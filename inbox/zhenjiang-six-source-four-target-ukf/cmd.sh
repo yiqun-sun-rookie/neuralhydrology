@@ -1,259 +1,133 @@
 #!/usr/bin/env bash
 set -euo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'READ_ONLY_226203_PY'
-"""Read-only, fixed-job metadata query. No deployed imports or compute actions."""
-import hashlib
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'REVIEWED_DIAGNOSTIC_PY'
+"""One fresh two-minute metadata-only Slurm diagnostic; no old-root mutations."""
 import json
 import os
 from pathlib import Path
-import re
-import selectors
 import stat
 import subprocess
-import time
+import hashlib
 
-ROOT = Path("/data1/home/sunyiq/zhenjiang_shared_base_20260916_001")
-ROOT_ID = [41, 7011215874]
-RELEASE = "49a27c4d9ea0f4f1843d581c780adfa554e8dc4498623cdc2c277aed3aa7856a"
-JOB = "226203"
-NONCE = "5a56f823f0914963b098660929f6f28a"
-ATTEMPT_SHA = "2d4a253aab012cb44de46395cb057c2812a78afc36a2948a51668b60251fb9d3"
-METADATA = (
-    "deployment.json", "submission/preflight/attempt.json",
-    "submission/preflight/submitted.json", "submission/preflight/failure.json",
-    "preflight/attempt.json", "preflight/environment.json", "preflight/failure.json",
-    "preflight/complete.json", "preflight/result.json", "preflight/measurement.json",
-    "preflight/preparation.json", "preflight/data_identity.json",
-)
-LOG = "slurm/preflight-226203.out"
+ROOT = Path("/data1/home/sunyiq/zhenjiang_root_identity_diagnostic_20260917_001")
+PYTHON = "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python"
 
-def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
-
-def sha(raw):
-    return hashlib.sha256(raw).hexdigest()
-
-def document(raw):
-    def unique(pairs):
-        result = {}
-        for key, value in pairs:
-            if key in result:
-                raise ValueError("duplicate JSON key")
-            result[key] = value
-        return result
-    return json.loads(raw, object_pairs_hook=unique,
-                      parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite JSON")))
-
-def safe(path):
-    if not path.is_absolute() or ".." in path.parts:
-        raise ValueError("unsafe absolute path")
-    for item in (path, *path.parents):
-        meta = item.lstat()
-        if stat.S_ISLNK(meta.st_mode) or getattr(meta, "st_file_attributes", 0) & 0x400:
-            raise ValueError("redirected path")
-    return path
-
-def identity(path):
-    meta = safe(path).stat()
-    return [meta.st_dev, meta.st_ino]
-
-class Reader:
+class Writer:
     def __init__(self):
-        if identity(ROOT) != ROOT_ID:
-            raise ValueError("fixed deployment root identity differs")
-        self.allowed = {"release_manifest.json": 2_000_000}
-        self.seen, self.total = set(), 0
-
-    def read(self, name, maximum=None):
-        if name not in self.allowed or name in self.seen:
-            raise ValueError("unknown or repeated read")
-        if identity(ROOT) != ROOT_ID:
-            raise ValueError("root changed before file lookup")
-        self.seen.add(name)
-        cap = self.allowed[name] if maximum is None else min(maximum, self.allowed[name])
-        path = ROOT / name
+        # Windows branch is used only by local synthetic controller tests.
+        # Production Linux always uses the pinned directory descriptors below.
+        if os.name == "nt":
+            self.windows_root = ROOT
+            ROOT.mkdir(mode=0o700, exist_ok=False)
+            self.windows_id = (ROOT.stat().st_dev, ROOT.stat().st_ino)
+            self.windows_parent = (ROOT.parent.stat().st_dev, ROOT.parent.stat().st_ino)
+            self.root_fd = self.parent_fd = None
+            self.check()
+            return
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        self.parent_fd = os.open("/", flags)
+        self.root_fd = None
         try:
-            before = safe(path).stat()
-        except FileNotFoundError:
-            for parent in path.parents:
-                try:
-                    safe(parent)
-                except FileNotFoundError:
-                    continue
-            if identity(ROOT) != ROOT_ID:
-                raise ValueError("root changed during missing-file lookup")
-            return None
-        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
-                or not 0 <= before.st_size <= cap or self.total + before.st_size > 8_000_000):
-            raise ValueError("file type or read budget differs")
-        parent_id = identity(path.parent)
-        if identity(ROOT) != ROOT_ID or identity(path.parent) != parent_id:
-            raise ValueError("root or parent changed before open")
-        fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0))
-        with os.fdopen(fd, "rb", buffering=0) as handle:
-            opened = os.fstat(handle.fileno())
-            if (opened.st_dev, opened.st_ino, opened.st_size, opened.st_mtime_ns, opened.st_nlink) != (
-                    before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, 1):
-                raise ValueError("file changed before open")
-            parts, remaining = [], before.st_size
-            while remaining:
-                part = handle.read(remaining)
-                if not part:
-                    break
-                parts.append(part)
-                remaining -= len(part)
-            raw = b"".join(parts)
-            after = os.fstat(handle.fileno())
-        visible = safe(path).stat()
-        if (remaining or identity(ROOT) != ROOT_ID or identity(path.parent) != parent_id
-                or (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns) !=
-                (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)
-                or (visible.st_dev, visible.st_ino) != (before.st_dev, before.st_ino)):
-            raise ValueError("file changed during read")
-        self.total += len(raw)
-        return raw, {"path": str(path), "bytes": len(raw), "sha256": sha(raw)}
+            for part in ROOT.parent.parts[1:]:
+                child = os.open(part, flags, dir_fd=self.parent_fd)
+                os.close(self.parent_fd)
+                self.parent_fd = child
+            self.parent_meta = os.fstat(self.parent_fd)
+            os.mkdir(ROOT.name, 0o700, dir_fd=self.parent_fd)
+            self.root_fd = os.open(ROOT.name, flags, dir_fd=self.parent_fd)
+            self.root_meta = os.fstat(self.root_fd)
+            self.check()
+        except BaseException:
+            self.close()
+            raise
 
-    def json(self, name):
-        result = self.read(name)
-        if result is None:
-            return None
-        raw, spec = result
-        value = document(raw)
-        if not isinstance(value, dict):
-            raise ValueError("metadata must be a JSON object")
-        return {"value": value, "spec": spec}
+    def check(self):
+        for item in (ROOT, *ROOT.parents):
+            value = item.lstat()
+            if stat.S_ISLNK(value.st_mode):
+                raise ValueError("linked diagnostic path")
+        if os.name == "nt":
+            if ((ROOT.stat().st_dev, ROOT.stat().st_ino) != self.windows_id
+                    or (ROOT.parent.stat().st_dev, ROOT.parent.stat().st_ino) != self.windows_parent):
+                raise ValueError("diagnostic root or parent changed")
+            return
+        for path, saved, fd in ((ROOT, self.root_meta, self.root_fd),
+                                (ROOT.parent, self.parent_meta, self.parent_fd)):
+            visible, opened = path.stat(), os.fstat(fd)
+            if (visible.st_dev, visible.st_ino) != (saved.st_dev, saved.st_ino) or (
+                    opened.st_dev, opened.st_ino) != (saved.st_dev, saved.st_ino):
+                raise ValueError("diagnostic root or parent changed")
 
-def verify_sources(reader):
-    manifest = reader.json("release_manifest.json")
-    if manifest is None or manifest["spec"]["sha256"] != RELEASE:
-        raise ValueError("published manifest identity differs")
-    value = manifest["value"]
-    rows = value.get("files")
-    if value.get("remote_root") != str(ROOT) or not isinstance(rows, list) or len(rows) != 25:
-        raise ValueError("release root or member count differs")
-    names = set()
-    for row in rows:
-        name = row.get("path")
-        if (set(row) != {"path", "bytes", "sha256"} or not isinstance(name, str)
-                or name in names or any(part in ("", ".", "..") for part in name.split("/"))
-                or "\\" in name or ":" in name or not name.endswith((".py", ".json"))
-                or type(row["bytes"]) is not int or not 0 < row["bytes"] <= 2_000_000
-                or not re.fullmatch("[0-9a-f]{64}", row["sha256"])):
-            raise ValueError("unsafe manifest source")
-        names.add(name)
-        reader.allowed[name] = row["bytes"]
-        result = reader.read(name)
-        if result is None or result[1]["bytes"] != row["bytes"] or result[1]["sha256"] != row["sha256"]:
-            raise ValueError("published source identity differs")
-    return manifest["spec"]
+    def put(self, name, raw):
+        if name not in ("attempt.json", "login_snapshot.json", "job.sh", "submitted.json", "failure.json"):
+            raise ValueError("unknown diagnostic output")
+        self.check()
+        target = ROOT / name if os.name == "nt" else name
+        extra = {} if os.name == "nt" else {"dir_fd": self.root_fd}
+        fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, **extra)
+        with os.fdopen(fd, "wb") as handle:
+            self.check()
+            handle.write(raw)
+            handle.flush()
+            os.fsync(handle.fileno())
+        self.check()
 
-def query_scheduler(command):
-    """Linux-only query subprocess, 15 seconds and 32768 combined bytes."""
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                               stdin=subprocess.DEVNULL, shell=False)
-    output, deadline = bytearray(), time.monotonic() + 15
+    def close(self):
+        for name in ("root_fd", "parent_fd"):
+            fd = getattr(self, name, None)
+            if fd is not None:
+                os.close(fd)
+                setattr(self, name, None)
+
+def submit(probe_code, worker_code):
+    writer = Writer()
     try:
-        with selectors.DefaultSelector() as selector:
-            selector.register(process.stdout, selectors.EVENT_READ)
-            while selector.get_map():
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise TimeoutError("scheduler query exceeded 15 seconds")
-                events = selector.select(min(remaining, 1))
-                for key, _ in events:
-                    raw = os.read(key.fileobj.fileno(), 32769 - len(output))
-                    if not raw:
-                        selector.unregister(key.fileobj)
-                    else:
-                        output.extend(raw)
-                        if len(output) > 32768:
-                            raise ValueError("scheduler output exceeds 32768 bytes")
-        code = process.wait(timeout=max(.001, deadline-time.monotonic()))
+        writer.put("attempt.json", b'{"action":"directory_metadata_only","maximum_submissions":1,"seconds":120}')
+        namespace = {"__name__": "_diagnostic_probe", "__file__": "<reviewed-inline-probe>"}
+        exec(compile(probe_code, "<reviewed-inline-probe>", "exec"), namespace)
+        snapshot = namespace["probe"]()
+        snapshot_raw = json.dumps(snapshot, sort_keys=True, separators=(",", ":")).encode()
+        writer.put("login_snapshot.json", snapshot_raw)
+        expected_root = {name: snapshot["diagnostic_root"][name] for name in ("inode", "uid", "mode")}
+        compute = (worker_code + "\nPROBE_CODE=" + repr(probe_code) + "\nEXPECTED_ROOT=" + repr(expected_root)
+                   + "\nLOGIN_SHA=" + repr(hashlib.sha256(snapshot_raw).hexdigest())
+                   + "\nrun(PROBE_CODE,EXPECTED_ROOT,LOGIN_SHA)\n")
+        compile(compute, "<reviewed-compute-diagnostic>", "exec")
+        script = ("#!/bin/bash\nset -euo pipefail\nexport PYTHONDONTWRITEBYTECODE=1\n"
+                  + PYTHON + " -B -I - <<'DIRECTORY_METADATA_ONLY_PY'\n"
+                  + compute + "\nDIRECTORY_METADATA_ONLY_PY\n")
+        writer.put("job.sh", script.encode())
+        command = ["sbatch", "--parsable", "--partition=hgpu2p", "--nodes=1", "--ntasks=1",
+                   "--cpus-per-task=4", "--gres=gpu:1", "--no-requeue", "--time=00:02:00",
+                   "--job-name=zhenjiang-directory-metadata", "--output=/dev/null", "--error=/dev/null"]
+        env = {key: value for key, value in os.environ.items() if not key.upper().startswith("SBATCH_")}
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        writer.check()
+        result = subprocess.run(command, input=script, capture_output=True, text=True, timeout=30, env=env, check=False)
+        stdout, stderr = result.stdout or "", result.stderr or ""
+        if len(stdout.encode()) + len(stderr.encode()) > 32768:
+            raise ValueError("scheduler reply exceeds bound")
+        job = stdout.strip()
+        if result.returncode or not job.isdigit() or int(job) <= 0:
+            raise ValueError("submission uncertain, do not retry")
+        record = {"job_id": job, "root": str(ROOT), "argv": command, "login_snapshot": snapshot}
+        writer.check()
+        writer.put("submitted.json", json.dumps(record, sort_keys=True, separators=(",", ":")).encode())
+        return record
+    except BaseException as error:
+        try:
+            writer.check()
+            writer.put("failure.json", json.dumps({"error_type": type(error).__name__, "message": str(error)[:1000],
+                                           "retry_allowed": False}).encode())
+        except (ValueError, FileNotFoundError):
+            pass
+        raise
     finally:
-        if process.poll() is None:
-            process.kill()  # Kills only this squeue/sacct client, never the Slurm job.
-            process.wait(timeout=5)
-        process.stdout.close()
-    return {"argv": command, "returncode": code, "stdout": output.decode("utf-8", errors="replace")}
+        writer.close()
 
-def run():
-    reader = Reader()
-    manifest_spec = verify_sources(reader)
-    reader.allowed.update({name: 500_000 for name in METADATA})
-    reader.allowed[LOG] = 65536
-    records = {}
-    # Bind root, release, nonce and submitted job before scheduler/log reads.
-    for name in METADATA[:3]:
-        records[name] = reader.json(name)
-        if records[name] is None:
-            raise ValueError("required deployment/submission metadata absent")
-    deployed = records["deployment.json"]["value"]
-    attempt = records["submission/preflight/attempt.json"]
-    submitted = records["submission/preflight/submitted.json"]["value"]
-    for value in (deployed, attempt["value"], submitted):
-        if value.get("release_sha256") != RELEASE or value.get("root_identity") != ROOT_ID:
-            raise ValueError("metadata release or root differs")
-    if (attempt["spec"]["sha256"] != ATTEMPT_SHA or attempt["spec"]["bytes"] != 236
-            or submitted.get("status") != "submitted" or submitted.get("stage") != "preflight"
-            or submitted.get("job_id") != JOB or submitted.get("nonce") != NONCE
-            or submitted.get("attempt_spec") != attempt["spec"]
-            or submitted.get("script_spec") != {"path": str(ROOT / "submission/preflight/job.sh"),
-                "bytes": 4662, "sha256": "46f7c06b4f3f4880221669c550f831f7eeab64bcbf83a75cf58d807c36bf27b7"}):
-        raise ValueError("exact submitted preflight job binding differs")
-    for name in METADATA[3:]:
-        records[name] = reader.json(name)
-    complete = records["preflight/complete.json"]
-    for name in ("preflight/failure.json", "preflight/complete.json"):
-        row = records[name]
-        if row is not None and (row["value"].get("stage") != "preflight"
-                or row["value"].get("job_id") != JOB or row["value"].get("release_sha256") != RELEASE):
-            raise ValueError("preflight record belongs to another job")
-    if complete is not None:
-        value = complete["value"]
-        if value.get("status") != "complete" or value.get("root_identity") != ROOT_ID:
-            raise ValueError("complete root/status differs")
-        for field, name in (("result_spec", "preflight/result.json"), ("preparation_spec", "preflight/preparation.json")):
-            if records[name] is None or value.get(field) != records[name]["spec"]:
-                raise ValueError("completed artifact pointer differs")
-    preparation = records["preflight/preparation.json"]
-    if preparation is not None:
-        prep = preparation["value"]
-        payload = dict(prep)
-        if payload.pop("preparation_sha256", None) != sha(canonical(payload)):
-            raise ValueError("preparation self identity differs")
-        tide = dict(prep["tide"])
-        if tide.pop("document_sha256", None) != sha(canonical(tide)):
-            raise ValueError("tide self identity differs")
-        # Dates, counts, diagnostics and identities only; coefficients not transferred.
-        tide.pop("constituents")
-        preparation["value"] = {"preparation_sha256": prep["preparation_sha256"],
-                                "tide": tide, "normalization": prep["normalization"]}
-    scheduler = {}
-    for name, command in (
-        ("queue", ["squeue", "--noheader", "--jobs", JOB, "--format=%i|%T|%M|%l|%R"]),
-        ("accounting", ["sacct", "--noheader", "--parsable2", "--jobs", JOB,
-                        "--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocTRES"]),
-    ):
-        reply = query_scheduler(command)
-        if reply["returncode"] == 0:
-            for line in reply["stdout"].splitlines():
-                if line.strip():
-                    actual = line.split("|", 1)[0].strip()
-                    if actual != JOB and not actual.startswith(JOB + "."):
-                        raise ValueError("scheduler returned unrelated job")
-        scheduler[name] = reply
-    log = reader.read(LOG)
-    log_value = None if log is None else {"spec": log[1], "text": log[0].decode("utf-8", errors="replace")}
-    report = {"status": "read_only_snapshot_not_a_pass_decision", "job_id": JOB,
-              "release_spec": manifest_spec, "root_identity": ROOT_ID,
-              "records": records, "scheduler": scheduler, "log": log_value,
-              "metadata_and_source_read_bytes": reader.total, "read_names": sorted(reader.seen)}
-    if identity(ROOT) != ROOT_ID or len(canonical(report)) > 2_000_000:
-        raise ValueError("root identity or total output bound differs")
-    return report
+PROBE_CODE='"""Read only fixed directory and deployment metadata; no scientific payload."""\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport socket\nimport stat\n\nOLD = Path("/data1/home/sunyiq/zhenjiang_shared_base_20260916_001")\nDIAG = Path("/data1/home/sunyiq/zhenjiang_root_identity_diagnostic_20260917_001")\nEXPECTED = {\n    "release_manifest.json": (4071, "49a27c4d9ea0f4f1843d581c780adfa554e8dc4498623cdc2c277aed3aa7856a"),\n    "deployment.json": (117, "202a1e8ba2fca8b1998895c9f80d3a3b8c4a53a631927d986415f0320e9c8fd2"),\n}\n\ndef safe(path):\n    if not path.is_absolute() or ".." in path.parts:\n        raise ValueError("unsafe fixed path")\n    for item in (path, *path.parents):\n        value = item.lstat()\n        if stat.S_ISLNK(value.st_mode) or getattr(value, "st_file_attributes", 0) & 0x400:\n            raise ValueError("linked metadata path")\n    return path\n\ndef directory(path):\n    value = safe(path).stat()\n    if not stat.S_ISDIR(value.st_mode):\n        raise ValueError("directory metadata differs")\n    return {"path": str(path), "device": value.st_dev, "inode": value.st_ino,\n            "uid": value.st_uid, "mode": stat.S_IMODE(value.st_mode)}\n\ndef verified_metadata(name):\n    if name not in EXPECTED:\n        raise ValueError("unknown metadata")\n    path = OLD / name\n    root_before = directory(OLD)\n    before = safe(path).stat()\n    size, expected = EXPECTED[name]\n    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or before.st_size != size:\n        raise ValueError("fixed metadata type/size differs")\n    fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0))\n    with os.fdopen(fd, "rb", buffering=0) as handle:\n        opened = os.fstat(handle.fileno())\n        if (opened.st_dev, opened.st_ino, opened.st_size, opened.st_mtime_ns) != (\n                before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns):\n            raise ValueError("metadata changed before open")\n        raw = handle.read(size + 1)\n        after = os.fstat(handle.fileno())\n    if (len(raw) != size or hashlib.sha256(raw).hexdigest() != expected\n            or directory(OLD) != root_before\n            or (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns) !=\n            (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)):\n        raise ValueError("fixed metadata identity differs")\n    return json.loads(raw)\n\ndef unescape(value):\n    return value.replace("\\\\040", " ").replace("\\\\011", "\\t").replace("\\\\012", "\\n").replace("\\\\134", "\\\\")\n\ndef mount_for_root():\n    # Linux proc metadata only; no experiment/data discovery.\n    with open("/proc/self/mountinfo", "rb", buffering=0) as handle:\n        raw = handle.read(1_000_001)\n    if len(raw) > 1_000_000:\n        raise ValueError("mount metadata exceeds bound")\n    matches = []\n    for line in raw.decode("utf-8", errors="strict").splitlines():\n        left, right = line.split(" - ", 1)\n        a, b = left.split(), right.split()\n        point = unescape(a[4])\n        if str(OLD) == point or str(OLD).startswith(point.rstrip("/") + "/"):\n            matches.append({"mountpoint": point, "device_major_minor": a[2],\n                            "mount_root": unescape(a[3]), "filesystem": b[0], "source": unescape(b[1])})\n    if not matches:\n        raise ValueError("fixed root mount not found")\n    return max(matches, key=lambda value: len(value["mountpoint"]))\n\ndef probe():\n    before = directory(OLD)\n    manifest = verified_metadata("release_manifest.json")\n    deployment = verified_metadata("deployment.json")\n    if manifest.get("remote_root") != str(OLD):\n        raise ValueError("fixed manifest root differs")\n    value = {"host": socket.gethostname(), "job_id": os.environ.get("SLURM_JOB_ID"),\n             "kernel": os.uname().release, "old_root": before,\n             "diagnostic_root": directory(DIAG), "mount": mount_for_root(),\n             "deployment": deployment,\n             "manifest_sha256": EXPECTED["release_manifest.json"][1]}\n    if directory(OLD) != before:\n        raise ValueError("root changed during metadata probe")\n    return value\n\nif __name__ == "__main__":\n    print(json.dumps(probe(), sort_keys=True, separators=(",", ":"), allow_nan=False))\n'
+WORKER_CODE='"""Write one bounded metadata result through a verified compute-node directory."""\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport re\nimport stat\n\nROOT = Path("/data1/home/sunyiq/zhenjiang_root_identity_diagnostic_20260917_001")\nMAXIMUM = 20000\n\nclass Output:\n    def __init__(self, expected):\n        self.root_fd = self.parent_fd = None\n        self.expected = expected\n        self.safe()\n        value = ROOT.stat()\n        if (not stat.S_ISDIR(value.st_mode) or\n                {"inode": value.st_ino, "uid": value.st_uid, "mode": stat.S_IMODE(value.st_mode)} != expected):\n            raise ValueError("compute diagnostic directory binding differs")\n        self.root_meta = value\n        self.parent_meta = ROOT.parent.stat()\n        if os.name == "posix":\n            flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW\n            self.parent_fd = os.open("/", flags)\n            try:\n                for part in ROOT.parent.parts[1:]:\n                    child = os.open(part, flags, dir_fd=self.parent_fd)\n                    os.close(self.parent_fd)\n                    self.parent_fd = child\n                self.root_fd = os.open(ROOT.name, flags, dir_fd=self.parent_fd)\n                self.check()\n            except BaseException:\n                self.close()\n                raise\n\n    def safe(self):\n        for path in (ROOT, *ROOT.parents):\n            value = path.lstat()\n            if stat.S_ISLNK(value.st_mode) or getattr(value, "st_file_attributes", 0) & 0x400:\n                raise ValueError("linked compute diagnostic path")\n\n    def check(self):\n        self.safe()\n        for path, saved, fd in ((ROOT, self.root_meta, self.root_fd),\n                                (ROOT.parent, self.parent_meta, self.parent_fd)):\n            current = path.stat()\n            if (current.st_dev, current.st_ino) != (saved.st_dev, saved.st_ino):\n                raise ValueError("compute diagnostic directory changed")\n            if fd is not None:\n                opened = os.fstat(fd)\n                if (opened.st_dev, opened.st_ino) != (saved.st_dev, saved.st_ino):\n                    raise ValueError("compute diagnostic handle differs")\n\n    def login(self, expected_sha):\n        self.check()\n        target = "login_snapshot.json" if self.root_fd is not None else ROOT / "login_snapshot.json"\n        extra = {"dir_fd": self.root_fd} if self.root_fd is not None else {}\n        fd = os.open(target, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0), **extra)\n        with os.fdopen(fd, "rb", buffering=0) as handle:\n            before = os.fstat(handle.fileno())\n            if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or not 0 < before.st_size <= MAXIMUM:\n                raise ValueError("login snapshot type or size differs")\n            raw = handle.read(MAXIMUM + 1)\n            after = os.fstat(handle.fileno())\n        self.check()\n        if (len(raw) != before.st_size or hashlib.sha256(raw).hexdigest() != expected_sha\n                or (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns) !=\n                (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)):\n            raise ValueError("exact compute login snapshot differs")\n        snapshot = json.loads(raw)\n        actual = snapshot.get("diagnostic_root", {})\n        if actual.get("path") != str(ROOT) or any(actual.get(k) != v for k, v in self.expected.items()):\n            raise ValueError("login snapshot directory binding differs")\n        return snapshot\n\n    def put(self, job, raw):\n        if not isinstance(job, str) or not re.fullmatch("[1-9][0-9]*", job) or not 0 < len(raw) <= MAXIMUM:\n            raise ValueError("bounded exact diagnostic job output required")\n        self.check()\n        name = "probe-" + job + ".out"\n        target = name if self.root_fd is not None else ROOT / name\n        extra = {"dir_fd": self.root_fd} if self.root_fd is not None else {}\n        fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0), 0o600, **extra)\n        with os.fdopen(fd, "wb") as handle:\n            self.check()\n            handle.write(raw)\n            handle.flush()\n            os.fsync(handle.fileno())\n        self.check()\n\n    def close(self):\n        for name in ("root_fd", "parent_fd"):\n            fd = getattr(self, name, None)\n            if fd is not None:\n                os.close(fd)\n                setattr(self, name, None)\n\ndef run(probe_code, expected_root, login_sha):\n    job = os.environ.get("SLURM_JOB_ID", "")\n    if not re.fullmatch("[1-9][0-9]*", job):\n        raise ValueError("allocated diagnostic job absent")\n    output = Output(expected_root)\n    try:\n        output.login(login_sha)\n        namespace = {"__name__": "_compute_diagnostic_probe", "__file__": "<reviewed-inline-probe>"}\n        exec(compile(probe_code, "<reviewed-inline-probe>", "exec"), namespace)\n        result = namespace["probe"]()\n        output.check()\n        output.put(job, json.dumps(result, sort_keys=True, separators=(",", ":"), allow_nan=False).encode())\n        return result\n    except BaseException as error:\n        try:\n            output.put(job, json.dumps({"status": "diagnostic_failed_no_retry", "job_id": job,\n                "error_type": type(error).__name__, "message": str(error)[:1000]}, sort_keys=True,\n                separators=(",", ":")).encode())\n        except (ValueError, FileNotFoundError, FileExistsError):\n            pass\n        raise\n    finally:\n        output.close()\n'
+print(json.dumps(submit(PROBE_CODE,WORKER_CODE),sort_keys=True,separators=(',',':')))
 
-if __name__ == "__main__":
-    print(canonical(run()).decode("utf-8"))
-
-READ_ONLY_226203_PY
+REVIEWED_DIAGNOSTIC_PY
