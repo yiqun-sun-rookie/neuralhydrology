@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=116
+### host=login4
+### started=2026-09-17T16:41:33+0800
+### ---------- output ----------
+{"argv":["sbatch","--parsable","--partition=hgpu2p","--nodes=1","--ntasks=1","--cpus-per-task=4","--gres=gpu:1","--no-requeue","--time=00:02:00","--job-name=zhenjiang-directory-metadata","--output=/dev/null","--error=/dev/null"],"job_id":"226226","login_snapshot":{"deployment":{"release_sha256":"49a27c4d9ea0f4f1843d581c780adfa554e8dc4498623cdc2c277aed3aa7856a","root_identity":[41,7011215874]},"diagnostic_root":{"device":41,"inode":7340244751,"mode":448,"path":"/data1/home/sunyiq/zhenjiang_root_identity_diagnostic_20260917_001","uid":2272},"host":"login4","job_id":null,"kernel":"3.10.0-957.el7.x86_64","manifest_sha256":"49a27c4d9ea0f4f1843d581c780adfa554e8dc4498623cdc2c277aed3aa7856a","mount":{"device_major_minor":"253:0","filesystem":"xfs","mount_root":"/","mountpoint":"/","source":"/dev/mapper/centos-root"},"old_root":{"device":41,"inode":7011215874,"mode":448,"path":"/data1/home/sunyiq/zhenjiang_shared_base_20260916_001","uid":2272}},"root":"/data1/home/sunyiq/zhenjiang_root_identity_diagnostic_20260917_001"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-17T16:41:34+0800
