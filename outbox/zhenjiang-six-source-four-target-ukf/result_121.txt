@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=121
+### host=login4
+### started=2026-09-18T11:09:32+0800
+### ---------- output ----------
+{"attempt_spec":{"bytes":495,"path":"/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/submission/preflight/attempt.json","sha256":"739a7f4d15dacae052f7641544540722c7e5ce29b1880b1aa19f33285e1ea168"},"deployment_identity":{"deployment_token":"35eb014766234b74961d73d38ffee3e2","metadata_sha256":"beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0","root_binding":{"inode":10617661454,"mode":448,"uid":2272},"schema":"cross-node-deployment-v1"},"job_id":"226373","nonce":"e335229c5e574666b4a8084818947200","predecessor":null,"release_sha256":"8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678","root_identity":[41,10617661454],"script_spec":{"bytes":15640,"path":"/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/submission/preflight/job.sh","sha256":"3071ec8cb97cf88bbda11c749e517db5f787088f181851d535a23f167bdda249"},"stage":"preflight","status":"submitted"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-18T11:09:34+0800
