@@ -1,7 +1,7 @@
 #!/bin/bash
-# kalmannet-daily-perbasin sequence=165: READ-ONLY observation (phase_a). No sbatch, no scancel, no writes.
+# kalmannet-daily-perbasin sequence=166: READ-ONLY observation (phase_a). No sbatch, no scancel, no writes.
 set -o pipefail
-echo "channel=kalmannet-daily-perbasin sequence=165 purpose=observe-phase_a"
+echo "channel=kalmannet-daily-perbasin sequence=166 purpose=observe-phase_a"
 ROOT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916
 emit_json() { f="$1"; if [ -f "$f" ]; then echo "JSON_BEGIN path=$f bytes=$(stat -c %s "$f") sha256=$(sha256sum "$f" | cut -c1-64)"; cat "$f"; echo; echo "JSON_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
 tail_file() { f="$1"; n="$2"; if [ -f "$f" ]; then echo "TAIL_BEGIN path=$f bytes=$(stat -c %s "$f")"; tail -n "$n" "$f"; echo "TAIL_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
