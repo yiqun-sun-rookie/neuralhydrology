@@ -1,0 +1,396 @@
+### channel=attrswap-daily seq=84
+### host=login4
+### started=2026-09-18T16:16:39+0800
+### ---------- output ----------
+wallclock 2026-09-18 16:16:39 +0800
+epoch 1789719399
+=== A. partition ===
+PARTITIO  AVAIL    TIMELIMIT NODES      STATE NODELIST
+   hgpu4     up     infinite     1      down* ngu103
+   hgpu4     up     infinite     2      mixed ngu[101,104]
+   hgpu4     up     infinite     1       idle ngu102
+=== B. sacct 226245-226287 (terminal + running states) ===
+       JobID                            JobName        State    Elapsed               Start                 End ExitCode   NodeList 
+------------ ---------------------------------- ------------ ---------- ------------------- ------------------- -------- ---------- 
+226245                          pswap3_gate_ref    COMPLETED   00:02:15 2026-09-17T19:05:34 2026-09-17T19:07:49      0:0     ngu101 
+226246                 pswap3_gate_era5l_refday    COMPLETED   00:03:06 2026-09-17T19:08:04 2026-09-17T19:11:10      0:0     ngu101 
+226247              pswap3_ep60_ref_daymet_s100    COMPLETED   04:01:29 2026-09-17T19:08:04 2026-09-17T23:09:33      0:0     ngu101 
+226248            pswap3_ep60_era5l_refday_s100    COMPLETED   03:59:57 2026-09-17T19:11:34 2026-09-17T23:11:31      0:0     ngu101 
+226249              pswap3_ep60_ref_daymet_s200    COMPLETED   04:01:16 2026-09-17T19:08:04 2026-09-17T23:09:20      0:0     ngu101 
+226250            pswap3_ep60_era5l_refday_s200    COMPLETED   04:05:44 2026-09-17T21:33:34 2026-09-18T01:39:18      0:0     ngu102 
+226251              pswap3_ep60_ref_daymet_s300    COMPLETED   04:03:33 2026-09-17T21:24:12 2026-09-18T01:27:45      0:0     ngu102 
+226252            pswap3_ep60_era5l_refday_s300    COMPLETED   04:07:05 2026-09-17T21:35:04 2026-09-18T01:42:09      0:0     ngu102 
+226253                         pswap3_guard_T16    COMPLETED   00:00:08 2026-09-18T01:42:11 2026-09-18T01:42:19      0:0     ngu101 
+226254                    pswap3_gate_imerg_e18    COMPLETED   00:03:09 2026-09-17T21:24:12 2026-09-17T21:27:21      0:0     ngu102 
+226255                pswap3_win_imerg_e18_s100    COMPLETED   02:04:08 2026-09-18T01:42:19 2026-09-18T03:46:27      0:0     ngu101 
+226256                pswap3_win_imerg_e18_s200    COMPLETED   02:04:48 2026-09-18T01:42:19 2026-09-18T03:47:07      0:0     ngu101 
+226257                pswap3_win_imerg_e18_s300    COMPLETED   02:02:27 2026-09-18T01:42:19 2026-09-18T03:44:46      0:0     ngu102 
+226258                  pswap3_gate_imerg_local    COMPLETED   00:03:09 2026-09-17T21:24:12 2026-09-17T21:27:21      0:0     ngu102 
+226259              pswap3_win_imerg_local_s100    COMPLETED   02:01:22 2026-09-18T01:42:19 2026-09-18T03:43:41      0:0     ngu102 
+226260              pswap3_win_imerg_local_s200    COMPLETED   02:01:23 2026-09-18T01:42:19 2026-09-18T03:43:42      0:0     ngu102 
+226261              pswap3_win_imerg_local_s300    COMPLETED   02:02:54 2026-09-18T01:42:19 2026-09-18T03:45:13      0:0     ngu102 
+226262                    pswap3_gate_gsmap_utc    COMPLETED   00:03:08 2026-09-17T21:24:12 2026-09-17T21:27:20      0:0     ngu102 
+226263                pswap3_win_gsmap_utc_s100    COMPLETED   01:56:59 2026-09-18T03:22:39 2026-09-18T05:19:38      0:0     ngu104 
+226264                pswap3_win_gsmap_utc_s200    COMPLETED   01:55:59 2026-09-18T03:22:39 2026-09-18T05:18:38      0:0     ngu104 
+226265                pswap3_win_gsmap_utc_s300    COMPLETED   01:55:59 2026-09-18T03:22:39 2026-09-18T05:18:38      0:0     ngu104 
+226266                  pswap3_gate_imerg_tau32    COMPLETED   00:03:07 2026-09-17T21:27:21 2026-09-17T21:30:28      0:0     ngu102 
+226267              pswap3_win_imerg_tau32_s100    COMPLETED   01:55:59 2026-09-18T03:22:39 2026-09-18T05:18:38      0:0     ngu104 
+226268              pswap3_win_imerg_tau32_s200    COMPLETED   02:00:36 2026-09-18T03:43:42 2026-09-18T05:44:18      0:0     ngu102 
+226269              pswap3_win_imerg_tau32_s300    COMPLETED   02:02:22 2026-09-18T03:43:42 2026-09-18T05:46:04      0:0     ngu102 
+226270                pswap3_gate_daymet_shift1    COMPLETED   00:03:07 2026-09-17T21:27:21 2026-09-17T21:30:28      0:0     ngu102 
+226271                pswap3_shift1_daymet_s100    COMPLETED   02:00:07 2026-09-18T03:44:46 2026-09-18T05:44:53      0:0     ngu102 
+226272                pswap3_shift1_daymet_s200    COMPLETED   01:59:39 2026-09-18T03:45:14 2026-09-18T05:44:53      0:0     ngu102 
+226273                pswap3_shift1_daymet_s300    COMPLETED   02:04:30 2026-09-18T03:46:27 2026-09-18T05:50:57      0:0     ngu101 
+226274                    pswap3_gate_syn_ln035    COMPLETED   00:03:07 2026-09-17T21:27:21 2026-09-17T21:30:28      0:0     ngu102 
+226275                    pswap3_syn_ln035_s100    COMPLETED   02:04:15 2026-09-18T03:47:07 2026-09-18T05:51:22      0:0     ngu101 
+226276                    pswap3_syn_ln035_s200    COMPLETED   01:59:32 2026-09-18T05:18:38 2026-09-18T07:18:10      0:0     ngu104 
+226277                    pswap3_syn_ln035_s300    COMPLETED   01:56:14 2026-09-18T05:18:38 2026-09-18T07:14:52      0:0     ngu104 
+226278                    pswap3_gate_syn_ln070    COMPLETED   00:03:06 2026-09-17T21:30:28 2026-09-17T21:33:34      0:0     ngu102 
+226279                    pswap3_syn_ln070_s100    COMPLETED   01:56:29 2026-09-18T05:18:38 2026-09-18T07:15:07      0:0     ngu104 
+226280                    pswap3_syn_ln070_s200    COMPLETED   01:58:31 2026-09-18T05:19:38 2026-09-18T07:18:09      0:0     ngu104 
+226281                    pswap3_syn_ln070_s300    COMPLETED   01:59:26 2026-09-18T05:44:19 2026-09-18T07:43:45      0:0     ngu102 
+226282                    pswap3_gate_syn_ln140    COMPLETED   00:03:05 2026-09-17T21:30:29 2026-09-17T21:33:34      0:0     ngu102 
+226283                    pswap3_syn_ln140_s100    COMPLETED   02:01:08 2026-09-18T05:44:53 2026-09-18T07:46:01      0:0     ngu102 
+226284                    pswap3_syn_ln140_s200    COMPLETED   02:02:16 2026-09-18T05:44:53 2026-09-18T07:47:09      0:0     ngu102 
+226285                    pswap3_syn_ln140_s300    COMPLETED   02:00:15 2026-09-18T05:46:04 2026-09-18T07:46:19      0:0     ngu102 
+226286                         pswap3_eval_ckpt    COMPLETED   03:08:36 2026-09-17T21:30:29 2026-09-18T00:39:05      0:0     ngu102 
+226287                                pswap3_p7    COMPLETED   00:01:30 2026-09-17T21:33:34 2026-09-17T21:35:04      0:0     ngu102 
+=== C. state counts ===
+     43    COMPLETED 
+=== D. queue (pswap3) ===
+     JOBID                                 NAME     STATE       TIME PARTITION NODELIST(REASON)
+=== E. gate / guard markers and logs ===
+  total 699450
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Sep 18 05:45 .
+  drwxr-xr-x. 11 sunyiq g_sunyiq     4096 Sep 17 21:29 ..
+  -rw-r--r--.  1 sunyiq g_sunyiq      123 Sep 17 19:04 budget_ledger.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq    16980 Sep 17 21:28 build_daymet_shift1.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     4675 Sep 17 19:09 build_era5l_refday.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     3456 Sep 17 21:25 build_gsmap_utc.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     1540 Sep 17 21:25 build_imerg_e18.json
+  -rw-r--r--.  1 sunyiq g_sunyiq    12542 Sep 17 21:25 build_imerg_local.json
+  -rw-r--r--.  1 sunyiq g_sunyiq    16221 Sep 17 21:28 build_imerg_tau32.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     1696 Sep 17 21:28 build_syn_ln035.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     1883 Sep 17 21:31 build_syn_ln070.json
+  -rw-r--r--.  1 sunyiq g_sunyiq    13216 Sep 17 21:31 build_syn_ln140.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     6330 Sep 17 21:29 e4_copy_manifest.json
+  -rw-r--r--.  1 sunyiq g_sunyiq       26 Sep 18 00:38 e4_done.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       56 Sep 17 22:30 e4_ref_done.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       76 Sep 17 21:29 gate_daymet_shift1.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       76 Sep 17 19:10 gate_era5l_refday.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       72 Sep 17 21:26 gate_gsmap_utc.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       72 Sep 17 21:26 gate_imerg_e18.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       74 Sep 17 21:26 gate_imerg_local.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       74 Sep 17 21:29 gate_imerg_tau32.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       32 Sep 17 19:06 gate_ref.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       71 Sep 17 21:29 gate_syn_ln035.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       71 Sep 17 21:32 gate_syn_ln070.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq       71 Sep 17 21:32 gate_syn_ln140.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq     2309 Sep 18 01:41 guard_T16.json
+  -rw-r--r--.  1 sunyiq g_sunyiq       30 Sep 18 01:41 guard_T16_PASS.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq     1938 Sep 17 19:04 jobs.txt
+  -rw-r--r--.  1 sunyiq g_sunyiq     3193 Sep 17 21:34 p7_hydro_year.json
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 17 23:08 slurm_pswap3_ep60_era5l_refday_s100_226248.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 39615751 Sep 17 23:10 slurm_pswap3_ep60_era5l_refday_s100_226248.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 18 01:34 slurm_pswap3_ep60_era5l_refday_s200_226250.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 39825111 Sep 18 01:38 slurm_pswap3_ep60_era5l_refday_s200_226250.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 18 01:37 slurm_pswap3_ep60_era5l_refday_s300_226252.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 40112616 Sep 18 01:41 slurm_pswap3_ep60_era5l_refday_s300_226252.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 17 23:06 slurm_pswap3_ep60_ref_daymet_s100_226247.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 39674082 Sep 17 23:08 slurm_pswap3_ep60_ref_daymet_s100_226247.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 17 23:06 slurm_pswap3_ep60_ref_daymet_s200_226249.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 39657090 Sep 17 23:08 slurm_pswap3_ep60_ref_daymet_s200_226249.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     2104 Sep 18 01:22 slurm_pswap3_ep60_ref_daymet_s300_226251.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 39636019 Sep 18 01:26 slurm_pswap3_ep60_ref_daymet_s300_226251.out
+  -rw-r--r--.  1 sunyiq g_sunyiq    55756 Sep 18 00:35 slurm_pswap3_eval_ckpt_226286.err
+  -rw-r--r--.  1 sunyiq g_sunyiq  2130032 Sep 18 00:38 slurm_pswap3_eval_ckpt_226286.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:26 slurm_pswap3_gate_daymet_shift1_226270.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12814 Sep 17 21:29 slurm_pswap3_gate_daymet_shift1_226270.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 19:07 slurm_pswap3_gate_era5l_refday_226246.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12704 Sep 17 19:10 slurm_pswap3_gate_era5l_refday_226246.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:23 slurm_pswap3_gate_gsmap_utc_226262.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12713 Sep 17 21:26 slurm_pswap3_gate_gsmap_utc_226262.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:23 slurm_pswap3_gate_imerg_e18_226254.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12707 Sep 17 21:26 slurm_pswap3_gate_imerg_e18_226254.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:23 slurm_pswap3_gate_imerg_local_226258.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12678 Sep 17 21:26 slurm_pswap3_gate_imerg_local_226258.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:26 slurm_pswap3_gate_imerg_tau32_226266.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12630 Sep 17 21:29 slurm_pswap3_gate_imerg_tau32_226266.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 19:04 slurm_pswap3_gate_ref_226245.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12045 Sep 17 19:06 slurm_pswap3_gate_ref_226245.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:26 slurm_pswap3_gate_syn_ln035_226274.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    12829 Sep 17 21:29 slurm_pswap3_gate_syn_ln035_226274.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:29 slurm_pswap3_gate_syn_ln070_226278.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    13026 Sep 17 21:32 slurm_pswap3_gate_syn_ln070_226278.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:29 slurm_pswap3_gate_syn_ln140_226282.err
+  -rw-r--r--.  1 sunyiq g_sunyiq    13177 Sep 17 21:32 slurm_pswap3_gate_syn_ln140_226282.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 18 01:41 slurm_pswap3_guard_T16_226253.err
+  -rw-r--r--.  1 sunyiq g_sunyiq      764 Sep 18 01:41 slurm_pswap3_guard_T16_226253.out
+  -rw-r--r--.  1 sunyiq g_sunyiq        0 Sep 17 21:32 slurm_pswap3_p7_226287.err
+  -rw-r--r--.  1 sunyiq g_sunyiq     1076 Sep 17 21:34 slurm_pswap3_p7_226287.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:41 slurm_pswap3_shift1_daymet_s100_226271.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19740080 Sep 18 05:43 slurm_pswap3_shift1_daymet_s100_226271.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:41 slurm_pswap3_shift1_daymet_s200_226272.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19730173 Sep 18 05:43 slurm_pswap3_shift1_daymet_s200_226272.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:47 slurm_pswap3_shift1_daymet_s300_226273.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 20033853 Sep 18 05:49 slurm_pswap3_shift1_daymet_s300_226273.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:48 slurm_pswap3_syn_ln035_s100_226275.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 20062721 Sep 18 05:50 slurm_pswap3_syn_ln035_s100_226275.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:15 slurm_pswap3_syn_ln035_s200_226276.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19804157 Sep 18 07:17 slurm_pswap3_syn_ln035_s200_226276.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:11 slurm_pswap3_syn_ln035_s300_226277.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19737032 Sep 18 07:13 slurm_pswap3_syn_ln035_s300_226277.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:12 slurm_pswap3_syn_ln070_s100_226279.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19746992 Sep 18 07:14 slurm_pswap3_syn_ln070_s100_226279.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:15 slurm_pswap3_syn_ln070_s200_226280.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19737392 Sep 18 07:17 slurm_pswap3_syn_ln070_s200_226280.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:40 slurm_pswap3_syn_ln070_s300_226281.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19728065 Sep 18 07:42 slurm_pswap3_syn_ln070_s300_226281.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:42 slurm_pswap3_syn_ln140_s100_226283.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19790064 Sep 18 07:44 slurm_pswap3_syn_ln140_s100_226283.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:44 slurm_pswap3_syn_ln140_s200_226284.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19863253 Sep 18 07:46 slurm_pswap3_syn_ln140_s200_226284.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 07:43 slurm_pswap3_syn_ln140_s300_226285.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19763058 Sep 18 07:45 slurm_pswap3_syn_ln140_s300_226285.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:16 slurm_pswap3_win_gsmap_utc_s100_226263.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19732857 Sep 18 05:18 slurm_pswap3_win_gsmap_utc_s100_226263.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:15 slurm_pswap3_win_gsmap_utc_s200_226264.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19728845 Sep 18 05:17 slurm_pswap3_win_gsmap_utc_s200_226264.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:15 slurm_pswap3_win_gsmap_utc_s300_226265.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19730486 Sep 18 05:17 slurm_pswap3_win_gsmap_utc_s300_226265.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:43 slurm_pswap3_win_imerg_e18_s100_226255.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19981897 Sep 18 03:45 slurm_pswap3_win_imerg_e18_s100_226255.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:43 slurm_pswap3_win_imerg_e18_s200_226256.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19952519 Sep 18 03:46 slurm_pswap3_win_imerg_e18_s200_226256.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:40 slurm_pswap3_win_imerg_e18_s300_226257.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19766401 Sep 18 03:43 slurm_pswap3_win_imerg_e18_s300_226257.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:39 slurm_pswap3_win_imerg_local_s100_226259.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19728504 Sep 18 03:42 slurm_pswap3_win_imerg_local_s100_226259.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:39 slurm_pswap3_win_imerg_local_s200_226260.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19751802 Sep 18 03:42 slurm_pswap3_win_imerg_local_s200_226260.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 03:41 slurm_pswap3_win_imerg_local_s300_226261.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19800600 Sep 18 03:44 slurm_pswap3_win_imerg_local_s300_226261.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:15 slurm_pswap3_win_imerg_tau32_s100_226267.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19728994 Sep 18 05:17 slurm_pswap3_win_imerg_tau32_s100_226267.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:41 slurm_pswap3_win_imerg_tau32_s200_226268.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19761702 Sep 18 05:43 slurm_pswap3_win_imerg_tau32_s200_226268.out
+  -rw-r--r--.  1 sunyiq g_sunyiq     1052 Sep 18 05:42 slurm_pswap3_win_imerg_tau32_s300_226269.err
+  -rw-r--r--.  1 sunyiq g_sunyiq 19778515 Sep 18 05:45 slurm_pswap3_win_imerg_tau32_s300_226269.out
+  -rw-r--r--.  1 sunyiq g_sunyiq    51840 Sep 17 19:05 v9_streamflow.json
+--- gate_ref.txt ---
+GATE_REF OK 2026-09-17 19:06:48
+
+--- gate_era5l_refday.txt ---
+GATE era5l_refday OK kind=rebuild hash=617233668e726892 2026-09-17 19:10:09
+
+--- guard_T16_PASS.txt ---
+T16 CLEAN 2026-09-18T01:41:17
+
+--- guard_T16.json ---
+{
+ "generated": "2026-09-18T01:41:17",
+ "abs_max": 0.006346344947814914,
+ "hard": 0.03,
+ "readings": {
+  "pswap3_ep60_ref_daymet_s100": {
+   "stage3": "runs/pswap3_ep60_ref_daymet_s100_2026_0917_1907_ep60/test/model_epoch030/test_metrics.csv",
+   "stage2": "/data1/home/sunyiq/precip_swap2_daily_2026_09/runs/ref_daymet_s100_2026_0912_1253_ep30/test/model_epoch030/test_metrics.csv",
+   "n": 422,
+   "median": 0.0,
+   "abs_gt_0_10_share": 0.0
+  },
+  "pswap3_ep60_ref_daymet_s200": {
+   "stage3": "runs/pswap3_ep60_ref_daymet_s200_2026_0917_1907_ep60/test/model_epoch030/test_metrics.csv",
+   "stage2": "/data1/home/sunyiq/precip_swap2_daily_2026_09/runs/ref_daymet_s200_2026_0912_1253_ep30/test/model_epoch030/test_metrics.csv",
+   "n": 422,
+   "median": 0.0,
+   "abs_gt_0_10_share": 0.0
+  },
+  "pswap3_ep60_ref_daymet_s300": {
+   "stage3": "runs/pswap3_ep60_ref_daymet_s300_2026_0917_2124_ep60/test/model_epoch030/test_metrics.csv",
+   "stage2": "/data1/home/sunyiq/precip_swap2_daily_2026_09/runs/ref_daymet_s300_2026_0912_1255_ep30/test/model_epoch030/test_metrics.csv",
+   "n": 422,
+   "median": 0.0,
+   "abs_gt_0_10_share": 0.0
+  },
+  "pswap3_ep60_era5l_refday_s100": {
+   "stage3": "runs/pswap3_ep60_era5l_refday_s100_2026_0917_1911_ep60/test/model_epoch030/test_metrics.csv",
+   "stage2": "/data1/home/sunyiq/precip_swap2_daily_2026_09/runs/pswap2_armP_era5l_refday_s100_2026_0912_1853_ep30/test/model_epoch030/test_metrics.csv",
+   "n": 422,
+   "median": 0.0,
+   "abs_gt_0_10_share": 0.0
+  },
+--- e4_done.txt ---
+E4 OK 2026-09-18 00:38:03
+
+--- e4_ref_done.txt ---
+REFERENCE COPIES EVALUATED AT 10/20 2026-09-17 22:30:35
+
+--- p7_hydro_year.json ---
+{
+ "generated": "2026-09-17T21:32:58",
+ "years": [
+  2000,
+  2001,
+  2002,
+  2003,
+  2004
+ ],
+ "public_422": 422,
+ "arms": {
+  "imerg_refday": {
+   "per_year": {
+    "2000": {
+     "main_reading": -0.21102981929991205,
+     "n_pairs": 24,
+     "pair_min": -0.2347753292440875,
+     "pair_max": -0.1877173100806253
+    },
+    "2001": {
+     "main_reading": -0.19383207247618542,
+     "n_pairs": 24,
+     "pair_min": -0.20782519169305408,
+     "pair_max": -0.1690279226226825
+    },
+    "2002": {
+     "main_reading": -0.19033401410783585,
+     "n_pairs": 24,
+     "pair_min": -0.2099982461532458,
+     "pair_max": -0.1750664710144077
+    },
+    "2003": {
+     "main_reading": -0.17259888583318578,
+     "n_pairs": 24,
+     "pair_min": -0.19414327501085948,
+     "pair_max": -0.15495048806559114
+    },
+    "2004": {
+     "main_reading": -0.19040824684209523,
+     "n_pairs": 24,
+     "pair_min": -0.20915195624524163,
+     "pair_max": -0.18094571356592237
+    }
+   },
+   "spearman_vs_year": 0.7
+  },
+  "gsmap_refday": {
+   "per_year": {
+    "2000": {
+     "main_reading": -0.03486537897357994,
+     "n_pairs": 24,
+     "pair_min": -0.04539423066969683,
+     "pair_max": -0.016271387133412585
+    },
+    "2001": {
+     "main_reading": -0.018383598269923335,
+     "n_pairs": 24,
+     "pair_min": -0.025246446750346763,
+     "pair_max": -0.010726093005235027
+    },
+    "2002": {
+     "main_reading": -0.0475657758417046,
+     "n_pairs": 24,
+     "pair_min": -0.05621600896806972,
+     "pair_max": -0.024
+--- budget_ledger.txt ---
+planned_gpu_hours 75.2 submitted_before 0.0 triggered_reserve_R2_arms 0 jobs_registered 43 expected 43 2026-09-17 19:04:25
+
+  gate_daymet_shift1.txt: GATE daymet_shift1 OK kind=shift1 hash=e9d89bcb2f1d7790 2026-09-17 21:29:27
+  gate_era5l_refday.txt: GATE era5l_refday OK kind=rebuild hash=617233668e726892 2026-09-17 19:10:09
+  gate_gsmap_utc.txt: GATE gsmap_utc OK kind=window hash=5f6a249c9607b253 2026-09-17 21:26:19
+  gate_imerg_e18.txt: GATE imerg_e18 OK kind=window hash=a60adeddd91a27d7 2026-09-17 21:26:19
+  gate_imerg_local.txt: GATE imerg_local OK kind=window hash=de9fef3313abe3b4 2026-09-17 21:26:19
+  gate_imerg_tau32.txt: GATE imerg_tau32 OK kind=window hash=9bf9b82772e5f18b 2026-09-17 21:29:27
+  gate_ref.txt: GATE_REF OK 2026-09-17 19:06:48
+  gate_syn_ln035.txt: GATE syn_ln035 OK kind=noise hash=9b132042b808c731 2026-09-17 21:29:27
+  gate_syn_ln070.txt: GATE syn_ln070 OK kind=noise hash=1d17596afbe14124 2026-09-17 21:32:33
+  gate_syn_ln140.txt: GATE syn_ln140 OK kind=noise hash=cee31b8c57514858 2026-09-17 21:32:33
+=== F. slurm out tails (gate_ref, era5l gate, guard, any FAIL/ABORT/Error lines) ===
+--- slurm_pswap3_guard_T16_226253.out ---
+ "n_hard": 0,
+ "status": "CLEAN",
+ "median_of_readings": 0.0
+}
+  pswap3_ep60_ref_daymet_s100          median +0.000000  |d|>0.10 share 0.000
+  pswap3_ep60_ref_daymet_s200          median +0.000000  |d|>0.10 share 0.000
+  pswap3_ep60_ref_daymet_s300          median +0.000000  |d|>0.10 share 0.000
+  pswap3_ep60_era5l_refday_s100        median +0.000000  |d|>0.10 share 0.000
+  pswap3_ep60_era5l_refday_s200        median +0.000000  |d|>0.10 share 0.000
+  pswap3_ep60_era5l_refday_s300        median +0.000000  |d|>0.10 share 0.000
+GUARD T16 CLEAN -> marker written
+guard finished 2026-09-18 01:41:17
+--- slurm_pswap3_gate_era5l_refday_226246.out ---
+2026-09-17 19:09:58,775: Loading basin data into xarray data set.
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:00<00:03,  1.00it/s] 40%|████      | 2/5 [00:01<00:01,  1.53it/s] 80%|████████  | 4/5 [00:01<00:00,  3.32it/s]100%|██████████| 5/5 [00:01<00:00,  2.97it/s]
+2026-09-17 19:10:00,472: Calculating target variable stds per basin
+  0%|          | 0/5 [00:00<?, ?it/s]100%|██████████| 5/5 [00:00<00:00, 869.18it/s]
+2026-09-17 19:10:00,506: Create lookup table and convert to pytorch tensor
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:02<00:10,  2.72s/it]100%|██████████| 5/5 [00:02<00:00,  2.33it/s]100%|██████████| 5/5 [00:02<00:00,  1.77it/s]
+  0%|          | 0/65 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/65 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/65 [00:01<?, ?it/s, Loss: 0.0940]# Epoch 1:   2%|1         | 1/65 [00:01<01:20,  1.25s/it, Loss: 0.0940]# Epoch 1:   2%|1         | 1/65 [00:01<01:20,  1.25s/it, Loss: 0.0678]# Epoch 1:   2%|1         | 1/65 [00:01<01:20,  1.25s/it, Loss: 0.0825]# Epoch 1:   2%|1         | 1/65 [00:01<01:20,  1.25s/it, Loss: 0.0631]# Epoch 1:   2%|1         | 1/65 [00:01<01:20,  1.25s/it, Loss: 0.0672]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.66it/s, Loss: 0.0672]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.66it/s, Loss: 0.0906]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.66it/s, Loss: 0.0739]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.66it/s, Loss: 0.0878]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.66it/s, Loss: 0.0645]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.66it/s, Loss: 0.0645]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.66it/s, Loss: 0.0780]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.66it/s, Loss: 0.0904]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.66it/s, Loss: 0.0825]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.66it/s, Loss: 0.0737]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.47it/s, Loss: 0.0737]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.47it/s, Loss: 0.0530]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.47it/s, Loss: 0.0396]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.47it/s, Loss: 0.0558]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.47it/s, Loss: 0.0502]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.04it/s, Loss: 0.0502]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.04it/s, Loss: 0.0752]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.04it/s, Loss: 0.0798]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.04it/s, Loss: 0.0559]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.04it/s, Loss: 0.0565]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.16it/s, Loss: 0.0565]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.16it/s, Loss: 0.0642]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.16it/s, Loss: 0.0913]# Epoch 1:  32%|###2      | 21/65 [00:02<00:02, 19.16it/s, Loss: 0.0531]# Epoch 1:  32%|###2      | 21/65 [00:02<00:02, 19.16it/s, Loss: 0.0708]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 21.78it/s, Loss: 0.0708]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 21.78it/s, Loss: 0.0458]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 21.78it/s, Loss: 0.0660]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 21.78it/s, Loss: 0.0650]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 21.78it/s, Loss: 0.0765]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 23.86it/s, Loss: 0.0765]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 23.86it/s, Loss: 0.0709]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 23.86it/s, Loss: 0.0473]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 23.86it/s, Loss: 0.0536]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 23.86it/s, Loss: 0.0456]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 25.49it/s, Loss: 0.0456]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 25.49it/s, Loss: 0.0535]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 25.49it/s, Loss: 0.0700]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 25.49it/s, Loss: 0.0724]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 25.49it/s, Loss: 0.0783]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 26.33it/s, Loss: 0.0783]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 26.33it/s, Loss: 0.0788]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 26.33it/s, Loss: 0.0644]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 26.33it/s, Loss: 0.0446]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 26.33it/s, Loss: 0.0837]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.15it/s, Loss: 0.0837]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.15it/s, Loss: 0.0442]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.15it/s, Loss: 0.0378]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.15it/s, Loss: 0.0761]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.15it/s, Loss: 0.0394]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 27.88it/s, Loss: 0.0394]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 27.88it/s, Loss: 0.1754]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 27.88it/s, Loss: 0.0572]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 27.88it/s, Loss: 0.0646]# Epoch 1:  74%|#######3  | 48/65 [00:02<00:00, 28.35it/s, Loss: 0.0646]# Epoch 1:  74%|#######3  | 48/65 [00:02<00:00, 28.35it/s, Loss: 0.0529]# Epoch 1:  74%|#######3  | 48/65 [00:02<00:00, 28.35it/s, Loss: 0.0666]# Epoch 1:  74%|#######3  | 48/65 [00:02<00:00, 28.35it/s, Loss: 0.0439]# Epoch 1:  78%|#######8  | 51/65 [00:02<00:00, 28.58it/s, Loss: 0.0439]# Epoch 1:  78%|#######8  | 51/65 [00:02<00:00, 28.58it/s, Loss: 0.0497]# Epoch 1:  78%|#######8  | 51/65 [00:03<00:00, 28.58it/s, Loss: 0.0372]# Epoch 1:  78%|#######8  | 51/65 [00:03<00:00, 28.58it/s, Loss: 0.0569]# Epoch 1:  83%|########3 | 54/65 [00:03<00:00, 28.73it/s, Loss: 0.0569]# Epoch 1:  83%|########3 | 54/65 [00:03<00:00, 28.73it/s, Loss: 0.0811]# Epoch 1:  83%|########3 | 54/65 [00:03<00:00, 28.73it/s, Loss: 0.0558]# Epoch 1:  83%|########3 | 54/65 [00:03<00:00, 28.73it/s, Loss: 0.0366]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 28.40it/s, Loss: 0.0366]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 28.40it/s, Loss: 0.0454]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 28.40it/s, Loss: 0.0635]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 28.40it/s, Loss: 0.1051]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 28.40it/s, Loss: 0.0746]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 28.94it/s, Loss: 0.0746]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 28.94it/s, Loss: 0.0618]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 28.94it/s, Loss: 0.0624]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 28.94it/s, Loss: 0.0597]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 28.94it/s, Loss: 0.0822]# Epoch 1: 100%|##########| 65/65 [00:03<00:00, 30.27it/s, Loss: 0.0822]# Epoch 1: 100%|##########| 65/65 [00:03<00:00, 18.84it/s, Loss: 0.0822]
+2026-09-17 19:10:07,099: Epoch 1 average loss: avg_loss: 0.06628, avg_total_loss: 0.06628
+2026-09-17 19:09:58,559: forcings: ['era5l_refday']
+2026-09-17 19:09:58,560: number_of_basins: 5
+smoke config OK: ['era5l_refday'] ['prcp(mm/day)', 'tmin(C)', 'tmax(C)', 'srad(W/m2)', 'vp(Pa)']
+=== GATE era5l_refday DONE ===
+--- slurm_pswap3_gate_ref_226245.out ---
+2026-09-17 19:06:40,491: Calculating target variable stds per basin
+  0%|          | 0/5 [00:00<?, ?it/s]100%|██████████| 5/5 [00:00<00:00, 910.70it/s]
+2026-09-17 19:06:40,511: Create lookup table and convert to pytorch tensor
+  0%|          | 0/5 [00:00<?, ?it/s] 20%|██        | 1/5 [00:02<00:10,  2.52s/it]100%|██████████| 5/5 [00:02<00:00,  2.50it/s]100%|██████████| 5/5 [00:02<00:00,  1.90it/s]
+  0%|          | 0/65 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/65 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/65 [00:01<?, ?it/s, Loss: 0.0931]# Epoch 1:   2%|1         | 1/65 [00:01<01:17,  1.21s/it, Loss: 0.0931]# Epoch 1:   2%|1         | 1/65 [00:01<01:17,  1.21s/it, Loss: 0.0668]# Epoch 1:   2%|1         | 1/65 [00:01<01:17,  1.21s/it, Loss: 0.0842]# Epoch 1:   2%|1         | 1/65 [00:01<01:17,  1.21s/it, Loss: 0.0589]# Epoch 1:   2%|1         | 1/65 [00:01<01:17,  1.21s/it, Loss: 0.0644]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.86it/s, Loss: 0.0644]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.86it/s, Loss: 0.0922]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.86it/s, Loss: 0.0723]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.86it/s, Loss: 0.0852]# Epoch 1:   8%|7         | 5/65 [00:01<00:12,  4.86it/s, Loss: 0.0615]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.97it/s, Loss: 0.0615]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.97it/s, Loss: 0.0757]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.97it/s, Loss: 0.0894]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.97it/s, Loss: 0.0866]# Epoch 1:  14%|#3        | 9/65 [00:01<00:06,  8.97it/s, Loss: 0.0736]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.96it/s, Loss: 0.0736]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.96it/s, Loss: 0.0521]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.96it/s, Loss: 0.0405]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.96it/s, Loss: 0.0555]# Epoch 1:  20%|##        | 13/65 [00:01<00:04, 12.96it/s, Loss: 0.0466]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.58it/s, Loss: 0.0466]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.58it/s, Loss: 0.0730]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.58it/s, Loss: 0.0796]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.58it/s, Loss: 0.0586]# Epoch 1:  26%|##6       | 17/65 [00:01<00:02, 16.58it/s, Loss: 0.0580]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.72it/s, Loss: 0.0580]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.72it/s, Loss: 0.0623]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.72it/s, Loss: 0.0890]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.72it/s, Loss: 0.0507]# Epoch 1:  32%|###2      | 21/65 [00:01<00:02, 19.72it/s, Loss: 0.0727]# Epoch 1:  38%|###8      | 25/65 [00:01<00:01, 22.32it/s, Loss: 0.0727]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 22.32it/s, Loss: 0.0469]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 22.32it/s, Loss: 0.0660]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 22.32it/s, Loss: 0.0688]# Epoch 1:  38%|###8      | 25/65 [00:02<00:01, 22.32it/s, Loss: 0.0797]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 24.57it/s, Loss: 0.0797]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 24.57it/s, Loss: 0.0704]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 24.57it/s, Loss: 0.0517]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 24.57it/s, Loss: 0.0551]# Epoch 1:  45%|####4     | 29/65 [00:02<00:01, 24.57it/s, Loss: 0.0439]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 26.20it/s, Loss: 0.0439]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 26.20it/s, Loss: 0.0560]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 26.20it/s, Loss: 0.0714]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 26.20it/s, Loss: 0.0728]# Epoch 1:  51%|#####     | 33/65 [00:02<00:01, 26.20it/s, Loss: 0.0799]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 27.01it/s, Loss: 0.0799]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 27.01it/s, Loss: 0.0810]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 27.01it/s, Loss: 0.0681]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 27.01it/s, Loss: 0.0466]# Epoch 1:  57%|#####6    | 37/65 [00:02<00:01, 27.01it/s, Loss: 0.0827]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.99it/s, Loss: 0.0827]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.99it/s, Loss: 0.0458]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.99it/s, Loss: 0.0365]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.99it/s, Loss: 0.0800]# Epoch 1:  63%|######3   | 41/65 [00:02<00:00, 27.99it/s, Loss: 0.0421]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 28.74it/s, Loss: 0.0421]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 28.74it/s, Loss: 0.1735]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 28.74it/s, Loss: 0.0587]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 28.74it/s, Loss: 0.0667]# Epoch 1:  69%|######9   | 45/65 [00:02<00:00, 28.74it/s, Loss: 0.0525]# Epoch 1:  75%|#######5  | 49/65 [00:02<00:00, 28.93it/s, Loss: 0.0525]# Epoch 1:  75%|#######5  | 49/65 [00:02<00:00, 28.93it/s, Loss: 0.0649]# Epoch 1:  75%|#######5  | 49/65 [00:02<00:00, 28.93it/s, Loss: 0.0454]# Epoch 1:  75%|#######5  | 49/65 [00:02<00:00, 28.93it/s, Loss: 0.0521]# Epoch 1:  75%|#######5  | 49/65 [00:02<00:00, 28.93it/s, Loss: 0.0355]# Epoch 1:  82%|########1 | 53/65 [00:02<00:00, 29.40it/s, Loss: 0.0355]# Epoch 1:  82%|########1 | 53/65 [00:02<00:00, 29.40it/s, Loss: 0.0540]# Epoch 1:  82%|########1 | 53/65 [00:02<00:00, 29.40it/s, Loss: 0.0802]# Epoch 1:  82%|########1 | 53/65 [00:03<00:00, 29.40it/s, Loss: 0.0569]# Epoch 1:  82%|########1 | 53/65 [00:03<00:00, 29.40it/s, Loss: 0.0400]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 29.49it/s, Loss: 0.0400]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 29.49it/s, Loss: 0.0466]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 29.49it/s, Loss: 0.0606]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 29.49it/s, Loss: 0.1040]# Epoch 1:  88%|########7 | 57/65 [00:03<00:00, 29.49it/s, Loss: 0.0743]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 29.71it/s, Loss: 0.0743]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 29.71it/s, Loss: 0.0665]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 29.71it/s, Loss: 0.0628]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 29.71it/s, Loss: 0.0572]# Epoch 1:  94%|#########3| 61/65 [00:03<00:00, 29.71it/s, Loss: 0.0776]# Epoch 1: 100%|##########| 65/65 [00:03<00:00, 30.88it/s, Loss: 0.0776]# Epoch 1: 100%|##########| 65/65 [00:03<00:00, 19.43it/s, Loss: 0.0776]
+2026-09-17 19:06:46,800: Epoch 1 average loss: avg_loss: 0.06643, avg_total_loss: 0.06643
+2026-09-17 19:06:39,240: forcings: ['daymet']
+2026-09-17 19:06:39,242: number_of_basins: 5
+0
+no case-insensitive fallback: OK
+smoke config OK: ['daymet'] ['prcp(mm/day)', 'tmin(C)', 'tmax(C)', 'srad(W/m2)', 'vp(Pa)'] 01/10/2004 30/09/2004
+=== GATE REF DONE ===
+=== G. runs/ progress ===
+  run dirs: 30  smoke dirs: 10  s2 copies: 26
+  pswap3_ep60_era5l_refday_s100_2026_0917_1911_ep60 ckpt=6 test_metrics=2
+  pswap3_ep60_era5l_refday_s200_2026_0917_2133_ep60 ckpt=6 test_metrics=2
+  pswap3_ep60_era5l_refday_s300_2026_0917_2135_ep60 ckpt=6 test_metrics=2
+  pswap3_ep60_ref_daymet_s100_2026_0917_1907_ep60 ckpt=6 test_metrics=2
+  pswap3_ep60_ref_daymet_s200_2026_0917_1907_ep60 ckpt=6 test_metrics=2
+  pswap3_ep60_ref_daymet_s300_2026_0917_2124_ep60 ckpt=6 test_metrics=2
+  pswap3_shift1_daymet_s100_2026_0918_0344_ep30 ckpt=3 test_metrics=1
+  pswap3_shift1_daymet_s200_2026_0918_0345_ep30 ckpt=3 test_metrics=1
+  pswap3_shift1_daymet_s300_2026_0918_0346_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln035_s100_2026_0918_0346_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln035_s200_2026_0918_0518_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln035_s300_2026_0918_0518_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln070_s100_2026_0918_0518_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln070_s200_2026_0918_0519_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln070_s300_2026_0918_0544_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln140_s100_2026_0918_0544_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln140_s200_2026_0918_0544_ep30 ckpt=3 test_metrics=1
+  pswap3_syn_ln140_s300_2026_0918_0545_ep30 ckpt=3 test_metrics=1
+  pswap3_win_gsmap_utc_s100_2026_0918_0322_ep30 ckpt=3 test_metrics=1
+  pswap3_win_gsmap_utc_s200_2026_0918_0322_ep30 ckpt=3 test_metrics=1
+  pswap3_win_gsmap_utc_s300_2026_0918_0322_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_e18_s100_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_e18_s200_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_e18_s300_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_local_s100_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_local_s200_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_local_s300_2026_0918_0142_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_tau32_s100_2026_0918_0322_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_tau32_s200_2026_0918_0343_ep30 ckpt=3 test_metrics=1
+  pswap3_win_imerg_tau32_s300_2026_0918_0343_ep30 ckpt=3 test_metrics=1
+=== H. era5l rebuild (V25) marker + forcing dirs ===
+  daymet
+  daymet_shift1
+  era5l_refday
+  gsmap_utc
+  imerg_e18
+  imerg_local
+  imerg_tau32
+  syn_ln035
+  syn_ln070
+  syn_ln140
+=== I. channel seq ===
+  attrswap-daily seq now: 84
+=== DONE (read-only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-18T16:16:49+0800
