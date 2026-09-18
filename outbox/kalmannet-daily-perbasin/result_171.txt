@@ -1,0 +1,50 @@
+### channel=kalmannet-daily-perbasin seq=171
+### host=login4
+### started=2026-09-18T18:36:26+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=171 purpose=observe-analysis
+=== ACCOUNTING ===
+226525|kdpp3-e8|COMPLETED|0:0|1|48|billing=48,cpu=48,node=1|icn201|2026-09-18T18:32:54|2026-09-18T18:32:55|2026-09-18T18:32:56
+226525.batch|batch|COMPLETED|0:0|1|48|cpu=48,mem=0,node=1|icn201|2026-09-18T18:32:55|2026-09-18T18:32:55|2026-09-18T18:32:56
+226525.extern|extern|COMPLETED|0:0|1|48|billing=48,cpu=48,node=1|icn201|2026-09-18T18:32:55|2026-09-18T18:32:55|2026-09-18T18:32:56
+=== QUEUE ===
+=== HGPU4_GRES_USED ===
+NODELIST            GRES_USED               
+ngu101              gpu:2,dcu:0             
+ngu102              gpu:4,dcu:0             
+ngu103              gpu:0,dcu:0             
+ngu104              gpu:4,dcu:0             
+=== REQUEST e8_node_seq170 ===
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/slurm-226525.stdout bytes=108
+NODE_START job=226525 host=icn201 started=1789727512
+E8_RC=1
+E8_SHA256=
+NODE_END exit=0 finished=1789727513
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/slurm-226525.stdout
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/slurm-226525.stderr bytes=1020
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/e8_compare_pretrial.py", line 112, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/e8_compare_pretrial.py", line 95, in main
+    reports.append(compare(extract, basin_id, run_dir, args.tolerance))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/e8_compare_pretrial.py", line 40, in compare
+    hs = s["history_summary"]
+         ~^^^^^^^^^^^^^^^^^^^
+KeyError: 'history_summary'
+sha256sum: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/e8_node_seq170/e8.json: No such file or directory
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/slurm-226525.stderr
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq170/logs/pool_result.json
+=== ANALYSIS analysis/e8_node_seq170/e8.json ===
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/e8_node_seq170/e8.json
+=== DATA_SURVEY (read-only) ===
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train2_20260827/source_A37_a800_train2_seq60/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train3_20260827/source_A37_a800_train3_seq61/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827/source_A37_a800_train4_seq65/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831/source_A39_formal_evaluation_seq86/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-18T18:39:46+0800
