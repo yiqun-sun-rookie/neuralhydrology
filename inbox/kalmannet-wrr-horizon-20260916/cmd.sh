@@ -1,39 +1,68 @@
 #!/bin/bash
 set -eo pipefail
-printf 'READ_ONLY_AFTER_PARTITION_EXPANSION_JOB_226070\n'
-date -Is
-root=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
-repo="$root/repo"
-printf '\nPRIORITY_DIAGNOSTICS_READ_ONLY\n'
-sprio -j 226070 || true
-sshare -l -u sunyiq || true
-printf '\nUSER_JOBS_READ_ONLY\n'
-squeue -u sunyiq -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R'
-squeue -j 226070 -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R' || true
-sacct -j 226070 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList,AllocTRES,MaxRSS -P
-printf '\nSCHEDULER_START_ESTIMATE\n'
-squeue --start -j 226070 || true
-scontrol show job 226070 || true
-printf '\nREQUESTED_PARTITION_STATUS\n'
-sinfo -p hgpu4,hgpu8 -N -o '%N %t %G %C'
-show_file() {
-  printf '\nFILE %s\n' "$1"
-  if [ -f "$1" ]; then cat "$1"; else printf 'NOT_PRESENT\n'; fi
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -I -B - <<'PY'
+"""Read existing scheduler records and small metadata files; no model execution."""
+import hashlib
+import json
+import math
+import subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+def command(args):
+    result = subprocess.run(args, capture_output=True, text=True, timeout=35)
+    return {"returncode": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
+
+
+def safe(value):
+    if isinstance(value, float) and not math.isfinite(value):
+        return str(value)
+    if isinstance(value, dict):
+        return {key: safe(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [safe(item) for item in value]
+    return value
+
+
+root = Path('/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916')
+repo = root / 'repo'
+pair = repo / 'artifacts/training_horizon_common_origins_v2/seed42'
+report = {
+    'observed_at_utc': datetime.now(timezone.utc).isoformat(),
+    'read_only': True,
+    'root': str(root),
+    'root_exists': root.is_dir(),
+    'job_id': 226070,
+    'user_queue': command(['squeue', '-u', 'sunyiq', '-h', '-o', '%i|%j|%T|%P|%M|%R']),
+    'scheduler_history': command(['sacct', '-X', '-j', '226070', '-n', '-P',
+                                 '--format=JobID%40,JobName%50,State%40,ExitCode,Start,End,Elapsed,NodeList']),
+    'job_detail': command(['scontrol', 'show', 'job', '226070']),
+    'files': {},
 }
-show_file "$root/environment_metadata_before_submission.json"
-show_file "$repo/artifacts/hpc_execution/status.json"
-show_file "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json"
-show_file "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json"
-show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/status.json"
-show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json"
-show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json"
-if [ -f "$repo/artifacts/hpc_execution/optimizer_steps.jsonl" ]; then
-  printf '\nOPTIMIZER_RECEIPTS_FIRST_AND_LAST\n'
-  head -n 1 "$repo/artifacts/hpc_execution/optimizer_steps.jsonl"
-  tail -n 2 "$repo/artifacts/hpc_execution/optimizer_steps.jsonl"
-fi
-for file in "$root/logs/job_226070.out" "$root/logs/job_226070.err" "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log"; do
-  printf '\nTAIL %s\n' "$file"
-  if [ -f "$file" ]; then tail -n 55 "$file"; else printf 'NOT_PRESENT\n'; fi
-done
-printf '\nREAD_ONLY_STATUS_COMPLETE\n'
+paths = [repo / 'artifacts/hpc_execution/status.json', pair / 'status.json', pair / 'preflight.json']
+for arm in ['output12', 'output25']:
+    paths.extend([pair / arm / 'status.json', pair / arm / 'selection.json'])
+    epoch_files = sorted((pair / arm).glob('epoch_*.json'))
+    report[arm + '_epoch_record_count'] = len(epoch_files)
+    if epoch_files:
+        paths.append(epoch_files[-1])
+for path in paths:
+    entry = {'exists': path.is_file()}
+    if path.is_file():
+        if not path.resolve().is_relative_to(root.resolve()):
+            raise RuntimeError('Metadata path escaped the registered experiment')
+        raw = path.read_bytes()
+        if len(raw) > 3_000_000:
+            raise RuntimeError('Unexpected metadata size')
+        entry.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(),
+                     modified_at_utc=datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat(),
+                     content=json.loads(raw))
+    report['files'][str(path.relative_to(root))] = entry
+report['log_tails'] = {}
+for name in ['job_226070.out', 'job_226070.err']:
+    path = root / 'logs' / name
+    report['log_tails'][name] = command(['tail', '-n', '35', str(path)]) if path.is_file() else {'exists': False}
+print(json.dumps(safe(report), sort_keys=True, allow_nan=False))
+
+PY
