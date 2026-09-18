@@ -275,28 +275,15 @@ def control(root, action, stage, release_sha, expected, core_rel):
     finally:
         guard.close()
 
-status_stream=io.StringIO()
-with contextlib.redirect_stdout(status_stream):
-    control('/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001','status',None,'8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678',{'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'},'runtime/inbox/zhenjiang-six-source-four-target-ukf/shared_base_20260916_001')
-status_text=status_stream.getvalue()
-if len(status_text.encode())>2000000 or len(status_text.splitlines())!=1:
-    raise ValueError('status output form differs')
-report=json.loads(status_text)
 fixed_guard=Root('/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001',{'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'})
 try:
     authenticate(fixed_guard,'8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678',{'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'})
-    try:
-        epoch_raw=fixed_guard.read('train/seed_17/common_process/epoch_1.json',maximum=16384)
-    except FileNotFoundError:
-        epoch_raw=None
-    if epoch_raw is not None:
-        report['epoch_1']={'value':json.loads(epoch_raw),'spec':{'path':REMOTE_ROOT+'/train/seed_17/common_process/epoch_1.json','bytes':len(epoch_raw),'sha256':hashlib.sha256(epoch_raw).hexdigest()}}
+    fixed_guard.read('submission/preflight/submitted.json',expected={'bytes': 938, 'sha256': 'd1c3e7a3b75ddff6ea9d9c0461fb5859e2cabeb802c2f266b4e3a167b931c591'})
+    fixed_guard.read('preflight/complete.json',expected={'bytes': 1139, 'sha256': '488e90609b4525928ccab2ae051fdb82bc4216a4a55d5dc9b1514db11a96b1e2'})
+    fixed_guard.read('preflight/result.json',expected={'bytes': 25821, 'sha256': '08da1b12e0d0e4b5478132afc91ec547b8717955b92f40e849dbdec806eb5158'})
     fixed_guard.check()
 finally:
     fixed_guard.close()
-reply=json.dumps(report,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
-if len(reply)>2000000:
-    raise ValueError('status reply bound exceeded')
-print(reply.decode())
+control('/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001','submit','train','8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678',{'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'},'runtime/inbox/zhenjiang-six-source-four-target-ukf/shared_base_20260916_001')
 
 SHARED_RELEASE_VERIFIED_PY
