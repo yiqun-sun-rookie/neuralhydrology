@@ -1,0 +1,31 @@
+### channel=attrswap-daily seq=87
+### host=login4
+### started=2026-09-19T09:08:02+0800
+### ---------- output ----------
+wallclock 2026-09-19 09:08:02 +0800
+=== A. guards ===
+  table 648ab96ae4ccd391  generator 7c6c84b897aac5ec
+=== B. install (copy, never move the originals) ===
+=== C. configs (login node, --r1-only) ===
+pswap3_smoke_syn_ln018.yml changed=['data_dir', 'dynamic_inputs', 'epochs', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'test_end_date', 'test_start_date', 'train_basin_file', 'train_end_date', 'train_start_date', 'validation_basin_file']
+wrote 3 arm configs + 1 smoke configs into /data1/home/sunyiq/precip_swap3_daily_2026_09/configs
+  configs now: 44 (expect 44)
+  manifest entries: 44 (expect 44)
+  unchanged sample: True (expect True)
+=== D. submit gate + 3 arms ===
+gate_syn_ln018 226558 kind=noise R1
+pswap3_syn_ln018_s100 226559 dep=226558 R1
+pswap3_syn_ln018_s200 226560 dep=226558 R1
+pswap3_syn_ln018_s300 226561 dep=226558 R1
+=== E. ledger ===
+R1 sigma=0.175 planned_gpu_hours 6.1 cumulative 81.3 (limit 100.0) jobs 4 2026-09-19 09:08:08
+     JOBID                                 NAME     STATE       TIME PARTITION NODELIST(REASON)
+    226558                pswap3_gate_syn_ln018   PENDING       0:00     hgpu4 (Priority)
+    226559                pswap3_syn_ln018_s100   PENDING       0:00     hgpu4 (Dependency)
+    226560                pswap3_syn_ln018_s200   PENDING       0:00     hgpu4 (Dependency)
+    226561                pswap3_syn_ln018_s300   PENDING       0:00     hgpu4 (Dependency)
+  attrswap-daily seq now: 87
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-19T09:08:08+0800
