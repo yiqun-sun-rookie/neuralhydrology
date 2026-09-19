@@ -300,3 +300,4 @@ if len(reply)>2000000:
 print(reply.decode())
 
 SHARED_RELEASE_VERIFIED_PY
+# metadata-only status recovery 20260919-001
