@@ -1,0 +1,2422 @@
+### channel=kalmannet-daily-perbasin seq=176
+### host=login4
+### started=2026-09-19T21:47:36+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=176 purpose=observe-analysis
+=== ACCOUNTING ===
+226617|kdpp3-unseal-rehearsal|COMPLETED|0:0|16|48|billing=48,cpu=48,node=1|icn201|2026-09-19T21:28:34|2026-09-19T21:28:35|2026-09-19T21:28:51
+226617.batch|batch|COMPLETED|0:0|16|48|cpu=48,mem=0,node=1|icn201|2026-09-19T21:28:35|2026-09-19T21:28:35|2026-09-19T21:28:51
+226617.extern|extern|COMPLETED|0:0|16|48|billing=48,cpu=48,node=1|icn201|2026-09-19T21:28:35|2026-09-19T21:28:35|2026-09-19T21:28:51
+=== QUEUE ===
+=== HGPU4_GRES_USED ===
+NODELIST            GRES_USED               
+ngu101              gpu:4,dcu:0             
+ngu102              gpu:4,dcu:0             
+ngu103              gpu:0,dcu:0             
+ngu104              gpu:3,dcu:0             
+=== REQUEST unseal_rehearsal_seq175 ===
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stdout bytes=1059
+NODE_START job=226617 host=icn201 started=1789824451
+NUMERICS_ENV ATEN_CPU_CAPABILITY=default
+DATA_ROOT=E:/Program Files/Git/data1/home/sunyiq/nearing2022_da/data/camels_us
+=== (ii) development summary regression: seq145 code must reproduce the registered sha; current code must agree on the projection ===
+SUMMARIZE_SEQ145_RC=0
+SUMMARY_DEV_SEQ145CODE_SHA256=b88513c2c13a3be918273a0abaaec9b0ea845000c8b26219b9087621fa75f4db (registered b88513c2c13a3be9)
+SUMMARIZE_DEV_RC=0
+SUMMARY_DEV_REGRESSION mismatched=0
+PROJECTION_RC=0
+=== (iv) P4 superseded vs rerun ===
+{"pairs": 45, "identical_best_epoch_stop_learned_form": 34, "learned_changed": [], "mean_nse_difference_rerun_minus_baseline": {"n": 45, "min": -0.004113320502372786, "median": 6.628239068717789e-10, "max": 0.004095541378298484, "max_abs": 0.004113320502372786}}
+P4_RC=0
+=== (i) rehearsal, development window, all basins ===
+REHEARSAL_RC=2 wall=0s
+REHEARSAL_MARKER_SHA256=
+=== (iii) formal-format dry run on the rehearsal output ===
+SUMMARIZE_FORMAL_DRYRUN_RC=1
+NODE_END exit=0 finished=1789824467
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stdout
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stderr bytes=1270
+ls: cannot access E:/Program: No such file or directory
+ls: cannot access Files/Git/data1/home/sunyiq/nearing2022_da/data/camels_us: No such file or directory
+usage: unseal_formal_evaluation.py [-h] --runs-dir RUNS_DIR --output OUTPUT
+                                   [--matrix MATRIX] --verification
+                                   VERIFICATION --data-root DATA_ROOT
+                                   --loader-file LOADER_FILE
+                                   [--expected-loader-sha256 EXPECTED_LOADER_SHA256]
+                                   [--threads THREADS] [--workers WORKERS]
+                                   [--basins BASINS] [--rehearsal]
+                                   [--authorization AUTHORIZATION]
+                                   [--authorization-file AUTHORIZATION_FILE]
+                                   [--resume-unseal]
+                                   [--slurm-terminal-state SLURM_TERMINAL_STATE]
+unseal_formal_evaluation.py: error: unrecognized arguments: Files/Git/data1/home/sunyiq/nearing2022_da/data/camels_us
+sha256sum: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/unseal_rehearsal/unseal_a.marker.json: No such file or directory
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stderr
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/logs/pool_result.json
+=== ANALYSIS analysis/unseal_rehearsal_seq175/unseal_rehearsal/unseal_a.marker.json ===
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/unseal_rehearsal/unseal_a.marker.json
+=== ANALYSIS analysis/unseal_rehearsal_seq175/summary_dev_regression_projection.json ===
+JSON_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/summary_dev_regression_projection.json bytes=40 sha256=b5c899c84ff25a4e569ba7796b4813d42ce16a08c7e568d0ca8ba22bae014514
+{
+ "mismatched": 0,
+ "mismatches": []
+}
+
+JSON_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/summary_dev_regression_projection.json
+=== ANALYSIS analysis/unseal_rehearsal_seq175/superseded_comparison.json ===
+JSON_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/superseded_comparison.json bytes=44759 sha256=5167652ce5e704c13ad9cee03bb12e0d46401ca54c47a15be048ac84d2042c65
+{
+ "best_epoch_changed": [
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260908",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260915",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260922",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260922",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260901",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260908",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260901",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260915",
+  "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260922"
+ ],
+ "identical_best_epoch_stop_learned_form": 34,
+ "learned_changed": [],
+ "mean_nse_difference_rerun_minus_baseline": {
+  "max": 0.004095541378298484,
+  "max_abs": 0.004113320502372786,
+  "median": 6.628239068717789e-10,
+  "min": -0.004113320502372786,
+  "n": 45
+ },
+ "pairs": 45,
+ "purpose": "P4 of the unsealing plan (disclosure only, read-only): the 45 KalmanNet runs completed in the baseline numerics\nenvironment (moved to runs_superseded_env/) against their reruns under ATEN_CPU_CAPABILITY=default in runs/.\nPairs every superseded result_summary.json with the current one of the same run id and reports best epoch,\nstop reason, learned flag, failure form, the three lead-712 MSEs and the mean NSE side by side, plus the\ndistribution of differences. Enters no criterion.",
+ "rows": [
+  {
+   "basin_id": "01487000",
+   "best_epoch": [
+    198,
+    177
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    200,
+    200
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.912120067715542,
+    0.9128434628652093
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.06181696794318235,
+     0.05871258999161369
+    ],
+    "2": [
+     0.09861221812016505,
+     0.09947041495281007
+    ],
+    "3": [
+     0.09210203330116608,
+     0.09227181938660947
+    ]
+   },
+   "objective_728": [
+    0.0851182028209883,
+    0.08452030165771839
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "CEILING",
+    "CEILING"
+   ]
+  },
+  {
+   "basin_id": "01487000",
+   "best_epoch": [
+    70,
+    70
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    110,
+    110
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9107544225808476,
+    0.9107544238273967
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.06942119411177217,
+     0.06942119027317167
+    ],
+    "2": [
+     0.10324963593006947,
+     0.10324963768248775
+    ],
+    "3": [
+     0.08377312659504961,
+     0.08377312510089761
+    ]
+   },
+   "objective_728": [
+    0.08651643882589301,
+    0.08651643794100894
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "01487000",
+   "best_epoch": [
+    196,
+    200
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    200,
+    200
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9218893361662029,
+    0.922072757775887
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.052795258622468234,
+     0.05035468174635735
+    ],
+    "2": [
+     0.0887594140596234,
+     0.09014089761772622
+    ],
+    "3": [
+     0.08290578993755543,
+     0.08343982041425987
+    ]
+   },
+   "objective_728": [
+    0.07653846871056554,
+    0.07654342108712518
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "CEILING",
+    "CEILING"
+   ]
+  },
+  {
+   "basin_id": "01487000",
+   "best_epoch": [
+    182,
+    189
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    200,
+    200
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9274172770378112,
+    0.9278752258031178
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.054325139655888935,
+     0.05536175041252579
+    ],
+    "2": [
+     0.07998567258374913,
+     0.07975837297062036
+    ],
+    "3": [
+     0.07425900147309288,
+     0.07213162750148559
+    ]
+   },
+   "objective_728": [
+    0.06976584340953933,
+    0.06937454089042287
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "CEILING",
+    "CEILING"
+   ]
+  },
+  {
+   "basin_id": "01487000",
+   "best_epoch": [
+    199,
+    171
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    200,
+    200
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9145891876469583,
+    0.9186203259419997
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.06328873963463355,
+     0.06096158355974569
+    ],
+    "2": [
+     0.09604922752823503,
+     0.09198754824872883
+    ],
+    "3": [
+     0.08609338931728555,
+     0.0808973165814127
+    ]
+   },
+   "objective_728": [
+    0.08271245284228061,
+    0.07887243342264195
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "CEILING",
+    "CEILING"
+   ]
+  },
+  {
+   "basin_id": "02178400",
+   "best_epoch": [
+    81,
+    81
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    121,
+    121
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7038012742424767,
+    0.7038055719936448
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.8686120143787853,
+     0.8686661585275364
+    ],
+    "2": [
+     0.8825276339978261,
+     0.8825035485407413
+    ],
+    "3": [
+     0.8740411393298235,
+     0.873972903531755
+    ]
+   },
+   "objective_728": [
+    0.8812039103140007,
+    0.8811897314018196
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "02178400",
+   "best_epoch": [
+    104,
+    104
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    144,
+    144
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.6967991341381593,
+    0.6964464014521822
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.9208403396436174,
+     0.9217690715684789
+    ],
+    "2": [
+     0.8987943434984567,
+     0.8997784827651946
+    ],
+    "3": [
+     0.8675637297264506,
+     0.8687772949303969
+    ]
+   },
+   "objective_728": [
+    0.9006115265469549,
+    0.9016783278315529
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "02178400",
+   "best_epoch": [
+    91,
+    91
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    131,
+    131
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7123706502893784,
+    0.7123712679841127
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.8291765582454805,
+     0.8291629319118174
+    ],
+    "2": [
+     0.8614248906917679,
+     0.8614210123957262
+    ],
+    "3": [
+     0.8586468241822671,
+     0.8586588725905748
+    ]
+   },
+   "objective_728": [
+    0.8565968870828224,
+    0.8565956084396982
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "02178400",
+   "best_epoch": [
+    130,
+    130
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    170,
+    170
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7227450384961337,
+    0.7227440014431866
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.7641875780779521,
+     0.7641884022913996
+    ],
+    "2": [
+     0.8387069152792467,
+     0.8387101005433927
+    ],
+    "3": [
+     0.8544496335032175,
+     0.8544548184103731
+    ]
+   },
+   "objective_728": [
+    0.8281649349763232,
+    0.828168512169586
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "02178400",
+   "best_epoch": [
+    100,
+    98
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    140,
+    138
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.6892934847056232,
+    0.6890009869780781
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.9775703875522992,
+     0.9868645555138366
+    ],
+    "2": [
+     0.9054177509414806,
+     0.9049880867982146
+    ],
+    "3": [
+     0.8706945087951596,
+     0.8644113511851161
+    ]
+   },
+   "objective_728": [
+    0.9231132936201366,
+    0.9239928445053174
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "03076600",
+   "best_epoch": [
+    49,
+    49
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    89,
+    89
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7227174852604236,
+    0.7227174545920034
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     2.3687944481892984,
+     2.3687947140346255
+    ],
+    "2": [
+     2.5051984684540507,
+     2.505198812719099
+    ],
+    "3": [
+     2.550537378663032,
+     2.550537589723171
+    ]
+   },
+   "objective_728": [
+    2.4310905361674244,
+    2.431090801695053
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "03076600",
+   "best_epoch": [
+    34,
+    34
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    74,
+    74
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7149723348941013,
+    0.7149724046719598
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     2.406171696276899,
+     2.4061711277483213
+    ],
+    "2": [
+     2.582236346786189,
+     2.5822355328172053
+    ],
+    "3": [
+     2.6435153123412416,
+     2.643514826474639
+    ]
+   },
+   "objective_728": [
+    2.5022374626277935,
+    2.5022368603769842
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "03076600",
+   "best_epoch": [
+    32,
+    32
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    72,
+    72
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7098027633902763,
+    0.7098027769180536
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     2.457975495337998,
+     2.457975516651717
+    ],
+    "2": [
+     2.633041245015429,
+     2.63304107132533
+    ],
+    "3": [
+     2.6793243972018925,
+     2.67932418731924
+    ]
+   },
+   "objective_728": [
+    2.5490869951274977,
+    2.5490868762665637
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "03076600",
+   "best_epoch": [
+    51,
+    51
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    91,
+    91
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7198716409606005,
+    0.719867004306005
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     2.3652903295652727,
+     2.3650703475057435
+    ],
+    "2": [
+     2.5470686584542106,
+     2.5472128939364143
+    ],
+    "3": [
+     2.588378994217757,
+     2.588578964778565
+    ]
+   },
+   "objective_728": [
+    2.4558967462082335,
+    2.455923324163527
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "03076600",
+   "best_epoch": [
+    35,
+    35
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    75,
+    75
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7154574033094573,
+    0.7154574006604588
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     2.3966547173666135,
+     2.3966547023538123
+    ],
+    "2": [
+     2.574578173130828,
+     2.5745782571860945
+    ],
+    "3": [
+     2.647704345270894,
+     2.647704347163719
+    ]
+   },
+   "objective_728": [
+    2.4986203709350447,
+    2.49862039505642
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "04105700",
+   "best_epoch": [
+    61,
+    61
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    101,
+    101
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7231561389517355,
+    0.7231561316460674
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.051054993164416265,
+     0.0510550010531427
+    ],
+    "2": [
+     0.10147180032852257,
+     0.10147180425666723
+    ],
+    "3": [
+     0.1270791044782969,
+     0.12707910004327222
+    ]
+   },
+   "objective_728": [
+    0.0923747750889188,
+    0.0923747775366418
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "04105700",
+   "best_epoch": [
+    50,
+    54
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    90,
+    94
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7192961782772537,
+    0.7179111722041728
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.05299314440258523,
+     0.05401970527478182
+    ],
+    "2": [
+     0.10191154587657904,
+     0.10251560961223045
+    ],
+    "3": [
+     0.12860050663445508,
+     0.12836910296851115
+    ]
+   },
+   "objective_728": [
+    0.09361418338783134,
+    0.0941023458188603
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "04105700",
+   "best_epoch": [
+    66,
+    62
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    106,
+    102
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7263311486059688,
+    0.722217828103596
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.05006361294730119,
+     0.05212749034107952
+    ],
+    "2": [
+     0.10064536472185592,
+     0.10033439255413468
+    ],
+    "3": [
+     0.12568995741816016,
+     0.12809242824885794
+    ]
+   },
+   "objective_728": [
+    0.09127357326204587,
+    0.0926342231974372
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "04105700",
+   "best_epoch": [
+    64,
+    64
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    104,
+    104
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7254899455272025,
+    0.7254913535307354
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.050093370656583085,
+     0.05009325030209694
+    ],
+    "2": [
+     0.10000729398400068,
+     0.1000066239338548
+    ],
+    "3": [
+     0.12714796395615194,
+     0.12714733241136297
+    ]
+   },
+   "objective_728": [
+    0.09151965998465623,
+    0.09151919650144939
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "04105700",
+   "best_epoch": [
+    61,
+    61
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    101,
+    101
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7290292472767282,
+    0.7297378598195632
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.04959829196298311,
+     0.04935963060701825
+    ],
+    "2": [
+     0.09834862760641835,
+     0.09809805560708908
+    ],
+    "3": [
+     0.12572724370882626,
+     0.12550073526145464
+    ]
+   },
+   "objective_728": [
+    0.09040246065613249,
+    0.09017156115089829
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "06803510",
+   "best_epoch": [
+    0,
+    0
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    40,
+    40
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.8239345672268442,
+    0.8239345672515356
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6872644054557564,
+     0.6872644050750175
+    ],
+    "2": [
+     0.6863542686318321,
+     0.6863542686266662
+    ],
+    "3": [
+     0.6848658600604787,
+     0.6848658601576961
+    ]
+   },
+   "objective_728": [
+    0.6712753021832084,
+    0.6712753020890956
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "06803510",
+   "best_epoch": [
+    0,
+    0
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    40,
+    40
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.8243212379626437,
+    0.8243212380428506
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6843582825602604,
+     0.6843582818718853
+    ],
+    "2": [
+     0.684948493345258,
+     0.6849484930691713
+    ],
+    "3": [
+     0.6846569354359779,
+     0.6846569354626867
+    ]
+   },
+   "objective_728": [
+    0.6698014116380285,
+    0.6698014113323167
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "06803510",
+   "best_epoch": [
+    0,
+    0
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    40,
+    40
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.8241504110050263,
+    0.8241504109519028
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6857404286357653,
+     0.6857404290898153
+    ],
+    "2": [
+     0.6854244625148669,
+     0.6854244626641376
+    ],
+    "3": [
+     0.684796071516084,
+     0.6847960715338636
+    ]
+   },
+   "objective_728": [
+    0.6704525671058343,
+    0.6704525673083149
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "06803510",
+   "best_epoch": [
+    0,
+    0
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    40,
+    40
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.8236938185062721,
+    0.8236938185152701
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6894160911581472,
+     0.6894160907873893
+    ],
+    "2": [
+     0.687024948005454,
+     0.6870249479422517
+    ],
+    "3": [
+     0.6848582522421182,
+     0.6848582525708714
+    ]
+   },
+   "objective_728": [
+    0.6721928459756215,
+    0.6721928459413231
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "06803510",
+   "best_epoch": [
+    0,
+    0
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    40,
+    40
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.8240654730817082,
+    0.8240654729781126
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6864273744253702,
+     0.6864273747839188
+    ],
+    "2": [
+     0.6855759935323374,
+     0.6855759938833788
+    ],
+    "3": [
+     0.6849506594969512,
+     0.6849506599985564
+    ]
+   },
+   "objective_728": [
+    0.6707762917733359,
+    0.6707762921681951
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08070200",
+   "best_epoch": [
+    32,
+    32
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    72,
+    72
+   ],
+   "failure_form": [
+    "WEAK_THEN_DEGRADED",
+    "WEAK_THEN_DEGRADED"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7021662434437742,
+    0.702166246632614
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5569734320025451,
+     0.5569734303317305
+    ],
+    "2": [
+     0.8047754210266969,
+     0.8047754173870181
+    ],
+    "3": [
+     0.8206140581892313,
+     0.8206140420436193
+    ]
+   },
+   "objective_728": [
+    0.7530077437639213,
+    0.7530077375926462
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08070200",
+   "best_epoch": [
+    23,
+    23
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    63,
+    63
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7276858938721213,
+    0.7276858954164416
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5179949234358251,
+     0.5179949271841519
+    ],
+    "2": [
+     0.7372862486439574,
+     0.7372862413801836
+    ],
+    "3": [
+     0.74233098525297,
+     0.7423309783558498
+    ]
+   },
+   "objective_728": [
+    0.6930493429463501,
+    0.6930493392724403
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08070200",
+   "best_epoch": [
+    34,
+    34
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    74,
+    74
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7301636113615739,
+    0.7301636112867488
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.49031575992587045,
+     0.49031576070929106
+    ],
+    "2": [
+     0.739265528538137,
+     0.7392655282272478
+    ],
+    "3": [
+     0.7463471368153641,
+     0.7463471369381588
+    ]
+   },
+   "objective_728": [
+    0.6851776930870682,
+    0.6851776935800772
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08070200",
+   "best_epoch": [
+    40,
+    40
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    80,
+    80
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.7259853570033156,
+    0.7259520426764681
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5079695029473063,
+     0.5080427405526489
+    ],
+    "2": [
+     0.7348841497549979,
+     0.7349752732651714
+    ],
+    "3": [
+     0.7629231277922033,
+     0.7630055426128308
+    ]
+   },
+   "objective_728": [
+    0.6960393612083721,
+    0.6961196754485502
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08070200",
+   "best_epoch": [
+    34,
+    34
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    74,
+    74
+   ],
+   "failure_form": [
+    "WEAK_THEN_DEGRADED",
+    "WEAK_THEN_DEGRADED"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7063200069709756,
+    0.7063200080307682
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5342519485473088,
+     0.5342519441766314
+    ],
+    "2": [
+     0.8010441125107413,
+     0.8010441128106174
+    ],
+    "3": [
+     0.8146951083283211,
+     0.8146951046981075
+    ]
+   },
+   "objective_728": [
+    0.7420269564280096,
+    0.7420269539129566
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08086290",
+   "best_epoch": [
+    6,
+    6
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    46,
+    46
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7680695851959035,
+    0.7680695850731519
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5869809325143533,
+     0.5869809342598642
+    ],
+    "2": [
+     0.5934467866353484,
+     0.5934467835611561
+    ],
+    "3": [
+     0.614422189360088,
+     0.6144221916387123
+    ]
+   },
+   "objective_728": [
+    0.5853130331115804,
+    0.5853130334212654
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08086290",
+   "best_epoch": [
+    13,
+    13
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    53,
+    53
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7656486581466747,
+    0.7656486649615855
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5894779682490416,
+     0.5894779371646247
+    ],
+    "2": [
+     0.6034339316154014,
+     0.6034339066367849
+    ],
+    "3": [
+     0.6206729412607497,
+     0.6206729445849398
+    ]
+   },
+   "objective_728": [
+    0.591419824165161,
+    0.5914198069744906
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08086290",
+   "best_epoch": [
+    8,
+    8
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    48,
+    48
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7686957784483678,
+    0.7686957791111917
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5770111140976232,
+     0.5770111104357275
+    ],
+    "2": [
+     0.5947348956506343,
+     0.594734895032211
+    ],
+    "3": [
+     0.6182579500193448,
+     0.6182579491702402
+    ]
+   },
+   "objective_728": [
+    0.5837336113586185,
+    0.5837336096866842
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08086290",
+   "best_epoch": [
+    1,
+    1
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    41,
+    41
+   ],
+   "failure_form": [
+    "WEAK_THEN_DEGRADED",
+    "WEAK_THEN_DEGRADED"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7651006112543736,
+    0.76510061123185
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.6027552371480606,
+     0.6027552371887727
+    ],
+    "2": [
+     0.6093784425790949,
+     0.6093784424796039
+    ],
+    "3": [
+     0.6056923555309276,
+     0.6056923557640088
+    ]
+   },
+   "objective_728": [
+    0.5928039140251338,
+    0.5928039140819555
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "08086290",
+   "best_epoch": [
+    22,
+    22
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    62,
+    62
+   ],
+   "failure_form": [
+    "NOT_BETTER_THAN_OPEN_LOOP",
+    "NOT_BETTER_THAN_OPEN_LOOP"
+   ],
+   "learned": [
+    false,
+    false
+   ],
+   "mean_nse_712": [
+    0.7688486004914918,
+    0.7688487229021167
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5805288947585381,
+     0.5805283425892286
+    ],
+    "2": [
+     0.5945577991035907,
+     0.5945574462613479
+    ],
+    "3": [
+     0.6137346153662969,
+     0.6137345730734647
+    ]
+   },
+   "objective_728": [
+    0.5833458632020844,
+    0.5833455543989499
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "09035800",
+   "best_epoch": [
+    54,
+    101
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    94,
+    141
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9687605189697118,
+    0.9728560603480103
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.013620314978008075,
+     0.010666607616099893
+    ],
+    "2": [
+     0.04083220093915614,
+     0.035098304669085874
+    ],
+    "3": [
+     0.0709330918037861,
+     0.06318250754663045
+    ]
+   },
+   "objective_728": [
+    0.04114937767183522,
+    0.03568088740170656
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "09035800",
+   "best_epoch": [
+    51,
+    72
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    91,
+    112
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9723476362493528,
+    0.9738976724362839
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.010614806391025926,
+     0.00951696497633222
+    ],
+    "2": [
+     0.035990523701158,
+     0.03377505259460333
+    ],
+    "3": [
+     0.06438275075628963,
+     0.06147471613170422
+    ]
+   },
+   "objective_728": [
+    0.03635531497540805,
+    0.03432838101070945
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "09035800",
+   "best_epoch": [
+    84,
+    84
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    124,
+    124
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9726413235792594,
+    0.9726339829607776
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.010314829563060993,
+     0.010328929125625042
+    ],
+    "2": [
+     0.035175472692604605,
+     0.03512460528552241
+    ],
+    "3": [
+     0.06431902394354928,
+     0.06438525574657214
+    ]
+   },
+   "objective_728": [
+    0.035974311277600986,
+    0.035982990625961477
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "09035800",
+   "best_epoch": [
+    147,
+    159
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    187,
+    199
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9733330684087825,
+    0.9742436464886174
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.010785068955670517,
+     0.009545550473357062
+    ],
+    "2": [
+     0.034392242986161496,
+     0.0333719832600885
+    ],
+    "3": [
+     0.061855536109727084,
+     0.060460560110077326
+    ]
+   },
+   "objective_728": [
+    0.03513926675693775,
+    0.03399923404620425
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "09035800",
+   "best_epoch": [
+    200,
+    137
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    200,
+    177
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9749578622394114,
+    0.9744992820845594
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.008686210827551959,
+     0.009048868947002069
+    ],
+    "2": [
+     0.032475785702389355,
+     0.03337521872114869
+    ],
+    "3": [
+     0.059349473834957554,
+     0.05992796934949843
+    ]
+   },
+   "objective_728": [
+    0.03290864912521821,
+    0.03353611504950837
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "CEILING",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "12447390",
+   "best_epoch": [
+    49,
+    49
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    89,
+    89
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9035153712411367,
+    0.9035164409399244
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.43924456731723677,
+     0.43923911640026786
+    ],
+    "2": [
+     0.6029162133898609,
+     0.6029045677025605
+    ],
+    "3": [
+     0.7463594520232932,
+     0.7463567197567376
+    ]
+   },
+   "objective_728": [
+    0.5847269899803121,
+    0.5847205260168891
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824",
+   "seed": 20260824,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "12447390",
+   "best_epoch": [
+    85,
+    85
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    125,
+    125
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.8989681212382813,
+    0.898968788875853
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.47660171278182617,
+     0.4765944566599819
+    ],
+    "2": [
+     0.6366353188488322,
+     0.6366288244096455
+    ],
+    "3": [
+     0.7595751636049544,
+     0.7595765381906646
+    ]
+   },
+   "objective_728": [
+    0.6113306716421399,
+    0.6113266439505759
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260901",
+   "seed": 20260901,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "12447390",
+   "best_epoch": [
+    72,
+    72
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    112,
+    112
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.9024407974924408,
+    0.902428127314832
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.4536187550264128,
+     0.45367966965487827
+    ],
+    "2": [
+     0.6137019702735715,
+     0.6137431999874299
+    ],
+    "3": [
+     0.7411188929021414,
+     0.7412516134978518
+    ]
+   },
+   "objective_728": [
+    0.5906293080551434,
+    0.5907061873232017
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260908",
+   "seed": 20260908,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "12447390",
+   "best_epoch": [
+    73,
+    73
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    113,
+    113
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.8807279278585307,
+    0.8807271504234987
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.5366489016317714,
+     0.5366543274057005
+    ],
+    "2": [
+     0.7523870848911958,
+     0.7523898343981386
+    ],
+    "3": [
+     0.9218913896138508,
+     0.921897625544625
+    ]
+   },
+   "objective_728": [
+    0.7217071926602441,
+    0.7217118890490082
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260915",
+   "seed": 20260915,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  },
+  {
+   "basin_id": "12447390",
+   "best_epoch": [
+    60,
+    60
+   ],
+   "code_sha256": [
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058",
+    "7c86d695e9dab4168a175bbc5a45f89e933f4a937fc9356212825ec829b53058"
+   ],
+   "completed_epochs": [
+    100,
+    100
+   ],
+   "failure_form": [
+    "LEARNED",
+    "LEARNED"
+   ],
+   "learned": [
+    true,
+    true
+   ],
+   "mean_nse_712": [
+    0.8951115295226947,
+    0.8951116271033578
+   ],
+   "mse_by_lead_712": {
+    "1": [
+     0.470470472256933,
+     0.47047008070272733
+    ],
+    "2": [
+     0.6838144811952271,
+     0.6838138946336463
+    ],
+    "3": [
+     0.7900159768840047,
+     0.790015146163561
+    ]
+   },
+   "objective_728": [
+    0.6348843040541193,
+    0.6348837142866683
+   ],
+   "run_id": "DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260922",
+   "seed": 20260922,
+   "stop_reason": [
+    "EARLY_STOP",
+    "EARLY_STOP"
+   ]
+  }
+ ],
+ "superseded_without_rerun": []
+}
+
+JSON_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/superseded_comparison.json
+=== ANALYSIS analysis/unseal_rehearsal_seq175/summary_formal_dryrun/summary.json ===
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/summary_formal_dryrun/summary.json
+=== ANALYSIS analysis/unseal_rehearsal_seq175/unseal_rehearsal/basin_12447390.json ===
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/analysis/unseal_rehearsal_seq175/unseal_rehearsal/basin_12447390.json
+=== FULL_STDOUT unseal_rehearsal_seq175 ===
+FULL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stdout bytes=1059
+NODE_START job=226617 host=icn201 started=1789824451
+NUMERICS_ENV ATEN_CPU_CAPABILITY=default
+DATA_ROOT=E:/Program Files/Git/data1/home/sunyiq/nearing2022_da/data/camels_us
+=== (ii) development summary regression: seq145 code must reproduce the registered sha; current code must agree on the projection ===
+SUMMARIZE_SEQ145_RC=0
+SUMMARY_DEV_SEQ145CODE_SHA256=b88513c2c13a3be918273a0abaaec9b0ea845000c8b26219b9087621fa75f4db (registered b88513c2c13a3be9)
+SUMMARIZE_DEV_RC=0
+SUMMARY_DEV_REGRESSION mismatched=0
+PROJECTION_RC=0
+=== (iv) P4 superseded vs rerun ===
+{"pairs": 45, "identical_best_epoch_stop_learned_form": 34, "learned_changed": [], "mean_nse_difference_rerun_minus_baseline": {"n": 45, "min": -0.004113320502372786, "median": 6.628239068717789e-10, "max": 0.004095541378298484, "max_abs": 0.004113320502372786}}
+P4_RC=0
+=== (i) rehearsal, development window, all basins ===
+REHEARSAL_RC=2 wall=0s
+REHEARSAL_MARKER_SHA256=
+=== (iii) formal-format dry run on the rehearsal output ===
+SUMMARIZE_FORMAL_DRYRUN_RC=1
+NODE_END exit=0 finished=1789824467
+FULL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/unseal_rehearsal_seq175/slurm-226617.stdout
+READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-19T21:47:36+0800
