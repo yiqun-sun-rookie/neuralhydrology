@@ -1,0 +1,102 @@
+### channel=kalmannet-daily-perbasin seq=174
+### host=login4
+### started=2026-09-19T19:51:51+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=174 purpose=observe-analysis
+=== ACCOUNTING ===
+226526|kdpp3-e8|COMPLETED|0:0|3|48|billing=48,cpu=48,node=1|icn201|2026-09-18T18:46:13|2026-09-18T18:46:14|2026-09-18T18:46:17
+226526.batch|batch|COMPLETED|0:0|3|48|cpu=48,mem=0,node=1|icn201|2026-09-18T18:46:14|2026-09-18T18:46:14|2026-09-18T18:46:17
+226526.extern|extern|COMPLETED|0:0|3|48|billing=48,cpu=48,node=1|icn201|2026-09-18T18:46:14|2026-09-18T18:46:14|2026-09-18T18:46:17
+=== QUEUE ===
+=== HGPU4_GRES_USED ===
+NODELIST            GRES_USED               
+ngu101              gpu:4,dcu:0             
+ngu102              gpu:4,dcu:0             
+ngu103              gpu:0,dcu:0             
+ngu104              gpu:4,dcu:0             
+=== REQUEST e8_node_seq172 ===
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq172/slurm-226526.stdout bytes=2483
+NODE_START job=226526 host=icn201 started=1789728313
+{"basin_id": "01435000", "epochs": 105, "all_match": false, "max_rel_diff": 1.2675790825481958, "mismatches": ["epoch_63_gradient_norm", "epoch_80_gradient_norm"]}
+{"basin_id": "01440400", "epochs": 122, "all_match": true, "max_rel_diff": 1.9694064524057483e-07, "mismatches": []}
+{"basin_id": "01487000", "epochs": 200, "all_match": true, "max_rel_diff": 0.0019706378460842265, "mismatches": []}
+{"basin_id": "02092500", "epochs": 191, "all_match": true, "max_rel_diff": 2.8939597494721307e-05, "mismatches": []}
+{"basin_id": "02102908", "epochs": 40, "all_match": true, "max_rel_diff": 4.262040451703091e-11, "mismatches": []}
+{"basin_id": "02178400", "epochs": 121, "all_match": true, "max_rel_diff": 2.927336197243913e-05, "mismatches": []}
+{"basin_id": "03049000", "epochs": 101, "all_match": true, "max_rel_diff": 6.495092656179525e-06, "mismatches": []}
+{"basin_id": "03076600", "epochs": 89, "all_match": false, "max_rel_diff": 0.025771738821474828, "mismatches": ["epoch_80_gradient_norm"]}
+{"basin_id": "04027000", "epochs": 93, "all_match": false, "max_rel_diff": 0.1056129210960686, "mismatches": ["epoch_80_gradient_norm"]}
+{"basin_id": "05503800", "epochs": 66, "all_match": true, "max_rel_diff": 0.0010727179861257997, "mismatches": []}
+{"basin_id": "06803510", "epochs": 40, "all_match": true, "max_rel_diff": 1.1540691555168199e-07, "mismatches": []}
+{"basin_id": "08086290", "epochs": 46, "all_match": true, "max_rel_diff": 1.6720770901109934e-07, "mismatches": []}
+{"basin_id": "08109700", "epochs": 65, "all_match": true, "max_rel_diff": 8.23245353376833e-08, "mismatches": []}
+{"basin_id": "08190500", "epochs": 70, "all_match": true, "max_rel_diff": 8.811620765465496e-08, "mismatches": []}
+{"basin_id": "09513780", "epochs": 40, "all_match": true, "max_rel_diff": 2.1479237882273158e-07, "mismatches": []}
+{"basin_id": "12175500", "epochs": 111, "all_match": false, "max_rel_diff": 0.4444052845309464, "mismatches": ["epoch_73_gradient_norm"]}
+{"basin_id": "12447390", "epochs": 89, "all_match": true, "max_rel_diff": 0.001386326203682821, "mismatches": []}
+{"basin_id": "14185900", "epochs": 142, "all_match": true, "max_rel_diff": 2.2250029815039952e-07, "mismatches": []}
+{"basins_compared": 18, "basins_absent": 0, "basins_all_match": 14, "max_rel_diff_over_all": 1.2675790825481958}
+E8_RC=1
+E8_SHA256=817b90fe1e92f1217c9a3fe7b360086f73b6a2a5f63234d6230efa1363e653d6
+NODE_END exit=0 finished=1789728314
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq172/slurm-226526.stdout
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq172/slurm-226526.stderr bytes=0
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq172/slurm-226526.stderr
+FILE_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e8_node_seq172/logs/pool_result.json
+=== DATA_SURVEY (read-only) ===
+/data1/home/sunyiq/nearing2022_da/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing
+/data1/home/sunyiq/precip_swap3_daily_2026_09/data_shadow/camels_us/basin_mean_forcing
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v3_20260904/data/camels_us/basin_mean_forcing
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train2_20260827/source_A37_a800_train2_seq60/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train3_20260827/source_A37_a800_train3_seq61/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827/source_A37_a800_train4_seq65/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+TUKF06 /data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831/source_A39_formal_evaluation_seq86/scripts/tukf06_full_diagonal_common.py sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+=== DATA_SURVEY_WIDE (read-only) ===
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_a20_result_audit_v2_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry3_staging_20260826
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train2_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train3_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_terminal_evidence_verify_seq90_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831
+/data1/home/sunyiq/camels_g2_design_20260808
+/data1/home/sunyiq/kalmannet_daily_camels_20260824
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_a20_result_audit_v2_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_staging_20260825
+/data1/home/sunyiq/nearing2022_da/data/camels_us
+/data1/home/sunyiq/nearing2022_da/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us/camels_attributes_v2.0
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us/usgs_streamflow
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE1_SEQ2
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_A800_TRAIN1_SEQ41
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V2_20260902_A44_HISTORYFIX1_A800_TRAIN1_SEQ62
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V2_20260902_A45_HISTORYFIX1_A800_TRAIN1_SEQ66
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53/synthetic_tmp/h2bb31a41/DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_HISTORYFIX1_SYNTHETIC_CPU
+=== TUKF06_EVAL_CONFIG_HINTS (read-only, filenames only) ===
+READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-19T19:58:04+0800
