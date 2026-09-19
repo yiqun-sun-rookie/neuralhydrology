@@ -116,3 +116,4 @@ git rm inbox/seq
 
 | id29-xinanjiang-transfer | Second hydrological model transferable-noise replication; isolated root only | 2026-09-07 |
 | `kalmannet-wrr-horizon-20260916` | Training horizon paired sensitivity, seed 42 only; resource preflight before training | 2026-09-16 | New root `/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916`; do not overwrite existing paths, alter other jobs/environments, access test data, retry or requeue |
+| `precip-input-da` | 输入空间降水同化决定性小试（计划 `docs/plans/2026-09-19-precip-input-assimilation-plan-v1-decisive-trial.md`）：冻结 C4 上用过去流量误差修过去降水 vs Nearing 式状态同化 | 2026-09-19 | 由 Claude 会话占用；新落点 `/data1/home/sunyiq/precip_input_da_2026_09`；ID33 落点只读、检查点只复制；seq 1 = 拿 C4 三种子检查点 + seed100 调参年验证结果（零 GPU、无 sbatch） |
