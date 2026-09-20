@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=140
+### host=login4
+### started=2026-09-20T20:13:45+0800
+### ---------- output ----------
+{"chunk_sha256":"58bdf0602813b4c9cfeb590b0d63f1e19b5c7c26288d2ae85d624e74f5036d5d","deployment_identity":{"deployment_token":"35eb014766234b74961d73d38ffee3e2","metadata_sha256":"beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0","root_binding":{"inode":10617661454,"mode":448,"uid":2272},"schema":"cross-node-deployment-v1"},"file":{"bytes":81,"path":"/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/slurm/evaluate-226800.out","sha256":"58bdf0602813b4c9cfeb590b0d63f1e19b5c7c26288d2ae85d624e74f5036d5d"},"index":0,"length":81,"offset":0,"payload_base64":"eyJzdGF0dXMiOiAiY29tcHV0ZV9ib290c3RyYXBfY29tcGxldGUiLCAic3RhZ2UiOiAiZXZhbHVhdGUiLCAiam9iX2lkIjogIjIyNjgwMCJ9","release_sha256":"8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678","source_opens":1,"source_read_bytes":81}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-20T20:13:47+0800
