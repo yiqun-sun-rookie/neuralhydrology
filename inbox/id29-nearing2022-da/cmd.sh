@@ -11,9 +11,7 @@ echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
 echo "=== PREPARE SCRIPT LINE 94 ==="
-sed -n '94p' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || echo '  unreadable'
-cd "$ROOT" && git log -1 --format='  repo HEAD %h %ci %s' 2>/dev/null || true
+sed -n '94p' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
 echo "=== GATE ARTIFACT ==="
-P="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
-[ -f "$P" ] && echo "  PRESENT ($(stat -c %s "$P") bytes)" || echo "  MISSING"
+P="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"; [ -f "$P" ] && echo "  PRESENT ($(stat -c %s "$P") bytes)" || echo "  MISSING"
 exit 0
