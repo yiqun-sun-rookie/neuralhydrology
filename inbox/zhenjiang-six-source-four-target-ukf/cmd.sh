@@ -277,12 +277,12 @@ def control(root, action, stage, release_sha, expected, core_rel):
 
 binding={'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'}
 release_sha='8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678'
-request={'file': {'bytes': 1250298, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/statistics/block_lead_station.json', 'sha256': '367f2a434742f313d5ed91b1a1bae7e0686cf815fcb8246e137e7454bffd257c'}, 'index': 2, 'length': 201722, 'offset': 1048576}
+request={'file': {'bytes': 125367, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/information/batch_0.json', 'sha256': '435cfca5b0f46b381f979ba3e27e27706a883e47a6664b825fe09468680d8fc6'}, 'index': 0, 'length': 125367, 'offset': 0}
 import base64
 gate=Root(REMOTE_ROOT,binding)
 try:
     authenticate(gate,release_sha,binding)
-    raw=gate.read('evaluate/statistics/block_lead_station.json',maximum=8000000,expected={'bytes': 1250298, 'sha256': '367f2a434742f313d5ed91b1a1bae7e0686cf815fcb8246e137e7454bffd257c'})
+    raw=gate.read('evaluate/information/batch_0.json',maximum=8000000,expected={'bytes': 125367, 'sha256': '435cfca5b0f46b381f979ba3e27e27706a883e47a6664b825fe09468680d8fc6'})
     offset=request['offset']
     payload=raw[offset:offset+request['length']]
     answer=dict(request,payload_base64=base64.b64encode(payload).decode('ascii'),chunk_sha256=hashlib.sha256(payload).hexdigest(),source_opens=1,source_read_bytes=len(raw),release_sha256=release_sha,deployment_identity=binding)
@@ -295,4 +295,4 @@ finally:
 print(reply.decode('ascii'))
 
 SHARED_RELEASE_VERIFIED_PY
-# collection command seq_134_chunk
+# collection command seq_135_chunk
