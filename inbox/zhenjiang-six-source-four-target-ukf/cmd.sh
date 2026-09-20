@@ -277,7 +277,7 @@ def control(root, action, stage, release_sha, expected, core_rel):
 
 binding={'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'}
 release_sha='8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678'
-request={'file': {'bytes': 1250298, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/statistics/block_lead_station.json', 'sha256': '367f2a434742f313d5ed91b1a1bae7e0686cf815fcb8246e137e7454bffd257c'}, 'index': 0, 'length': 524288, 'offset': 0}
+request={'file': {'bytes': 1250298, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/statistics/block_lead_station.json', 'sha256': '367f2a434742f313d5ed91b1a1bae7e0686cf815fcb8246e137e7454bffd257c'}, 'index': 1, 'length': 524288, 'offset': 524288}
 import base64
 gate=Root(REMOTE_ROOT,binding)
 try:
@@ -295,4 +295,4 @@ finally:
 print(reply.decode('ascii'))
 
 SHARED_RELEASE_VERIFIED_PY
-# collection command seq_132_chunk
+# collection command seq_133_chunk
