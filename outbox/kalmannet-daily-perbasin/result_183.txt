@@ -1,0 +1,60 @@
+### channel=kalmannet-daily-perbasin seq=183
+### host=login4
+### started=2026-09-21T19:11:46+0800
+### ---------- output ----------
+DIAG_PREFLIGHT_READONLY_V1
+sequence=183
+timestamp=2026-09-21T11:11:46Z
+host=login4
+OWN_JOBS_BEGIN
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+OWN_JOBS_END
+HCPU48_STATE_BEGIN
+hcpu48*|up|infinite|10|alloc$|480/0/0/480
+hcpu48*|up|infinite|5|maint|0/240/0/240
+hcpu48*|up|infinite|14|down*|0/0/672/672
+hcpu48*|up|infinite|2|alloc|96/0/0/96
+hcpu48*|up|infinite|33|idle|0/1584/0/1584
+PartitionName=hcpu48
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=EXCLUSIVE
+   State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE
+HCPU48_STATE_END
+OUTPUT_ROOT_ABSENT=yes
+SOURCE_HASHES_BEGIN
+934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/knet/dl/nn_kalman_clamp_5.py
+3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/knet_native_hbvlite_full_state.py
+770de40d8d472805515c00131c37f4852012be1e0a42b7a3aeb36689a192daa8  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py
+2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py
+0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/hbvlite_system_model.py
+d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/differentiable_hbv_lite.py
+SOURCE_HASHES_END
+RUN_SUMMARIES_BEGIN
+RUN_ID=DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824
+ "best_checkpoint": "checkpoints/epoch_151.pt",
+ "best_checkpoint_sha256": "dba62964dc897f282db80eddba93aa163ced1c248d60ec4f0ac6a7254d76b666",
+ "best_epoch": 151,
+RUN_ID=DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260901
+ "best_checkpoint": "checkpoints/epoch_080.pt",
+ "best_checkpoint_sha256": "c8e4fb2baf47bb92324cd7760609d9e1a06ac934275ddf5b1c3a809219ffbe8c",
+ "best_epoch": 80,
+RUN_ID=DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260908
+ "best_checkpoint": "checkpoints/epoch_178.pt",
+ "best_checkpoint_sha256": "f69b3068c08e14aa17495a618a7827f4218d608126624a65dfc7dab181a2a7ee",
+ "best_epoch": 178,
+RUN_ID=DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260915
+ "best_checkpoint": "checkpoints/epoch_124.pt",
+ "best_checkpoint_sha256": "465a5fe8cbae21beec06324e64127b36cd9eeadec68d285d547b03d4fbfd6dd5",
+ "best_epoch": 124,
+RUN_ID=DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260922
+ "best_checkpoint": "checkpoints/epoch_134.pt",
+ "best_checkpoint_sha256": "ba99d913dad8365a607702684e190ec38d46085cc301d5bc84469897f73e87d7",
+ "best_epoch": 134,
+RUN_SUMMARIES_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-21T19:11:47+0800
