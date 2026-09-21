@@ -1,0 +1,30 @@
+### channel=kalmannet-daily-perbasin seq=184
+### host=login4
+### started=2026-09-21T19:39:21+0800
+### ---------- output ----------
+DIAG_SUBMIT_V1
+sequence=184
+timestamp=2026-09-21T11:39:21Z
+host=login4
+hcpu48_idle_nodes=33
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/knet/dl/nn_kalman_clamp_5.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/knet_native_hbvlite_full_state.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/hbvlite_system_model.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/src/global_hydrology/models/differentiable_hbv_lite.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs/DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824/checkpoints/epoch_151.pt: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs/DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260901/checkpoints/epoch_080.pt: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs/DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260908/checkpoints/epoch_178.pt: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs/DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260915/checkpoints/epoch_124.pt: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs/DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260922/checkpoints/epoch_134.pt: OK
+/data1/home/sunyiq/kalmannet_daily_camels_stability_diagnosis_development_20260921_v1/payload/trace_development.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_stability_diagnosis_development_20260921_v1/diagnosis_contract.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_stability_diagnosis_development_20260921_v1/source_manifest.json: OK
+Submitted batch job 227131
+job_id=227131
+output_root=/data1/home/sunyiq/kalmannet_daily_camels_stability_diagnosis_development_20260921_v1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-21T19:39:22+0800
