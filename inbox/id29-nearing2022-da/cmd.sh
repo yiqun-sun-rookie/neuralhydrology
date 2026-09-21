@@ -9,25 +9,7 @@ echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
 echo "=== PREPARE SCRIPT LINE 94 ==="
-sed -n '94p' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" || true
+sed -n '94p' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
 echo "=== GATE ARTIFACT ==="
 P="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"; [ -f "$P" ] && echo "  PRESENT ($(stat -c %s "$P") bytes)" || echo "  MISSING"
-echo "=== ROLE COUNTS ==="
-source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
-cd "$ROOT"
-python - <<'PY' 2>/dev/null || echo "recount unavailable"
-import json, sys
-from pathlib import Path
-root = Path('/data1/home/sunyiq/nearing2022_da')
-sys.path.insert(0, str(root / 'src/29_nearing2022_da_ar/scripts'))
-from verify_registered_closure import audit_registered_closure
-reg = root / 'src/29_nearing2022_da_ar/registry'
-agg = root / 'closure_20260810/aggregation'
-c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
-                             reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
-m = {}
-for row in c['missing']:
-    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
-print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
-PY
 exit 0
