@@ -284,7 +284,9 @@ import numpy as np
 METHODS = ("no_update", "rolling_encoder", "differentiable_filter")
 STATIONS = ("南京", "镇江", "江阴", "徐六泾", "吴淞口")
 LEADS = 23
-EXPECTED_ORIGINS = 7248
+EXPECTED_WINDOWS = 151
+ORIGINS_PER_WINDOW = 48
+EXPECTED_ORIGINS = EXPECTED_WINDOWS * ORIGINS_PER_WINDOW
 EXPECTED_KEYS = set(METHODS) | {"targets", "origins", "scale"}
 
 
@@ -304,29 +306,40 @@ def compute_archive(raw):
         targets_native = np.asarray(archive["targets"])
         origins = np.asarray(archive["origins"])
         scale = np.asarray(archive["scale"])
-        expected_shape = (EXPECTED_ORIGINS, LEADS, len(STATIONS))
-        if targets_native.shape != expected_shape or origins.shape != (EXPECTED_ORIGINS,):
+        expected_shape = (
+            EXPECTED_WINDOWS,
+            ORIGINS_PER_WINDOW,
+            LEADS,
+            len(STATIONS),
+        )
+        if targets_native.shape != expected_shape or origins.shape != (
+                EXPECTED_WINDOWS, ORIGINS_PER_WINDOW):
             raise ValueError("target or origin shape differs")
-        if scale.shape != (len(STATIONS),) or not np.issubdtype(targets_native.dtype, np.number):
+        if scale.shape != (len(STATIONS),) or not np.issubdtype(
+                targets_native.dtype, np.number):
             raise ValueError("scale or target dtype differs")
         targets = targets_native.astype(np.float64, copy=False)
         scale64 = scale.astype(np.float64, copy=False)
-        if not np.isfinite(targets).all() or not np.isfinite(scale64).all() or np.any(scale64 <= 0):
+        if (not np.isfinite(targets).all() or not np.isfinite(scale64).all()
+                or np.any(scale64 <= 0)):
             raise ValueError("target or scale is not finite and positive")
-        target_mean = targets.mean(axis=0)
-        sst = np.square(targets - target_mean).sum(axis=0, dtype=np.float64)
+        target_mean = targets.mean(axis=(0, 1))
+        sst = np.square(targets - target_mean[None, None]).sum(
+            axis=(0, 1), dtype=np.float64)
         if not np.isfinite(sst).all() or np.any(sst <= 0):
             raise ValueError("NSE denominator is not finite and positive")
         squared_error_sums = []
         nse = []
         for method in METHODS:
             prediction_native = np.asarray(archive[method])
-            if prediction_native.shape != expected_shape or not np.issubdtype(prediction_native.dtype, np.number):
+            if (prediction_native.shape != expected_shape
+                    or not np.issubdtype(prediction_native.dtype, np.number)):
                 raise ValueError("prediction shape or dtype differs: " + method)
             prediction = prediction_native.astype(np.float64, copy=False)
             if not np.isfinite(prediction).all():
                 raise ValueError("prediction is not finite: " + method)
-            sse = np.square(prediction - targets).sum(axis=0, dtype=np.float64)
+            sse = np.square(prediction - targets).sum(
+                axis=(0, 1), dtype=np.float64)
             score = 1.0 - sse / sst
             if not np.isfinite(score).all():
                 raise ValueError("NSE is not finite: " + method)
@@ -350,9 +363,11 @@ def combine_seed_records(records):
         if len({repr(record[field]) for record in records}) != 1:
             raise ValueError("seed target identity differs: " + field)
     sst = np.asarray([record["target_sst"] for record in records], dtype=np.float64)
-    sse = np.asarray([record["squared_error_sums"] for record in records], dtype=np.float64)
+    sse = np.asarray(
+        [record["squared_error_sums"] for record in records], dtype=np.float64)
     nse = np.asarray([record["nse"] for record in records], dtype=np.float64)
-    if sst.shape != (3, LEADS, len(STATIONS)) or sse.shape != (3, len(METHODS), LEADS, len(STATIONS)):
+    if (sst.shape != (3, LEADS, len(STATIONS))
+            or sse.shape != (3, len(METHODS), LEADS, len(STATIONS))):
         raise ValueError("seed statistic shape differs")
     rebuilt = 1.0 - sse / sst[:, None]
     if not np.allclose(rebuilt, nse, rtol=0.0, atol=1e-12):
@@ -383,7 +398,7 @@ try:
         records.append(compute_archive(raw))
         del raw
     combined=combine_seed_records(records)
-    answer={'schema':'nse-by-lead-v1','methods':list(METHODS),'stations':list(STATIONS),'lead_hours':list(range(1,LEADS+1)),'seeds':list(seed_values),'n_origins':EXPECTED_ORIGINS,'nse_definition':'1 - sum((prediction-target)^2) / sum((target-mean_target_for_same_lead_and_station)^2)','macro_definition':'equal mean of station NSE, then equal mean of three seeds','pooled_definition':'station-pooled squared-error ratio, then equal mean of three seeds','source_archives':[{'path':REMOTE_ROOT+'/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']} for row in array_rows],'target_sha256':records[0]['target_sha256'],'origin_sha256':records[0]['origin_sha256'],'scale_sha256':records[0]['scale_sha256'],'source_opens':len(array_rows),'source_read_bytes':sum(row['bytes'] for row in array_rows)}
+    answer={'schema':'nse-by-lead-v2','methods':list(METHODS),'stations':list(STATIONS),'lead_hours':list(range(1,LEADS+1)),'seeds':list(seed_values),'n_windows':EXPECTED_WINDOWS,'origins_per_window':ORIGINS_PER_WINDOW,'n_origins':EXPECTED_ORIGINS,'nse_definition':'1 - sum((prediction-target)^2) / sum((target-mean_target_for_same_lead_and_station)^2)','macro_definition':'equal mean of station NSE, then equal mean of three seeds','pooled_definition':'station-pooled squared-error ratio, then equal mean of three seeds','source_archives':[{'path':REMOTE_ROOT+'/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']} for row in array_rows],'target_sha256':records[0]['target_sha256'],'origin_sha256':records[0]['origin_sha256'],'scale_sha256':records[0]['scale_sha256'],'source_opens':len(array_rows),'source_read_bytes':sum(row['bytes'] for row in array_rows)}
     answer.update(combined)
     reply=json.dumps(answer,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
     if len(reply)>500000:
@@ -394,4 +409,4 @@ finally:
 print(reply.decode('utf-8'))
 
 SHARED_RELEASE_VERIFIED_PY
-# read-only NSE aggregation; no remote writes
+# corrected read-only NSE aggregation; no remote writes
