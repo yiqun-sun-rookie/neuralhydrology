@@ -1,0 +1,11 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=141
+### host=login4
+### started=2026-09-21T21:02:57+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 379, in <module>
+  File "<stdin>", line 305, in compute_archive
+ValueError: target or origin shape differs
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-21T21:03:03+0800
