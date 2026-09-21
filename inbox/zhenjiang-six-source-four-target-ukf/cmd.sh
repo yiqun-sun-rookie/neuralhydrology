@@ -275,24 +275,123 @@ def control(root, action, stage, release_sha, expected, core_rel):
     finally:
         guard.close()
 
+"""Pure NSE aggregation for one authenticated seed prediction archive."""
+from io import BytesIO
+import hashlib
+
+import numpy as np
+
+METHODS = ("no_update", "rolling_encoder", "differentiable_filter")
+STATIONS = ("南京", "镇江", "江阴", "徐六泾", "吴淞口")
+LEADS = 23
+EXPECTED_ORIGINS = 7248
+EXPECTED_KEYS = set(METHODS) | {"targets", "origins", "scale"}
+
+
+def _array_hash(value):
+    array = np.ascontiguousarray(value)
+    header = (str(array.dtype) + ":" + repr(array.shape) + ":").encode("ascii")
+    return hashlib.sha256(header + array.tobytes()).hexdigest()
+
+
+def compute_archive(raw):
+    """Return sufficient statistics; never return predictions or targets."""
+    if not isinstance(raw, bytes) or not raw:
+        raise ValueError("non-empty archive bytes required")
+    with np.load(BytesIO(raw), allow_pickle=False) as archive:
+        if set(archive.files) != EXPECTED_KEYS:
+            raise ValueError("prediction archive keys differ")
+        targets_native = np.asarray(archive["targets"])
+        origins = np.asarray(archive["origins"])
+        scale = np.asarray(archive["scale"])
+        expected_shape = (EXPECTED_ORIGINS, LEADS, len(STATIONS))
+        if targets_native.shape != expected_shape or origins.shape != (EXPECTED_ORIGINS,):
+            raise ValueError("target or origin shape differs")
+        if scale.shape != (len(STATIONS),) or not np.issubdtype(targets_native.dtype, np.number):
+            raise ValueError("scale or target dtype differs")
+        targets = targets_native.astype(np.float64, copy=False)
+        scale64 = scale.astype(np.float64, copy=False)
+        if not np.isfinite(targets).all() or not np.isfinite(scale64).all() or np.any(scale64 <= 0):
+            raise ValueError("target or scale is not finite and positive")
+        target_mean = targets.mean(axis=0)
+        sst = np.square(targets - target_mean).sum(axis=0, dtype=np.float64)
+        if not np.isfinite(sst).all() or np.any(sst <= 0):
+            raise ValueError("NSE denominator is not finite and positive")
+        squared_error_sums = []
+        nse = []
+        for method in METHODS:
+            prediction_native = np.asarray(archive[method])
+            if prediction_native.shape != expected_shape or not np.issubdtype(prediction_native.dtype, np.number):
+                raise ValueError("prediction shape or dtype differs: " + method)
+            prediction = prediction_native.astype(np.float64, copy=False)
+            if not np.isfinite(prediction).all():
+                raise ValueError("prediction is not finite: " + method)
+            sse = np.square(prediction - targets).sum(axis=0, dtype=np.float64)
+            score = 1.0 - sse / sst
+            if not np.isfinite(score).all():
+                raise ValueError("NSE is not finite: " + method)
+            squared_error_sums.append(sse.tolist())
+            nse.append(score.tolist())
+    return {
+        "shape": list(expected_shape),
+        "target_sha256": _array_hash(targets_native),
+        "origin_sha256": _array_hash(origins),
+        "scale_sha256": _array_hash(scale),
+        "target_sst": sst.tolist(),
+        "squared_error_sums": squared_error_sums,
+        "nse": nse,
+    }
+
+
+def combine_seed_records(records):
+    if not isinstance(records, list) or len(records) != 3:
+        raise ValueError("exactly three seed records required")
+    for field in ("shape", "target_sha256", "origin_sha256", "scale_sha256"):
+        if len({repr(record[field]) for record in records}) != 1:
+            raise ValueError("seed target identity differs: " + field)
+    sst = np.asarray([record["target_sst"] for record in records], dtype=np.float64)
+    sse = np.asarray([record["squared_error_sums"] for record in records], dtype=np.float64)
+    nse = np.asarray([record["nse"] for record in records], dtype=np.float64)
+    if sst.shape != (3, LEADS, len(STATIONS)) or sse.shape != (3, len(METHODS), LEADS, len(STATIONS)):
+        raise ValueError("seed statistic shape differs")
+    rebuilt = 1.0 - sse / sst[:, None]
+    if not np.allclose(rebuilt, nse, rtol=0.0, atol=1e-12):
+        raise ValueError("reported NSE differs from sufficient statistics")
+    mean_station = nse.mean(axis=0)
+    macro = mean_station.mean(axis=2)
+    pooled_by_seed = 1.0 - sse.sum(axis=3) / sst.sum(axis=2)[:, None]
+    pooled = pooled_by_seed.mean(axis=0)
+    return {
+        "per_seed_method_lead_station_nse": nse.tolist(),
+        "per_method_lead_station_nse": mean_station.tolist(),
+        "per_method_lead_macro_nse": macro.tolist(),
+        "per_method_lead_pooled_nse": pooled.tolist(),
+        "per_seed_method_lead_station_sse": sse.tolist(),
+        "per_seed_lead_station_sst": sst.tolist(),
+    }
+
 binding={'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'}
 release_sha='8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678'
-request={'file': {'bytes': 81, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/slurm/evaluate-226800.out', 'sha256': '58bdf0602813b4c9cfeb590b0d63f1e19b5c7c26288d2ae85d624e74f5036d5d'}, 'index': 0, 'length': 81, 'offset': 0}
-import base64
+array_rows=[{'bytes': 7395989, 'path': 'evaluate/arrays/seed_17.npz', 'sha256': 'faf14e7721cf677299f4dd92e8f13df3161b4a128e2a1b1209a5c557cca5d257'}, {'bytes': 7405828, 'path': 'evaluate/arrays/seed_29.npz', 'sha256': 'd17e5da02ccf2cc493e0e5c8945dc683cb03f91a7703679b4f5597b06a9cde14'}, {'bytes': 7416208, 'path': 'evaluate/arrays/seed_43.npz', 'sha256': '31d483c7e48e5f070d8a15292733f8c1e1ff3680c651098102639746971efad7'}]
+seed_values=(17, 29, 43)
 gate=Root(REMOTE_ROOT,binding)
+records=[]
 try:
     authenticate(gate,release_sha,binding)
-    raw=gate.read('slurm/evaluate-226800.out',maximum=8000000,expected={'bytes': 81, 'sha256': '58bdf0602813b4c9cfeb590b0d63f1e19b5c7c26288d2ae85d624e74f5036d5d'})
-    offset=request['offset']
-    payload=raw[offset:offset+request['length']]
-    answer=dict(request,payload_base64=base64.b64encode(payload).decode('ascii'),chunk_sha256=hashlib.sha256(payload).hexdigest(),source_opens=1,source_read_bytes=len(raw),release_sha256=release_sha,deployment_identity=binding)
-    reply=json.dumps(answer,ensure_ascii=True,sort_keys=True,separators=(',',':'),allow_nan=False).encode('ascii')
-    if len(reply)>1000000:
-        raise ValueError('encoded chunk record too large')
+    for row in array_rows:
+        raw=gate.read(row['path'],maximum=8000000,expected={'bytes':row['bytes'],'sha256':row['sha256']})
+        records.append(compute_archive(raw))
+        del raw
+    combined=combine_seed_records(records)
+    answer={'schema':'nse-by-lead-v1','methods':list(METHODS),'stations':list(STATIONS),'lead_hours':list(range(1,LEADS+1)),'seeds':list(seed_values),'n_origins':EXPECTED_ORIGINS,'nse_definition':'1 - sum((prediction-target)^2) / sum((target-mean_target_for_same_lead_and_station)^2)','macro_definition':'equal mean of station NSE, then equal mean of three seeds','pooled_definition':'station-pooled squared-error ratio, then equal mean of three seeds','source_archives':[{'path':REMOTE_ROOT+'/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']} for row in array_rows],'target_sha256':records[0]['target_sha256'],'origin_sha256':records[0]['origin_sha256'],'scale_sha256':records[0]['scale_sha256'],'source_opens':len(array_rows),'source_read_bytes':sum(row['bytes'] for row in array_rows)}
+    answer.update(combined)
+    reply=json.dumps(answer,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
+    if len(reply)>500000:
+        raise ValueError('NSE aggregate reply exceeds bound')
     gate.check()
 finally:
     gate.close()
-print(reply.decode('ascii'))
+print(reply.decode('utf-8'))
 
 SHARED_RELEASE_VERIFIED_PY
-# collection command seq_140_chunk
+# read-only NSE aggregation; no remote writes
