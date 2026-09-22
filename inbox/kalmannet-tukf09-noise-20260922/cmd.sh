@@ -9,8 +9,21 @@ response="$stage/submission_response.txt"
 job_count=$(awk '/^Submitted batch job [0-9]+$/ {n++} END {print n+0}' "$response")
 [ "$job_count" -eq 1 ] || exit 23
 job_id=$(awk '/^Submitted batch job [0-9]+$/ {print $4}' "$response")
+[ "$job_id" = 227210 ] || exit 24
 printf 'REGISTERED_ENVIRONMENT_ONLY_JOB=%s\n' "$job_id"
-squeue -j "$job_id" -h -o '%i|%j|%T|%P|%C|%D|%R|%Z'
+# Completed jobs may leave the live queue before their history/logs are read.
+set +e
+queue_output=$(squeue -j "$job_id" -h -o '%i|%j|%T|%P|%C|%D|%R|%Z' 2>&1)
+queue_rc=$?
+set -e
+if [ "$queue_rc" -eq 0 ]; then
+    printf '%s\n' "$queue_output"
+elif [ "$queue_rc" -eq 1 ] && [ "$queue_output" = 'slurm_load_jobs error: Invalid job id specified' ]; then
+    printf 'JOB_NOT_IN_LIVE_QUEUE_QUERY_ACCOUNTING_AND_LOGS\n'
+else
+    printf '%s\n' "$queue_output"
+    exit "$queue_rc"
+fi
 sacct -j "$job_id" --noheader --parsable2 --format=JobID,JobName%25,Partition,State,ExitCode,Elapsed,AllocCPUS,TotalCPU,MaxRSS,ReqMem,AllocTRES%80,NodeList
 for suffix in out err; do
     logfile="$root/logs/environment_probe_${job_id}.$suffix"
