@@ -1,0 +1,1016 @@
+### channel=kalmannet-daily-perbasin seq=190
+### host=login4
+### started=2026-09-22T16:09:49+0800
+### ---------- output ----------
+FIXED_CONTROL_AGGREGATE_READ_ONLY_V1
+sequence=190
+timestamp_utc=2026-09-22T08:09:49Z
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/aggregate.json: OK
+AGGREGATE_JSON_BEGIN
+{
+  "environment": {
+    "aten_cpu_capability": "default",
+    "capability": "NO AVX",
+    "device": "cpu",
+    "interop_threads": 1,
+    "numpy": "2.3.3",
+    "python": "3.11.13",
+    "threads": 1,
+    "torch": "2.4.0"
+  },
+  "filter_days": 60649,
+  "outcomes": [
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.3500947154254858,
+          "mse_by_lead": {
+            "1": 0.2619575093354911,
+            "2": 0.3703231215835478,
+            "3": 0.4180035153574184
+          },
+          "signed_bias_by_lead": {
+            "1": 0.06926842736818178,
+            "2": 0.11924271281028263,
+            "3": 0.1573261584215841
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.3576973384601783,
+          "mse_by_lead": {
+            "1": 0.267776694311289,
+            "2": 0.37835109847109316,
+            "3": 0.426964222598153
+          },
+          "signed_bias_by_lead": {
+            "1": 0.07035767612937824,
+            "2": 0.12084450498919982,
+            "3": 0.1593849060404216
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260824-FULL3288",
+      "sequence_id": "CTRL-02092500-NETWORK-20260824-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.34784639397816175,
+          "mse_by_lead": {
+            "1": 0.2616603139277807,
+            "2": 0.36761013704348044,
+            "3": 0.414268730963224
+          },
+          "signed_bias_by_lead": {
+            "1": 0.0670201773050579,
+            "2": 0.11353719265995438,
+            "3": 0.1490115936051728
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.35537211446664213,
+          "mse_by_lead": {
+            "1": 0.26746157109332597,
+            "2": 0.3755569387528107,
+            "3": 0.4230978335537896
+          },
+          "signed_bias_by_lead": {
+            "1": 0.0681200729376813,
+            "2": 0.11523173006841037,
+            "3": 0.15111365057372705
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260824-RESTART731",
+      "sequence_id": "CTRL-02092500-NETWORK-20260824-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.29565432138909037,
+          "mse_by_lead": {
+            "1": 0.19837414620986005,
+            "2": 0.2636500187286166,
+            "3": 0.4249387992287945
+          },
+          "signed_bias_by_lead": {
+            "1": 0.06278656594782953,
+            "2": 0.12358282308048302,
+            "3": 0.17276620244536878
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.30199689401015317,
+          "mse_by_lead": {
+            "1": 0.20271217168694888,
+            "2": 0.2692547295413369,
+            "3": 0.43402378080217374
+          },
+          "signed_bias_by_lead": {
+            "1": 0.0637612881854003,
+            "2": 0.12534526816910094,
+            "3": 0.17524416973981083
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260901-FULL3288",
+      "sequence_id": "CTRL-02092500-NETWORK-20260901-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.2926928331922399,
+          "mse_by_lead": {
+            "1": 0.19256192620470275,
+            "2": 0.26106378139803155,
+            "3": 0.42445279197398544
+          },
+          "signed_bias_by_lead": {
+            "1": 0.06149135276057332,
+            "2": 0.11986790449995975,
+            "3": 0.16702365285211038
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.2989619523332256,
+          "mse_by_lead": {
+            "1": 0.19677991744270049,
+            "2": 0.2666021794374139,
+            "3": 0.4335037601195625
+          },
+          "signed_bias_by_lead": {
+            "1": 0.06230071025161359,
+            "2": 0.12154087970080488,
+            "3": 0.16937384633830777
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260901-RESTART731",
+      "sequence_id": "CTRL-02092500-NETWORK-20260901-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.33636456146909527,
+          "mse_by_lead": {
+            "1": 0.24431481408245026,
+            "2": 0.32708166407033384,
+            "3": 0.4376972062545017
+          },
+          "signed_bias_by_lead": {
+            "1": 0.039441286557460216,
+            "2": 0.06959412506240338,
+            "3": 0.09820613846457917
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.3436120426110871,
+          "mse_by_lead": {
+            "1": 0.24970628818462873,
+            "2": 0.33408489034217465,
+            "3": 0.4470449493064578
+          },
+          "signed_bias_by_lead": {
+            "1": 0.03966948296260656,
+            "2": 0.06980364499932548,
+            "3": 0.09864005822451505
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260908-FULL3288",
+      "sequence_id": "CTRL-02092500-NETWORK-20260908-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.33407329799792224,
+          "mse_by_lead": {
+            "1": 0.24335066074429193,
+            "2": 0.3243990445688301,
+            "3": 0.43447018868064463
+          },
+          "signed_bias_by_lead": {
+            "1": 0.03667978483901207,
+            "2": 0.06448358272462014,
+            "3": 0.09143399686419876
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.34126740459546046,
+          "mse_by_lead": {
+            "1": 0.24872010158002902,
+            "2": 0.33134353032108654,
+            "3": 0.4437385818852658
+          },
+          "signed_bias_by_lead": {
+            "1": 0.037204925672455286,
+            "2": 0.06513672669828469,
+            "3": 0.09226021065286269
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260908-RESTART731",
+      "sequence_id": "CTRL-02092500-NETWORK-20260908-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.3525873727099598,
+          "mse_by_lead": {
+            "1": 0.23988594765345497,
+            "2": 0.35785272211472813,
+            "3": 0.4600234483616963
+          },
+          "signed_bias_by_lead": {
+            "1": 0.03961323815938876,
+            "2": 0.08888493611214955,
+            "3": 0.1340561661538478
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.3602418973674039,
+          "mse_by_lead": {
+            "1": 0.2452059537627307,
+            "2": 0.36559859636407643,
+            "3": 0.46992114197540447
+          },
+          "signed_bias_by_lead": {
+            "1": 0.040066409879898644,
+            "2": 0.0898575230033831,
+            "3": 0.13566127448449794
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260915-FULL3288",
+      "sequence_id": "CTRL-02092500-NETWORK-20260915-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.35080832703878895,
+          "mse_by_lead": {
+            "1": 0.23937277127402715,
+            "2": 0.35569920053104603,
+            "3": 0.4573530093112936
+          },
+          "signed_bias_by_lead": {
+            "1": 0.0368073890357246,
+            "2": 0.08321785472924793,
+            "3": 0.12615965029950163
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.35839230368991887,
+          "mse_by_lead": {
+            "1": 0.24467405128628844,
+            "2": 0.363367175149399,
+            "3": 0.46713568463406924
+          },
+          "signed_bias_by_lead": {
+            "1": 0.03736525276067904,
+            "2": 0.0842849857378094,
+            "3": 0.12770450347215512
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260915-RESTART731",
+      "sequence_id": "CTRL-02092500-NETWORK-20260915-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.3403365214238729,
+          "mse_by_lead": {
+            "1": 0.22706217523979141,
+            "2": 0.32230994838730176,
+            "3": 0.47163744064452534
+          },
+          "signed_bias_by_lead": {
+            "1": 0.02520695520159025,
+            "2": 0.04510963788093061,
+            "3": 0.06596830050139765
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.347745851544847,
+          "mse_by_lead": {
+            "1": 0.23209942261556132,
+            "2": 0.32928177280289317,
+            "3": 0.4818563592160865
+          },
+          "signed_bias_by_lead": {
+            "1": 0.025299544764332476,
+            "2": 0.04505497771330722,
+            "3": 0.0660459593869239
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260922-FULL3288",
+      "sequence_id": "CTRL-02092500-NETWORK-20260922-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.34127881868233206,
+          "mse_by_lead": {
+            "1": 0.22950999231731067,
+            "2": 0.32272617907635587,
+            "3": 0.4716002846533296
+          },
+          "signed_bias_by_lead": {
+            "1": 0.02343437146276023,
+            "2": 0.04183464009019243,
+            "3": 0.06170516504389829
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.3486300215415483,
+          "mse_by_lead": {
+            "1": 0.23456295633530944,
+            "2": 0.3296314694592317,
+            "3": 0.48169563883010375
+          },
+          "signed_bias_by_lead": {
+            "1": 0.02370505722529125,
+            "2": 0.04191381124025346,
+            "3": 0.0617358918524807
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NETWORK-20260922-RESTART731",
+      "sequence_id": "CTRL-02092500-NETWORK-20260922-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.49189828505565664,
+          "mse_by_lead": {
+            "1": 0.4243572105179452,
+            "2": 0.5053723228435962,
+            "3": 0.5459653218054287
+          },
+          "signed_bias_by_lead": {
+            "1": 0.17534039680247437,
+            "2": 0.22228819604295472,
+            "3": 0.2581852677865599
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.5022847853246214,
+          "mse_by_lead": {
+            "1": 0.43340432835760295,
+            "2": 0.516030716131783,
+            "3": 0.5574193114844783
+          },
+          "signed_bias_by_lead": {
+            "1": 0.17713944895992076,
+            "2": 0.22468491954439412,
+            "3": 0.2610791188680899
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260824-FULL3288",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260824-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.48563815245540604,
+          "mse_by_lead": {
+            "1": 0.42021743713750076,
+            "2": 0.4988425938278,
+            "3": 0.5378544264009172
+          },
+          "signed_bias_by_lead": {
+            "1": 0.16356958756468845,
+            "2": 0.20760408174507852,
+            "3": 0.241404011518554
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.495990204709897,
+          "mse_by_lead": {
+            "1": 0.4292197923179878,
+            "2": 0.5094692350073569,
+            "3": 0.5492815868043465
+          },
+          "signed_bias_by_lead": {
+            "1": 0.16540675223309875,
+            "2": 0.21016069201277357,
+            "3": 0.2445210003112207
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260824-RESTART731",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260824-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.4886984144689741,
+          "mse_by_lead": {
+            "1": 0.3012633570316984,
+            "2": 0.5553240954543442,
+            "3": 0.6095077909208797
+          },
+          "signed_bias_by_lead": {
+            "1": 0.10647934527356405,
+            "2": 0.15872389751036126,
+            "3": 0.20129848100933653
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.49928134839078026,
+          "mse_by_lead": {
+            "1": 0.3078367022126523,
+            "2": 0.5673731361014981,
+            "3": 0.6226342068581904
+          },
+          "signed_bias_by_lead": {
+            "1": 0.10784924013425076,
+            "2": 0.16060244793438502,
+            "3": 0.20365502210599964
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260901-FULL3288",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260901-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.49375158816902215,
+          "mse_by_lead": {
+            "1": 0.3033918166997321,
+            "2": 0.56024122047396,
+            "3": 0.6176217273333743
+          },
+          "signed_bias_by_lead": {
+            "1": 0.11123290136470315,
+            "2": 0.16575346922160333,
+            "3": 0.21013452258196208
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.5044545762916187,
+          "mse_by_lead": {
+            "1": 0.31001013752707246,
+            "2": 0.5724078919650931,
+            "3": 0.6309456993826907
+          },
+          "signed_bias_by_lead": {
+            "1": 0.11282370291292064,
+            "2": 0.1680188097399433,
+            "3": 0.2129595335986676
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260901-RESTART731",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260901-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.46775898928186166,
+          "mse_by_lead": {
+            "1": 0.3108058026531488,
+            "2": 0.5109099429658408,
+            "3": 0.5815612222265952
+          },
+          "signed_bias_by_lead": {
+            "1": 0.09725708765423989,
+            "2": 0.15713328158094425,
+            "3": 0.20518778550704717
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.47790737546323525,
+          "mse_by_lead": {
+            "1": 0.3176261506939354,
+            "2": 0.5219920753793916,
+            "3": 0.5941039003163786
+          },
+          "signed_bias_by_lead": {
+            "1": 0.09858316130312174,
+            "2": 0.15912954215178696,
+            "3": 0.20781705644609919
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260908-FULL3288",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260908-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.47414608370104067,
+          "mse_by_lead": {
+            "1": 0.3134955243510752,
+            "2": 0.51718905972528,
+            "3": 0.5917536670267668
+          },
+          "signed_bias_by_lead": {
+            "1": 0.10619450793026339,
+            "2": 0.17062111066816937,
+            "3": 0.2222306756326112
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.48442746285718585,
+          "mse_by_lead": {
+            "1": 0.32037877323302083,
+            "2": 0.5284050694890589,
+            "3": 0.6044985458494778
+          },
+          "signed_bias_by_lead": {
+            "1": 0.10778710840317127,
+            "2": 0.17298583763711403,
+            "3": 0.2252419388018306
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260908-RESTART731",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260908-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.5094017328039091,
+          "mse_by_lead": {
+            "1": 0.4502287041948851,
+            "2": 0.5214724560163613,
+            "3": 0.556504038200481
+          },
+          "signed_bias_by_lead": {
+            "1": 0.18121799910124625,
+            "2": 0.2192858297339938,
+            "3": 0.24818371167399753
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.5201787831543515,
+          "mse_by_lead": {
+            "1": 0.4597906124493534,
+            "2": 0.5324976043654795,
+            "3": 0.5682481326482217
+          },
+          "signed_bias_by_lead": {
+            "1": 0.18282450133278863,
+            "2": 0.22144609025737447,
+            "3": 0.2508211626964122
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260915-FULL3288",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260915-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.5059768769356876,
+          "mse_by_lead": {
+            "1": 0.4479109548756255,
+            "2": 0.5179749050749679,
+            "3": 0.5520447708564694
+          },
+          "signed_bias_by_lead": {
+            "1": 0.17319953935924734,
+            "2": 0.20979847967383228,
+            "3": 0.23767838516789536
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.5167697947855191,
+          "mse_by_lead": {
+            "1": 0.45747890698304355,
+            "2": 0.5290221872614059,
+            "3": 0.5638082901121078
+          },
+          "signed_bias_by_lead": {
+            "1": 0.17496690264766737,
+            "2": 0.21220220924807567,
+            "3": 0.24058154143997942
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260915-RESTART731",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260915-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.5005022401828242,
+          "mse_by_lead": {
+            "1": 0.427173610563808,
+            "2": 0.5159216566719624,
+            "3": 0.5584114533127019
+          },
+          "signed_bias_by_lead": {
+            "1": 0.15995465531345518,
+            "2": 0.21117748526008454,
+            "3": 0.2514955802831947
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.5111264414052282,
+          "mse_by_lead": {
+            "1": 0.43633119276828164,
+            "2": 0.526861505777604,
+            "3": 0.5701866256697988
+          },
+          "signed_bias_by_lead": {
+            "1": 0.16140486906274454,
+            "2": 0.2132617969204232,
+            "3": 0.25415307516555885
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260922-FULL3288",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260922-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.4964678853437103,
+          "mse_by_lead": {
+            "1": 0.42491856949480644,
+            "2": 0.5118747285320855,
+            "3": 0.5526103580042389
+          },
+          "signed_bias_by_lead": {
+            "1": 0.15108619015024874,
+            "2": 0.1997427904576903,
+            "3": 0.23814742410716508
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.507091812681258,
+          "mse_by_lead": {
+            "1": 0.43406511366821937,
+            "2": 0.5228219283164898,
+            "3": 0.564388396059065
+          },
+          "signed_bias_by_lead": {
+            "1": 0.15270271484249526,
+            "2": 0.20211965672971488,
+            "3": 0.24113486736268816
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-UNSCENTED-20260922-RESTART731",
+      "sequence_id": "CTRL-02092500-UNSCENTED-20260922-RESTART731"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.6150681456861266,
+          "mse_by_lead": {
+            "1": 0.6077205529283535,
+            "2": 0.6147891228771531,
+            "3": 0.622694761252873
+          },
+          "signed_bias_by_lead": {
+            "1": 0.26598377377166604,
+            "2": 0.26878663990322454,
+            "3": 0.27188131878083716
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.6281965623308275,
+          "mse_by_lead": {
+            "1": 0.6206275806625108,
+            "2": 0.627925019314861,
+            "3": 0.6360370870151105
+          },
+          "signed_bias_by_lead": {
+            "1": 0.2690253560454826,
+            "2": 0.27210300344312965,
+            "3": 0.27541225674130226
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NOUPDATE-NONE-FULL3288",
+      "sequence_id": "CTRL-02092500-NOUPDATE-NONE-FULL3288"
+    },
+    {
+      "metrics": {
+        "full": {
+          "mean_mse": 0.6150681456861266,
+          "mse_by_lead": {
+            "1": 0.6077205529283535,
+            "2": 0.6147891228771531,
+            "3": 0.622694761252873
+          },
+          "signed_bias_by_lead": {
+            "1": 0.26598377377166604,
+            "2": 0.26878663990322454,
+            "3": 0.27188131878083716
+          },
+          "target_count_by_lead": {
+            "1": 728,
+            "2": 728,
+            "3": 728
+          }
+        },
+        "reporting": {
+          "mean_mse": 0.6281965623308275,
+          "mse_by_lead": {
+            "1": 0.6206275806625108,
+            "2": 0.627925019314861,
+            "3": 0.6360370870151105
+          },
+          "signed_bias_by_lead": {
+            "1": 0.2690253560454826,
+            "2": 0.27210300344312965,
+            "3": 0.27541225674130226
+          },
+          "target_count_by_lead": {
+            "1": 712,
+            "2": 712,
+            "3": 712
+          }
+        }
+      },
+      "output": "/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/runs/CTRL-02092500-NOUPDATE-NONE-RESTART731",
+      "sequence_id": "CTRL-02092500-NOUPDATE-NONE-RESTART731"
+    }
+  ],
+  "parity": [
+    {
+      "core_arrays_bitwise_equal": true,
+      "previous_trace_equal": true,
+      "saturation_count": 353,
+      "seed": 20260824
+    },
+    {
+      "core_arrays_bitwise_equal": true,
+      "previous_trace_equal": true,
+      "saturation_count": 222,
+      "seed": 20260901
+    },
+    {
+      "core_arrays_bitwise_equal": true,
+      "previous_trace_equal": true,
+      "saturation_count": 311,
+      "seed": 20260908
+    },
+    {
+      "core_arrays_bitwise_equal": true,
+      "previous_trace_equal": true,
+      "saturation_count": 247,
+      "seed": 20260915
+    },
+    {
+      "core_arrays_bitwise_equal": true,
+      "previous_trace_equal": true,
+      "saturation_count": 295,
+      "seed": 20260922
+    }
+  ],
+  "source_sha256": {
+    "configs/tukf06_full_diagonal_search_head_to_head_v1.json": "4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3",
+    "knet/dl/nn_kalman_clamp_5.py": "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843",
+    "scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/aligned_rematch/__init__.py": "22e0d8419836fd1456f3b09052f50a8a4fbce4517f1f3c8dbae91ef0c609b150",
+    "scripts/aligned_rematch/contract.py": "b20808e97a3c6cb95c72f2739cb6bdf0c691da45bcc05833d831c98cfa755fc6",
+    "scripts/aligned_rematch/knet_arm.py": "cbfe3ea3e205f11b2ea06467bbaa7d1c3e768a0ba0902dfd037a3d521c9cdd76",
+    "scripts/aligned_rematch/trainer.py": "361b69fb8a313a6eb69fe69ddf2380e703c4ad7700ec2c958989c3c1bae7ea9a",
+    "scripts/aligned_rematch/ukf_arm.py": "0fa63467dfd89d531f3c97f8429b53c70f7c8f4f426ef9618f4cd41def3648ff",
+    "scripts/differentiable_ukf_hbvlite.py": "5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d",
+    "scripts/run_aligned_gr4j_da.py": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+    "scripts/run_aligned_gr4j_differentiable_ukf.py": "a8bae71dc1007c3b0502e81e50e766328202996aaf370987a347041ddde0d23f",
+    "scripts/tukf06_full_diagonal_common.py": "2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02",
+    "src/global_hydrology/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/global_hydrology/assimilation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/global_hydrology/assimilation/conventional_ukf.py": "2c1a17f0d48962ab8ac7c68c0ae8edaf0ad616f938a6466f0925d27ee9258c3a",
+    "src/global_hydrology/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/global_hydrology/experiments/daily_camels_knet_per_basin_contract.py": "5ae943564e6fd9506808a311dabc1fd83bb8fcb0ededb5ec6f64ff9c8c983187",
+    "src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py": "770de40d8d472805515c00131c37f4852012be1e0a42b7a3aeb36689a192daa8",
+    "src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py": "bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52",
+    "src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py": "2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69",
+    "src/global_hydrology/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/global_hydrology/models/differentiable_hbv_lite.py": "d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea",
+    "src/global_hydrology/models/hbvlite_system_model.py": "0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597",
+    "src/global_hydrology/models/hbvlite_ukf_adapter.py": "2bf82d8ee0da909982769dd585657feed37a4ad46249f3b1fe9a72e1ccbc377a",
+    "src/global_hydrology/models/knet_native_hbvlite_full_state.py": "3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"
+  }
+}
+AGGREGATE_JSON_END
+SACCT_BEGIN
+227265|kdpp_ctrl_d1|sunyiq|hcpu48|COMPLETED|0:0|00:02:37
+227265.batch|batch|||COMPLETED|0:0|00:02:37
+227265.extern|extern|||COMPLETED|0:0|00:02:37
+SACCT_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:09:49+0800
