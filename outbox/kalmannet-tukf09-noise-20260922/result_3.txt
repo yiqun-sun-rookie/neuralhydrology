@@ -1,0 +1,35 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=3
+### host=login4
+### started=2026-09-22T14:28:46+0800
+### ---------- output ----------
+2026-09-22T06:28:46Z
+OLD_PRIVATE_RUNTIME_METADATA_ONLY
+torch-2.2.2+cu121.dist-info
+numpy-1.26.4.dist-info
+psutil-5.9.0.dist-info
+pip-stdout.log
+private_runtime_manifest.json
+pip-command.txt
+pip-stderr.log
+psutil-built-wheel.sha256
+pip-install-report.json
+runtime-import-check.txt
+MEMORY_ENFORCEMENT_CONFIGURATION
+CGROUP_CONFIGURATION_NOT_READABLE
+RESERVE_NEW_ROOT_EXCLUSIVELY
+e585ab5722ab6c70b87fff716f0eafbf843cf69690dbac4bdb0b8182bb08d5c4  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control/root_creation_command.sh
+directory|sunyiq|750|/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922
+directory|sunyiq|750|/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control
+directory|sunyiq|750|/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/logs
+NO_COMPUTE_SUBMISSION_PERFORMED
+CURRENT_USER_JOBS
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|4|1|(DependencyNeverSatisfied)|/data1/home/sunyiq/nearing2022_da
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|4|1|(Dependency)|/data1/home/sunyiq/nearing2022_da
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|2|1|(Dependency)|/data1/home/sunyiq/hpc_mailbox
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|4|1|(DependencyNeverSatisfied)|/data1/home/sunyiq/hpc_mailbox
+215429|id30_m01_s100|PENDING|hgpu2|4|1|(DependencyNeverSatisfied)|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|4|1|(JobHeldUser)|/data1/home/sunyiq/nearing2022_da
+ROOT_RESERVED_NO_EXISTING_EXPERIMENT_MODIFIED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T14:28:47+0800
