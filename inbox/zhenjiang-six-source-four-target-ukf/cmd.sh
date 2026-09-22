@@ -275,138 +275,267 @@ def control(root, action, stage, release_sha, expected, core_rel):
     finally:
         guard.close()
 
-"""Pure NSE aggregation for one authenticated seed prediction archive."""
-from io import BytesIO
+"""Pure exploratory high-water aggregates; no disk, network or model access."""
+import csv
+from datetime import datetime, timedelta, timezone
 import hashlib
+from io import BytesIO, StringIO
 
 import numpy as np
 
-METHODS = ("no_update", "rolling_encoder", "differentiable_filter")
-STATIONS = ("南京", "镇江", "江阴", "徐六泾", "吴淞口")
-LEADS = 23
-EXPECTED_WINDOWS = 151
-ORIGINS_PER_WINDOW = 48
-EXPECTED_ORIGINS = EXPECTED_WINDOWS * ORIGINS_PER_WINDOW
-EXPECTED_KEYS = set(METHODS) | {"targets", "origins", "scale"}
+METHODS = ('no_update', 'rolling_encoder', 'differentiable_filter')
+STATIONS = ('nanjing', 'zhenjiang', 'jiangyin', 'xuliujing', 'wusongkou')
+SHAPE = (151, 48, 23, 5)
+BEIJING = timezone(timedelta(hours=8))
+IDENTITIES = {
+    'target_sha256': '9124782f2e6cae610a907c4fd37ad99115fad9e3b03a963fda12fe8fb2835827',
+    'origin_sha256': 'ceb3a478459ef10dc5efc3473d17d0a4061db39f994c6003063c837984ceddab',
+    'scale_sha256': '6fd883d4927dec405c2962c4c543a27edd4848206157f66ec26502d56febfc37',
+}
 
 
-def _array_hash(value):
-    array = np.ascontiguousarray(value)
-    header = (str(array.dtype) + ":" + repr(array.shape) + ":").encode("ascii")
-    return hashlib.sha256(header + array.tobytes()).hexdigest()
+def array_hash(array):
+    a = np.ascontiguousarray(array)
+    header = (str(a.dtype) + ':' + repr(a.shape) + ':').encode('ascii')
+    return hashlib.sha256(header + a.tobytes()).hexdigest()
 
 
-def compute_archive(raw):
-    """Return sufficient statistics; never return predictions or targets."""
-    if not isinstance(raw, bytes) or not raw:
-        raise ValueError("non-empty archive bytes required")
+def select_training(rows):
+    """Validate pairs and select finite 2017-2021 observations; no weighting."""
+    values, counts = [], {str(y): 0 for y in range(2017, 2022)}
+    for time, value in rows:
+        if time.year not in range(2017, 2023):
+            raise ValueError('unauthorized year')
+        if np.isinf(value):
+            raise ValueError('infinite observation')
+        if time.year <= 2021 and np.isfinite(value):
+            values.append(value)
+            counts[str(time.year)] += 1
+    if len(values) < 2:
+        raise ValueError('insufficient training observations')
+    a = np.sort(np.asarray(values, dtype=np.float64))
+    position = 0.9 * (len(a) - 1)
+    low, high = int(np.floor(position)), int(np.ceil(position))
+    threshold = float(np.quantile(a, 0.9, method='linear'))
+    independent = float(a[low] + (position - low) * (a[high] - a[low]))
+    if abs(threshold - independent) > 1e-12:
+        raise ValueError('quantile interpolation disagrees')
+    return {'threshold_m': threshold, 'training_valid_count': len(a),
+            'valid_count_by_year': counts, 'quantile': 0.9, 'method': 'linear',
+            'order_position_zero_based': position,
+            'lower_order_index_zero_based': low, 'upper_order_index_zero_based': high,
+            'lower_order_statistic_m': float(a[low]),
+            'upper_order_statistic_m': float(a[high])}
+
+
+def training_quantile(raw):
+    expected = ('TIME', 'TARGET_STAGE', 'time_beijing', 'time_utc', 'is_missing_for_target')
+    reader = csv.DictReader(StringIO(raw.decode('utf-8'), newline=''))
+    if tuple(reader.fieldnames or ()) != expected:
+        raise ValueError('CSV columns differ')
+    start = datetime(2017, 1, 1, tzinfo=BEIJING)
+    end = datetime(2023, 1, 1, tzinfo=BEIJING)
+    parsed = []
+    for row in reader:
+        if set(row) != set(expected) or any(v is None for v in row.values()):
+            raise ValueError('CSV width differs')
+        time = datetime.fromisoformat(row['time_beijing'])
+        utc = datetime.fromisoformat(row['time_utc'])
+        if (time.utcoffset() != timedelta(hours=8) or utc.utcoffset() != timedelta(0)
+                or row['TIME'] != row['time_beijing'] or time.astimezone(timezone.utc) != utc):
+            raise ValueError('timestamp pair differs')
+        if time != start + timedelta(hours=len(parsed)) or not start <= time < end:
+            raise ValueError('timeline differs or unauthorized year')
+        flag, cell = row['is_missing_for_target'], row['TARGET_STAGE']
+        if flag == 'True' and cell == '':
+            value = float('nan')
+        elif flag == 'False' and cell != '' and np.isfinite(float(cell)):
+            value = float(cell)
+        else:
+            raise ValueError('missing flag/value differs')
+        parsed.append((time, value))
+    if len(parsed) != int((end - start).total_seconds() // 3600):
+        raise ValueError('incomplete six-year timeline')
+    result = select_training(parsed)
+    result['source_hour_count'] = len(parsed)
+    result['training_missing_count'] = 43824 - result['training_valid_count']
+    return result
+
+
+def nullable(a):
+    value = np.asarray(a)
+    return np.where(np.isfinite(value), value, None).tolist()
+
+
+def derive(sae, sse, counts, sst):
+    sae, sse = np.asarray(sae, dtype=float), np.asarray(sse, dtype=float)
+    counts, sst = np.asarray(counts), np.asarray(sst, dtype=float)
+    mae = np.full(sae.shape, np.nan)
+    nse = np.full(sse.shape, np.nan)
+    np.divide(1000 * sae, counts, out=mae, where=counts > 0)
+    np.divide(sse, sst, out=nse, where=(counts >= 2) & (sst > 0))
+    nse = 1 - nse
+    return {'mae_mm': nullable(mae), 'nse': nullable(nse)}
+
+
+def high_statistics(targets, predictions, origins, scale, mean, thresholds):
+    targets = np.asarray(targets)
+    scale, mean, thresholds = (np.asarray(x, dtype=np.float64) for x in (scale, mean, thresholds))
+    if (targets.ndim != 4 or targets.dtype.kind != 'f'
+            or np.asarray(origins).shape != targets.shape[:2]
+            or any(a.shape != (targets.shape[-1],) for a in (scale, mean, thresholds))
+            or any(not np.isfinite(a).all() for a in (targets, scale, mean, thresholds))
+            or np.any(scale <= 0) or set(predictions) != set(METHODS)):
+        raise ValueError('array shape, finite values or scale differs')
+    cutoff = ((thresholds - mean) / scale).astype(targets.dtype)
+    mask = targets >= cutoff
+    physical = targets.astype(np.float64) * scale + mean
+    counts = mask.sum(axis=(0, 1), dtype=np.int64)
+    target_sum = np.where(mask, physical, 0).sum(axis=(0, 1), dtype=np.float64)
+    average = np.zeros(counts.shape, dtype=np.float64)
+    np.divide(target_sum, counts, out=average, where=counts > 0)
+    sst = np.where(mask, (physical - average) ** 2, 0).sum(axis=(0, 1), dtype=np.float64)
+    # Exact constancy, not an arbitrary near-zero tolerance: physical conversion
+    # and summation can otherwise invent a tiny positive denominator.
+    high_min = np.where(mask, targets, np.inf).min(axis=(0, 1))
+    high_max = np.where(mask, targets, -np.inf).max(axis=(0, 1))
+    sst[(counts > 0) & (high_min == high_max)] = 0.0
+    sae, sse = [], []
+    for name in METHODS:
+        p = np.asarray(predictions[name])
+        if p.shape != targets.shape or p.dtype.kind != 'f' or not np.isfinite(p).all():
+            raise ValueError('prediction shape or finite value differs')
+        error = (p.astype(np.float64) - targets.astype(np.float64)) * scale
+        sae.append(np.where(mask, np.abs(error), 0).sum(axis=(0, 1), dtype=np.float64))
+        sse.append(np.where(mask, error ** 2, 0).sum(axis=(0, 1), dtype=np.float64))
+    hours = np.asarray(origins)[..., None] + np.arange(1, targets.shape[2] + 1)
+    unique = [len(np.unique(hours[mask[..., station]])) for station in range(targets.shape[-1])]
+    result = {
+        'counts': counts.tolist(), 'target_mean_m': nullable(np.where(counts > 0, average, np.nan)),
+        'target_sst_m2': sst.tolist(), 'absolute_error_sum_m': np.asarray(sae).tolist(),
+        'squared_error_sum_m2': np.asarray(sse).tolist(),
+        'encoded_threshold': cutoff.astype(float).tolist(),
+        'encoded_threshold_roundtrip_error_m': (cutoff.astype(float) * scale + mean - thresholds).tolist(),
+        'mask_sha256': array_hash(mask), 'unique_high_target_hours_across_leads': unique,
+        'windows_with_high_by_lead_station': mask.any(axis=1).sum(axis=0).tolist(),
+    }
+    result.update(derive(sae, sse, counts, sst))
+    return result
+
+
+def compute_high_archive(raw, scale, mean, thresholds):
     with np.load(BytesIO(raw), allow_pickle=False) as archive:
-        if set(archive.files) != EXPECTED_KEYS:
-            raise ValueError("prediction archive keys differ")
-        targets_native = np.asarray(archive["targets"])
-        origins = np.asarray(archive["origins"])
-        scale = np.asarray(archive["scale"])
-        expected_shape = (
-            EXPECTED_WINDOWS,
-            ORIGINS_PER_WINDOW,
-            LEADS,
-            len(STATIONS),
-        )
-        if targets_native.shape != expected_shape or origins.shape != (
-                EXPECTED_WINDOWS, ORIGINS_PER_WINDOW):
-            raise ValueError("target or origin shape differs")
-        if scale.shape != (len(STATIONS),) or not np.issubdtype(
-                targets_native.dtype, np.number):
-            raise ValueError("scale or target dtype differs")
-        targets = targets_native.astype(np.float64, copy=False)
-        scale64 = scale.astype(np.float64, copy=False)
-        if (not np.isfinite(targets).all() or not np.isfinite(scale64).all()
-                or np.any(scale64 <= 0)):
-            raise ValueError("target or scale is not finite and positive")
-        target_mean = targets.mean(axis=(0, 1))
-        sst = np.square(targets - target_mean[None, None]).sum(
-            axis=(0, 1), dtype=np.float64)
-        if not np.isfinite(sst).all() or np.any(sst <= 0):
-            raise ValueError("NSE denominator is not finite and positive")
-        squared_error_sums = []
-        nse = []
-        for method in METHODS:
-            prediction_native = np.asarray(archive[method])
-            if (prediction_native.shape != expected_shape
-                    or not np.issubdtype(prediction_native.dtype, np.number)):
-                raise ValueError("prediction shape or dtype differs: " + method)
-            prediction = prediction_native.astype(np.float64, copy=False)
-            if not np.isfinite(prediction).all():
-                raise ValueError("prediction is not finite: " + method)
-            sse = np.square(prediction - targets).sum(
-                axis=(0, 1), dtype=np.float64)
-            score = 1.0 - sse / sst
-            if not np.isfinite(score).all():
-                raise ValueError("NSE is not finite: " + method)
-            squared_error_sums.append(sse.tolist())
-            nse.append(score.tolist())
-    return {
-        "shape": list(expected_shape),
-        "target_sha256": _array_hash(targets_native),
-        "origin_sha256": _array_hash(origins),
-        "scale_sha256": _array_hash(scale),
-        "target_sst": sst.tolist(),
-        "squared_error_sums": squared_error_sums,
-        "nse": nse,
-    }
+        if set(archive.files) != set(METHODS) | {'targets', 'origins', 'scale'}:
+            raise ValueError('archive members differ')
+        targets, origins, stored_scale = (archive[k] for k in ('targets', 'origins', 'scale'))
+        identities = dict(zip(IDENTITIES, (array_hash(a) for a in (targets, origins, stored_scale))))
+        if identities != IDENTITIES or targets.shape != SHAPE or not np.array_equal(stored_scale, scale):
+            raise ValueError('frozen arrays or scale identity differs')
+        result = high_statistics(targets, {m: archive[m] for m in METHODS}, origins, scale, mean, thresholds)
+        result.update(identities)
+        return result
+
+"""Descriptor-bound, allowlisted, one-read training source reader (Linux)."""
+import hashlib
+import os
+from pathlib import PurePosixPath
+import stat
 
 
-def combine_seed_records(records):
-    if not isinstance(records, list) or len(records) != 3:
-        raise ValueError("exactly three seed records required")
-    for field in ("shape", "target_sha256", "origin_sha256", "scale_sha256"):
-        if len({repr(record[field]) for record in records}) != 1:
-            raise ValueError("seed target identity differs: " + field)
-    sst = np.asarray([record["target_sst"] for record in records], dtype=np.float64)
-    sse = np.asarray(
-        [record["squared_error_sums"] for record in records], dtype=np.float64)
-    nse = np.asarray([record["nse"] for record in records], dtype=np.float64)
-    if (sst.shape != (3, LEADS, len(STATIONS))
-            or sse.shape != (3, len(METHODS), LEADS, len(STATIONS))):
-        raise ValueError("seed statistic shape differs")
-    rebuilt = 1.0 - sse / sst[:, None]
-    if not np.allclose(rebuilt, nse, rtol=0.0, atol=1e-12):
-        raise ValueError("reported NSE differs from sufficient statistics")
-    mean_station = nse.mean(axis=0)
-    macro = mean_station.mean(axis=2)
-    pooled_by_seed = 1.0 - sse.sum(axis=3) / sst.sum(axis=2)[:, None]
-    pooled = pooled_by_seed.mean(axis=0)
-    return {
-        "per_seed_method_lead_station_nse": nse.tolist(),
-        "per_method_lead_station_nse": mean_station.tolist(),
-        "per_method_lead_macro_nse": macro.tolist(),
-        "per_method_lead_pooled_nse": pooled.tolist(),
-        "per_seed_method_lead_station_sse": sse.tolist(),
-        "per_seed_lead_station_sst": sst.tolist(),
-    }
+class TrainingReader:
+    def __init__(self, rows):
+        self.rows = {r['path']: dict(r) for r in rows}
+        if len(rows) != 5 or len(self.rows) != 5:
+            raise ValueError('exact five training sources required')
+        self.used = []
 
+    def read(self, row):
+        if self.rows.get(row['path']) != row or row['path'] in [r['path'] for r in self.used]:
+            raise ValueError('source unregistered or duplicate')
+        path = PurePosixPath(row['path'])
+        prefix = '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/'
+        if (not str(path).startswith(prefix) or '..' in path.parts or not path.is_absolute()
+                or not 0 < row['bytes'] <= 5000000 or path.suffix != '.csv'):
+            raise ValueError('source path or bound differs')
+        self.used.append(dict(row))
+        directories = []
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        try:
+            directories.append(os.open('/', flags))
+            for part in path.parts[1:-1]:
+                directories.append(os.open(part, flags, dir_fd=directories[-1]))
+            fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=directories[-1])
+            with os.fdopen(fd, 'rb', buffering=0) as handle:
+                before = os.fstat(handle.fileno())
+                if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or before.st_size != row['bytes']:
+                    raise ValueError('training source size or type differs')
+                raw = handle.read(row['bytes'] + 1)
+                after = os.fstat(handle.fileno())
+                identity = lambda m: (m.st_dev, m.st_ino, m.st_size, m.st_mtime_ns)
+                if (identity(before) != identity(after) or len(raw) != row['bytes']
+                        or hashlib.sha256(raw).hexdigest() != row['sha256']
+                        or identity(os.stat(path.name, dir_fd=directories[-1], follow_symlinks=False)) != identity(after)):
+                    raise ValueError('training source changed')
+            for index, part in enumerate(path.parts[1:-1]):
+                linked = os.stat(part, dir_fd=directories[index], follow_symlinks=False)
+                pinned = os.fstat(directories[index + 1])
+                if (linked.st_dev, linked.st_ino) != (pinned.st_dev, pinned.st_ino):
+                    raise ValueError('training ancestor changed')
+            return raw
+        finally:
+            for fd in reversed(directories):
+                os.close(fd)
+
+request={'training_sources': [{'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv', 'bytes': 4674734, 'sha256': '9e0d1bdd950326bc1c11e05bfcc26ecf6ac847a2e15d01c7cdc49d79644c14b4'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv', 'bytes': 4703632, 'sha256': '17d897dea5b3599717b1ad2bfd9520ae7e1900d1c9247e27b4d542f2701de937'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv', 'bytes': 4674038, 'sha256': '922157f3294822f86a58d1f590cd0c54eb3b7529beeb957bc53192126b211891'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv', 'bytes': 4674687, 'sha256': '4344b95978c5308cb22bbd3b39e703e9ac6f8daf7973d2a4089c54ef212eb9f8'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv', 'bytes': 4671875, 'sha256': 'ecba8ddbb6f1fca085194794c55041f45166975fb467074188c9acabb7056d78'}], 'array_sources': [{'bytes': 7395989, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_17.npz', 'sha256': 'faf14e7721cf677299f4dd92e8f13df3161b4a128e2a1b1209a5c557cca5d257'}, {'bytes': 7405828, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_29.npz', 'sha256': 'd17e5da02ccf2cc493e0e5c8945dc683cb03f91a7703679b4f5597b06a9cde14'}, {'bytes': 7416208, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_43.npz', 'sha256': '31d483c7e48e5f070d8a15292733f8c1e1ff3680c651098102639746971efad7'}], 'normalization': {'ddof': 0, 'mean_m': [5.400405236226313, 4.6402023945551205, 3.320065825425991, 2.759381737791283, 2.238691191812825], 'normalization_sha256': 'b79ff31ade01a53484038f51995ecf5b9d04e52c9dbf30282423e0cbca16f406', 'role': 'explicit_stage', 'station_order': ['nanjing', 'zhenjiang', 'jiangyin', 'xuliujing', 'wusongkou'], 'std_m': [1.5813798323932793, 1.2406226087623022, 0.870605641869221, 0.8872664836969456, 0.889800898572366], 'unique_timestamp_count': 40258, 'unique_timestamp_manifest_sha256': 'd9f4462b82040837241678886ca4a254d7906e662df34bab82e64558a070b2e2'}, 'training_opens': 5, 'training_read_bytes': 23398966, 'array_opens': 3, 'array_read_bytes': 22218025, 'authentication_opens': 28, 'authentication_max_bytes': 393996}
 binding={'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'}
 release_sha='8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678'
-array_rows=[{'bytes': 7395989, 'path': 'evaluate/arrays/seed_17.npz', 'sha256': 'faf14e7721cf677299f4dd92e8f13df3161b4a128e2a1b1209a5c557cca5d257'}, {'bytes': 7405828, 'path': 'evaluate/arrays/seed_29.npz', 'sha256': 'd17e5da02ccf2cc493e0e5c8945dc683cb03f91a7703679b4f5597b06a9cde14'}, {'bytes': 7416208, 'path': 'evaluate/arrays/seed_43.npz', 'sha256': '31d483c7e48e5f070d8a15292733f8c1e1ff3680c651098102639746971efad7'}]
-seed_values=(17, 29, 43)
-gate=Root(REMOTE_ROOT,binding)
-records=[]
+
+class RecordedRoot(Root):
+    def __init__(self, *args):
+        self.read_log = []
+        super().__init__(*args)
+    def read(self, name, maximum=2000000, expected=None):
+        if any(row['path'] == name for row in self.read_log):
+            raise ValueError('duplicate authenticated root read')
+        raw = super().read(name, maximum=maximum, expected=expected)
+        self.read_log.append({'path': name, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()})
+        return raw
+gate = RecordedRoot(REMOTE_ROOT, binding)
 try:
-    authenticate(gate,release_sha,binding)
-    for row in array_rows:
-        raw=gate.read(row['path'],maximum=8000000,expected={'bytes':row['bytes'],'sha256':row['sha256']})
-        records.append(compute_archive(raw))
+    authenticate(gate, release_sha, binding)
+    authentication_reads = list(gate.read_log)
+    if (len(authentication_reads) != request['authentication_opens']
+            or sum(row['bytes'] for row in authentication_reads) > request['authentication_max_bytes']):
+        raise ValueError('authentication reads exceed fixed budget')
+    training_reader = TrainingReader(request['training_sources'])
+    quantiles = [training_quantile(training_reader.read(row)) for row in request['training_sources']]
+    thresholds = [row['threshold_m'] for row in quantiles]
+    norm = request['normalization']
+    records = []
+    for row in request['array_sources']:
+        raw = gate.read(row['path'][len(REMOTE_ROOT)+1:], maximum=8000000,
+                        expected={'bytes': row['bytes'], 'sha256': row['sha256']})
+        records.append(compute_high_archive(raw, norm['std_m'], norm['mean_m'], thresholds))
         del raw
-    combined=combine_seed_records(records)
-    answer={'schema':'nse-by-lead-v2','methods':list(METHODS),'stations':list(STATIONS),'lead_hours':list(range(1,LEADS+1)),'seeds':list(seed_values),'n_windows':EXPECTED_WINDOWS,'origins_per_window':ORIGINS_PER_WINDOW,'n_origins':EXPECTED_ORIGINS,'nse_definition':'1 - sum((prediction-target)^2) / sum((target-mean_target_for_same_lead_and_station)^2)','macro_definition':'equal mean of station NSE, then equal mean of three seeds','pooled_definition':'station-pooled squared-error ratio, then equal mean of three seeds','source_archives':[{'path':REMOTE_ROOT+'/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']} for row in array_rows],'target_sha256':records[0]['target_sha256'],'origin_sha256':records[0]['origin_sha256'],'scale_sha256':records[0]['scale_sha256'],'source_opens':len(array_rows),'source_read_bytes':sum(row['bytes'] for row in array_rows)}
-    answer.update(combined)
-    reply=json.dumps(answer,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
-    if len(reply)>500000:
-        raise ValueError('NSE aggregate reply exceeds bound')
+    shared = ('counts','target_mean_m','target_sst_m2','encoded_threshold',
+              'encoded_threshold_roundtrip_error_m','mask_sha256',
+              'unique_high_target_hours_across_leads','windows_with_high_by_lead_station')
+    if any(record[key] != records[0][key] for record in records[1:] for key in shared):
+        raise ValueError('seed high-water samples differ')
+    answer = {'schema': 'high-water-v1', 'year': 2024, 'seeds': [17,29,43],
+              'methods': list(METHODS), 'stations': list(STATIONS), 'leads': list(range(1,24)),
+              'request': request, 'quantiles': quantiles, 'records': records,
+              'training_sources_read': training_reader.used,
+              'authentication_reads': authentication_reads,
+              'array_reads': gate.read_log[len(authentication_reads):],
+              'numpy_version': np.__version__, 'remote_experiment_writes': 0}
+    reply = json.dumps(answer, ensure_ascii=False, sort_keys=True, separators=(',',':'), allow_nan=False).encode()
+    if len(reply) > 500000:
+        raise ValueError('high-water reply too large')
     gate.check()
 finally:
     gate.close()
-print(reply.decode('utf-8'))
+print(reply.decode())
 
 SHARED_RELEASE_VERIFIED_PY
-# corrected read-only NSE aggregation; no remote writes
+# read-only high-water aggregation seq=143
