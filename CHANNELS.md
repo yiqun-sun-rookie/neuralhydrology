@@ -121,3 +121,5 @@ git rm inbox/seq
 | `kalmannet-wrr-final-eval-20260920` | WRR selected existing-model retrieval and local evaluation | 2026-09-20 | Read only the three registered completed weights/logs in the two existing WRR training roots; encrypted export only; no training, cluster computation, job mutation, or changes to other channels. |
 
 | `kalmannet-wrr-compact-eval-20260921` | WRR compact existing-model retrieval and local evaluation | 2026-09-21 | Read only the three registered completed weights/logs in the two existing WRR training roots; encrypted export only; no training, cluster computation, job mutation, or changes to other channels. |
+
+| `kalmannet-tukf09-noise-20260922` | 455-basin scaled-noise follow-up: isolated two-basin technical rehearsal, no full study or evaluation | 2026-09-22 | Dedicated proposed root `/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922`; no existing jobs, environments, channels or results modified; no automatic retry/requeue |
