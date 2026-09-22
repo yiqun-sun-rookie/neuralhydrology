@@ -1,40 +1,29 @@
 #!/usr/bin/env bash
 set -eo pipefail
-root='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922'
-stage="$root/control/environment_probe_v1"
-date -u '+%Y-%m-%dT%H:%M:%SZ'
-[ "$(readlink -f "$stage")" = "$stage" ] || exit 21
-response="$stage/submission_response.txt"
-[ -r "$response" ] || exit 22
-job_count=$(awk '/^Submitted batch job [0-9]+$/ {n++} END {print n+0}' "$response")
-[ "$job_count" -eq 1 ] || exit 23
-job_id=$(awk '/^Submitted batch job [0-9]+$/ {print $4}' "$response")
-[ "$job_id" = 227210 ] || exit 24
-printf 'REGISTERED_ENVIRONMENT_ONLY_JOB=%s\n' "$job_id"
-# Completed jobs may leave the live queue before their history/logs are read.
-set +e
-queue_output=$(squeue -j "$job_id" -h -o '%i|%j|%T|%P|%C|%D|%R|%Z' 2>&1)
-queue_rc=$?
-set -e
-if [ "$queue_rc" -eq 0 ]; then
-    printf '%s\n' "$queue_output"
-elif [ "$queue_rc" -eq 1 ] && [ "$queue_output" = 'slurm_load_jobs error: Invalid job id specified' ]; then
-    printf 'JOB_NOT_IN_LIVE_QUEUE_QUERY_ACCOUNTING_AND_LOGS\n'
-else
-    printf '%s\n' "$queue_output"
-    exit "$queue_rc"
-fi
-sacct -j "$job_id" --noheader --parsable2 --format=JobID,JobName%25,Partition,State,ExitCode,Elapsed,AllocCPUS,TotalCPU,MaxRSS,ReqMem,AllocTRES%80,NodeList
-for suffix in out err; do
-    logfile="$root/logs/environment_probe_${job_id}.$suffix"
-    if [ -f "$logfile" ]; then
-        printf 'EXACT_LOG_FILE %s\n' "$logfile"
-        sha256sum "$logfile"
-        tail -c 30000 "$logfile"
-    else
-        printf 'LOG_NOT_CREATED %s\n' "$logfile"
-    fi
-done
-printf 'CURRENT_USER_JOBS_READ_ONLY\n'
-squeue -u sunyiq -h -o '%i|%j|%T|%P|%C|%D|%R|%Z'
-printf 'ENVIRONMENT_STATUS_ONLY_NO_SUBMISSIONS_OR_JOB_MUTATIONS\n'
+export PYTHONDONTWRITEBYTECODE=1
+
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - 9e428c321ef1cddbf39c016cb048198d4ecb012e3e1ef37b479556359edea599 ad840ffd9959505a31686dc3f255947b1dae2a45bab33ef24de0e97e04fc4f08 <<'PY'
+import hashlib
+import sys
+import zipfile
+from pathlib import Path
+
+archive_sha, manifest_sha = sys.argv[1:]
+for value in (archive_sha, manifest_sha):
+    if len(value) != 64 or any(char not in '0123456789abcdef' for char in value):
+        raise SystemExit('unfilled or invalid fingerprint placeholder')
+
+archive_path = Path('/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-tukf09-noise-20260922/payload/narrow_probe_v1.zip')
+with archive_path.open('rb') as stream:
+    if hashlib.file_digest(stream, 'sha256').hexdigest() != archive_sha:
+        raise SystemExit('archive fingerprint mismatch')
+
+deploy_name = 'hpc/tukf09_two_basin_hpc_deploy_v1.py'
+with zipfile.ZipFile(archive_path) as archive:
+    if archive.namelist().count(deploy_name) != 1:
+        raise SystemExit('deploy member missing or duplicated')
+    deploy_source = archive.read(deploy_name)
+
+sys.argv = [deploy_name, archive_sha, manifest_sha]
+exec(compile(deploy_source, deploy_name, 'exec'), {'__name__': '__main__', '__file__': deploy_name})
+PY
