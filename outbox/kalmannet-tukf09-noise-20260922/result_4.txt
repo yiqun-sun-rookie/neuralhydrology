@@ -1,0 +1,38 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=4
+### host=login4
+### started=2026-09-22T14:37:41+0800
+### ---------- output ----------
+084bf192fbddd0fc8d4954302beefd2d1e04a53b28247e9c8f7c267ba7c6d4f1  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control/environment_probe_v1/environment_probe_v1.slurm
+Submitted batch job 227210
+CONFIRMED_ENVIRONMENT_ONLY_JOB_ID=227210
+227210|KN-noise-env-0922|PENDING|hcpu48y|1|1|(None)|/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control/environment_probe_v1
+JobId=227210 JobName=KN-noise-env-0922
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=190005 Nice=10000 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A
+   SubmitTime=2026-09-22T14:38:51 EligibleTime=2026-09-22T14:38:51
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-22T14:38:51
+   Partition=hcpu48y AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=1,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control/environment_probe_v1/environment_probe_v1.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/control/environment_probe_v1
+   StdErr=/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/logs/environment_probe_227210.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/logs/environment_probe_227210.out
+   Power=
+
+HYDROLOGY_MODEL_CALLS=0 OPTIMIZER_UPDATES=0 EVALUATION_CALLS=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T14:37:42+0800
