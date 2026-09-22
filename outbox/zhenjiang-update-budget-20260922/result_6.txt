@@ -1,0 +1,8 @@
+### channel=zhenjiang-update-budget-20260922 seq=6
+### host=login4
+### started=2026-09-22T21:07:32+0800
+### ---------- output ----------
+{"epoch_20_best_epoch": 19, "epoch_20_best_score_m": 0.10500910429116138, "epoch_20_record_sha256": "6efc70d81f1377c789dc91f80ff8f0417f95c7b5a879f0ea669dd95a2e7e4c37", "gate_sha256": "985caadc7cb84b9088745c544a8e57f3e767ff3c043bf0aae7a3cfbedcec4c38", "gate_status": "passed", "job_id": "227320", "old_best_epoch": 19, "old_best_score_m": 0.10500910429116138, "old_best_state_sha256": "da6cf8ceb96a910aeba7bebbde47433f0fc2f51e0419303206bd14d516749c42", "old_final_checkpoint": {"bytes": 66568, "path": "/data1/home/sunyiq/zhenjiang_update_budget_20260922_001/run/seed_17/rolling_encoder/epoch_20.pt", "sha256": "5b7848acbab9a43c5ab0d8a63519a7f0fd31d1f66038cf05f9ea2558e5e639f9"}, "seed": 17, "stage": "rolling_encoder"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T21:07:33+0800
