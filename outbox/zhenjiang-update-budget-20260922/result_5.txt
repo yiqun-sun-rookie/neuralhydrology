@@ -1,0 +1,8 @@
+### channel=zhenjiang-update-budget-20260922 seq=5
+### host=login4
+### started=2026-09-22T21:03:50+0800
+### ---------- output ----------
+{"attempt": {"job_id": "227320", "status": "reserved_no_retry"}, "complete": null, "failure": null, "groups": {"17/differentiable_filter": {"epoch_json_count": 0, "identity_20_present": false, "selection_present": false}, "17/rolling_encoder": {"epoch_json_count": 30, "identity_20_present": true, "selection_present": false}, "29/differentiable_filter": {"epoch_json_count": 0, "identity_20_present": false, "selection_present": false}, "29/rolling_encoder": {"epoch_json_count": 0, "identity_20_present": false, "selection_present": false}, "43/differentiable_filter": {"epoch_json_count": 0, "identity_20_present": false, "selection_present": false}, "43/rolling_encoder": {"epoch_json_count": 0, "identity_20_present": false, "selection_present": false}}, "job_id": "227320", "run_exists": true, "sacct": {"returncode": 0, "stderr": "", "stdout": "227320|RUNNING|00:08:29|0:0\n227320.batch|RUNNING|00:08:29|0:0\n227320.extern|RUNNING|00:08:29|0:0\n"}, "squeue": {"returncode": 0, "stderr": "", "stdout": "RUNNING|7:19|ngu011\n"}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T21:03:52+0800
