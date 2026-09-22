@@ -5,7 +5,8 @@ echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
 echo "=== FAILURES/TIMEOUTS 7d ==="
 sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
-echo "=== WARMPAIR 219423 ==="
+echo "=== WARMPAIR 219423 + any newer warm* ==="
+sacct -X -n -P -S 2026-09-03 --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E "N22-warm" || true
 sacct -j 219423 -X -n -P --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null || echo '  not found'
 echo "=== LOG IDLE SECONDS ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
