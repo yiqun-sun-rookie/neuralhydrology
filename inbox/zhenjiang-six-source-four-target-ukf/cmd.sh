@@ -435,58 +435,91 @@ def compute_high_archive(raw, scale, mean, thresholds):
         result.update(identities)
         return result
 
-"""Descriptor-bound, allowlisted, one-read training source reader (Linux)."""
-import hashlib
-import os
-from pathlib import PurePosixPath
-import stat
+"""Pure same-sample astronomical-tide comparison; no file or network access."""
+from datetime import datetime, timedelta, timezone
+from io import BytesIO
+
+import numpy as np
 
 
-class TrainingReader:
-    def __init__(self, rows):
-        self.rows = {r['path']: dict(r) for r in rows}
-        if len(rows) != 5 or len(self.rows) != 5:
-            raise ValueError('exact five training sources required')
-        self.used = []
+def calculate(raw, norm, thresholds, frozen, identities, tide_predictor, array_hash):
+    """Aggregate one frozen archive without returning any observations or forecasts."""
+    with np.load(BytesIO(raw), allow_pickle=False) as archive:
+        if set(archive.files) != {
+                'targets', 'origins', 'scale', 'no_update', 'rolling_encoder',
+                'differentiable_filter'}:
+            raise ValueError('archive members differ')
+        targets, origins, stored_scale = (archive[k] for k in ('targets', 'origins', 'scale'))
+        observed = dict(zip(identities, (array_hash(x) for x in
+                                         (targets, origins, stored_scale))))
+        if observed != identities or targets.shape != (151, 48, 23, 5):
+            raise ValueError('frozen target or origin identity differs')
+        if (origins.shape != (151, 48) or origins.dtype.kind not in 'iu'
+                or origins.min() < 0 or origins.max() + 23 >= 8784
+                or targets.dtype.kind != 'f' or not np.isfinite(targets).all()):
+            raise ValueError('2024 calendar or target support differs')
+        scale = np.asarray(norm['std_m'], dtype=np.float64)
+        mean = np.asarray(norm['mean_m'], dtype=np.float64)
+        cutoff = ((np.asarray(thresholds, dtype=np.float64) - mean) / scale).astype(targets.dtype)
+        if (scale.shape != (5,) or mean.shape != (5,) or not np.isfinite(scale).all()
+                or not np.isfinite(mean).all() or np.any(scale <= 0)
+                or not np.array_equal(stored_scale, scale)
+                or cutoff.astype(float).tolist() != frozen['encoded_threshold']):
+            raise ValueError('normalization or encoded threshold differs')
+        mask = targets >= cutoff
+        if array_hash(mask) != frozen['mask_sha256']:
+            raise ValueError('same high-water sample mask differs')
+        counts_all = mask.sum(axis=(0, 1), dtype=np.int64).tolist()
+        if counts_all != frozen['counts']:
+            raise ValueError('high-water sample counts differ')
 
-    def read(self, row):
-        if self.rows.get(row['path']) != row or row['path'] in [r['path'] for r in self.used]:
-            raise ValueError('source unregistered or duplicate')
-        path = PurePosixPath(row['path'])
-        prefix = '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/'
-        if (not str(path).startswith(prefix) or '..' in path.parts or not path.is_absolute()
-                or not 0 < row['bytes'] <= 5000000 or path.suffix != '.csv'):
-            raise ValueError('source path or bound differs')
-        self.used.append(dict(row))
-        directories = []
-        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        try:
-            directories.append(os.open('/', flags))
-            for part in path.parts[1:-1]:
-                directories.append(os.open(part, flags, dir_fd=directories[-1]))
-            fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=directories[-1])
-            with os.fdopen(fd, 'rb', buffering=0) as handle:
-                before = os.fstat(handle.fileno())
-                if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or before.st_size != row['bytes']:
-                    raise ValueError('training source size or type differs')
-                raw = handle.read(row['bytes'] + 1)
-                after = os.fstat(handle.fileno())
-                identity = lambda m: (m.st_dev, m.st_ino, m.st_size, m.st_mtime_ns)
-                if (identity(before) != identity(after) or len(raw) != row['bytes']
-                        or hashlib.sha256(raw).hexdigest() != row['sha256']
-                        or identity(os.stat(path.name, dir_fd=directories[-1], follow_symlinks=False)) != identity(after)):
-                    raise ValueError('training source changed')
-            for index, part in enumerate(path.parts[1:-1]):
-                linked = os.stat(part, dir_fd=directories[index], follow_symlinks=False)
-                pinned = os.fstat(directories[index + 1])
-                if (linked.st_dev, linked.st_ino) != (pinned.st_dev, pinned.st_ino):
-                    raise ValueError('training ancestor changed')
-            return raw
-        finally:
-            for fd in reversed(directories):
-                os.close(fd)
+        target = targets[..., 4].astype(np.float64) * scale[4] + mean[4]
+        selected = mask[..., 4]
+        hours = origins[..., None] + np.arange(1, 24, dtype=np.int64)
+        unique_hours, reverse = np.unique(hours, return_inverse=True)
+        start = datetime(2024, 1, 1, tzinfo=timezone(timedelta(hours=8)))
+        times = [start + timedelta(hours=int(hour)) for hour in unique_hours]
+        tide_unique = np.asarray(tide_predictor(times))
+        if (tide_unique.shape != unique_hours.shape or tide_unique.dtype != np.dtype('float64')
+                or not np.isfinite(tide_unique).all()):
+            raise ValueError('frozen tide forecast shape or precision differs')
+        tide = tide_unique[reverse].reshape(hours.shape)
+        err = tide - target
+        count, sae, sse, means, sst = [], [], [], [], []
+        for lead in range(23):
+            chosen = selected[:, :, lead]
+            y = target[:, :, lead][chosen]
+            e = err[:, :, lead][chosen]
+            n = int(y.size)
+            if n != frozen['counts'][lead][4] or n < 2:
+                raise ValueError('per-lead high-water sample count differs')
+            ym = float(y.mean(dtype=np.float64))
+            denominator = float(np.sum((y - ym) ** 2, dtype=np.float64))
+            expected = float(frozen['target_sst_m2'][lead][4])
+            if abs(denominator - expected) > 1e-9 * max(1.0, expected):
+                raise ValueError('per-lead observed variation differs')
+            if denominator <= 0:
+                raise ValueError('non-positive observed variation')
+            count.append(n)
+            sae.append(float(np.sum(np.abs(e), dtype=np.float64)))
+            sse.append(float(np.sum(e ** 2, dtype=np.float64)))
+            means.append(ym)
+            sst.append(denominator)
+        return {
+            'count': count, 'absolute_error_sum_m': sae,
+            'squared_error_sum_m2': sse, 'target_mean_m': means,
+            'target_sst_m2': sst,
+            'mae_mm': [1000 * a / n for a, n in zip(sae, count)],
+            'nse': [1 - a / b for a, b in zip(sse, sst)],
+            'unique_target_hours': int(len(unique_hours)),
+            'unique_high_target_hours': int(len(np.unique(hours[selected]))),
+            'target_sha256': observed['target_sha256'],
+            'origin_sha256': observed['origin_sha256'],
+            'scale_sha256': observed['scale_sha256'],
+            'mask_sha256': frozen['mask_sha256'],
+        }
 
-request={'training_sources': [{'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv', 'bytes': 4674734, 'sha256': '9e0d1bdd950326bc1c11e05bfcc26ecf6ac847a2e15d01c7cdc49d79644c14b4'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv', 'bytes': 4703632, 'sha256': '17d897dea5b3599717b1ad2bfd9520ae7e1900d1c9247e27b4d542f2701de937'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv', 'bytes': 4674038, 'sha256': '922157f3294822f86a58d1f590cd0c54eb3b7529beeb957bc53192126b211891'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv', 'bytes': 4674687, 'sha256': '4344b95978c5308cb22bbd3b39e703e9ac6f8daf7973d2a4089c54ef212eb9f8'}, {'path': '/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv', 'bytes': 4671875, 'sha256': 'ecba8ddbb6f1fca085194794c55041f45166975fb467074188c9acabb7056d78'}], 'array_sources': [{'bytes': 7395989, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_17.npz', 'sha256': 'faf14e7721cf677299f4dd92e8f13df3161b4a128e2a1b1209a5c557cca5d257'}, {'bytes': 7405828, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_29.npz', 'sha256': 'd17e5da02ccf2cc493e0e5c8945dc683cb03f91a7703679b4f5597b06a9cde14'}, {'bytes': 7416208, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_43.npz', 'sha256': '31d483c7e48e5f070d8a15292733f8c1e1ff3680c651098102639746971efad7'}], 'normalization': {'ddof': 0, 'mean_m': [5.400405236226313, 4.6402023945551205, 3.320065825425991, 2.759381737791283, 2.238691191812825], 'normalization_sha256': 'b79ff31ade01a53484038f51995ecf5b9d04e52c9dbf30282423e0cbca16f406', 'role': 'explicit_stage', 'station_order': ['nanjing', 'zhenjiang', 'jiangyin', 'xuliujing', 'wusongkou'], 'std_m': [1.5813798323932793, 1.2406226087623022, 0.870605641869221, 0.8872664836969456, 0.889800898572366], 'unique_timestamp_count': 40258, 'unique_timestamp_manifest_sha256': 'd9f4462b82040837241678886ca4a254d7906e662df34bab82e64558a070b2e2'}, 'training_opens': 5, 'training_read_bytes': 23398966, 'array_opens': 3, 'array_read_bytes': 22218025, 'authentication_opens': 28, 'authentication_max_bytes': 393996}
+request={'array': {'bytes': 7395989, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/evaluate/arrays/seed_17.npz', 'sha256': 'faf14e7721cf677299f4dd92e8f13df3161b4a128e2a1b1209a5c557cca5d257'}, 'preparation': {'bytes': 10525, 'path': '/data1/home/sunyiq/zhenjiang_shared_base_no_training_time_cap_20260917_001/preflight/preparation.json', 'sha256': '5a4be84658540e57a000a50a94179630f60bd88e5af060dc94aa25fe8cc5d8e9'}, 'preparation_sha256': 'c4453b4a9b70e8884a53a4bb66083d7bfd433f1f99953a9936a0b506dd2baea4', 'normalization': {'ddof': 0, 'mean_m': [5.400405236226313, 4.6402023945551205, 3.320065825425991, 2.759381737791283, 2.238691191812825], 'normalization_sha256': 'b79ff31ade01a53484038f51995ecf5b9d04e52c9dbf30282423e0cbca16f406', 'role': 'explicit_stage', 'station_order': ['nanjing', 'zhenjiang', 'jiangyin', 'xuliujing', 'wusongkou'], 'std_m': [1.5813798323932793, 1.2406226087623022, 0.870605641869221, 0.8872664836969456, 0.889800898572366], 'unique_timestamp_count': 40258, 'unique_timestamp_manifest_sha256': 'd9f4462b82040837241678886ca4a254d7906e662df34bab82e64558a070b2e2'}, 'thresholds_m': [7.47, 6.244, 4.46, 3.96, 3.46], 'frozen_high': {'encoded_threshold': [1.3087271451950073, 1.2927360534667969, 1.3093576431274414, 1.3531653881072998, 1.3725641965866089], 'mask_sha256': '63c8ece984300555a37cbfec5a17bc6720e5f69b4d3ea7d859b9b52b75206ddf', 'counts': [[975, 982, 809, 849, 834], [975, 982, 806, 846, 834], [975, 982, 802, 844, 836], [975, 982, 800, 844, 837], [975, 982, 798, 846, 840], [975, 982, 795, 849, 842], [975, 980, 796, 852, 843], [975, 978, 799, 854, 843], [975, 977, 802, 856, 843], [975, 977, 804, 856, 843], [975, 977, 806, 856, 842], [975, 977, 808, 856, 840], [975, 977, 808, 856, 840], [975, 977, 807, 854, 840], [975, 977, 805, 853, 841], [975, 977, 803, 855, 841], [975, 977, 803, 855, 840], [975, 977, 802, 856, 841], [975, 976, 801, 858, 841], [975, 975, 802, 861, 841], [975, 975, 804, 861, 841], [975, 975, 806, 861, 839], [975, 975, 808, 860, 835]], 'target_sst_m2': [[364.7211155452521, 229.53109857652254, 112.36996526344456, 97.65495909226179, 82.82348357848659], [364.91916113340716, 229.85485133050076, 112.02323734762273, 97.48556640910921, 82.81934449753794], [365.059616463363, 229.96088617616974, 111.73339225513297, 97.43330174441367, 83.0214769389502], [365.12517247571157, 229.88501687598773, 111.65679693140581, 97.57301224055722, 83.03508579926162], [364.9838358714927, 229.71787840271733, 111.60675154107763, 97.7591324425626, 83.06381476351574], [364.6914973093924, 229.5690274450686, 111.18735026030984, 97.88248422200054, 83.06464940127726], [364.2819054095427, 228.62216631261998, 111.02727545049855, 98.0536642176148, 83.13523818963999], [363.8586597874439, 227.65980637026476, 111.36460383360637, 98.06710622309281, 83.13523818963999], [363.4285625064532, 227.22741648593527, 111.95880707192673, 98.1821348032826, 83.13523818963999], [363.05994691370535, 227.49289089979465, 112.09635910258648, 98.1821348032826, 83.13523818963999], [362.70076800983765, 227.79443356018567, 112.12066293652641, 98.1821348032826, 82.98642995276177], [362.3970902027448, 228.14659567232064, 112.25974037121763, 98.1821348032826, 82.94476848388206], [362.09856248828356, 228.54102580477542, 112.27903503990302, 98.1821348032826, 83.00619765249195], [361.86239664775815, 228.8667466518166, 112.23631538728459, 98.17315398280388, 82.87329509974171], [361.6597773854582, 229.01795287825206, 112.09763020948658, 98.13244934806096, 82.73530590984824], [361.4013526673212, 229.01399599411928, 111.91465842777183, 98.26410893101885, 82.64949148557028], [361.0415395443592, 228.87024446650886, 112.1146967744151, 98.02673134670894, 82.4154382791909], [360.54826009366946, 228.70553423463863, 112.0703586611325, 98.22257223191697, 82.4715405077759], [359.96603981578863, 228.01297678613895, 112.03878869820257, 98.38815052846469, 82.4715405077759], [359.31863274375524, 227.52683274675564, 112.0703586611325, 98.85625988220978, 82.4715405077759], [358.6434516710279, 227.59759521265053, 112.17935916709008, 98.85625988220978, 82.4715405077759], [357.9496888839768, 227.76348937972116, 112.2017339582648, 98.85625988220978, 82.31482947751967], [357.2996805129706, 227.9519688566741, 112.31879156957358, 98.77169753926374, 82.11596763255916]]}, 'identities': {'target_sha256': '9124782f2e6cae610a907c4fd37ad99115fad9e3b03a963fda12fe8fb2835827', 'origin_sha256': 'ceb3a478459ef10dc5efc3473d17d0a4061db39f994c6003063c837984ceddab', 'scale_sha256': '6fd883d4927dec405c2962c4c543a27edd4848206157f66ec26502d56febfc37'}, 'high_result': {'bytes': 107671, 'sha256': '6c53a0054dc7cac547ce39e426202a74d44582d129f95e2b0f6b46fcf9b492fa'}, 'authentication_opens': 28, 'authentication_max_bytes': 393996, 'additional_opens': 2, 'additional_bytes': 7406514}
 binding={'deployment_token': '35eb014766234b74961d73d38ffee3e2', 'metadata_sha256': 'beba9684d5ff495d62e5326531fab6273700c7cf9aa56b4f7dc7a13ba9f48fc0', 'root_binding': {'inode': 10617661454, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'}
 release_sha='8c29507a7e6d6b2a53f7b3a8ff1f5bcbe4d2bb32d58c1d7fecc7fc9f29a24678'
 
@@ -498,44 +531,56 @@ class RecordedRoot(Root):
         if any(row['path'] == name for row in self.read_log):
             raise ValueError('duplicate authenticated root read')
         raw = super().read(name, maximum=maximum, expected=expected)
-        self.read_log.append({'path': name, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()})
+        self.read_log.append({'path': name, 'bytes': len(raw),
+                              'sha256': hashlib.sha256(raw).hexdigest()})
         return raw
+
 gate = RecordedRoot(REMOTE_ROOT, binding)
 try:
     authenticate(gate, release_sha, binding)
-    authentication_reads = list(gate.read_log)
-    if (len(authentication_reads) != request['authentication_opens']
-            or sum(row['bytes'] for row in authentication_reads) > request['authentication_max_bytes']):
-        raise ValueError('authentication reads exceed fixed budget')
-    training_reader = TrainingReader(request['training_sources'])
-    quantiles = [training_quantile(training_reader.read(row)) for row in request['training_sources']]
-    thresholds = [row['threshold_m'] for row in quantiles]
-    norm = request['normalization']
-    records = []
-    for row in request['array_sources']:
-        raw = gate.read(row['path'][len(REMOTE_ROOT)+1:], maximum=8000000,
-                        expected={'bytes': row['bytes'], 'sha256': row['sha256']})
-        records.append(compute_high_archive(raw, norm['std_m'], norm['mean_m'], thresholds))
-        del raw
-    shared = ('counts','target_mean_m','target_sst_m2','encoded_threshold',
-              'encoded_threshold_roundtrip_error_m','mask_sha256',
-              'unique_high_target_hours_across_leads','windows_with_high_by_lead_station')
-    if any(record[key] != records[0][key] for record in records[1:] for key in shared):
-        raise ValueError('seed high-water samples differ')
-    answer = {'schema': 'high-water-v1', 'year': 2024, 'seeds': [17,29,43],
-              'methods': list(METHODS), 'stations': list(STATIONS), 'leads': list(range(1,24)),
-              'request': request, 'quantiles': quantiles, 'records': records,
-              'training_sources_read': training_reader.used,
-              'authentication_reads': authentication_reads,
-              'array_reads': gate.read_log[len(authentication_reads):],
-              'numpy_version': np.__version__, 'remote_experiment_writes': 0}
-    reply = json.dumps(answer, ensure_ascii=False, sort_keys=True, separators=(',',':'), allow_nan=False).encode()
-    if len(reply) > 500000:
-        raise ValueError('high-water reply too large')
+    auth_reads = list(gate.read_log)
+    if (len(auth_reads) != request['authentication_opens'] or
+            sum(row['bytes'] for row in auth_reads) > request['authentication_max_bytes']):
+        raise ValueError('authentication read budget differs')
+    prep = request['preparation']
+    raw_prep = gate.read(prep['path'][len(REMOTE_ROOT)+1:], maximum=20000,
+                         expected={'bytes':prep['bytes'],'sha256':prep['sha256']})
+    preparation = json.loads(raw_prep)
+    payload = dict(preparation)
+    if payload.pop('preparation_sha256', None) != request['preparation_sha256'] or hashlib.sha256(
+            json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                       separators=(',', ':'), allow_nan=False).encode()).hexdigest() != request['preparation_sha256']:
+        raise ValueError('preparation document identity differs')
+    sys.path.insert(0, str(gate.root / 'execution'))
+    import tide_adapter
+    if Path(tide_adapter.__file__).resolve() != gate.root / 'execution/tide_adapter.py':
+        raise ValueError('frozen tide adapter source differs')
+    predictor = tide_adapter.restore_tide(preparation['tide'])
+    array = request['array']
+    raw_array = gate.read(array['path'][len(REMOTE_ROOT)+1:], maximum=8000000,
+                          expected={'bytes':array['bytes'],'sha256':array['sha256']})
+    record = calculate(raw_array, request['normalization'], request['thresholds_m'],
+                       request['frozen_high'], request['identities'],
+                       predictor.predict_float64, array_hash)
+    if len(gate.read_log) != request['authentication_opens'] + request['additional_opens'] or sum(
+            row['bytes'] for row in gate.read_log[len(auth_reads):]) != request['additional_bytes']:
+        raise ValueError('data read budget differs')
+    answer = {'schema':'wusongkou-high-water-tide-only-v1','year':2024,
+              'leads':list(range(1,24)), 'station':'wusongkou',
+              'threshold_m':request['thresholds_m'][4],
+              'tide_document_sha256':preparation['tide']['document_sha256'],
+              'preparation_sha256':request['preparation_sha256'],
+              'record':record, 'authentication_reads':auth_reads,
+              'data_reads':gate.read_log[len(auth_reads):],
+              'numpy_version':np.__version__, 'remote_experiment_writes':0}
+    reply = json.dumps(answer, ensure_ascii=False, sort_keys=True,
+                       separators=(',',':'), allow_nan=False).encode()
+    if len(reply) > 100000:
+        raise ValueError('tide-only aggregate reply too large')
     gate.check()
 finally:
     gate.close()
 print(reply.decode())
 
 SHARED_RELEASE_VERIFIED_PY
-# read-only high-water aggregation seq=143
+# read-only Wusongkou tide-only aggregation seq=144
