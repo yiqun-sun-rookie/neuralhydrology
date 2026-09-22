@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - 026c5a0ba6dafcbf84bf8ce4a1a97ad849032b354379a171c10b274733b435ca cb560e388dae4ee9817d1f72dd7126ba3a78dba956d7575fd9cf2fc699393302 <<'PY'
-import hashlib
-import sys
-import zipfile
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
+import json
 from pathlib import Path
-
-archive_sha, manifest_sha = sys.argv[1:]
-for value in (archive_sha, manifest_sha):
-    if len(value) != 64 or any(char not in '0123456789abcdef' for char in value):
-        raise SystemExit('unfilled or invalid fingerprint placeholder')
-
-archive_path = Path('/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-tukf09-noise-20260922/payload/narrow_probe_v2.zip')
-with archive_path.open('rb') as stream:
-    if hashlib.file_digest(stream, 'sha256').hexdigest() != archive_sha:
-        raise SystemExit('archive fingerprint mismatch')
-
-deploy_name = 'hpc/tukf09_two_basin_hpc_deploy_v1.py'
-with zipfile.ZipFile(archive_path) as archive:
-    if archive.namelist().count(deploy_name) != 1:
-        raise SystemExit('deploy member missing or duplicated')
-    deploy_source = archive.read(deploy_name)
-
-sys.argv = [deploy_name, archive_sha, manifest_sha]
-exec(compile(deploy_source, deploy_name, 'exec'), {'__name__': '__main__', '__file__': deploy_name})
+import re
+import subprocess
+root = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/narrow_probe_v2')
+submission = json.loads((root/'control/submission.json').read_text())
+match = re.fullmatch(r'Submitted batch job ([0-9]+)\s*', submission['stdout'])
+if submission['returncode'] != 0 or match is None:
+    raise RuntimeError('no uniquely confirmed job')
+job = match.group(1)
+print('CONFIRMED_JOB',job,flush=True)
+for command in (['sacct','-j',job,'-n','-P','--format=JobIDRaw,JobName,State,ExitCode,Elapsed,AllocCPUS,NodeList'],
+                ['squeue','-u','sunyiq','-h','-o','%i|%j|%T|%R']):
+    result = subprocess.run(command,text=True,capture_output=True,check=True)
+    print(result.stdout,flush=True)
+for relative in ('control/linux_tests.xml', 'run/supervisor.json', 'run/model/started.json',
+                 'run/model/run_summary.json', 'run/model/manifest.final.sha256.json',
+                 'run/stdout.log','run/stderr.log',f'logs/job-{job}.out',f'logs/job-{job}.err'):
+    path = root/relative
+    print('FILE',relative,'PRESENT' if path.is_file() else 'ABSENT',flush=True)
+    if path.is_file():
+        if path.stat().st_size > 200000:
+            print('FILE_TOO_LARGE_FOR_INLINE_READ',path.stat().st_size,flush=True)
+        else:
+            print(path.read_text(errors='replace'),flush=True)
 PY
