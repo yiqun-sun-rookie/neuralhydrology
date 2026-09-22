@@ -18,7 +18,7 @@ if root != Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_2026
 manifest_path = root / 'manifest.final.sha256.json'
 expected = {
  'basin_01047000/probe_arrays.npz': (os.environ['EXPECTED_A'], 80757),
- 'basin_01047000/summary.json': ('02e606e480d1548a08278245dd28b500d29d7cb1f098e5c195de55789725d9', 487),
+ 'basin_01047000/summary.json': ('02e606e480d1548a5a08278245dd28b500d29d7cb1f098e5c195de55789725d9', 487),
  'basin_01142500/probe_arrays.npz': (os.environ['EXPECTED_B'], 79664),
  'basin_01142500/summary.json': ('bdb35fe7a211656f92fb0d268a5707f9a38d05ebb8d1157b8f6e884204f5c97f', 493),
  'run_summary.json': ('dbc3c2cb5560bcbdd08b83e81bf2b11b030d5b0443806998f445386d24f82e5f', 1287),
@@ -69,7 +69,7 @@ with zipfile.ZipFile(stream,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9
 blob=stream.getvalue()
 print('TUKF09_SHORT_PROBE_RECEIPT_V2')
 print('channel=kalmannet-tukf09-noise-20260922')
-print('sequence=11')
+print('sequence=12')
 print('exit_code=0')
 print('zip_sha256='+hashlib.sha256(blob).hexdigest())
 print('zip_size='+str(len(blob)))
