@@ -1,0 +1,36 @@
+### channel=kalmannet-daily-perbasin seq=188
+### host=login4
+### started=2026-09-22T16:02:06+0800
+### ---------- output ----------
+FIXED_CONTROL_SUBMIT_V1
+sequence=188
+timestamp_utc=2026-09-22T08:02:06Z
+host=login4
+OWN_QUEUE_BEGIN
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+OWN_QUEUE_END
+hcpu48_idle_nodes=34
+tar: authorization_stage2b.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: run_development_control.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: source_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: submit.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: trace_development.py: implausibly old time stamp 1970-01-01 08:00:00
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/bundle_manifest.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/run_development_control.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/authorization_stage2b.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/submit.slurm: OK
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/source_manifest.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/payload/trace_development.py: OK
+STAGED_BUNDLE_SHA=84ca694e33bb150bda42f0e579ea9af2e85caab3b425442101a1803c7122456d
+Submitted batch job 227265
+job_id=227265
+output_root=/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:02:06+0800
