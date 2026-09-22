@@ -1,0 +1,24 @@
+### channel=id25-coarse-label-audit-20260922 seq=4
+### host=login4
+### started=2026-09-22T16:26:40+0800
+### ---------- output ----------
+=== queue ===
+slurm_load_jobs error: Invalid job id specified
+NOT_IN_ACTIVE_QUEUE
+=== accounting ===
+227275|id25meta|COMPLETED|0:0|00:00:01|icn213
+227275.batch|batch|COMPLETED|0:0|00:00:01|icn213
+227275.extern|extern|COMPLETED|0:0|00:00:01|icn213
+=== compute-node log ===
+/data1/home/sunyiq/id25_coarse_label_audit_20260922/slurm-227275.out 295 bytes
+JOB_ID=227275
+NODE=icn213
+2026-09-22T08:20:11Z
+AUDIT_PASS universe=180 scored=119 remaining=61
+AUDIT_PASS own_band_fold_excluded=61 band_other_fold_training=61
+AUDIT_PASS checker_other_fold_training=59 hyperparameter_training=43
+NO_TARGET_VALUES_READ NO_TRAINING NO_SCORING
+2026-09-22T08:20:13Z
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:26:40+0800
