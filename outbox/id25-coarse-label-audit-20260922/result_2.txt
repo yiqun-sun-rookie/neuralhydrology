@@ -1,0 +1,16 @@
+### channel=id25-coarse-label-audit-20260922 seq=2
+### host=login4
+### started=2026-09-22T16:20:10+0800
+### ---------- output ----------
+=== input preflight ===
+9f3b53499fced9c6e893201746ad44fcca10e41f281b490b643c17305bca3361  /data1/home/sunyiq/hpc_mailbox/inbox/id25-coarse-label-audit-20260922/payload/coarse_metadata.tar.gz
+2957c2fbde86e1ad8330bfbe09eea2df7a847afba27167d1e20b987fa01bfa34  /data1/home/sunyiq/hpc_mailbox/inbox/id25-coarse-label-audit-20260922/payload/audit_metadata.py
+=== isolated output root ===
+/data1/home/sunyiq/id25_coarse_label_audit_20260922
+=== submit ===
+Submitted batch job 227275
+JOB_ID=227275
+227275 PENDING (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:20:10+0800
