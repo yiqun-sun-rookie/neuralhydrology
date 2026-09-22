@@ -1,0 +1,96 @@
+### channel=kalmannet-daily-perbasin seq=189
+### host=login4
+### started=2026-09-22T16:06:16+0800
+### ---------- output ----------
+FIXED_CONTROL_READ_ONLY_MONITOR_V1
+sequence=189
+timestamp_utc=2026-09-22T08:06:16Z
+job_id=227265
+SQUEUE_BEGIN
+slurm_load_jobs error: Invalid job id specified
+SQUEUE_END
+SACCT_BEGIN
+227265|kdpp_ctrl_d1|sunyiq|hcpu48|COMPLETED|0:0|00:02:37|2026-09-22T16:03:17|2026-09-22T16:05:54
+227265.batch|batch|||COMPLETED|0:0|00:02:37|2026-09-22T16:03:17|2026-09-22T16:05:54
+227265.extern|extern|||COMPLETED|0:0|00:02:37|2026-09-22T16:03:17|2026-09-22T16:05:54
+SACCT_END
+FILE_BEGIN submission_receipt.json
+276
+3e873ef891fa66a25e95801ac825ee7f94aec6b9125d798d48328ff527ae4cbf  /data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/submission_receipt.json
+{"schema_version":"daily_camels_stage2b_submission_receipt_v1","job_id":"227265","job_name":"kdpp_ctrl_d1","partition":"hcpu48","submitted_at_utc":"2026-09-22T08:02:06Z","retry_allowed":false,"bundle_sha256":"84ca694e33bb150bda42f0e579ea9af2e85caab3b425442101a1803c7122456d"}
+FILE_END submission_receipt.json
+FILE_BEGIN compute_admission.json
+1243
+3fcc15d7268be3fa9ddd151b8758c6a988aa807a26c8c817a83edf18bb265767  /data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/compute_admission.json
+{
+  "archive_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz",
+  "archive_sha256": "453d57eab87b0d774d5895f143d51c40644f9b92fd8702ce646a6f4841378eb6",
+  "bundle_sha256": {
+    "authorization_stage2b.json": "fa9e0729f81319733906c1f83b61931b16ff4c9df8ad70ef0bf5635b0df604b3",
+    "run_development_control.py": "fbefc7735c247765b7094eb539442d2eee059d4934f5d37d0fa4ddb55d7fcdca",
+    "source_manifest.json": "030e8cce6c4818e35fba9dc22fb39e93fb118996ea1e77706f50c2367cd49ffe",
+    "submit.slurm": "5a98cde85208263de383471f5b47ee4b5a40f7b0c359cbb17e4a5f6edc9c1dc7",
+    "trace_development.py": "9e2a5735e555cb63b2ab6bbeef277d825159f87a3ff860bc56e9f9be634fe36b"
+  },
+  "checkpoint_count": 10,
+  "environment": {
+    "aten_cpu_capability": "default",
+    "capability": "NO AVX",
+    "device": "cpu",
+    "interop_threads": 1,
+    "numpy": "2.3.3",
+    "python": "3.11.13",
+    "threads": 1,
+    "torch": "2.4.0"
+  },
+  "observed_at_utc": "2026-09-22T08:02:30.944060+00:00",
+  "slurm_job_id": "227265",
+  "source_count": 25,
+  "status": "PASS",
+  "target_environment_synthetic_checks": 4
+}
+FILE_END compute_admission.json
+FILE_BEGIN completion.json
+269
+7e25d8d45fce0765e7916005bd126ab1a52563debcd31f6d9e9bed6e16086011  /data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/completion.json
+{
+  "aggregate_sha256": "9e801d2e858fcae945ba783a123f1fd22f3fbc64911d341a86ca0b05292016e4",
+  "parity_count": 5,
+  "reserved_period_access_count": 0,
+  "sequence_count": 22,
+  "status": "COMPLETED_TECHNICALLY_NOT_INDEPENDENTLY_AUDITED",
+  "training_performed": false
+}
+FILE_END completion.json
+LOG_BEGIN slurm-227265.out
+1149
+COMPLETE CTRL-02092500-NETWORK-20260901-RESTART731
+COMPLETE CTRL-02092500-NETWORK-20260908-FULL3288
+COMPLETE CTRL-02092500-NETWORK-20260908-RESTART731
+COMPLETE CTRL-02092500-NETWORK-20260915-FULL3288
+COMPLETE CTRL-02092500-NETWORK-20260915-RESTART731
+COMPLETE CTRL-02092500-NETWORK-20260922-FULL3288
+COMPLETE CTRL-02092500-NETWORK-20260922-RESTART731
+COMPLETE CTRL-02092500-UNSCENTED-20260824-FULL3288
+COMPLETE CTRL-02092500-UNSCENTED-20260824-RESTART731
+COMPLETE CTRL-02092500-UNSCENTED-20260901-FULL3288
+COMPLETE CTRL-02092500-UNSCENTED-20260901-RESTART731
+COMPLETE CTRL-02092500-UNSCENTED-20260908-FULL3288
+COMPLETE CTRL-02092500-UNSCENTED-20260908-RESTART731
+COMPLETE CTRL-02092500-UNSCENTED-20260915-FULL3288
+COMPLETE CTRL-02092500-UNSCENTED-20260915-RESTART731
+COMPLETE CTRL-02092500-UNSCENTED-20260922-FULL3288
+COMPLETE CTRL-02092500-UNSCENTED-20260922-RESTART731
+COMPLETE CTRL-02092500-NOUPDATE-NONE-FULL3288
+COMPLETE CTRL-02092500-NOUPDATE-NONE-RESTART731
+FIXED_DEVELOPMENT_CONTROL_COMPLETE
+LOG_END slurm-227265.out
+LOG_BEGIN slurm-227265.err
+0
+LOG_END slurm-227265.err
+AGGREGATE_PRESENT
+31375
+9e801d2e858fcae945ba783a123f1fd22f3fbc64911d341a86ca0b05292016e4  /data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1/aggregate.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:06:16+0800
