@@ -1,17 +1,27 @@
 #!/bin/bash
 set -eo pipefail
-echo '=== identity ==='
-hostname
-date -u +'%Y-%m-%dT%H:%M:%SZ'
-echo '=== scheduler ==='
-sinfo -h -p hcpu48 -o '%P %a %l %D %t' 2>&1
-echo '=== permitted coarse metadata ==='
-for root in "$HOME/neuralhydrology" /data1/home/sunyiq/neuralhydrology; do
-  for rel in data/id25/multisource/spatial_folds_primary_land_v1/folds.json results/25_global_flood_hierarchy/split_contrast_checkerboard_v1/folds/folds_checkerboard.json results/25_global_flood_hierarchy/formal_portfolio_primary_land_production_v2_statics_lr1e3/formal_portfolio_manifest.json; do
-    if [ -f "$root/$rel" ]; then
-      stat -c '%n %s bytes' "$root/$rel"
-    else
-      echo "MISSING $root/$rel"
-    fi
-  done
-done
+cd "$HOME/hpc_mailbox"
+echo '=== input preflight ==='
+PAYLOAD="$HOME/hpc_mailbox/inbox/id25-coarse-label-audit-20260922/payload"
+test -f "$PAYLOAD/coarse_metadata.tar.gz"
+test -f "$PAYLOAD/audit_metadata.py"
+test -f "$PAYLOAD/audit_metadata.slurm"
+sha256sum "$PAYLOAD/coarse_metadata.tar.gz" "$PAYLOAD/audit_metadata.py"
+echo '=== isolated output root ==='
+AUDIT_ROOT=/data1/home/sunyiq/id25_coarse_label_audit_20260922
+if [ -e "$AUDIT_ROOT" ]; then
+  echo "ROOT_ALREADY_EXISTS $AUDIT_ROOT"
+  exit 1
+fi
+mkdir "$AUDIT_ROOT"
+echo "$AUDIT_ROOT"
+echo '=== submit ==='
+out=$(sbatch "$PAYLOAD/audit_metadata.slurm" 2>&1)
+echo "$out"
+JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+if [ -z "$JID" ]; then
+  echo 'SUBMIT_FAILED'
+  exit 1
+fi
+echo "JOB_ID=$JID"
+squeue -j "$JID" -h -o '%i %T %R'
