@@ -1,0 +1,23 @@
+### channel=id25-coarse-label-audit-20260922 seq=1
+### host=login4
+### started=2026-09-22T16:11:08+0800
+### ---------- output ----------
+=== identity ===
+login4
+2026-09-22T08:11:08Z
+=== scheduler ===
+hcpu48* up infinite 10 alloc$
+hcpu48* up infinite 5 maint
+hcpu48* up infinite 14 down*
+hcpu48* up infinite 1 alloc
+hcpu48* up infinite 34 idle
+=== permitted coarse metadata ===
+MISSING /data1/home/sunyiq/neuralhydrology/data/id25/multisource/spatial_folds_primary_land_v1/folds.json
+MISSING /data1/home/sunyiq/neuralhydrology/results/25_global_flood_hierarchy/split_contrast_checkerboard_v1/folds/folds_checkerboard.json
+MISSING /data1/home/sunyiq/neuralhydrology/results/25_global_flood_hierarchy/formal_portfolio_primary_land_production_v2_statics_lr1e3/formal_portfolio_manifest.json
+MISSING /data1/home/sunyiq/neuralhydrology/data/id25/multisource/spatial_folds_primary_land_v1/folds.json
+MISSING /data1/home/sunyiq/neuralhydrology/results/25_global_flood_hierarchy/split_contrast_checkerboard_v1/folds/folds_checkerboard.json
+MISSING /data1/home/sunyiq/neuralhydrology/results/25_global_flood_hierarchy/formal_portfolio_primary_land_production_v2_statics_lr1e3/formal_portfolio_manifest.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-22T16:11:08+0800
