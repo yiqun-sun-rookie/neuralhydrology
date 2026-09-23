@@ -1,0 +1,21 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=16
+### host=login4
+### started=2026-09-23T22:06:58+0800
+### ---------- output ----------
+SACCT_HISTORY
+227494|tukf09-noise-full-v2|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|22|FAILED|1:0
+EXPECTED_MARKERS
+control/deployed.json|1207|1790171348
+basin_01047000/control/submission_attempt.json|1834|1790171353
+basin_01047000/control/submission.json|1883|1790171353
+basin_01047000/control/original_tests.xml|5163|1790171380
+basin_01047000/control/new_gate_tests.xml|6210|1790171381
+basin_01047000/control/tensor_tests/tensor_tests.xml|MISSING
+basin_01047000/control/job_gate.json|MISSING
+basin_01047000/run/supervisor.json|MISSING
+basin_01047000/run/model/manifest.final.sha256.json|MISSING
+logs/job-227494.out|512|1790171381
+logs/job-227494.err|730|1790171382
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-23T22:06:58+0800
