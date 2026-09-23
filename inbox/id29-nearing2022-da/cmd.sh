@@ -9,5 +9,5 @@ echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for X in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$X" ] && echo "  PRESENT $X" || echo "  MISSING $X"; done
 echo "=== GATE ==="
-[ -f "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" ] && grep -o '"released_code_numerical_status"[^,]*' "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" || echo MISSING
+grep -o '"released_code_numerical_status": *"[A-Z_]*"' "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" 2>/dev/null || echo '  gate missing'
 exit 0
