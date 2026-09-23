@@ -1,0 +1,8 @@
+### channel=zhenjiang-update-budget-20260922 seq=7
+### host=login4
+### started=2026-09-23T16:48:51+0800
+### ---------- output ----------
+{"attempt": {"job_id": "227320", "status": "reserved_no_retry"}, "complete": {"elapsed_seconds": 30401.675815984607, "job_id": "227320", "status": "complete"}, "failure": null, "groups": {"17/differentiable_filter": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}, "17/rolling_encoder": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}, "29/differentiable_filter": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}, "29/rolling_encoder": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}, "43/differentiable_filter": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}, "43/rolling_encoder": {"epoch_json_count": 101, "identity_20_present": true, "selection_present": true}}, "job_id": "227320", "run_exists": true, "sacct": {"returncode": 0, "stderr": "", "stdout": "227320|COMPLETED|08:26:45|0:0\n227320.batch|COMPLETED|08:26:45|0:0\n227320.extern|COMPLETED|08:26:46|0:0\n"}, "squeue": {"returncode": 1, "stderr": "slurm_load_jobs error: Invalid job id specified\n", "stdout": ""}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-23T16:48:56+0800
