@@ -1,0 +1,217 @@
+### channel=kalmannet-hamid-weights-20260923 seq=8
+### host=login4
+### started=2026-09-23T21:46:44+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-23T13:46:44Z
+FORMAL_ARRAY_ID=227482
+slurm_load_jobs error: Invalid job id specified
+227482_0|hamid_weights|FAILED|1:0|00:00:23|ngu011
+227482_1|hamid_weights|FAILED|1:0|00:00:03|ngu011
+227482_2|hamid_weights|FAILED|1:0|00:00:02|ngu011
+227482_3|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227482_4|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227482_5|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227482_6|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227482_7|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227482_8|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227482_9|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227482_10|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227482_11|hamid_weights|FAILED|1:0|00:00:02|ngu011
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/FORMAL_HALT.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227483",
+  "type": "AssertionError",
+  "message": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py\", line 96, in main\n    assert init_hash==protocol['verified_initial_weight_sha256'][str(seed)]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_0.out
+JOB_ID=227483 ARRAY=227482_0 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+Walrus Using device: cuda
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_10.out
+JOB_ID=227493 ARRAY=227482_10 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_11.out
+JOB_ID=227482 ARRAY=227482_11 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_1.out
+JOB_ID=227484 ARRAY=227482_1 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_2.out
+JOB_ID=227485 ARRAY=227482_2 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_3.out
+JOB_ID=227486 ARRAY=227482_3 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_4.out
+JOB_ID=227487 ARRAY=227482_4 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_5.out
+JOB_ID=227488 ARRAY=227482_5 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_6.out
+JOB_ID=227489 ARRAY=227482_6 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_7.out
+JOB_ID=227490 ARRAY=227482_7 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_8.out
+JOB_ID=227491 ARRAY=227482_8 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_9.out
+JOB_ID=227492 ARRAY=227482_9 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_0.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 96, in main
+    assert init_hash==protocol['verified_initial_weight_sha256'][str(seed)]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_10.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_11.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_1.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_2.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_3.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_4.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_5.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_6.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_7.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_8.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/logs/weights-227482_9.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 176, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py", line 44, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_runs/objective-current-0p05-highflow-2-seed-42/failure.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227483",
+  "type": "AssertionError",
+  "message": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v1/train_weights.py\", line 96, in main\n    assert init_hash==protocol['verified_initial_weight_sha256'][str(seed)]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|(Dependency)
+202315|N22-gate|PENDING|(Dependency)
+202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|(JobHeldUser)
+
+READ_ONLY_FORMAL_QUERY_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-23T21:46:46+0800
