@@ -126,3 +126,4 @@ git rm inbox/seq
 
 | `kalmannet-tukf09-noise-20260922` | 455-basin scaled-noise follow-up: isolated two-basin technical rehearsal, no full study or evaluation | 2026-09-22 | Dedicated proposed root `/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922`; no existing jobs, environments, channels or results modified; no automatic retry/requeue |
 | `id25-coarse-label-audit-20260922` | Coarse spatial-fold metadata and label-use-path read-only audit on HPC; no training or scoring | 2026-09-22 | Only this mailbox channel and a new isolated audit root may be written; existing data and results are read-only; no sealed labels, streamflow, fine layer, or H2M comparison |
+| `zhenjiang-update-temporal-eval-20260923` | Frozen 100-epoch water-level update models: supplementary 2024 evaluation | 2026-09-23 | New root /data1/home/sunyiq/zhenjiang_update_temporal_eval_20260923_001; 2023 forbidden; no training, retries, requeue or changes to old experiments |
