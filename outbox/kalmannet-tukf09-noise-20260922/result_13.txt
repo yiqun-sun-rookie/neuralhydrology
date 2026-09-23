@@ -1,0 +1,21 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=13
+### host=login4
+### started=2026-09-23T20:16:02+0800
+### ---------- output ----------
+TUKF09_HCPU48Y_ACCOUNTING_QUERY_V1_BEGIN
+query_kind=read_only_no_submission_no_model
+query_time_utc=2026-09-23T12:16:02Z
+login4
+PARTITION_HCPU48Y_BEGIN
+PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+PARTITION_HCPU48Y_END
+JOB_227288_ACCOUNTING_BEGIN
+227288|tukf09-noise-2probe-v2|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|135|COMPLETED|0:0
+JOB_227288_ACCOUNTING_END
+JOB_227288_CONTROL_BEGIN
+slurm_load_jobs error: Invalid job id specified
+JOB_227288_CONTROL_END
+TUKF09_HCPU48Y_ACCOUNTING_QUERY_V1_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-23T20:16:02+0800
