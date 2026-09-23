@@ -1,0 +1,8 @@
+### channel=zhenjiang-update-temporal-eval-20260923 seq=2
+### host=login4
+### started=2026-09-23T20:34:00+0800
+### ---------- output ----------
+{"deployment_metadata_sha256": "987bedd9eecc7d7586aaa5e39b53f666f5393322de59fda9bbcbce3579f91f2a", "deployment_token": "1b2502c8109ab95fc9bb14663c0a4559", "job_sha256": "7dc18eef1025d7a544edba0159e2ee7544e515bf54ee655361b5bd744dab01e1", "login_root_identity": [41, 6174393607], "manifest_sha256": "46fd30d81b90dce69b3a917aabe10c25618db920192a703ce68e9f10b925a466", "member_count": 37, "protocol_sha256": "f4f3c4caed8072ff8523589e1becdaf0afcc384346602febe05ee2f3d2d1e5cc", "root": "/data1/home/sunyiq/zhenjiang_update_temporal_eval_20260923_001", "root_binding": {"inode": 6174393607, "mode": 448, "uid": 2272}, "status": "deployed_no_training"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-23T20:34:02+0800
