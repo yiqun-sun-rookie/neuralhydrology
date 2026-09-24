@@ -1,0 +1,73 @@
+### channel=kalmannet-hamid-weights-20260923 seq=12
+### host=login4
+### started=2026-09-24T14:21:19+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T06:21:19Z
+FORMAL_ARRAY_ID=227495
+
+RECOVERY_EVENTS
+{"unix_time": 1790175030.776149, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 7, "attempt": 1, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 4096}
+{"unix_time": 1790176384.1869678, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 9, "attempt": 1, "recovery_total": 2, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 120832}
+{"unix_time": 1790176849.3758621, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 10, "attempt": 1, "recovery_total": 3, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 0}
+{"unix_time": 1790176856.6769485, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 10, "attempt": 2, "recovery_total": 4, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 0}
+
+EPOCH_COMPLETIONS
+{"unix_time": 1790172257.5526443, "event": "epoch_complete", "epoch": 0, "train_loss": 0.0001247290927634997, "common_validation_mse": 1.3741425114713677e-05, "validation_samples": 14979, "epoch_seconds": 469.7544188760221, "best_epoch": 0, "absolute_best_validation": 1.3741425114713677e-05, "patience_reference": 1.3741425114713677e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "18bee9484da6e2ff19ec976252c7bfc3f579cd204c0241a3bedf705cff9f0cdb", "recovery_total": 0, "corrected_outlet_region_elements_total": 56703, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790172716.2686787, "event": "epoch_complete", "epoch": 1, "train_loss": 5.866735506778575e-05, "common_validation_mse": 1.1614380906392759e-05, "validation_samples": 14979, "epoch_seconds": 458.7121895365417, "best_epoch": 1, "absolute_best_validation": 1.1614380906392759e-05, "patience_reference": 1.1614380906392759e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "76054ece6c14636d589753fb602fea163183fbd43cd9e495e50baf3009b6764f", "recovery_total": 0, "corrected_outlet_region_elements_total": 119448, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790173174.4863927, "event": "epoch_complete", "epoch": 2, "train_loss": 5.663005345271682e-05, "common_validation_mse": 1.1425725526564257e-05, "validation_samples": 14979, "epoch_seconds": 458.2164393439889, "best_epoch": 2, "absolute_best_validation": 1.1425725526564257e-05, "patience_reference": 1.1425725526564257e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "6da2889d3ddf4edf5f83ce57fb4a171cd5e4a498dbe95bb7f4cc2acec90909d3", "recovery_total": 0, "corrected_outlet_region_elements_total": 185852, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790173633.0001125, "event": "epoch_complete", "epoch": 3, "train_loss": 5.642043216169623e-05, "common_validation_mse": 1.1163362045521146e-05, "validation_samples": 14979, "epoch_seconds": 458.50944904610515, "best_epoch": 3, "absolute_best_validation": 1.1163362045521146e-05, "patience_reference": 1.1163362045521146e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "3a3929d5804a9b8e3c4aa9433168d7054699e5ab721042c0a0065d32746a3acc", "recovery_total": 0, "corrected_outlet_region_elements_total": 253482, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790174091.1890168, "event": "epoch_complete", "epoch": 4, "train_loss": 5.668239884514818e-05, "common_validation_mse": 1.0951589427306135e-05, "validation_samples": 14979, "epoch_seconds": 458.1879679262638, "best_epoch": 4, "absolute_best_validation": 1.0951589427306135e-05, "patience_reference": 1.0951589427306135e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "e748c6cc5999e862651ce144898e62a5e9899c9d2c0482c84078cfba5c124aa2", "recovery_total": 0, "corrected_outlet_region_elements_total": 318596, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790174550.1261172, "event": "epoch_complete", "epoch": 5, "train_loss": 5.425672014423173e-05, "common_validation_mse": 1.063995740682274e-05, "validation_samples": 14979, "epoch_seconds": 458.93311082571745, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 0, "next_lr": 0.01, "sample_order_sha256": "ae38726f7dcc9ff36d64137e8e310129469134633aed5f9f80255bf758572ada", "recovery_total": 0, "corrected_outlet_region_elements_total": 373649, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790175008.716113, "event": "epoch_complete", "epoch": 6, "train_loss": 5.778140791242499e-05, "common_validation_mse": 1.1089952189957397e-05, "validation_samples": 14979, "epoch_seconds": 458.588205717504, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 1, "next_lr": 0.01, "sample_order_sha256": "dd1db7d47b57264c2c10d29198c9414fbd6324370c9948ec0f981aadd0c40e78", "recovery_total": 0, "corrected_outlet_region_elements_total": 432655, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790175489.7598457, "event": "epoch_complete", "epoch": 7, "train_loss": 0.601652849477817, "common_validation_mse": 0.011322120334016712, "validation_samples": 14979, "epoch_seconds": 481.03856425732374, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 2, "next_lr": 0.005, "sample_order_sha256": "8b742b28b47988452229c14ba0c968e0a4eeaf77a35c4c74837f5d826e335f79", "recovery_total": 1, "corrected_outlet_region_elements_total": 2179801, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790175947.8809001, "event": "epoch_complete", "epoch": 8, "train_loss": 0.550346964876695, "common_validation_mse": 0.009249385452092338, "validation_samples": 14979, "epoch_seconds": 458.11503671854734, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 3, "next_lr": 0.005, "sample_order_sha256": "4394f00e1c6ade60828874ae60f58a19304dab76e97f8096a4e599341028f777", "recovery_total": 1, "corrected_outlet_region_elements_total": 3893473, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790176841.9162908, "event": "epoch_complete", "epoch": 9, "train_loss": 0.45632445441287106, "common_validation_mse": 0.004825266795212374, "validation_samples": 14979, "epoch_seconds": 894.0245702899992, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 4, "next_lr": 0.0025, "sample_order_sha256": "5407cceee9a24a7c9e1f81962c1d2c24440ed731037361d3e31d19a324ed2095", "recovery_total": 2, "corrected_outlet_region_elements_total": 7114120, "peak_gpu_allocated_bytes": 21907148288}
+
+LAST_STDOUT
+JOB_ID=227496 ARRAY=227495_0 HOST=ngu011 CUDA_VISIBLE_DEVICES=0
+Walrus Using device: cuda
+{"event": "FORMAL_TRAINING_STARTED", "cell": {"exp_id": "objective-current-0p05-highflow-2-seed-42", "seed": 42, "lambda_upd": 0.05, "alpha_hf": 2}}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 0, "validation_mse": 1.3741425114713677e-05, "best_epoch": 0, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 1, "validation_mse": 1.1614380906392759e-05, "best_epoch": 1, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 2, "validation_mse": 1.1425725526564257e-05, "best_epoch": 2, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 3, "validation_mse": 1.1163362045521146e-05, "best_epoch": 3, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 4, "validation_mse": 1.0951589427306135e-05, "best_epoch": 4, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 5, "validation_mse": 1.063995740682274e-05, "best_epoch": 5, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 6, "validation_mse": 1.1089952189957397e-05, "best_epoch": 5, "no_improve_epochs": 1, "recovery_total": 0}
+Warning: high gradient norm 17040.41015625 detected at epoch 7
+[SafeTrain] Grad explosion 1.70e+04 at epoch 7
+Warning: high gradient norm 1.2336572408676147 detected at epoch 7
+Warning: high gradient norm 18.778825759887695 detected at epoch 7
+Warning: high gradient norm 88.82589721679688 detected at epoch 7
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 7, "validation_mse": 0.011322120334016712, "best_epoch": 5, "no_improve_epochs": 2, "recovery_total": 1}
+Warning: high gradient norm 227.2841033935547 detected at epoch 8
+Warning: high gradient norm 1.4159458875656128 detected at epoch 8
+Warning: high gradient norm 7.384162425994873 detected at epoch 8
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 8, "validation_mse": 0.009249385452092338, "best_epoch": 5, "no_improve_epochs": 3, "recovery_total": 1}
+Warning: high gradient norm 1.650320053100586 detected at epoch 9
+Warning: high gradient norm 134533.921875 detected at epoch 9
+[SafeTrain] Grad explosion 1.35e+05 at epoch 9
+Warning: high gradient norm 1.2080936431884766 detected at epoch 9
+{"cell": "objective-current-0p05-highflow-2-seed-42", "epoch": 9, "validation_mse": 0.004825266795212374, "best_epoch": 5, "no_improve_epochs": 4, "recovery_total": 2}
+Warning: high gradient norm 24750266368.0 detected at epoch 10
+[SafeTrain] Grad explosion 2.48e+10 at epoch 10
+Warning: high gradient norm 24750266368.0 detected at epoch 10
+[SafeTrain] Grad explosion 2.48e+10 at epoch 10
+
+RUN_FILE_NAMES
+checkpoint_epoch_000.pt
+checkpoint_epoch_001.pt
+checkpoint_epoch_002.pt
+checkpoint_epoch_003.pt
+checkpoint_epoch_004.pt
+checkpoint_epoch_005.pt
+events.jsonl
+failure.json
+initialization_check.json
+resolved_config.json
+started.json
+
+READ_ONLY_FAILURE_DIAGNOSIS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T14:21:19+0800
