@@ -1,0 +1,151 @@
+### channel=kalmannet-hamid-weights-20260923 seq=27
+### host=login4
+### started=2026-09-24T21:18:53+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T13:18:53Z
+
+ARRAY_SQUEUE
+227626_[2-11%1]|hamid_weights|PENDING|hgpu2p|(JobArrayTaskLimit)
+227626_1|hamid_weights|RUNNING|hgpu2p|ngu001
+
+ARRAY_SACCT
+227627|RUNNING|0:0|00:06:32|ngu001
+227626|PENDING|0:0|00:00:00|None assigned
+
+FIRST_CELL_ARTIFACTS
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/runs/objective-current-0p05-highflow-2-seed-43/started.json
+{
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-43",
+    "seed": 43,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227627",
+  "array_identity": "227626_1",
+  "torch": "2.4.0",
+  "cuda": "12.1",
+  "cudnn": 90100,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "host": "ngu001",
+  "protocol_sha256": "2575b0fcdafcf5befb38c4e6a431f856a202164c81763a3eb99e1c141d6055cc",
+  "package_manifest_sha256": "4bd8fe167bb5d6932a25161e9855bfdf03f656352b567aeee903e31925b6899f",
+  "initial_weight_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46",
+  "paired_manifest_sha256": "2f5c0a8c992e8ef42587141ec09648b89a0d2640cdb0aad15d832b1ef558f1ca",
+  "data": {
+    "train": {
+      "name": "train_win800_19990101_01-20070527_03.pt",
+      "sha256": "3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440",
+      "bytes": 4381521,
+      "rows": 121635,
+      "corrected_states_name": "train_corrected_cpu.pt",
+      "corrected_states_sha256": "67ba7160a7c3b0e4a462bbadcf611319c165892aaa05829ed6239290c2dd0512",
+      "columns_sha256": {
+        "p": "bc9ec5e52cda71e3b2aad02a29021dccb0ca1f131533092c1b2385969d3d2a5a",
+        "etpot": "110750f54cb2a110ee163af74ab9b3533ac7a17c43727320f138ca83589e2ef8",
+        "qobs": "c3cb2a1c718df7d957a9b54c8d866a2fd552768891b44a8c98f6670d0ca65409",
+        "tm_hours": "361939c0456922281a33f7cc8ed815fef693602f12b33401eca52fa38e77d0b3"
+      }
+    },
+    "val": {
+      "name": "val_win800_20070527_04-20090314_13.pt",
+      "sha256": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403",
+      "bytes": 570687,
+      "rows": 15778,
+      "corrected_states_name": "val_corrected_cpu.pt",
+      "corrected_states_sha256": "70f0eb175d5dba5c6a7fc1290879a7346cff436f376a2ff92bc8db7433d24a1e",
+      "columns_sha256": {
+        "p": "1c04c87df88bc29a94d62b2f556b385773da28ea1f75cecb86f57fb4a58e0e9b",
+        "etpot": "8407f72ce0ee0982c85e9c3b8318503e92e4168ab4addf911026cf64376290a1",
+        "qobs": "292898c14ccf49864eb8f378c103fa4cfc8448a00affa13eb5481fce81d000b3",
+        "tm_hours": "9b3965415a03e4c2c73016055e3d58696ee333336d6837b99fed459fa12a53e5"
+      }
+    }
+  },
+  "scientific_status": "NOT_EVALUATED",
+  "precision": "float32, no mixed precision",
+  "cudnn_benchmark": true,
+  "deterministic_algorithms": false
+}FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/runs/objective-current-0p05-highflow-2-seed-43/initialization_check.json
+{
+  "constructor_tensor_sha256": "8632e24c2a5a30875d4cd4cb8fd8150b824c3c2af6e5fc14115120b4ba9ee5da",
+  "frozen_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46",
+  "constructor_equals_frozen": false,
+  "constructor_max_abs_difference_by_tensor": {
+    "LSTM_Q.weight_ih_l0": 0.0,
+    "LSTM_Q.weight_hh_l0": 0.0,
+    "LSTM_Q.bias_ih_l0": 0.0,
+    "LSTM_Q.bias_hh_l0": 0.0,
+    "LSTM_Sigma.weight_ih_l0": 0.0,
+    "LSTM_Sigma.weight_hh_l0": 0.0,
+    "LSTM_Sigma.bias_ih_l0": 0.0,
+    "LSTM_Sigma.bias_hh_l0": 0.0,
+    "FC1.0.weight": 0.0,
+    "FC1.0.bias": 0.0,
+    "FC7.0.weight": 5.960464477539063e-08,
+    "FC7.0.bias": 5.960464477539063e-08,
+    "LSTM_S.weight_ih_l0": 0.0,
+    "LSTM_S.weight_hh_l0": 0.0,
+    "LSTM_S.bias_ih_l0": 0.0,
+    "LSTM_S.bias_hh_l0": 0.0,
+    "FC2.0.weight": 7.450580596923828e-09,
+    "FC2.0.bias": 7.450580596923828e-09,
+    "FC2.2.weight": 3.725290298461914e-09,
+    "FC2.2.bias": 1.862645149230957e-09,
+    "FC3.0.weight": 2.9802322387695312e-08,
+    "FC3.0.bias": 2.9802322387695312e-08,
+    "FC4.0.weight": 7.450580596923828e-09,
+    "FC4.0.bias": 7.450580596923828e-09,
+    "FC5.0.weight": 2.9802322387695312e-08,
+    "FC5.0.bias": 2.9802322387695312e-08,
+    "FC6.0.weight": 2.9802322387695312e-08,
+    "FC6.0.bias": 2.9802322387695312e-08,
+    "fc_inQ_to_outQ.weight": 7.450580596923828e-09,
+    "fc_inQ_to_outQ.bias": 7.450580596923828e-09,
+    "fc_in_Sigma_to_out_Sigma.weight": 7.450580596923828e-09,
+    "fc_in_Sigma_to_out_Sigma.bias": 7.450580596923828e-09,
+    "fc_in_S_to_out_S.weight": 1.4901161193847656e-08,
+    "fc_in_S_to_out_S.bias": 2.7939677238464355e-09,
+    "q_prior_to_hidden_state.weight": 1.4901161193847656e-08,
+    "q_prior_to_hidden_state.bias": 1.4901161193847656e-08,
+    "q_prior_to_cell_state.weight": 1.4901161193847656e-08,
+    "q_prior_to_cell_state.bias": 1.4901161193847656e-08,
+    "sigma_prior_to_hidden_state.weight": 1.4901161193847656e-08,
+    "sigma_prior_to_hidden_state.bias": 1.4901161193847656e-08,
+    "sigma_prior_to_cell_state.weight": 1.4901161193847656e-08,
+    "sigma_prior_to_cell_state.bias": 1.4901161193847656e-08,
+    "r_prior_to_hidden_state.weight": 0.0,
+    "r_prior_to_hidden_state.bias": 0.0,
+    "r_prior_to_cell_state.weight": 0.0,
+    "r_prior_to_cell_state.bias": 0.0
+  },
+  "loaded_frozen_tensors_before_any_optimizer_step": true
+}FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/runs/objective-current-0p05-highflow-2-seed-43/events.jsonl
+{"unix_time": 1790255653.9984875, "event": "FIRST_OPTIMIZER_UPDATE_VERIFIED", "before_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46", "after_tensor_sha256": "ddbc787f293652d1333a564bc3452c69eadfc35a55fbf8e6c37507cdd4de3483", "epoch": 0, "batch": 0}
+{"unix_time": 1790255983.5797875, "event": "training_batch", "epoch": 0, "attempt": 0, "batch": 36, "samples": 2048, "loss_sum": 0.14859725534915924, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 37039}
+{"unix_time": 1790255992.7793775, "event": "training_batch", "epoch": 0, "attempt": 0, "batch": 37, "samples": 2048, "loss_sum": 0.1537865400314331, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 37798}
+ABSENT=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/runs/objective-current-0p05-highflow-2-seed-43/completion.json
+ABSENT=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/runs/objective-current-0p05-highflow-2-seed-43/failure.json
+
+FIRST_CELL_LOG_TAIL
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/logs/weights-227626_1.out
+JOB_ID=227627 ARRAY=227626_1 HOST=ngu001 CUDA_VISIBLE_DEVICES=1
+Walrus Using device: cuda
+{"event": "FORMAL_TRAINING_STARTED", "cell": {"exp_id": "objective-current-0p05-highflow-2-seed-43", "seed": 43, "lambda_upd": 0.05, "alpha_hf": 2}}
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_003/logs/weights-227626_1.err
+
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+227626_[2-11%1]|hamid_weights|PENDING|hgpu2p|(JobArrayTaskLimit)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+227626_1|hamid_weights|RUNNING|hgpu2p|ngu001
+
+READ_ONLY_REMAINING_CELLS_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T21:18:53+0800
