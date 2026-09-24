@@ -1,64 +1,33 @@
 #!/usr/bin/env bash
 set -eo pipefail
-readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_state_update_control_20260921_v1"
-readonly EXPECTED_AGGREGATE_SHA="9e801d2e858fcae945ba783a123f1fd22f3fbc64911d341a86ca0b05292016e4"
-echo "FIXED_CONTROL_REMAINING_PAIR_READ_ONLY_TRANSFER_V1"
-echo "sequence=193"
+readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1"
+readonly SOURCE_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace"
+readonly RUNS_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs"
+readonly PYTHON_BIN="/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python"
+readonly FAMILY="DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916"
+echo "COLDSTART_STRESS_READ_ONLY_PREFLIGHT_V1"
+echo "sequence=194"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-printf '%s  %s\n' "$EXPECTED_AGGREGATE_SHA" "$OUTPUT_ROOT/aggregate.json" | sha256sum --check --strict
-primary_ids=(
-  CTRL-02092500-NETWORK-20260824-FULL3288
-  CTRL-02092500-NETWORK-20260901-FULL3288
-  CTRL-02092500-NETWORK-20260908-FULL3288
-  CTRL-02092500-NETWORK-20260915-FULL3288
-  CTRL-02092500-NETWORK-20260922-FULL3288
-  CTRL-02092500-NOUPDATE-NONE-FULL3288
-)
-echo "PRIMARY_PAIR_HASHES_BEGIN"
-for id in "${primary_ids[@]}"; do
-  file="$OUTPUT_ROOT/runs/$id/forecast_pairs.npz"
-  if [[ ! -f "$file" || -L "$file" ]]; then echo "REFUSING: primary pair file absent or symlink" >&2; exit 20; fi
-  stat -c "$id bytes=%s" "$file"
-  sha256sum "$file"
-done
-echo "PRIMARY_PAIR_HASHES_END"
-ids=(
-  CTRL-02092500-NETWORK-20260824-RESTART731
-  CTRL-02092500-NETWORK-20260901-RESTART731
-  CTRL-02092500-NETWORK-20260908-RESTART731
-  CTRL-02092500-NETWORK-20260915-RESTART731
-  CTRL-02092500-NETWORK-20260922-RESTART731
-  CTRL-02092500-UNSCENTED-20260824-FULL3288
-  CTRL-02092500-UNSCENTED-20260824-RESTART731
-  CTRL-02092500-UNSCENTED-20260901-FULL3288
-  CTRL-02092500-UNSCENTED-20260901-RESTART731
-  CTRL-02092500-UNSCENTED-20260908-FULL3288
-  CTRL-02092500-UNSCENTED-20260908-RESTART731
-  CTRL-02092500-UNSCENTED-20260915-FULL3288
-  CTRL-02092500-UNSCENTED-20260915-RESTART731
-  CTRL-02092500-UNSCENTED-20260922-FULL3288
-  CTRL-02092500-UNSCENTED-20260922-RESTART731
-  CTRL-02092500-NOUPDATE-NONE-RESTART731
-)
-total=0
-for id in "${ids[@]}"; do
-  file="$OUTPUT_ROOT/runs/$id/forecast_pairs.npz"
-  if [[ ! -f "$file" || -L "$file" ]]; then echo "REFUSING: expected pair file absent or symlink" >&2; exit 21; fi
-  size=$(stat -c '%s' "$file")
-  if [[ "$size" -gt 200000 ]]; then echo "REFUSING: individual pair file too large" >&2; exit 22; fi
-  total=$((total + size))
-done
-if [[ "$total" -gt 700000 ]]; then echo "REFUSING: total pair transfer too large" >&2; exit 23; fi
-echo "total_pair_bytes=$total"
-for id in "${ids[@]}"; do
-  file="$OUTPUT_ROOT/runs/$id/forecast_pairs.npz"
-  echo "PAIR_BEGIN $id"
-  stat -c 'bytes=%s' "$file"
-  sha256sum "$file"
-  base64 --wrap=0 "$file"
-  echo
-  echo "PAIR_END $id"
-done
+echo "host=$(hostname)"
 echo "OWN_QUEUE_BEGIN"
-squeue -u "$USER" -h -o '%i|%j|%T|%P|%R' || echo "OWN_QUEUE_READ_FAILED"
+squeue -u "$USER" -h -o '%i|%j|%T|%P|%R|%M|%l'
 echo "OWN_QUEUE_END"
+echo "CPU_PARTITION_BEGIN"
+sinfo -h -p hcpu48 -o '%P|%a|%D|%t|%C'
+scontrol show partition hcpu48 | grep -E 'PartitionName=|OverSubscribe=|State=|TotalCPUs='
+echo "CPU_PARTITION_END"
+echo "CPU_NODE_FEATURES_BEGIN"
+sinfo -h -p hcpu48 -N -o '%N|%t|%c|%f'
+echo "CPU_NODE_FEATURES_END"
+for path in "$SOURCE_ROOT" "$RUNS_ROOT"; do
+  if [[ -d "$path" ]]; then echo "DIR_PRESENT $path"; else echo "DIR_ABSENT $path"; fi
+done
+if [[ -x "$PYTHON_BIN" ]]; then echo "PYTHON_PRESENT"; else echo "PYTHON_ABSENT"; fi
+for arm in KNET UKF; do
+  for seed in 20260824 20260901 20260908 20260915 20260922; do
+    summary="$RUNS_ROOT/${FAMILY}_${arm}_BASIN_02092500_SEED_${seed}/result_summary.json"
+    if [[ -f "$summary" && ! -L "$summary" ]]; then echo "SUMMARY_PRESENT $arm $seed"; else echo "SUMMARY_ABSENT $arm $seed"; fi
+  done
+done
+if [[ -e "$OUTPUT_ROOT" ]]; then echo "PROPOSED_ROOT_ABSENT=no"; else echo "PROPOSED_ROOT_ABSENT=yes"; fi
+echo "PREFLIGHT_COMPLETE"
