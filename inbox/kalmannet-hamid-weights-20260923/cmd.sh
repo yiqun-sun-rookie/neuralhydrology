@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-sequence=17
+sequence=18
 root=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1
 attempt="$root/diagnostic_20260924_v2"
 job_id=$(cat "$root/diagnostic_submission_claim_20260924_v2/job_id.txt")
