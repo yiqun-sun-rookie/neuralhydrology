@@ -1,0 +1,360 @@
+### channel=kalmannet-hamid-weights-20260923 seq=18
+### host=login4
+### started=2026-09-24T17:43:25+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T09:43:25Z
+DIAGNOSTIC_JOB_ID=227614
+slurm_load_jobs error: Invalid job id specified
+227614_0|hamid_weight_diag|FAILED|1:0|00:04:18|ngu001
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/full_batch_observer_audit.json
+{
+  "state": "FULL_BATCH_OBSERVER_AUDIT_PASS",
+  "checks": {
+    "plain_repeat_loss_sum": true,
+    "plain_repeat_samples": true,
+    "plain_repeat_model_sha256": true,
+    "plain_repeat_optimizer_sha256": true,
+    "plain_repeat_cpu_rng_sha256": true,
+    "plain_repeat_gpu_rng_sha256": true,
+    "minimal_observer_loss_sum": true,
+    "minimal_observer_samples": true,
+    "minimal_observer_model_sha256": true,
+    "minimal_observer_optimizer_sha256": true,
+    "minimal_observer_cpu_rng_sha256": true,
+    "minimal_observer_gpu_rng_sha256": true
+  },
+  "rows": [
+    {
+      "case": "plain_a",
+      "loss_sum": 1.7257440090179443,
+      "samples": 2048,
+      "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d",
+      "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934",
+      "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55",
+      "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9"
+    },
+    {
+      "case": "plain_b",
+      "loss_sum": 1.7257440090179443,
+      "samples": 2048,
+      "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d",
+      "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934",
+      "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55",
+      "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9",
+      "parameter_max_abs_difference": 0.0,
+      "parameter_tensors_different": 0,
+      "largest_parameter_differences": {
+        "LSTM_Q.weight_ih_l0": 0.0,
+        "LSTM_Q.weight_hh_l0": 0.0,
+        "LSTM_Q.bias_ih_l0": 0.0,
+        "LSTM_Q.bias_hh_l0": 0.0,
+        "LSTM_Sigma.weight_ih_l0": 0.0,
+        "LSTM_Sigma.weight_hh_l0": 0.0,
+        "LSTM_Sigma.bias_ih_l0": 0.0,
+        "LSTM_Sigma.bias_hh_l0": 0.0
+      }
+    },
+    {
+      "case": "minimal_observer",
+      "loss_sum": 1.7257440090179443,
+      "samples": 2048,
+      "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d",
+      "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934",
+      "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55",
+      "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9",
+      "parameter_max_abs_difference": 0.0,
+      "parameter_tensors_different": 0,
+      "largest_parameter_differences": {
+        "LSTM_Q.weight_ih_l0": 0.0,
+        "LSTM_Q.weight_hh_l0": 0.0,
+        "LSTM_Q.bias_ih_l0": 0.0,
+        "LSTM_Q.bias_hh_l0": 0.0,
+        "LSTM_Sigma.weight_ih_l0": 0.0,
+        "LSTM_Sigma.weight_hh_l0": 0.0,
+        "LSTM_Sigma.bias_ih_l0": 0.0,
+        "LSTM_Sigma.bias_hh_l0": 0.0
+      }
+    },
+    {
+      "case": "backward_hook_observer",
+      "loss_sum": 1.7257440090179443,
+      "samples": 2048,
+      "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d",
+      "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934",
+      "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55",
+      "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9",
+      "parameter_max_abs_difference": 0.0,
+      "parameter_tensors_different": 0,
+      "largest_parameter_differences": {
+        "LSTM_Q.weight_ih_l0": 0.0,
+        "LSTM_Q.weight_hh_l0": 0.0,
+        "LSTM_Q.bias_ih_l0": 0.0,
+        "LSTM_Q.bias_hh_l0": 0.0,
+        "LSTM_Sigma.weight_ih_l0": 0.0,
+        "LSTM_Sigma.weight_hh_l0": 0.0,
+        "LSTM_Sigma.bias_ih_l0": 0.0,
+        "LSTM_Sigma.bias_hh_l0": 0.0
+      }
+    }
+  ],
+  "batch_size": 2048,
+  "sequence_hours": 800,
+  "test_data_read": false,
+  "temporary_updates_not_scientific_training": true,
+  "original_non_deterministic_backend_preserved": true
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/preflight_cpu/result.json
+{
+  "state": "DIAGNOSTIC_OBSERVER_PARITY_PASS",
+  "device": "cpu",
+  "torch": "2.4.0",
+  "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm",
+  "rows": [
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 2,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 2,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 2,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 2,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 1,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 1,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 1,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 1,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    }
+  ],
+  "synthetic_trigger_caught": true,
+  "trigger_model_and_optimizer_unchanged": true,
+  "trigger_snapshot_verified": true,
+  "scientific_evaluation": false
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/preflight_gpu/result.json
+{
+  "state": "DIAGNOSTIC_OBSERVER_PARITY_PASS",
+  "device": "cuda",
+  "torch": "2.4.0",
+  "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm",
+  "rows": [
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 2,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 2,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 2,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 2,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 1,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.05,
+      "alpha_hf": 1,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 1,
+      "step": 0,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    },
+    {
+      "lambda_upd": 0.0,
+      "alpha_hf": 1,
+      "step": 1,
+      "loss_equal": true,
+      "parameters_equal": true,
+      "optimizer_equal": true,
+      "rng_equal": true
+    }
+  ],
+  "synthetic_trigger_caught": true,
+  "trigger_model_and_optimizer_unchanged": true,
+  "trigger_snapshot_verified": true,
+  "scientific_evaluation": false
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/HALT.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227614",
+  "type": "AssertionError",
+  "message": "Full-size observer parity failed; do not continue diagnostic trajectory",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v2/train_diagnostic.py\", line 160, in main\n    assert all(parity.values()),'Full-size observer parity failed; do not continue diagnostic trajectory'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Full-size observer parity failed; do not continue diagnostic trajectory\n"
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/runs/objective-current-0p05-highflow-2-seed-42/full_batch_observer_parity.json
+{
+  "checks": {
+    "loss_equal": true,
+    "count_equal": true,
+    "model_equal": false,
+    "optimizer_equal": false,
+    "cpu_rng_equal": true,
+    "gpu_rng_equal": true
+  },
+  "batch_size": 2048,
+  "sequence_hours": 800,
+  "temporary_reference_update_restored": true,
+  "passed": false
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/runs/objective-current-0p05-highflow-2-seed-42/failure.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227614",
+  "type": "AssertionError",
+  "message": "Full-size observer parity failed; do not continue diagnostic trajectory",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v2/train_diagnostic.py\", line 160, in main\n    assert all(parity.values()),'Full-size observer parity failed; do not continue diagnostic trajectory'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Full-size observer parity failed; do not continue diagnostic trajectory\n"
+}
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/logs/weights-227614_0.out
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Warning: high gradient norm 1.7808336286541414e+17 detected at epoch 0
+[SafeTrain] Grad explosion 1.78e+17 at epoch 0
+{"state": "DIAGNOSTIC_OBSERVER_PARITY_PASS", "device": "cuda", "torch": "2.4.0", "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm", "rows": [{"lambda_upd": 0.05, "alpha_hf": 2, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 2, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 2, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 2, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 1, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 1, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 1, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 1, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}], "synthetic_trigger_caught": true, "trigger_model_and_optimizer_unchanged": true, "trigger_snapshot_verified": true, "scientific_evaluation": false}
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+{"state": "FULL_BATCH_OBSERVER_AUDIT_PASS", "checks": {"plain_repeat_loss_sum": true, "plain_repeat_samples": true, "plain_repeat_model_sha256": true, "plain_repeat_optimizer_sha256": true, "plain_repeat_cpu_rng_sha256": true, "plain_repeat_gpu_rng_sha256": true, "minimal_observer_loss_sum": true, "minimal_observer_samples": true, "minimal_observer_model_sha256": true, "minimal_observer_optimizer_sha256": true, "minimal_observer_cpu_rng_sha256": true, "minimal_observer_gpu_rng_sha256": true}, "rows": [{"case": "plain_a", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9"}, {"case": "plain_b", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9", "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}, {"case": "minimal_observer", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9", "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}, {"case": "backward_hook_observer", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9", "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}], "batch_size": 2048, "sequence_hours": 800, "test_data_read": false, "temporary_updates_not_scientific_training": true, "original_non_deterministic_backend_preserved": true}
+Walrus Using device: cuda
+{"event": "FORMAL_TRAINING_STARTED", "cell": {"exp_id": "objective-current-0p05-highflow-2-seed-42", "seed": 42, "lambda_upd": 0.05, "alpha_hf": 2}}
+
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v2/logs/weights-227614_0.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v2/train_diagnostic.py", line 212, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v2/train_diagnostic.py", line 160, in main
+    assert all(parity.values()),'Full-size observer parity failed; do not continue diagnostic trajectory'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: Full-size observer parity failed; do not continue diagnostic trajectory
+
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+
+READ_ONLY_DIAGNOSTIC_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T17:43:26+0800
