@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-sequence=29
+sequence=30
 root=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1
 date -u '+SNAPSHOT_UTC=%Y-%m-%dT%H:%M:%SZ'
 printf '\nARRAY_QUEUE\n'
