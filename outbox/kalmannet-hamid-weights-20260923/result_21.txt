@@ -1,0 +1,43 @@
+### channel=kalmannet-hamid-weights-20260923 seq=21
+### host=login4
+### started=2026-09-24T17:56:39+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T09:56:39Z
+DIAGNOSTIC_JOB_ID=227616
+227616_0|hamid_weight_diag|RUNNING|2:38|ngu001
+227616_0|hamid_weight_diag|RUNNING|0:0|00:03:51|ngu001
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/preflight_cpu/result.json
+{"state": "DIAGNOSTIC_OBSERVER_PARITY_PASS", "device": "cpu", "torch": "2.4.0", "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm", "synthetic_trigger_caught": true, "trigger_model_and_optimizer_unchanged": true, "trigger_snapshot_verified": true, "pristine_reference_parity": {"checks": {"loss_equal": true, "count_equal": true, "model_equal": true, "optimizer_equal": true, "cpu_rng_equal": true, "gpu_rng_equal": true}, "passed": true, "batch_size": 2, "reference_uses_separate_pristine_pipeline": true, "live_pipeline_rewound": false, "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}, "scientific_evaluation": false, "all_eight_update_comparisons_passed": true}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/preflight_gpu/result.json
+{"state": "DIAGNOSTIC_OBSERVER_PARITY_PASS", "device": "cuda", "torch": "2.4.0", "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm", "synthetic_trigger_caught": true, "trigger_model_and_optimizer_unchanged": true, "trigger_snapshot_verified": true, "pristine_reference_parity": {"checks": {"loss_equal": true, "count_equal": true, "model_equal": true, "optimizer_equal": true, "cpu_rng_equal": true, "gpu_rng_equal": true}, "passed": true, "batch_size": 2, "reference_uses_separate_pristine_pipeline": true, "live_pipeline_rewound": false, "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}, "scientific_evaluation": false, "all_eight_update_comparisons_passed": true}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/full_batch_observer_audit.json
+{"state": "FULL_BATCH_OBSERVER_AUDIT_PASS", "checks": {"plain_repeat_loss_sum": true, "plain_repeat_samples": true, "plain_repeat_model_sha256": true, "plain_repeat_optimizer_sha256": true, "plain_repeat_cpu_rng_sha256": true, "plain_repeat_gpu_rng_sha256": true, "minimal_observer_loss_sum": true, "minimal_observer_samples": true, "minimal_observer_model_sha256": true, "minimal_observer_optimizer_sha256": true, "minimal_observer_cpu_rng_sha256": true, "minimal_observer_gpu_rng_sha256": true}, "batch_size": 2048, "sequence_hours": 800, "test_data_read": false, "temporary_updates_not_scientific_training": true, "original_non_deterministic_backend_preserved": true}
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/logs/weights-227616_0.err
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/logs/weights-227616_0.out
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda:0
+Walrus Using device: cuda
+Warning: high gradient norm 1.7808336286541414e+17 detected at epoch 0
+[SafeTrain] Grad explosion 1.78e+17 at epoch 0
+{"state": "DIAGNOSTIC_OBSERVER_PARITY_PASS", "device": "cuda", "torch": "2.4.0", "real_input_scope": "two real corrected-cache windows truncated to 16 hours; two updates per arm", "rows": [{"lambda_upd": 0.05, "alpha_hf": 2, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 2, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 2, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 2, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 1, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.05, "alpha_hf": 1, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 1, "step": 0, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}, {"lambda_upd": 0.0, "alpha_hf": 1, "step": 1, "loss_equal": true, "parameters_equal": true, "optimizer_equal": true, "rng_equal": true}], "synthetic_trigger_caught": true, "trigger_model_and_optimizer_unchanged": true, "trigger_snapshot_verified": true, "pristine_reference_parity": {"checks": {"loss_equal": true, "count_equal": true, "model_equal": true, "optimizer_equal": true, "cpu_rng_equal": true, "gpu_rng_equal": true}, "passed": true, "batch_size": 2, "reference_uses_separate_pristine_pipeline": true, "live_pipeline_rewound": false, "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences":
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+Walrus Using device: cuda
+{"state": "FULL_BATCH_OBSERVER_AUDIT_PASS", "checks": {"plain_repeat_loss_sum": true, "plain_repeat_samples": true, "plain_repeat_model_sha256": true, "plain_repeat_optimizer_sha256": true, "plain_repeat_cpu_rng_sha256": true, "plain_repeat_gpu_rng_sha256": true, "minimal_observer_loss_sum": true, "minimal_observer_samples": true, "minimal_observer_model_sha256": true, "minimal_observer_optimizer_sha256": true, "minimal_observer_cpu_rng_sha256": true, "minimal_observer_gpu_rng_sha256": true}, "rows": [{"case": "plain_a", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9"}, {"case": "plain_b", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9a49d4c6594946e819bd3e052f273de5d", "optimizer_sha256": "0ca33eb420f51102e7343ba5c66b963420a2535d6d238dae0330b5467fbfa934", "cpu_rng_sha256": "89c1c63a24b6a986ff43372f2982e0d8f64c801fe0e5049a1fb80a0f56afba55", "gpu_rng_sha256": "5610b1dc2fd95ce78006879930b189575ff3e58865b8c522457c97d0a4ff2fd9", "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}}, {"case": "minimal_observer", "loss_sum": 1.7257440090179443, "samples": 2048, "model_sha256": "c4b805aa2dbcefb128e27f39a173b9a9
+
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+227616_0|hamid_weight_diag|RUNNING|hgpu2p|ngu001
+
+READ_ONLY_DIAGNOSTIC_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T17:56:39+0800
