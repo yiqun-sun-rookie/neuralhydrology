@@ -1,0 +1,33 @@
+### channel=kalmannet-hamid-weights-20260923 seq=19
+### host=login4
+### started=2026-09-24T17:52:44+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T09:52:44Z
+
+OWN_JOBS_BEFORE_SUBMISSION
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+{"state": "DIAGNOSTIC_DEPLOYMENT_VERIFIED", "manifest_sha256": "1c3b167812299f99ea80c83262efeb900688516663ceaaae813665949e0f9493", "archive_sha256": "4036429ec4d82139728074ea6b195c90551b53924b650003e736f37d61214389", "source_files_unchanged": true, "old_halt_sha256": "42e23aba58d177c2e1a58cc03a4e2ef49dc38d91e4427e600292a340a2883557"}
+Submitted batch job 227616
+DIAGNOSTIC_SUBMITTED_JOB_ID=227616
+227616_[0%1]|hamid_weight_diag|PENDING|(None)
+
+OWN_JOBS_AFTER_SUBMISSION
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+227616_[0%1]|hamid_weight_diag|PENDING|hgpu2p|(None)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+
+ISOLATED_DIAGNOSTIC_SUBMISSION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T17:52:47+0800
