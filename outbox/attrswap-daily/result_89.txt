@@ -1,0 +1,75 @@
+### channel=attrswap-daily seq=89
+### host=login4
+### started=2026-09-24T21:38:31+0800
+### ---------- output ----------
+wallclock 2026-09-24 21:38:31 +0800
+epoch 1790257111
+=== A. sacct 47 jobs (expect 47 rows, all COMPLETED) ===
+226245|pswap3_gate_ref|COMPLETED|0:0|2026-09-17T19:07:49
+226246|pswap3_gate_era5l_refday|COMPLETED|0:0|2026-09-17T19:11:10
+226247|pswap3_ep60_ref_daymet_s100|COMPLETED|0:0|2026-09-17T23:09:33
+226248|pswap3_ep60_era5l_refday_s100|COMPLETED|0:0|2026-09-17T23:11:31
+226249|pswap3_ep60_ref_daymet_s200|COMPLETED|0:0|2026-09-17T23:09:20
+226250|pswap3_ep60_era5l_refday_s200|COMPLETED|0:0|2026-09-18T01:39:18
+226251|pswap3_ep60_ref_daymet_s300|COMPLETED|0:0|2026-09-18T01:27:45
+226252|pswap3_ep60_era5l_refday_s300|COMPLETED|0:0|2026-09-18T01:42:09
+226253|pswap3_guard_T16|COMPLETED|0:0|2026-09-18T01:42:19
+226254|pswap3_gate_imerg_e18|COMPLETED|0:0|2026-09-17T21:27:21
+226255|pswap3_win_imerg_e18_s100|COMPLETED|0:0|2026-09-18T03:46:27
+226256|pswap3_win_imerg_e18_s200|COMPLETED|0:0|2026-09-18T03:47:07
+226257|pswap3_win_imerg_e18_s300|COMPLETED|0:0|2026-09-18T03:44:46
+226258|pswap3_gate_imerg_local|COMPLETED|0:0|2026-09-17T21:27:21
+226259|pswap3_win_imerg_local_s100|COMPLETED|0:0|2026-09-18T03:43:41
+226260|pswap3_win_imerg_local_s200|COMPLETED|0:0|2026-09-18T03:43:42
+226261|pswap3_win_imerg_local_s300|COMPLETED|0:0|2026-09-18T03:45:13
+226262|pswap3_gate_gsmap_utc|COMPLETED|0:0|2026-09-17T21:27:20
+226263|pswap3_win_gsmap_utc_s100|COMPLETED|0:0|2026-09-18T05:19:38
+226264|pswap3_win_gsmap_utc_s200|COMPLETED|0:0|2026-09-18T05:18:38
+226265|pswap3_win_gsmap_utc_s300|COMPLETED|0:0|2026-09-18T05:18:38
+226266|pswap3_gate_imerg_tau32|COMPLETED|0:0|2026-09-17T21:30:28
+226267|pswap3_win_imerg_tau32_s100|COMPLETED|0:0|2026-09-18T05:18:38
+226268|pswap3_win_imerg_tau32_s200|COMPLETED|0:0|2026-09-18T05:44:18
+226269|pswap3_win_imerg_tau32_s300|COMPLETED|0:0|2026-09-18T05:46:04
+226270|pswap3_gate_daymet_shift1|COMPLETED|0:0|2026-09-17T21:30:28
+226271|pswap3_shift1_daymet_s100|COMPLETED|0:0|2026-09-18T05:44:53
+226272|pswap3_shift1_daymet_s200|COMPLETED|0:0|2026-09-18T05:44:53
+226273|pswap3_shift1_daymet_s300|COMPLETED|0:0|2026-09-18T05:50:57
+226274|pswap3_gate_syn_ln035|COMPLETED|0:0|2026-09-17T21:30:28
+226275|pswap3_syn_ln035_s100|COMPLETED|0:0|2026-09-18T05:51:22
+226276|pswap3_syn_ln035_s200|COMPLETED|0:0|2026-09-18T07:18:10
+226277|pswap3_syn_ln035_s300|COMPLETED|0:0|2026-09-18T07:14:52
+226278|pswap3_gate_syn_ln070|COMPLETED|0:0|2026-09-17T21:33:34
+226279|pswap3_syn_ln070_s100|COMPLETED|0:0|2026-09-18T07:15:07
+226280|pswap3_syn_ln070_s200|COMPLETED|0:0|2026-09-18T07:18:09
+226281|pswap3_syn_ln070_s300|COMPLETED|0:0|2026-09-18T07:43:45
+226282|pswap3_gate_syn_ln140|COMPLETED|0:0|2026-09-17T21:33:34
+226283|pswap3_syn_ln140_s100|COMPLETED|0:0|2026-09-18T07:46:01
+226284|pswap3_syn_ln140_s200|COMPLETED|0:0|2026-09-18T07:47:09
+226285|pswap3_syn_ln140_s300|COMPLETED|0:0|2026-09-18T07:46:19
+226286|pswap3_eval_ckpt|COMPLETED|0:0|2026-09-18T00:39:05
+226287|pswap3_p7|COMPLETED|0:0|2026-09-17T21:35:04
+226558|pswap3_gate_syn_ln018|COMPLETED|0:0|2026-09-19T20:05:24
+226559|pswap3_syn_ln018_s100|COMPLETED|0:0|2026-09-19T22:02:44
+226560|pswap3_syn_ln018_s200|COMPLETED|0:0|2026-09-19T22:00:21
+226561|pswap3_syn_ln018_s300|COMPLETED|0:0|2026-09-19T22:01:52
+  rows: 47
+  state tally:
+    COMPLETED 47
+=== B. queue (expect no pswap3 rows) ===
+     JOBID                                 NAME     STATE       TIME PARTITION NODELIST(REASON)
+  pswap3 rows in queue: 0
+=== C. landing (expect runs/ 33 dirs, jobs.txt 47 lines) ===
+  runs/ dirs: 33
+  runs/ test_metrics.csv: 39
+  logs/jobs.txt lines: 47  sha256_16: 53d85ad4748f3672
+  logs/budget_ledger.txt lines: 2  sha256_16: bc8ff568768085f5
+  landing files total: 6531
+  files modified after 2026-09-20 17:30 (seq 88 receipt time): 0
+  newest 3 files:
+    2026-09-19 22:01:37.000000000 +0800 /data1/home/sunyiq/precip_swap3_daily_2026_09/runs/pswap3_syn_ln018_s100_2026_0919_2005_ep30/test/model_epoch030/test_metrics.csv
+    2026-09-19 22:01:37.000000000 +0800 /data1/home/sunyiq/precip_swap3_daily_2026_09/runs/pswap3_syn_ln018_s100_2026_0919_2005_ep30/test/model_epoch030/test_results.p
+    2026-09-19 22:01:40.000000000 +0800 /data1/home/sunyiq/precip_swap3_daily_2026_09/logs/slurm_pswap3_syn_ln018_s100_226559.out
+=== DONE (read-only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T21:38:41+0800
