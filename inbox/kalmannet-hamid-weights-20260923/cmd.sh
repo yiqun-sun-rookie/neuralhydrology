@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-sequence=21
+sequence=22
 root=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1
 job_id=$(cat "$root/diagnostic_submission_claim_20260924_v3/job_id.txt")
 [[ "$job_id" =~ ^[0-9]+$ ]]
