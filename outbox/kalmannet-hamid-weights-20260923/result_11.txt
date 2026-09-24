@@ -1,0 +1,253 @@
+### channel=kalmannet-hamid-weights-20260923 seq=11
+### host=login4
+### started=2026-09-24T14:16:31+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T06:16:31Z
+FORMAL_ARRAY_ID=227495
+slurm_load_jobs error: Invalid job id specified
+227495_0|hamid_weights|FAILED|1:0|01:25:07|ngu011
+227495_1|hamid_weights|FAILED|1:0|00:00:04|ngu011
+227495_2|hamid_weights|FAILED|1:0|00:00:02|ngu011
+227495_3|hamid_weights|FAILED|1:0|00:00:02|ngu011
+227495_4|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227495_5|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227495_6|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227495_7|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227495_8|hamid_weights|FAILED|1:0|00:00:00|ngu011
+227495_9|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227495_10|hamid_weights|FAILED|1:0|00:00:01|ngu011
+227495_11|hamid_weights|FAILED|1:0|00:00:00|ngu011
+
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/HALT.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227496",
+  "type": "RuntimeError",
+  "message": "Frozen total numerical-recovery limit exceeded",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py\", line 138, in main\n    value,_,count,_=batches.run_one_batch(pipe,batch,True,epoch,False,False)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py\", line 117, in run_one_batch\n    _restore_safe_state(pipeline)\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py\", line 12, in _restore_safe_state\n    raise NumericalFailure(\"Non-finite loss or gradient explosion; complete epoch replay required\")\nprobe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py\", line 153, in main\n    if recovery_total>3:raise RuntimeError('Frozen total numerical-recovery limit exceeded') from err\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Frozen total numerical-recovery limit exceeded\n"
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/runs/objective-current-0p05-highflow-2-seed-42/started.json
+{
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227496",
+  "array_identity": "227495_0",
+  "torch": "2.4.0",
+  "cuda": "12.1",
+  "cudnn": 90100,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "host": "ngu011",
+  "protocol_sha256": "2c070638bd6c25d672ad42a85fdb8cf234b0132e31e5399b8e7339f3fdc417db",
+  "package_manifest_sha256": "b4a2f2b7d68ff131776639f1d9998fbbdd2609f8c89b85958832f365e35a317e",
+  "initial_weight_tensor_sha256": "bf08341773f5b242cb5858b29233ea5ad67c69b67cdb97b9536ed33e1b04b68d",
+  "paired_manifest_sha256": "286bdf2b5131ce46f3e0900633b7cb1c27620a5fdf6839863115fa96d3718c53",
+  "data": {
+    "train": {
+      "name": "train_win800_19990101_01-20070527_03.pt",
+      "sha256": "3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440",
+      "bytes": 4381521,
+      "rows": 121635,
+      "corrected_states_name": "train_corrected_cpu.pt",
+      "corrected_states_sha256": "67ba7160a7c3b0e4a462bbadcf611319c165892aaa05829ed6239290c2dd0512",
+      "columns_sha256": {
+        "p": "bc9ec5e52cda71e3b2aad02a29021dccb0ca1f131533092c1b2385969d3d2a5a",
+        "etpot": "110750f54cb2a110ee163af74ab9b3533ac7a17c43727320f138ca83589e2ef8",
+        "qobs": "c3cb2a1c718df7d957a9b54c8d866a2fd552768891b44a8c98f6670d0ca65409",
+        "tm_hours": "361939c0456922281a33f7cc8ed815fef693602f12b33401eca52fa38e77d0b3"
+      }
+    },
+    "val": {
+      "name": "val_win800_20070527_04-20090314_13.pt",
+      "sha256": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403",
+      "bytes": 570687,
+      "rows": 15778,
+      "corrected_states_name": "val_corrected_cpu.pt",
+      "corrected_states_sha256": "70f0eb175d5dba5c6a7fc1290879a7346cff436f376a2ff92bc8db7433d24a1e",
+      "columns_sha256": {
+        "p": "1c04c87df88bc29a94d62b2f556b385773da28ea1f75cecb86f57fb4a58e0e9b",
+        "etpot": "8407f72ce0ee0982c85e9c3b8318503e92e4168ab4addf911026cf64376290a1",
+        "qobs": "292898c14ccf49864eb8f378c103fa4cfc8448a00affa13eb5481fce81d000b3",
+        "tm_hours": "9b3965415a03e4c2c73016055e3d58696ee333336d6837b99fed459fa12a53e5"
+      }
+    }
+  },
+  "scientific_status": "NOT_EVALUATED",
+  "precision": "float32, no mixed precision",
+  "cudnn_benchmark": true,
+  "deterministic_algorithms": false
+}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/runs/objective-current-0p05-highflow-2-seed-42/failure.json
+{
+  "state": "FAILED_REQUIRES_REVIEW",
+  "cell": {
+    "exp_id": "objective-current-0p05-highflow-2-seed-42",
+    "seed": 42,
+    "lambda_upd": 0.05,
+    "alpha_hf": 2
+  },
+  "job_id": "227496",
+  "type": "RuntimeError",
+  "message": "Frozen total numerical-recovery limit exceeded",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py\", line 138, in main\n    value,_,count,_=batches.run_one_batch(pipe,batch,True,epoch,False,False)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py\", line 117, in run_one_batch\n    _restore_safe_state(pipeline)\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py\", line 12, in _restore_safe_state\n    raise NumericalFailure(\"Non-finite loss or gradient explosion; complete epoch replay required\")\nprobe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py\", line 153, in main\n    if recovery_total>3:raise RuntimeError('Frozen total numerical-recovery limit exceeded') from err\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Frozen total numerical-recovery limit exceeded\n"
+}
+RUN_EVENTS=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/runs/objective-current-0p05-highflow-2-seed-42/events.jsonl
+676 /data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/runs/objective-current-0p05-highflow-2-seed-42/events.jsonl
+{"unix_time": 1790175947.8809001, "event": "epoch_complete", "epoch": 8, "train_loss": 0.550346964876695, "common_validation_mse": 0.009249385452092338, "validation_samples": 14979, "epoch_seconds": 458.11503671854734, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 3, "next_lr": 0.005, "sample_order_sha256": "4394f00e1c6ade60828874ae60f58a19304dab76e97f8096a4e599341028f777", "recovery_total": 1, "corrected_outlet_region_elements_total": 3893473, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790176841.9162908, "event": "epoch_complete", "epoch": 9, "train_loss": 0.45632445441287106, "common_validation_mse": 0.004825266795212374, "validation_samples": 14979, "epoch_seconds": 894.0245702899992, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 4, "next_lr": 0.0025, "sample_order_sha256": "5407cceee9a24a7c9e1f81962c1d2c24440ed731037361d3e31d19a324ed2095", "recovery_total": 2, "corrected_outlet_region_elements_total": 7114120, "peak_gpu_allocated_bytes": 21907148288}
+{"unix_time": 1790176849.3758621, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 10, "attempt": 1, "recovery_total": 3, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 0}
+{"unix_time": 1790176856.6769485, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 10, "attempt": 2, "recovery_total": 4, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 0}
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_0.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 138, in main
+    value,_,count,_=batches.run_one_batch(pipe,batch,True,epoch,False,False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py", line 117, in run_one_batch
+    _restore_safe_state(pipeline)
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/sources/batch.py", line 12, in _restore_safe_state
+    raise NumericalFailure("Non-finite loss or gradient explosion; complete epoch replay required")
+probe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 153, in main
+    if recovery_total>3:raise RuntimeError('Frozen total numerical-recovery limit exceeded') from err
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Frozen total numerical-recovery limit exceeded
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_10.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_11.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_1.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_2.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_3.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_4.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_5.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_6.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_7.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_8.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+STDERR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_attempt_002/logs/weights-227495_9.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v2/train_weights.py", line 45, in main
+    if halt.exists():raise RuntimeError('Earlier cell failed; preserve entire matrix for review')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Earlier cell failed; preserve entire matrix for review
+
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|(Dependency)
+202315|N22-gate|PENDING|(Dependency)
+202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|(JobHeldUser)
+
+READ_ONLY_FORMAL_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T14:16:33+0800
