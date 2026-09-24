@@ -10,13 +10,9 @@ from pathlib import Path
 
 root = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_v2')
 relative_paths = (
-    'control/deployed.json',
-    'basin_01047000/control/submission_attempt.json',
-    'basin_01047000/control/submission.json',
-    'basin_01047000/control/original_tests.xml',
-    'basin_01047000/control/new_gate_tests.xml',
-    'logs/job-227494.out',
-    'logs/job-227494.err',
+    'basin_01047000/control/tensor_tests/stdout.log',
+    'basin_01047000/control/tensor_tests/stderr.log',
+    'basin_01047000/control/tensor_tests/supervisor.json',
 )
 for relative in relative_paths:
     path = root / relative
