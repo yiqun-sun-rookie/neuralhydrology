@@ -1,157 +1,56 @@
 #!/bin/bash
 set -euo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'ZHENJIANG_BUDGET_SINGLE_COMMAND'
-"""Reserve and invoke exactly one scheduler submission for the isolated run.
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'FOUR_TARGET_STATUS'
 
-Inputs: sealed deployed root, submitted proof nonce and resource availability.
-Outputs: submission/attempt.json before sbatch, then one scheduler receipt.
-Example: this body is delivered inside the dedicated mailbox cmd.sh.
-"""
-from __future__ import annotations
-
-import base64
-import hashlib
-import json
-import os
 from pathlib import Path
-import re
-import shutil
-import stat
-import subprocess
+import json,subprocess,hashlib
+root=Path('/data1/home/sunyiq/zhenjiang_four_target_retrain_20260924_001')
+job='227612'
+def small(relative,limit=262144):
+    p=root/relative
+    if not p.exists(): return None
+    if p.is_symlink() or not p.is_file() or p.stat().st_size>limit:
+        raise ValueError('status metadata type or size differs: '+relative)
+    return json.loads(p.read_bytes())
+submission=small('submission/submitted.json',8192)
+if (submission is None or submission['job_id']!=job or
+    submission['protocol_sha256']!='e1bcbe3aaaae9d427d06588317d402a4c04532811673edad318dffbadf7b90d6' or
+    submission['attempt_sha256']!='06254f7226d11e8180972341444a2242eff471a0acfc54ac31384fdc29efc387'):
+    raise ValueError('status job differs from registered one-time submission')
+commands={}
+for name,args in (
+    ('squeue',['squeue','-j',job,'-h','-o','%i|%T|%M|%R']),
+    ('sacct',['sacct','-j',job,'-n','-P','--format=JobID,State,ExitCode,Elapsed,AllocTRES'])):
+    p=subprocess.run(args,capture_output=True,text=True,timeout=15,check=False)
+    if len(p.stdout)+len(p.stderr)>16384: raise ValueError('scheduler status exceeds bound')
+    commands[name]={'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+inputs=small('run/input_identity.json')
+preflight=small('run/preflight/result.json')
+stages=[]
+for seed in (17,29,43):
+    for stage in ('common_process','rolling_encoder','differentiable_filter'):
+        directory=root/'run'/('seed_'+str(seed))/stage
+        files=[p for p in directory.glob('epoch_*.json') if p.stem[6:].isdigit()]
+        latest=max(files,key=lambda p:int(p.stem[6:])) if files else None
+        record=small(latest.relative_to(root).as_posix(),16384) if latest else None
+        selection=small((directory/'selection.json').relative_to(root).as_posix(),16384)
+        stages.append({'seed':seed,'stage':stage,'epoch_record_count':len(files),
+                       'latest_epoch_record':record,'selection':selection})
+failure=small('run/failure.json',8192)
+complete=small('run/complete.json',16384)
+out={'job_id':job,'scheduler':commands,'complete':complete,'failure':failure,
+     'stages':stages,'input_summary':None,'preflight_summary':None}
+if inputs:
+    out['input_summary']={key:inputs[key] for key in ('train_windows','validate_windows','formal_reads','old_model_weight_reads','scale','preparation_seconds')}
+    out['input_summary']['year_window_counts']={year: value['accepted_windows'] for year,value in inputs['identity']['years'].items()}
+if preflight:
+    out['preflight_summary']={key:preflight[key] for key in ('status','estimated_training_seconds','elapsed_seconds','train_windows','validate_windows','scale','preflight_weights_must_not_initialize_training')}
+if complete:
+    out['training_result']=small('run/result.json')
+if failure:
+    log=root/'slurm'/('job_'+job+'.log')
+    if log.is_file() and not log.is_symlink() and log.stat().st_size<65536:
+        out['failure_log']=log.read_text(errors='replace')[-8192:]
+print(json.dumps(out,sort_keys=True))
 
-
-ROOT = Path("/data1/home/sunyiq/zhenjiang_four_target_retrain_20260924_001")
-PYTHON = Path("/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python")
-RECEIPT_B64 = "eyJqb2JfYnl0ZXMiOjY4Mywiam9iX3NoYTI1NiI6IjQ0NzIyZGY2Zjg2NTQxYTU2MmIzNzQxNjQ3OGJkZmFjNjVkYTZhMzU2NWUwMjI0NDRlZGYxMWI5ZGI4Y2M2ZmQiLCJtYW5pZmVzdF9maWxlcyI6NDAsIm1hbmlmZXN0X3NoYTI1NiI6IjJkZWQ4ZjNiMTUzYTNlOTkxMWM0MTExZTI1MDZmOGViODcyNDE2YWY1NTIzNGMwNjc0NzJiMWExNmI0YmMyNTgiLCJwYXlsb2FkX2J5dGVzIjoxMjA3ODMsInBheWxvYWRfc2hhMjU2IjoiNjIyN2ZjMWMwZjVmZjNhY2RmOGJkYmFkM2IwZTA4YmNkZjA3NGEyYjBhN2EwNmU0ODNkZTAzZDQwNzIwYzU0NyIsInByb3RvY29sX3NoYTI1NiI6ImUxYmNiZTNhYWFhZTlkNDI3ZDA2NTg4MzE3ZDQwMmE0YzA0NTMyODExNjczZWRhZDMxOGRmZmJhZGY3YjkwZDYiLCJzY2hlbWEiOiJidWRnZXQtc2VhbC12MSJ9"
-NONCE = "9002e4911909e3a24a904d59dee393a1"
-EXPECTED_DEPLOYMENT_SHA = "5045a30464a1b37a1bbdd2e64fe2248f4ee86e49f2c8b8870775fb051d2c56f7"
-EXPECTED_BINDING_B64 = "eyJpbm9kZSI6NjEzNzcxMTg4MywibW9kZSI6NDQ4LCJ1aWQiOjIyNzJ9"
-
-
-def sha(raw):
-    return hashlib.sha256(raw).hexdigest()
-
-
-def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"),
-                      allow_nan=False).encode("utf-8")
-
-
-def exclusive_write(path, raw):
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(path, flags, 0o600)
-    with os.fdopen(fd, "wb", buffering=0) as handle:
-        handle.write(raw)
-        os.fsync(handle.fileno())
-
-
-def checked_read(path, maximum):
-    if path.is_symlink() or not path.is_file() or path.stat().st_size > maximum:
-        raise ValueError("deployed input type or size differs: " + str(path))
-    return path.read_bytes()
-
-
-def main():
-    os.umask(0o077)
-    receipt = json.loads(base64.b64decode(RECEIPT_B64, validate=True))
-    if (not ROOT.is_dir() or ROOT.is_symlink()
-            or not (ROOT / "slurm").is_dir()
-            or os.path.lexists(ROOT / "submission")
-            or os.path.lexists(ROOT / "run")
-            or not PYTHON.is_file() or shutil.which("sbatch") is None):
-        raise ValueError("isolated root or one-submission preconditions differ")
-    meta = ROOT.stat()
-    root_identity = [meta.st_dev, meta.st_ino]
-    stable = {"inode": meta.st_ino, "uid": meta.st_uid,
-              "mode": stat.S_IMODE(meta.st_mode)}
-    expected_binding = json.loads(base64.b64decode(EXPECTED_BINDING_B64, validate=True))
-    deployment_raw = checked_read(ROOT / "deploy" / "deployment.json", 8192)
-    deployed = json.loads(deployment_raw)
-    if (sha(deployment_raw) != EXPECTED_DEPLOYMENT_SHA
-            or deployed.get("schema") != "budget-deployment-v2"
-            or deployed.get("login_root_identity") != root_identity
-            or stable != expected_binding
-            or deployed.get("root_binding") != expected_binding
-            or (os.name == "posix" and stable["mode"] != 0o700)
-            or any(deployed.get(key) != receipt[key] for key in
-                   ("protocol_sha256", "manifest_sha256", "job_sha256", "payload_sha256"))
-            or sha(checked_read(ROOT / "protocol.json", 16384)) != receipt["protocol_sha256"]
-            or sha(checked_read(ROOT / "source_manifest.json", 16384)) != receipt["manifest_sha256"]
-            or sha(checked_read(ROOT / "deploy" / "job.sh", 8192)) != receipt["job_sha256"]):
-        raise ValueError("deployed source identity differs")
-    protocol = json.loads(checked_read(ROOT / "protocol.json", 16384))
-    if (NONCE != protocol["submission_nonce"]
-            or deployed.get("deployment_token") != protocol["deployment_token"]
-            or protocol["resources"] != {"partition": "hgpu2p", "nodes": 1,
-                                          "tasks": 1, "cpus_per_task": 4,
-                                          "gpus": 1, "gpu_name_contains": "3090"}
-            or protocol["wall_seconds"] != 129600):
-        raise ValueError("approved nonce or resource declaration differs")
-    partition = subprocess.run(["scontrol", "show", "partition", "hgpu2p", "-o"],
-                               capture_output=True, text=True, timeout=15, check=False)
-    if (partition.returncode != 0 or "PartitionName=hgpu2p" not in partition.stdout
-            or "MaxTime=UNLIMITED" not in partition.stdout):
-        raise ValueError("approved partition resource preflight differs")
-
-    # This exclusive record consumes the only submission attempt even if sbatch fails.
-    directory = ROOT / "submission"
-    directory.mkdir(mode=0o700)
-    attempt = {"status": "reserved_no_retry", "nonce": NONCE,
-               "protocol_sha256": receipt["protocol_sha256"],
-               "manifest_sha256": receipt["manifest_sha256"],
-               "root_binding": expected_binding,
-               "deployment_token": protocol["deployment_token"],
-               "deployment_metadata_sha256": EXPECTED_DEPLOYMENT_SHA,
-               "job_sha256": receipt["job_sha256"]}
-    attempt_raw = canonical(attempt)
-    exclusive_write(directory / "attempt.json", attempt_raw)
-    argv = ["sbatch", "--parsable", "--partition=hgpu2p", "--nodes=1",
-            "--ntasks=1", "--cpus-per-task=4", "--gres=gpu:1",
-            "--no-requeue", "--time=36:00:00", "--output=/dev/null",
-            "--error=/dev/null", "--job-name=zhenjiang-four-target",
-            "--export=ALL", str(ROOT / "deploy" / "job.sh")]
-    env = {key: value for key, value in os.environ.items()
-           if not key.upper().startswith("SBATCH_")}
-    env["ZHENJIANG_DEPLOYMENT_SHA"] = EXPECTED_DEPLOYMENT_SHA
-    exclusive_write(directory / "command.json", canonical({
-        "argv": argv, "attempt_sha256": sha(attempt_raw),
-        "job_sha256": receipt["job_sha256"]}))
-    invoked = False
-    try:
-        invoked = True
-        result = subprocess.run(argv, capture_output=True, text=True,
-                                encoding="utf-8", errors="replace", check=False,
-                                timeout=30, env=env)
-        if len(result.stdout.encode()) + len(result.stderr.encode()) > 8192:
-            raise ValueError("scheduler reply exceeds bound; submission uncertain")
-        exclusive_write(directory / "scheduler_reply.json", canonical({
-            "returncode": result.returncode, "stdout": result.stdout,
-            "stderr": result.stderr}))
-        match = re.fullmatch(r"([1-9][0-9]*)(?:;[A-Za-z0-9_.-]+)?",
-                             result.stdout.strip())
-        if result.returncode != 0 or match is None:
-            raise ValueError("scheduler submission uncertain; no retry")
-        submitted = {"status": "submitted", "nonce": NONCE,
-                     "protocol_sha256": receipt["protocol_sha256"],
-                     "manifest_sha256": receipt["manifest_sha256"],
-                     "root_binding": expected_binding,
-                     "deployment_token": protocol["deployment_token"],
-                     "deployment_metadata_sha256": EXPECTED_DEPLOYMENT_SHA,
-                     "job_sha256": receipt["job_sha256"],
-                     "attempt_sha256": sha(attempt_raw), "job_id": match.group(1)}
-        exclusive_write(directory / "submitted.json", canonical(submitted))
-        print(json.dumps({"status": "submitted_once", "job_id": match.group(1),
-                          "root": str(ROOT), "attempt_sha256": sha(attempt_raw),
-                          "job_sha256": receipt["job_sha256"]}, sort_keys=True))
-    except BaseException as error:
-        exclusive_write(directory / "failure.json", canonical({
-            "status": "stopped_no_retry", "sbatch_invoked": invoked,
-            "submission_uncertain": invoked,
-            "error_type": type(error).__name__, "message": str(error)[:2000]}))
-        raise
-
-
-if __name__ == "__main__":
-    main()
-
-ZHENJIANG_BUDGET_SINGLE_COMMAND
+FOUR_TARGET_STATUS
