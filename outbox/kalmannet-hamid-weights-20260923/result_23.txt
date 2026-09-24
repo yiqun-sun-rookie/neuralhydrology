@@ -1,0 +1,63 @@
+### channel=kalmannet-hamid-weights-20260923 seq=23
+### host=login4
+### started=2026-09-24T20:46:21+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T12:46:21Z
+DIAGNOSTIC_JOB_ID=227616
+slurm_load_jobs error: Invalid job id specified
+227616_0|hamid_weight_diag|COMPLETED|0:0|01:16:58|ngu001
+RUN_DIR=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/runs/objective-current-0p05-highflow-2-seed-42
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/runs/objective-current-0p05-highflow-2-seed-42/full_batch_observer_parity.json
+{"checks": {"loss_equal": true, "count_equal": true, "model_equal": true, "optimizer_equal": true, "cpu_rng_equal": true, "gpu_rng_equal": true}, "passed": true, "batch_size": 2048, "reference_uses_separate_pristine_pipeline": true, "live_pipeline_rewound": false, "parameter_max_abs_difference": 0.0, "parameter_tensors_different": 0, "largest_parameter_differences": {"LSTM_Q.weight_ih_l0": 0.0, "LSTM_Q.weight_hh_l0": 0.0, "LSTM_Q.bias_ih_l0": 0.0, "LSTM_Q.bias_hh_l0": 0.0, "LSTM_Sigma.weight_ih_l0": 0.0, "LSTM_Sigma.weight_hh_l0": 0.0, "LSTM_Sigma.bias_ih_l0": 0.0, "LSTM_Sigma.bias_hh_l0": 0.0}, "sequence_hours": 800}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/runs/objective-current-0p05-highflow-2-seed-42/diagnostic_training_observation.json
+{"state": "NUMERICAL_TRIGGER_CAPTURED", "epoch_zero_based": 7, "batch_zero_based": 2, "completed_epochs": 7, "snapshot": "trigger_epoch_007_attempt_00_batch_002.pt", "snapshot_sha256": "83524ed1ab42dfb35bd5e72a6dee66668e76ccb57e0476da07fd1876d026fef7", "type": "NumericalFailure", "message": "Non-finite loss or gradient explosion; complete epoch replay required", "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/train_diagnostic.py\", line 152, in main\n    value,_,count,_=batches.run_one_batch(pipe,batch,True,epoch,False,False)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/diagnostic_observer.py\", line 173, in run\n    result = self.original['run_one_batch'](pipe, batch, is_training, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/sources/batch.py\", line 117, in run_one_batch\n    _restore_safe_state(pipeline)\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/sources/batch.py\", line 12, in _restore_safe_state\n    raise NumericalFailure(\"Non-finite loss or gradient explosion; complete epoch replay required\")\nprobe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required\n", "scientific_training_completed": false, "recovery_replays_performed": 0, "test_data_read": false}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/runs/objective-current-0p05-highflow-2-seed-42/diagnostic_summary.json
+{"state": "DIAGNOSTIC_COMPLETE_NOT_WEIGHT_COMPARISON", "observation": {"state": "NUMERICAL_TRIGGER_CAPTURED", "epoch_zero_based": 7, "batch_zero_based": 2, "completed_epochs": 7, "snapshot": "trigger_epoch_007_attempt_00_batch_002.pt", "snapshot_sha256": "83524ed1ab42dfb35bd5e72a6dee66668e76ccb57e0476da07fd1876d026fef7", "type": "NumericalFailure", "message": "Non-finite loss or gradient explosion; complete epoch replay required", "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/train_diagnostic.py\", line 152, in main\n    value,_,count,_=batches.run_one_batch(pipe,batch,True,epoch,False,False)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/diagnostic_observer.py\", line 173, in run\n    result = self.original['run_one_batch'](pipe, batch, is_training, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/sources/batch.py\", line 117, in run_one_batch\n    _restore_safe_state(pipeline)\n  File \"/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_package_20260924_v3/sources/batch.py\", line 12, in _restore_safe_state\n    raise NumericalFailure(\"Non-finite loss or gradient explosion; complete epoch replay required\")\nprobe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required\n", "scientific_training_completed": false, "recovery_replays_performed": 0, "test_data_read": false}, "scientific_training_completed": false, "automatic_resubmission": false, "scope": "one fixed failed model and batch; no retrained-arm performance claim"}
+EVENT_COUNTS={"training_batch": 422, "epoch_complete": 7, "FIRST_OPTIMIZER_UPDATE_VERIFIED": 1}
+LAST_EVENT={"unix_time": 1790247968.737435, "event": "training_batch", "epoch": 6, "attempt": 0, "batch": 58, "samples": 2048, "loss_sum": 0.10772952437400818, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 430939}
+LAST_EVENT={"unix_time": 1790247977.1752272, "event": "training_batch", "epoch": 6, "attempt": 0, "batch": 59, "samples": 4, "loss_sum": 0.00016158614016603678, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 430941}
+LAST_EVENT={"unix_time": 1790248002.5660088, "event": "epoch_complete", "epoch": 6, "train_loss": 5.778140791242499e-05, "common_validation_mse": 1.1089952189957397e-05, "validation_samples": 14979, "epoch_seconds": 584.7096962854266, "best_epoch": 5, "absolute_best_validation": 1.063995740682274e-05, "patience_reference": 1.063995740682274e-05, "no_improve_epochs": 1, "next_lr": 0.01, "sample_order_sha256": "dd1db7d47b57264c2c10d29198c9414fbd6324370c9948ec0f981aadd0c40e78", "recovery_total": 0, "corrected_outlet_region_elements_total": 432655, "peak_gpu_allocated_bytes": 21917350400}
+LAST_EVENT={"unix_time": 1790248011.8849328, "event": "training_batch", "epoch": 7, "attempt": 0, "batch": 0, "samples": 2048, "loss_sum": 0.24481996893882751, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 433800}
+LAST_EVENT={"unix_time": 1790248021.2408345, "event": "training_batch", "epoch": 7, "attempt": 0, "batch": 1, "samples": 2048, "loss_sum": 0.2542722523212433, "learning_rate": 0.01, "corrected_outlet_region_elements_total": 435006}
+PROBE={"mode": "current_only", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 17080.17578125, "loss": {"loss_total": 0.019107811152935028, "loss_future": 0.003162696724757552, "loss_upd": 0.31890228390693665, "loss_slope": 0.0, "diagnostic_current_only_total": 0.015945114195346832, "backward_total": 0.015945114195346832}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+PROBE={"mode": "forecast_only", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 70.23395538330078, "loss": {"loss_total": 0.003162696724757552, "loss_future": 0.003162696724757552, "loss_upd": 0.31890228390693665, "loss_slope": 0.0, "backward_total": 0.003162696724757552}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+PROBE={"mode": "half_learning_rate", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 17040.41015625, "loss": {"loss_total": 0.019107811152935028, "loss_future": 0.003162696724757552, "loss_upd": 0.31890228390693665, "loss_slope": 0.0, "backward_total": 0.019107811152935028}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+PROBE={"mode": "neither", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 42.43008041381836, "loss": {"loss_total": 0.0019698385149240494, "loss_future": 0.0019698385149240494, "loss_upd": 0.17301252484321594, "loss_slope": 0.0, "backward_total": 0.0019698385149240494}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+PROBE={"mode": "no_highflow", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 8530.3779296875, "loss": {"loss_total": 0.010620464570820332, "loss_future": 0.0019698385149240494, "loss_upd": 0.17301252484321594, "loss_slope": 0.0, "backward_total": 0.010620464570820332}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+PROBE={"mode": "original", "state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "preclip_gradient_norm": 17040.41015625, "loss": {"loss_total": 0.019107811152935028, "loss_future": 0.003162696724757552, "loss_upd": 0.31890228390693665, "loss_slope": 0.0, "backward_total": 0.019107811152935028}, "model_unchanged": true, "optimizer_unchanged": true, "optimizer_update_performed": false}
+FILE=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/full_batch_observer_audit.json
+{"state": "FULL_BATCH_OBSERVER_AUDIT_PASS", "checks": {"plain_repeat_loss_sum": true, "plain_repeat_samples": true, "plain_repeat_model_sha256": true, "plain_repeat_optimizer_sha256": true, "plain_repeat_cpu_rng_sha256": true, "plain_repeat_gpu_rng_sha256": true, "minimal_observer_loss_sum": true, "minimal_observer_samples": true, "minimal_observer_model_sha256": true, "minimal_observer_optimizer_sha256": true, "minimal_observer_cpu_rng_sha256": true, "minimal_observer_gpu_rng_sha256": true}, "batch_size": 2048, "sequence_hours": 800, "test_data_read": false, "temporary_updates_not_scientific_training": true, "original_non_deterministic_backend_preserved": true}
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/logs/weights-227616_0.err
+LOG=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/diagnostic_20260924_v3/logs/weights-227616_0.out
+Walrus Using device: cuda
+Warning: high gradient norm 17040.41015625 detected at epoch 7
+[SafeTrain] Grad explosion 1.70e+04 at epoch 7
+{"state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "mode": "half_learning_rate", "preclip_gradient_norm": 17040.41015625, "model_unchanged": true}
+Walrus Using device: cuda
+Warning: high gradient norm 70.23395538330078 detected at epoch 7
+{"state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "mode": "forecast_only", "preclip_gradient_norm": 70.23395538330078, "model_unchanged": true}
+Walrus Using device: cuda
+Warning: high gradient norm 8530.3779296875 detected at epoch 7
+{"state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "mode": "no_highflow", "preclip_gradient_norm": 8530.3779296875, "model_unchanged": true}
+Walrus Using device: cuda
+Warning: high gradient norm 42.43008041381836 detected at epoch 7
+{"state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "mode": "neither", "preclip_gradient_norm": 42.43008041381836, "model_unchanged": true}
+Walrus Using device: cuda
+Warning: high gradient norm 17080.17578125 detected at epoch 7
+[SafeTrain] Grad explosion 1.71e+04 at epoch 7
+{"state": "NO_UPDATE_GRADIENT_PROBE_COMPLETE", "mode": "current_only", "preclip_gradient_norm": 17080.17578125, "model_unchanged": true}
+{"state": "DIAGNOSTIC_COMPLETE_NOT_WEIGHT_COMPARISON", "probe_norms": {"original": 17040.41015625, "half_learning_rate": 17040.41015625, "forecast_only": 70.23395538330078, "no_highflow": 8530.3779296875, "neither": 42.43008041381836, "current_only": 17080.17578125}}
+
+OWN_JOB_INVENTORY
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227612|zhenjiang-four-target|RUNNING|hgpu2p|ngu011
+
+READ_ONLY_DIAGNOSTIC_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T20:46:23+0800
