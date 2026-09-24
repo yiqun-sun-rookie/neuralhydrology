@@ -1,0 +1,18 @@
+### channel=kalmannet-hamid-weights-20260923 seq=31
+### host=login4
+### started=2026-09-25T06:41:18+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-24T22:41:18Z
+
+RELATED_AND_PROTECTED_JOB_ACCOUNTING
+227612|zhenjiang-four-target|COMPLETED|0:0|12:28:32|ngu011
+227627|hamid_weights|COMPLETED|0:0|07:37:07|ngu001
+227671|hamid_weights|RUNNING|0:0|01:51:51|ngu001
+
+FIRST_COMPLETED_CELL_INDEPENDENT_AUDIT
+{"state": "FIRST_CELL_TRAINING_INDEPENDENTLY_AUDITED", "array_identity": "227626_1", "job_id": "227627", "epochs_completed": 48, "first_optimizer_update_verified": true, "recovery_total": 1, "best_epoch_zero_based": 41, "best_validation_mse": 9.919476197612625e-06, "checkpoint_sha256": "4fc13cbca7f3642046c665ee0fe804d8d962fec0e5810c37c6911878fd401f2d", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "test_data_read": false, "scientific_comparison_complete": false}
+
+READ_ONLY_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-25T06:41:19+0800
