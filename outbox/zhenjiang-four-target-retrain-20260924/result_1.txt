@@ -1,0 +1,8 @@
+### channel=zhenjiang-four-target-retrain-20260924 seq=1
+### host=login4
+### started=2026-09-24T17:22:34+0800
+### ---------- output ----------
+{"deployment_metadata_sha256": "5045a30464a1b37a1bbdd2e64fe2248f4ee86e49f2c8b8870775fb051d2c56f7", "deployment_token": "f9d4d880dc7153c61e66b0648debb06a", "job_sha256": "44722df6f86541a562b37416478bdfac65da6a3565e022444edf11b9db8cc6fd", "login_root_identity": [41, 6137711883], "manifest_sha256": "2ded8f3b153a3e9911c4111e2506f8eb872416af55234c067472b1a16b4bc258", "member_count": 42, "protocol_sha256": "e1bcbe3aaaae9d427d06588317d402a4c04532811673edad318dffbadf7b90d6", "root": "/data1/home/sunyiq/zhenjiang_four_target_retrain_20260924_001", "root_binding": {"inode": 6137711883, "mode": 448, "uid": 2272}, "status": "deployed_no_training"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-24T17:22:36+0800
