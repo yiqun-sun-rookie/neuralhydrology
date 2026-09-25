@@ -1,0 +1,24 @@
+### channel=kalmannet-hamid-weights-20260923 seq=39
+### host=login4
+### started=2026-09-25T18:48:29+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T10:48:29Z
+
+RELATED_JOB_ACCOUNTING
+227703|hamid_weights|COMPLETED|0:0|05:38:09|ngu001
+227726|hamid_weights|RUNNING|0:0|00:18:32|ngu001
+
+FIFTH_COMPLETED_CELL_INDEPENDENT_AUDIT
+{"state": "FIFTH_CELL_TRAINING_INDEPENDENTLY_AUDITED", "array_identity": "227626_5", "job_id": "227703", "epochs_completed": 35, "first_optimizer_update_verified": true, "recovery_total": 2, "recovery_epochs": [0, 20], "best_epoch_zero_based": 24, "best_validation_mse": 9.933946071610028e-06, "checkpoint_sha256": "bd2c2ab387eaa4936b30c83cd2044681bbf58a86e963e601825d7c308c2f9484", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "test_data_read": false, "scientific_comparison_complete": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_5.out", "exists": true, "bytes": 6399, "sha256": "de5b81b6d9b31050c69146f379a57bb102f8269a5f1537f4982c0522066cbac0"}
+LOG_TAIL weights-227626_5.out {"cell": "objective-current-0-highflow-2-seed-44", "epoch": 31, "validation_mse": 1.000820410606097e-05, "best_epoch": 24, "no_improve_epochs": 7, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-2-seed-44", "epoch": 32, "validation_mse": 9.99490192969423e-06, "best_epoch": 24, "no_improve_epochs": 8, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-2-seed-44", "epoch": 33, "validation_mse": 9.991759887436992e-06, "best_epoch": 24, "no_improve_epochs": 9, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-2-seed-44", "epoch": 34, "validation_mse": 9.990625716699145e-06, "best_epoch": 24, "no_improve_epochs": 10, "recovery_total": 2}
+LOG_FILE {"name": "weights-227626_5.err", "exists": true, "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+LOG_TAIL weights-227626_5.err 
+
+READ_ONLY_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-25T18:48:31+0800
