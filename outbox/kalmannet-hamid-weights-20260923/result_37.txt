@@ -1,0 +1,69 @@
+### channel=kalmannet-hamid-weights-20260923 seq=37
+### host=login4
+### started=2026-09-25T15:43:07+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T07:43:07Z
+
+FOURTH_CELL_SCHEDULER
+227699|hamid_weights|FAILED|1:0|01:49:07|ngu001
+
+FOURTH_CELL_INDEPENDENT_FAILURE_AUDIT
+{"state": "FOURTH_CELL_FAILURE_INDEPENDENTLY_AUDITED", "array_identity": "227626_4", "job_id": "227699", "failure_sha256": "dc3bfdcb4fe820141cb70bb81e133280bce30fee38ee7107a10a026ca1628d06", "events_sha256": "0d0bd229cfe4314e141afcf8745b6b8aab2da2b8c2f592aa33b9231e9afab32e", "completed_epochs": 11, "first_optimizer_update_verified": true, "recovery_total": 4, "recovery_epochs": [11, 11, 11, 11], "recovery_attempts": [1, 2, 3, 4], "last_completed_epoch_zero_based": 10, "last_validation_mse": 9.931814876822907e-06, "best_completed_epoch_zero_based": 9, "best_validation_mse_before_failure": 9.910212829347174e-06, "best_checkpoint_sha256": "03f95438c577511eacf491bbad893737dcca4a44325b14833533ca8998adb1f4", "full_training_samples_each_completed_epoch": 120836, "validation_samples_each_completed_epoch": 14979, "completion_file_exists": false, "test_data_read": false, "source_manifest_sha256": "4bd8fe167bb5d6932a25161e9855bfdf03f656352b567aeee903e31925b6899f", "old_failure_preserved": true}
+REPLAY_EVENTS
+{"unix_time": 1790311827.9230373, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 11, "attempt": 1, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 6144}
+{"unix_time": 1790311891.9366276, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 11, "attempt": 2, "recovery_total": 2, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 12288}
+{"unix_time": 1790311937.706019, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 11, "attempt": 3, "recovery_total": 3, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 8192}
+{"unix_time": 1790311974.2799563, "event": "FULL_EPOCH_REPLAY_REQUIRED", "epoch": 11, "attempt": 4, "recovery_total": 4, "cause": "Non-finite loss or gradient explosion; complete epoch replay required", "discarded_samples_from_epoch_attempt": 6144}
+EVENT_TYPES {"FIRST_OPTIMIZER_UPDATE_VERIFIED": 1, "training_batch": 676, "epoch_complete": 11, "FULL_EPOCH_REPLAY_REQUIRED": 4}
+FAILURE_TRACEBACK_TAIL
+    _restore_safe_state(pipeline)
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/sources/batch.py", line 12, in _restore_safe_state
+    raise NumericalFailure("Non-finite loss or gradient explosion; complete epoch replay required")
+probe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/train_weights.py", line 148, in main
+    if recovery_total>3:raise RuntimeError('Frozen total numerical-recovery limit exceeded') from err
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Frozen total numerical-recovery limit exceeded
+LOG_FILE {"name": "weights-227626_4.out", "exists": true, "bytes": 2570, "sha256": "0de69028191e6501a67771ec0d8bb284ec3ee17802c19bde7a3642b1bcf5ef07"}
+LOG_TAIL weights-227626_4.out {"cell": "objective-current-0-highflow-2-seed-43", "epoch": 4, "validation_mse": 1.0262678430055858e-05, "best_epoch": 4, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 5, "validation_mse": 1.0264905783673423e-05, "best_epoch": 4, "no_improve_epochs": 1, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 6, "validation_mse": 1.0151027199222136e-05, "best_epoch": 6, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 7, "validation_mse": 1.0030816114949258e-05, "best_epoch": 7, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 8, "validation_mse": 1.016764830943494e-05, "best_epoch": 7, "no_improve_epochs": 1, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 9, "validation_mse": 9.910212829347174e-06, "best_epoch": 9, "no_improve_epochs": 0, "recovery_total": 0}
+{"cell": "objective-current-0-highflow-2-seed-43", "epoch": 10, "validation_mse": 9.931814876822907e-06, "best_epoch": 9, "no_improve_epochs": 1, "recovery_total": 0}
+Warning: high gradient norm 2516.918212890625 detected at epoch 11
+[SafeTrain] Grad explosion nan at epoch 11
+Warning: high gradient norm 5.306820702848942e+17 detected at epoch 11
+[SafeTrain] Grad explosion 5.31e+17 at epoch 11
+Warning: high gradient norm 68.35616302490234 detected at epoch 11
+[SafeTrain] Grad explosion nan at epoch 11
+Warning: high gradient norm 5.058098316192627 detected at epoch 11
+Warning: high gradient norm inf detected at epoch 11
+[SafeTrain] Grad explosion inf at epoch 11
+LOG_FILE {"name": "weights-227626_4.err", "exists": true, "bytes": 1481, "sha256": "fd68731fa24c8e6236ccc5e5de97dab4404e4e31d281adf74fd643e0fba92f67"}
+LOG_TAIL weights-227626_4.err   File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/sources/batch.py", line 117, in run_one_batch
+    _restore_safe_state(pipeline)
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/sources/batch.py", line 12, in _restore_safe_state
+    raise NumericalFailure("Non-finite loss or gradient explosion; complete epoch replay required")
+probe_batch.NumericalFailure: Non-finite loss or gradient explosion; complete epoch replay required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/train_weights.py", line 179, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/formal_package_v3/train_weights.py", line 148, in main
+    if recovery_total>3:raise RuntimeError('Frozen total numerical-recovery limit exceeded') from err
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Frozen total numerical-recovery limit exceeded
+
+READ_ONLY_FAILURE_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-25T15:43:07+0800
