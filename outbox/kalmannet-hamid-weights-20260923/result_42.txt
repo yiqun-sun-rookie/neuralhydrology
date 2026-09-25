@@ -1,0 +1,48 @@
+### channel=kalmannet-hamid-weights-20260923 seq=42
+### host=login4
+### started=2026-09-26T00:39:48+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T16:39:48Z
+
+ARRAY_QUEUE
+227626_[8-11%1]|hamid_weights|PENDING|hgpu2p|(JobArrayTaskLimit)
+227626_7|hamid_weights|RUNNING|hgpu2p|ngu001
+
+ARRAY_ACCOUNTING
+227627|COMPLETED|0:0|07:37:07|ngu001
+227671|COMPLETED|0:0|03:06:25|ngu001
+227672|COMPLETED|0:0|03:06:46|ngu001
+227699|FAILED|1:0|01:49:07|ngu001
+227703|COMPLETED|0:0|05:38:09|ngu001
+227726|COMPLETED|0:0|02:37:48|ngu001
+227732|RUNNING|0:0|03:32:04|ngu001
+227626|PENDING|0:0|00:00:00|None assigned
+
+FROZEN_CELL_RECORDS
+{"state": "INPUT_IDENTITIES_VERIFIED", "package_manifest_sha256": "4bd8fe167bb5d6932a25161e9855bfdf03f656352b567aeee903e31925b6899f", "protocol_sha256": "2575b0fcdafcf5befb38c4e6a431f856a202164c81763a3eb99e1c141d6055cc", "old_failure_preserved": true}
+{"index": 1, "exp_id": "objective-current-0p05-highflow-2-seed-43", "lambda_upd": 0.05, "alpha_hf": 2, "seed": 43, "run_dir_exists": true, "started_job_id": "227627", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46", "completion_state": "TRAINING_COMPLETE_NOT_SCIENTIFIC_EVALUATION", "epochs_completed": 48, "best_validation_mse": 9.919476197612625e-06, "best_epoch": 41, "test_data_read": false, "checkpoint_hash_matches": true, "events_bytes": 686051, "events_mtime_utc": "2026-09-24T20:49:26Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 47, "attempt": 0, "batch": 59, "samples": 4}, "last_complete_epoch": {"epoch": 47, "common_validation_mse": 1.0663302920971802e-05, "recovery_total": 1, "peak_gpu_allocated_bytes": 21907148288}, "last_recovery": {"epoch": 14, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}}
+{"index": 2, "exp_id": "objective-current-0p05-highflow-2-seed-44", "lambda_upd": 0.05, "alpha_hf": 2, "seed": 44, "run_dir_exists": true, "started_job_id": "227671", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "8e5a7685157b2f64aeb41cf99c14bdd427e6a7ad931a9db3a4e5eb1f653e0d6c", "completion_state": "TRAINING_COMPLETE_NOT_SCIENTIFIC_EVALUATION", "epochs_completed": 18, "best_validation_mse": 1.045757688893249e-05, "best_epoch": 17, "test_data_read": false, "checkpoint_hash_matches": true, "events_bytes": 259840, "events_mtime_utc": "2026-09-24T23:55:52Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 17, "attempt": 0, "batch": 59, "samples": 4}, "last_complete_epoch": {"epoch": 17, "common_validation_mse": 1.045757688893249e-05, "recovery_total": 1, "peak_gpu_allocated_bytes": 21907148288}, "last_recovery": {"epoch": 4, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}}
+{"index": 3, "exp_id": "objective-current-0-highflow-2-seed-42", "lambda_upd": 0, "alpha_hf": 2, "seed": 42, "run_dir_exists": true, "started_job_id": "227672", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "bf08341773f5b242cb5858b29233ea5ad67c69b67cdb97b9536ed33e1b04b68d", "completion_state": "TRAINING_COMPLETE_NOT_SCIENTIFIC_EVALUATION", "epochs_completed": 19, "best_validation_mse": 1.0321261812344397e-05, "best_epoch": 8, "test_data_read": false, "checkpoint_hash_matches": true, "events_bytes": 268851, "events_mtime_utc": "2026-09-25T03:02:38Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 18, "attempt": 0, "batch": 59, "samples": 4}, "last_recovery": {"epoch": 0, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}, "last_complete_epoch": {"epoch": 18, "common_validation_mse": 1.0400796455023678e-05, "recovery_total": 1, "peak_gpu_allocated_bytes": 21907148288}}
+{"index": 4, "exp_id": "objective-current-0-highflow-2-seed-43", "lambda_upd": 0, "alpha_hf": 2, "seed": 43, "run_dir_exists": true, "started_job_id": "227699", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46", "failure_type": "RuntimeError", "failure_message": "Frozen total numerical-recovery limit exceeded", "events_bytes": 158025, "events_mtime_utc": "2026-09-25T04:51:45Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 11, "attempt": 3, "batch": 2, "samples": 2048}, "last_complete_epoch": {"epoch": 10, "common_validation_mse": 9.931814876822907e-06, "recovery_total": 0, "peak_gpu_allocated_bytes": 21907148288}, "last_recovery": {"epoch": 11, "recovery_total": 4, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}}
+{"index": 5, "exp_id": "objective-current-0-highflow-2-seed-44", "lambda_upd": 0, "alpha_hf": 2, "seed": 44, "run_dir_exists": true, "started_job_id": "227703", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "8e5a7685157b2f64aeb41cf99c14bdd427e6a7ad931a9db3a4e5eb1f653e0d6c", "completion_state": "TRAINING_COMPLETE_NOT_SCIENTIFIC_EVALUATION", "epochs_completed": 35, "best_validation_mse": 9.933946071610028e-06, "best_epoch": 24, "test_data_read": false, "checkpoint_hash_matches": true, "events_bytes": 501073, "events_mtime_utc": "2026-09-25T10:29:56Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 34, "attempt": 0, "batch": 59, "samples": 4}, "last_recovery": {"epoch": 20, "recovery_total": 2, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}, "last_complete_epoch": {"epoch": 34, "common_validation_mse": 9.990625716699145e-06, "recovery_total": 2, "peak_gpu_allocated_bytes": 21907148288}}
+{"index": 6, "exp_id": "objective-current-0p05-highflow-1-seed-42", "lambda_upd": 0.05, "alpha_hf": 1, "seed": 42, "run_dir_exists": true, "started_job_id": "227726", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "bf08341773f5b242cb5858b29233ea5ad67c69b67cdb97b9536ed33e1b04b68d", "completion_state": "TRAINING_COMPLETE_NOT_SCIENTIFIC_EVALUATION", "epochs_completed": 16, "best_validation_mse": 1.0399441628934025e-05, "best_epoch": 5, "test_data_read": false, "checkpoint_hash_matches": true, "events_bytes": 229396, "events_mtime_utc": "2026-09-25T13:07:44Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 15, "attempt": 0, "batch": 59, "samples": 4}, "last_complete_epoch": {"epoch": 15, "common_validation_mse": 1.1104055799588092e-05, "recovery_total": 3, "peak_gpu_allocated_bytes": 21907148288}, "last_recovery": {"epoch": 6, "recovery_total": 3, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}}
+{"index": 7, "exp_id": "objective-current-0p05-highflow-1-seed-43", "lambda_upd": 0.05, "alpha_hf": 1, "seed": 43, "run_dir_exists": true, "started_job_id": "227732", "started_gpu": "NVIDIA GeForce RTX 3090", "frozen_initial_weights_loaded": true, "frozen_tensor_sha256": "a6c5324c59979589242f8114e6d4b0ae04acbcbceca4a1276b594844d409ed46", "events_bytes": 310118, "events_mtime_utc": "2026-09-25T16:39:44Z", "first_optimizer_update_verified": true, "last_training_batch": {"epoch": 21, "attempt": 0, "batch": 37, "samples": 2048}, "last_complete_epoch": {"epoch": 20, "common_validation_mse": 1.0149086390231764e-05, "recovery_total": 1, "peak_gpu_allocated_bytes": 21907148288}, "last_recovery": {"epoch": 7, "recovery_total": 1, "cause": "Non-finite loss or gradient explosion; complete epoch replay required"}}
+{"index": 8, "exp_id": "objective-current-0p05-highflow-1-seed-44", "lambda_upd": 0.05, "alpha_hf": 1, "seed": 44, "run_dir_exists": false}
+{"index": 9, "exp_id": "objective-current-0-highflow-1-seed-42", "lambda_upd": 0, "alpha_hf": 1, "seed": 42, "run_dir_exists": false}
+{"index": 10, "exp_id": "objective-current-0-highflow-1-seed-43", "lambda_upd": 0, "alpha_hf": 1, "seed": 43, "run_dir_exists": false}
+{"index": 11, "exp_id": "objective-current-0-highflow-1-seed-44", "lambda_upd": 0, "alpha_hf": 1, "seed": 44, "run_dir_exists": false}
+
+PROTECTED_OTHER_JOBS
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+227626_[8-11%1]|hamid_weights|PENDING|hgpu2p|(JobArrayTaskLimit)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+227626_7|hamid_weights|RUNNING|hgpu2p|ngu001
+
+READ_ONLY_HAMID_CHECK_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T00:39:51+0800
