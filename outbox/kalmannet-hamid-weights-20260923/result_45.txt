@@ -1,0 +1,25 @@
+### channel=kalmannet-hamid-weights-20260923 seq=45
+### host=login4
+### started=2026-09-26T03:43:17+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T19:43:17Z
+
+SEVENTH_CELL_SCHEDULER_AND_RESOURCE
+227732|hamid_weights|RUNNING|0:0|06:35:33|ngu001
+227732.batch|2087920K|06:35:13
+
+SEVENTH_CELL_READ_ONLY_CURRENT_AUDIT
+{"state": "SEVENTH_CELL_CURRENT_PROGRESS_INDEPENDENTLY_CHECKED", "array_identity": "227626_7", "job_id": "227732", "completed_epochs": 40, "first_optimizer_update_verified": true, "recovery_total_observed": 3, "recovery_epochs": [7, 33, 40], "last_completed_epoch_zero_based": 39, "last_validation_mse": 1.01283387198566e-05, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "completion_file_exists": false, "failure_file_exists": false, "test_data_read": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_7.out", "exists": true, "bytes": 7261}
+LOG_TAIL weights-227626_7.out {"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 37, "validation_mse": 9.792237644687573e-06, "best_epoch": 34, "no_improve_epochs": 3, "recovery_total": 2}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 38, "validation_mse": 9.65468630328741e-06, "best_epoch": 34, "no_improve_epochs": 4, "recovery_total": 2}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 39, "validation_mse": 1.01283387198566e-05, "best_epoch": 34, "no_improve_epochs": 5, "recovery_total": 2}
+Warning: high gradient norm 284776.8125 detected at epoch 40
+[SafeTrain] Grad explosion 2.85e+05 at epoch 40
+LOG_FILE {"name": "weights-227626_7.err", "exists": true, "bytes": 0}
+LOG_TAIL weights-227626_7.err 
+
+READ_ONLY_CURRENT_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T03:43:19+0800
