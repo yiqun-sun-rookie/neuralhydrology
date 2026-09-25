@@ -1,0 +1,24 @@
+### channel=kalmannet-hamid-weights-20260923 seq=41
+### host=login4
+### started=2026-09-25T21:43:03+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T13:43:03Z
+
+RELATED_JOB_ACCOUNTING
+227726|hamid_weights|COMPLETED|0:0|02:37:48|ngu001
+227732|hamid_weights|RUNNING|0:0|00:35:18|ngu001
+
+SIXTH_COMPLETED_CELL_INDEPENDENT_AUDIT
+{"state": "SIXTH_CELL_TRAINING_INDEPENDENTLY_AUDITED", "array_identity": "227626_6", "job_id": "227726", "epochs_completed": 16, "first_optimizer_update_verified": true, "recovery_total": 3, "recovery_epochs": [6, 6, 6], "best_epoch_zero_based": 5, "best_validation_mse": 1.0399441628934025e-05, "checkpoint_sha256": "ab588a2d8a06a70595d7c39e6eb2880f8003723a3115f9fcb7656d35d215584b", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "test_data_read": false, "scientific_comparison_complete": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_6.out", "exists": true, "bytes": 3618, "sha256": "599e4be18cc56e5879a6e40abeac6e4149f78e771669e48d4b66592b63eef951"}
+LOG_TAIL weights-227626_6.out {"cell": "objective-current-0p05-highflow-1-seed-42", "epoch": 12, "validation_mse": 1.114707834278464e-05, "best_epoch": 5, "no_improve_epochs": 7, "recovery_total": 3}
+{"cell": "objective-current-0p05-highflow-1-seed-42", "epoch": 13, "validation_mse": 1.1114326758350208e-05, "best_epoch": 5, "no_improve_epochs": 8, "recovery_total": 3}
+{"cell": "objective-current-0p05-highflow-1-seed-42", "epoch": 14, "validation_mse": 1.1139070510612615e-05, "best_epoch": 5, "no_improve_epochs": 9, "recovery_total": 3}
+{"cell": "objective-current-0p05-highflow-1-seed-42", "epoch": 15, "validation_mse": 1.1104055799588092e-05, "best_epoch": 5, "no_improve_epochs": 10, "recovery_total": 3}
+LOG_FILE {"name": "weights-227626_6.err", "exists": true, "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+LOG_TAIL weights-227626_6.err 
+
+READ_ONLY_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-25T21:43:03+0800
