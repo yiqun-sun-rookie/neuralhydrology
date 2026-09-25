@@ -1,0 +1,25 @@
+### channel=kalmannet-hamid-weights-20260923 seq=43
+### host=login4
+### started=2026-09-26T00:43:04+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-25T16:43:04Z
+
+SEVENTH_CELL_SCHEDULER_AND_RESOURCE
+227732|hamid_weights|RUNNING|0:0|03:35:20|ngu001
+227732.batch|2009992K|03:34:57
+
+SEVENTH_CELL_READ_ONLY_PROGRESS_AUDIT
+{"state": "SEVENTH_CELL_RUNNING_PROGRESS_INDEPENDENTLY_CHECKED", "array_identity": "227626_7", "job_id": "227732", "completed_epochs": 21, "first_optimizer_update_verified": true, "recovery_total_observed": 1, "recovery_epochs": [7], "last_completed_epoch_zero_based": 20, "last_validation_mse": 1.0149086390231764e-05, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "completion_file_exists": false, "failure_file_exists": false, "test_data_read": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_7.out", "exists": true, "bytes": 3862}
+LOG_TAIL weights-227626_7.out {"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 16, "validation_mse": 9.91077802927086e-06, "best_epoch": 16, "no_improve_epochs": 0, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 17, "validation_mse": 9.88560633349074e-06, "best_epoch": 17, "no_improve_epochs": 0, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 18, "validation_mse": 9.811921237349273e-06, "best_epoch": 18, "no_improve_epochs": 0, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 19, "validation_mse": 9.884642226300681e-06, "best_epoch": 18, "no_improve_epochs": 1, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-43", "epoch": 20, "validation_mse": 1.0149086390231764e-05, "best_epoch": 18, "no_improve_epochs": 2, "recovery_total": 1}
+LOG_FILE {"name": "weights-227626_7.err", "exists": true, "bytes": 0}
+LOG_TAIL weights-227626_7.err 
+
+READ_ONLY_PROGRESS_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T00:43:05+0800
