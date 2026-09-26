@@ -12,7 +12,7 @@ D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for F in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$F" ] && echo "  PRESENT $F" || echo "  MISSING $F"; done
 [ -f "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" ] && echo "  PRESENT final_reproduction_gate.json" || echo "  MISSING final_reproduction_gate.json"
 echo "=== ENTRY GATE LINES ==="
-grep -n '_require_equal(.*slurm_job_id' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
+grep -n 'slurm_job_id' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
 echo "=== ROLE COUNTS ==="
 source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
 cd "$ROOT"
