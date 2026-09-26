@@ -1,0 +1,33 @@
+### channel=kalmannet-hamid-weights-20260923 seq=51
+### host=login4
+### started=2026-09-26T15:47:52+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-26T07:47:52Z
+
+RELATED_JOB_ACCOUNTING
+227627|hamid_weights|COMPLETED|0:0|07:37:07|ngu001
+227671|hamid_weights|COMPLETED|0:0|03:06:25|ngu001
+227672|hamid_weights|COMPLETED|0:0|03:06:46|ngu001
+227699|hamid_weights|FAILED|1:0|01:49:07|ngu001
+227703|hamid_weights|COMPLETED|0:0|05:38:09|ngu001
+227726|hamid_weights|COMPLETED|0:0|02:37:48|ngu001
+227732|hamid_weights|COMPLETED|0:0|07:17:37|ngu001
+227745|hamid_weights|COMPLETED|0:0|05:21:05|ngu001
+227748|hamid_weights|COMPLETED|0:0|02:39:26|ngu001
+227749|hamid_weights|COMPLETED|0:0|02:35:38|ngu001
+227626|hamid_weights|RUNNING|0:0|00:46:21|ngu001
+
+TENTH_COMPLETED_CELL_INDEPENDENT_AUDIT
+{"state": "TENTH_CELL_TRAINING_INDEPENDENTLY_AUDITED", "array_identity": "227626_10", "job_id": "227749", "epochs_completed": 16, "first_optimizer_update_verified": true, "recovery_total": 1, "recovery_epochs": [0], "best_epoch_zero_based": 5, "best_validation_mse": 1.0443245598029039e-05, "checkpoint_sha256": "562fd1aee6c8c404603707731391e20a4b090ca738919676310c07f4c3aab441", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "test_data_read": false, "scientific_comparison_complete": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_10.out", "exists": true, "bytes": 3003, "sha256": "1f9af3e441f388f42185e4f914698f2d071cc3fc6d1f905b0a232ab906e7fdd8"}
+LOG_TAIL weights-227626_10.out {"cell": "objective-current-0-highflow-1-seed-43", "epoch": 12, "validation_mse": 1.048300920367085e-05, "best_epoch": 5, "no_improve_epochs": 7, "recovery_total": 1}
+{"cell": "objective-current-0-highflow-1-seed-43", "epoch": 13, "validation_mse": 1.0544497180091628e-05, "best_epoch": 5, "no_improve_epochs": 8, "recovery_total": 1}
+{"cell": "objective-current-0-highflow-1-seed-43", "epoch": 14, "validation_mse": 1.0472978553943765e-05, "best_epoch": 5, "no_improve_epochs": 9, "recovery_total": 1}
+{"cell": "objective-current-0-highflow-1-seed-43", "epoch": 15, "validation_mse": 1.048870612674851e-05, "best_epoch": 5, "no_improve_epochs": 10, "recovery_total": 1}
+LOG_FILE {"name": "weights-227626_10.err", "exists": true, "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+LOG_TAIL weights-227626_10.err 
+
+READ_ONLY_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T15:47:55+0800
