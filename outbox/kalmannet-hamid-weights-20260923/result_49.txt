@@ -1,0 +1,33 @@
+### channel=kalmannet-hamid-weights-20260923 seq=49
+### host=login4
+### started=2026-09-26T12:45:19+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-09-26T04:45:19Z
+
+RELATED_JOB_ACCOUNTING
+227745|hamid_weights|COMPLETED|0:0|05:21:05|ngu001
+227748|hamid_weights|COMPLETED|0:0|02:39:26|ngu001
+227749|hamid_weights|RUNNING|0:0|00:19:26|ngu001
+
+EIGHTH_AND_NINTH_COMPLETED_CELLS_INDEPENDENT_AUDIT
+{"state": "CELL_TRAINING_INDEPENDENTLY_AUDITED", "index": 8, "array_identity": "227626_8", "job_id": "227745", "epochs_completed": 33, "first_optimizer_update_verified": true, "recovery_total": 1, "recovery_epochs": [18], "best_epoch_zero_based": 22, "best_validation_mse": 9.625192447391192e-06, "checkpoint_sha256": "4de1e977e6f2278198dc85d8b6e3aeee56974ceaf826d671032fb6f22487619c", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "test_data_read": false, "scientific_comparison_complete": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_8.out", "exists": true, "bytes": 5986, "sha256": "70e3e1fa7c379d9381e78fdb398e56a271e7b3b7a5d2b27028de1a7276e00e22"}
+LOG_TAIL weights-227626_8.out {"cell": "objective-current-0p05-highflow-1-seed-44", "epoch": 29, "validation_mse": 9.718060167520035e-06, "best_epoch": 22, "no_improve_epochs": 7, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-44", "epoch": 30, "validation_mse": 9.724429229101498e-06, "best_epoch": 22, "no_improve_epochs": 8, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-44", "epoch": 31, "validation_mse": 9.907990847510486e-06, "best_epoch": 22, "no_improve_epochs": 9, "recovery_total": 1}
+{"cell": "objective-current-0p05-highflow-1-seed-44", "epoch": 32, "validation_mse": 9.909677629815717e-06, "best_epoch": 22, "no_improve_epochs": 10, "recovery_total": 1}
+LOG_FILE {"name": "weights-227626_8.err", "exists": true, "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+LOG_TAIL weights-227626_8.err 
+{"state": "CELL_TRAINING_INDEPENDENTLY_AUDITED", "index": 9, "array_identity": "227626_9", "job_id": "227748", "epochs_completed": 16, "first_optimizer_update_verified": true, "recovery_total": 2, "recovery_epochs": [0, 0], "best_epoch_zero_based": 5, "best_validation_mse": 1.0419680334440512e-05, "checkpoint_sha256": "9d21f6df1de6826e29211fb9d71fd73e82081c64d270fa9fd887e3a8717480ed", "validation_samples_each_epoch": 14979, "full_training_samples_each_completed_epoch": 120836, "last_epoch_peak_gpu_allocated_bytes": 21907148288, "test_data_read": false, "scientific_comparison_complete": false, "old_failure_preserved": true}
+LOG_FILE {"name": "weights-227626_9.out", "exists": true, "bytes": 3126, "sha256": "68e3054a874e4126fbc49e9421ef2531ebd804fc8149425a5b545f787ff45495"}
+LOG_TAIL weights-227626_9.out {"cell": "objective-current-0-highflow-1-seed-42", "epoch": 12, "validation_mse": 1.0564101539607745e-05, "best_epoch": 5, "no_improve_epochs": 7, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-1-seed-42", "epoch": 13, "validation_mse": 1.0529977175382588e-05, "best_epoch": 5, "no_improve_epochs": 8, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-1-seed-42", "epoch": 14, "validation_mse": 1.051774398887504e-05, "best_epoch": 5, "no_improve_epochs": 9, "recovery_total": 2}
+{"cell": "objective-current-0-highflow-1-seed-42", "epoch": 15, "validation_mse": 1.05324705417799e-05, "best_epoch": 5, "no_improve_epochs": 10, "recovery_total": 2}
+LOG_FILE {"name": "weights-227626_9.err", "exists": true, "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+LOG_TAIL weights-227626_9.err 
+
+READ_ONLY_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T12:45:19+0800
