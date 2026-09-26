@@ -1,0 +1,52 @@
+### channel=id29-nearing2022-da seq=724
+### host=login4
+### started=2026-09-26T15:10:55+0800
+### ---------- output ----------
+2026-09-26T15:10:55+0800
+=== N22 JOBS ===
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+=== FAILURES AND TIMEOUTS 7d ===
+  none
+=== N22 JOBS SINCE 09-03 ===
+219423_0|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+220487|N22-replv2|FAILED|1:0|00:00:05|2026-09-04T14:19:04
+220489|N22-replv2b|COMPLETED|0:0|00:00:08|2026-09-04T14:44:37
+=== WARMPAIR 219423 ===
+219423_0|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+=== WARMPAIR OUTPUTS ===
+  MISSING control_seed0_repeat1
+  MISSING masked_seed0_repeat1
+  MISSING paired_analysis
+=== prepare_warmup_target_pair.py line 85-100 ===
+            raise FileNotFoundError(f"Missing paired-retraining entry evidence: {path}")
+
+    data_audit = _load_json(data_audit_path)
+    data_receipt = _load_json(data_receipt_path)
+    mask_audit = _load_json(mask_audit_path)
+    mask_receipt = _load_json(mask_receipt_path)
+    data_sha = _sha256_file(data_audit_path)
+    mask_sha = _sha256_file(mask_audit_path)
+
+    _require_equal(data_receipt, "slurm_job_id", "202506")
+    _require_equal(data_receipt, "audit_sha256", data_sha)
+    _require_equal(data_receipt, "frozen_config_sha256", frozen["configuration_sha256"])
+    _require_equal(data_receipt, "frozen_basin_list_sha256", frozen["basin_list_sha256"])
+    _require_equal(data_receipt, "registered_source_scaler_matches_current_audit", True)
+    _require_equal(data_audit["scope"], "basin_count", 531)
+    _require_false(data_audit["scope"], "registered_matrix_modified")
+=== GATE ARTIFACTS ===
+  PRESENT aggregation/evaluations/time_split_vs_author.csv (128198 bytes)
+  PRESENT aggregation/evaluations/basin_split_vs_author.csv (1695 bytes)
+  PRESENT aggregation/hyperparameters/scores.csv (115432 bytes)
+  PRESENT aggregation/final_reproduction_gate.json (3000 bytes)
+=== ROLE COUNTS ===
+{"missing_by_type": {}, "missing_total": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-26T15:11:47+0800
