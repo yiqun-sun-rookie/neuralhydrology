@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=40
+### host=login4
+### started=2026-09-27T22:25:34+0800
+### ---------- output ----------
+=== FIRST-BASIN TERMINAL READ-ONLY TECHNICAL ACCEPTANCE ===
+UTC=2026-09-27T14:25:34Z
+ACCOUNTING ["228327|tukf09-noise-int-v2r9-0927|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|4858|COMPLETED|0:0"]
+CONTROL_CHAIN_PASS job_id=228327
+RESULT_MANIFEST_SHA256=572924fe106a5c0195898f5fc78a94c37bca41f1d897f171deb1cfdd0d131004
+INDEPENDENT_ARRAY_AUDIT {"basin_id":"01047000","dimension":7,"evaluation_array_reads":0,"maximum_q_exp_ulp_distance":1,"status":"PASS_NOT_FORMAL_EVALUATION"}
+OUTPUT_BYTES=737251
+READ_ONLY_FIRST_BASIN_TECHNICAL_ACCEPTANCE_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T22:25:46+0800
