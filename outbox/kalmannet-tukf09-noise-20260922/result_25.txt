@@ -1,0 +1,108 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=25
+### host=login4
+### started=2026-09-27T11:34:22+0800
+### ---------- output ----------
+=== EXACT FAILED JOB ===
+UTC=2026-09-27T03:34:22Z
+228078|tukf09-noise-recover-v2r7-0927|hcpu48y|1|1|19|FAILED|1:0
+SQUEUE_NONZERO_FOR_TERMINAL_JOB slurm_load_jobs error: Invalid job id specified
+=== EXCLUSIVE NEW PHASE ===
+NEW_PHASE_DIRECTORY_PRESENT
+SECOND_BASIN_PATH_ABSENT
+=== FIXED EVIDENCE FILES ===
+FILE control/deployed.json
+2ad7fd254520278a2e0bf51c6fc0f5c62c7ac549dd3a30bf35ba9206bbcd0ccd  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/control/deployed.json
+{"archive_sha256":"41b81765600449683b2dc158de1bd110b7a2e77b5c1c532073ae4da87f2ea697","bundle_manifest_sha256":"d1806b57a4b42d9b63269da7d04eef0b1ac3e8b51710ea6412db869b1aa1a79d","evaluation_array_reads":0,"gate":{"evaluation_array_reads":0,"manifest_sha256":"d1806b57a4b42d9b63269da7d04eef0b1ac3e8b51710ea6412db869b1aa1a79d","member_count":311,"model_import_performed":false,"parent_source_count":13,"samples":[{"basin_id":"01047000","dimension":7},{"basin_id":"01142500","dimension":20}],"stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2"},"model_calls":0,"runtime":{"numpy":"1.26.4","numpy_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/numpy/__init__.py","pytest":"8.3.5","pytest_path":"/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/vendor/pytest/__init__.py","python":"3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]","torch":"2.2.2+cu121","torch_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/torch/__init__.py"}}
+
+END_FILE control/deployed.json
+FILE basin_01047000/control/submission_attempt.json
+5f8648d37fee396c617b4946beac46bd3540dabecd20d87475c70b602bf84a84  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/submission_attempt.json
+{"archive_sha256":"41b81765600449683b2dc158de1bd110b7a2e77b5c1c532073ae4da87f2ea697","automatic_retry_authorized":false,"basin_id":"01047000","bundle_manifest_sha256":"d1806b57a4b42d9b63269da7d04eef0b1ac3e8b51710ea6412db869b1aa1a79d","partition_preflight":"PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED","prerequisite":null,"queue_before":"202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)\n202294|N22-export|PENDING|(Dependency)\n202315|N22-gate|PENDING|(Dependency)\n202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)\n215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)\n202293|N22-manifest|PENDING|(JobHeldUser)\n","runtime_preflight":{"numpy":"1.26.4","numpy_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/numpy/__init__.py","pytest":"8.3.5","pytest_path":"/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/vendor/pytest/__init__.py","python":"3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]","torch":"2.2.2+cu121","torch_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/torch/__init__.py"},"status":"SUBMISSION_ATTEMPT_CONSUMED_OUTCOME_UNKNOWN_UNTIL_SEPARATE_RECEIPT"}
+
+END_FILE basin_01047000/control/submission_attempt.json
+FILE basin_01047000/control/submission.json
+fa234d16620b1eb8d6d0152cb18ba800d584d659e7c47fbb23df1008fbd40467  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/submission.json
+{"archive_sha256":"41b81765600449683b2dc158de1bd110b7a2e77b5c1c532073ae4da87f2ea697","basin_id":"01047000","bundle_manifest_sha256":"d1806b57a4b42d9b63269da7d04eef0b1ac3e8b51710ea6412db869b1aa1a79d","partition_preflight":"PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED","prerequisite":null,"queue_before":"202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)\n202294|N22-export|PENDING|(Dependency)\n202315|N22-gate|PENDING|(Dependency)\n202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)\n215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)\n202293|N22-manifest|PENDING|(JobHeldUser)\n","returncode":0,"runtime_preflight":{"numpy":"1.26.4","numpy_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/numpy/__init__.py","pytest":"8.3.5","pytest_path":"/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/vendor/pytest/__init__.py","python":"3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]","torch":"2.2.2+cu121","torch_path":"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite/torch/__init__.py"},"stderr":"","stdout":"Submitted batch job 228078\n","submission_attempt_sha256":"5f8648d37fee396c617b4946beac46bd3540dabecd20d87475c70b602bf84a84"}
+
+END_FILE basin_01047000/control/submission.json
+MISSING_OR_LINKED basin_01047000/control/job_gate.json
+FILE basin_01047000/control/original_tests.xml
+7dd4cf2d6e38fabf55c3bacc253e84108e616c46a8825c3b9cfa295b0a6c6811  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests.xml
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="41" time="15.473" timestamp="2026-09-27T11:16:10.575908+08:00" hostname="icn277"><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_invalid" time="0.011" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_existing_directory" time="0.014" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_normal_nonzero_and_unrelated" time="2.458" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_limits[wall-import time;time.sleep(5)-limits0-wall_limit]" time="1.207" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_limits[output-print('x'*100000)-limits1-output_limit]" time="1.213"><failure message="assert (not True)">tmp_path = PosixPath('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp/test_limits_output_print__x__10')
+name = 'output', code = "print('x'*100000)"
+limits = {'output_limit_bytes': 1000}, reason = 'output_limit'
+
+    @pytest.mark.skipif(sys.platform != "linux", reason="Linux resource test")
+    @pytest.mark.parametrize("name,code,limits,reason", [
+        ("wall", "import time;time.sleep(5)", {"wall_seconds": .3}, "wall_limit"),
+        ("output", "print('x'*100000)", {"output_limit_bytes": 1000}, "output_limit"),
+        ("memory", "import time;x=bytearray(40*1024*1024);time.sleep(5)", {"rss_limit_bytes": 20*2**20}, "rss_limit"),
+    ])
+    def test_limits(tmp_path, name, code, limits, reason):
+        result = run_supervised([sys.executable, "-c", code], tmp_path / name,
+                                poll_seconds=.1, **limits)
+&gt;       assert not result["success"] and result["reason"] == reason
+E       assert (not True)
+
+test_tukf09_two_basin_hpc_supervisor_v1.py:52: AssertionError</failure></testcase><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_limits[memory-import time;x=bytearray(40*1024*1024);time.sleep(5)-limits2-rss_limit]" time="1.209" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_supervisor_write_failure" time="0.217" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_parent_death" time="0.217" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_unexpected_child" time="1.230" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_written_file_counts_without_print" time="1.226" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_output_link_rejected" time="1.211" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_supervisor_soft_cap_preserves_worker_hard_cap" time="0.001" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_infinite_soft_limit_is_bounded" time="0.002" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_parent_death_stops_child_not_unrelated" time="1.327" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_detached_child_is_stopped" time="1.246" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_identity_mismatch_never_signals" time="0.012" /><testcase classname="test_tukf09_two_basin_hpc_supervisor_v1" name="test_stale_heartbeat_kills_only_registered_group" time="0.178" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[../escape]" time="0.011" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[/absolute]" time="0.009" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[a/../b]" time="0.010" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[a\\b]" time="0.010" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[G:/escape]" time="0.010" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_bad_paths[a//b]" time="0.010" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_windows_mapping" time="0.002" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_wrong_root" time="0.012" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_manifest_tamper" time="0.014" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_json_rejection[{&quot;x&quot;:1,&quot;x&quot;:2}]" time="0.011" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_json_rejection[{&quot;x&quot;:NaN}]" time="0.013" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_json_rejection[[]]" time="0.011" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_remote_mapping_is_posix_on_every_platform" time="0.001" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_complete_synthetic_bundle" time="0.197" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[missing-member set]" time="0.142" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[bytes-member changed]" time="0.179" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[link-linked]" time="0.186" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[budget-scope]" time="0.227" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[basin-sample order]" time="0.221" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[period-period]" time="0.214" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[dimension-dimension]" time="0.218" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[semantic-semantic input]" time="0.237" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[mapping-root mapping]" time="0.135" /><testcase classname="test_tukf09_two_basin_hpc_gate_v1" name="test_synthetic_bundle_rejects_changes[source-parent source]" time="0.212" /></testsuite></testsuites>
+END_FILE basin_01047000/control/original_tests.xml
+MISSING_OR_LINKED basin_01047000/control/new_gate_tests.xml
+MISSING_OR_LINKED basin_01047000/control/tensor_tests/supervisor.json
+MISSING_OR_LINKED basin_01047000/control/tensor_tests/tensor_tests.xml
+MISSING_OR_LINKED basin_01047000/run/supervisor.json
+MISSING_OR_LINKED basin_01047000/run/model/started.json
+MISSING_OR_LINKED basin_01047000/run/model/manifest.final.sha256.json
+=== FIXED SUBPROCESS LOG TAILS ===
+MISSING_OR_LINKED basin_01047000/control/tensor_tests/stdout.log
+MISSING_OR_LINKED basin_01047000/control/tensor_tests/stderr.log
+MISSING_OR_LINKED basin_01047000/run/stdout.log
+MISSING_OR_LINKED basin_01047000/run/stderr.log
+=== FIXED JOB LOG TAILS ===
+LOG out
+2407ff6ce04eb360662e32a7b79f44498e885ba2ebc68960979de5476a3e365c  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/logs/job-228078.out
+....F....................................                                [100%]
+=================================== FAILURES ===================================
+__________ test_limits[output-print('x'*100000)-limits1-output_limit] __________
+
+tmp_path = PosixPath('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp/test_limits_output_print__x__10')
+name = 'output', code = "print('x'*100000)"
+limits = {'output_limit_bytes': 1000}, reason = 'output_limit'
+
+    @pytest.mark.skipif(sys.platform != "linux", reason="Linux resource test")
+    @pytest.mark.parametrize("name,code,limits,reason", [
+        ("wall", "import time;time.sleep(5)", {"wall_seconds": .3}, "wall_limit"),
+        ("output", "print('x'*100000)", {"output_limit_bytes": 1000}, "output_limit"),
+        ("memory", "import time;x=bytearray(40*1024*1024);time.sleep(5)", {"rss_limit_bytes": 20*2**20}, "rss_limit"),
+    ])
+    def test_limits(tmp_path, name, code, limits, reason):
+        result = run_supervised([sys.executable, "-c", code], tmp_path / name,
+                                poll_seconds=.1, **limits)
+>       assert not result["success"] and result["reason"] == reason
+E       assert (not True)
+
+test_tukf09_two_basin_hpc_supervisor_v1.py:52: AssertionError
+- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests.xml -
+=========================== short test summary info ============================
+FAILED test_tukf09_two_basin_hpc_supervisor_v1.py::test_limits[output-print('x'*100000)-limits1-output_limit]
+1 failed, 40 passed in 15.53s
+
+END_LOG out
+LOG err
+022dab6c014a459123ecc4a1b6ead850ba5c23b484b34d2bdd8ae5102142f7a2  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/logs/job-228078.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/hpc/tukf09_two_basin_full_budget_job_gate_v2.py", line 172, in <module>
+    main(sys.argv[1])
+  File "/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/hpc/tukf09_two_basin_full_budget_job_gate_v2.py", line 108, in main
+    original = _run_small_tests(original_command, original_report, 41, environment)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/hpc/tukf09_two_basin_full_budget_job_gate_v2.py", line 44, in _run_small_tests
+    subprocess.run(
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python', '-B', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', '--basetemp', '/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp', '--junitxml', '/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests.xml', '/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/hpc/test_tukf09_two_basin_hpc_supervisor_v1.py', '/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/bundle/hpc/test_tukf09_two_basin_hpc_gate_v1.py']' returned non-zero exit status 1.
+
+END_LOG err
+READ_ONLY_FAILURE_EVIDENCE_QUERY_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T11:34:23+0800
