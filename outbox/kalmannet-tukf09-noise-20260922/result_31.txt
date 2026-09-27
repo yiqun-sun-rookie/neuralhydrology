@@ -1,0 +1,31 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=31
+### host=login4
+### started=2026-09-27T15:39:39+0800
+### ---------- output ----------
+=== BOUNDED FIRST-BASIN SYNTHETIC OUTPUT INSPECTION ===
+UTC=2026-09-27T07:39:39Z
+EXACT_TENSOR_TEST_DIRECTORY_PRESENT
+=== SYMBOLIC LINKS, TARGETS, AND COUNTS ===
+/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tmp/test_tensor_complete_syntheticcurrent -> /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tmp/test_tensor_complete_synthetic0
+/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tmp/test_tensor_result_mutations_acurrent -> /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tmp/test_tensor_result_mutations_a5
+2
+=== BOUNDED TEST FILE RECORDS ===
+FILE supervisor.json
+0f39e325ed3010113d7cd8dfdd7741122961ecebec5e681bed5e4cd404d9e27f  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/supervisor.json
+228
+{"error": "ValueError: output_link", "exit_code": -9, "output_bytes": 252, "peak_tree_rss_bytes": 456003584, "reason": "output_link", "sample_count": 24, "success": false, "wall_seconds": 26.087962433695793, "worker_pid": 43918}FILE stdout.log
+5f07e4ad316e3741c8c702ffbb91a05c1f7d6d80cce095f9be77eb8025e5c45f  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/stdout.log
+295
+..............                                                           [100%]
+- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tensor_tests.xml -
+14 passed, 44 deselected in 24.67s
+FILE stderr.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/stderr.log
+0
+FILE tensor_tests.xml
+46d71bce85951b0758a6f45787446866a82da1ec063c4e2a314be14b48fe0b9b  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r8_20260927/basin_01047000/control/tensor_tests/tensor_tests.xml
+2318
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="14" time="24.665" timestamp="2026-09-27T15:20:56.634228+08:00" hostname="icn277"><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_full_loop_budget_and_round_robin" time="24.294" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_independent_selection_uses_all_four_tiers" time="0.004" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_one_ulp_is_accepted_in_both_directions" time="0.001" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_two_ulps_are_rejected_in_both_directions" time="0.001" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_nonfinite_process_variance_is_rejected" time="0.001" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_complete_synthetic_result_verifies" time="0.036" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_started_identity_rejects_shared_runtime_path" time="0.001" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_started_identity_rejects_bundle_or_budget_tampering" time="0.001" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[wrong_checkpoint_order]" time="0.032" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[wrong_update_order]" time="0.036" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[missing_checkpoint]" time="0.034" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[nonfinite_objective]" time="0.033" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[wrong_observation_noise]" time="0.038" /><testcase classname="bundle.hpc.test_tukf09_two_basin_full_budget_v2" name="test_tensor_result_mutations_are_rejected[extra_result_member]" time="0.034" /></testsuite></testsuites>READ_ONLY_EXACT_OUTPUT_LINK_INSPECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T15:39:39+0800
