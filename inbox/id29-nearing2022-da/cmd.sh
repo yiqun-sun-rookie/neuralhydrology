@@ -9,7 +9,7 @@ echo "=== N22 warm* jobs since 09-03 ==="
 sacct -X -n -P -S 2026-09-03 --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22-warm' || echo '  none'
 echo "=== WARMUP PAIR DIR ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
-for X in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$X" ] && echo "  PRESENT $X" || echo "  MISSING $X"; done
+for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
 echo "=== GATE ==="
 [ -f "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" ] && echo "  PRESENT gate" || echo "  MISSING gate"
 echo "=== hardcode line ==="
