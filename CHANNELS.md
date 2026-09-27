@@ -130,3 +130,5 @@ git rm inbox/seq
 
 | `kalmannet-hamid-weights-20260923` | Hamid comments 72/113/115 objective-weight comparison; isolated preflight and controlled training | 2026-09-23 | New root `/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1`; existing jobs, environments, sources and channels read-only; one GPU maximum; no automatic requeue |
 | `zhenjiang-four-target-retrain-20260924` | 南京、镇江、江阴、徐六泾四站损失的共同模型及两个更新模块完整重训 | 2026-09-24 | 独立目录 `/data1/home/sunyiq/zhenjiang_four_target_retrain_20260924_001`；3种子，30/100/100轮；仅2017—2022年，10个数据文件，无吴淞口未来标签文件、无旧权重读取；禁止2023/2024数据与评价；一次36小时作业，不自动重试，不改旧实验。 |
+
+| `kalmannet-hamid-evaluation-20260927` | Authorized encrypted retrieval and evidence-bounded evaluation; no retraining | 2026-09-27 | Original training directories and other jobs read-only; new isolated evaluation root; one GPU maximum; no automatic requeue |
