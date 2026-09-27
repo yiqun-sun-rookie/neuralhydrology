@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=29
+### host=login4
+### started=2026-09-27T15:29:08+0800
+### ---------- output ----------
+=== EXACT FIRST-BASIN JOB STATUS ===
+UTC=2026-09-27T07:29:08Z
+228129|tukf09-noise-recover-v2r8-0927|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|48|FAILED|1:0
+slurm_load_jobs error: Invalid job id specified
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-27T15:29:09+0800
