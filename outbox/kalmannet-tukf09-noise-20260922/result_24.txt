@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=24
+### host=login4
+### started=2026-09-27T11:24:57+0800
+### ---------- output ----------
+=== EXACT NEW JOB STATUS ===
+UTC=2026-09-27T03:24:57Z
+228078|tukf09-noise-recover-v2r7-0927|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|19|FAILED|1:0
+slurm_load_jobs error: Invalid job id specified
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-27T11:24:58+0800
