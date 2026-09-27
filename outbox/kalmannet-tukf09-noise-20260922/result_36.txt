@@ -1,0 +1,28 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=36
+### host=login4
+### started=2026-09-27T21:19:28+0800
+### ---------- output ----------
+=== FIRST-BASIN MODEL READ-ONLY PROGRESS ===
+UTC=2026-09-27T13:19:28Z
+=== ACCOUNTING ===
+228327|tukf09-noise-int-v2r9-0927|hcpu48y|2181|RUNNING|0:0
+=== QUEUE ===
+228327|tukf09-noise-int-v2r9-0927|RUNNING|icn277
+PRESENT control/job_gate.json bytes=746
+DETAIL control/job_gate.json {"basin_id":"01047000","status":"ALL_JOB_TESTS_PASSED_MODEL_MAY_START"}
+PRESENT run/model/started.json bytes=1425
+DETAIL run/model/started.json {"basin_id":"01047000"}
+PRESENT run/stdout.log bytes=53
+TAIL run/stdout.log 'FULL_BUDGET_MODEL_STARTED basin=01047000 dimension=7\n'
+MODEL_CALCULATION_ENTRY_MARKER=True
+PRESENT run/stderr.log bytes=0
+TAIL run/stderr.log ''
+PRESENT run/supervisor.json bytes=196
+DETAIL run/supervisor.json {"exit_code":null,"reason":"not_started","success":false,"wall_seconds":2142.30748064816}
+ABSENT run/model/summary.json
+ABSENT run/model/manifest.final.sha256.json
+MODEL_FILE_LIST [["started.json",1425]]
+READ_ONLY_FIRST_BASIN_MODEL_PROGRESS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T21:19:29+0800
