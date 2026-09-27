@@ -1,66 +1,48 @@
 #!/usr/bin/env bash
-set -u
-phase='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r6'
-job='227637'
+set -euo pipefail
 
-echo '=== SCHEDULER ==='
-sacct -X -j "$job" -P -n --format=JobID,JobName,Partition,AllocCPUS,ReqCPUS,ElapsedRaw,State,ExitCode 2>&1 || echo 'SACCT_COMMAND_FAILED'
+phase='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927'
+payload='/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-tukf09-noise-20260922/payload/full_budget_recovery_v2r7_20260927.zip'
+python='/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python'
 
-echo '=== EXCLUSIVE PHASE ==='
-if [ -d "$phase" ] && [ ! -L "$phase" ]; then echo 'PHASE_DIRECTORY_PRESENT'; else echo 'PHASE_DIRECTORY_ABSENT_OR_LINKED'; fi
-if [ -e "$phase/basin_01142500" ] || [ -L "$phase/basin_01142500" ]; then echo 'SECOND_BASIN_PATH_PRESENT'; else echo 'SECOND_BASIN_PATH_ABSENT'; fi
-
-echo '=== FIXED EVIDENCE FILES ==='
-for relative in \
-  control/deployed.json \
-  basin_01047000/control/submission_attempt.json \
-  basin_01047000/control/submission.json \
-  basin_01047000/control/job_gate.json \
-  basin_01047000/control/original_tests.xml \
-  basin_01047000/control/new_gate_tests.xml \
-  basin_01047000/control/tensor_tests/supervisor.json \
-  basin_01047000/control/tensor_tests/tensor_tests.xml \
-  basin_01047000/run/supervisor.json \
-  basin_01047000/run/model/started.json \
-  basin_01047000/run/model/manifest.final.sha256.json; do
-  target="$phase/$relative"
-  if [ -f "$target" ] && [ ! -L "$target" ]; then
-    printf 'FILE %s\n' "$relative"
-    sha256sum "$target" || echo 'SHA256_COMMAND_FAILED'
-    head -c 8192 "$target" || echo 'HEAD_COMMAND_FAILED'
-    printf '\nEND_FILE %s\n' "$relative"
-  else
-    printf 'MISSING %s\n' "$relative"
-  fi
-done
-
-echo '=== FIXED SUPERVISED SUBPROCESS LOG TAILS ==='
-for relative in \
-  basin_01047000/control/tensor_tests/stdout.log \
-  basin_01047000/control/tensor_tests/stderr.log \
-  basin_01047000/run/stdout.log \
-  basin_01047000/run/stderr.log; do
-  target="$phase/$relative"
-  if [ -f "$target" ] && [ ! -L "$target" ]; then
-    printf 'LOG %s\n' "$relative"
-    sha256sum "$target" || echo 'SHA256_COMMAND_FAILED'
-    tail -c 32768 "$target" || echo 'TAIL_COMMAND_FAILED'
-    printf '\nEND_LOG %s\n' "$relative"
-  else
-    printf 'MISSING %s\n' "$relative"
-  fi
-done
-
-echo '=== FIXED JOB LOG TAILS ==='
-for suffix in out err; do
-  target="$phase/logs/job-$job.$suffix"
-  if [ -f "$target" ] && [ ! -L "$target" ]; then
-    printf 'LOG %s\n' "$suffix"
-    sha256sum "$target" || echo 'SHA256_COMMAND_FAILED'
-    tail -c 32768 "$target" || echo 'TAIL_COMMAND_FAILED'
-    printf '\nEND_LOG %s\n' "$suffix"
-  else
-    printf 'MISSING job-%s.%s\n' "$job" "$suffix"
-  fi
-done
-echo '=== END READ-ONLY EVIDENCE QUERY ==='
+printf '=== FIRST-BASIN RELEASE READ-ONLY PREFLIGHT ===\n'
+date -u '+UTC=%Y-%m-%dT%H:%M:%SZ'
+id -un
+if [[ -e "$phase" || -L "$phase" ]]; then
+    printf 'NEW_PHASE_OCCUPIED\n'
+    exit 1
+fi
+if [[ ! -d "$(dirname "$phase")" || -L "$(dirname "$phase")" ]]; then
+    printf 'NEW_PHASE_PARENT_INVALID\n'
+    exit 1
+fi
+printf 'NEW_PHASE_ABSENT\n'
+if [[ -e "$payload" || -L "$payload" ]]; then
+    printf 'NEW_PAYLOAD_OCCUPIED\n'
+    exit 1
+fi
+printf 'NEW_PAYLOAD_ABSENT\n'
+if [[ ! -x "$python" ]]; then
+    printf 'FROZEN_PYTHON_MISSING\n'
+    exit 1
+fi
+python_version="$("$python" --version)"
+if [[ "$python_version" != 'Python 3.11.13' ]]; then
+    printf 'FROZEN_PYTHON_VERSION_CHANGED %s\n' "$python_version"
+    exit 1
+fi
+printf 'FROZEN_PYTHON_PRESENT %s\n' "$python_version"
+partition="$(scontrol show partition hcpu48y -o)"
+printf '%s\n' "$partition"
+if [[ "$partition" != *' State=UP '* || "$partition" != *' OverSubscribe=NO '* ]]; then
+    printf 'FROZEN_PARTITION_NOT_READY\n'
+    exit 1
+fi
+printf 'OWN_QUEUE\n'
+queue="$(squeue -u sunyiq -h -o '%i|%j|%T|%P|%R')"
+printf '%s\n' "$queue"
+if printf '%s\n' "$queue" | awk -F '|' '$2 ~ /^tukf09-noise-/ { found=1 } END { exit !found }'; then
+    printf 'COMPETING_NOISE_RECOVERY_JOB_IN_QUEUE\n'
+    exit 1
+fi
+printf 'READ_ONLY_PREFLIGHT_PASS\n'
