@@ -1,0 +1,28 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=26
+### host=login4
+### started=2026-09-27T11:49:43+0800
+### ---------- output ----------
+=== FIXED OUTPUT-LIMIT TEST ARTIFACTS ===
+UTC=2026-09-27T03:49:43Z
+FIXED_TEST_DIRECTORY_PRESENT
+supervisor.json|f|185
+stderr.log|f|0
+worker.pid|f|5
+watchdog.stop|f|8
+stdout.log|f|100001
+heartbeat.json|f|54
+FILE stdout.log
+SIZE_BYTES=100001
+bfea3d32f999b72aa62c59ea58089c7d910d03a088fea16033b5fc1c4824e525  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp/test_limits_output_print__x__10/output/stdout.log
+FILE stderr.log
+SIZE_BYTES=0
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp/test_limits_output_print__x__10/output/stderr.log
+FILE supervisor.json
+SIZE_BYTES=185
+01d2715b169ed4d4110b86bcd6b334e4a1e4ae85dcc1b9d4a25b5d44a6b876d9  /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_recovery_v2r7_20260927/basin_01047000/control/original_tests_tmp/test_limits_output_print__x__10/output/supervisor.json
+{"exit_code": 0, "output_bytes": 226, "peak_tree_rss_bytes": 40173568, "reason": "complete", "sample_count": 1, "success": true, "wall_seconds": 1.1866950169205666, "worker_pid": 18912}
+END_SUPERVISOR
+READ_ONLY_OUTPUT_LIMIT_EVIDENCE_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T11:49:43+0800
