@@ -1,0 +1,84 @@
+### channel=attrswap-daily seq=93
+### host=login4
+### started=2026-09-27T12:43:27+0800
+### ---------- output ----------
+wallclock 2026-09-27 12:43:27 +0800
+=== A. sacct ===
+           JobID        JobName        State    Elapsed ExitCode   NodeList 
+---------------- -------------- ------------ ---------- -------- ---------- 
+          228080    pswap4_gate    COMPLETED   00:11:57      0:0     ngu104 
+        228081_0     pswap4_arm    COMPLETED   00:18:17      0:0     ngu104 
+        228081_1     pswap4_arm    COMPLETED   00:18:17      0:0     ngu104 
+        228081_2     pswap4_arm    COMPLETED   00:18:29      0:0     ngu104 
+        228081_3     pswap4_arm    COMPLETED   00:18:08      0:0     ngu101 
+        228081_4     pswap4_arm    COMPLETED   00:18:27      0:0     ngu101 
+        228081_5     pswap4_arm    COMPLETED   00:18:24      0:0     ngu101 
+        228081_6     pswap4_arm    COMPLETED   00:18:17      0:0     ngu101 
+        228081_7     pswap4_arm    COMPLETED   00:18:26      0:0     ngu104 
+        228081_8     pswap4_arm    COMPLETED   00:18:21      0:0     ngu104 
+        228081_9     pswap4_arm    COMPLETED   00:18:25      0:0     ngu104 
+       228081_10     pswap4_arm    COMPLETED   00:18:21      0:0     ngu101 
+       228081_11     pswap4_arm    COMPLETED   00:18:21      0:0     ngu104 
+       228081_12     pswap4_arm      RUNNING   00:07:40      0:0     ngu101 
+       228081_13     pswap4_arm      RUNNING   00:07:40      0:0     ngu101 
+       228081_14     pswap4_arm      RUNNING   00:07:38      0:0     ngu104 
+       228081_15     pswap4_arm      RUNNING   00:07:24      0:0     ngu104 
+228081_[16-25%4]     pswap4_arm      PENDING   00:00:00      0:0 None assi+ 
+  state tally (array tasks):
+         12 COMPLETED
+          1 PENDING
+          4 RUNNING
+=== B. queue ===
+           JOBID           NAME     STATE       TIME PARTITION NODELIST(REASON)
+228081_[16-25%4]     pswap4_arm   PENDING       0:00     hgpu4 (JobArrayTaskLimit)
+       228081_15     pswap4_arm   RUNNING       6:06     hgpu4 ngu104
+       228081_14     pswap4_arm   RUNNING       6:20     hgpu4 ngu104
+       228081_12     pswap4_arm   RUNNING       6:22     hgpu4 ngu101
+       228081_13     pswap4_arm   RUNNING       6:22     hgpu4 ngu101
+=== C. gate ===
+  GATE OK 2026-09-27 11:40:47 daymet4=b498cdc199855a9b streamflow=23467a40d502963d
+  build_shadow4 checks passed
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash gsmap_refday: e897d16599a8fe6d
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_utc: 500b5a25c8da30e8
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_refday: e70f812fc170c862
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash chirps: 3cb47ce145956989
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash era5l_refday: 47cbc4483af59fed
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_uncal_refday: 911964c2bbe287d1
+    combined hash daymet4: b498cdc199855a9b  streamflow: 23467a40d502963d
+  smoke daymet4 OK ['daymet4'] 01/10/2015 30/09/2023
+  smoke gsmap_refday OK ['gsmap_refday'] 01/10/2015 30/09/2023
+  smoke imerg_utc OK ['imerg_utc'] 01/10/2015 30/09/2023
+  smoke imerg_refday OK ['imerg_refday'] 01/10/2015 30/09/2023
+  smoke chirps OK ['chirps'] 01/10/2015 30/09/2023
+  smoke era5l_refday OK ['era5l_refday'] 01/10/2015 30/09/2023
+  smoke imerg_uncal_refday OK ['imerg_uncal_refday'] 01/10/2015 30/09/2023
+  === GATE DONE ===
+=== D. arms ===
+  run dirs: 16  test_metrics: 12
+  slurm_pswap4_arm_228081_0 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s100
+  slurm_pswap4_arm_228081_10 done=1 last='Epoch 30 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_11 done=1 last='Epoch 30 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_12 done=0 last='Epoch 11 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_13 done=0 last='Epoch 11 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_14 done=0 last='Epoch 11 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_15 done=0 last='Epoch 11 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_1 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s200
+  slurm_pswap4_arm_228081_2 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s300
+  slurm_pswap4_arm_228081_3 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s400
+  slurm_pswap4_arm_228081_4 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s500
+  slurm_pswap4_arm_228081_5 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s600
+  slurm_pswap4_arm_228081_6 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s700
+  slurm_pswap4_arm_228081_7 done=1 last='Epoch 30 average loss' cfg pswap4_ref_daymet4_s800
+  slurm_pswap4_arm_228081_8 done=1 last='Epoch 30 average loss' cfg pswap4_arm
+  slurm_pswap4_arm_228081_9 done=1 last='Epoch 30 average loss' cfg pswap4_arm
+  arm stderr with Traceback: 0
+=== DONE (read-only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T12:43:28+0800
