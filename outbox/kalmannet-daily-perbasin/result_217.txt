@@ -1,0 +1,63 @@
+### channel=kalmannet-daily-perbasin seq=217
+### host=login4
+### started=2026-09-27T23:04:12+0800
+### ---------- output ----------
+TRAINING_MODE_REPLAY_READ_ONLY_PREFLIGHT_V1
+sequence=217
+timestamp_utc=2026-09-27T15:04:12Z
+host=login4
+OWN_QUEUE_BEGIN
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)|0:00|1-00:00:00
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)|0:00|4:00:00
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)|0:00|2:00:00
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)|0:00|2:00:00
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)|0:00|7-00:00:00
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)|0:00|1-00:00:00
+OWN_QUEUE_END
+CPU_PARTITION_BEGIN
+hcpu48*|up|1|alloc$|48/0/0/48
+hcpu48*|up|14|maint|0/672/0/672
+hcpu48*|up|15|down*|0/0/720/720
+hcpu48*|up|1|drain|0/0/48/48
+hcpu48*|up|5|alloc|240/0/0/240
+hcpu48*|up|28|idle|0/1344/0/1344
+PartitionName=hcpu48
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=EXCLUSIVE
+   State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE
+CPU_PARTITION_END
+DIR_PRESENT /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace
+DIR_PRESENT /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs
+DIR_PRESENT /data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1
+DIR_PRESENT /data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1
+PYTHON_PRESENT
+SUMMARY_PRESENT KNET 20260824
+SUMMARY_PRESENT KNET 20260901
+SUMMARY_PRESENT KNET 20260908
+SUMMARY_PRESENT KNET 20260915
+SUMMARY_PRESENT KNET 20260922
+PROPOSED_ROOT_ABSENT=yes
+READ_ONLY_FILES_BEGIN
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1/aggregate.json|254914|31cf39ce1ac7875ee003d4a5a6fc77229f386b9bc5bebc0ff1db686b691170af
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1/completion.json|326|ef93c4f187ed4c7800b904080e65261f45eba36c07cbf27873a7bbf4ee3f7740
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1/bounds.json|11763|32fa626e145a33e47ce02b2aea5ac5fa0674364a6d8101bc679ca69b82d6cb1b
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1/runs/STRESS-02092500-NETWORK-20260922-COLD20041001/arrays.npz|26371|0346843f65ee09e72907d63509108fd424b98210f2e1ac70ee427b6e07faf5e5
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_stress_development_20260924_v1/runs/STRESS-02092500-NETWORK-20260824-COLD20041001/arrays.npz|26161|60cc2085f20dccbc25cf475fd1f23d297b1dc228645111dfc190eb83975807af
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1/runs/INTV-02092500-NETWORK-20260922-COLD20011001-R2_150/arrays.npz|51682|211c2827ca0e613ab072161d87e5bd2c9e51b63a539defc07d58ab815a0155a7
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1/runs/INTV-02092500-NETWORK-20260922-COLD20021001-R2_150/arrays.npz|43087|f348e77499d4b7380ce71c6700a4b19648c2eb09e99847f53214c638921297a6
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1/runs/INTV-02092500-NETWORK-20260922-COLD20031001-R2_150/arrays.npz|34499|31c935ca897f650a142f601e6d30d77fd8919df674a8df0ae89393c6c01e9c2d
+/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1/runs/INTV-02092500-NETWORK-20260922-COLD20041001-R2_150/arrays.npz|26242|227a1f09d9dca8d19ae32fbb41036fc2079c186024e95036dd19e05542252679
+EPOCH_HISTORY|20260824|572815|38cb1c0592357293eb2d8126ffbd45c9b6a157478525c5f6d314df408a1be381
+MARKER|20260824|ea7fa69f6087488df26be998c09c4ad796f160ad33695369ca1e629220987a52|"epoch_history_sha256": "38cb1c0592357293eb2d8126ffbd45c9b6a157478525c5f6d314df408a1be381"
+EPOCH_HISTORY|20260901|360145|32b5d8f85331acd458928db4e590e3a1bbc786064017cbd656d575fcb1f7c739
+MARKER|20260901|bd236248ecc4833164d7b21dbcf7aa83a99fdcf5bbf7fa05eaff411b24c80896|"epoch_history_sha256": "32b5d8f85331acd458928db4e590e3a1bbc786064017cbd656d575fcb1f7c739"
+EPOCH_HISTORY|20260908|599574|b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a
+MARKER|20260908|f3adc041cb4230928062ebd99035261e63124046f1159e2c750b402d879871bf|"epoch_history_sha256": "b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a"
+EPOCH_HISTORY|20260915|491739|48dd3209a57078ce4b197ad2cac87a73f4e8026051250c33c66a1e1deafb08b6
+MARKER|20260915|ded0db8d8f3140cfd2da8f64308fb9868938ed7cea26f1ec970c0d8468b6379e|"epoch_history_sha256": "48dd3209a57078ce4b197ad2cac87a73f4e8026051250c33c66a1e1deafb08b6"
+EPOCH_HISTORY|20260922|521838|f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6
+MARKER|20260922|3d156047331bb72e5c9c7717b07900544f7a8ab24004ea05c54cacfbd049b010|"epoch_history_sha256": "f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6"
+READ_ONLY_FILES_END
+PREFLIGHT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T23:04:13+0800
