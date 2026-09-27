@@ -3,13 +3,13 @@ set -eo pipefail
 readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_coldstart_intervention_development_20260927_v1"
 readonly EXPECTED_AGGREGATE_SHA="6a4928d7fa88ea68d2723505abd6af173dd777cf1ed3427e7e90057a4f086f0a"
 echo "COLDSTART_INTERVENTION_ARRAY_READ_ONLY_TRANSFER_V1"
-echo "sequence=213"
-echo "batch=9"
+echo "sequence=214"
+echo "batch=10"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 printf '%s  %s\n' "$EXPECTED_AGGREGATE_SHA" "$OUTPUT_ROOT/aggregate.json" | sha256sum --check --strict
 files=(
-  trace/TRACE-02092500-NETWORK-20260824-COLD20011001/summary.npz
-  trace/TRACE-02092500-NETWORK-20260824-COLD20021001/summary.npz
+  trace/TRACE-02092500-NETWORK-20260824-COLD20031001/summary.npz
+  trace/TRACE-02092500-NETWORK-20260824-COLD20041001/summary.npz
 )
 total=0
 for rel in "${files[@]}"; do
