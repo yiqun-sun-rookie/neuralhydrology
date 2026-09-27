@@ -1,0 +1,21 @@
+### channel=attrswap-daily seq=91
+### host=login4
+### started=2026-09-27T11:28:48+0800
+### ---------- output ----------
+wallclock 2026-09-27 11:28:48 +0800
+=== A. guards ===
+  partition set in pswap4_gate.slurm
+  partition set in pswap4_train.slurm
+  hpc_deploy/pswap4_gate.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap4_train.slurm:#SBATCH -p hgpu4
+=== B. submit gate + array ===
+gate 228080
+array 228081 dep=228080 tasks=0-25%4
+planned_gpu_hours 11.0 cap 20.0 partition hgpu4 submitted 2026-09-27 11:28:49
+         JOBID                           NAME     STATE       TIME PARTITION NODELIST(REASON)
+228081_[0-25%4                     pswap4_arm   PENDING       0:00     hgpu4 (Dependency)
+        228080                    pswap4_gate   RUNNING    INVALID     hgpu4 ngu104
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T11:28:50+0800
