@@ -1,0 +1,50 @@
+### channel=attrswap-daily seq=96
+### host=login4
+### started=2026-09-27T15:12:46+0800
+### ---------- output ----------
+wallclock 2026-09-27 15:12:46 +0800
+=== 0. probe ===
+         JOBID                           NAME     STATE       TIME PARTITION NODELIST(REASON)
+        202229                   N22-agg-eval   PENDING       0:00 hgpu4,hgp (DependencyNeverSatisfied)
+        202294                     N22-export   PENDING       0:00 hgpu4,hgp (Dependency)
+        202315                       N22-gate   PENDING       0:00 hgpu4,hgp (Dependency)
+        202507               N22-mask-iso-531   PENDING       0:00 hgpu4,hgp (DependencyNeverSatisfied)
+        215429                  id30_m01_s100   PENDING       0:00     hgpu2 (DependencyNeverSatisfied)
+        202293                   N22-manifest   PENDING       0:00 hgpu4,hgp (JobHeldUser)
+  NODELIST            GRES          GRES_USED               STATE       
+  ngu101              gpu:4         gpu:0,dcu:0             idle        
+  ngu102              gpu:4         gpu:0,dcu:0             idle        
+  ngu103              gpu:4         gpu:0,dcu:0             down*       
+  ngu104              gpu:4         gpu:1,dcu:0             mixed       
+=== A. guards ===
+  make_pswap4_configs.py before: 22f761445cd897a7
+=== B. install ===
+  1dba7ba28384f0d6 pswap4_gate_add.slurm
+  390df34eb5f9613b pswap4_train_add.slurm
+  7ccbd6063d2b298b gsmap_uncal_refday_daily_132.csv.gz
+  1c9ac8410ad7bb10 make_pswap4_configs_add.py
+  hpc_deploy/pswap4_gate_add.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap4_train_add.slurm:#SBATCH -p hgpu4
+addendum: wrote 3 arm configs + 1 smoke config + arms_add.txt into /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/configs
+  pswap4_armG_gsmap_uncal_refday_s100
+  pswap4_armG_gsmap_uncal_refday_s200
+  pswap4_armG_gsmap_uncal_refday_s300
+  13c13
+  < experiment_name: pswap4_armG_gsmap_refday_s200
+  ---
+  > experiment_name: pswap4_armG_gsmap_uncal_refday_s200
+  15c15
+  < - gsmap_refday
+  ---
+  > - gsmap_uncal_refday
+=== C. submit ===
+gate_add 228125
+array_add 228126 dep=228125 tasks=0-2%3
+planned_gpu_hours 1.2 cap 3.0 partition hgpu4 submitted 2026-09-27 15:12:52
+         JOBID                           NAME     STATE       TIME PARTITION NODELIST(REASON)
+        228125                pswap4_gate_add   PENDING       0:00     hgpu4 (None)
+228126_[0-2%3]                 pswap4_arm_add   PENDING       0:00     hgpu4 (None)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T15:12:52+0800
