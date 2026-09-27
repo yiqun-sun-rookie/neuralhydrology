@@ -1,0 +1,34 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=34
+### host=login4
+### started=2026-09-27T20:47:53+0800
+### ---------- output ----------
+=== FIRST-BASIN JOB READ-ONLY STATUS ===
+UTC=2026-09-27T12:47:53Z
+=== ACCOUNTING ===
+228327|tukf09-noise-int-v2r9-0927|hcpu48y|286|RUNNING|0:0
+=== QUEUE ===
+228327|tukf09-noise-int-v2r9-0927|RUNNING|icn277
+=== EXACT FIRST-BASIN FILES ===
+PRESENT basin_01047000/control/submission_attempt.json bytes=1868
+PRESENT basin_01047000/control/submission.json bytes=1917
+DETAIL basin_01047000/control/submission.json {"basin_id":"01047000","returncode":0}
+PRESENT basin_01047000/control/original_tests.xml bytes=5163
+PRESENT basin_01047000/control/output_guard_regression.xml bytes=684
+PRESENT basin_01047000/control/new_gate_tests.xml bytes=6210
+PRESENT basin_01047000/control/tensor_tests/tensor_tests.xml bytes=2316
+PRESENT basin_01047000/control/job_gate.json bytes=746
+DETAIL basin_01047000/control/job_gate.json {"basin_id":"01047000","elapsed_seconds":36.80757737159729,"stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2","status":"ALL_JOB_TESTS_PASSED_MODEL_MAY_START"}
+PRESENT basin_01047000/run/model/started.json bytes=1425
+DETAIL basin_01047000/run/model/started.json {"basin_id":"01047000","stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2"}
+ABSENT basin_01047000/run/model/summary.json
+ABSENT basin_01047000/run/model/manifest.final.sha256.json
+PRESENT basin_01047000/run/supervisor.json bytes=197
+DETAIL basin_01047000/run/supervisor.json {"success":false}
+PRESENT logs/job-228327.out bytes=1654
+TAIL logs/job-228327.out '.........................................                                [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/original_tests.xml -\n41 passed in 15.33s\n...                                                                      [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/output_guard_regression.xml -\n3 passed in 3.73s\n............................................                             [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/new_gate_tests.xml -\n44 passed, 14 deselected in 0.27s\nFULL_BUDGET_JOB_GATE_ALL_TESTS_PASSED {"stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2","basin_id":"01047000","status":"ALL_JOB_TESTS_PASSED_MODEL_MAY_START","original_linux_protection_tests":{"tests":41,"failures":0,"errors":0,"skipped":0},"final_output_guard_regressions":{"tests":3,"failures":0,"errors":0,"skipped":0},"new_standard_library_gate_tests":{"tests":44,"failures":0,"errors":0,"skipped":0},"synthetic_tensor_loop_tests":{"tests":14,"failures":0,"errors":0,"skipped":0},"synthetic_tensor_supervisor":{"success":true,"reason":"complete","exit_code":0,"wall_seconds":11.572787895798683,"peak_tree_rss_bytes":460967936,"output_bytes":305482,"worker_pid":42487,"sample_count":11},"model_calls":0,"evaluation_array_reads":0,"elapsed_seconds":36.80757737159729}\n'
+PRESENT logs/job-228327.err bytes=0
+TAIL logs/job-228327.err ''
+READ_ONLY_FIRST_BASIN_JOB_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T20:47:54+0800
