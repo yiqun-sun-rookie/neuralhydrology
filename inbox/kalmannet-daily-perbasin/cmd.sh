@@ -1,54 +1,148 @@
 #!/usr/bin/env bash
-set -o pipefail
+set -eo pipefail
 readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_training_mode_replay_development_20260927_v1"
-readonly JOB_ID="228361"
-echo "TRAINING_MODE_REPLAY_READ_ONLY_MONITOR_V1"
-echo "sequence=219"
+readonly EXPECTED_AGGREGATE_SHA="c83bac15b1ebcd4501bf70a91d7a56849c5c382dc2256442534c57da24fcb796"
+echo "TRAINING_MODE_REPLAY_ARRAY_READ_ONLY_TRANSFER_V1"
+echo "sequence=220"
+echo "batch=1"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-echo "SQUEUE_BEGIN"
-squeue -j "$JOB_ID" -h -o '%i|%j|%T|%P|%R|%M|%l' 2>&1 || echo "SQUEUE_NO_RECORD"
-echo "SQUEUE_END"
-echo "SACCT_BEGIN"
-sacct -j "$JOB_ID" --noheader --parsable2 --format=JobID,JobName,User,Partition,State,ExitCode,Elapsed,Start,End,NodeList 2>&1 || echo "SACCT_READ_FAILED"
-echo "SACCT_END"
-echo "TOP_FILES_BEGIN"
-for name in submission_receipt.json compute_admission.json gates.json termination.json completion.json aggregate.json; do
-  path="$OUTPUT_ROOT/$name"
-  if [[ -f "$path" && ! -L "$path" ]]; then
-    printf '%s|%s|%s\n' "$name" "$(stat -c %s "$path")" "$(sha256sum "$path" | awk '{print $1}')"
-  else
-    echo "$name|ABSENT"
-  fi
+printf '%s  %s\n' "$EXPECTED_AGGREGATE_SHA" "$OUTPUT_ROOT/aggregate.json" | sha256sum --check --strict
+files=(
+  physics/REPLAY-02092500-PHYSICS-SEG0000-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0100-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0201-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0301-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0401-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0501-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0602-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0702-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0802-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG0903-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1003-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1103-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1204-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1304-C0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1304-C0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1304-C1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1304-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1396-PC1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1396-PT/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-C0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-C0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-C1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-CS0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-CS0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-CS1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1404-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1504-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1605-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1705-C0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1705-C0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1705-C1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1705-C1461/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1705-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1805-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG1906-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2006-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2061-PC1461/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2061-PT/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2081-PC0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2081-PT/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-C0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-C0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-C1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-C1461/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-C1827/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-CS0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-CS0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-CS1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-CS1461/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-CS1827/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2106-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2127-PC1827/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2127-PT/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2146-PC1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2146-PT/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2207-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2307-T/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C0366/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C0731/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C1096/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C1461/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C1827/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-C2192/arrays.npz
+  physics/REPLAY-02092500-PHYSICS-SEG2407-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0000-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0100-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0201-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0301-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0401-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0501-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0602-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0702-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0802-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG0903-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1003-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1103-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1204-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1304-C0366/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1304-C0731/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1304-C1096/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1304-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1404-C0366/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1404-C0731/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1404-C1096/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1404-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1504-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1605-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1705-C0366/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1705-C0731/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1705-C1096/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1705-C1461/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1705-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1805-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG1906-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2006-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-C0366/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-C0731/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-C1096/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-C1461/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-C1827/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2106-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2207-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2307-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C0366/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C0731/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C1096/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C1461/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C1827/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-C2192/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260824-SEG2407-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0000-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0100-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0201-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0301-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0401-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0501-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0602-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0702-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0802-T/arrays.npz
+  runs/REPLAY-02092500-NETWORK-20260901-SEG0903-T/arrays.npz
+)
+total=0
+for rel in "${files[@]}"; do
+  file="$OUTPUT_ROOT/$rel"
+  if [[ ! -f "$file" || -L "$file" ]]; then echo "REFUSING: expected array file absent or symlink: $rel" >&2; exit 21; fi
+  total=$((total + $(stat -c '%s' "$file")))
 done
-echo "TOP_FILES_END"
-for folder in reproduction runs physics; do
-  if [[ -d "$OUTPUT_ROOT/$folder" ]]; then echo "${folder}_directories=$(ls -1 "$OUTPUT_ROOT/$folder" | wc -l)"; fi
+if [[ "$total" -gt 600000 ]]; then echo "REFUSING: batch too large total=$total" >&2; exit 22; fi
+echo "total_bytes=$total"
+for rel in "${files[@]}"; do
+  file="$OUTPUT_ROOT/$rel"
+  echo "FILE_BEGIN $rel"
+  stat -c 'bytes=%s' "$file"
+  sha256sum "$file" | awk '{print $1}'
+  base64 --wrap=0 "$file"
+  echo
+  echo "FILE_END $rel"
 done
-for name in compute_admission.json gates.json termination.json completion.json; do
-  path="$OUTPUT_ROOT/$name"
-  if [[ -f "$path" && ! -L "$path" && $(stat -c %s "$path") -le 60000 ]]; then
-    echo "FILE_BEGIN $name"
-    cat "$path"
-    echo "FILE_END $name"
-  fi
-done
-for path in "$OUTPUT_ROOT/logs/slurm-$JOB_ID.out" "$OUTPUT_ROOT/logs/slurm-$JOB_ID.err"; do
-  if [[ -f "$path" ]]; then
-    echo "LOG_BEGIN $(basename "$path") bytes=$(stat -c %s "$path")"
-    tail -n 30 "$path"
-    echo "LOG_END"
-  fi
-done
-if [[ -f "$OUTPUT_ROOT/completion.json" && -f "$OUTPUT_ROOT/aggregate.json" && ! -L "$OUTPUT_ROOT/aggregate.json" ]]; then
-  size=$(stat -c %s "$OUTPUT_ROOT/aggregate.json")
-  encoded=$(gzip -9 -c "$OUTPUT_ROOT/aggregate.json" | base64 --wrap=0 | wc -c)
-  if [[ "$encoded" -le 600000 ]]; then
-    echo "AGGREGATE_GZIP_BASE64_BEGIN bytes=$size"
-    gzip -9 -c "$OUTPUT_ROOT/aggregate.json" | base64 --wrap=0
-    echo
-    echo "AGGREGATE_GZIP_BASE64_END"
-  else
-    echo "AGGREGATE_ENCODED_TOO_LARGE size=$size encoded=$encoded"
-  fi
-fi
-echo "MONITOR_COMPLETE"
