@@ -1,0 +1,126 @@
+### channel=attrswap-daily seq=90
+### host=login4
+### started=2026-09-27T11:26:57+0800
+### ---------- output ----------
+wallclock 2026-09-27 11:26:57 +0800
+epoch 1790479617
+=== 0. probe: my jobs in flight (all channels), partitions, quota ===
+     JOBID                           NAME     STATE       TIME PARTITION NODELIST(REASON)
+    202229                   N22-agg-eval   PENDING       0:00 hgpu4,hgp (DependencyNeverSatisfied)
+    202294                     N22-export   PENDING       0:00 hgpu4,hgp (Dependency)
+    202315                       N22-gate   PENDING       0:00 hgpu4,hgp (Dependency)
+    202507               N22-mask-iso-531   PENDING       0:00 hgpu4,hgp (DependencyNeverSatisfied)
+    215429                  id30_m01_s100   PENDING       0:00     hgpu2 (DependencyNeverSatisfied)
+    202293                   N22-manifest   PENDING       0:00 hgpu4,hgp (JobHeldUser)
+  jobs in flight: 6
+        1 hgpu2 PENDING
+        5 hgpu4,hgpu8,hgpu2 PENDING
+  [hgpu4] NODELIST            GRES          GRES_USED               STATE       
+  [hgpu4] ngu101              gpu:4         gpu:0,dcu:0             idle        
+  [hgpu4] ngu102              gpu:4         gpu:0,dcu:0             idle        
+  [hgpu4] ngu103              gpu:4         gpu:0,dcu:0             down*       
+  [hgpu4] ngu104              gpu:4         gpu:1,dcu:0             mixed       
+  [hgpu8] NODELIST            GRES          GRES_USED               STATE       
+  [hgpu8] ngu201              gpu:8         gpu:1,dcu:0             mixed       
+  [hgpu8] ngu202              gpu:8         gpu:0,dcu:0             idle        
+  [hgpu8] ngu203              gpu:8         gpu:0,dcu:0             maint       
+  [hgpu2p] NODELIST            GRES          GRES_USED               STATE       
+  [hgpu2p] ngu001              gpu:2         gpu:2,dcu:0             mixed       
+  [hgpu2p] ngu002              gpu:2         gpu:1,dcu:0             mixed       
+  [hgpu2p] ngu004              gpu:2         gpu:2,dcu:0             mixed       
+  [hgpu2p] ngu005              gpu:2         gpu:2,dcu:0             mixed       
+  [hgpu2p] ngu006              gpu:2         gpu:0,dcu:0             mixed       
+  [hgpu2p] ngu007              gpu:2         gpu:0,dcu:0             idle        
+  [hgpu2p] ngu008              gpu:2         gpu:1,dcu:0             mixed       
+  [hgpu2p] ngu010              gpu:2         gpu:2,dcu:0             mixed       
+  [hgpu2p] ngu011              gpu:2         gpu:1,dcu:0             mixed       
+  [hgpu2] NODELIST            GRES          GRES_USED               STATE       
+  [hgpu2] ngu003              gpu:2         gpu:0,dcu:0             idle        
+  [hgpu2] ngu009              gpu:2         gpu:0,dcu:0             idle        
+  df: hhjt_parastor_hhjt_parastor  954T  623T  332T  66% /data1
+=== A. guards ===
+  base config sha 33bfcc279b213848 (expect 33bfcc279b213848)
+=== B. landing dir + attribute link ===
+  attribute files through link: 8
+=== C. archived code (copied from the Stage-3 landing dir, hash-checked) ===
+  files: 78
+  camelsus.py sha: 51e2e02b382ec103 (expect 51e2e02b382ec103)
+=== D. install scripts, tables, basin lists from the payload ===
+  ae7f045c2d6ccad3 build_precip_swap4.py
+  941253541fd9ec9c build_shadow4.py
+  27bb016ddbaae367 chirps_daily_132.csv.gz
+  ff5ea5c7a6cf018e cmd_submit4_template.sh
+  d097552bfc69b55c daymet4_132.csv.gz
+  0cfe1be8543a3446 era5l_refday_daily_132.csv.gz
+  93cdf35b58b44600 gsmap_refday_daily_132.csv.gz
+  2b1136345cb76f5c headers_132.json
+  d23321bde7034fd8 imerg_refday_daily_132.csv.gz
+  75f083426a37f03d imerg_uncal_refday_daily_132.csv.gz
+  8dcd8c2a19515c31 imerg_utc_daily_132.csv.gz
+  22f761445cd897a7 make_pswap4_configs.py
+  dcaa9ad67fc95ed3 pswap4_gate.slurm
+  2ef9ad2d3d86b865 pswap4_train.slurm
+  5cabc85df39d41ef streamflow_cfs_132.csv.gz
+  39ea6e30d65a14a7 basins_132.txt
+  b822eb47e3075391 basins_5.txt
+  dfa251f768698644 holdout_132.txt
+  1fe68237e2e34ade public_132.txt
+=== E. configs on the login node ===
+  CR bytes in slurm/sh/py/txt: 0 (expect 0)
+wrote 26 arm configs + 7 smoke configs + arms.txt into /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/configs
+  configs: 33  arms.txt lines: 26
+  manifest sha: f4e52c56a3360df9
+  3c3
+  < data_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us
+  ---
+  > data_dir: /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/data_shadow/camels_us
+  7,11c7,11
+  < - PRCP(mm/day)
+  < - Tmin(C)
+  < - Tmax(C)
+  < - SRAD(W/m2)
+  < - Vp(Pa)
+  ---
+  > - prcp(mm/day)
+  > - tmin(C)
+  > - tmax(C)
+  > - srad(W/m2)
+  > - vp(Pa)
+  13c13
+  < experiment_name: attrswap_ref27_parity_s900
+  ---
+  > experiment_name: pswap4_armG_chirps_s200
+  15c15
+  < - maurer
+  ---
+  > - chirps
+  34c34
+  < run_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/runs
+  ---
+  > run_dir: /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/runs
+  36c36
+  < seed: 900
+  ---
+  > seed: 200
+  68,74c68,74
+  < test_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  < test_end_date: 30/09/1999
+  < test_start_date: 01/10/1989
+  < train_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  < train_end_date: 30/09/2008
+  < train_start_date: 01/10/1999
+  < validation_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  ---
+  > test_basin_file: /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/basin_lists/basins_132.txt
+  > test_end_date: 30/09/2023
+  > test_start_date: 01/10/2020
+  > train_basin_file: /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/basin_lists/basins_132.txt
+  > train_end_date: 30/09/2020
+  > train_start_date: 01/10/2015
+  > validation_basin_file: /data1/home/sunyiq/precip_swap4_gpm_daily_2026_09/basin_lists/basins_132.txt
+=== F. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 90
+=== DONE (no sbatch) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T11:27:07+0800
