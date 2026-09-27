@@ -1,0 +1,26 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=41
+### host=login4
+### started=2026-09-27T22:30:05+0800
+### ---------- output ----------
+=== FIRST-BASIN TERMINAL LOGS AND RESULT IDENTITIES ===
+UTC=2026-09-27T14:30:05Z
+FILE {"path":"logs/job-228327.out","sha256":"fb73d1281f953ed6437798ec6d7b81aab90d93b9e7f972f675f161528874319d","size_bytes":1951}
+TAIL logs/job-228327.out '.........................................                                [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/original_tests.xml -\n41 passed in 15.33s\n...                                                                      [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/output_guard_regression.xml -\n3 passed in 3.73s\n............................................                             [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1/basin_01047000/control/new_gate_tests.xml -\n44 passed, 14 deselected in 0.27s\nFULL_BUDGET_JOB_GATE_ALL_TESTS_PASSED {"stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2","basin_id":"01047000","status":"ALL_JOB_TESTS_PASSED_MODEL_MAY_START","original_linux_protection_tests":{"tests":41,"failures":0,"errors":0,"skipped":0},"final_output_guard_regressions":{"tests":3,"failures":0,"errors":0,"skipped":0},"new_standard_library_gate_tests":{"tests":44,"failures":0,"errors":0,"skipped":0},"synthetic_tensor_loop_tests":{"tests":14,"failures":0,"errors":0,"skipped":0},"synthetic_tensor_supervisor":{"success":true,"reason":"complete","exit_code":0,"wall_seconds":11.572787895798683,"peak_tree_rss_bytes":460967936,"output_bytes":305482,"worker_pid":42487,"sample_count":11},"model_calls":0,"evaluation_array_reads":0,"elapsed_seconds":36.80757737159729}\n{"basin_id":"01047000","limits_after_tests":{"wall_seconds":14302.781293153763,"output_bytes":103105725},"supervisor":{"success":true,"reason":"complete","exit_code":0,"wall_seconds":4819.5962123945355,"peak_tree_rss_bytes":2073788416,"output_bytes":33655,"worker_pid":42503,"sample_count":2344}}\n'
+FILE {"path":"logs/job-228327.err","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","size_bytes":0}
+TAIL logs/job-228327.err ''
+FILE {"path":"basin_01047000/run/stdout.log","sha256":"3de2d7bf83de73029a21a4f2d9f475558f219127576cd67e4362b7615059a51e","size_bytes":976}
+TAIL basin_01047000/run/stdout.log 'FULL_BUDGET_MODEL_STARTED basin=01047000 dimension=7\nFULL_BUDGET_SINGLE_BASIN_COMPLETE {"stage_id":"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2","status":"FULL_BUDGET_SINGLE_BASIN_COMPLETE_NOT_FORMAL_EVALUATION","basin_id":"01047000","dimension":7,"counts":{"start_count":8,"updates_per_start":31,"checkpoints":256,"gradient_updates":248,"training_objective_calls":256,"validation_objective_calls":256,"evaluation_array_reads":0},"fixed_observation_noise_multiplier":0.016165823842132845,"selected_index":32,"selected_training_objective":4.116970374444384,"selected_validation_objective":2.88596155108921,"selected_process_variance":[0.509210609833026,8.441450710841675e-09,2.247908501884753,0.009209376736871602,0.1153215126925338,0.0011650665731728304,0.0009730035907574872],"ratio_lower_bound_hits":198,"ratio_upper_bound_hits":124,"roundoff_ratio_clip_count":65,"model_wall_seconds":4813.164918296039,"evaluation_array_reads":0,"scientific_performance_claim":false}\n'
+FILE {"path":"basin_01047000/run/stderr.log","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","size_bytes":0}
+TAIL basin_01047000/run/stderr.log ''
+FILE {"path":"basin_01047000/run/supervisor.json","sha256":"1e0d355ebf494e1025672c099a32b0ba2f8339bbd5d1d3640d688137241d4d26","size_bytes":192}
+FILE {"path":"basin_01047000/control/job_gate.json","sha256":"88a2ca6e38df77c35681476272c78b25d8ccf634c1fd61acec268b42538e10f2","size_bytes":746}
+FILE {"path":"basin_01047000/run/model/started.json","sha256":"d2bf2cf6ef1f4ac15a0d58d671d77c79c46462905312861feb610950a703e175","size_bytes":1425}
+FILE {"path":"basin_01047000/run/model/summary.json","sha256":"b0ae827e00f75dc177b8d812cf5e8403316a4dee9beed60d785fab8943f65961","size_bytes":889}
+FILE {"path":"basin_01047000/run/model/history.npz","sha256":"a84da227ffee7c12f9a78aa4d75800fbdb202b9304b3ffaca451a86ca058a6f2","size_bytes":29565}
+FILE {"path":"basin_01047000/run/model/manifest.final.sha256.json","sha256":"572924fe106a5c0195898f5fc78a94c37bca41f1d897f171deb1cfdd0d131004","size_bytes":541}
+COUNTS {"checkpoints":256,"evaluation_array_reads":0,"gradient_updates":248,"start_count":8,"training_objective_calls":256,"updates_per_start":31,"validation_objective_calls":256}
+SUPERVISOR {"exit_code":0,"output_bytes":33655,"peak_tree_rss_bytes":2073788416,"reason":"complete","success":true,"wall_seconds":4819.5962123945355}
+READ_ONLY_FIRST_BASIN_TERMINAL_LOGS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T22:30:06+0800
