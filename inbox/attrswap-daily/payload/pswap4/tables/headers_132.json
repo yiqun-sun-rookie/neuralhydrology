@@ -1,0 +1,926 @@
+{
+ "01073000": {
+  "huc": "01",
+  "lat": "  43.09",
+  "elev": "  54.00",
+  "area": "  31325460",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01078000": {
+  "huc": "01",
+  "lat": "  43.49",
+  "elev": " 353.00",
+  "area": " 222125990",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01123000": {
+  "huc": "01",
+  "lat": "  41.68",
+  "elev": " 150.00",
+  "area": "  77666430",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01162500": {
+  "huc": "01",
+  "lat": "  42.68",
+  "elev": " 332.00",
+  "area": "  50224291",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01181000": {
+  "huc": "01",
+  "lat": "  42.23",
+  "elev": " 452.00",
+  "area": " 243354814",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01187300": {
+  "huc": "01",
+  "lat": "  42.01",
+  "elev": " 394.00",
+  "area": "  51518732",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01451800": {
+  "huc": "02",
+  "lat": "  40.59",
+  "elev": " 205.00",
+  "area": " 137210693",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01518862": {
+  "huc": "02",
+  "lat": "  41.86",
+  "elev": " 606.00",
+  "area": " 234552619",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01567500": {
+  "huc": "02",
+  "lat": "  40.32",
+  "elev": " 255.00",
+  "area": "  38833215",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01605500": {
+  "huc": "02",
+  "lat": "  38.44",
+  "elev": " 894.00",
+  "area": " 463409699",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01606500": {
+  "huc": "02",
+  "lat": "  38.44",
+  "elev": " 894.00",
+  "area": "1685361531",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01632000": {
+  "huc": "02",
+  "lat": "  38.66",
+  "elev": " 765.00",
+  "area": " 543665010",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01632900": {
+  "huc": "02",
+  "lat": "  38.57",
+  "elev": " 318.00",
+  "area": " 242319262",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01634500": {
+  "huc": "02",
+  "lat": "  38.96",
+  "elev": " 451.00",
+  "area": " 264065862",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01639500": {
+  "huc": "02",
+  "lat": "  39.60",
+  "elev": " 224.00",
+  "area": " 264065862",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01664000": {
+  "huc": "02",
+  "lat": "  38.64",
+  "elev": " 181.00",
+  "area": "1602517339",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01666500": {
+  "huc": "02",
+  "lat": "  38.48",
+  "elev": " 588.00",
+  "area": " 463409699",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01669000": {
+  "huc": "02",
+  "lat": "  37.81",
+  "elev": "  42.00",
+  "area": "  72229780",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "01669520": {
+  "huc": "02",
+  "lat": "  37.74",
+  "elev": "  47.00",
+  "area": " 282188029",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02011400": {
+  "huc": "02",
+  "lat": "  38.27",
+  "elev": " 890.00",
+  "area": " 406454317",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02013000": {
+  "huc": "02",
+  "lat": "  37.63",
+  "elev": " 749.00",
+  "area": " 419398722",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02014000": {
+  "huc": "02",
+  "lat": "  37.64",
+  "elev": " 582.00",
+  "area": " 396098793",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02015700": {
+  "huc": "02",
+  "lat": "  38.28",
+  "elev": " 793.00",
+  "area": " 284776910",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02016000": {
+  "huc": "02",
+  "lat": "  38.23",
+  "elev": " 728.00",
+  "area": "1193474141",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02017500": {
+  "huc": "02",
+  "lat": "  37.35",
+  "elev": " 711.00",
+  "area": " 271832505",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02018000": {
+  "huc": "02",
+  "lat": "  37.35",
+  "elev": " 711.00",
+  "area": " 851741849",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02027000": {
+  "huc": "02",
+  "lat": "  37.79",
+  "elev": " 849.00",
+  "area": " 240765933",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02027500": {
+  "huc": "02",
+  "lat": "  37.73",
+  "elev": " 961.00",
+  "area": " 123489624",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02028500": {
+  "huc": "02",
+  "lat": "  37.87",
+  "elev": " 313.00",
+  "area": " 245425919",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02038850": {
+  "huc": "02",
+  "lat": "  37.37",
+  "elev": " 204.00",
+  "area": "  22109044",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02046000": {
+  "huc": "03",
+  "lat": "  37.03",
+  "elev": " 100.00",
+  "area": " 292543553",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02051500": {
+  "huc": "03",
+  "lat": "  36.87",
+  "elev": " 132.00",
+  "area": "1429062312",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02069700": {
+  "huc": "03",
+  "lat": "  36.61",
+  "elev": " 493.00",
+  "area": " 221349326",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02070000": {
+  "huc": "03",
+  "lat": "  36.64",
+  "elev": " 375.00",
+  "area": " 279599148",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02074500": {
+  "huc": "03",
+  "lat": "  36.60",
+  "elev": " 266.00",
+  "area": " 287365791",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02118500": {
+  "huc": "03",
+  "lat": "  36.07",
+  "elev": " 343.00",
+  "area": " 401276555",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02231000": {
+  "huc": "03",
+  "lat": "  30.57",
+  "elev": "  36.00",
+  "area": "1812216700",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02245500": {
+  "huc": "03",
+  "lat": "  29.87",
+  "elev": "  32.00",
+  "area": " 346910054",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02246000": {
+  "huc": "03",
+  "lat": "  30.01",
+  "elev": "  45.00",
+  "area": " 458231937",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02296500": {
+  "huc": "03",
+  "lat": "  27.59",
+  "elev": "  28.00",
+  "area": " 854330730",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02371500": {
+  "huc": "03",
+  "lat": "  31.80",
+  "elev": " 143.00",
+  "area": "1294440500",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02372250": {
+  "huc": "03",
+  "lat": "  31.82",
+  "elev": " 138.00",
+  "area": "1144285402",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02374500": {
+  "huc": "03",
+  "lat": "  31.60",
+  "elev": " 132.00",
+  "area": " 455643056",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02415000": {
+  "huc": "03",
+  "lat": "  33.17",
+  "elev": " 293.00",
+  "area": " 491887390",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02427250": {
+  "huc": "03",
+  "lat": "  31.77",
+  "elev": " 103.00",
+  "area": " 675697941",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02450250": {
+  "huc": "03",
+  "lat": "  34.28",
+  "elev": " 257.00",
+  "area": " 238435940",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02464000": {
+  "huc": "03",
+  "lat": "  33.71",
+  "elev": " 165.00",
+  "area": " 577320463",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02465493": {
+  "huc": "03",
+  "lat": "  32.91",
+  "elev": " 100.00",
+  "area": "  83620856",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "02469800": {
+  "huc": "03",
+  "lat": "  31.76",
+  "elev": "  72.00",
+  "area": " 424576484",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03010655": {
+  "huc": "05",
+  "lat": "  41.87",
+  "elev": " 628.00",
+  "area": " 255522555",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03011800": {
+  "huc": "05",
+  "lat": "  41.68",
+  "elev": " 640.00",
+  "area": " 100448583",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03021350": {
+  "huc": "05",
+  "lat": "  42.01",
+  "elev": " 488.00",
+  "area": " 238177052",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03026500": {
+  "huc": "05",
+  "lat": "  41.61",
+  "elev": " 640.00",
+  "area": "  20296827",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03049800": {
+  "huc": "05",
+  "lat": "  40.48",
+  "elev": " 342.00",
+  "area": "  14963732",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03050000": {
+  "huc": "05",
+  "lat": "  38.45",
+  "elev": " 937.00",
+  "area": " 478942985",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03069500": {
+  "huc": "05",
+  "lat": "  39.01",
+  "elev": " 988.00",
+  "area": "1869172082",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03070500": {
+  "huc": "05",
+  "lat": "  39.63",
+  "elev": " 592.00",
+  "area": " 517776200",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03076600": {
+  "huc": "05",
+  "lat": "  39.60",
+  "elev": " 770.00",
+  "area": " 126596281",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03078000": {
+  "huc": "05",
+  "lat": "  39.60",
+  "elev": " 808.00",
+  "area": " 161805063",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03140000": {
+  "huc": "05",
+  "lat": "  40.36",
+  "elev": " 302.00",
+  "area": "  70417563",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03170000": {
+  "huc": "05",
+  "lat": "  36.78",
+  "elev": " 803.00",
+  "area": " 799964229",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03173000": {
+  "huc": "05",
+  "lat": "  36.99",
+  "elev": " 869.00",
+  "area": " 774075419",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03180500": {
+  "huc": "05",
+  "lat": "  38.54",
+  "elev": "1088.00",
+  "area": " 344321173",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03182500": {
+  "huc": "05",
+  "lat": "  38.54",
+  "elev": "1088.00",
+  "area": "1397995740",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03186500": {
+  "huc": "05",
+  "lat": "  38.27",
+  "elev": "1160.00",
+  "area": " 331376768",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03237280": {
+  "huc": "05",
+  "lat": "  38.62",
+  "elev": " 295.00",
+  "area": "  31584348",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03237500": {
+  "huc": "05",
+  "lat": "  38.88",
+  "elev": " 297.00",
+  "area": "1001896947",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03241500": {
+  "huc": "05",
+  "lat": "  39.70",
+  "elev": " 337.00",
+  "area": " 163617279",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03471500": {
+  "huc": "06",
+  "lat": "  36.72",
+  "elev": " 872.00",
+  "area": " 198308285",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03473000": {
+  "huc": "06",
+  "lat": "  36.57",
+  "elev": " 658.00",
+  "area": " 784430943",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "03574500": {
+  "huc": "06",
+  "lat": "  34.95",
+  "elev": " 398.00",
+  "area": " 828441920",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05488200": {
+  "huc": "07",
+  "lat": "  41.07",
+  "elev": " 292.00",
+  "area": " 233258178",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05489000": {
+  "huc": "07",
+  "lat": "  40.93",
+  "elev": " 300.00",
+  "area": " 968241494",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05495000": {
+  "huc": "07",
+  "lat": "  40.48",
+  "elev": " 216.00",
+  "area": "1035552400",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05501000": {
+  "huc": "07",
+  "lat": "  39.87",
+  "elev": " 225.00",
+  "area": " 916463874",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05503800": {
+  "huc": "07",
+  "lat": "  39.64",
+  "elev": " 240.00",
+  "area": " 207110480",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05507600": {
+  "huc": "07",
+  "lat": "  39.21",
+  "elev": " 234.00",
+  "area": " 269243624",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "05508805": {
+  "huc": "07",
+  "lat": "  39.29",
+  "elev": " 229.00",
+  "area": " 533309486",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06221400": {
+  "huc": "10",
+  "lat": "  43.14",
+  "elev": "3521.00",
+  "area": " 228339304",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06224000": {
+  "huc": "10",
+  "lat": "  43.02",
+  "elev": "3354.00",
+  "area": " 484120747",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06289000": {
+  "huc": "10",
+  "lat": "  44.75",
+  "elev": "2716.00",
+  "area": " 471176342",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06406000": {
+  "huc": "10",
+  "lat": "  43.80",
+  "elev": "1609.00",
+  "area": " 437520889",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06431500": {
+  "huc": "10",
+  "lat": "  44.14",
+  "elev": "1966.00",
+  "area": " 427165365",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06622700": {
+  "huc": "10",
+  "lat": "  41.33",
+  "elev": "3079.00",
+  "area": "  96824149",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06803510": {
+  "huc": "10",
+  "lat": "  40.89",
+  "elev": " 394.00",
+  "area": " 112875212",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06814000": {
+  "huc": "10",
+  "lat": "  40.18",
+  "elev": " 424.00",
+  "area": " 714531156",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06847900": {
+  "huc": "10",
+  "lat": "  39.28",
+  "elev": "1010.00",
+  "area": "1527439790",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06853800": {
+  "huc": "10",
+  "lat": "  39.78",
+  "elev": " 569.00",
+  "area": " 587675987",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06878000": {
+  "huc": "10",
+  "lat": "  39.30",
+  "elev": " 441.00",
+  "area": " 776664300",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06889200": {
+  "huc": "10",
+  "lat": "  39.57",
+  "elev": " 412.00",
+  "area": " 385743269",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06889500": {
+  "huc": "10",
+  "lat": "  39.57",
+  "elev": " 412.00",
+  "area": " 750775490",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06903400": {
+  "huc": "10",
+  "lat": "  40.81",
+  "elev": " 332.00",
+  "area": " 471176342",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06906800": {
+  "huc": "10",
+  "lat": "  38.40",
+  "elev": " 305.00",
+  "area": "1405762383",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06910800": {
+  "huc": "10",
+  "lat": "  38.64",
+  "elev": " 425.00",
+  "area": " 458231937",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06911900": {
+  "huc": "10",
+  "lat": "  38.71",
+  "elev": " 363.00",
+  "area": " 295132434",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06917000": {
+  "huc": "10",
+  "lat": "  38.04",
+  "elev": " 320.00",
+  "area": " 812908634",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06918460": {
+  "huc": "10",
+  "lat": "  37.22",
+  "elev": " 326.00",
+  "area": " 652398012",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06919500": {
+  "huc": "10",
+  "lat": "  37.73",
+  "elev": " 271.00",
+  "area": "1087330020",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06921070": {
+  "huc": "10",
+  "lat": "  37.29",
+  "elev": " 414.00",
+  "area": " 714531156",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "06921200": {
+  "huc": "10",
+  "lat": "  37.60",
+  "elev": " 331.00",
+  "area": " 289954672",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07057500": {
+  "huc": "11",
+  "lat": "  36.64",
+  "elev": " 200.00",
+  "area": "1452362241",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07060710": {
+  "huc": "11",
+  "lat": "  36.00",
+  "elev": " 200.00",
+  "area": " 150413986",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07066000": {
+  "huc": "11",
+  "lat": "  37.01",
+  "elev": " 200.00",
+  "area": "1030374638",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07167500": {
+  "huc": "11",
+  "lat": "  37.63",
+  "elev": " 200.00",
+  "area": " 333965649",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07184000": {
+  "huc": "11",
+  "lat": "  37.50",
+  "elev": " 200.00",
+  "area": " 510009557",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07315200": {
+  "huc": "11",
+  "lat": "  33.53",
+  "elev": " 200.00",
+  "area": " 460820818",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07335700": {
+  "huc": "11",
+  "lat": "  34.61",
+  "elev": " 468.00",
+  "area": " 102519688",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07346045": {
+  "huc": "11",
+  "lat": "  33.01",
+  "elev": " 104.00",
+  "area": " 944941565",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "07362100": {
+  "huc": "08",
+  "lat": "  33.43",
+  "elev": "  84.00",
+  "area": " 996719185",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08013000": {
+  "huc": "08",
+  "lat": "  31.28",
+  "elev": " 100.00",
+  "area": "1291851619",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08014500": {
+  "huc": "08",
+  "lat": "  31.06",
+  "elev": "  93.00",
+  "area": "1320329310",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08023080": {
+  "huc": "12",
+  "lat": "  32.03",
+  "elev": "  90.00",
+  "area": " 187693872",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08050800": {
+  "huc": "12",
+  "lat": "  33.53",
+  "elev": " 209.00",
+  "area": " 100448583",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08066200": {
+  "huc": "12",
+  "lat": "  30.84",
+  "elev": "  86.00",
+  "area": " 365032221",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08066300": {
+  "huc": "12",
+  "lat": "  30.73",
+  "elev": "  97.00",
+  "area": " 393509912",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08082700": {
+  "huc": "12",
+  "lat": "  33.18",
+  "elev": " 467.00",
+  "area": " 269243624",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08086212": {
+  "huc": "12",
+  "lat": "  32.68",
+  "elev": " 525.00",
+  "area": "1586984053",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08086290": {
+  "huc": "12",
+  "lat": "  32.37",
+  "elev": " 493.00",
+  "area": " 724886680",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08103900": {
+  "huc": "12",
+  "lat": "  30.89",
+  "elev": " 404.00",
+  "area": "  86209737",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "08380500": {
+  "huc": "13",
+  "lat": "  35.66",
+  "elev": "2953.00",
+  "area": " 217466004",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "09047700": {
+  "huc": "14",
+  "lat": "  39.50",
+  "elev": "3386.00",
+  "area": "  23662372",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "09081600": {
+  "huc": "14",
+  "lat": "  39.02",
+  "elev": "3511.00",
+  "area": " 432343127",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "10244950": {
+  "huc": "16",
+  "lat": "  39.17",
+  "elev": "2610.00",
+  "area": "  28736579",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "11264500": {
+  "huc": "18",
+  "lat": "  37.62",
+  "elev": "2933.00",
+  "area": " 468587461",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "11473900": {
+  "huc": "18",
+  "lat": "  39.80",
+  "elev": " 764.00",
+  "area": "1928716345",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "11522500": {
+  "huc": "18",
+  "lat": "  41.44",
+  "elev": "1832.00",
+  "area": "1944249631",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "12175500": {
+  "huc": "17",
+  "lat": "  48.47",
+  "elev": "1556.00",
+  "area": " 271832505",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "12377150": {
+  "huc": "17",
+  "lat": "  47.24",
+  "elev": "2348.00",
+  "area": "  32102124",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "12390700": {
+  "huc": "17",
+  "lat": "  47.47",
+  "elev": "1732.00",
+  "area": " 471176342",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "14020000": {
+  "huc": "17",
+  "lat": "  45.54",
+  "elev": "1409.00",
+  "area": " 339143411",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "14216500": {
+  "huc": "17",
+  "lat": "  46.14",
+  "elev": " 951.00",
+  "area": " 349498935",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ },
+ "14222500": {
+  "huc": "17",
+  "lat": "  45.73",
+  "elev": " 869.00",
+  "area": " 323610125",
+  "columns": "Year Mnth Day Hr dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"
+ }
+}
