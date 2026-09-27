@@ -1,0 +1,59 @@
+### channel=attrswap-daily seq=92
+### host=login4
+### started=2026-09-27T11:45:59+0800
+### ---------- output ----------
+wallclock 2026-09-27 11:45:59 +0800
+=== A. sacct ===
+           JobID        JobName        State    Elapsed ExitCode   NodeList 
+---------------- -------------- ------------ ---------- -------- ---------- 
+          228080    pswap4_gate    COMPLETED   00:11:57      0:0     ngu104 
+        228081_0     pswap4_arm      RUNNING   00:05:11      0:0     ngu104 
+        228081_1     pswap4_arm      RUNNING   00:05:11      0:0     ngu104 
+        228081_2     pswap4_arm      RUNNING   00:05:11      0:0     ngu104 
+        228081_3     pswap4_arm      RUNNING   00:05:11      0:0     ngu101 
+ 228081_[4-25%4]     pswap4_arm      PENDING   00:00:00      0:0 None assi+ 
+  state tally (array tasks):
+          1 PENDING
+          4 RUNNING
+=== B. queue ===
+           JOBID           NAME     STATE       TIME PARTITION NODELIST(REASON)
+ 228081_[4-25%4]     pswap4_arm   PENDING       0:00     hgpu4 (JobArrayTaskLimit)
+        228081_0     pswap4_arm   RUNNING       3:54     hgpu4 ngu104
+        228081_1     pswap4_arm   RUNNING       3:54     hgpu4 ngu104
+        228081_2     pswap4_arm   RUNNING       3:54     hgpu4 ngu104
+        228081_3     pswap4_arm   RUNNING       3:54     hgpu4 ngu101
+=== C. gate ===
+  GATE OK 2026-09-27 11:40:47 daymet4=b498cdc199855a9b streamflow=23467a40d502963d
+  build_shadow4 checks passed
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash gsmap_refday: e897d16599a8fe6d
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_utc: 500b5a25c8da30e8
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_refday: e70f812fc170c862
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash chirps: 3cb47ce145956989
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash era5l_refday: 47cbc4483af59fed
+  checks passed (V6/V7-extreme/V9 are report items)
+    combined hash imerg_uncal_refday: 911964c2bbe287d1
+    combined hash daymet4: b498cdc199855a9b  streamflow: 23467a40d502963d
+  smoke daymet4 OK ['daymet4'] 01/10/2015 30/09/2023
+  smoke gsmap_refday OK ['gsmap_refday'] 01/10/2015 30/09/2023
+  smoke imerg_utc OK ['imerg_utc'] 01/10/2015 30/09/2023
+  smoke imerg_refday OK ['imerg_refday'] 01/10/2015 30/09/2023
+  smoke chirps OK ['chirps'] 01/10/2015 30/09/2023
+  smoke era5l_refday OK ['era5l_refday'] 01/10/2015 30/09/2023
+  smoke imerg_uncal_refday OK ['imerg_uncal_refday'] 01/10/2015 30/09/2023
+  === GATE DONE ===
+=== D. arms ===
+  run dirs: 4  test_metrics: 0
+  slurm_pswap4_arm_228081_0 done=0 last='Epoch 6 average loss' cfg pswap4_ref_daymet4_s100
+  slurm_pswap4_arm_228081_1 done=0 last='Epoch 7 average loss' cfg pswap4_ref_daymet4_s200
+  slurm_pswap4_arm_228081_2 done=0 last='Epoch 6 average loss' cfg pswap4_ref_daymet4_s300
+  slurm_pswap4_arm_228081_3 done=0 last='Epoch 7 average loss' cfg pswap4_ref_daymet4_s400
+  arm stderr with Traceback: 0
+=== DONE (read-only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-27T11:45:59+0800
