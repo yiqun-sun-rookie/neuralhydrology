@@ -1,0 +1,8 @@
+### channel=zhenjiang-fair-comparison-20260928 seq=1
+### host=login4
+### started=2026-09-28T21:10:17+0800
+### ---------- output ----------
+{"deployment_sha256": "42d09fb76a535a63e8f8c387258d9669202f35aa1c5aa3bbc1f09fae1d15183a", "job_sha256": "ac2cf990fbf6ac6a8dd855e85e358bda001cb76fb0efd30093bfb1c6e296c4e5", "manifest_sha256": "6d07962898e1b994abe895039be674044864cb530bd6c7d064cd77d2f04973bf", "payload_sha256": "7bcd530cc25b205b302c1c6bdc7ddad90186f34f17d129b87c75beb728042aa5", "protocol_sha256": "b9d6f19789b0bf37c06bcd979719d20b1f13504c9fbdabe8abd79a451ea0d956", "root": "/data1/home/sunyiq/zhenjiang_fair_comparison_20260928_001", "root_binding": {"device": 41, "inode": 10948058128, "mode": 448, "uid": 2272}, "source_data_files": 10, "status": "DEPLOYED_NO_TRAINING"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T21:10:20+0800
