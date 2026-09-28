@@ -1,0 +1,21 @@
+### channel=kalmannet-wrr-counter-hpc-20260928 seq=2
+### host=login4
+### started=2026-09-28T16:37:11+0800
+### ---------- output ----------
+=== EXCLUSIVE DEPLOYMENT GATE ===
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-counter-hpc-20260928/payload/hpc_counter_diagnosis_package_v1.tar.gz: OK
+=== IMMUTABLE CODE FILES ===
+hpc_driver.py: OK
+hpc_summarize.py: OK
+hpc_experiment_manifest.json: OK
+job.slurm: OK
+neural_runtime.py: OK
+evaluate_neural.py: OK
+diagnostic_capture.py: OK
+=== SINGLE JOB SUBMISSION ===
+Submitted batch job 228714
+CONFIRMED_JOB_ID=228714
+228714|knet-counter-diag|PENDING|hgpu2p|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T16:37:11+0800
