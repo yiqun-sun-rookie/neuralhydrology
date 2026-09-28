@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 set -eo pipefail
 task_root=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
-sacct -n -P -j 229342 -o JobID,JobName,State,ExitCode,Elapsed,NodeList,MaxRSS
-for suffix in out err; do
-  task_log="$task_root/logs/saved-statistics-229342.$suffix"
-  if [ -f "$task_log" ]; then echo "DIAGNOSTIC_LOG_$suffix"; tail -n 35 "$task_log"; fi
+sacct -n -X -P -j 228823,228835,228839,229130,229131,229342 -o JobID,JobName,State,ExitCode,Elapsed,NodeList
+echo TASK_ACTIVE_QUEUE
+squeue -h -u sunyiq -o '%i|%j|%T|%Z' | awk -F'|' '$4 ~ "^/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1(/|$)" {print}'
+for task_model in main_seed43 main_seed44 compact_seed42 compact_seed43 compact_seed44 learned_noise hand_tuned adaptive; do
+  task_path="$task_root/plain_preflight_v1/numerical_impact/runs/${task_model}__original_outlet_original_states__formal_attempt01"
+  if [ -e "$task_path" ] || [ -L "$task_path" ]; then echo "EXISTS=$task_path"; else echo "ABSENT=$task_path"; fi
 done
-task_report="$task_root/saved_stats_diagnostic_001/diagnostic.json"
-if [ -f "$task_report" ]; then
-  echo "DIAGNOSTIC_SHA256=$(sha256sum "$task_report" | cut -d' ' -f1)"
-  echo BEGIN_SAVED_STATISTICS_DIAGNOSTIC_JSON
-  cat "$task_report"
-  echo
-  echo END_SAVED_STATISTICS_DIAGNOSTIC_JSON
-fi
-task_failure="$task_root/saved_stats_diagnostic_001/failure.json"
-if [ -f "$task_failure" ]; then echo DIAGNOSTIC_FAILURE; cat "$task_failure"; fi
-find "$task_root/adaptive_preflight_v1/adaptive_comparison/runs" -path '*__formal_attempt01/physical_plain_*.py' -type f -exec sha256sum {} \;
+for task_path in "$task_root/remaining_launch_001" "$task_root/remaining_original_launch_001" "$task_root/adaptive_preflight_v1/adaptive_comparison/selection_attempt01" "$task_root/adaptive_preflight_v1/adaptive_comparison/runs/matched_fixed_test__preflight_attempt01" "$task_root/adaptive_preflight_v1/adaptive_comparison/runs/matched_selected_test__preflight_attempt01"; do
+  if [ -e "$task_path" ] || [ -L "$task_path" ]; then echo "EXISTS=$task_path"; else echo "ABSENT=$task_path"; fi
+done
+sha256sum "$task_root/plain_preflight_v1/deployed_manifest.json" "$task_root/plain_preflight_v1/formal_input_delivery_001_original/completion.json" "$task_root/adaptive_preflight_v1/package_files.sha256"
