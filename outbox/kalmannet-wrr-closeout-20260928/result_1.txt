@@ -1,0 +1,727 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=1
+### host=login4
+### started=2026-09-28T18:04:42+0800
+### ---------- output ----------
+=== READONLY SNAPSHOT ===
+2026-09-28T10:04:42Z
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+NODELIST            PARTITION           GRES          GRES_USED               CPUS(A/I/O/T)       
+ngu001              hgpu2p              gpu:2         gpu:1,dcu:0             76/20/0/96          
+ngu002              hgpu2p              gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu003              hgpu2               gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu004              hgpu2p              gpu:2         gpu:2,dcu:0             18/78/0/96          
+ngu005              hgpu2p              gpu:2         gpu:0,dcu:0             12/84/0/96          
+ngu006              hgpu2p              gpu:2         gpu:0,dcu:0             12/84/0/96          
+ngu007              hgpu2p              gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu008              hgpu2p              gpu:2         gpu:1,dcu:0             2/94/0/96           
+ngu009              hgpu2               gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu010              hgpu2p              gpu:2         gpu:2,dcu:0             8/24/0/32           
+ngu011              hgpu2p              gpu:2         gpu:0,dcu:0             0/32/0/32           
+ngu101              hgpu4               gpu:4         gpu:1,dcu:0             16/80/0/96          
+ngu102              hgpu4               gpu:4         gpu:0,dcu:0             0/96/0/96           
+ngu103              hgpu4               gpu:4         gpu:0,dcu:0             0/0/96/96           
+ngu104              hgpu4               gpu:4         gpu:4,dcu:0             38/58/0/96          
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  628T  327T  66% /data1
+CANDIDATE_AVAILABLE=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
+=== SAVED COUNTER ARRAYS AND VALIDATION MAPPING ===
+{
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "phase": "plain_a",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "arrays": {
+    "updated": {
+      "shape": [
+        256,
+        5,
+        800
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "a17c11ea624abcde14188331f974fd111b0862a79bda90e1276717bd2dd8c678",
+      "raw_sha256": "d9f3f3e978fc1aa38871da6edb29b62640bd9c688334fcfa4a45bc0d4fddf35e",
+      "bytes": 4096128
+    },
+    "outputs": {
+      "shape": [
+        256,
+        1,
+        800
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "7431903f363b6492b869c1c62eb31f9dcb50cced434dc8630d6a56e7c9bbb711",
+      "raw_sha256": "dbccda52ea8322f3b5081d199ede239ed3469cc05d5cc7d6a2b673dbab30bae6",
+      "bytes": 819328
+    },
+    "forecast_states": {
+      "shape": [
+        192768,
+        5,
+        48
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "bba0f15151f0124ee4fb844de619e4ef745f6652dd42bf865a849d3af4591b03",
+      "raw_sha256": "f048c9a5dc840ad550f6c242c73fcb4afae955cc3762e515d42967dd64ad466c",
+      "bytes": 185057408
+    },
+    "predictions": {
+      "shape": [
+        192768,
+        1,
+        48
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "704a3361044861a9134517e3b3ee7da4733e56fa182efe6714bdc35ab2abd194",
+      "raw_sha256": "dcd6a9a361206855af37ff2cc1b379f9aa5707f547d4f4d13612704924e3fc66",
+      "bytes": 37011584
+    }
+  },
+  "counters": null,
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "validation_windows": 256,
+  "window_hours": 800,
+  "issues_per_window": 753,
+  "forecast_positions": 48,
+  "source_bindings": {
+    "checkpoint": "504b27123f3fcb51c97bcd18d531c652d7a8f3cb09ded47b252a40e04d94cfc3",
+    "config": "f9ecc592a78c4ebb676a88d79bc285040960de8e473e1b7fe22ab133302cdcc6",
+    "validation": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403",
+    "plain_physics": "703adbb37c7bd3804f7f218664c9636f4a3c5a303687fdbb33fc6172b0daffd2",
+    "counted_physics": "b02a8c95175557997764280a281533fcbe5a534ad2f35c9df8b6ef674dc74537",
+    "neural_runtime.py": "19c94fea3e9b6cca1741856fe6d061a010c7e84dbc8943a9622705bcd3d68785",
+    "evaluate_neural.py": "001e1c543f3b84fe14dc6b18320c1d9544eeaffc0d7b51a415383a7af040cfb7",
+    "diagnostic_capture.py": "08f1c04ff265d73e9eee91f02c0776f35157848c236e4577629dbf5792cd3fde",
+    "sources/batch.py": "2894bf752fbab9abdb556b089990f5245bdf59b8097fb1e3ca8ba36951c65ef6",
+    "sources/builders.py": "863b682290d7bda1a4ee0a9b59412c3dc40c62cf31c92a8dfb9a4f8093d55b99",
+    "sources/core.py": "e45c1ddeec0105bdb62f0255fe50d0ecb23006415a89ceb7ede7886e41a3741e",
+    "sources/dataset.py": "8389e6d1fc24ca46fc395ebe102ab685436409be03dd787ba2b46eca56e79cb4",
+    "sources/initializer.py": "27abf8df86e2cf46cc0a4e1c98fcfa2cb7765dbc7d6a8b9540507953d13eaa9f",
+    "sources/metrics.py": "77ab10316846a8cb35a0bf71dd3d161c0fc81a7389677d72832a7cb0b4971def",
+    "sources/network.py": "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843",
+    "sources/params.py": "bd64b468504491cacee12c060b8f3f2ff8bb1a7a3e04cf01b826547a6bc52cab",
+    "sources/prepare.py": "e601a55bee55c59a2ba4f28cec85655173d823c15980645e79af4c0c740382eb",
+    "sources/system_model.py": "17cdb1bfb5b3ee38a34d6bb660f161c179d6d1ea52affd4514619eee5a64e465",
+    "sources/walrus_corrected.py": "ef134f2913199c9323bf9e3c3cff43bc5de0a414f29daf95951034aa6ff345a1"
+  },
+  "numerical_environment": {
+    "python": "3.11.13",
+    "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "torch": "2.4.0",
+    "numpy": "2.3.3",
+    "cuda": "12.1",
+    "cudnn": 90100,
+    "device": "NVIDIA GeForce RTX 3090",
+    "batch_size": 256,
+    "dtype": "float32",
+    "seed": 42,
+    "cudnn_benchmark": false,
+    "amp": false,
+    "compilation": false,
+    "matmul_precision": "highest",
+    "cudnn_enabled": true,
+    "cudnn_deterministic": false,
+    "deterministic_algorithms": false,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "autocast_enabled": false,
+    "grad_enabled": false
+  },
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "driver_sha256": "02e55d21f1f581baad0f79f93e5a08311689cabb93566c33e22aa51b825d4d73",
+  "duration_seconds": 28.50070985034108,
+  "finished_utc": "2026-09-28T08:35:41.598280+00:00"
+}
+{
+  "passed": true,
+  "source": {
+    "path": "/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1/data/val_win800_20070527_04-20090314_13.pt",
+    "sha256": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403"
+  },
+  "window_count": 256,
+  "window_hours": 800,
+  "window_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190,
+    191,
+    192,
+    193,
+    194,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229,
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241,
+    242,
+    243,
+    244,
+    245,
+    246,
+    247,
+    248,
+    249,
+    250,
+    251,
+    252,
+    253,
+    254,
+    255
+  ],
+  "issues_per_window": 753,
+  "issue_count": 192768,
+  "target_pair_count": 9252864,
+  "saved_target_pair_count": 4819200,
+  "actual_leads": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+  ],
+  "saved_leads": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "actual_shapes": {
+    "observation": [
+      256,
+      1,
+      800
+    ],
+    "hours": [
+      256,
+      1,
+      800
+    ],
+    "updated": [
+      256,
+      5,
+      800
+    ],
+    "outputs": [
+      256,
+      1,
+      800
+    ],
+    "forecast_states": [
+      192768,
+      5,
+      48
+    ],
+    "predictions": [
+      192768,
+      1,
+      48
+    ]
+  },
+  "unfolded_shape": [
+    256,
+    753,
+    48
+  ],
+  "target_observations_exact": true,
+  "target_hours_exact": true,
+  "issue_hours_exact": true,
+  "target_minus_issue_equals_lead": true,
+  "saved_validate_targets_passed": true,
+  "arrays": {
+    "issue_ids": {
+      "shape": [
+        192768
+      ],
+      "dtype": "int64",
+      "sha256": "cbfb77cd068589b53bb9fe6cc7a7d47a823c860ea90ea32a24ad636ce95f8c10"
+    },
+    "issue_hours": {
+      "shape": [
+        192768
+      ],
+      "dtype": "float32",
+      "sha256": "5e0301b395db810ed97bf9b7391030d4dde45d6a306788a25798e5642f8b56f3"
+    },
+    "target_observations": {
+      "shape": [
+        192768,
+        48
+      ],
+      "dtype": "float32",
+      "sha256": "da81e10b8a8a305619c4743a9ec869861898c88a5198d80afa4e6341298d7543"
+    },
+    "target_hours": {
+      "shape": [
+        192768,
+        48
+      ],
+      "dtype": "float32",
+      "sha256": "cbf8765a2e523b37388aa8d6b78f6152bb85299d77e9a4c5bbdf9d9c104515dd"
+    }
+  }
+}
+{
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "phase": "counted_a",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "arrays": {
+    "updated": {
+      "shape": [
+        256,
+        5,
+        800
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "a17c11ea624abcde14188331f974fd111b0862a79bda90e1276717bd2dd8c678",
+      "raw_sha256": "d9f3f3e978fc1aa38871da6edb29b62640bd9c688334fcfa4a45bc0d4fddf35e",
+      "bytes": 4096128
+    },
+    "outputs": {
+      "shape": [
+        256,
+        1,
+        800
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "7431903f363b6492b869c1c62eb31f9dcb50cced434dc8630d6a56e7c9bbb711",
+      "raw_sha256": "dbccda52ea8322f3b5081d199ede239ed3469cc05d5cc7d6a2b673dbab30bae6",
+      "bytes": 819328
+    },
+    "forecast_states": {
+      "shape": [
+        192768,
+        5,
+        48
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "77e9fdc4d8bbdf4b82a746dfbcb5eb98410b7dcf706c8a50cb26a16341f1ded6",
+      "raw_sha256": "a694dd01c715744f84d4294ced4e269042808b86eb3ec28f97308adc914d744e",
+      "bytes": 185057408
+    },
+    "predictions": {
+      "shape": [
+        192768,
+        1,
+        48
+      ],
+      "dtype": "torch.float32",
+      "file_sha256": "d6a712b9de9359b15acdeac8fdaeb5b21dfc14ddb8a65e4f2b7e6d44f55da318",
+      "raw_sha256": "0b4d1a7d7dec6892972369be841dc5d3246b4b4f6213fe18e290f45e0aaeaa57",
+      "bytes": 37011584
+    }
+  },
+  "counters": {
+    "before": {
+      "audit_q_calls": 0,
+      "audit_q_elements": 0,
+      "audit_gap_hits": 0
+    },
+    "assimilation": {
+      "audit_q_calls": 800,
+      "audit_q_elements": 204800,
+      "audit_gap_hits": 0
+    },
+    "total": {
+      "audit_q_calls": 847,
+      "audit_q_elements": 9264896,
+      "audit_gap_hits": 0
+    }
+  },
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "validation_windows": 256,
+  "window_hours": 800,
+  "issues_per_window": 753,
+  "forecast_positions": 48,
+  "source_bindings": {
+    "checkpoint": "504b27123f3fcb51c97bcd18d531c652d7a8f3cb09ded47b252a40e04d94cfc3",
+    "config": "f9ecc592a78c4ebb676a88d79bc285040960de8e473e1b7fe22ab133302cdcc6",
+    "validation": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403",
+    "plain_physics": "703adbb37c7bd3804f7f218664c9636f4a3c5a303687fdbb33fc6172b0daffd2",
+    "counted_physics": "b02a8c95175557997764280a281533fcbe5a534ad2f35c9df8b6ef674dc74537",
+    "neural_runtime.py": "19c94fea3e9b6cca1741856fe6d061a010c7e84dbc8943a9622705bcd3d68785",
+    "evaluate_neural.py": "001e1c543f3b84fe14dc6b18320c1d9544eeaffc0d7b51a415383a7af040cfb7",
+    "diagnostic_capture.py": "08f1c04ff265d73e9eee91f02c0776f35157848c236e4577629dbf5792cd3fde",
+    "sources/batch.py": "2894bf752fbab9abdb556b089990f5245bdf59b8097fb1e3ca8ba36951c65ef6",
+    "sources/builders.py": "863b682290d7bda1a4ee0a9b59412c3dc40c62cf31c92a8dfb9a4f8093d55b99",
+    "sources/core.py": "e45c1ddeec0105bdb62f0255fe50d0ecb23006415a89ceb7ede7886e41a3741e",
+    "sources/dataset.py": "8389e6d1fc24ca46fc395ebe102ab685436409be03dd787ba2b46eca56e79cb4",
+    "sources/initializer.py": "27abf8df86e2cf46cc0a4e1c98fcfa2cb7765dbc7d6a8b9540507953d13eaa9f",
+    "sources/metrics.py": "77ab10316846a8cb35a0bf71dd3d161c0fc81a7389677d72832a7cb0b4971def",
+    "sources/network.py": "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843",
+    "sources/params.py": "bd64b468504491cacee12c060b8f3f2ff8bb1a7a3e04cf01b826547a6bc52cab",
+    "sources/prepare.py": "e601a55bee55c59a2ba4f28cec85655173d823c15980645e79af4c0c740382eb",
+    "sources/system_model.py": "17cdb1bfb5b3ee38a34d6bb660f161c179d6d1ea52affd4514619eee5a64e465",
+    "sources/walrus_corrected.py": "ef134f2913199c9323bf9e3c3cff43bc5de0a414f29daf95951034aa6ff345a1"
+  },
+  "numerical_environment": {
+    "python": "3.11.13",
+    "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "torch": "2.4.0",
+    "numpy": "2.3.3",
+    "cuda": "12.1",
+    "cudnn": 90100,
+    "device": "NVIDIA GeForce RTX 3090",
+    "batch_size": 256,
+    "dtype": "float32",
+    "seed": 42,
+    "cudnn_benchmark": false,
+    "amp": false,
+    "compilation": false,
+    "matmul_precision": "highest",
+    "cudnn_enabled": true,
+    "cudnn_deterministic": false,
+    "deterministic_algorithms": false,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "autocast_enabled": false,
+    "grad_enabled": false
+  },
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "driver_sha256": "02e55d21f1f581baad0f79f93e5a08311689cabb93566c33e22aa51b825d4d73",
+  "duration_seconds": 21.994004767388105,
+  "finished_utc": "2026-09-28T08:36:05.111562+00:00"
+}
+=== FROZEN DATA INVENTORY ===
+train_win800_19990101_01-20070527_03.pt|4381521
+val_win800_20070527_04-20090314_13.pt|570687
+configs/objective-current-0-highflow-1-seed-42.json|3265
+configs/objective-current-0-highflow-1-seed-43.json|3265
+configs/objective-current-0-highflow-1-seed-44.json|3265
+configs/objective-current-0-highflow-2-seed-42.json|3265
+configs/objective-current-0-highflow-2-seed-43.json|3265
+configs/objective-current-0-highflow-2-seed-44.json|3265
+configs/objective-current-0p05-highflow-1-seed-42.json|3271
+configs/objective-current-0p05-highflow-1-seed-43.json|3271
+configs/objective-current-0p05-highflow-1-seed-44.json|3271
+configs/objective-current-0p05-highflow-2-seed-42.json|3271
+configs/objective-current-0p05-highflow-2-seed-43.json|3271
+configs/objective-current-0p05-highflow-2-seed-44.json|3271
+initial_states/train_corrected_cpu.pt|2433820
+initial_states/val_corrected_cpu.pt|316700
+initial_weights/seed_42.pt|755532
+initial_weights/seed_43.pt|755532
+initial_weights/seed_44.pt|755532
+manifest.json|3563
+protocol.json|14803
+sources/batch.py|9362
+sources/builders.py|8942
+sources/core.py|15959
+sources/dataset.py|2572
+sources/initializer.py|1770
+sources/metrics.py|14758
+sources/network.py|32576
+sources/params.py|219
+sources/prepare.py|269
+sources/system_model.py|1834
+sources/walrus_corrected.py|16292
+train_weights.py|15319
+train_weights.slurm|1602
+=== COMPLETE READONLY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T18:04:44+0800
