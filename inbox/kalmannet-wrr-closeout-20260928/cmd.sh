@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 set -eo pipefail
-echo '=== READONLY SNAPSHOT ==='
-date -u '+%Y-%m-%dT%H:%M:%SZ'
-squeue -u sunyiq -h -o '%i|%j|%T|%P|%R'
-sinfo -p hgpu2p,hgpu2,hgpu4 -N -O nodelist,partition,gres:14,gresused:24,cpusstate
-df -h /data1/home/sunyiq
-candidate=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
-if [ -e "$candidate" ]; then
-  echo 'CANDIDATE_ALREADY_EXISTS'
-  ls -ld "$candidate"
-else
-  echo "CANDIDATE_AVAILABLE=$candidate"
-fi
-echo '=== SAVED COUNTER ARRAYS AND VALIDATION MAPPING ==='
-old=/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1
-cat "$old/runs/plain_a/completion.json"
-cat "$old/runs/plain_a/validation_time_mapping.json"
-cat "$old/runs/counted_a/completion.json"
-echo '=== FROZEN DATA INVENTORY ==='
-source=/data1/home/sunyiq/kalmannet_hamid_weights_20260923_v1
-find "$source/data" -maxdepth 1 -type f -printf '%f|%s\n' | sort
-find "$source/formal_package_v3" -maxdepth 2 -type f -printf '%P|%s\n' | sort
-echo '=== COMPLETE READONLY ==='
+root=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
+payload=/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/counter_code_v1.tar
+test ! -e "$root"
+echo '291121e32e39fb850f2be9015d7a8f3b1f3584e69d92dd56ed2673feee173191  '"$payload" | sha256sum -c -
+mkdir "$root"
+mkdir "$root/logs" "$root/counter_code_v1"
+tar -xf "$payload" -C "$root/counter_code_v1"
+cd "$root/counter_code_v1"
+echo 'cc93937c613772642a062b20cd1667f528b2f1facd12c802e1ba12a80aaddf39  counter_saved_metrics.py' | sha256sum -c -
+echo '5b1eb4988b8843d40d8af1532ca2bddcd199add4c9cb6eeaa08f39e02e34bb01  test_counter_saved_metrics.py' | sha256sum -c -
+echo '84bec57f26736f64b86b5e7fbb2c9d95ca4b70fe1c8fc9ec0c02d9ec8105af80  counter_metrics.slurm' | sha256sum -c -
+submission=$(sbatch counter_metrics.slurm 2>&1)
+echo "$submission"
+job=$(printf '%s\n' "$submission" | sed -nE 's/^Submitted batch job ([0-9]+)$/\1/p')
+test -n "$job"
+printf '%s\n' "$job" > "$root/counter_metrics_jobid.txt"
+echo "COUNTER_METRICS_SINGLE_SUBMISSION=$job"
