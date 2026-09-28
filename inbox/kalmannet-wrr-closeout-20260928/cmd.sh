@@ -14,18 +14,18 @@ for package in plain adaptive; do
     if [ -f "$root/$logroot/$stem-$job.$suffix" ]; then tail -n 25 "$root/$logroot/$stem-$job.$suffix"; fi
   done
 done
-state=$(sacct -n -X -P -j 229130 -o State | head -n 1 | cut -d'|' -f1)
+state=$(sacct -n -X -P -j 229131 -o State | head -n 1 | cut -d'|' -f1)
 case "$state" in
   COMPLETED|FAILED|CANCELLED*|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)
-    root="$parent/plain_preflight_v1"
-    archive="$parent/plain_formal_failure_receipts_001.tar.gz"
+    root="$parent/adaptive_preflight_v1"
+    archive="$parent/adaptive_formal_receipts_001.tar.gz"
     test ! -e "$archive"
     cd "$root"
-    find numerical_impact/runs -type f -path '*__formal_attempt01/*.json' -print0 | tar -czf "$archive" --null -T - deployed_manifest.json
-    echo "PLAIN_RECEIPTS_SHA256=$(sha256sum "$archive" | cut -d' ' -f1)"
-    echo BEGIN_PLAIN_RECEIPTS_TAR_GZ
+    find adaptive_comparison/runs -type f -path '*__formal_attempt01/*.json' -print0 | tar -czf "$archive" --null -T -
+    echo "ADAPTIVE_RECEIPTS_SHA256=$(sha256sum "$archive" | cut -d' ' -f1)"
+    echo BEGIN_ADAPTIVE_RECEIPTS_TAR_GZ
     base64 "$archive"
-    echo END_PLAIN_RECEIPTS_TAR_GZ
+    echo END_ADAPTIVE_RECEIPTS_TAR_GZ
     ;;
-  *) echo "PLAIN_RECEIPTS_NOT_TERMINAL=$state" ;;
+  *) echo "ADAPTIVE_RECEIPTS_NOT_TERMINAL=$state" ;;
 esac
