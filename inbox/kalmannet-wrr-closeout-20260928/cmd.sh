@@ -29,3 +29,7 @@ case "$state" in
     ;;
   *) echo "ADAPTIVE_RECEIPTS_NOT_TERMINAL=$state" ;;
 esac
+first_stats="$parent/plain_preflight_v1/numerical_impact/runs/main_seed42__original_outlet_original_states__formal_attempt01/issue_statistics.npz"
+test -f "$first_stats"
+stat -c 'ORIGINAL_FAILED_STATISTICS_BYTES=%s' "$first_stats"
+sha256sum "$first_stats"
