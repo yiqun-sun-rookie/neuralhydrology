@@ -132,3 +132,4 @@ git rm inbox/seq
 | `zhenjiang-four-target-retrain-20260924` | 南京、镇江、江阴、徐六泾四站损失的共同模型及两个更新模块完整重训 | 2026-09-24 | 独立目录 `/data1/home/sunyiq/zhenjiang_four_target_retrain_20260924_001`；3种子，30/100/100轮；仅2017—2022年，10个数据文件，无吴淞口未来标签文件、无旧权重读取；禁止2023/2024数据与评价；一次36小时作业，不自动重试，不改旧实验。 |
 
 | `kalmannet-hamid-evaluation-20260927` | Authorized encrypted retrieval and evidence-bounded evaluation; no retraining | 2026-09-27 | Original training directories and other jobs read-only; new isolated evaluation root; one GPU maximum; no automatic requeue |
+| `kalmannet-wrr-counter-hpc-20260928` | 历史单模型出口流量计数是否改变数值的独立跨环境诊断；仅验证集，不训练、不评分 | 2026-09-28 | 新独占落点 `/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1`；旧模型、输入、作业和通道只读；最多一张显卡、单次提交、不自动重排；超算结果不能替代本机逐字节验收 |
