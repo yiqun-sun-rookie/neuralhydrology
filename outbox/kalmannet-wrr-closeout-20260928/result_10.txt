@@ -1,0 +1,89 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=10
+### host=login4
+### started=2026-09-28T19:06:23+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/plain_original_launch_001.tar: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/adaptive_validation_launch_001.tar: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/adaptive__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/compact_seed42__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/compact_seed43__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/compact_seed44__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/hand_tuned__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/independent_review.md: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/learned_noise__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/main_seed42__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/main_seed43__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_admission_001/main_seed44__original_outlet_original_states.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_launch_001/independent_launch_review.md: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_launch_001/original_nine.slurm: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_delivery_001_original/completion.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/deployed_manifest.json: OK
+historical_r001_validation.json: OK
+historical_r002_validation.json: OK
+independent_launch_review.md: OK
+independent_review.md: OK
+matched_fixed_validation.json: OK
+matched_r001_validation.json: OK
+matched_r002_validation.json: OK
+validation_five.slurm: OK
+Submitted batch job 229130
+PLAIN_ORIGINAL_FORMAL_SINGLE_SUBMISSION=229130
+Submitted batch job 229131
+ADAPTIVE_VALIDATION_FORMAL_SINGLE_SUBMISSION=229131
+JobId=229130 JobName=knet-original-bridge
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-09-28T19:07:43 EligibleTime=2026-09-28T19:07:43
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-28T19:07:43
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_launch_001/original_nine.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_launch_001/logs/original-bridge-229130.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_launch_001/logs/original-bridge-229130.out
+   Power=
+   TresPerNode=gpu:1
+
+JobId=229131 JobName=knet-adaptive-validation
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Dependency Dependency=afterany:229130
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-09-28T19:07:43 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-28T19:07:43
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/formal_admission_001/validation_five.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-validation-229131.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-validation-229131.out
+   Power=
+   TresPerNode=gpu:1
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T19:06:23+0800
