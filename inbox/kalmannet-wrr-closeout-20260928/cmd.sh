@@ -1,35 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail
-parent=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
-sacct -n -P -j 229130,229131 -o JobID,JobName,State,ExitCode,Elapsed,NodeList,MaxRSS
-for package in plain adaptive; do
-  if [ "$package" = plain ]; then subtree=numerical_impact; job=229130; logroot=formal_launch_001/logs; stem=original-bridge; else subtree=adaptive_comparison; job=229131; logroot=logs; stem=adaptive-validation; fi
-  root="$parent/${package}_preflight_v1"
-  echo "${package}_FORMAL_COMPLETION_FILES"
-  find "$root/$subtree/runs" -path '*__formal_attempt01/completion.json' -type f -printf '%P\n' | sort
-  echo "${package}_FORMAL_FAILURES"
-  find "$root/$subtree/runs" -path '*__formal_attempt01/failure.json' -type f -exec cat {} \;
-  for suffix in out err; do
-    echo "${package}_${suffix}_TAIL"
-    if [ -f "$root/$logroot/$stem-$job.$suffix" ]; then tail -n 25 "$root/$logroot/$stem-$job.$suffix"; fi
-  done
-done
-state=$(sacct -n -X -P -j 229131 -o State | head -n 1 | cut -d'|' -f1)
-case "$state" in
-  COMPLETED|FAILED|CANCELLED*|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)
-    root="$parent/adaptive_preflight_v1"
-    archive="$parent/adaptive_formal_receipts_001.tar.gz"
-    test ! -e "$archive"
-    cd "$root"
-    find adaptive_comparison/runs -type f -path '*__formal_attempt01/*.json' -print0 | tar -czf "$archive" --null -T -
-    echo "ADAPTIVE_RECEIPTS_SHA256=$(sha256sum "$archive" | cut -d' ' -f1)"
-    echo BEGIN_ADAPTIVE_RECEIPTS_TAR_GZ
-    base64 "$archive"
-    echo END_ADAPTIVE_RECEIPTS_TAR_GZ
-    ;;
-  *) echo "ADAPTIVE_RECEIPTS_NOT_TERMINAL=$state" ;;
-esac
-first_stats="$parent/plain_preflight_v1/numerical_impact/runs/main_seed42__original_outlet_original_states__formal_attempt01/issue_statistics.npz"
-test -f "$first_stats"
-stat -c 'ORIGINAL_FAILED_STATISTICS_BYTES=%s' "$first_stats"
-sha256sum "$first_stats"
+task_root=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
+task_payload="$PWD/inbox/kalmannet-wrr-closeout-20260928/saved_stats_audit_001.tar"
+test "$(sha256sum "$task_payload" | cut -d' ' -f1)" = e4628f679d19f7dccef0f28a25599374c1a175abc09b95b15b4f446c65ef9224
+test ! -e "$task_root/saved_stats_audit_001"
+test ! -L "$task_root/saved_stats_audit_001"
+test ! -e "$task_root/saved_stats_diagnostic_001"
+mkdir "$task_root/saved_stats_audit_001"
+tar -xf "$task_payload" -C "$task_root/saved_stats_audit_001"
+cd "$task_root/saved_stats_audit_001"
+sha256sum --strict --check package_files.sha256
+bash -n saved_statistics.slurm
+echo SAVED_STATISTICS_DIAGNOSTIC_SUBMISSION_ONLY_NO_NEW_MODELS
+sbatch --parsable saved_statistics.slurm
