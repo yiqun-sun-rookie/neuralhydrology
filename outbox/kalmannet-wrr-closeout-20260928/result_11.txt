@@ -1,0 +1,188 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=11
+### host=login4
+### started=2026-09-28T19:09:31+0800
+### ---------- output ----------
+229130|knet-original-bridge|RUNNING|0:0|00:03:08|ngu001|
+229130.batch|batch|RUNNING|0:0|00:03:08|ngu001|
+229130.extern|extern|RUNNING|0:0|00:03:08|ngu001|
+229131|knet-adaptive-validation|PENDING|0:0|00:00:00|None assigned|
+JobId=229131 JobName=knet-adaptive-validation
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Dependency Dependency=afterany:229130
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-09-28T19:07:43 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-28T19:07:43
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/formal_admission_001/validation_five.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-validation-229131.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-validation-229131.out
+   Power=
+   TresPerNode=gpu:1
+
+plain_FORMAL_MODEL_START_FILES
+main_seed42__original_outlet_original_states__formal_attempt01/model_start.json
+plain_FORMAL_COMPLETION_FILES
+plain_FORMAL_FAILURES
+plain_out_TAIL
+inputs/repo/knet/__init__.py: OK
+inputs/repo/knet/dl/nn_kalman_clamp_5_block_renamed.py: OK
+inputs/repo/knet/dl/nn_kalman_clamp_5_compile.py: OK
+inputs/repo/knet/modules/data_preprocessor/check_data_loader.py: OK
+inputs/repo/knet/modules/data_preprocessor/compute_clamp_and_scale_for_states_qobs.py: OK
+inputs/repo/knet/modules/data_preprocessor/prepare_data_for_train_nn_add_data_augmentation1.py: OK
+inputs/repo/knet/modules/data_preprocessor/utils.py: OK
+inputs/repo/knet/modules/data_preprocessor/windowed_time_series.py: OK
+inputs/repo/knet/modules/nn/nn_kalman.py: OK
+inputs/repo/knet/modules/nn/nn_state_scale_12.py: OK
+inputs/repo/knet/modules/nn/utils.py: OK
+inputs/repo/knet/modules/pipeline/openloop.py: OK
+inputs/repo/knet/modules/pipeline/script_system_model.py: OK
+inputs/repo/knet/modules/pipeline/test_kf.py: OK
+inputs/repo/knet/modules/pipeline/train_composite_loss_11.py: OK
+inputs/repo/knet/modules/pipeline/utils.py: OK
+inputs/repo/knet/modules/utils/imports_12.py: OK
+inputs/repo/knet/modules/utils/initializations.py: OK
+inputs/repo/knet/modules/utils/metricsV2.py: OK
+inputs/repo/knet/modules/utils/print_utils.py: OK
+inputs/repo/knet/pipelines/openloop.py: OK
+inputs/repo/knet/pipelines/test_kf.py: OK
+inputs/repo/knet/pipelines/test_update_save_8.py: OK
+inputs/repo/knet/utils/prepare_data.py: OK
+inputs/repo/knet/utils/train_config_8.py: OK
+numerical_impact/code/build_manifest.py: OK
+numerical_impact/code/deployment_inventory.py: OK
+numerical_impact/code/plain_evaluation.py: OK
+numerical_impact/code/plain_runtime.py: OK
+numerical_impact/code/run_plain.py: OK
+numerical_impact/code/vendor/comparator_runtime.py: OK
+numerical_impact/code/vendor/diagnostic_capture.py: OK
+numerical_impact/code/vendor/evaluate_neural.py: OK
+numerical_impact/code/vendor/neural_runtime.py: OK
+numerical_impact/protocol/README.md: OK
+numerical_impact/tests/test_plain_evaluation.py: OK
+numerical_impact/tests/test_report_001.md: OK
+plain_preflight.slurm: OK
+ORIGINAL_NINE_BEGIN job=229130 host=ngu001
+Walrus Using device: cuda
+FORECAST_WINDOWS 1280/14981
+FORECAST_WINDOWS 2560/14981
+FORECAST_WINDOWS 3840/14981
+FORECAST_WINDOWS 5120/14981
+FORECAST_WINDOWS 6400/14981
+FORECAST_WINDOWS 7680/14981
+FORECAST_WINDOWS 8960/14981
+FORECAST_WINDOWS 10240/14981
+FORECAST_WINDOWS 11520/14981
+FORECAST_WINDOWS 12800/14981
+plain_err_TAIL
+adaptive_FORMAL_MODEL_START_FILES
+adaptive_FORMAL_COMPLETION_FILES
+adaptive_FORMAL_FAILURES
+adaptive_out_TAIL
+adaptive_err_TAIL
+FIRST_FORMAL_running.json
+{
+  "case_id": "main_seed42__original_outlet_original_states",
+  "stage": "formal",
+  "manifest_sha256": "fe81db8c7bbea43e2f8040ea004e8f8bbf5ddf2107cd5b73369643f3e68c3087"
+}
+FIRST_FORMAL_model_start.json
+{
+  "case_id": "main_seed42__original_outlet_original_states",
+  "input_fingerprints": {
+    "p": "a936f42425e0be48da9506269c2b0cd887d179bccc94aae21aeac05e5e54987d",
+    "etpot": "43ac9fd09e861953cf97bf4ba96cf8e09def0f0b4ff04111d00dcd3640d722ed",
+    "qobs": "0de1009f129346df78bdbe2ac7beeffef0dc347b07cf22d4f50eaa9ece1d60ce",
+    "tm_hours": "15713dea16b1ab03461f72c7f9ce43571785e8a12bf07ebbd74aecb97732189f",
+    "states_all": "6cf87e4f2cfc86975a33150516df0ffcc29bfde3d055bd0a2500ad65c4474df8"
+  },
+  "parameter_fingerprints": {
+    "LSTM_Q.weight_ih_l0": "f320a07e98ba0a088d18a8fd3ef74ea8986a9d8ec73237d0600d3d33a8c7ea0e",
+    "LSTM_Q.weight_hh_l0": "e0704c774033a091a9369b943d214f964dc418bdf87b49c30fed640fc8a79d6d",
+    "LSTM_Q.bias_ih_l0": "84d3db8de3cbedec02616193ae135d266d46f4ab2b40c78881b58b158ce2eeea",
+    "LSTM_Q.bias_hh_l0": "1c4951457047b9bf9b4b3f5616908b40d1e9e5b3300389f38a92145becf866e3",
+    "LSTM_Sigma.weight_ih_l0": "44cd3fcf1c886ad214479f62161b9746e05dc218349eabb348680fb331b7a4ca",
+    "LSTM_Sigma.weight_hh_l0": "4389262ddb0589f1c1c227243757d43b3376d94259a055ed911e78ebd58cda33",
+    "LSTM_Sigma.bias_ih_l0": "dec8a2dba803113ade424d6c5a596053b167a108b164fb1a959b4ecb4ef4ffb0",
+    "LSTM_Sigma.bias_hh_l0": "c99d814d6d56679f31933caf8100217f4ddbd3b918b47e995104ef3552d666db",
+    "FC1.0.weight": "56974581364dd6c717f036389cd7a57afc3136a5e041ba849d6fb3894c72cbaf",
+    "FC1.0.bias": "74db7cdb6a4d9a54fb917e355e875a77994a46f364dc46fbb787dde7971407e1",
+    "FC7.0.weight": "86c659eaf1afb958cfdb6be411e04455cd7ed8b5e3335aca66dd0413a77a4165",
+    "FC7.0.bias": "33e8a37c48219861fea39ade9d3e827268170687a446eb6a5573f2fe07e0123b",
+    "LSTM_S.weight_ih_l0": "add60015aa3564de6f9abef26c0a6d46dcc46ce97670f19b23fd521d31d4741c",
+    "LSTM_S.weight_hh_l0": "f6e72ad17fbdfa3bbc8e343292dce65be2681281abb7e9fb0bde8e45e53de451",
+    "LSTM_S.bias_ih_l0": "c2766964b9e9c06472974eac27c07aa33e2e82fb20b02810c7c14e768e372128",
+    "LSTM_S.bias_hh_l0": "df4e41421d8002f4484b1e0d8c6877236a8cc7f2b604af6799ef1fd1b114a24e",
+    "FC2.0.weight": "5dbdea510572b1c89db6b3ac567ff9cbac55aeaccbecd4b27968d1de28caf0f5",
+    "FC2.0.bias": "5e42b654ed293c39da698062b2a66f4a8dd5cf0b651938aeb72a2400570d7030",
+    "FC2.2.weight": "8d4c06a65dab88e934d1548a8c96e25c92ee71d643c4932006c7a7b33c6b11f8",
+    "FC2.2.bias": "04d096185de30968162ebf30573c798fa5b13369d23a2b551078879123fbdb26",
+    "FC3.0.weight": "5e8c6e163fbb0ae14758801c05a525ea50ef330e85ad7d77920d514ac9d4db37",
+    "FC3.0.bias": "919dbc01fd7b40af97372afb1e9aaf4106bcbb6516b5122f2bc4f79d7be41b72",
+    "FC4.0.weight": "1ce2fe72a5b5914ca40c8d01f7691cd27521c570eba5162f87b396fdbe274e01",
+    "FC4.0.bias": "a3d14afc6dc848acb3cbe061164574df5e90c3055563a282c4ee1146d65ff2e1",
+    "FC5.0.weight": "da32f2935ef620c571fa6bd143315e9f5462fc5d416cfe0264bc1f66a54c567a",
+    "FC5.0.bias": "e07fa0d522114053f6293874c51b9f8522c27c4283e1f65f8e069d22692b7a0a",
+    "FC6.0.weight": "2fefa44e2eaaa32a99efad2289387855789edff6fc0fdc43757d1d00bc1638d2",
+    "FC6.0.bias": "7ed217551d7a03fe978b6a1e7eb822db91eed4c691cb785563ffa48cde95624d",
+    "fc_inQ_to_outQ.weight": "1c0b6a46c0606c0d98dc8efa10be15e3d1f67ed8283cb9bbeb73d7d009f6b26c",
+    "fc_inQ_to_outQ.bias": "f07e83b23b04f9b7f3df456dd33baf7ac2cd13993bfe960ef19ecc93081a469d",
+    "fc_in_Sigma_to_out_Sigma.weight": "63df82ebb995e34fdf5ef9e78e3f47c8120567bb8d1ce11e79e9b16f70c39022",
+    "fc_in_Sigma_to_out_Sigma.bias": "8b682649560f34539ab6ce9683efbbff455d248b62ec7883fc91f0734862d33c",
+    "fc_in_S_to_out_S.weight": "e25829ff69575d5d988b5f30e169557f92c69a195bea9a36a24e6e42471880ff",
+    "fc_in_S_to_out_S.bias": "cae495dc6e95b9eba1620d29205e419887a9f287ddbea34dd47fa9977556ec1e",
+    "q_prior_to_hidden_state.weight": "4ae4530c8ce835c6785d79ffa826e065e9b9763e284bbf807a34eec69370a56f",
+    "q_prior_to_hidden_state.bias": "96fc7f13f18765a85f0139748836e7add161489ce27d1fe46a75307d3cb11b32",
+    "q_prior_to_cell_state.weight": "fcdd405e012d7346fa687e4f537da11f7bf69c8b6f630001d97317660e64248e",
+    "q_prior_to_cell_state.bias": "17db0a55a35b10db581933dacfd9ce7a441fcaf58c90fd6e367575ae6ee8886e",
+    "sigma_prior_to_hidden_state.weight": "911df1dca4966fec9780575d2ae3d10ed45549852d89ab7b0f8cd7f116c16f58",
+    "sigma_prior_to_hidden_state.bias": "d5b49b3a0b368561558bcf55caf906dfb72619758ce6fa912958ed321b8bfc26",
+    "sigma_prior_to_cell_state.weight": "7cfb2aa3d33215a359ce2a03de655155b085dfd2b458f3cdc30d190dac2b33a1",
+    "sigma_prior_to_cell_state.bias": "9f9989e2ffaec4acba603c0a639858650e791c001c089efcb1e809945453e70c",
+    "r_prior_to_hidden_state.weight": "9f62c74378e40b3492e086790fd97c5e15ac7fe5a2f8b83f8c430fe57e60d8f3",
+    "r_prior_to_hidden_state.bias": "035c6f762ebf555bc141e87990dbb37bc9a79f0886a9f5aebdfebfa9c764cb13",
+    "r_prior_to_cell_state.weight": "3b086faf8c3bbde80cd23707c1eb6a056894bb1b12e2b94de686b13d3ac3e925",
+    "r_prior_to_cell_state.bias": "6bbeb2942983e82991bb555268ce4dcf0e9f51daa2e27ea244e6231517656393"
+  }
+}
+FIRST_FORMAL_environment.json
+{
+  "python": "3.11.13",
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+  "cuda": "12.1",
+  "cudnn": 90100,
+  "device": "NVIDIA GeForce RTX 3090",
+  "dtype": "float32",
+  "batch_size": 256,
+  "seed": 42,
+  "amp": false,
+  "compilation": false,
+  "cudnn_benchmark": false,
+  "matmul_precision": "highest",
+  "cudnn_enabled": true,
+  "cudnn_deterministic": false,
+  "deterministic_algorithms": false,
+  "cuda_matmul_allow_tf32": false,
+  "cudnn_allow_tf32": true,
+  "autocast_enabled": false,
+  "grad_enabled": false
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T19:09:33+0800
