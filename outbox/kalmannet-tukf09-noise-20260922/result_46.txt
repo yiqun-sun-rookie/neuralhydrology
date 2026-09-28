@@ -1,0 +1,26 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=46
+### host=login4
+### started=2026-09-28T19:25:50+0800
+### ---------- output ----------
+ONE20_STATUS_QUERY_BEGIN basin=01142500
+FILE {"path": "control/deployed.json", "sha256": "1abb1da32d4019c27b8b1e71e148a5a0b12576cc9f10f49be016aa58f42e4392", "size_bytes": 1231}
+FILE {"path": "basin_01142500/control/submission_attempt.json", "sha256": "f8dfef4bd466aca7259217d66aef39024b3b4d060759d4d2548a8ec4a867b677", "size_bytes": 1906}
+FILE {"path": "basin_01142500/control/submission.json", "sha256": "07c9e5d44629bbfcaee4d333da333fb5b9bfab87e99c0d223aca21cfd9c36730", "size_bytes": 1955}
+FILE {"path": "basin_01142500/control/job_gate.json", "sha256": "5e11895a80c253a8258fd376df9e7589adb251baf289e3babf3fff32b54d6ca6", "size_bytes": 746}
+FILE {"path": "basin_01142500/run/model/started.json", "sha256": "04f923ae940c7d248440b93a5ae37f5270ec3704f958ef63a067187187b86041", "size_bytes": 1426}
+ABSENT basin_01142500/run/model/summary.json
+ABSENT basin_01142500/run/model/manifest.final.sha256.json
+FILE {"path": "basin_01142500/run/supervisor.json", "sha256": "2fa8675c6eaa5c17959e86d2062a34af8c5f7225511dde84f1e47d665757e302", "size_bytes": 196}
+JOB_ID=229133
+ACCOUNTING_RETURN_CODE=0
+ACCOUNTING_STDOUT="229133|tukf09-noise-20state-0928|hcpu48y|1|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1|657|RUNNING|0:0\n"
+ACCOUNTING_STDERR=""
+QUEUE_RETURN_CODE=0
+QUEUE_STDOUT="229133|tukf09-noise-20state-0928|RUNNING|icn277\n"
+QUEUE_STDERR=""
+LOG {"path": "logs/job-229133.out", "sha256": "6b65fa890945b03339e0b7227cca939edb77847e3e94f2fb28cc351b31e9d2ba", "size_bytes": 1624, "tail": ".........................................                                [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/basin_01142500/control/original_tests.xml -\n41 passed in 14.85s\n...                                                                      [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/basin_01142500/control/output_guard_regression.xml -\n3 passed in 5.42s\n............................................                             [100%]\n- generated xml file: /data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/basin_01142500/control/new_gate_tests.xml -\n44 passed, 14 deselected in 0.49s\nFULL_BUDGET_JOB_GATE_ALL_TESTS_PASSED {\"stage_id\":\"TUKF09_455_TWO_BASIN_FULL_BUDGET_HPC_REHEARSAL_V2\",\"basin_id\":\"01142500\",\"status\":\"ALL_JOB_TESTS_PASSED_MODEL_MAY_START\",\"original_linux_protection_tests\":{\"tests\":41,\"failures\":0,\"errors\":0,\"skipped\":0},\"final_output_guard_regressions\":{\"tests\":3,\"failures\":0,\"errors\":0,\"skipped\":0},\"new_standard_library_gate_tests\":{\"tests\":44,\"failures\":0,\"errors\":0,\"skipped\":0},\"synthetic_tensor_loop_tests\":{\"tests\":14,\"failures\":0,\"errors\":0,\"skipped\":0},\"synthetic_tensor_supervisor\":{\"success\":true,\"reason\":\"complete\",\"exit_code\":0,\"wall_seconds\":52.702705927193165,\"peak_tree_rss_bytes\":348356608,\"output_bytes\":305475,\"worker_pid\":23680,\"sample_count\":50},\"model_calls\":0,\"evaluation_array_reads\":0,\"elapsed_seconds\":89.78018736839294}\n"}
+LOG {"path": "logs/job-229133.err", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "size_bytes": 0, "tail": ""}
+ONE20_STATUS_QUERY_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T19:25:51+0800
