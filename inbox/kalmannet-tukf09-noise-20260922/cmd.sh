@@ -2,44 +2,38 @@
 set -euo pipefail
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 
-printf '%s\n' '=== FIRST-BASIN TERMINAL LOGS AND RESULT IDENTITIES ==='
-date -u '+UTC=%Y-%m-%dT%H:%M:%SZ'
 /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
+import base64
 import hashlib
 import json
 from pathlib import Path
 import stat
 
 phase = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1')
-basin = phase / 'basin_01047000'
-files = (
-    phase / 'logs/job-228327.out',
-    phase / 'logs/job-228327.err',
-    basin / 'run/stdout.log',
-    basin / 'run/stderr.log',
-    basin / 'run/supervisor.json',
-    basin / 'control/job_gate.json',
-    basin / 'run/model/started.json',
-    basin / 'run/model/summary.json',
-    basin / 'run/model/history.npz',
-    basin / 'run/model/manifest.final.sha256.json',
-)
-for path in files:
-    mode = path.lstat().st_mode
-    if not stat.S_ISREG(mode):
-        raise RuntimeError('expected regular unlinked evidence file: ' + str(path))
-    with path.open('rb') as stream:
-        digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-    relative = path.relative_to(phase).as_posix()
-    print('FILE ' + json.dumps({'path': relative, 'size_bytes': path.stat().st_size, 'sha256': digest}, sort_keys=True, separators=(',', ':')))
-    if path.suffix in ('.out', '.err', '.log'):
-        with path.open('rb') as stream:
-            stream.seek(max(0, path.stat().st_size - 4000))
-            tail = stream.read().decode('utf-8', errors='replace')
-        print('TAIL ' + relative + ' ' + repr(tail))
-summary = json.loads((basin / 'run/model/summary.json').read_text(encoding='utf-8'))
-supervisor = json.loads((basin / 'run/supervisor.json').read_text(encoding='utf-8'))
-print('COUNTS ' + json.dumps(summary.get('counts'), sort_keys=True, separators=(',', ':')))
-print('SUPERVISOR ' + json.dumps({key: supervisor.get(key) for key in ('success', 'reason', 'exit_code', 'wall_seconds', 'peak_tree_rss_bytes', 'output_bytes')}, sort_keys=True, separators=(',', ':')))
-print('READ_ONLY_FIRST_BASIN_TERMINAL_LOGS_COMPLETE')
+expected = {
+    'basin_01047000/run/model/started.json': (1425, 'd2bf2cf6ef1f4ac15a0d58d671d77c79c46462905312861feb610950a703e175'),
+    'basin_01047000/run/model/summary.json': (889, 'b0ae827e00f75dc177b8d812cf5e8403316a4dee9beed60d785fab8943f65961'),
+    'basin_01047000/run/model/history.npz': (29565, 'a84da227ffee7c12f9a78aa4d75800fbdb202b9304b3ffaca451a86ca058a6f2'),
+    'basin_01047000/run/model/manifest.final.sha256.json': (541, '572924fe106a5c0195898f5fc78a94c37bca41f1d897f171deb1cfdd0d131004'),
+    'basin_01047000/run/supervisor.json': (192, '1e0d355ebf494e1025672c099a32b0ba2f8339bbd5d1d3640d688137241d4d26'),
+    'basin_01047000/control/job_gate.json': (746, '88a2ca6e38df77c35681476272c78b25d8ccf634c1fd61acec268b42538e10f2'),
+}
+payloads = {}
+for relative, (size, digest) in expected.items():
+    path = phase / relative
+    if not stat.S_ISREG(path.lstat().st_mode):
+        raise RuntimeError('not one regular unlinked file: ' + relative)
+    data = path.read_bytes()
+    if len(data) != size or hashlib.sha256(data).hexdigest() != digest:
+        raise RuntimeError('remote evidence differs from terminal receipt: ' + relative)
+    payloads[relative] = data
+print('FIRST_BASIN_EXACT_EVIDENCE_BEGIN job=228327 basin=01047000 count=6')
+for relative, data in payloads.items():
+    print('EVIDENCE ' + json.dumps({
+        'path': relative,
+        'size_bytes': len(data),
+        'sha256': hashlib.sha256(data).hexdigest(),
+        'base64': base64.b64encode(data).decode('ascii'),
+    }, sort_keys=True, separators=(',', ':')))
+print('FIRST_BASIN_EXACT_EVIDENCE_END')
 PY
