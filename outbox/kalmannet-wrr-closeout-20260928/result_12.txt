@@ -1,0 +1,143 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=12
+### host=login4
+### started=2026-09-28T19:20:22+0800
+### ---------- output ----------
+229130|knet-original-bridge|FAILED|1:0|00:03:26|ngu001|
+229130.batch|batch|FAILED|1:0|00:03:26|ngu001|1204424K
+229130.extern|extern|COMPLETED|0:0|00:03:26|ngu001|1680K
+229131|knet-adaptive-validation|RUNNING|0:0|00:10:33|ngu001|
+229131.batch|batch|RUNNING|0:0|00:10:33|ngu001|
+229131.extern|extern|RUNNING|0:0|00:10:33|ngu001|
+plain_FORMAL_COMPLETION_FILES
+plain_FORMAL_FAILURES
+{
+  "case_id": "main_seed42__original_outlet_original_states",
+  "stage": "formal",
+  "error": "ValueError('Full original-setting numerical bridge failed; corrected branches closed')",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/code/run_plain.py\", line 178, in main\n    result = formal(case, manifest, output, rt, cr, ev)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/code/run_plain.py\", line 117, in formal\n    raise ValueError('Full original-setting numerical bridge failed; corrected branches closed')\nValueError: Full original-setting numerical bridge failed; corrected branches closed\n",
+  "seconds": 199.45355831831694
+}
+plain_out_TAIL
+numerical_impact/code/plain_evaluation.py: OK
+numerical_impact/code/plain_runtime.py: OK
+numerical_impact/code/run_plain.py: OK
+numerical_impact/code/vendor/comparator_runtime.py: OK
+numerical_impact/code/vendor/diagnostic_capture.py: OK
+numerical_impact/code/vendor/evaluate_neural.py: OK
+numerical_impact/code/vendor/neural_runtime.py: OK
+numerical_impact/protocol/README.md: OK
+numerical_impact/tests/test_plain_evaluation.py: OK
+numerical_impact/tests/test_report_001.md: OK
+plain_preflight.slurm: OK
+ORIGINAL_NINE_BEGIN job=229130 host=ngu001
+Walrus Using device: cuda
+FORECAST_WINDOWS 1280/14981
+FORECAST_WINDOWS 2560/14981
+FORECAST_WINDOWS 3840/14981
+FORECAST_WINDOWS 5120/14981
+FORECAST_WINDOWS 6400/14981
+FORECAST_WINDOWS 7680/14981
+FORECAST_WINDOWS 8960/14981
+FORECAST_WINDOWS 10240/14981
+FORECAST_WINDOWS 11520/14981
+FORECAST_WINDOWS 12800/14981
+FORECAST_WINDOWS 14080/14981
+FORECAST_WINDOWS 14981/14981
+plain_err_TAIL
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/code/run_plain.py", line 212, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/code/run_plain.py", line 178, in main
+    result = formal(case, manifest, output, rt, cr, ev)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/code/run_plain.py", line 117, in formal
+    raise ValueError('Full original-setting numerical bridge failed; corrected branches closed')
+ValueError: Full original-setting numerical bridge failed; corrected branches closed
+adaptive_FORMAL_COMPLETION_FILES
+adaptive_FORMAL_FAILURES
+adaptive_out_TAIL
+inputs/repo/knet/pipelines/test_kf.py: OK
+inputs/repo/knet/pipelines/test_update_save_8.py: OK
+inputs/repo/knet/utils/prepare_data.py: OK
+inputs/repo/knet/utils/train_config_8.py: OK
+path_map.json: OK
+historical_r001_validation.json: OK
+historical_r002_validation.json: OK
+independent_launch_review.md: OK
+independent_review.md: OK
+matched_fixed_validation.json: OK
+matched_r001_validation.json: OK
+matched_r002_validation.json: OK
+validation_five.slurm: OK
+job=229131 host=ngu001 five sequential full-validation configurations; no training or test
+Walrus Using device: cuda
+historical_r001_validation: 1280/14979 windows
+historical_r001_validation: 2560/14979 windows
+historical_r001_validation: 3840/14979 windows
+historical_r001_validation: 5120/14979 windows
+historical_r001_validation: 6400/14979 windows
+historical_r001_validation: 7680/14979 windows
+historical_r001_validation: 8960/14979 windows
+historical_r001_validation: 10240/14979 windows
+historical_r001_validation: 11520/14979 windows
+historical_r001_validation: 12800/14979 windows
+adaptive_err_TAIL
+FIRST_FORMAL_historical_reproduction.json
+{
+  "passed": false,
+  "maximum_absolute_differences": {
+    "nse": 2.2087966428108174e-06,
+    "rmse": 2.691467923932045e-05,
+    "mae": 3.944706716829671e-08,
+    "kge": 4.647368269106167e-07,
+    "correlation": 1.2209854355349492e-06,
+    "variability_ratio": 3.580073459907851e-08,
+    "bias_ratio": 1.7253414585916005e-08
+  },
+  "period_absolute_differences": {
+    "nse": {
+      "1_12": 4.249240033911879e-10,
+      "13_24": 1.980067502460603e-07
+    },
+    "rmse": {
+      "1_12": 5.380346418393245e-09,
+      "13_24": 2.3938520188893087e-06
+    },
+    "mae": {
+      "1_12": 2.0999463048084386e-09,
+      "13_24": 2.937462897922849e-08
+    },
+    "kge": {
+      "1_12": 3.3958288495986957e-09,
+      "13_24": 6.49216171562846e-08
+    },
+    "correlation": {
+      "1_12": 4.853833168727562e-10,
+      "13_24": 1.0748847674898106e-07
+    },
+    "variability_ratio": {
+      "1_12": 3.542171852129646e-09,
+      "13_24": 2.4641614221332375e-08
+    },
+    "bias_ratio": {
+      "1_12": 3.9971486398560074e-09,
+      "13_24": 1.3864922302856778e-08
+    }
+  },
+  "error_difference_unit": "m3/s",
+  "dimensionless_tolerance": 1e-06,
+  "error_tolerance_m3s": 0.0001,
+  "provenance": "archived statistics domain checked",
+  "unavailable_original_arrays": []
+}
+1da32a29e797b7cefa3c5bc388132bde856b45c94890bdd9a3844942b0c7de19  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/main_seed42__original_outlet_original_states__formal_attempt01/historical_reproduction.json
+FIRST_FORMAL_resources.json
+{
+  "seconds": 199.46684677526355,
+  "peak_cuda_allocated": 580271104,
+  "peak_cuda_reserved": 929038336
+}
+207176c28bf6eaaabde094eea636e59243463d5430518c82e9e10df566de21f0  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/main_seed42__original_outlet_original_states__formal_attempt01/resources.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T19:20:23+0800
