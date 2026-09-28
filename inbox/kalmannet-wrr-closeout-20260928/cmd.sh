@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 set -eo pipefail
 task_root=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
-task_payload="$PWD/inbox/kalmannet-wrr-closeout-20260928/saved_stats_audit_001.tar"
-test "$(sha256sum "$task_payload" | cut -d' ' -f1)" = e4628f679d19f7dccef0f28a25599374c1a175abc09b95b15b4f446c65ef9224
-test ! -e "$task_root/saved_stats_audit_001"
-test ! -L "$task_root/saved_stats_audit_001"
-test ! -e "$task_root/saved_stats_diagnostic_001"
-mkdir "$task_root/saved_stats_audit_001"
-tar -xf "$task_payload" -C "$task_root/saved_stats_audit_001"
-cd "$task_root/saved_stats_audit_001"
-sha256sum --strict --check package_files.sha256
-bash -n saved_statistics.slurm
-echo SAVED_STATISTICS_DIAGNOSTIC_SUBMISSION_ONLY_NO_NEW_MODELS
-sbatch --parsable saved_statistics.slurm
+sacct -n -P -j 229342 -o JobID,JobName,State,ExitCode,Elapsed,NodeList,MaxRSS
+for suffix in out err; do
+  task_log="$task_root/logs/saved-statistics-229342.$suffix"
+  if [ -f "$task_log" ]; then echo "DIAGNOSTIC_LOG_$suffix"; tail -n 35 "$task_log"; fi
+done
+task_report="$task_root/saved_stats_diagnostic_001/diagnostic.json"
+if [ -f "$task_report" ]; then
+  echo "DIAGNOSTIC_SHA256=$(sha256sum "$task_report" | cut -d' ' -f1)"
+  echo BEGIN_SAVED_STATISTICS_DIAGNOSTIC_JSON
+  cat "$task_report"
+  echo
+  echo END_SAVED_STATISTICS_DIAGNOSTIC_JSON
+fi
+task_failure="$task_root/saved_stats_diagnostic_001/failure.json"
+if [ -f "$task_failure" ]; then echo DIAGNOSTIC_FAILURE; cat "$task_failure"; fi
+find "$task_root/adaptive_preflight_v1/adaptive_comparison/runs" -path '*__formal_attempt01/physical_plain_*.py' -type f -exec sha256sum {} \;
