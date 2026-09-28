@@ -1,0 +1,30 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=18
+### host=login4
+### started=2026-09-28T21:22:24+0800
+### ---------- output ----------
+228823|knet-saved-metrics|COMPLETED|0:0|00:00:24|ngu010
+228835|knet-plain-preflight|FAILED|127:0|00:15:28|ngu001
+228839|knet-adaptive-preflight|FAILED|127:0|00:05:05|ngu001
+229130|knet-original-bridge|FAILED|1:0|00:03:26|ngu001
+229131|knet-adaptive-validation|COMPLETED|0:0|01:00:58|ngu001
+229342|knet-statistics-diagnostic|COMPLETED|0:0|00:00:06|ngu001
+TASK_ACTIVE_QUEUE
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/main_seed43__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/main_seed44__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/compact_seed42__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/compact_seed43__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/compact_seed44__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/learned_noise__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/hand_tuned__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/numerical_impact/runs/adaptive__original_outlet_original_states__formal_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/remaining_launch_001
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/remaining_original_launch_001
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/adaptive_comparison/selection_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/adaptive_comparison/runs/matched_fixed_test__preflight_attempt01
+ABSENT=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/adaptive_comparison/runs/matched_selected_test__preflight_attempt01
+fe81db8c7bbea43e2f8040ea004e8f8bbf5ddf2107cd5b73369643f3e68c3087  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/deployed_manifest.json
+7ec8723d6c216eb3417591415e43cecc083348266ccea887de1c3406b13a4e91  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_delivery_001_original/completion.json
+fdcc10d717bd49c6f8314554e8a123ebbb01988971eb44c160478e9b2df4e15b  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/package_files.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T21:22:25+0800
