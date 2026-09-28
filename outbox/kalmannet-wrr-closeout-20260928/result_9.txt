@@ -1,0 +1,77 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=9
+### host=login4
+### started=2026-09-28T18:54:40+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/formal_original_input_volumes_001/plain_original_inputs_01.tar: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/formal_original_input_volumes_001/plain_original_inputs_02.tar: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/formal_original_input_volumes_001/plain_original_inputs_03.tar: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_chunks_001/opaque_delivery.py: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_chunks_001/delivery_catalogue.json: OK
+{
+  "state": "OPAQUE_INPUTS_COPIED_NOT_EVALUATED",
+  "stage": "original",
+  "files": [
+    {
+      "file_id": "file01",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_capacity_comparison_20260921_v1/run_001/neural_seed42/issue_statistics.npz",
+      "sha256": "4082dc59d7e555c51ad15e27f04e7090c4cd97b69c7b79a09882e3049792d0d0",
+      "bytes": 14952156
+    },
+    {
+      "file_id": "file02",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_capacity_comparison_20260921_v1/run_001/neural_seed43/issue_statistics.npz",
+      "sha256": "e377b3bdf56a9f62ce1a89bf2ebaad8b2309cf4a760f4f2094c25cf32df98f10",
+      "bytes": 14961336
+    },
+    {
+      "file_id": "file03",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_capacity_comparison_20260921_v1/run_001/neural_seed44/issue_statistics.npz",
+      "sha256": "d480f2c0fed28adf72c62e5d85e9a58215054f0517c8a43362c18c2f5cc98b71",
+      "bytes": 14949056
+    },
+    {
+      "file_id": "file04",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_selected_model_results_20260920_v1/run_003/hand_tuned/issue_statistics.npz",
+      "sha256": "ff0b49c69fc10df26a930da61c1bb17b428b30924f35fb4902d06db799d41407",
+      "bytes": 14707315
+    },
+    {
+      "file_id": "file05",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_selected_model_results_20260920_v1/run_003/learned_noise/issue_statistics.npz",
+      "sha256": "c2b5aa3544965524473ca4faa1a2d22e04c3075d52cc4e5b41ddec42b0150c16",
+      "bytes": 14995117
+    },
+    {
+      "file_id": "file06",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_selected_model_results_20260920_v1/run_003/neural_seed42/issue_statistics.npz",
+      "sha256": "57aeecc0a6852911eb4e1f1f9c605f9a1c4b5681e14c219698818fb4261ea753",
+      "bytes": 14960474
+    },
+    {
+      "file_id": "file07",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_selected_model_results_20260920_v1/run_003/neural_seed43/issue_statistics.npz",
+      "sha256": "93c3708d1204dba1cfe6464d0cef2c4091acc88ea5315a4cd9410aac7c4e809a",
+      "bytes": 14970411
+    },
+    {
+      "file_id": "file08",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/artifacts/wrr_selected_model_results_20260920_v1/run_003/neural_seed44/issue_statistics.npz",
+      "sha256": "e581603335572fec5ce7bec96f2f1c4c31f49f3e7c914876ef605d29471a807c",
+      "bytes": 14960453
+    },
+    {
+      "file_id": "file09",
+      "path": "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/data/processed/high_flow_aug/test_win800_20090314_14-20110101_01.pt",
+      "sha256": "df18203c073314c5a15c6df77411cb972a0a3f983d97cc468760ff12dbd6908a",
+      "bytes": 570696
+    }
+  ],
+  "models_executed": 0,
+  "tensor_deserializations": 0,
+  "formal_evaluation_admitted": false
+}
+fe81db8c7bbea43e2f8040ea004e8f8bbf5ddf2107cd5b73369643f3e68c3087  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/deployed_manifest.json
+OPAQUE_ORIGINAL_INPUTS_DELIVERED_NO_MODEL_OR_SCORE_RUN
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T18:54:43+0800
