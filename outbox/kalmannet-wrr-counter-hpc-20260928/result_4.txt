@@ -1,0 +1,408 @@
+### channel=kalmannet-wrr-counter-hpc-20260928 seq=4
+### host=login4
+### started=2026-09-28T16:44:41+0800
+### ---------- output ----------
+=== FINAL SCHEDULER STATE ===
+228714|knet-counter-diag|COMPLETED|0:0|00:02:00|ngu011
+228714.batch|batch|COMPLETED|0:0|00:02:00|ngu011
+228714.extern|extern|COMPLETED|0:0|00:02:00|ngu011
+=== FULL COMPARISON ===
+{
+  "case_id": "main_seed42__original_outlet_original_states",
+  "comparisons": {
+    "counted_a__vs__counted_b": {
+      "forecast_states": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          192768,
+          5,
+          48
+        ]
+      },
+      "outputs": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          1,
+          800
+        ]
+      },
+      "predictions": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          192768,
+          1,
+          48
+        ]
+      },
+      "updated": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          5,
+          800
+        ]
+      }
+    },
+    "plain_a__vs__counted_a": {
+      "forecast_states": {
+        "bitwise_equal": false,
+        "different_bit_elements": 992980,
+        "different_numeric_elements": 992980,
+        "dtype": "float32",
+        "first_bit_flat_index": 102,
+        "first_numeric_flat_index": 102,
+        "max_absolute_difference": 0.000244140625,
+        "shape": [
+          192768,
+          5,
+          48
+        ]
+      },
+      "outputs": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          1,
+          800
+        ]
+      },
+      "predictions": {
+        "bitwise_equal": false,
+        "different_bit_elements": 86804,
+        "different_numeric_elements": 86804,
+        "dtype": "float32",
+        "first_bit_flat_index": 3306,
+        "first_numeric_flat_index": 3306,
+        "max_absolute_difference": 2.60770320892334e-08,
+        "shape": [
+          192768,
+          1,
+          48
+        ]
+      },
+      "updated": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          5,
+          800
+        ]
+      }
+    },
+    "plain_a__vs__plain_b": {
+      "forecast_states": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          192768,
+          5,
+          48
+        ]
+      },
+      "outputs": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          1,
+          800
+        ]
+      },
+      "predictions": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          192768,
+          1,
+          48
+        ]
+      },
+      "updated": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          5,
+          800
+        ]
+      }
+    },
+    "plain_b__vs__counted_b": {
+      "forecast_states": {
+        "bitwise_equal": false,
+        "different_bit_elements": 992980,
+        "different_numeric_elements": 992980,
+        "dtype": "float32",
+        "first_bit_flat_index": 102,
+        "first_numeric_flat_index": 102,
+        "max_absolute_difference": 0.000244140625,
+        "shape": [
+          192768,
+          5,
+          48
+        ]
+      },
+      "outputs": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          1,
+          800
+        ]
+      },
+      "predictions": {
+        "bitwise_equal": false,
+        "different_bit_elements": 86804,
+        "different_numeric_elements": 86804,
+        "dtype": "float32",
+        "first_bit_flat_index": 3306,
+        "first_numeric_flat_index": 3306,
+        "max_absolute_difference": 2.60770320892334e-08,
+        "shape": [
+          192768,
+          1,
+          48
+        ]
+      },
+      "updated": {
+        "bitwise_equal": true,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "dtype": "float32",
+        "first_bit_flat_index": null,
+        "first_numeric_flat_index": null,
+        "max_absolute_difference": 0.0,
+        "shape": [
+          256,
+          5,
+          800
+        ]
+      }
+    }
+  },
+  "cross_different": true,
+  "local_historical_result_reliability_admitted": false,
+  "numerical_environment": {
+    "amp": false,
+    "autocast_enabled": false,
+    "batch_size": 256,
+    "compilation": false,
+    "cuda": "12.1",
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "cudnn_enabled": true,
+    "deterministic_algorithms": false,
+    "device": "NVIDIA GeForce RTX 3090",
+    "dtype": "float32",
+    "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "grad_enabled": false,
+    "matmul_precision": "highest",
+    "numpy": "2.3.3",
+    "python": "3.11.13",
+    "seed": 42,
+    "torch": "2.4.0"
+  },
+  "phases": [
+    "plain_a",
+    "counted_a",
+    "counted_b",
+    "plain_b"
+  ],
+  "scope": "HPC cross-environment validation only; not local raw-bit admission",
+  "stable_counted": true,
+  "stable_plain": true,
+  "state": "REPEAT_STABLE_COUNTING_CHANGES_HPC_NUMBERS",
+  "test_tensor_reads": 0,
+  "training_calls": 0
+}
+=== COUNTER COVERAGE ===
+{
+  "before": {
+    "audit_q_calls": 0,
+    "audit_q_elements": 0,
+    "audit_gap_hits": 0
+  },
+  "assimilation": {
+    "audit_q_calls": 800,
+    "audit_q_elements": 204800,
+    "audit_gap_hits": 0
+  },
+  "total": {
+    "audit_q_calls": 847,
+    "audit_q_elements": 9264896,
+    "audit_gap_hits": 0
+  }
+}
+{
+  "before": {
+    "audit_q_calls": 0,
+    "audit_q_elements": 0,
+    "audit_gap_hits": 0
+  },
+  "assimilation": {
+    "audit_q_calls": 800,
+    "audit_q_elements": 204800,
+    "audit_gap_hits": 0
+  },
+  "total": {
+    "audit_q_calls": 847,
+    "audit_q_elements": 9264896,
+    "audit_gap_hits": 0
+  }
+}
+=== EACH PHASE CLAIMS ===
+PHASE=plain_a
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "duration_seconds": 28.50070985034108,
+PHASE=counted_a
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "duration_seconds": 21.994004767388105,
+PHASE=counted_b
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "duration_seconds": 26.052927911281586,
+PHASE=plain_b
+  "state": "HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION",
+  "case_id": "main_seed42__original_outlet_original_states",
+  "inputs_unchanged": true,
+  "parameters_unchanged": true,
+  "time_mapping_passed": true,
+  "model_inference_calls": 1,
+  "training_calls": 0,
+  "test_tensor_reads": 0,
+  "duration_seconds": 27.477325435727835,
+=== ENVIRONMENT AND SMALL EVIDENCE HASHES ===
+{
+  "python": "3.11.13",
+  "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "cuda": "12.1",
+  "cudnn": 90100,
+  "device": "NVIDIA GeForce RTX 3090",
+  "batch_size": 256,
+  "dtype": "float32",
+  "seed": 42,
+  "cudnn_benchmark": false,
+  "amp": false,
+  "compilation": false,
+  "matmul_precision": "highest",
+  "cudnn_enabled": true,
+  "cudnn_deterministic": false,
+  "deterministic_algorithms": false,
+  "cuda_matmul_allow_tf32": false,
+  "cudnn_allow_tf32": true,
+  "autocast_enabled": false,
+  "grad_enabled": false
+}
+8f09fb69e222019edad8c2787e9006206e78dd93f3d52ba10f0a465c228127de  /data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/comparison.json
+b3e67bb6d442cc255ea0c9024410b2271d25a65bf6a4b416f045068b6e7563ae  /data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/completion.json
+9fda8cd0f15de80750564165696ba93030bf4719ef79541766463d468f340e63  /data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/completion.json
+bb70a066624e82291985c22ba821005b6502571dffab03ff0588b8ac4616e955  /data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/completion.json
+157cf7f29e1225b6edc515a727ba8d0be733211f35761bf3e6ec7f28cf9a81c5  /data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/completion.json
+=== ARTIFACT COUNTS AND FAILURE FILES ===
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/forecast_states.npy|185057408
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/outputs.npy|819328
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/predictions.npy|37011584
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/updated.npy|4096128
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/forecast_states.npy|185057408
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/outputs.npy|819328
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/predictions.npy|37011584
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/updated.npy|4096128
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/forecast_states.npy|185057408
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/outputs.npy|819328
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/predictions.npy|37011584
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/updated.npy|4096128
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/forecast_states.npy|185057408
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/outputs.npy|819328
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/predictions.npy|37011584
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/updated.npy|4096128
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T16:44:41+0800
