@@ -1,0 +1,68 @@
+### channel=kalmannet-wrr-counter-hpc-20260928 seq=3
+### host=login4
+### started=2026-09-28T16:40:57+0800
+### ---------- output ----------
+=== SCHEDULER RECEIPT ===
+228714|knet-counter-diag|COMPLETED|0:0|00:02:00|ngu011
+228714.batch|batch|COMPLETED|0:0|00:02:00|ngu011
+228714.extern|extern|COMPLETED|0:0|00:02:00|ngu011
+slurm_load_jobs error: Invalid job id specified
+=== PHASE RECEIPTS ===
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/completion.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_a/model_start.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/completion.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/counted_b/model_start.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/completion.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_a/model_start.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/completion.json
+/data1/home/sunyiq/kalmannet_wrr_counter_diagnosis_20260928_v1/runs/plain_b/model_start.json
+=== COMPARISON ===
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 992980,
+        "different_numeric_elements": 992980,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 86804,
+        "different_numeric_elements": 86804,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 992980,
+        "different_numeric_elements": 992980,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+        "different_bit_elements": 86804,
+        "different_numeric_elements": 86804,
+        "different_bit_elements": 0,
+        "different_numeric_elements": 0,
+  "cross_different": true,
+  "stable_counted": true,
+  "stable_plain": true,
+  "state": "REPEAT_STABLE_COUNTING_CHANGES_HPC_NUMBERS",
+=== LOG TAIL ===
+Walrus Using device: cuda
+HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION plain_a
+Walrus Using device: cuda
+HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION counted_a
+Walrus Using device: cuda
+HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION counted_b
+Walrus Using device: cuda
+HPC_CROSS_ENV_VALIDATION_DIAGNOSTIC_COMPLETE_NOT_LOCAL_ADMISSION plain_b
+REPEAT_STABLE_COUNTING_CHANGES_HPC_NUMBERS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T16:40:57+0800
