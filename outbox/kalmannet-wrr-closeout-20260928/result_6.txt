@@ -1,0 +1,57 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=6
+### host=login4
+### started=2026-09-28T18:35:02+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/adaptive_preflight_payload_v1.tar.gz: OK
+ALL_ADAPTIVE_PACKAGE_FILES_VERIFIED
+Submitted batch job 228839
+ADAPTIVE_SINGLE_SUBMISSION=228839
+JobId=228839 JobName=knet-adaptive-preflight
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Dependency Dependency=afterany:228835
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-09-28T18:36:24 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-28T18:36:24
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/adaptive_preflight.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-preflight-228839.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/adaptive_preflight_v1/logs/adaptive-preflight-228839.out
+   Power=
+   TresPerNode=gpu:1
+
+228835|knet-plain-preflight|RUNNING|0:0|00:08:06|ngu001
+228835.batch|batch|RUNNING|0:0|00:08:06|ngu001
+228835.extern|extern|RUNNING|0:0|00:08:06|ngu001
+compact_seed42__corrected_outlet_corrected_states__preflight_attempt01/completion.json
+compact_seed42__corrected_outlet_original_states__preflight_attempt01/completion.json
+compact_seed42__original_outlet_original_states__preflight_attempt01/completion.json
+compact_seed43__corrected_outlet_corrected_states__preflight_attempt01/completion.json
+compact_seed43__corrected_outlet_original_states__preflight_attempt01/completion.json
+compact_seed43__original_outlet_original_states__preflight_attempt01/completion.json
+compact_seed44__original_outlet_original_states__preflight_attempt01/completion.json
+main_seed42__corrected_outlet_corrected_states__preflight_attempt01/completion.json
+main_seed42__corrected_outlet_original_states__preflight_attempt01/completion.json
+main_seed42__original_outlet_original_states__preflight_attempt01/completion.json
+main_seed43__corrected_outlet_corrected_states__preflight_attempt01/completion.json
+main_seed43__corrected_outlet_original_states__preflight_attempt01/completion.json
+main_seed43__original_outlet_original_states__preflight_attempt01/completion.json
+main_seed44__corrected_outlet_corrected_states__preflight_attempt01/completion.json
+main_seed44__corrected_outlet_original_states__preflight_attempt01/completion.json
+main_seed44__original_outlet_original_states__preflight_attempt01/completion.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-28T18:35:04+0800
