@@ -1,128 +1,67 @@
 #!/bin/bash
 set -euo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'ZJ_FAIR_SUBMIT'
-"""Reserve and invoke one bounded cluster job for twelve separate models."""
-from __future__ import annotations
-
-import base64
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'ZJ_FAIR_STATUS'
+from pathlib import Path
 import hashlib
 import json
-import os
-from pathlib import Path
-import re
-import shutil
-import stat
 import subprocess
 
+root = Path('/data1/home/sunyiq/zhenjiang_fair_comparison_20260928_002')
+job = '229380'
+expected_protocol = 'c12a304d42928fa819fe1504dbc59f00ee0bef22436a97679886b04476cd8254'
+expected_attempt = '97d06e3d580da96f93e6505b32849f24f212aa7fa4841558d959bef498a07d16'
 
-RECEIPT = "eyJqb2Jfc2hhMjU2IjoiYWZhODc4NTg3YWRmZDdhOGM2Yzk3NGFhYmNmYTk4YTYwMzUzZWQ2YjI2ZjIxMDc2OGFmMWQwMzA2MGViOWZjZiIsImxvY2FsX3Byb3RvY29sX3NoYTI1NiI6IjVkMmNhMWRhZDc3YTQxNmU5MTFkOWU0MTkyODRlYjE3NmU5N2QzNWEwMDYzOWFkNDVmYWJiNjU2MDhhZjViMTkiLCJtZW1iZXJzIjo1NCwicGF5bG9hZF9ieXRlcyI6MTQ3MjA4LCJwYXlsb2FkX2luZGV4X3NoYTI1NiI6IjkwMjUyZDI3NzI4NGM1MTI3MDYyY2M3ZDNiNmZiYTA3YWQ1MDFmMjBlNDljMGM5Y2M1NGI3YzQzOTc0NzcyODUiLCJwYXlsb2FkX3NoYTI1NiI6ImQ3NmZmMmNkZmExYmRiZWZmZGMwZjA3ZmI1OGI5ZDU1M2IxYjYyZjU0OGI0OWU3Mzk2ZmE5NGExMmJmMDhjY2IiLCJyZW1vdGVfbWFuaWZlc3Rfc2hhMjU2IjoiMGVlMmQzMjBjNTZjMTVlYzE2Yjk5ZWJiODk4OTVkYjQ3NzQwZGNiZTA5ZmFiOTMwNGUyNjhkNjhmNWYwOTVhMSIsInJlbW90ZV9wcm90b2NvbF9zaGEyNTYiOiJjMTJhMzA0ZDQyOTI4ZmE4MTlmZTE1MDRkYmM1OWYwMGVlMGJlZjIyNDM2YTk3Njc5ODg2YjA0NDc2Y2Q4MjU0IiwicmVtb3RlX3Jvb3QiOiIvZGF0YTEvaG9tZS9zdW55aXEvemhlbmppYW5nX2ZhaXJfY29tcGFyaXNvbl8yMDI2MDkyOF8wMDIiLCJzb3VyY2VfZGF0YV9maWxlcyI6MTB9"
-EXPECTED_DEPLOYMENT_SHA = "eea53a2472d8bef9a335d1c6b04492137aa8164bbc2e4293fde2c8b9e27ade0b"
+def small(path, maximum=16384):
+    full = root / path
+    if not full.exists():
+        return None
+    if full.is_symlink() or not full.is_file() or full.stat().st_size > maximum:
+        raise ValueError('status metadata type or size differs: ' + path)
+    return json.loads(full.read_bytes())
 
+submitted = small('submission/submitted.json')
+if (submitted is None or submitted['job_id'] != job or
+        submitted['protocol_sha256'] != expected_protocol or
+        submitted['attempt_sha256'] != expected_attempt):
+    raise ValueError('status job differs from exclusive submission')
+scheduler = {}
+for name, args in (
+    ('queue', ['squeue', '-j', job, '-h', '-o', '%i|%T|%M|%R']),
+    ('accounting', ['sacct', '-j', job, '-n', '-P',
+                    '--format=JobID,State,ExitCode,Elapsed,AllocTRES'])):
+    result = subprocess.run(args, capture_output=True, text=True, timeout=15,
+                            check=False)
+    if len(result.stdout) + len(result.stderr) > 12000:
+        raise ValueError('bounded scheduler reply exceeded')
+    scheduler[name] = {'returncode': result.returncode,
+                       'stdout': result.stdout, 'stderr': result.stderr}
 
-def sha(data):
-    return hashlib.sha256(data).hexdigest()
-
-
-def canonical(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False,
-                      separators=(",", ":"), allow_nan=False).encode()
-
-
-def write_new(path, raw):
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(path, flags, 0o600)
-    with os.fdopen(fd, "wb") as stream:
-        stream.write(raw)
-        stream.flush()
-        os.fsync(stream.fileno())
-
-
-def main():
-    receipt = json.loads(base64.b64decode(RECEIPT, validate=True))
-    root = Path(receipt["remote_root"])
-    deployment_path = root / "deploy/deployment.json"
-    manifest_path = root / "reports/training_manifest.json"
-    job_path = root / "deploy/job.sh"
-    if (str(root) != "/data1/home/sunyiq/zhenjiang_fair_comparison_20260928_002"
-            or root.is_symlink() or not root.is_dir() or
-            any(os.path.lexists(root / part) for part in ("submission", "run", "preflight"))
-            or not (root / "slurm").is_dir() or shutil.which("sbatch") is None):
-        raise ValueError("single submission precondition differs")
-    deployment_raw = deployment_path.read_bytes()
-    deployed = json.loads(deployment_raw)
-    meta = root.stat()
-    binding = {"device": meta.st_dev, "inode": meta.st_ino,
-               "uid": meta.st_uid, "mode": stat.S_IMODE(meta.st_mode)}
-    if (sha(deployment_raw) != EXPECTED_DEPLOYMENT_SHA or
-            deployed["status"] != "DEPLOYED_NO_TRAINING" or
-            deployed["root_binding"] != binding or binding["mode"] != 0o700 or
-            deployed["root"] != str(root) or
-            deployed["payload_sha256"] != receipt["payload_sha256"] or
-            deployed["protocol_sha256"] != receipt["remote_protocol_sha256"] or
-            deployed["manifest_sha256"] != receipt["remote_manifest_sha256"] or
-            deployed["job_sha256"] != receipt["job_sha256"] or
-            sha((root / "protocol.json").read_bytes()) != receipt["remote_protocol_sha256"] or
-            sha(manifest_path.read_bytes()) != receipt["remote_manifest_sha256"] or
-            sha(job_path.read_bytes()) != receipt["job_sha256"]):
-        raise ValueError("deployed training package identity differs")
-    protocol = json.loads((root / "protocol.json").read_bytes())
-    manifest = json.loads(manifest_path.read_bytes())
-    if (protocol["epochs"] != 100 or protocol["seeds"] != [17, 29, 43] or
-            protocol["planned_process_runs"]["separate_available"] != 12 or
-            protocol["local_root"] != str(root) or
-            manifest["file_count"] != 21):
-        raise ValueError("scientific or placement contract differs")
-    partition = subprocess.run(["scontrol", "show", "partition", "hgpu2p", "-o"],
-                               capture_output=True, text=True, timeout=15, check=False)
-    if partition.returncode != 0 or "PartitionName=hgpu2p" not in partition.stdout:
-        raise ValueError("cluster partition unavailable")
-    # An exclusive attempt record consumes this submission even if the reply is ambiguous.
-    submission = root / "submission"
-    submission.mkdir(mode=0o700)
-    attempt = {"status": "RESERVED_NO_RETRY", "root": str(root),
-               "root_binding": binding,
-               "protocol_sha256": receipt["remote_protocol_sha256"],
-               "manifest_sha256": receipt["remote_manifest_sha256"],
-               "job_sha256": receipt["job_sha256"],
-               "deployment_sha256": EXPECTED_DEPLOYMENT_SHA}
-    attempt_raw = canonical(attempt)
-    write_new(submission / "attempt.json", attempt_raw)
-    argv = ["sbatch", "--parsable", "--partition=hgpu2p", "--nodes=1",
-            "--ntasks=1", "--cpus-per-task=4", "--gres=gpu:1",
-            "--no-requeue", "--time=24:00:00", "--output=/dev/null",
-            "--error=/dev/null", "--job-name=zj-fair-separate",
-            "--export=ALL", str(job_path)]
-    write_new(submission / "command.json", canonical({
-        "argv": argv, "attempt_sha256": sha(attempt_raw)}))
-    env = {key: value for key, value in os.environ.items()
-           if not key.upper().startswith("SBATCH_")}
-    try:
-        result = subprocess.run(argv, capture_output=True, text=True,
-                                encoding="utf-8", errors="replace", timeout=30,
-                                check=False, env=env)
-        if len(result.stdout.encode()) + len(result.stderr.encode()) > 8192:
-            raise ValueError("scheduler reply exceeds bound")
-        write_new(submission / "scheduler_reply.json", canonical({
-            "returncode": result.returncode, "stdout": result.stdout,
-            "stderr": result.stderr}))
-        match = re.fullmatch(r"([1-9][0-9]*)(?:;[A-Za-z0-9_.-]+)?",
-                             result.stdout.strip())
-        if result.returncode != 0 or match is None:
-            raise ValueError("scheduler submission uncertain; no retry")
-        submitted = {**attempt, "status": "SUBMITTED_ONCE",
-                     "job_id": match.group(1), "attempt_sha256": sha(attempt_raw)}
-        write_new(submission / "submitted.json", canonical(submitted))
-        print(json.dumps({"status": "SUBMITTED_ONCE", "job_id": match.group(1),
-                          "root": str(root), "attempt_sha256": sha(attempt_raw)},
-                         sort_keys=True))
-    except BaseException as error:
-        write_new(submission / "failure.json", canonical({
-            "status": "STOPPED_NO_RETRY", "error": str(error)[:2000],
-            "submission_uncertain": True}))
-        raise
-
-
-if __name__ == "__main__":
-    main()
-
-ZJ_FAIR_SUBMIT
+preflight = small('preflight/result.json', 65536)
+decision = small('reports/compute_decision.json', 16384)
+attempt = small('run/separate_available/attempt.json')
+failure = small('run/separate_available/failure.json', 16384)
+complete = small('run/separate_available/complete.json', 16384)
+progress = []
+for station in ('nanjing', 'zhenjiang', 'jiangyin', 'xuliujing'):
+    for seed in (17, 29, 43):
+        folder = root / 'run/separate_available' / station / str(seed)
+        records = [p for p in folder.glob('epoch_*.json')
+                   if p.stem[6:].isdigit()] if folder.is_dir() else []
+        latest = max(records, key=lambda p: int(p.stem[6:])) if records else None
+        progress.append({'station': station, 'seed': seed, 'epoch_records': len(records),
+                         'latest_epoch': int(latest.stem[6:]) if latest else None})
+log_path = root / 'slurm' / ('job_' + job + '.log')
+log_tail = None
+if log_path.is_file() and not log_path.is_symlink():
+    if log_path.stat().st_size > 20_000_000:
+        raise ValueError('job log exceeds bounded status policy')
+    with log_path.open('rb') as stream:
+        stream.seek(max(0, log_path.stat().st_size - 4096))
+        log_tail = stream.read(4096).decode(errors='replace')[-4096:]
+print(json.dumps({'job_id': job, 'scheduler': scheduler,
+                  'preflight_status': preflight['status'] if preflight else None,
+                  'preflight_failure': small('preflight/failure.json', 16384),
+                  'decision': decision['decisions']['separate_available'] if decision else None,
+                  'attempt': attempt, 'failure': failure, 'complete': complete,
+                  'progress': progress, 'log_tail': log_tail}, sort_keys=True))
+ZJ_FAIR_STATUS
