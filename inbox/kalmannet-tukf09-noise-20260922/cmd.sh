@@ -2,38 +2,39 @@
 set -euo pipefail
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
-import base64
-import hashlib
-import json
-from pathlib import Path
-import stat
+phase='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1'
+payload='/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-tukf09-noise-20260922/payload/full_budget_01142500_20260928_attempt1.zip'
+python='/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python'
+private='/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite'
 
-phase = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_integrated_release_20260927_attempt1')
-expected = {
-    'basin_01047000/run/model/started.json': (1425, 'd2bf2cf6ef1f4ac15a0d58d671d77c79c46462905312861feb610950a703e175'),
-    'basin_01047000/run/model/summary.json': (889, 'b0ae827e00f75dc177b8d812cf5e8403316a4dee9beed60d785fab8943f65961'),
-    'basin_01047000/run/model/history.npz': (29565, 'a84da227ffee7c12f9a78aa4d75800fbdb202b9304b3ffaca451a86ca058a6f2'),
-    'basin_01047000/run/model/manifest.final.sha256.json': (541, '572924fe106a5c0195898f5fc78a94c37bca41f1d897f171deb1cfdd0d131004'),
-    'basin_01047000/run/supervisor.json': (192, '1e0d355ebf494e1025672c099a32b0ba2f8339bbd5d1d3640d688137241d4d26'),
-    'basin_01047000/control/job_gate.json': (746, '88a2ca6e38df77c35681476272c78b25d8ccf634c1fd61acec268b42538e10f2'),
+printf '=== ONE 20-STATE BASIN READ-ONLY RESOURCE PREFLIGHT ===\n'
+date -u '+UTC=%Y-%m-%dT%H:%M:%SZ'
+[[ "$(id -un)" == sunyiq ]] || { printf 'WRONG_ACCOUNT\n'; exit 1; }
+[[ ! -e "$phase" && ! -L "$phase" ]] || { printf 'NEW_PHASE_OCCUPIED\n'; exit 1; }
+[[ -d "$(dirname "$phase")" && ! -L "$(dirname "$phase")" ]] || { printf 'NEW_PHASE_PARENT_INVALID\n'; exit 1; }
+printf 'NEW_PHASE_ABSENT\n'
+[[ ! -e "$payload" && ! -L "$payload" ]] || { printf 'NEW_PAYLOAD_OCCUPIED\n'; exit 1; }
+printf 'NEW_PAYLOAD_ABSENT\n'
+[[ -x "$python" && -d "$private" && ! -L "$private" ]] || { printf 'FROZEN_RUNTIME_ABSENT\n'; exit 1; }
+[[ "$("$python" --version)" == 'Python 3.11.13' ]] || { printf 'FROZEN_PYTHON_CHANGED\n'; exit 1; }
+partition="$(scontrol show partition hcpu48y -o)"
+printf '%s\n' "$partition"
+[[ "$partition" == *' State=UP '* && "$partition" == *' OverSubscribe=NO '* ]] || { printf 'PARTITION_CHANGED\n'; exit 1; }
+queue="$(squeue -u sunyiq -h -o '%i|%j|%T|%P|%R')"
+printf '=== OWN_QUEUE ===\n%s\n' "$queue"
+if printf '%s\n' "$queue" | awk -F '|' '$2 ~ /^tukf09-noise-/ { found=1 } END { exit !found }'; then
+    printf 'COMPETING_NOISE_JOB\n'
+    exit 1
+fi
+accounting="$(sacct -X -j 228327 -P -n --format=JobID,JobName,Partition,AllocCPUS,ReqCPUS,AllocTRES,ReqTRES,ElapsedRaw,State,ExitCode)"
+printf '=== COMPLETED FIRST BASIN ===\n%s\n' "$accounting"
+[[ "$(printf '%s\n' "$accounting" | wc -l)" -eq 1 && "$accounting" == 228327\|tukf09-noise-int-v2r9-0927\|hcpu48y\|1\|1\|*\|*\|*\|COMPLETED\|0:0 ]] || {
+    printf 'FIRST_BASIN_ACCOUNTING_CHANGED\n'
+    exit 1
 }
-payloads = {}
-for relative, (size, digest) in expected.items():
-    path = phase / relative
-    if not stat.S_ISREG(path.lstat().st_mode):
-        raise RuntimeError('not one regular unlinked file: ' + relative)
-    data = path.read_bytes()
-    if len(data) != size or hashlib.sha256(data).hexdigest() != digest:
-        raise RuntimeError('remote evidence differs from terminal receipt: ' + relative)
-    payloads[relative] = data
-print('FIRST_BASIN_EXACT_EVIDENCE_BEGIN job=228327 basin=01047000 count=6')
-for relative, data in payloads.items():
-    print('EVIDENCE ' + json.dumps({
-        'path': relative,
-        'size_bytes': len(data),
-        'sha256': hashlib.sha256(data).hexdigest(),
-        'base64': base64.b64encode(data).decode('ascii'),
-    }, sort_keys=True, separators=(',', ':')))
-print('FIRST_BASIN_EXACT_EVIDENCE_END')
-PY
+PYTHONPATH="$private" OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 \
+"$python" -B -c 'import importlib.metadata as md,json,numpy,torch,sys;from pathlib import Path;p=Path(sys.argv[1]).resolve();assert sys.version.startswith("3.11.13") and numpy.__version__=="1.26.4" and torch.__version__.startswith("2.2.2") and md.version("pytest")=="8.3.5";assert Path(numpy.__file__).resolve().is_relative_to(p) and Path(torch.__file__).resolve().is_relative_to(p);print(json.dumps({"python":sys.version,"numpy":numpy.__version__,"torch":torch.__version__,"pytest":md.version("pytest"),"numpy_path":numpy.__file__,"torch_path":torch.__file__},sort_keys=True))' "$private"
+available_kib="$(df -Pk "$(dirname "$phase")" | awk 'NR==2 {print $4}')"
+[[ "$available_kib" =~ ^[0-9]+$ && "$available_kib" -ge 1048576 ]] || { printf 'LESS_THAN_ONE_GIB_FREE\n'; exit 1; }
+printf 'PARENT_FILESYSTEM_AVAILABLE_KIB=%s\n' "$available_kib"
+printf 'READ_ONLY_ONE20_RESOURCE_PREFLIGHT_PASS\n'
