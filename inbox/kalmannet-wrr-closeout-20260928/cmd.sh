@@ -2,31 +2,26 @@
 set -eo pipefail
 parent=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
 adaptive="$parent/adaptive_preflight_v1"
-launch="$parent/remaining_launch_001"
-payload=/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/adaptive_prepare_launch_001.tar
-for target in "$launch" "$parent/adaptive_prepare_jobid.txt" "$adaptive/adaptive_comparison/selection_attempt01" "$adaptive/adaptive_comparison/runs/matched_fixed_test__preflight_attempt01" "$adaptive/adaptive_comparison/runs/matched_selected_test__preflight_attempt01"; do
-  if [ -e "$target" ] || [ -L "$target" ]; then echo "REFUSE_EXISTING=$target"; exit 64; fi
-done
-active=$(squeue -h -u sunyiq -o '%i|%Z' | awk -F'|' '$2 ~ "^/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1(/|$)" {print}')
-if [ -n "$active" ]; then printf 'REFUSE_ACTIVE_TASK_JOBS\n%s\n' "$active"; exit 64; fi
-echo '542b001e8d6dcf6867e5e94caf10e074ab1b9105d821b41016ff9376221c1408  '"$payload" | sha256sum --strict --check -
-tar --keep-old-files -xf "$payload" -C "$parent"
-sha256sum --strict --check "$launch/launch_inputs.sha256"
-( cd "$adaptive"; sha256sum --strict --check package_files.sha256 )
-test -s "$launch/task-1-independent-review.md"
-( set -o noclobber; : > "$launch/submission_attempted" )
-cd "$adaptive"
-if submission=$(sbatch "$launch/adaptive_prepare.slurm" 2>&1); then
-  printf '%s\n' "$submission"
-else
-  submission_status=$?
-  printf '%s\n' "$submission"
-  exit "$submission_status"
-fi
-( set -o noclobber; printf '%s\n' "$submission" > "$launch/submission_receipt.txt" )
-job=$(printf '%s\n' "$submission" | sed -nE 's/^Submitted batch job ([0-9]+)$/\1/p')
-if ! [[ "$job" =~ ^[0-9]+$ ]]; then echo SUBMISSION_PARSE_FAILED_NO_RETRY; exit 65; fi
-( set -o noclobber; printf '%s\n' "$job" > "$parent/adaptive_prepare_jobid.txt" )
-echo "ADAPTIVE_PREPARE_SINGLE_SUBMISSION=$job"
+job=$(cat "$parent/adaptive_prepare_jobid.txt")
+if ! [[ "$job" =~ ^[0-9]+$ ]]; then exit 64; fi
 sacct -n -X -P -j "$job" -o JobID,JobName,State,ExitCode,Elapsed,NodeList
 squeue -h -j "$job" -o '%i|%j|%T|%Z|%R'
+state=$(sacct -n -X -P -j "$job" -o State | head -n 1 | cut -d'|' -f1)
+for log in "$parent/logs/adaptive-prepare-$job.out" "$parent/logs/adaptive-prepare-$job.err"; do
+  if [ -f "$log" ]; then echo "LOG=$log"; tail -n 8 "$log"; fi
+done
+if [ "$state" != COMPLETED ]; then echo "NO_RECEIPT_ARCHIVE_STATE=$state"; exit 0; fi
+cd "$adaptive"
+for case_id in matched_fixed_test matched_selected_test; do
+  test -s "adaptive_comparison/runs/${case_id}__preflight_attempt01/completion.json"
+done
+test -s adaptive_comparison/selection_attempt01/selection_frozen.json
+archive="$parent/adaptive_test_preflight_receipts_001.tar.gz"
+if [ -e "$archive" ] || [ -L "$archive" ]; then echo REFUSE_EXISTING_ARCHIVE; exit 64; fi
+find adaptive_comparison/runs/matched_fixed_test__preflight_attempt01 adaptive_comparison/runs/matched_selected_test__preflight_attempt01 adaptive_comparison/selection_attempt01 -type f \( -name '*.json' -o -name 'physical_plain_*.py' \) -print0 | sort -z | tar --null --transform='s|^adaptive_comparison/selection_attempt01/|adaptive_comparison/runs/selection_attempt01/|' -czf "$archive" -T -
+echo TRANSPORT_PATH_ALIAS_ONLY_SELECTION_BYTES_UNCHANGED
+printf 'ADAPTIVE_RECEIPTS_SHA256='
+sha256sum "$archive" | cut -d' ' -f1
+echo BEGIN_ADAPTIVE_RECEIPTS_TAR_GZ
+base64 "$archive"
+echo END_ADAPTIVE_RECEIPTS_TAR_GZ
