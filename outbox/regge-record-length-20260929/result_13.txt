@@ -1,0 +1,61 @@
+### channel=regge-record-length-20260929 seq=13
+### host=login4
+### started=2026-09-29T20:06:28+0800
+### ---------- output ----------
+=== exact runtime and tools ===
+3.11.5 1.26.4 2.3.2 2.2.2 24 False
+/usr/bin/tar
+/data1/home/sunyiq/miniconda3/bin/zstd
+/data1/home/sunyiq/miniconda3/bin/openssl
+/usr/bin/curl
+*** Zstandard CLI (64-bit) v1.5.5, by Yann Collet ***
+OpenSSL 3.0.12 24 Oct 2023 (Library: OpenSSL 3.0.12 24 Oct 2023)
+curl 7.29.0 (x86_64-redhat-linux-gnu) libcurl/7.29.0 NSS/3.90 zlib/1.2.7 libidn/1.28 libssh2/1.8.0
+=== isolated target availability ===
+AVAILABLE: /data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_001
+AVAILABLE: /data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_001
+AVAILABLE: /data1/home/sunyiq/regge_record_length_20260929_001/transport_package_001
+AVAILABLE: /data1/home/sunyiq/regge_record_length_20260929_001/transport_credentials_001
+=== scheduler snapshot ===
+NODELIST    STATE       CPUS(A/I/O/T)     GRES            GRES_USED               
+ngu001      mix         44/52/0/96        gpu:2           gpu:2,dcu:0             
+ngu002      idle        0/96/0/96         gpu:2           gpu:0,dcu:0             
+ngu004      mix         68/28/0/96        gpu:2           gpu:2,dcu:0             
+ngu005      mix         44/52/0/96        gpu:2           gpu:2,dcu:0             
+ngu006      mix         12/84/0/96        gpu:2           gpu:0,dcu:0             
+ngu007      idle        0/96/0/96         gpu:2           gpu:0,dcu:0             
+ngu008      mix         2/94/0/96         gpu:2           gpu:1,dcu:0             
+ngu010      mix         8/24/0/32         gpu:2           gpu:2,dcu:0             
+ngu011      mix         4/28/0/32         gpu:2           gpu:1,dcu:0             
+             JOBID                     NAME PARTITION      STATE               NODELIST(REASON)
+ 231096_[50-113%2]            zj-arch-share    hgpu2p    PENDING            (JobArrayTaskLimit)
+            202229             N22-agg-eval hgpu4,hgp    PENDING     (DependencyNeverSatisfied)
+            202294               N22-export hgpu4,hgp    PENDING                   (Dependency)
+            202315                 N22-gate hgpu4,hgp    PENDING                   (Dependency)
+            202507         N22-mask-iso-531 hgpu4,hgp    PENDING     (DependencyNeverSatisfied)
+            215429            id30_m01_s100     hgpu2    PENDING     (DependencyNeverSatisfied)
+            202293             N22-manifest hgpu4,hgp    PENDING                  (JobHeldUser)
+         231096_49            zj-arch-share    hgpu2p    RUNNING                         ngu011
+         231096_48            zj-arch-share    hgpu2p    RUNNING                         ngu010
+=== storage ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  631T  324T  67% /data1
+=== create isolated upload-token keypair ===
+3a65fc53662fe9f205f048b3847a3c3d1ec314f7a11da824d7ad5ff15edc73cd  /data1/home/sunyiq/regge_record_length_20260929_001/transport_credentials_001/upload_token_public.pem
+UPLOAD_TOKEN_PUBLIC_KEY_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA7wRfvYC88jxiLdjeJuEW
+pA/Nmh3pcivV+oidpyu1JGOAUA6RDOZ7opIcr81qz9NRNXIdPUi6O5QZ0kgj/gfd
+vSCJgyTiXNKYCf4hgN6IajoaJZ/W7nw9INxhuDCG9hX2f9ESPM2pteUhBXQ1JW5+
+E/fyK9nGw+npC4+NmNr7K56oybcRupE5ZIRKhiEEzZwKrp++fpuDW10JSyf2gxyU
+A+OToyR3a9YU8RaE3+TH2sDkh0eTmuR2QrCzaQBja63zuef6vXh1PTy6RTP1QNho
+sKCWe0qeyrIsTMZlmt+UXqPgh/15FTlxhIBa4sQRY0ZFFhxl743JSIGhSjtRBdSt
+1//IdriYPQZLUtSMKvgn9UK7wmkyuNxPSQuxqFtynWYCdHmgRT0DG8f5jRD/aaF4
+YZ3voSEbsfa335B27Bl/VJF8tZ82+w8mSQcl0CLgQCbszyb7nEhl/CaB7w1qQ1SK
+zTRMJg3Mcy1K5EXA/NecNfoGrhqp9DU/YIt5gHJhYR+nAgMBAAE=
+-----END PUBLIC KEY-----
+UPLOAD_TOKEN_PUBLIC_KEY_END
+=== setup complete ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T20:06:57+0800
