@@ -1,0 +1,8 @@
+### channel=zhenjiang-architecture-sharing-20260929 seq=3
+### host=login4
+### started=2026-09-29T15:27:48+0800
+### ---------- output ----------
+{"campus_xbatch_exists": true, "deployment_sha256": "f4d409049b4b13d03cf76ac1026d5514da9acbab5cd44d6c082e6ce7398905ac", "job_sha256_matches": true, "resource_directives": ["#SBATCH --job-name=zj-arch-share", "#SBATCH --partition=hgpu2p", "#SBATCH --nodes=1", "#SBATCH --ntasks=1", "#SBATCH --cpus-per-task=4", "#SBATCH --gres=gpu:1", "#SBATCH --array=0-113%2", "#SBATCH --no-requeue", "#SBATCH --time=02:00:00", "#SBATCH --exclude=ngu002", "#SBATCH --output=/dev/null", "#SBATCH --error=/dev/null"], "root": "/data1/home/sunyiq/zhenjiang_architecture_sharing_20260929_001", "root_binding_matches": true, "root_is_private": true, "runs_exists": false, "sbatch_executable": "/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch", "source_files": 10, "status": "DEPLOYED_NO_TRAINING", "submission_exists": false, "xbatch_executable": "/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T15:27:49+0800
