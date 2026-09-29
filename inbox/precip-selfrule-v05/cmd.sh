@@ -1,5 +1,5 @@
 #!/bin/bash
-# precip-selfrule-v05 seq=15: summarize the eight-basin technical run if all records are complete.
+# precip-selfrule-v05 seq=16: summarize the eight-basin technical run if all records are complete.
 set -eo pipefail
 ROOT=/data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03
 CODE="$ROOT/code"
