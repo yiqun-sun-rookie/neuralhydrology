@@ -2,66 +2,47 @@
 set -euo pipefail
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
-import base64
-import hashlib
-import io
+phase='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/timing_probe_01142500_20260929_attempt1'
+old='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/bundle'
+control="$phase/basin_01142500/control"
+python='/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python'
+printf 'TIMING_PROBE_STAGED_PREFLIGHT_BEGIN basin=01142500 read_only=true\n'
+date -u '+UTC=%Y-%m-%dT%H:%M:%SZ'
+[[ "$(id -un)" == sunyiq ]] || { printf 'WRONG_ACCOUNT\n'; exit 1; }
+for path in "$phase" "$control" "$phase/logs" "$phase/cache" "$phase/tmp" "$old"; do
+    [[ -d "$path" && ! -L "$path" ]] || { printf 'MISSING_OR_LINKED_DIRECTORY %s\n' "$path"; exit 1; }
+done
+[[ ! -e "$phase/basin_01142500/run" && ! -L "$phase/basin_01142500/run" ]] || { printf 'DIAGNOSTIC_RUN_ALREADY_EXISTS\n'; exit 1; }
+[[ ! -e "$control/submission_attempt.json" && ! -L "$control/submission_attempt.json" ]] || { printf 'SUBMISSION_ATTEMPT_ALREADY_CONSUMED\n'; exit 1; }
+[[ ! -e "$control/submission.json" && ! -L "$control/submission.json" ]] || { printf 'SUBMISSION_ALREADY_RECORDED\n'; exit 1; }
+[[ "$(sha256sum "$phase/payload_manifest.json" | awk '{print $1}')" == '1d0b611435939b3290cd6ab843472479b7fb0f209791e650e0f017f39cc51e98' ]] || { printf 'DIAGNOSTIC_MANIFEST_CHANGED\n'; exit 1; }
+[[ "$(sha256sum "$phase/tukf09_timing_probe_01142500_20260929.py" | awk '{print $1}')" == 'dbb2cef831d7b75ca45e46fc876d2bb9a60da21f95ed2fd0b1259c4106525051' ]] || { printf 'DIAGNOSTIC_WRAPPER_CHANGED\n'; exit 1; }
+[[ "$(sha256sum "$phase/timing_probe_01142500_20260929.slurm" | awk '{print $1}')" == '4f42af818c796bb24e095596e4ad50c756a01a7606f8979f937c58a84292da29' ]] || { printf 'DIAGNOSTIC_JOB_SCRIPT_CHANGED\n'; exit 1; }
+[[ "$(sha256sum "$old/hpc/tukf09_455_scaled_noise_common_v1.py" | awk '{print $1}')" == 'b4b70d97e4fdeca92ef1a7a8a6335a41d45acead5b40db5bdf1ab92ff70a3a5e' ]] || { printf 'FROZEN_SCIENCE_CHANGED\n'; exit 1; }
+[[ "$("$python" --version)" == 'Python 3.11.13' ]] || { printf 'PYTHON_CHANGED\n'; exit 1; }
+"$python" -B - "$control/deployment.json" <<'PY'
 import json
-import os
 from pathlib import Path
-import pwd
 import sys
-import zipfile
-
-phase = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/timing_probe_01142500_20260929_attempt1')
-old = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/bundle')
-expected_archive_sha = '8737f4fd58dea66d26551462b15536c97d0fbdde8d7a2598df92438a3c431e40'
-expected_manifest_sha = '1d0b611435939b3290cd6ab843472479b7fb0f209791e650e0f017f39cc51e98'
-raw = base64.b64decode('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', validate=True)
-if hashlib.sha256(raw).hexdigest() != expected_archive_sha:
-    raise SystemExit('staging archive fingerprint changed')
-if pwd.getpwuid(os.getuid()).pw_name != 'sunyiq':
-    raise SystemExit('wrong remote account')
-if phase.exists() or phase.is_symlink() or not phase.parent.is_dir() or phase.parent.is_symlink():
-    raise SystemExit('exclusive remote timing directory occupied or parent linked')
-if old.is_symlink() or not old.is_dir():
-    raise SystemExit('sealed old bundle unavailable')
-with (old / 'bundle_manifest.json').open('rb') as stream:
-    if hashlib.file_digest(stream, 'sha256').hexdigest() != '4ebee2dcbd215e9751c86ca9895b84090956e7857d84b524fc87d60a3ea6afa1':
-        raise SystemExit('sealed old bundle changed')
-with zipfile.ZipFile(io.BytesIO(raw)) as archive:
-    names = archive.namelist()
-    expected = {'payload_manifest.json', 'tukf09_timing_probe_01142500_20260929.py', 'timing_probe_01142500_20260929.slurm'}
-    if len(names) != len(set(names)) or set(names) != expected:
-        raise SystemExit('diagnostic archive members changed')
-    data = {name: archive.read(name) for name in expected}
-if hashlib.sha256(data['payload_manifest.json']).hexdigest() != expected_manifest_sha:
-    raise SystemExit('diagnostic manifest fingerprint changed')
-manifest = json.loads(data['payload_manifest.json'])
-if (manifest.get('remote_phase') != phase.as_posix() or manifest.get('basin_id') != '01142500'
-        or manifest.get('maximum_new_submissions') != 1
-        or manifest.get('formal_selection_authorized') is not False
-        or manifest.get('formal_evaluation_authorized') is not False
-        or manifest.get('other_basin_authorized') is not False
-        or manifest.get('automatic_retry_authorized') is not False):
-    raise SystemExit('diagnostic scope changed')
-for name in expected - {'payload_manifest.json'}:
-    if manifest['files'][name] != {'sha256': hashlib.sha256(data[name]).hexdigest(), 'size_bytes': len(data[name])}:
-        raise SystemExit('diagnostic member fingerprint changed: ' + name)
-phase.mkdir(mode=0o750, exist_ok=False)
-for sub in ('logs', 'cache', 'tmp', 'basin_01142500', 'basin_01142500/control'):
-    (phase / sub).mkdir(mode=0o750, exist_ok=False)
-for name in sorted(expected):
-    with (phase / name).open('xb') as stream:
-        stream.write(data[name])
-        stream.flush()
-        os.fsync(stream.fileno())
-record = {'status': 'ONE_TIMING_DIAGNOSTIC_STAGED_NOT_SUBMITTED', 'basin_id': '01142500',
-          'archive_sha256': expected_archive_sha, 'manifest_sha256': expected_manifest_sha,
-          'old_bundle_manifest_sha256': manifest['old_manifest_sha256'],
-          'scheduler_submission_performed': False}
-with (phase / 'basin_01142500/control/deployment.json').open('x', encoding='utf-8') as stream:
-    json.dump(record, stream, sort_keys=True, separators=(',', ':'))
-    stream.write('\n')
-print('TIMING_DIAGNOSTIC_DEPLOYED_NOT_SUBMITTED ' + json.dumps(record, sort_keys=True))
+record = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+assert record == {
+    'status': 'ONE_TIMING_DIAGNOSTIC_STAGED_NOT_SUBMITTED',
+    'basin_id': '01142500',
+    'archive_sha256': '8737f4fd58dea66d26551462b15536c97d0fbdde8d7a2598df92438a3c431e40',
+    'manifest_sha256': '1d0b611435939b3290cd6ab843472479b7fb0f209791e650e0f017f39cc51e98',
+    'old_bundle_manifest_sha256': '4ebee2dcbd215e9751c86ca9895b84090956e7857d84b524fc87d60a3ea6afa1',
+    'scheduler_submission_performed': False,
+}
+print('STAGED_DEPLOYMENT_RECORD_VERIFIED')
 PY
+partition="$(scontrol show partition hcpu48y -o)"
+printf 'PARTITION %s\n' "$partition"
+[[ "$partition" == *' State=UP '* && "$partition" == *' OverSubscribe=NO '* ]] || { printf 'PARTITION_CHANGED\n'; exit 1; }
+queue="$(squeue -u sunyiq -h -o '%i|%j|%T|%P|%R')"
+printf 'OWN_QUEUE_BEGIN\n%s\nOWN_QUEUE_END\n' "$queue"
+if printf '%s\n' "$queue" | awk -F '|' '$2 ~ /^tukf09-noise-/ { found=1 } END { exit !found }'; then
+    printf 'COMPETING_NOISE_JOB\n'; exit 1
+fi
+printf 'ACCOUNTING_229133 '
+sacct -X -j 229133 -P -n --format=JobID,JobName,Partition,AllocCPUS,ReqCPUS,AllocTRES,ReqTRES,ElapsedRaw,State,ExitCode
+printf 'TIMING_PROBE_STAGED_PREFLIGHT_END result=PASS read_only=true\n'
