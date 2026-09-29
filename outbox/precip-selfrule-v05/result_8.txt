@@ -1,0 +1,268 @@
+### channel=precip-selfrule-v05 seq=8
+### host=login4
+### started=2026-09-29T18:17:41+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:17:41 +0800
+login4
+=== SQUEUE ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231259_[1-7%1]                  psv05t3     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231259_0                  psv05t3     hgpu2p  R       1:50      1 ngu011
+=== SACCT ===
+JobID|JobName|State|ExitCode|Elapsed|AllocTRES|MaxRSS|NodeList
+231258|psv05c3|COMPLETED|0:0|00:01:11|billing=4,cpu=4,node=1||ngu011
+231258.batch|batch|COMPLETED|0:0|00:01:11|cpu=4,mem=0,node=1|590896K|ngu011
+231258.extern|extern|COMPLETED|0:0|00:01:12|billing=4,cpu=4,node=1|1792K|ngu011
+231259_0|psv05t3|RUNNING|0:0|00:03:12|billing=4,cpu=4,node=1||ngu011
+231259_0.batch|batch|RUNNING|0:0|00:03:12|cpu=4,mem=0,node=1||ngu011
+231259_0.extern|extern|RUNNING|0:0|00:03:12|billing=4,cpu=4,node=1||ngu011
+231259_[1-7%1]|psv05t3|PENDING|0:0|00:00:00|||None assigned
+=== RUNTIME JSON ===
+{
+  "basin": "02137727",
+  "checks": {
+    "dropout_disabled": true,
+    "frozen_weights_have_no_gradient": true,
+    "full_shape_repeat_exact": true,
+    "gradient_finite_and_nonzero": true,
+    "gradient_max_absolute_difference": true,
+    "gradient_relative_l2_difference": true,
+    "identity_rule": true,
+    "micro_shape_repeat_exact": true,
+    "repeat_forward_exact": true,
+    "warmup_gradient_finite_and_nonzero": true
+  },
+  "device": "cuda:0",
+  "dropout_training": false,
+  "failure_reasons": [],
+  "first_warmup_day_precipitation_gradient": 6.003176895319484e-05,
+  "frozen_weight_gradient_count": 0,
+  "full_model_training": false,
+  "gradient": {
+    "difference": [
+      2.0326115190982819e-07,
+      -1.94646418094635e-07,
+      -6.366521120071411e-06,
+      -3.9068982005119324e-07,
+      7.644295692443848e-06,
+      2.886354923248291e-05
+    ],
+    "difference_l2": 3.053365435334854e-05,
+    "difference_max_abs": 2.886354923248291e-05,
+    "difference_relative_l2": 0.00012101645048266371,
+    "full": [
+      0.0007383945630863309,
+      0.006997047457844019,
+      0.04469723254442215,
+      0.00266621308401227,
+      0.057106662541627884,
+      0.24154643714427948
+    ],
+    "full_l2": 0.2523099482059479,
+    "full_max_abs": 0.24154643714427948,
+    "full_shape_repeat_max_abs": 0.0,
+    "max_difference_full_value": 0.24154643714427948,
+    "max_difference_micro_value": 0.241517573595047,
+    "max_difference_parameter": 5,
+    "max_difference_sign_flip": false,
+    "micro": [
+      0.0007381913019344211,
+      0.006997242104262114,
+      0.04470359906554222,
+      0.002666603773832321,
+      0.05709901824593544,
+      0.241517573595047
+    ],
+    "micro_l2": 0.25228172540664673,
+    "micro_max_abs": 0.241517573595047,
+    "micro_shape_repeat_max_abs": 0.0
+  },
+  "hashes": {
+    "model_config": "0a3b8a3d8c6e153288b480b5cef9166b80248f2968ce538f95eb38b21a21f61a",
+    "model_scaler": "d2a6ce291e137bcf30dbb39f140692882769760f59f71a29d674b02eafde14db",
+    "model_weight": "1c755b0d6ce977db38a8332b50160f2a62a732cb7835be8814d7c23f12a70e00",
+    "protocol_file": "3b58878a9c2511663c10236a5b6bb6913b810c7c061fb0b0aa5e8daa1f5f8e58",
+    "run_manifest": "1c6b26c916c743cc44712727b3731e9e8703f4c5a7b9b11c66c107aba7e70331",
+    "validation_script": "4c39c3dde841436bb1f95a609fad36b025739cbdec0d649af1bcb0e11df42972"
+  },
+  "identity_max_abs": 0.0,
+  "microbatch_size": 4,
+  "objective": {
+    "difference": 1.1822208762168884e-05,
+    "full": 0.09016694873571396,
+    "micro_sum": 0.09015512652695179
+  },
+  "passed": true,
+  "prediction": {
+    "full": [
+      0.09442973136901855,
+      0.09156930446624756,
+      0.08598113059997559,
+      0.08152854442596436,
+      0.07792115211486816,
+      0.07402336597442627,
+      0.07100284099578857,
+      0.06752896308898926,
+      0.0675969123840332,
+      0.06695365905761719,
+      0.06557595729827881,
+      0.06827855110168457,
+      0.06954920291900635,
+      0.07153058052062988,
+      0.07145774364471436,
+      0.06781172752380371
+    ],
+    "max_abs_difference": 1.1086463928222656e-05,
+    "micro": [
+      0.094429612159729,
+      0.09156596660614014,
+      0.08597183227539062,
+      0.08152246475219727,
+      0.07791006565093994,
+      0.07401752471923828,
+      0.07099485397338867,
+      0.06752395629882812,
+      0.06758689880371094,
+      0.06694447994232178,
+      0.06557083129882812,
+      0.06827950477600098,
+      0.06954073905944824,
+      0.07152867317199707,
+      0.07146823406219482,
+      0.06780338287353516
+    ]
+  },
+  "protocol": "selfrule_time_v05",
+  "recurrent_module_training": true,
+  "repeat_max_abs": 0.0,
+  "rule_parameter_count": 6,
+  "rule_parameters": [
+    {
+      "members": [
+        {
+          "original_bin": 0,
+          "quantile_edges_mm": [
+            1.3233333826065061,
+            5.186666488647459
+          ],
+          "season": "cold"
+        }
+      ],
+      "parameter": 0
+    },
+    {
+      "members": [
+        {
+          "original_bin": 1,
+          "quantile_edges_mm": [
+            1.3233333826065061,
+            5.186666488647459
+          ],
+          "season": "cold"
+        }
+      ],
+      "parameter": 1
+    },
+    {
+      "members": [
+        {
+          "original_bin": 2,
+          "quantile_edges_mm": [
+            1.3233333826065061,
+            5.186666488647459
+          ],
+          "season": "cold"
+        }
+      ],
+      "parameter": 2
+    },
+    {
+      "members": [
+        {
+          "original_bin": 0,
+          "quantile_edges_mm": [
+            1.350000023841858,
+            4.516666730244954
+          ],
+          "season": "warm"
+        }
+      ],
+      "parameter": 3
+    },
+    {
+      "members": [
+        {
+          "original_bin": 1,
+          "quantile_edges_mm": [
+            1.350000023841858,
+            4.516666730244954
+          ],
+          "season": "warm"
+        }
+      ],
+      "parameter": 4
+    },
+    {
+      "members": [
+        {
+          "original_bin": 2,
+          "quantile_edges_mm": [
+            1.350000023841858,
+            4.516666730244954
+          ],
+          "season": "warm"
+        }
+      ],
+      "parameter": 5
+    }
+  ],
+  "runtime": {
+    "cuda": "12.1",
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": false,
+    "dtype": "torch.float32",
+    "float32_matmul_precision": "highest",
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "torch": "2.4.0"
+  },
+  "target_count": 16,
+  "target_dates": [
+    "1985-09-15",
+    "1985-09-16",
+    "1985-09-17",
+    "1985-09-18",
+    "1985-09-19",
+    "1985-09-20",
+    "1985-09-21",
+    "1985-09-22",
+    "1985-09-23",
+    "1985-09-24",
+    "1985-09-25",
+    "1985-09-26",
+    "1985-09-27",
+    "1985-09-28",
+    "1985-09-29",
+    "1985-09-30"
+  ],
+  "thresholds": {
+    "gradient_max_absolute_difference": 0.0001,
+    "gradient_relative_l2_difference": 0.0005
+  }
+}
+=== RUNTIME LOG ===
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/runtime-231258.out
+[2026-09-29 18:11:15 +0800] selfrule_time_v05 runtime gate
+NVIDIA GeForce RTX 3090, 24576 MiB, 23540 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+{"basin": "02137727", "checks": {"dropout_disabled": true, "frozen_weights_have_no_gradient": true, "full_shape_repeat_exact": true, "gradient_finite_and_nonzero": true, "gradient_max_absolute_difference": true, "gradient_relative_l2_difference": true, "identity_rule": true, "micro_shape_repeat_exact": true, "repeat_forward_exact": true, "warmup_gradient_finite_and_nonzero": true}, "device": "cuda:0", "dropout_training": false, "failure_reasons": [], "first_warmup_day_precipitation_gradient": 6.003176895319484e-05, "frozen_weight_gradient_count": 0, "full_model_training": false, "gradient": {"difference": [2.0326115190982819e-07, -1.94646418094635e-07, -6.366521120071411e-06, -3.9068982005119324e-07, 7.644295692443848e-06, 2.886354923248291e-05], "difference_l2": 3.053365435334854e-05, "difference_max_abs": 2.886354923248291e-05, "difference_relative_l2": 0.00012101645048266371, "full": [0.0007383945630863309, 0.006997047457844019, 0.04469723254442215, 0.00266621308401227, 0.057106662541627884, 0.24154643714427948], "full_l2": 0.2523099482059479, "full_max_abs": 0.24154643714427948, "full_shape_repeat_max_abs": 0.0, "max_difference_full_value": 0.24154643714427948, "max_difference_micro_value": 0.241517573595047, "max_difference_parameter": 5, "max_difference_sign_flip": false, "micro": [0.0007381913019344211, 0.006997242104262114, 0.04470359906554222, 0.002666603773832321, 0.05709901824593544, 0.241517573595047], "micro_l2": 0.25228172540664673, "micro_max_abs": 0.241517573595047, "micro_shape_repeat_max_abs": 0.0}, "hashes": {"model_config": "0a3b8a3d8c6e153288b480b5cef9166b80248f2968ce538f95eb38b21a21f61a", "model_scaler": "d2a6ce291e137bcf30dbb39f140692882769760f59f71a29d674b02eafde14db", "model_weight": "1c755b0d6ce977db38a8332b50160f2a62a732cb7835be8814d7c23f12a70e00", "protocol_file": "3b58878a9c2511663c10236a5b6bb6913b810c7c061fb0b0aa5e8daa1f5f8e58", "run_manifest": "1c6b26c916c743cc44712727b3731e9e8703f4c5a7b9b11c66c107aba7e70331", "validation_script": "4c39c3dde841436bb1f95a609fad36b025739cbdec0d649af1bcb0e11df42972"}, "identity_max_abs": 0.0, "microbatch_size": 4, "objective": {"difference": 1.1822208762168884e-05, "full": 0.09016694873571396, "micro_sum": 0.09015512652695179}, "passed": true, "prediction": {"full": [0.09442973136901855, 0.09156930446624756, 0.08598113059997559, 0.08152854442596436, 0.07792115211486816, 0.07402336597442627, 0.07100284099578857, 0.06752896308898926, 0.0675969123840332, 0.06695365905761719, 0.06557595729827881, 0.06827855110168457, 0.06954920291900635, 0.07153058052062988, 0.07145774364471436, 0.06781172752380371], "max_abs_difference": 1.1086463928222656e-05, "micro": [0.094429612159729, 0.09156596660614014, 0.08597183227539062, 0.08152246475219727, 0.07791006565093994, 0.07401752471923828, 0.07099485397338867, 0.06752395629882812, 0.06758689880371094, 0.06694447994232178, 0.06557083129882812, 0.06827950477600098, 0.06954073905944824, 0.07152867317199707, 0.07146823406219482, 0.06780338287353516]}, "protocol": "selfrule_time_v05", "recurrent_module_training": true, "repeat_max_abs": 0.0, "rule_parameter_count": 6, "rule_parameters": [{"members": [{"original_bin": 0, "quantile_edges_mm": [1.3233333826065061, 5.186666488647459], "season": "cold"}], "parameter": 0}, {"members": [{"original_bin": 1, "quantile_edges_mm": [1.3233333826065061, 5.186666488647459], "season": "cold"}], "parameter": 1}, {"members": [{"original_bin": 2, "quantile_edges_mm": [1.3233333826065061, 5.186666488647459], "season": "cold"}], "parameter": 2}, {"members": [{"original_bin": 0, "quantile_edges_mm": [1.350000023841858, 4.516666730244954], "season": "warm"}], "parameter": 3}, {"members": [{"original_bin": 1, "quantile_edges_mm": [1.350000023841858, 4.516666730244954], "season": "warm"}], "parameter": 4}, {"members": [{"original_bin": 2, "quantile_edges_mm": [1.350000023841858, 4.516666730244954], "season": "warm"}], "parameter": 5}], "runtime": {"cuda": "12.1", "cuda_matmul_allow_tf32": false, "cudnn": 90100, "cudnn_allow_tf32": true, "cudnn_benchmark": false, "cudnn_deterministic": true, "deterministic_algorithms": false, "dtype": "torch.float32", "float32_matmul_precision": "highest", "gpu": "NVIDIA GeForce RTX 3090", "torch": "2.4.0"}, "target_count": 16, "target_dates": ["1985-09-15", "1985-09-16", "1985-09-17", "1985-09-18", "1985-09-19", "1985-09-20", "1985-09-21", "1985-09-22", "1985-09-23", "1985-09-24", "1985-09-25", "1985-09-26", "1985-09-27", "1985-09-28", "1985-09-29", "1985-09-30"], "thresholds": {"gradient_max_absolute_difference": 0.0001, "gradient_relative_l2_difference": 0.0005}}
+[2026-09-29 18:12:24 +0800] DONE runtime gate
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/runtime-231258.err
+=== FIT RECORDS ===
+FIT_DIR_PENDING
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:17:41+0800
