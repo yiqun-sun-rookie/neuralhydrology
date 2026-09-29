@@ -1,52 +1,34 @@
 #!/bin/bash
-# precip-selfrule-v05 seq=1 (2026-09-29): read-only preflight for selfrule_time_v05.
-# No compute, no sbatch, no writes outside the mailbox receipt.
+# precip-selfrule-v05 seq=2: identify the exact frozen C4 assets and repository state.
+# Read-only; no compute job is submitted.
 set -o pipefail
 ROOT=/data1/home/sunyiq/precip_input_da_2026_09
-NEWROOT=/data1/home/sunyiq/precip_input_selfrule_time_v05_20260929
 REPO=$HOME/neuralhydrology
 
 date "+wallclock %F %T %z"
 hostname
 
-echo "=== A. CURRENT USER JOBS ==="
-squeue -u sunyiq -o "%.18i %.28j %.10P %.2t %.10M %.6D %R"
-
-echo "=== B. GPU NODE STATE ==="
-sinfo -p hgpu2p,hgpu4,hgpu8 -N -O nodelist,partition,statecompact,gres:18,gresused:30,cpusstate
-
-echo "=== C. REQUIRED PATHS ==="
-for p in "$ROOT" "$REPO" "$REPO/data/camels_us" "$REPO/data/camels_us/basin_mean_forcing/maurer" "$REPO/data/camels_us/usgs_streamflow"; do
-  if [ -e "$p" ]; then
-    echo "PRESENT $p"
-  else
-    echo "MISSING $p"
-  fi
-done
-if [ -e "$NEWROOT" ]; then
-  echo "NEWROOT_ALREADY_EXISTS $NEWROOT"
-else
-  echo "NEWROOT_FREE $NEWROOT"
-fi
-
-echo "=== D. C4 LANDING FILES ==="
-find "$ROOT" -maxdepth 6 -type f \( -name model_epoch030.pt -o -name config.yml -o -name train_data_scaler.yml \) -print 2>/dev/null
-
-echo "=== E. CORE SOURCE HASHES ==="
-for rel in neuralhydrology/modelzoo/cudalstm.py neuralhydrology/modelzoo/inputlayer.py neuralhydrology/modelzoo/__init__.py neuralhydrology/modelzoo/head.py neuralhydrology/utils/config.py neuralhydrology/datautils/utils.py neuralhydrology/datasetzoo/camelsus.py; do
-  f="$REPO/$rel"
-  if [ -f "$f" ]; then
-    sha256sum "$f"
-  else
-    echo "MISSING $f"
-  fi
+echo "=== A. C4 ASSET HASHES ==="
+for d in "$ROOT/base/C4" "$ROOT/base/C4_s200" "$ROOT/base/C4_s300"; do
+  echo "DIR $d"
+  for rel in model_epoch030.pt config.yml train_data/train_data_scaler.yml; do
+    if [ -f "$d/$rel" ]; then
+      sha256sum "$d/$rel"
+    else
+      echo "MISSING $d/$rel"
+    fi
+  done
 done
 
-echo "=== F. ENVIRONMENT ==="
-if command -v conda >/dev/null 2>&1; then
-  conda run -n nh_final python -c 'import sys, torch, numpy, pandas, yaml; print(sys.version.split()[0], torch.__version__, torch.cuda.is_available(), numpy.__version__, pandas.__version__)'
-else
-  echo "CONDA_NOT_ON_PATH"
-fi
+echo "=== B. REPOSITORY STATE ==="
+git -C "$REPO" rev-parse HEAD
+git -C "$REPO" branch --show-current
+git -C "$REPO" status --short -- neuralhydrology/modelzoo/cudalstm.py neuralhydrology/modelzoo/inputlayer.py neuralhydrology/modelzoo/__init__.py neuralhydrology/modelzoo/head.py neuralhydrology/utils/config.py neuralhydrology/datautils/utils.py neuralhydrology/datasetzoo/camelsus.py
 
-echo "=== DONE READ-ONLY PREFLIGHT ==="
+echo "=== C. CONFIG SEMANTICS ==="
+for d in "$ROOT/base/C4" "$ROOT/base/C4_s200" "$ROOT/base/C4_s300"; do
+  echo "DIR $d"
+  grep -E '^(model|hidden_size|seq_length|predict_last_n|output_dropout|train_start_date|train_end_date|seed):' "$d/config.yml" || true
+done
+
+echo "=== DONE READ-ONLY ASSET CHECK ==="
