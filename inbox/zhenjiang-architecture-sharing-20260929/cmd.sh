@@ -27,6 +27,6 @@ print(json.dumps({'submission': submission, 'scheduler_reply': scheduler,
                   'epoch_records': epoch_records}, sort_keys=True))
 ZJ_ARCH_STATUS
 echo '=== squeue array state ==='
-squeue -r -j "$JOB" -h -o '%A|%a|%T|%M|%R|%j' | head -n 130
+squeue -r -j "$JOB" -h -o '%A|%a|%T|%M|%R|%j' | awk 'NR <= 130'
 echo '=== sacct bounded state ==='
-sacct -j "$JOB" --starttime 2026-09-29 --noheader --parsable2 --format=JobIDRaw,State,ExitCode,Elapsed,NodeList | head -n 240
+sacct -j "$JOB" --starttime 2026-09-29 --noheader --parsable2 --format=JobIDRaw,State,ExitCode,Elapsed,NodeList | awk 'NR <= 240'
