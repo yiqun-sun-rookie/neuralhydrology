@@ -1,0 +1,44 @@
+### channel=kalmannet-daily-perbasin seq=225
+### host=login4
+### started=2026-09-29T21:38:55+0800
+### ---------- output ----------
+SLZ_SURVEY_SUBMIT_V1
+sequence=225
+timestamp_utc=2026-09-29T13:38:55Z
+host=login4
+OWN_QUEUE_BEGIN
+231096_[68-113%2]|zj-arch-share|PENDING|hgpu2p|(JobArrayTaskLimit)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|(JobHeldUser)
+231096_67|zj-arch-share|RUNNING|hgpu2p|ngu011
+231096_66|zj-arch-share|RUNNING|hgpu2p|ngu010
+OWN_QUEUE_END
+hcpu48_idle_nodes=7
+tar: authorization_survey.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: registered_inputs.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: run_coldstart_intervention.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run_slz_survey.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run_training_mode_replay.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: source_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: submit.slurm: implausibly old time stamp 1970-01-01 08:00:00
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/bundle_manifest.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/run_slz_survey.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/run_training_mode_replay.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/run_coldstart_intervention.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/authorization_survey.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/registered_inputs.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/submit.slurm: OK
+/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1/payload/source_manifest.json: OK
+REBIND_OK|runs=105
+STAGED_BUNDLE_SHA=cdd9a58abae5de5211f78c6d4ce543fb57cf9c5a60c7c5022f2e98a5c2591184
+Submitted batch job 231448
+job_id=231448
+output_root=/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:39:07+0800
