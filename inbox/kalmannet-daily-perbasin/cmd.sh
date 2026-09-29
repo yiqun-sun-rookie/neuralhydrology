@@ -3,17 +3,17 @@ set -eo pipefail
 readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1"
 readonly EXPECTED_AGGREGATE_SHA="ffc8c51ed3c5fd5defeae4b7dcf9b36e06c4f04bbce6898d2483be0d76b09c92"
 echo "SLZ_SURVEY_READ_ONLY_TRANSFER_V1"
-echo "sequence=236"
-echo "batch=8"
+echo "sequence=237"
+echo "batch=9"
 echo "kind=necessary"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 printf '%s  %s\n' "$EXPECTED_AGGREGATE_SHA" "$OUTPUT_ROOT/aggregate.json" | sha256sum --check --strict
 files=(
-  part_a/seed_20260922/epoch_012_all.npz
-  part_a/seed_20260922/epoch_013_all.npz
-  part_a/seed_20260922/epoch_014_all.npz
-  part_a/seed_20260922/epoch_015_all.npz
-  part_a/seed_20260922/epoch_016_all.npz
+  part_a/seed_20260922/epoch_017_all.npz
+  part_a/seed_20260922/epoch_018_all.npz
+  part_a/seed_20260922/epoch_019_all.npz
+  part_a/seed_20260922/epoch_020_all.npz
+  part_a/seed_20260922/epoch_021_all.npz
 )
 total=0
 for rel in "${files[@]}"; do
