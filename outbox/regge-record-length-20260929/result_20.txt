@@ -1,0 +1,28 @@
+### channel=regge-record-length-20260929 seq=20
+### host=login4
+### started=2026-09-29T21:58:29+0800
+### ---------- output ----------
+=== exclusive attempt-003 deployment preflight ===
+REMOTE_POSIX_PATH_GATE=PASS
+FORMAL_JOB_ID=231464
+{
+  "schema": "regge_record_length_hpc_submission_receipt_v01",
+  "status": "submitted",
+  "slurm_job_id": "231464",
+  "slurm_job_name": "regge_rl_cal_003",
+  "formal_attempt": "20260929-003",
+  "remote_output": "/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_003",
+  "archive_sha256": "4d8ab8c8e8e632f69f8c0d53d48f2e3cecd1421ab742e439779dc869d4dd7587",
+  "capsule_manifest_sha256": "203a2da468d8bcbc8b7ad1306f6eea04ef13520f32dc0f053d49d98570763f23",
+  "authorization_sha256": "e15d17a925edb3fad03a5424dd49cc28cc031fa26e22f3366eae9c30c3f15eb1",
+  "job_submitted": true,
+  "manual_reconciliation_required": false,
+  "retry_policy": "none",
+  "submitted_utc": "2026-09-29T13:58:50.455220+00:00"
+}
+             JOBID                     NAME PARTITION      STATE               NODELIST(REASON)
+            231464         regge_rl_cal_003    hgpu2p    PENDING                         (None)
+FORMAL_SUBMISSION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:58:50+0800
