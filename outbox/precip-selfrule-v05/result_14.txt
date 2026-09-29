@@ -1,0 +1,26 @@
+### channel=precip-selfrule-v05 seq=14
+### host=login4
+### started=2026-09-29T18:54:56+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:54:56 +0800
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+          231273_[7%1]                 psv05t3r     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231273_6                 psv05t3r     hgpu2p  R    INVALID      1 ngu011
+JobID|State|ExitCode|Elapsed|MaxRSS|NodeList
+231273_3|COMPLETED|0:0|00:07:19||ngu006
+231273_3.batch|COMPLETED|0:0|00:07:19|1342972K|ngu006
+231273_3.extern|COMPLETED|0:0|00:07:20|1608K|ngu006
+231273_4|COMPLETED|0:0|00:07:44||ngu011
+231273_4.batch|COMPLETED|0:0|00:07:44|1324712K|ngu011
+231273_4.extern|COMPLETED|0:0|00:07:44|2392K|ngu011
+231273_5|COMPLETED|0:0|00:07:45||ngu011
+231273_5.batch|COMPLETED|0:0|00:07:45|1333168K|ngu011
+231273_5.extern|COMPLETED|0:0|00:07:45|2384K|ngu011
+231273_6|RUNNING|0:0|00:00:06||ngu011
+231273_6.batch|RUNNING|0:0|00:00:06||ngu011
+231273_6.extern|RUNNING|0:0|00:00:06||ngu011
+231273_[7%1]|PENDING|0:0|00:00:00||None assigned
+COMPLETE_COUNT 6 ['01054200', '01142500', '02137727', '02245500', '09404450', '09512280']
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:54:57+0800
