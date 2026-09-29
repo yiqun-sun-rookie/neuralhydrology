@@ -31,8 +31,8 @@ squeue = subprocess.run(['squeue', '-j', job_id, '-h', '-o', '%i|%j|%T|%R|%M|%S'
 sacct = subprocess.run(['sacct', '-X', '-j', job_id, '-P', '-n',
                         '--format=JobID,JobName,Partition,AllocCPUS,ReqCPUS,AllocTRES,ReqTRES,ElapsedRaw,State,ExitCode,Start,End,Timelimit'],
                        text=True, capture_output=True, timeout=30)
-if squeue.returncode != 0 or sacct.returncode != 0:
-    raise SystemExit('scheduler read-only query failed')
+if sacct.returncode != 0:
+    raise SystemExit('scheduler accounting read-only query failed: ' + sacct.stderr.strip())
 submission = json.loads((control / 'submission.json').read_text(encoding='utf-8'))
 attempt = json.loads((control / 'submission_attempt.json').read_text(encoding='utf-8'))
 if (submission.get('job_id') != job_id
@@ -80,7 +80,9 @@ for suffix in ('out', 'err'):
         log_tails[suffix] = lines[-20:]
 print('FULL_BUDGET_ATTEMPT2_READONLY_STATUS ' + json.dumps({
     'job_id': job_id, 'squeue_return_code': squeue.returncode, 'squeue': squeue.stdout,
-    'sacct': sacct.stdout, 'progress': progress, 'files': files, 'log_tails': log_tails,
+    'squeue_stderr': squeue.stderr, 'sacct_return_code': sacct.returncode,
+    'sacct': sacct.stdout, 'sacct_stderr': sacct.stderr,
+    'progress': progress, 'files': files, 'log_tails': log_tails,
     'scheduler_mutation_performed': False, 'model_execution_requested_by_status_query': False,
     'formal_evaluation_performed': False,
 }, sort_keys=True))
