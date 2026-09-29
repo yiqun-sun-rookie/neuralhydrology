@@ -1,0 +1,53 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=31
+### host=login4
+### started=2026-09-29T13:07:35+0800
+### ---------- output ----------
+CORRECTED_FOURTEEN_SCHEDULER_SNAPSHOT
+230414|knet-corrected-main_seed43__corrected_outlet_original_states|RUNNING|0:0|00:05:06|billing=4,cpu=4,node=1|06:00:00|hgpu2p|ngu011
+230415|knet-corrected-main_seed43__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230416|knet-corrected-main_seed44__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230417|knet-corrected-main_seed44__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230418|knet-corrected-compact_seed42__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230419|knet-corrected-compact_seed42__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230420|knet-corrected-compact_seed43__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230421|knet-corrected-compact_seed43__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230422|knet-corrected-compact_seed44__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230423|knet-corrected-compact_seed44__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230424|knet-corrected-learned_noise__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230425|knet-corrected-learned_noise__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230426|knet-corrected-hand_tuned__corrected_outlet_original_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230427|knet-corrected-hand_tuned__corrected_outlet_corrected_states|PENDING|0:0|00:00:00|billing=4,cpu=4,node=1|06:00:00|hgpu2p|None assigned
+230415|knet-corrected-main_seed43__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230414
+230416|knet-corrected-main_seed44__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230415
+230417|knet-corrected-main_seed44__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230416
+230418|knet-corrected-compact_seed42__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230417
+230419|knet-corrected-compact_seed42__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230418
+230420|knet-corrected-compact_seed43__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230419
+230421|knet-corrected-compact_seed43__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230420
+230422|knet-corrected-compact_seed44__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230421
+230423|knet-corrected-compact_seed44__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230422
+230424|knet-corrected-learned_noise__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230423
+230425|knet-corrected-learned_noise__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230424
+230426|knet-corrected-hand_tuned__corrected_outlet_original_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230425
+230427|knet-corrected-hand_tuned__corrected_outlet_corrected_states|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230426
+230414|knet-corrected-main_seed43__corrected_outlet_original_states|RUNNING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|ngu011|
+CASE=main_seed43__corrected_outlet_original_states
+PRESENT=running.json
+PRESENT=model_start.json
+CASE=main_seed43__corrected_outlet_corrected_states
+CASE=main_seed44__corrected_outlet_original_states
+CASE=main_seed44__corrected_outlet_corrected_states
+CASE=compact_seed42__corrected_outlet_original_states
+CASE=compact_seed42__corrected_outlet_corrected_states
+CASE=compact_seed43__corrected_outlet_original_states
+CASE=compact_seed43__corrected_outlet_corrected_states
+CASE=compact_seed44__corrected_outlet_original_states
+CASE=compact_seed44__corrected_outlet_corrected_states
+CASE=learned_noise__corrected_outlet_original_states
+CASE=learned_noise__corrected_outlet_corrected_states
+CASE=hand_tuned__corrected_outlet_original_states
+CASE=hand_tuned__corrected_outlet_corrected_states
+NO_MODEL_RESULTS_ACCEPTED_BY_STATUS_QUERY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T13:07:35+0800
