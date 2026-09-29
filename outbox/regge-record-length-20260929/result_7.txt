@@ -1,0 +1,17 @@
+### channel=regge-record-length-20260929 seq=7
+### host=login4
+### started=2026-09-29T18:24:51+0800
+### ---------- output ----------
+=== download pinned private environment tool ===
+/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/micromamba-2.9.0-linux-64.tar.bz2: OK
+2.9.0
+=== create exact isolated Linux runtime ===
+=== validate exact isolated Linux runtime ===
+{"cuda_available": false, "mkl_service_force_intel": "1", "mkl_threading_layer": "GNU", "numpy": "1.26.4", "prefix": "/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_002", "psutil": "5.9.0", "python": "3.11.5", "schema": "regge_private_runtime_ready_v01", "torch": "2.2.2", "torch_threads": 1}
+153c0c8bfb81e990114d5af7350c9c75c6542aa7484571597e1e6934fdf30d0d  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/runtime_ready.json
+07cb187e8984274c5b5c814df7d8db83595a0b90cbe4f980ec9e02de71381b40  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/environment.explicit.txt
+1.7G	/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_002
+1.9G	/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/mamba_root/pkgs
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:31:15+0800
