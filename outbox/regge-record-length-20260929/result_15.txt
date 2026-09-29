@@ -1,0 +1,19 @@
+### channel=regge-record-length-20260929 seq=15
+### host=login4
+### started=2026-09-29T20:50:04+0800
+### ---------- output ----------
+=== exclusive formal deployment preflight ===
+=== copy and verify bound capsule archive ===
+=== independent capsule verification on HPC ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_001/project/python/run_regge_record_length_hpc_calibration.py", line 107, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_001/project/python/run_regge_record_length_hpc_calibration.py", line 78, in main
+    verify_capsule(args.capsule_root)
+  File "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_001/project/python/regge_record_length_study/hpc_calibration.py", line 328, in verify_capsule
+    raise RuntimeError("capsule file set or hashes differ")
+RuntimeError: capsule file set or hashes differ
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-29T20:50:26+0800
