@@ -4,9 +4,10 @@ readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_devel
 readonly SOURCE_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/workspace"
 readonly RUNS_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runs"
 readonly PYTHON_BIN="/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python"
+readonly PYTHON_ENV_ROOT="/data1/home/sunyiq/miniconda3/envs/nh_final"
 readonly FAMILY="DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916"
-echo "SLZ_SURVEY_READ_ONLY_PREFLIGHT_V1"
-echo "sequence=223"
+echo "SLZ_SURVEY_READ_ONLY_PREFLIGHT_V2"
+echo "sequence=224"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "host=$(hostname)"
 echo "OWN_QUEUE_BEGIN"
@@ -24,9 +25,25 @@ if ! [[ "$idle_nodes" =~ ^[0-9]+$ ]] || [[ "$idle_nodes" -lt 1 ]]; then
 fi
 if [[ -d "$SOURCE_ROOT" && ! -L "$SOURCE_ROOT" ]]; then echo "SOURCE_ROOT_PRESENT=yes"; else echo "SOURCE_ROOT_PRESENT=no"; fi
 if [[ -d "$RUNS_ROOT" && ! -L "$RUNS_ROOT" ]]; then echo "RUNS_ROOT_PRESENT=yes"; else echo "RUNS_ROOT_PRESENT=no"; fi
-if [[ -x "$PYTHON_BIN" && ! -L "$PYTHON_BIN" ]]; then echo "PYTHON_PRESENT=yes"; else echo "PYTHON_PRESENT=no"; fi
 if [[ -e "$OUTPUT_ROOT" ]]; then echo "PROPOSED_ROOT_ABSENT=no"; else echo "PROPOSED_ROOT_ABSENT=yes"; fi
-PYTHONDONTWRITEBYTECODE=1 "$PYTHON_BIN" -B - "$RUNS_ROOT" "$FAMILY" <<'PY'
+if [[ ! -e "$PYTHON_BIN" || ! -x "$PYTHON_BIN" || ! -L "$PYTHON_BIN" ]]; then
+  echo "PYTHON_IDENTITY_OK=no" >&2
+  exit 13
+fi
+python_resolved=$(readlink -f -- "$PYTHON_BIN") || { echo "PYTHON_IDENTITY_OK=no" >&2; exit 13; }
+case "$python_resolved" in
+  "$PYTHON_ENV_ROOT"/bin/python*) ;;
+  *) echo "PYTHON_IDENTITY_OK=no" >&2; exit 13 ;;
+esac
+if [[ ! -f "$python_resolved" || ! -x "$python_resolved" || -L "$python_resolved" ]]; then
+  echo "PYTHON_IDENTITY_OK=no" >&2
+  exit 13
+fi
+python_sha=$(sha256sum -- "$python_resolved" | awk '{print $1}')
+if ! [[ "$python_sha" =~ ^[0-9a-f]{64}$ ]]; then echo "PYTHON_IDENTITY_OK=no" >&2; exit 13; fi
+echo "PYTHON_IDENTITY|requested=$PYTHON_BIN|requested_is_symlink=yes|resolved=$python_resolved|sha256=$python_sha"
+echo "PYTHON_IDENTITY_OK=yes"
+PYTHONDONTWRITEBYTECODE=1 "$python_resolved" -B - "$RUNS_ROOT" "$FAMILY" "$PYTHON_ENV_ROOT" "$python_resolved" <<'PY'
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -37,6 +54,8 @@ import torch
 
 runs_root = Path(sys.argv[1])
 family = sys.argv[2]
+expected_prefix = sys.argv[3]
+expected_executable = sys.argv[4]
 basins = ('04105700','08190500','02102908','12447390','01487000','02178400','08070200','09513780','06803510','03076600','12175500','09035800','04027000','08109700','08086290','01440400','05503800','03049000','01435000','02092500','14185900',)
 seeds = (20260824,20260901,20260908,20260915,20260922,)
 
@@ -47,6 +66,9 @@ def digest(path):
             value.update(block)
     return value.hexdigest()
 
+if sys.prefix != expected_prefix or sys.executable != expected_executable:
+    raise SystemExit(f"PYTHON_RUNTIME_MISMATCH|executable={sys.executable}|prefix={sys.prefix}")
+print(f"PYTHON_RUNTIME|executable={sys.executable}|prefix={sys.prefix}")
 print(f"ENVIRONMENT|python={sys.version.split()[0]}|numpy={numpy.__version__}|torch={torch.__version__.split('+')[0]}")
 print("RUNS_BEGIN")
 for basin in basins:
