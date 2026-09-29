@@ -1,0 +1,24 @@
+### channel=regge-record-length-20260929 seq=9
+### host=login4
+### started=2026-09-29T18:49:48+0800
+### ---------- output ----------
+=== read-only diagnosis of failed complete runtime build ===
+root=/data1/home/sunyiq/regge_record_length_20260929_001
+stage=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_003
+prefix=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_003
+exists=yes path=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_003
+exists=no path=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_003
+exists=yes path=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/tool/bin/micromamba
+=== failure receipt and stage files ===
+status=failed
+exit_code=1
+utc=2026-09-29T10:45:24Z
+/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_003/runtime_failed.txt 51 bytes
+=== partial prefix metadata ===
+=== package cache and capacity ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  631T  324T  67% /data1
+3.4G	/data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_002/mamba_root/pkgs
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:50:09+0800
