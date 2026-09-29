@@ -1,0 +1,43 @@
+### channel=regge-record-length-20260929 seq=2
+### host=login4
+### started=2026-09-29T17:33:31+0800
+### ---------- output ----------
+=== identity ===
+2026-09-29T17:33:31+0800
+login4
+=== conda environments ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== exact cached packages ===
+/data1/home/sunyiq/miniconda3/pkgs/python-3.11.5-h955ad1f_0
+/data1/home/sunyiq/miniconda3/pkgs/python-3.11.5-h955ad1f_0.conda
+NO_MATCH /data1/home/sunyiq/miniconda3/pkgs/numpy-1.26.4-*
+NO_MATCH /data1/home/sunyiq/miniconda3/pkgs/pytorch-2.2.2-*
+NO_MATCH /data1/home/sunyiq/miniconda3/pkgs/torch-2.2.2-*
+=== available isolated runtime tools ===
+conda=conda
+ABSENT micromamba
+ABSENT apptainer
+singularity=/usr/local/bin/singularity
+=== exact Regge and ID23 top-level candidates ===
+drwxr-xr-x sunyiq g_sunyiq 4096 2026-09-02 16:51:39.000000000 +0800 /data1/home/sunyiq/id23_r_perturbation
+drwxr-xr-x sunyiq g_sunyiq 4096 2026-09-03 13:14:32.000000000 +0800 /data1/home/sunyiq/id23_param_probe
+drwxr-xr-x sunyiq g_sunyiq 4096 2026-08-19 14:43:04.000000000 +0800 /data1/home/sunyiq/id23_dlimm
+=== exact archive directory names under candidate roots ===
+=== partition policies ===
+PartitionName=hcpu48
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=EXCLUSIVE
+   State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE
+PartitionName=hgpu2p
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T17:33:46+0800
