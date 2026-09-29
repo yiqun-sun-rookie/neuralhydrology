@@ -116,7 +116,7 @@ members = {
     'registry_frozen.json': registry_raw,
     'reports/training_manifest.json': manifest_raw,
     'submission/submitted.json': submission_raw,
-    'deployment/deployed.json': raw_file('deployment/deployed.json', 32_768),
+    'deploy/deployment.json': raw_file('deploy/deployment.json', 32_768),
 }
 records_checked = checkpoints_checked = selected_state_checks = 0
 attempt_job_ids = set()
