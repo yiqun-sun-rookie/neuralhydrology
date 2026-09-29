@@ -1,0 +1,8 @@
+### channel=zhenjiang-architecture-sharing-20260929 seq=2
+### host=login4
+### started=2026-09-29T15:23:52+0800
+### ---------- output ----------
+{"deployment_sha256": "f4d409049b4b13d03cf76ac1026d5514da9acbab5cd44d6c082e6ce7398905ac", "job_sha256": "b852a6e57b29ba79b91e91b5c4cb21cfddd8a356be994bca62f1ed7cc2bd9e2d", "manifest_sha256": "320a45562d1f2ced6b8baf165a777415596d2ecf1e7031c64711df2f5f02a06c", "payload_sha256": "f292580b9127d822ac0a71565733960b1dd6dc8f4be452f4ca5b6d4b5bcef487", "protocol_sha256": "1c9e0e116fea48ebedef76670e82361b27b161889c361cba3897c795fa150378", "registered_training_inputs": 10, "registry_sha256": "bbb07af90473ba1136043eceaa5a09bb6d085db172d7e37e1fe9a185e11179bf", "root": "/data1/home/sunyiq/zhenjiang_architecture_sharing_20260929_001", "root_binding": {"device": 41, "inode": 10021910277, "mode": 448, "uid": 2272}, "status": "DEPLOYED_NO_TRAINING"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T15:23:56+0800
