@@ -1,0 +1,35 @@
+### channel=precip-selfrule-v05 seq=19
+### host=login4
+### started=2026-09-29T19:41:26+0800
+### ---------- output ----------
+wallclock 2026-09-29 19:41:26 +0800
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+                231323                psv05b384     hgpu2p  R      11:36      1 ngu011
+JobID|JobName|State|ExitCode|Elapsed|AllocTRES|MaxRSS|NodeList
+231323|psv05b384|RUNNING|0:0|00:12:57|billing=4,cpu=4,node=1||ngu011
+231323.batch|batch|RUNNING|0:0|00:12:57|cpu=4,mem=0,node=1||ngu011
+231323.extern|extern|RUNNING|0:0|00:12:57|billing=4,cpu=4,node=1||ngu011
+BATCH_PROBE_COMPARISON_PENDING
+=== STDOUT TAIL ===
+[2026-09-29 19:26:27 +0800] batch384 probe
+NVIDIA GeForce RTX 3090, 24576 MiB, 23046 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+{
+  "all_complete": true,
+  "attempted_basins": [
+    "02137727"
+  ],
+  "complete_basins": [
+    "02137727"
+  ],
+  "elapsed_seconds": 400.1285008229315,
+  "peak_gpu_bytes": 5650876416,
+  "requested_basins": [
+    "02137727"
+  ],
+  "stage": "fit",
+  "technical_probe": false
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T19:41:27+0800
