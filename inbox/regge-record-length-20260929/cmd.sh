@@ -1,9 +1,9 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=18
+sequence=19
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-CREDENTIALS=$ROOT/transport_credentials_002
+CREDENTIALS=$ROOT/transport_credentials_003
 
 test ! -e "$CREDENTIALS"
 umask 077
@@ -16,10 +16,10 @@ openssl pkey -in "$CREDENTIALS/upload_token_private.pem" -pubout \
   -out "$CREDENTIALS/upload_token_public.pem"
 test "$(stat -c '%a' "$CREDENTIALS/upload_token_private.pem")" = "600"
 
-echo "HPC_SIGNING_CREDENTIALS_002_READY=1"
+echo "HPC_SIGNING_CREDENTIALS_003_READY=1"
 sha256sum "$CREDENTIALS/upload_token_public.pem"
 openssl pkey -pubin -in "$CREDENTIALS/upload_token_public.pem" -text -noout \
   | head -n 1
-echo "---BEGIN_PUBLIC_KEY_002---"
+echo "---BEGIN_PUBLIC_KEY_003---"
 cat "$CREDENTIALS/upload_token_public.pem"
-echo "---END_PUBLIC_KEY_002---"
+echo "---END_PUBLIC_KEY_003---"
