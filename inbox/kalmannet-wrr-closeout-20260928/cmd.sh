@@ -1,25 +1,39 @@
 #!/usr/bin/env bash
 set -eo pipefail
 parent=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1
-plain="$parent/plain_preflight_v1/numerical_impact/runs"
-adaptive="$parent/adaptive_preflight_v1/adaptive_comparison/runs"
-echo JOB_STATUS
-sacct -n -X -P -j 229381,229398,229399,229400,229401,229402,229403,229404,229405,229426 -o JobID,JobName,State,ExitCode,Elapsed,NodeList
-echo ACTIVE_TASK_QUEUE
-squeue -h -u sunyiq -o '%i|%j|%T|%Z|%R' | awk -F'|' '$4 ~ "^/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1(/|$)" {print}'
+plain="$parent/plain_preflight_v1"
+adaptive="$parent/adaptive_preflight_v1"
+plain_archive="$parent/plain_original_eight_metadata_001.tar.gz"
+adaptive_archive="$parent/adaptive_two_test_metadata_001.tar.gz"
+for target in "$plain_archive" "$adaptive_archive"; do
+  if [ -e "$target" ] || [ -L "$target" ]; then echo "REFUSE_EXISTING_ARCHIVE=$target"; exit 64; fi
+done
+plain_dirs=()
 for model in main_seed43 main_seed44 compact_seed42 compact_seed43 compact_seed44 learned_noise hand_tuned adaptive; do
-  output="$plain/${model}__original_outlet_original_states__formal_attempt01"
-  echo "ORIGINAL_CASE=$model"
-  for name in model_start.json completion.json failure.json historical_reproduction.json; do
-    if [ -f "$output/$name" ]; then sha256sum "$output/$name"; else echo "MISSING=$output/$name"; fi
-  done
+  relative="numerical_impact/runs/${model}__original_outlet_original_states__formal_attempt01"
+  test -s "$plain/$relative/completion.json"
+  test ! -e "$plain/$relative/failure.json"
+  plain_dirs+=("$relative")
 done
+adaptive_dirs=()
 for case_id in matched_fixed_test matched_selected_test; do
-  output="$adaptive/${case_id}__formal_attempt01"
-  echo "MATCHED_TEST_CASE=$case_id"
-  for name in running.json completion.json failure.json metrics.json; do
-    if [ -f "$output/$name" ]; then sha256sum "$output/$name"; else echo "MISSING=$output/$name"; fi
-  done
+  relative="adaptive_comparison/runs/${case_id}__formal_attempt01"
+  test -s "$adaptive/$relative/completion.json"
+  test ! -e "$adaptive/$relative/failure.json"
+  adaptive_dirs+=("$relative")
 done
-echo RECORD_HASHES
-sha256sum "$parent/adaptive_prepare_jobid.txt" "$parent/adaptive_test_formal_jobid.txt" "$parent/remaining_original_launch_001/all_jobids.txt"
+cd "$plain"
+find "${plain_dirs[@]}" -type f -name '*.json' -print0 | sort -z | tar --null -czf "$plain_archive" -T -
+cd "$adaptive"
+find "${adaptive_dirs[@]}" -type f \( -name '*.json' -o -name 'physical_plain_*.py' \) -print0 | sort -z | tar --null -czf "$adaptive_archive" -T -
+echo 'ORIGINAL_EIGHT_METADATA_ONLY_AND_ADAPTIVE_TWO_TEST_METADATA_SOURCE_BYTES_ONLY'
+printf 'PLAIN_RECEIPTS_SHA256='
+sha256sum "$plain_archive" | cut -d' ' -f1
+echo BEGIN_PLAIN_RECEIPTS_TAR_GZ
+base64 "$plain_archive"
+echo END_PLAIN_RECEIPTS_TAR_GZ
+printf 'ADAPTIVE_RECEIPTS_SHA256='
+sha256sum "$adaptive_archive" | cut -d' ' -f1
+echo BEGIN_ADAPTIVE_RECEIPTS_TAR_GZ
+base64 "$adaptive_archive"
+echo END_ADAPTIVE_RECEIPTS_TAR_GZ
