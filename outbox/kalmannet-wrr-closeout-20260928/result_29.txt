@@ -1,0 +1,21 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=29
+### host=login4
+### started=2026-09-29T12:58:29+0800
+### ---------- output ----------
+230259|FAILED|1:0|00:00:11|ngu001
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/completed_ten_array_review_001/arrays/failure.json: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/domain_diagnostic_001.tar: OK
+audit_completed_ten.py: OK
+audit_saved_statistics.py: OK
+diagnose_domain.py: OK
+diagnose_domain.slurm: OK
+independent_rereview_001.md: OK
+independent_review.md: OK
+task-report.md: OK
+test_diagnose_domain.py: OK
+Submitted batch job 230409
+FOUR_SAVED_ARRAY_DOMAIN_DIAGNOSTIC_SUBMITTED=230409
+230409|knet-domain-diagnostic|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/domain_diagnostic_001|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T12:58:29+0800
