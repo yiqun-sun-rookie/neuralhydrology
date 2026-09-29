@@ -1,0 +1,42 @@
+### channel=regge-record-length-20260929 seq=12
+### host=login4
+### started=2026-09-29T19:34:29+0800
+### ---------- output ----------
+=== clone exact core runtime into exclusive complete attempt ===
+Collecting pandas==2.3.2
+  Downloading pandas-2.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (91 kB)
+Collecting threadpoolctl==3.6.0
+  Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: pytest==9.1.1 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (9.1.1)
+Requirement already satisfied: numpy>=1.23.2 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (from pandas==2.3.2) (1.26.4)
+Collecting python-dateutil>=2.8.2 (from pandas==2.3.2)
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas==2.3.2)
+  Downloading pytz-2026.4-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas==2.3.2)
+  Downloading tzdata-2026.4-py2.py3-none-any.whl.metadata (1.4 kB)
+Requirement already satisfied: iniconfig>=1.0.1 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (from pytest==9.1.1) (2.3.0)
+Requirement already satisfied: packaging>=22 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (from pytest==9.1.1) (26.3)
+Requirement already satisfied: pluggy<2,>=1.5 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (from pytest==9.1.1) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/python3.11/site-packages (from pytest==9.1.1) (2.21.0)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas==2.3.2)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading pandas-2.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 13.1 MB/s  0:00:01
+Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading pytz-2026.4-py2.py3-none-any.whl (506 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading tzdata-2026.4-py2.py3-none-any.whl (347 kB)
+Installing collected packages: pytz, tzdata, threadpoolctl, six, python-dateutil, pandas
+
+Successfully installed pandas-2.3.2 python-dateutil-2.9.0.post0 pytz-2026.4 six-1.17.0 threadpoolctl-3.6.0 tzdata-2026.4
+=== validate complete old-glibc-compatible runtime ===
+{"numpy": "1.26.4", "pandas": "2.3.2", "psutil": "5.9.0", "pytest": "9.1.1", "python": "3.11.5", "threadpoolctl": "3.6.0", "torch": "2.2.2"}
+{"torch_threads": 1, "cuda_available": false}
+93229f625533fbec6b0a04ddb70b3b47c3c725cab4a9f99aa4f97c1c9280f463  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_005/runtime_ready.json
+15fd95da01a1f5884aa4a225165942b43f5db405a4f0d75fd400dac6468a82ac  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_005/pip_freeze.txt
+1.7G	/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T19:40:33+0800
