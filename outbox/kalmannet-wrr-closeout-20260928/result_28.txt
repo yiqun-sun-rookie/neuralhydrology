@@ -1,0 +1,26 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=28
+### host=login4
+### started=2026-09-29T12:44:34+0800
+### ---------- output ----------
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_chunks_001/opaque_delivery.py: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_chunks_001/delivery_catalogue.json: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/deployed_manifest.json: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/corrected_file10_part001.bin: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/inputs/repo/docs/plans/wrr-hamid-evaluation-20260927-v1/test_states_001/test_corrected_cpu.pt: OK
+BEGIN_CORRECTED_STATE_DELIVERY
+5fa38b2d534fdf4161885dc0749ae6ac6b5a691b71dbf3032e4336b63b6a35f9  /data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/plain_preflight_v1/formal_input_delivery_001_corrected_states/completion.json
+ewogICJzdGF0ZSI6ICJPUEFRVUVfSU5QVVRTX0NPUElFRF9OT1RfRVZBTFVBVEVEIiwKICAic3Rh
+Z2UiOiAiY29ycmVjdGVkX3N0YXRlcyIsCiAgImZpbGVzIjogWwogICAgewogICAgICAiZmlsZV9p
+ZCI6ICJmaWxlMTAiLAogICAgICAicGF0aCI6ICIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0
+X3dycl9jbG9zZW91dF8yMDI2MDkyOF92MS9wbGFpbl9wcmVmbGlnaHRfdjEvaW5wdXRzL3JlcG8v
+ZG9jcy9wbGFucy93cnItaGFtaWQtZXZhbHVhdGlvbi0yMDI2MDkyNy12MS90ZXN0X3N0YXRlc18w
+MDEvdGVzdF9jb3JyZWN0ZWRfY3B1LnB0IiwKICAgICAgInNoYTI1NiI6ICI3YzlmMjFmNGFiNjk4
+NDBhM2Y4NzA2NGZmOWFlYzE1MjIyZjQ4YjEyNGFjNjFjNmY2NWQyMWEzOWFjMDdkZjYwIiwKICAg
+ICAgImJ5dGVzIjogMzE2NzY0CiAgICB9CiAgXSwKICAibW9kZWxzX2V4ZWN1dGVkIjogMCwKICAi
+dGVuc29yX2Rlc2VyaWFsaXphdGlvbnMiOiAwLAogICJmb3JtYWxfZXZhbHVhdGlvbl9hZG1pdHRl
+ZCI6IGZhbHNlCn0K
+END_CORRECTED_STATE_DELIVERY
+OPAQUE_DELIVERY_ONLY_NO_MODEL_NO_ADMISSION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T12:44:37+0800
