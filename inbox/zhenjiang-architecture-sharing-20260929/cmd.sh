@@ -125,8 +125,7 @@ curve_rows = []
 parameter_rows = []
 for index, row in enumerate(registry['runs']):
     exp_id = row['exp_id']
-    if (row.get('array_index') != index or row.get('required') is not True
-            or row.get('status') != 'REGISTERED_NOT_STARTED'
+    if (row.get('required') is not True or row.get('status') != 'REGISTERED_NOT_STARTED'
             or row.get('epochs') != 100
             or row.get('information_arm') not in ('available', 'ideal_observed')
             or row.get('seed') not in (17, 29, 43)):
