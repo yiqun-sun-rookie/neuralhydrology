@@ -1,19 +1,25 @@
 #!/bin/bash
-# precip-selfrule-v05 seq=11: make the retry array wait for the currently running original task.
-set -eo pipefail
+# precip-selfrule-v05 seq=12: read-only progress after scheduler-wrapper repair.
+set -o pipefail
+ROOT=/data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03
+OUT="$ROOT/technical_8/run01"
 
 date "+wallclock %F %T %z"
-echo "=== BEFORE ==="
+echo "=== SQUEUE ==="
 squeue -j 231259,231273 -o "%.22i %.24j %.10P %.2t %.10M %.6D %R" || true
-
-running_retry=$(squeue -h -j 231273 -t RUNNING -o "%i" 2>/dev/null | head -1)
-if test -z "$running_retry"; then
-  scontrol update JobId=231273 Dependency=afterany:231259_2
-  echo "DEPENDENCY_UPDATED=afterany:231259_2"
-else
-  echo "RETRY_ALREADY_RUNNING=$running_retry; LEFT_UNCHANGED"
-fi
-
-echo "=== AFTER ==="
-squeue -j 231259,231273 -o "%.22i %.24j %.10P %.2t %.10M %.6D %R" || true
-scontrol show job 231273 -o 2>/dev/null | sed -n 's/.*Dependency=\([^ ]*\).*/Dependency=\1/p' || true
+echo "=== SACCT ==="
+sacct -j 231259,231273 --format=JobID,JobName%24,State,ExitCode,Elapsed,AllocTRES%40,MaxRSS,NodeList%14 -P || true
+echo "=== RECORDS ==="
+for basin in 02137727 02245500 09404450 09512280 01054200 01142500 01144000 01169000; do
+  if test -f "$OUT/fit/$basin.json"; then
+    python - "$OUT/fit/$basin.json" <<'PY'
+import json, sys
+p=json.load(open(sys.argv[1], encoding='utf-8'))
+print(p['basin'], p.get('technical_complete'), p.get('peak_gpu_bytes'),
+      p['rain']['rain_intensity']['fit'].get('elapsed_seconds'),
+      p['rain']['rain_season']['fit'].get('elapsed_seconds'))
+PY
+  else
+    echo "$basin PENDING"
+  fi
+done
