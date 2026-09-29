@@ -1,0 +1,51 @@
+### channel=precip-selfrule-v05 seq=21
+### host=login4
+### started=2026-09-29T20:08:11+0800
+### ---------- output ----------
+wallclock 2026-09-29 20:08:11 +0800
+=== PINNED REFERENCE HASHES ===
+9c9e925fb4a12cdeeb96fbd6d3ee5c8c172fe88721d198b1d7a5a37162845559  /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/technical_8/run01/technical_summary.json
+97f9ee8bcdbb293f78e12edd2eac635bd8eaba8cb2e02a96d19451c7ac90531d  /data1/home/sunyiq/precip_input_selfrule_time_v05_batch384_probe_20260929/reference_batch128/run01/RUN_MANIFEST.json
+d78ca5f3c99853464be920b48269cec161fa30ceb7c52e5cc45312f7caf3dc7d  /data1/home/sunyiq/precip_input_selfrule_time_v05_batch384_probe_20260929/reference_batch128/run01/fit/02137727.json
+a02ff138ba3e6643f22060a889243f32a171522a9867d1fe2c4f8c86824465c2  /data1/home/sunyiq/precip_input_selfrule_time_v05_batch384_probe_20260929/reference_batch128/run01/predictions/02137727.npz
+e54b7ee59a5cdc4f7cbe6b383bd83b627f277fb526a4fbd61d1e2067739d5d9c  /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/technical_8/run01/fit/02245500.json
+e6cdf57590a055b7750d98c5079dac6a6fcc3b8138d7acb3ecb8d073005ecd0d  /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/technical_8/run01/fit/09404450.json
+=== GPU JOB RECEIPTS ===
+JobID|JobName|State|ExitCode|Elapsed|ElapsedRaw|AllocTRES|NodeList
+231221|psv05check|FAILED|1:0|00:01:16|76|billing=4,cpu=4,node=1|ngu011
+231221.batch|batch|FAILED|1:0|00:01:16|76|cpu=4,mem=0,node=1|ngu011
+231221.extern|extern|COMPLETED|0:0|00:01:17|77|billing=4,cpu=4,node=1|ngu011
+231258|psv05c3|COMPLETED|0:0|00:01:11|71|billing=4,cpu=4,node=1|ngu011
+231258.batch|batch|COMPLETED|0:0|00:01:11|71|cpu=4,mem=0,node=1|ngu011
+231258.extern|extern|COMPLETED|0:0|00:01:12|72|billing=4,cpu=4,node=1|ngu011
+231259_0|psv05t3|FAILED|127:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231259_0.batch|batch|FAILED|127:0|00:07:44|464|cpu=4,mem=0,node=1|ngu011
+231259_0.extern|extern|COMPLETED|0:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231259_1|psv05t3|FAILED|127:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231259_1.batch|batch|FAILED|127:0|00:07:44|464|cpu=4,mem=0,node=1|ngu011
+231259_1.extern|extern|COMPLETED|0:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231259_2|psv05t3|FAILED|127:0|00:07:47|467|billing=4,cpu=4,node=1|ngu011
+231259_2.batch|batch|FAILED|127:0|00:07:47|467|cpu=4,mem=0,node=1|ngu011
+231259_2.extern|extern|COMPLETED|0:0|00:07:47|467|billing=4,cpu=4,node=1|ngu011
+231259_[3-7%1]|psv05t3|CANCELLED by 2272|0:0|00:00:00|0||None assigned
+231273_3|psv05t3r|COMPLETED|0:0|00:07:19|439|billing=4,cpu=4,node=1|ngu006
+231273_3.batch|batch|COMPLETED|0:0|00:07:19|439|cpu=4,mem=0,node=1|ngu006
+231273_3.extern|extern|COMPLETED|0:0|00:07:20|440|billing=4,cpu=4,node=1|ngu006
+231273_4|psv05t3r|COMPLETED|0:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231273_4.batch|batch|COMPLETED|0:0|00:07:44|464|cpu=4,mem=0,node=1|ngu011
+231273_4.extern|extern|COMPLETED|0:0|00:07:44|464|billing=4,cpu=4,node=1|ngu011
+231273_5|psv05t3r|COMPLETED|0:0|00:07:45|465|billing=4,cpu=4,node=1|ngu011
+231273_5.batch|batch|COMPLETED|0:0|00:07:45|465|cpu=4,mem=0,node=1|ngu011
+231273_5.extern|extern|COMPLETED|0:0|00:07:45|465|billing=4,cpu=4,node=1|ngu011
+231273_6|psv05t3r|COMPLETED|0:0|00:07:45|465|billing=4,cpu=4,node=1|ngu011
+231273_6.batch|batch|COMPLETED|0:0|00:07:45|465|cpu=4,mem=0,node=1|ngu011
+231273_6.extern|extern|COMPLETED|0:0|00:07:45|465|billing=4,cpu=4,node=1|ngu011
+231273_7|psv05t3r|COMPLETED|0:0|00:07:47|467|billing=4,cpu=4,node=1|ngu011
+231273_7.batch|batch|COMPLETED|0:0|00:07:47|467|cpu=4,mem=0,node=1|ngu011
+231273_7.extern|extern|COMPLETED|0:0|00:07:48|468|billing=4,cpu=4,node=1|ngu011
+231323|psv05b384|FAILED|1:0|00:15:52|952|billing=4,cpu=4,node=1|ngu011
+231323.batch|batch|FAILED|1:0|00:15:52|952|cpu=4,mem=0,node=1|ngu011
+231323.extern|extern|COMPLETED|0:0|00:15:52|952|billing=4,cpu=4,node=1|ngu011
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T20:08:12+0800
