@@ -1,0 +1,25 @@
+### channel=regge-record-length-20260929 seq=6
+### host=login4
+### started=2026-09-29T18:19:02+0800
+### ---------- output ----------
+=== login compatibility and exact-base check ===
+ldd (GNU libc) 2.17
+{"executable": "/data1/home/sunyiq/miniconda3/bin/python", "python": "3.11.5"}
+=== private download endpoints from login node ===
+405 https://micro.mamba.pm/api/micromamba/linux-64/latest
+200 https://repo.anaconda.com/pkgs/main/linux-64/repodata.json
+200 https://conda.anaconda.org/pytorch/linux-64/repodata.json
+=== shared environment dependency versions ===
+intel-openmp              2022.1.0          h9e868ea_3769    https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+llvm-openmp               15.0.7               h0cdce71_0    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+mkl                       2022.1.0           hc2b9512_224    https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+numpy                     2.3.3           py311h2e04523_0    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+psutil                    7.0.0           py311h49ec1c0_1    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+python                    3.11.13         h9e4cc4f_0_cpython    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+pytorch                   2.4.0           py3.11_cuda12.1_cudnn9.1.0_0    pytorch
+tbb                       2022.2.0             hb60516a_1    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+=== isolated root remains exclusive ===
+runtime_probe_001
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:19:40+0800
