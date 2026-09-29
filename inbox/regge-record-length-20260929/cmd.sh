@@ -1,55 +1,56 @@
 #!/bin/bash
 set -eo pipefail
-sequence=13
+sequence=14
 
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-RUNTIME=$ROOT/runtime_probe_005
+EVIDENCE=$ROOT/runtime_stage_005
 KEYS=$ROOT/transport_credentials_001
+TEST=$ROOT/transport_selftest_001
 
-echo "=== exact runtime and tools ==="
-test -x "$RUNTIME/bin/python"
-"$RUNTIME/bin/python" -c 'import platform,numpy,pandas,torch; print(platform.python_version(),numpy.__version__,pandas.__version__,torch.__version__,torch.get_num_threads(),torch.cuda.is_available())'
-command -v tar
-command -v zstd
-command -v openssl
-command -v curl
-zstd --version | sed -n '1p'
-openssl version
-curl --version | sed -n '1p'
+echo "=== bound runtime evidence ==="
+sha256sum "$EVIDENCE/runtime_ready.json" "$EVIDENCE/pip_freeze.txt"
+sed -n '1,120p' "$EVIDENCE/runtime_ready.json"
 
-echo "=== isolated target availability ==="
-for target in \
-  "$ROOT/deploy/formal_calibration_capsule_001" \
-  "$ROOT/formal_calibration_001" \
-  "$ROOT/transport_package_001" \
-  "$KEYS"
-do
-  if [ -e "$target" ]; then
-    echo "TARGET_ALREADY_EXISTS: $target"
-    exit 1
-  fi
-  echo "AVAILABLE: $target"
-done
+echo "=== exclusive authenticated-transport self-test ==="
+test ! -e "$TEST"
+mkdir "$TEST"
+chmod 700 "$TEST"
+cat > "$TEST/recipient.cnf" <<'EOF'
+[req]
+distinguished_name=dn
+prompt=no
+x509_extensions=ext
+[dn]
+CN=Regge HPC Transport Self Test
+[ext]
+basicConstraints=critical,CA:false
+keyUsage=critical,keyEncipherment
+EOF
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
+  -out "$TEST/recipient_private.pem" >/dev/null 2>&1
+openssl req -new -x509 -sha256 -days 2 \
+  -key "$TEST/recipient_private.pem" -config "$TEST/recipient.cnf" \
+  -out "$TEST/recipient_certificate.pem"
+printf 'regge authenticated transport self-test\n' > "$TEST/plain.bin"
+openssl cms -encrypt -binary -aes-256-gcm -outform DER \
+  -in "$TEST/plain.bin" -out "$TEST/payload.cms" \
+  "$TEST/recipient_certificate.pem"
+openssl cms -cmsout -inform DER -in "$TEST/payload.cms" -print \
+  | grep -E 'authEnvelopedData|aes-256-gcm'
+openssl cms -decrypt -binary -inform DER -in "$TEST/payload.cms" \
+  -inkey "$TEST/recipient_private.pem" \
+  -recip "$TEST/recipient_certificate.pem" \
+  -out "$TEST/plain.decrypted.bin"
+cmp "$TEST/plain.bin" "$TEST/plain.decrypted.bin"
 
-echo "=== scheduler snapshot ==="
-sinfo -p hgpu2p -N -O nodelist:12,statecompact:12,cpusstate:18,gres:16,gresused:24
-squeue -u sunyiq -o '%.18i %.24j %.9P %.10T %.30R'
-
-echo "=== storage ==="
-df -h "$ROOT"
-
-echo "=== create isolated upload-token keypair ==="
-mkdir "$KEYS"
-chmod 700 "$KEYS"
-openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:3072 \
-  -out "$KEYS/upload_token_private.pem" >/dev/null 2>&1
-chmod 600 "$KEYS/upload_token_private.pem"
-openssl pkey -in "$KEYS/upload_token_private.pem" -pubout \
-  -out "$KEYS/upload_token_public.pem" >/dev/null 2>&1
-chmod 644 "$KEYS/upload_token_public.pem"
-sha256sum "$KEYS/upload_token_public.pem"
-echo "UPLOAD_TOKEN_PUBLIC_KEY_BEGIN"
-sed -n '1,80p' "$KEYS/upload_token_public.pem"
-echo "UPLOAD_TOKEN_PUBLIC_KEY_END"
-
-echo "=== setup complete ==="
+echo '{"transport":"self-test"}' > "$TEST/manifest.json"
+openssl dgst -sha256 -sign "$KEYS/upload_token_private.pem" \
+  -sigopt rsa_padding_mode:pss -sigopt rsa_pss_saltlen:-1 \
+  -out "$TEST/manifest.sig" "$TEST/manifest.json"
+openssl dgst -sha256 -verify "$KEYS/upload_token_public.pem" \
+  -signature "$TEST/manifest.sig" \
+  -sigopt rsa_padding_mode:pss -sigopt rsa_pss_saltlen:-1 \
+  "$TEST/manifest.json"
+sha256sum "$KEYS/upload_token_public.pem" "$TEST/payload.cms" \
+  "$TEST/manifest.json" "$TEST/manifest.sig"
+echo "AUTHENTICATED_TRANSPORT_SELF_TEST_PASS"
