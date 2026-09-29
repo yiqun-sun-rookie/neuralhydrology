@@ -118,7 +118,7 @@ git rm inbox/seq
 
 | id29-xinanjiang-transfer | Second hydrological model transferable-noise replication; isolated root only | 2026-09-07 |
 | `kalmannet-wrr-horizon-20260916` | Training horizon paired sensitivity, seed 42 only; resource preflight before training | 2026-09-16 | New root `/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916`; do not overwrite existing paths, alter other jobs/environments, access test data, retry or requeue |
-| `precip-input-da` | 输入空间降水同化决定性小试（计划 `docs/plans/2026-09-19-precip-input-assimilation-plan-v1-decisive-trial.md`）：冻结 C4 上用过去流量误差修过去降水 vs Nearing 式状态同化 | 2026-09-19 | 由 Claude 会话占用；新落点 `/data1/home/sunyiq/precip_input_da_2026_09`；ID33 落点只读、检查点只复制；seq 1 = 拿 C4 三种子检查点 + seed100 调参年验证结果（零 GPU、无 sbatch） |
+| `precip-input-da` | 冻结 C4 的降水输入研究；seq 2 起追加单流域自修正规则的跨年技术试验 | 2026-09-19（2026-09-29 扩展） | 旧落点 `/data1/home/sunyiq/precip_input_da_2026_09` 只读；新试验仅写独立落点 `/data1/home/sunyiq/precip_input_selfrule_time_v05_20260929`；不碰其他作业、通道、落点或密封期，禁止账号级批量取消 |
 
 | `kalmannet-wrr-final-eval-20260920` | WRR selected existing-model retrieval and local evaluation | 2026-09-20 | Read only the three registered completed weights/logs in the two existing WRR training roots; encrypted export only; no training, cluster computation, job mutation, or changes to other channels. |
 
