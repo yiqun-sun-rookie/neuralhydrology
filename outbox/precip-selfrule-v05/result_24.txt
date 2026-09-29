@@ -1,0 +1,25 @@
+### channel=precip-selfrule-v05 seq=24
+### host=login4
+### started=2026-09-29T20:43:37+0800
+### ---------- output ----------
+wallclock 2026-09-29 20:43:37 +0800
+REFERENCE_SOURCE_COUNT 129
+REFERENCE_RELEVANT_SOURCE_COUNT 0
+=== SACCT FIELD SHAPE ===
+231258|COMPLETED|0:0|71
+231258.batch|COMPLETED|0:0|71
+231258.extern|COMPLETED|0:0|72
+=== CURRENT USER JOBS (READ ONLY) ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+     231096_[59-113%2]            zj-arch-share     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+                202229             N22-agg-eval hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+                202294               N22-export hgpu4,hgpu PD       0:00      1 (Dependency)
+                202315                 N22-gate hgpu4,hgpu PD       0:00      1 (Dependency)
+                202507         N22-mask-iso-531 hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+                215429            id30_m01_s100      hgpu2 PD       0:00      1 (DependencyNeverSatisfied)
+                202293             N22-manifest hgpu4,hgpu PD       0:00      1 (JobHeldUser)
+             231096_58            zj-arch-share     hgpu2p  R       0:23      1 ngu010
+             231096_57            zj-arch-share     hgpu2p  R       7:27      1 ngu011
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T20:43:38+0800
