@@ -1,56 +1,29 @@
 #!/bin/bash
 set -eo pipefail
-sequence=9
+sequence=10
 
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-STAGE="$ROOT/runtime_stage_003"
-PREFIX="$ROOT/runtime_probe_003"
-MICROMAMBA="$ROOT/runtime_stage_002/tool/bin/micromamba"
+PRIOR_STAGE="$ROOT/runtime_stage_002"
+MICROMAMBA="$PRIOR_STAGE/tool/bin/micromamba"
+DIAG_PREFIX="$ROOT/runtime_probe_diag_004"
 
 test -d "$ROOT"
-echo "=== read-only diagnosis of failed complete runtime build ==="
-printf 'root=%s\nstage=%s\nprefix=%s\n' "$ROOT" "$STAGE" "$PREFIX"
-for target in "$STAGE" "$PREFIX" "$MICROMAMBA"; do
-  if [ -e "$target" ]; then
-    printf 'exists=yes path=%s\n' "$target"
-  else
-    printf 'exists=no path=%s\n' "$target"
-  fi
-done
-
-echo "=== failure receipt and stage files ==="
-if [ -f "$STAGE/runtime_failed.txt" ]; then
-  sed -n '1,80p' "$STAGE/runtime_failed.txt"
+test -x "$MICROMAMBA"
+test ! -e "$DIAG_PREFIX"
+echo "=== dry-run diagnosis of exact environment solve ==="
+export MAMBA_ROOT_PREFIX="$PRIOR_STAGE/mamba_root"
+set +e
+timeout 600 "$MICROMAMBA" create --dry-run --json -p "$DIAG_PREFIX" \
+  -c pytorch -c defaults \
+  python=3.11.5 numpy=1.26.4 pandas=2.3.3 pytorch=2.2.2 cpuonly \
+  psutil=5.9.0 mkl=2023.1.0 intel-openmp=2023.1.0 \
+  matplotlib-base=3.10.6 conda-pack pytest
+solver_rc=$?
+set -e
+printf 'solver_exit_code=%s\n' "$solver_rc"
+if [ -e "$DIAG_PREFIX" ]; then
+  printf 'unexpected_diagnostic_prefix_created=yes path=%s\n' "$DIAG_PREFIX"
+  find "$DIAG_PREFIX" -maxdepth 2 -type f -printf '%p %s bytes\n' | sort | head -80
+  exit 1
 fi
-if [ -d "$STAGE" ]; then
-  find "$STAGE" -maxdepth 2 -type f -printf '%p %s bytes\n' | sort
-fi
-
-echo "=== partial prefix metadata ==="
-if [ -d "$PREFIX" ]; then
-  du -sh "$PREFIX"
-  if [ -f "$PREFIX/conda-meta/history" ]; then
-    tail -80 "$PREFIX/conda-meta/history"
-  fi
-  if [ -x "$PREFIX/bin/python" ]; then
-    "$PREFIX/bin/python" - <<'PY'
-import importlib
-import platform
-mods = ("numpy", "pandas", "torch", "psutil", "matplotlib", "pytest", "threadpoolctl")
-print("python", platform.python_version())
-for name in mods:
-    try:
-        module = importlib.import_module(name)
-        print(name, getattr(module, "__version__", "NO_VERSION"))
-    except Exception as exc:
-        print(name, "IMPORT_FAILED", type(exc).__name__, str(exc))
-PY
-  fi
-fi
-
-echo "=== package cache and capacity ==="
-df -h "$ROOT"
-du -sh "$ROOT/runtime_stage_002/mamba_root/pkgs" 2>/dev/null || true
-find "$ROOT/runtime_stage_002/mamba_root/pkgs" -maxdepth 1 -type d \
-  \( -name 'pandas-*' -o -name 'matplotlib-base-*' -o -name 'pytest-*' -o -name 'conda-pack-*' \) \
-  -printf '%f\n' | sort | tail -80
+printf 'diagnostic_prefix_created=no\n'
