@@ -1,0 +1,28 @@
+### channel=regge-record-length-20260929 seq=17
+### host=login4
+### started=2026-09-29T21:00:01+0800
+### ---------- output ----------
+{
+  "actual_file_count": 60,
+  "cache_only_contamination": true,
+  "capsule": "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_001",
+  "expected_file_count": 54,
+  "extras": [
+    "project/python/regge_record_length_study/__pycache__/__init__.cpython-311.pyc",
+    "project/python/regge_record_length_study/__pycache__/calibration.cpython-311.pyc",
+    "project/python/regge_record_length_study/__pycache__/common.cpython-311.pyc",
+    "project/python/regge_record_length_study/__pycache__/contract.cpython-311.pyc",
+    "project/python/regge_record_length_study/__pycache__/hpc_calibration.cpython-311.pyc",
+    "project/python/regge_record_length_study/__pycache__/prepare.cpython-311.pyc"
+  ],
+  "hash_mismatches": [],
+  "missing": [],
+  "schema": "regge_record_length_failed_deployment_diagnosis_v01",
+  "sequence": 17
+}
+DIAGNOSIS_CONFIRMED=PYTHON_BYTECODE_CACHE_ONLY
+NO_FORMAL_OUTPUT_OR_PACKAGE=1
+NO_JOB_SUBMITTED_BY_THIS_DIAGNOSTIC=1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:00:04+0800
