@@ -1,0 +1,159 @@
+### channel=regge-record-length-20260929 seq=1
+### host=login4
+### started=2026-09-29T17:26:14+0800
+### ---------- output ----------
+=== identity ===
+2026-09-29T17:26:14+0800
+login4
+uid=2272(sunyiq) gid=2269(g_sunyiq) groups=2269(g_sunyiq) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+=== isolated root must not exist yet ===
+ROOT_ABSENT /data1/home/sunyiq/regge_record_length_20260929_001
+=== exact candidate source locations ===
+ABSENT /data1/home/sunyiq/paper-imm-variable-params
+ABSENT /data1/home/sunyiq/paper_imm_variable_params
+ABSENT /data1/home/sunyiq/paper-imm-variable-params
+=== partitions ===
+hcpu48*|up|infinite|1|alloc$|48/0/0/48
+hcpu48*|up|infinite|14|maint|0/672/0/672
+hcpu48*|up|infinite|15|down*|0/0/720/720
+hcpu48*|up|infinite|1|drain|0/0/48/48
+hcpu48*|up|infinite|28|alloc|1344/0/0/1344
+hcpu48*|up|infinite|5|idle|0/240/0/240
+hcpu48y|up|infinite|1|down$|0/0/48/48
+hcpu48y|up|infinite|1|maint|0/48/0/48
+hcpu48y|up|infinite|2|down*|0/0/96/96
+hcpu48y|up|infinite|2|mix|54/42/0/96
+hcpu48y|up|infinite|6|idle|0/288/0/288
+hgpu8|up|infinite|1|mix$|32/32/0/64
+hgpu8|up|infinite|2|mix|82/46/0/128
+hgpu4|up|infinite|1|down*|0/0/96/96
+hgpu4|up|infinite|1|mix|6/90/0/96
+hgpu4|up|infinite|2|idle|0/192/0/192
+hgpu2|up|infinite|2|idle|0/192/0/192
+hgpu2p|up|infinite|7|mix|186/358/0/544
+hgpu2p|up|infinite|2|idle|0/192/0/192
+=== selected nodes ===
+hcpu48*|icn201|alloc|48|1|(null)
+hcpu48*|icn202|maint|48|1|(null)
+hcpu48*|icn203|down*|48|1|(null)
+hcpu48*|icn204|maint|48|1|(null)
+hcpu48*|icn205|maint|48|1|(null)
+hcpu48*|icn206|maint|48|1|(null)
+hcpu48*|icn207|maint|48|1|(null)
+hcpu48*|icn208|alloc|48|1|(null)
+hcpu48*|icn209|alloc|48|1|(null)
+hcpu48*|icn210|maint|48|1|(null)
+hcpu48*|icn211|maint|48|1|(null)
+hcpu48*|icn212|maint|48|1|(null)
+hcpu48*|icn213|alloc|48|1|(null)
+hcpu48*|icn214|alloc$|48|1|(null)
+hcpu48*|icn215|down*|48|1|(null)
+hcpu48*|icn216|maint|48|1|(null)
+hcpu48*|icn217|maint|48|1|(null)
+hcpu48*|icn218|down*|48|1|(null)
+hcpu48*|icn219|alloc|48|1|(null)
+hcpu48*|icn220|maint|48|1|(null)
+hcpu48*|icn221|maint|48|1|(null)
+hcpu48*|icn222|alloc|48|1|(null)
+hcpu48*|icn223|alloc|48|1|(null)
+hcpu48*|icn224|alloc|48|1|(null)
+hcpu48*|icn225|alloc|48|1|(null)
+hcpu48*|icn226|alloc|48|1|(null)
+hcpu48*|icn227|alloc|48|1|(null)
+hcpu48*|icn228|alloc|48|1|(null)
+hcpu48*|icn229|alloc|48|1|(null)
+hcpu48*|icn230|down*|48|1|(null)
+hcpu48*|icn231|alloc|48|1|(null)
+hcpu48*|icn232|alloc|48|1|(null)
+hcpu48*|icn233|down*|48|1|(null)
+hcpu48*|icn234|alloc|48|1|(null)
+hcpu48*|icn235|down*|48|1|(null)
+hcpu48*|icn236|down*|48|1|(null)
+hcpu48*|icn237|down*|48|1|(null)
+hcpu48*|icn238|alloc|48|1|(null)
+hcpu48*|icn239|down*|48|1|(null)
+hcpu48*|icn240|alloc|48|1|(null)
+hcpu48*|icn241|drain|48|1|(null)
+hcpu48*|icn242|down*|48|1|(null)
+hcpu48*|icn243|down*|48|1|(null)
+hcpu48*|icn244|alloc|48|1|(null)
+hcpu48*|icn245|down*|48|1|(null)
+hcpu48*|icn246|maint|48|1|(null)
+hcpu48*|icn247|down*|48|1|(null)
+hcpu48*|icn248|alloc|48|1|(null)
+hcpu48*|icn249|maint|48|1|(null)
+hcpu48*|icn250|alloc|48|1|(null)
+hcpu48*|icn251|alloc|48|1|(null)
+hcpu48*|icn252|alloc|48|1|(null)
+hcpu48*|icn253|alloc|48|1|(null)
+hcpu48*|icn254|down*|48|1|(null)
+hcpu48*|icn255|alloc|48|1|(null)
+hcpu48*|icn256|down*|48|1|(null)
+hcpu48*|icn257|alloc|48|1|(null)
+hcpu48*|icn258|alloc|48|1|(null)
+hcpu48*|icn259|alloc|48|1|(null)
+hcpu48*|icn260|idle|48|1|(null)
+hcpu48*|icn261|idle|48|1|(null)
+hcpu48*|icn262|idle|48|1|(null)
+hcpu48*|icn263|idle|48|1|(null)
+hcpu48*|icn264|idle|48|1|(null)
+hcpu48y|icn270|idle|48|1|(null)
+hcpu48y|icn271|idle|48|1|(null)
+hcpu48y|icn272|idle|48|1|(null)
+hcpu48y|icn273|idle|48|1|(null)
+hcpu48y|icn274|mix|48|1|(null)
+hcpu48y|icn275|idle|48|1|(null)
+hcpu48y|icn276|idle|48|1|(null)
+hcpu48y|icn277|mix|48|1|(null)
+hcpu48y|icn278|down*|48|1|(null)
+hcpu48y|icn279|down*|48|1|(null)
+hcpu48y|icn280|maint|48|1|(null)
+hcpu48y|icn281|down$|48|1|(null)
+hgpu2p|ngu001|mix|96|1|gpu:2
+hgpu2p|ngu002|idle|96|1|gpu:2
+hgpu2p|ngu004|mix|96|1|gpu:2
+hgpu2p|ngu005|mix|96|1|gpu:2
+hgpu2p|ngu006|mix|96|1|gpu:2
+hgpu2p|ngu007|idle|96|1|gpu:2
+hgpu2p|ngu008|mix|96|1|gpu:2
+hgpu2p|ngu010|mix|32|1|gpu:2
+hgpu2p|ngu011|mix|32|1|gpu:2
+=== scheduler reasons ===
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+Not responding       root      2026-09-26T23:11:48 icn254
+Not responding       root      2026-01-20T14:12:40 icn256
+batch job complete f root      2026-09-26T23:10:12 icn241
+Not responding       root      2026-05-06T18:55:06 icn281
+Not responding       root      2026-05-05T20:28:13 icn278
+Not responding       root      2026-02-28T11:10:15 icn279
+Not responding       root      2026-01-13T10:39:13 ngu103
+=== user jobs ===
+             JOBID    PARTITION                                 NAME ST       TIME TIME_LIMIT     NODELIST(REASON)
+            202229 hgpu4,hgpu8,                         N22-agg-eval PD       0:00 1-00:00:00 (DependencyNeverSati
+            202294 hgpu4,hgpu8,                           N22-export PD       0:00    4:00:00         (Dependency)
+            202315 hgpu4,hgpu8,                             N22-gate PD       0:00    2:00:00         (Dependency)
+            202507 hgpu4,hgpu8,                     N22-mask-iso-531 PD       0:00    2:00:00 (DependencyNeverSati
+            215429        hgpu2                        id30_m01_s100 PD       0:00 7-00:00:00 (DependencyNeverSati
+ 231096_[22-113%2]       hgpu2p                        zj-arch-share PD       0:00    2:00:00  (JobArrayTaskLimit)
+            202293 hgpu4,hgpu8,                         N22-manifest PD       0:00 1-00:00:00        (JobHeldUser)
+         231096_21       hgpu2p                        zj-arch-share  R    INVALID    2:00:00               ngu010
+         231096_20       hgpu2p                        zj-arch-share  R       2:24    2:00:00               ngu011
+=== fair share ===
+Account|User|RawShares|NormShares|RawUsage|EffectvUsage|FairShare
+g_sunyiq|sunyiq|1|0.500000|7505668|0.999999|0.354037
+=== data1 space ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  631T  324T  67% /data1
+=== frozen shared environment identity ===
+{"conda_prefix": "/data1/home/sunyiq/miniconda3/envs/nh_final", "numpy": "2.3.3", "numpy_path": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/__init__.py", "python": "3.11.13", "torch": "2.4.0", "torch_path": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/__init__.py"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T17:26:38+0800
