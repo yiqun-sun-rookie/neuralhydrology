@@ -1,0 +1,39 @@
+### channel=precip-selfrule-v05 seq=12
+### host=login4
+### started=2026-09-29T18:38:20+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:38:20 +0800
+=== SQUEUE ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231273_[4-7%1]                 psv05t3r     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231273_3                 psv05t3r     hgpu2p  R       4:58      1 ngu006
+=== SACCT ===
+JobID|JobName|State|ExitCode|Elapsed|AllocTRES|MaxRSS|NodeList
+231259_0|psv05t3|FAILED|127:0|00:07:44|billing=4,cpu=4,node=1||ngu011
+231259_0.batch|batch|FAILED|127:0|00:07:44|cpu=4,mem=0,node=1|1321204K|ngu011
+231259_0.extern|extern|COMPLETED|0:0|00:07:44|billing=4,cpu=4,node=1|1792K|ngu011
+231259_1|psv05t3|FAILED|127:0|00:07:44|billing=4,cpu=4,node=1||ngu011
+231259_1.batch|batch|FAILED|127:0|00:07:44|cpu=4,mem=0,node=1|1322816K|ngu011
+231259_1.extern|extern|COMPLETED|0:0|00:07:44|billing=4,cpu=4,node=1|1932K|ngu011
+231259_2|psv05t3|FAILED|127:0|00:07:47|billing=4,cpu=4,node=1||ngu011
+231259_2.batch|batch|FAILED|127:0|00:07:47|cpu=4,mem=0,node=1|1344204K|ngu011
+231259_2.extern|extern|COMPLETED|0:0|00:07:47|billing=4,cpu=4,node=1|1884K|ngu011
+231259_[3-7%1]|psv05t3|CANCELLED by 2272|0:0|00:00:00|||None assigned
+231273_3|psv05t3r|RUNNING|0:0|00:06:19|billing=4,cpu=4,node=1||ngu006
+231273_3.batch|batch|RUNNING|0:0|00:06:19|cpu=4,mem=0,node=1||ngu006
+231273_3.extern|extern|RUNNING|0:0|00:06:19|billing=4,cpu=4,node=1||ngu006
+231273_[4-7%1]|psv05t3r|PENDING|0:0|00:00:00|||None assigned
+=== RECORDS ===
+02137727 True 5650876416 197.30717712268233 199.60048704966903
+02245500 True 5650876416 198.25463638827205 198.98162224143744
+09404450 True 5650876416 199.73335959389806 200.24825040996075
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+KeyError: 'rain_season'
+01054200 PENDING
+01142500 PENDING
+01144000 PENDING
+01169000 PENDING
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:38:21+0800
