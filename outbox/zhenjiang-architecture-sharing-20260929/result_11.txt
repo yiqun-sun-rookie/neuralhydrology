@@ -1,0 +1,11 @@
+### channel=zhenjiang-architecture-sharing-20260929 seq=11
+### host=login4
+### started=2026-09-30T04:19:36+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 116, in <module>
+  File "<stdin>", line 38, in raw_file
+ValueError: missing or linked registered file: deployment/deployed.json
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-30T04:20:01+0800
