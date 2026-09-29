@@ -1,0 +1,32 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=35
+### host=login4
+### started=2026-09-29T16:28:20+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/three_method_analysis_002.tar: OK
+analysis_manifest_003.json: OK
+code/analyze_evaluation.py: OK
+code/analyze_three_methods.py: OK
+code/audit_saved_statistics.py: OK
+code/build_analysis_manifest.py: OK
+code/launch_three_methods.slurm: OK
+code/test_analyze_three_methods.py: OK
+independent_code_review.md: OK
+independent_repair_review_001.md: OK
+independent_submit_review.md: OK
+proofs/analysis_admission_002.json: OK
+proofs/audit_manifest_001.json: OK
+proofs/diagnostic.json: OK
+proofs/domain_diagnostic_independent_review_001.md: OK
+proofs/failure.json: OK
+proofs/independent_result_review.md: OK
+proofs/result_acceptance_001.json: OK
+proofs/three_method_analysis_brief_002.md: OK
+proofs/three_method_scope_independent_review_002.md: OK
+repair_001_report.md: OK
+/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/three_method_analysis_002/analysis_manifest_003.json: OK
+Submitted batch job 231134
+THREE_METHOD_SAVED_STATISTICS_SUBMITTED=231134
+231134|knet-three-method-saved|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/three_method_analysis_002/code|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T16:28:21+0800
