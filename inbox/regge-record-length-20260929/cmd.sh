@@ -1,31 +1,25 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=21
+sequence=22
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-JOB_ID=231464
-OUTPUT=$ROOT/formal_calibration_003
-STDOUT=$ROOT/logs/formal_calibration_003-$JOB_ID.out
-STDERR=$ROOT/logs/formal_calibration_003-$JOB_ID.err
-SUBMISSION=$ROOT/submission_receipts/formal_calibration_003-$JOB_ID.json
-WRAPPER_FAILURE=$ROOT/wrapper_receipts/formal_calibration_003-$JOB_ID.failed.json
+WORK=$ROOT/formal_calibration_003
+EXP=RL-E1-M06
+CAL=$WORK/calibration/$EXP
+LOGS=$WORK/calibration_process_logs
 
-echo "=== SQUEUE ==="
-squeue -j "$JOB_ID" -o '%.18i %.24j %.9P %.10T %.12M %.30R' || true
-echo "=== SACCT ==="
-sacct -j "$JOB_ID" --format=JobID,JobName%24,Partition,State,ExitCode,Elapsed,Start,End -P || true
-echo "=== RECEIPTS ==="
-for path in "$SUBMISSION" "$OUTPUT/batch_started.json" \
-    "$OUTPUT/batch_receipt.json" "$OUTPUT/batch_failed.json" \
-    "$WRAPPER_FAILURE"; do
+echo "=== FILE INVENTORY ==="
+find "$CAL" "$LOGS" -maxdepth 2 -type f -printf '%p|%s bytes\n' | sort
+echo "=== EXPERIMENT FILES ==="
+for path in "$CAL/process.json" "$CAL/receipt.json" "$CAL/result.json" \
+    "$CAL/events.jsonl" "$LOGS/$EXP.stdout.log" "$LOGS/$EXP.stderr.log"; do
+  echo "--- $path"
   if [ -f "$path" ]; then
-    echo "--- $path"
     cat "$path"
   else
-    echo "MISSING $path"
+    echo "MISSING"
   fi
 done
-echo "=== STDOUT TAIL ==="
-if [ -f "$STDOUT" ]; then tail -n 40 "$STDOUT"; else echo "MISSING $STDOUT"; fi
-echo "=== STDERR TAIL ==="
-if [ -f "$STDERR" ]; then tail -n 40 "$STDERR"; else echo "MISSING $STDERR"; fi
+echo "=== CHECKSUMS ==="
+find "$CAL" "$LOGS" -maxdepth 2 -type f -print0 \
+  | sort -z | xargs -0 sha256sum
