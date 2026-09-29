@@ -1,10 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=16
+sequence=17
 BASE=/data1/home/sunyiq/regge_record_length_20260929_001
 CAPSULE=$BASE/deploy/formal_calibration_capsule_001
-RUNTIME=$BASE/runtime_stage_005/venv
+RUNTIME=$BASE/runtime_probe_005
 
 export PYTHONDONTWRITEBYTECODE=1
 
@@ -49,7 +49,7 @@ cache_extras = [
 ]
 report = {
     "schema": "regge_record_length_failed_deployment_diagnosis_v01",
-    "sequence": 16,
+    "sequence": 17,
     "capsule": str(root),
     "expected_file_count": len(expected),
     "actual_file_count": len(actual),
