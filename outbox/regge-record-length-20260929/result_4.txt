@@ -1,0 +1,92 @@
+### channel=regge-record-length-20260929 seq=4
+### host=login4
+### started=2026-09-29T17:48:21+0800
+### ---------- output ----------
+=== queue ===
+slurm_load_jobs error: Invalid job id specified
+=== accounting ===
+JobID|JobName|Partition|State|ExitCode|Elapsed|AllocCPUS|NodeList
+231216|regge-env-v1|hgpu2p|FAILED|1:0|00:00:24|4|ngu001
+231216.batch|batch||FAILED|1:0|00:00:24|4|ngu001
+231216.extern|extern||COMPLETED|0:0|00:00:24|4|ngu001
+=== receipts ===
+--- /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/submission_receipt.txt
+job_id=231216
+script=/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/create_exact_runtime.slurm
+submitted=2026-09-29T17:42:07+0800
+ABSENT /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/runtime_success.txt
+ABSENT /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/runtime_failed.txt
+ABSENT /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/conda-explicit.sha256
+=== logs ===
+--- /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/logs/runtime-231216.out
+START 2026-09-29T17:43:24+08:00 host=ngu001 job=231216
+Retrieving notices: ...working... done
+Channels:
+ - pytorch
+ - defaults
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... failed
+--- /data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_001/logs/runtime-231216.err
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3c610>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/notices.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3cf10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/notices.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3ca90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/notices.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3df90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/notices.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3e9d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/notices.json
+
+ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/r/notices.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3f910>: Failed to establish a new connection: [Errno -2] Name or service not known'))> for channel: defaults url: https://repo.anaconda.com/pkgs/r/notices.json
+ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/main/notices.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3ffd0>: Failed to establish a new connection: [Errno -2] Name or service not known'))> for channel: defaults url: https://repo.anaconda.com/pkgs/main/notices.json
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3e550>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/notices.json
+
+ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='conda.anaconda.org', port=443): Max retries exceeded with url: /pytorch/notices.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b66f3ff10>: Failed to establish a new connection: [Errno -2] Name or service not known'))> for channel: pytorch url: https://conda.anaconda.org/pytorch/notices.json
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b69e47010>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/noarch/repodata.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661a6710>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/noarch/repodata.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661a7a10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/noarch/repodata.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661b4c10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/linux-64/repodata.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661b5d90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/linux-64/repodata.json
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661c83d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/linux-64/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661a7490>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/noarch/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661a7e90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/noarch/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661b6810>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/linux-64/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661b6250>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/noarch/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661b7290>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/linux-64/repodata.json
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661c8e50>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/linux-64/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661c9910>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/noarch/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661ca050>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/noarch/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661cae10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/linux-64/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661cb5d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/main/noarch/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661cc2d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pytorch/linux-64/repodata.json
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x148b661ccd10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /pkgs/r/linux-64/repodata.json
+
+
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://conda.anaconda.org/pytorch/linux-64/repodata.json>
+Elapsed: -
+
+An HTTP error occurred when trying to retrieve this URL.
+HTTP errors are often intermittent, and a simple retry will get you on your way.
+'https//conda.anaconda.org/pytorch/linux-64'
+
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T17:48:21+0800
