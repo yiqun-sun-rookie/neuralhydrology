@@ -1,59 +1,63 @@
 #!/bin/bash
 set -eo pipefail
-sequence=1
+sequence=2
 
 echo "=== identity ==="
 date -Is
 hostname
-id
 
-echo "=== isolated root must not exist yet ==="
-ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-if test -e "$ROOT"; then
-  echo "ROOT_EXISTS $ROOT"
-  stat -c '%A %U %G %s %y %n' "$ROOT"
-else
-  echo "ROOT_ABSENT $ROOT"
-fi
+echo "=== conda environments ==="
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda env list
 
-echo "=== exact candidate source locations ==="
-for path in /data1/home/sunyiq/paper-imm-variable-params /data1/home/sunyiq/paper_imm_variable_params "$HOME/paper-imm-variable-params"; do
-  if test -e "$path"; then
-    stat -c '%A %U %G %s %y %n' "$path"
+echo "=== exact cached packages ==="
+for pattern in \
+  '/data1/home/sunyiq/miniconda3/pkgs/python-3.11.5-*' \
+  '/data1/home/sunyiq/miniconda3/pkgs/numpy-1.26.4-*' \
+  '/data1/home/sunyiq/miniconda3/pkgs/pytorch-2.2.2-*' \
+  '/data1/home/sunyiq/miniconda3/pkgs/torch-2.2.2-*'; do
+  matches=$(compgen -G "$pattern" || true)
+  if test -n "$matches"; then
+    printf '%s\n' "$matches"
   else
-    echo "ABSENT $path"
+    echo "NO_MATCH $pattern"
   fi
 done
 
-echo "=== partitions ==="
-sinfo -h -o '%P|%a|%l|%D|%t|%C'
-echo "=== selected nodes ==="
-sinfo -h -N -p hcpu48,hcpu48y,hgpu2p -o '%P|%N|%t|%c|%m|%G'
-echo "=== scheduler reasons ==="
-sinfo -R -h || true
-echo "=== user jobs ==="
-squeue -u sunyiq -o '%.18i %.12P %.36j %.2t %.10M %.10l %.20R'
-echo "=== fair share ==="
-sshare -U -P || true
-echo "=== data1 space ==="
-df -h /data1
+echo "=== available isolated runtime tools ==="
+for tool in conda micromamba apptainer singularity; do
+  if command -v "$tool" >/dev/null 2>&1; then
+    printf '%s=' "$tool"
+    command -v "$tool"
+  else
+    echo "ABSENT $tool"
+  fi
+done
 
-echo "=== frozen shared environment identity ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || source "$HOME/miniconda3/etc/profile.d/conda.sh"
-conda activate nh_final
-python - <<'PY'
-import json
-import os
-import platform
-import numpy
-import torch
+echo "=== exact Regge and ID23 top-level candidates ==="
+found=0
+for pattern in '/data1/home/sunyiq/*regge*' '/data1/home/sunyiq/*Regge*' '/data1/home/sunyiq/id23*'; do
+  matches=$(compgen -G "$pattern" || true)
+  if test -n "$matches"; then
+    found=1
+    while IFS= read -r path; do
+      stat -c '%A %U %G %s %y %n' "$path"
+    done <<< "$matches"
+  fi
+done
+if test "$found" -eq 0; then
+  echo "NO_TOP_LEVEL_CANDIDATES"
+fi
 
-print(json.dumps({
-    "python": platform.python_version(),
-    "numpy": numpy.__version__,
-    "torch": torch.__version__,
-    "torch_path": torch.__file__,
-    "numpy_path": numpy.__file__,
-    "conda_prefix": os.environ.get("CONDA_PREFIX"),
-}, sort_keys=True))
-PY
+echo "=== exact archive directory names under candidate roots ==="
+for base in $(compgen -G '/data1/home/sunyiq/id23*' || true) $(compgen -G '/data1/home/sunyiq/*regge*' || true); do
+  test -d "$base" || continue
+  find "$base" -maxdepth 5 -type d \( \
+    -name '20260920-regge-short-record-recovery-v03-001' -o \
+    -name '20260927-regge-short-record-selection-development-001' -o \
+    -name '20260929-002' \) -print
+done
+
+echo "=== partition policies ==="
+scontrol show partition hcpu48 | grep -E 'PartitionName=|OverSubscribe=|TotalCPUs=|TotalNodes='
+scontrol show partition hgpu2p | grep -E 'PartitionName=|OverSubscribe=|TotalCPUs=|TotalNodes='
