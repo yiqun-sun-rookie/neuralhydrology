@@ -1,0 +1,33 @@
+### channel=regge-record-length-20260929 seq=25
+### host=login4
+### started=2026-09-29T22:19:46+0800
+### ---------- output ----------
+[
+  {
+    "count": 31,
+    "dimensions": 4,
+    "exponent_sha256": "f844e0fc2b20f0fc8c1b6b965ae659478d3eaf0c3d5ddc8aada240fd7011a8f6",
+    "log_lower_sha256": "7f726fc208b41dc74a3c7ef75ff9c2ed4a18d0183b8b221af80a987d2360aba9",
+    "log_upper_sha256": "da68757c67c4970cfb8e26527ed0b14f506346ef85887e71ec12ef8b21a92c98",
+    "lower_sha256": "20cb10c987993803184a5adccb0d83308f253435bd99e199046a437dddfbd0b8",
+    "result_sha256": "2a91ea612681c18a33d8a9d20c2a9b46cb2e1d378bef2e4083e3d28862e09674",
+    "span_sha256": "daaa870fc3c2dfe630d34cc90c5bfab2a571be6ff9a3ea80148328319f02e08b",
+    "unit_design_sha256": "e1dee63d924ca3f66d6e1e39e12c6b660d8de7bd67b8595e7667f3aae2f29c97",
+    "upper_sha256": "740681cab7840375d8a70822812b15ace442b5772c53e2717123db3d163769a5"
+  },
+  {
+    "count": 96,
+    "dimensions": 5,
+    "exponent_sha256": "9d42cd2052f8c3158c60779586e9614433b130a83e517d03f42d1a3337c9f5bb",
+    "log_lower_sha256": "54eb37594bf190ebb5f94e76da07fd5e7b105f484dfb0948aecf138b961c3d34",
+    "log_upper_sha256": "a24e2506153cfaa3c08f5055ce6573720dd82eda4dfbb4e81480aba1a1fe783f",
+    "lower_sha256": "a6f15a558a2592ff767c9e25b82613430ffe4055427f8dd2a0b64cf5761dfa34",
+    "result_sha256": "6d30a349dcfc21379b4c7c7facbd11a939ac157beb1e4e567bf08cecbfcfd2b9",
+    "span_sha256": "7015d6996e759bd143ceeb8e45c13acec1d278601d504343a7f4b74e8a717c30",
+    "unit_design_sha256": "f5415f4237b13fbd0bbb3d0d1cf9cf4be0b8ab2b1ef866659cf87e187ccb8628",
+    "upper_sha256": "a9354c2e78c3746eafc9649f9631efb0dee1e248cc5386a0476e2c95d89647b5"
+  }
+]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T22:20:08+0800
