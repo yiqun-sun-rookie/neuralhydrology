@@ -1,0 +1,67 @@
+### channel=precip-input-da seq=2
+### host=login4
+### started=2026-09-29T16:53:45+0800
+### ---------- output ----------
+wallclock 2026-09-29 16:53:45 +0800
+login4
+=== A. CURRENT USER JOBS ===
+             JOBID                         NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+            202229                 N22-agg-eval hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+            202294                   N22-export hgpu4,hgpu PD       0:00      1 (Dependency)
+            202315                     N22-gate hgpu4,hgpu PD       0:00      1 (Dependency)
+            202507             N22-mask-iso-531 hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+            215429                id30_m01_s100      hgpu2 PD       0:00      1 (DependencyNeverSatisfied)
+ 231096_[16-113%2]                zj-arch-share     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+            202293                 N22-manifest hgpu4,hgpu PD       0:00      1 (JobHeldUser)
+         231096_15                zj-arch-share     hgpu2p  R       3:13      1 ngu010
+         231096_14                zj-arch-share     hgpu2p  R       3:16      1 ngu011
+=== B. GPU NODE STATE ===
+NODELIST            PARTITION           STATE               GRES              GRES_USED                     CPUS(A/I/O/T)       
+ngu001              hgpu2p              mix                 gpu:2             gpu:2,dcu:0                   80/16/0/96          
+ngu002              hgpu2p              idle                gpu:2             gpu:0,dcu:0                   0/96/0/96           
+ngu004              hgpu2p              mix                 gpu:2             gpu:2,dcu:0                   18/78/0/96          
+ngu005              hgpu2p              mix                 gpu:2             gpu:2,dcu:0                   44/52/0/96          
+ngu006              hgpu2p              mix                 gpu:2             gpu:1,dcu:0                   28/68/0/96          
+ngu007              hgpu2p              idle                gpu:2             gpu:0,dcu:0                   0/96/0/96           
+ngu008              hgpu2p              mix                 gpu:2             gpu:1,dcu:0                   2/94/0/96           
+ngu010              hgpu2p              mix                 gpu:2             gpu:2,dcu:0                   8/24/0/32           
+ngu011              hgpu2p              mix                 gpu:2             gpu:1,dcu:0                   4/28/0/32           
+ngu101              hgpu4               idle                gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu102              hgpu4               idle                gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu103              hgpu4               down*               gpu:4             gpu:0,dcu:0                   0/0/96/96           
+ngu104              hgpu4               mix                 gpu:4             gpu:3,dcu:0                   6/90/0/96           
+ngu201              hgpu8               mix                 gpu:8             gpu:8,dcu:0                   46/18/0/64          
+ngu202              hgpu8               mix                 gpu:8             gpu:5,dcu:0                   28/36/0/64          
+ngu203              hgpu8               mix$                gpu:8             gpu:8,dcu:0                   32/32/0/64          
+=== C. REQUIRED PATHS ===
+PRESENT /data1/home/sunyiq/precip_input_da_2026_09
+PRESENT /data1/home/sunyiq/neuralhydrology
+PRESENT /data1/home/sunyiq/neuralhydrology/data/camels_us
+PRESENT /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer
+PRESENT /data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow
+NEWROOT_FREE /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929
+=== D. C4 LANDING FILES ===
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/model_epoch030.pt
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/train_data/train_data_scaler.yml
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/config.yml
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/model_epoch030.pt
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/config.yml
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/train_data/train_data_scaler.yml
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4/model_epoch030.pt
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4/config.yml
+/data1/home/sunyiq/precip_input_da_2026_09/base/C4/train_data/train_data_scaler.yml
+=== E. CORE SOURCE HASHES ===
+27f2e17d3f388a9b7ef25a261ec33007c328985d8c2a879592794c3fb8dede01  /data1/home/sunyiq/neuralhydrology/neuralhydrology/modelzoo/cudalstm.py
+b89b8eadbebaebe4f01b1bffaf64513c89d69f5726576f32e5a6bd83f4cbcbcb  /data1/home/sunyiq/neuralhydrology/neuralhydrology/modelzoo/inputlayer.py
+275d7a5d5f1b37542bd47cf0d2fce39fce25b9a292504adc3d9a845b4b43c247  /data1/home/sunyiq/neuralhydrology/neuralhydrology/modelzoo/__init__.py
+708f03d0b00e857b7c50a2f014cd76044ecc3025ed653164160bea69c481869d  /data1/home/sunyiq/neuralhydrology/neuralhydrology/modelzoo/head.py
+9980f7f196f4d7800e507c7f52d6e2b095cf5d2b30b31a0a70c4dc4c9a3590f9  /data1/home/sunyiq/neuralhydrology/neuralhydrology/utils/config.py
+c8871ff1217d02fa2a78c0426510436ae9f56d512991079b309357950cb76b32  /data1/home/sunyiq/neuralhydrology/neuralhydrology/datautils/utils.py
+51e2e02b382ec10314972ca68e1c337c46c0fbdff786b99877d2fd5dfb2055ef  /data1/home/sunyiq/neuralhydrology/neuralhydrology/datasetzoo/camelsus.py
+=== F. ENVIRONMENT ===
+3.11.13 2.4.0 False 2.3.3 2.3.2
+
+=== DONE READ-ONLY PREFLIGHT ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T16:54:30+0800
