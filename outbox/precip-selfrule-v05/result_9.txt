@@ -1,0 +1,55 @@
+### channel=precip-selfrule-v05 seq=9
+### host=login4
+### started=2026-09-29T18:24:12+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:24:12 +0800
+=== SQUEUE ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231259_[2-7%1]                  psv05t3     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231259_1                  psv05t3     hgpu2p  R       0:37      1 ngu011
+=== SACCT ===
+JobID|JobName|State|ExitCode|Elapsed|AllocTRES|MaxRSS|NodeList
+231259_0|psv05t3|FAILED|127:0|00:07:44|billing=4,cpu=4,node=1||ngu011
+231259_0.batch|batch|FAILED|127:0|00:07:44|cpu=4,mem=0,node=1|1321204K|ngu011
+231259_0.extern|extern|COMPLETED|0:0|00:07:44|billing=4,cpu=4,node=1|1792K|ngu011
+231259_1|psv05t3|RUNNING|0:0|00:01:59|billing=4,cpu=4,node=1||ngu011
+231259_1.batch|batch|RUNNING|0:0|00:01:59|cpu=4,mem=0,node=1||ngu011
+231259_1.extern|extern|RUNNING|0:0|00:01:59|billing=4,cpu=4,node=1||ngu011
+231259_[2-7%1]|psv05t3|PENDING|0:0|00:00:00|||None assigned
+=== FIT RECORD COUNT ===
+02137727.json
+COUNT=1
+=== TECHNICAL LOG TAILS ===
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/technical-231259_0.out
+NVIDIA GeForce RTX 3090, 24576 MiB, 23540 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+{
+  "all_complete": true,
+  "attempted_basins": [
+    "02137727"
+  ],
+  "complete_basins": [
+    "02137727"
+  ],
+  "elapsed_seconds": 399.05336159840226,
+  "peak_gpu_bytes": 5650876416,
+  "requested_basins": [
+    "02137727"
+  ],
+  "stage": "fit",
+  "technical_probe": true
+}
+TECHNICAL_RECORD_OK 02137727 5650876416
+[2026-09-29 18:20:10 +0800] DONE basin=02137727
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/technical-231259_1.out
+==========================================
+[2026-09-29 18:20:12 +0800] selfrule_time_v05 technical basin=02245500
+job=231259_1 node=ngu011
+NVIDIA GeForce RTX 3090, 24576 MiB, 23540 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/technical-231259_0.err
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- /data1/home/sunyiq/precip_input_selfrule_time_v05_20260929_r03/logs/technical-231259_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:24:14+0800
