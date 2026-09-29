@@ -1,0 +1,10 @@
+### channel=zhenjiang-architecture-sharing-20260929 seq=10
+### host=login4
+### started=2026-09-30T04:10:39+0800
+### ---------- output ----------
+{"complete_runs": 114, "epoch_records": 11514, "failed_runs": 0, "scheduler_reply": {"returncode": 0, "stderr": "", "stdout": "Submitted batch job 231096\n"}, "started_run_directories": 114, "submission": {"attempt_sha256": "01433a558ae4a4b343bbc642721ef117692d121b3923bc5741a3d0d141ee96cf", "deployment_sha256": "f4d409049b4b13d03cf76ac1026d5514da9acbab5cd44d6c082e6ce7398905ac", "job_id": "231096", "job_sha256": "b852a6e57b29ba79b91e91b5c4cb21cfddd8a356be994bca62f1ed7cc2bd9e2d", "manifest_sha256": "320a45562d1f2ced6b8baf165a777415596d2ecf1e7031c64711df2f5f02a06c", "maximum_simultaneous_gpu_tasks": 2, "planned_tasks": 114, "registry_sha256": "bbb07af90473ba1136043eceaa5a09bb6d085db172d7e37e1fe9a185e11179bf", "root": "/data1/home/sunyiq/zhenjiang_architecture_sharing_20260929_001", "root_binding": {"device": 41, "inode": 10021910277, "mode": 448, "uid": 2272}, "status": "SUBMITTED_ONCE", "time_limit_per_task": "02:00:00"}}
+=== squeue array state ===
+slurm_load_jobs error: Invalid job id specified
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-30T04:10:40+0800
