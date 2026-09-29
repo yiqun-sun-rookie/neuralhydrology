@@ -1,0 +1,36 @@
+### channel=regge-record-length-20260929 seq=24
+### host=login4
+### started=2026-09-29T22:16:17+0800
+### ---------- output ----------
+[
+  {
+    "before_permutation_sha256": "6d19f28d9fe88d7c692514bd6ad16b57bd57eae5439fc7978a5a96ace6c86fd9",
+    "count": 31,
+    "dimensions": 4,
+    "permutation_sha256": [
+      "e83470b6cff0c00362e3ae84401e381ffd5093bd39a08697089a970e41d56381",
+      "908a677358b96df94fa112bae19a464b672e5d6e4247bc24e85508e4450371d2",
+      "3af002ea42ac46b7fdb8846d253f1dd5061557a1dd303507ee959d1795acf9ca",
+      "bd4c4dfb231820c68475b903f17817defbd2b795b25c4803424b1cc8feb7847f"
+    ],
+    "random_sha256": "5e5589bfac565156c29cffb6e4b02e393f78793316c6dcd942189926c9182164",
+    "unit_design_sha256": "e1dee63d924ca3f66d6e1e39e12c6b660d8de7bd67b8595e7667f3aae2f29c97"
+  },
+  {
+    "before_permutation_sha256": "177adf2373a1a7520887cb619a90639110729a722dd20fb6161f1f8a2cf6b8a7",
+    "count": 96,
+    "dimensions": 5,
+    "permutation_sha256": [
+      "ea2fc10099bdad9d4365437fb006c133366fc33a5b3cf824951b6330510ea977",
+      "c73fb6ae04d29be3fd2a40e1e3557bd1175d81d81594300c55cd271a6f1afba2",
+      "cf2d2df17430f416550097327f04218e34f0d46e608c037bf4e67dd1a2e6395d",
+      "63b4241eef6e5b650d82774075471bf6e0a668ce4aadd48ce4c467ce43ed08a8",
+      "cdeec2421f00811aba86e109b9faa626a6369e2fbe3f7df10486085714026c1e"
+    ],
+    "random_sha256": "8e571b4dc4eba957d3ce8d916d12fe31c4376b2169b95566cd5fd95c0425c816",
+    "unit_design_sha256": "f5415f4237b13fbd0bbb3d0d1cf9cf4be0b8ab2b1ef866659cf87e187ccb8628"
+  }
+]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T22:16:23+0800
