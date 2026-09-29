@@ -1,0 +1,204 @@
+### channel=precip-selfrule-v05 seq=20
+### host=login4
+### started=2026-09-29T19:45:20+0800
+### ---------- output ----------
+wallclock 2026-09-29 19:45:20 +0800
+slurm_load_jobs error: Invalid job id specified
+JobID|JobName|State|ExitCode|Elapsed|AllocTRES|MaxRSS|NodeList
+231323|psv05b384|FAILED|1:0|00:15:52|billing=4,cpu=4,node=1||ngu011
+231323.batch|batch|FAILED|1:0|00:15:52|cpu=4,mem=0,node=1|1337248K|ngu011
+231323.extern|extern|COMPLETED|0:0|00:15:52|billing=4,cpu=4,node=1|2156K|ngu011
+=== BATCH PROBE COMPARISON ===
+{
+  "arms": {
+    "rain_intensity": {
+      "max_candidate_selection_mse_relative_difference": 3.187840039133485e-05,
+      "selected_lambda_candidate": 0.1,
+      "selected_lambda_reference": 0.1,
+      "selected_mse_relative_differences": {
+        "fit_mse": 8.871794317009336e-05,
+        "selection_mse": 0.0
+      },
+      "selected_start_candidate": 0.09531017980432493,
+      "selected_start_reference": 0.09531017980432493,
+      "selected_step_candidate": 0,
+      "selected_step_reference": 0,
+      "theta_max_absolute_difference": 0.0
+    },
+    "rain_season": {
+      "max_candidate_selection_mse_relative_difference": 1.8430511213191514e-05,
+      "selected_lambda_candidate": 0.1,
+      "selected_lambda_reference": 0.1,
+      "selected_mse_relative_differences": {
+        "fit_mse": 8.871794317009336e-05,
+        "selection_mse": 0.0
+      },
+      "selected_start_candidate": 0.09531017980432493,
+      "selected_start_reference": 0.09531017980432493,
+      "selected_step_candidate": 0,
+      "selected_step_reference": 0,
+      "theta_max_absolute_difference": 0.0
+    }
+  },
+  "basin": "02137727",
+  "candidate_elapsed_seconds": 313.72871758788824,
+  "candidate_peak_gpu_bytes": 16890111488,
+  "checks": {
+    "both_complete": true,
+    "candidate_identities_same": true,
+    "candidate_memory_within_limit": true,
+    "candidate_selection_mse_close": true,
+    "candidate_steps_complete": true,
+    "flow_history_selection_mse_close": true,
+    "frozen_inputs_same": true,
+    "held_out_predictions_close": false,
+    "manifest_schema_scope_and_basins_same": true,
+    "only_protocol_batch_and_paths_differ": true,
+    "original_metrics_close": true,
+    "prediction_dates_same": true,
+    "prediction_keys_same": true,
+    "record_provenance_same": true,
+    "rules_same": true,
+    "runtime_same": true,
+    "selected_lambda_same": true,
+    "selected_mse_close": true,
+    "selected_start_same": true,
+    "selected_step_same": true,
+    "selected_theta_close": true,
+    "source_code_same": true
+  },
+  "equivalence_passed": false,
+  "flow_history_selection_mse_relative_difference": 5.904991149381483e-05,
+  "held_out_prediction_differences": {
+    "flow_history": {
+      "max_absolute_difference": 0.004126548767089844,
+      "relative_l2_difference": 0.00010891375436477257
+    },
+    "original": {
+      "max_absolute_difference": 0.009172439575195312,
+      "relative_l2_difference": 0.0002731098265332579
+    },
+    "precip_original": {
+      "max_absolute_difference": 0.0,
+      "relative_l2_difference": 0.0
+    },
+    "precip_rain_intensity": {
+      "max_absolute_difference": 0.0,
+      "relative_l2_difference": 0.0
+    },
+    "precip_rain_season": {
+      "max_absolute_difference": 0.0,
+      "relative_l2_difference": 0.0
+    },
+    "rain_intensity": {
+      "max_absolute_difference": 0.005657196044921875,
+      "relative_l2_difference": 0.0002504747198032686
+    },
+    "rain_season": {
+      "max_absolute_difference": 0.005657196044921875,
+      "relative_l2_difference": 0.0002504747198032686
+    }
+  },
+  "original_metric_relative_differences": {
+    "fit_mse": 9.424655298979713e-06,
+    "fit_nse": 8.574294637889273e-05,
+    "selection_mse": 1.5327716187361475e-05,
+    "selection_nse": 4.6400963373404565e-05
+  },
+  "probe_timing_seconds": {
+    "candidate_fit_seconds": 373,
+    "candidate_predict_seconds": 52,
+    "reference_fit_seconds": 463,
+    "reference_predict_seconds": 59
+  },
+  "projected_96_basin_core_gpu_hours": 8.36609913567702,
+  "projected_96_basin_fit_plus_predict_gpu_hours": 11.333333333333334,
+  "protocol": "selfrule_time_v05_batch384_probe",
+  "protocol_difference_keys": [
+    "batch_targets",
+    "output_dir",
+    "protocol_file"
+  ],
+  "reference_elapsed_seconds": 400.1285008229315,
+  "reference_peak_gpu_bytes": 5650876416,
+  "resource_line_passed": false,
+  "speedup": 1.2753964759723955,
+  "thresholds": {
+    "max_gpu_bytes": 23622320128,
+    "projected_96_basin_fit_plus_predict_gpu_hours": 6.0,
+    "relative_mse_tolerance": 0.0002,
+    "theta_tolerance": 0.005
+  }
+}
+=== STDOUT TAIL ===
+[2026-09-29 19:26:27 +0800] batch384 probe
+NVIDIA GeForce RTX 3090, 24576 MiB, 23046 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+{
+  "all_complete": true,
+  "attempted_basins": [
+    "02137727"
+  ],
+  "complete_basins": [
+    "02137727"
+  ],
+  "elapsed_seconds": 400.1285008229315,
+  "peak_gpu_bytes": 5650876416,
+  "requested_basins": [
+    "02137727"
+  ],
+  "stage": "fit",
+  "technical_probe": false
+}
+{
+  "all_complete": true,
+  "attempted_basins": [
+    "02137727"
+  ],
+  "complete_basins": [
+    "02137727"
+  ],
+  "elapsed_seconds": 313.72871758788824,
+  "peak_gpu_bytes": 16890111488,
+  "requested_basins": [
+    "02137727"
+  ],
+  "stage": "fit",
+  "technical_probe": false
+}
+TECHNICAL_RECORD_OK 02137727 5650876416
+TECHNICAL_RECORD_OK 02137727 16890111488
+{
+  "basins": [
+    {
+      "basin": "02137727",
+      "forcing_coverage": 1.0,
+      "forcing_sha256": "3863eafd622496d8fd551b3d8b81658f75f7fc0a498f62ef7b529bd0b10e6d0f",
+      "prediction_file": "predictions/02137727.npz",
+      "prediction_sha256": "a02ff138ba3e6643f22060a889243f32a171522a9867d1fe2c4f8c86824465c2",
+      "target_count": 1461
+    }
+  ],
+  "complete": true,
+  "stage": "predict"
+}
+{
+  "basins": [
+    {
+      "basin": "02137727",
+      "forcing_coverage": 1.0,
+      "forcing_sha256": "3863eafd622496d8fd551b3d8b81658f75f7fc0a498f62ef7b529bd0b10e6d0f",
+      "prediction_file": "predictions/02137727.npz",
+      "prediction_sha256": "079494fb574f9c653ef0bb164810f9c9647e4de2011bb0c56b9b46d7b2e5d972",
+      "target_count": 1461
+    }
+  ],
+  "complete": true,
+  "stage": "predict"
+}
+{"arms": {"rain_intensity": {"max_candidate_selection_mse_relative_difference": 3.187840039133485e-05, "selected_lambda_candidate": 0.1, "selected_lambda_reference": 0.1, "selected_mse_relative_differences": {"fit_mse": 8.871794317009336e-05, "selection_mse": 0.0}, "selected_start_candidate": 0.09531017980432493, "selected_start_reference": 0.09531017980432493, "selected_step_candidate": 0, "selected_step_reference": 0, "theta_max_absolute_difference": 0.0}, "rain_season": {"max_candidate_selection_mse_relative_difference": 1.8430511213191514e-05, "selected_lambda_candidate": 0.1, "selected_lambda_reference": 0.1, "selected_mse_relative_differences": {"fit_mse": 8.871794317009336e-05, "selection_mse": 0.0}, "selected_start_candidate": 0.09531017980432493, "selected_start_reference": 0.09531017980432493, "selected_step_candidate": 0, "selected_step_reference": 0, "theta_max_absolute_difference": 0.0}}, "basin": "02137727", "candidate_elapsed_seconds": 313.72871758788824, "candidate_peak_gpu_bytes": 16890111488, "checks": {"both_complete": true, "candidate_identities_same": true, "candidate_memory_within_limit": true, "candidate_selection_mse_close": true, "candidate_steps_complete": true, "flow_history_selection_mse_close": true, "frozen_inputs_same": true, "held_out_predictions_close": false, "manifest_schema_scope_and_basins_same": true, "only_protocol_batch_and_paths_differ": true, "original_metrics_close": true, "prediction_dates_same": true, "prediction_keys_same": true, "record_provenance_same": true, "rules_same": true, "runtime_same": true, "selected_lambda_same": true, "selected_mse_close": true, "selected_start_same": true, "selected_step_same": true, "selected_theta_close": true, "source_code_same": true}, "equivalence_passed": false, "flow_history_selection_mse_relative_difference": 5.904991149381483e-05, "held_out_prediction_differences": {"flow_history": {"max_absolute_difference": 0.004126548767089844, "relative_l2_difference": 0.00010891375436477257}, "original": {"max_absolute_difference": 0.009172439575195312, "relative_l2_difference": 0.0002731098265332579}, "precip_original": {"max_absolute_difference": 0.0, "relative_l2_difference": 0.0}, "precip_rain_intensity": {"max_absolute_difference": 0.0, "relative_l2_difference": 0.0}, "precip_rain_season": {"max_absolute_difference": 0.0, "relative_l2_difference": 0.0}, "rain_intensity": {"max_absolute_difference": 0.005657196044921875, "relative_l2_difference": 0.0002504747198032686}, "rain_season": {"max_absolute_difference": 0.005657196044921875, "relative_l2_difference": 0.0002504747198032686}}, "original_metric_relative_differences": {"fit_mse": 9.424655298979713e-06, "fit_nse": 8.574294637889273e-05, "selection_mse": 1.5327716187361475e-05, "selection_nse": 4.6400963373404565e-05}, "probe_timing_seconds": {"candidate_fit_seconds": 373, "candidate_predict_seconds": 52, "reference_fit_seconds": 463, "reference_predict_seconds": 59}, "projected_96_basin_core_gpu_hours": 8.36609913567702, "projected_96_basin_fit_plus_predict_gpu_hours": 11.333333333333334, "protocol": "selfrule_time_v05_batch384_probe", "protocol_difference_keys": ["batch_targets", "output_dir", "protocol_file"], "reference_elapsed_seconds": 400.1285008229315, "reference_peak_gpu_bytes": 5650876416, "resource_line_passed": false, "speedup": 1.2753964759723955, "thresholds": {"max_gpu_bytes": 23622320128, "projected_96_basin_fit_plus_predict_gpu_hours": 6.0, "relative_mse_tolerance": 0.0002, "theta_tolerance": 0.005}}
+=== STDERR TAIL ===
+BATCH_PROBE_EQUIVALENCE_FAILED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T19:45:21+0800
