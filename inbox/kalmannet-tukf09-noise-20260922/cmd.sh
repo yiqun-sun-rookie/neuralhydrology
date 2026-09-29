@@ -1,79 +1,113 @@
 #!/usr/bin/env bash
 set -euo pipefail
-export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
+export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+export MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1 CUDA_VISIBLE_DEVICES='' CUDA_CACHE_DISABLE=1
+
+phase='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260929_attempt2'
+old='/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/bundle'
+private='/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite'
+export PYTHONPATH="$old/vendor:$private:$old:$old/hpc"
 
 /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
-import base64
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
 import pwd
-import zipfile
+import subprocess
+import sys
 
 phase = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260929_attempt2')
 old = Path('/data1/home/sunyiq/kalmannet_tukf09_scaled_noise_rehearsal_20260922/full_budget_01142500_20260928_attempt1/bundle')
-expected_archive_sha = '38d719ea23d2e95b7a8929ce341709dd4d60958b60ef79e37bb8a5391a5bce5b'
-expected_manifest_sha = 'ccf02a35c7f0c4e882a007de46512fd1b1556d38ccd350b9f2fee9533cd8a2cc'
-raw = base64.b64decode('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', validate=True)
-if hashlib.sha256(raw).hexdigest() != expected_archive_sha:
-    raise SystemExit('staging archive fingerprint changed')
+private = Path('/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14/pysite').resolve()
+
+def digest(path):
+    with path.open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
 if pwd.getpwuid(os.getuid()).pw_name != 'sunyiq':
     raise SystemExit('wrong remote account')
-if phase.exists() or phase.is_symlink() or not phase.parent.is_dir() or phase.parent.is_symlink():
-    raise SystemExit('exclusive remote full-budget directory occupied or parent linked')
-for path, expected in (
-    (old / 'bundle_manifest.json', '4ebee2dcbd215e9751c86ca9895b84090956e7857d84b524fc87d60a3ea6afa1'),
-    (old / 'hpc/tukf09_455_scaled_noise_common_v1.py', 'b4b70d97e4fdeca92ef1a7a8a6335a41d45acead5b40db5bdf1ab92ff70a3a5e'),
-    (old / 'hpc/tukf09_455_scaled_noise_local_transfer_contract_v1.json', '27239212680bd370bd76f40e53337b7d68d80cbe4dc01feac2164bab4917f8a1'),
-):
-    if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-        raise SystemExit('sealed prerequisite changed: ' + str(path))
-with zipfile.ZipFile(io.BytesIO(raw)) as archive:
-    names = archive.namelist()
-    expected_names = {'payload_manifest.json', 'tukf09_full_budget_01142500_20260929.py', 'full_budget_01142500_20260929.slurm'}
-    if len(names) != len(set(names)) or set(names) != expected_names:
-        raise SystemExit('full-budget archive members changed')
-    data = {name: archive.read(name) for name in expected_names}
-if hashlib.sha256(data['payload_manifest.json']).hexdigest() != expected_manifest_sha:
-    raise SystemExit('payload manifest fingerprint changed')
-manifest = json.loads(data['payload_manifest.json'])
-if (manifest.get('schema_version') != 'tukf09_one_20_state_full_budget_attempt2_payload_v1'
-        or manifest.get('remote_phase') != phase.as_posix() or manifest.get('basin_id') != '01142500'
-        or manifest.get('dimension') != 20 or manifest.get('maximum_new_submissions') != 1
-        or manifest.get('wall_seconds') != 28800 or manifest.get('cpus_per_task') != 1
+for directory in (phase, phase / 'logs', phase / 'cache', phase / 'tmp', phase / 'basin_01142500', phase / 'basin_01142500/control', old):
+    if directory.is_symlink() or not directory.is_dir():
+        raise SystemExit('missing or linked staged directory: ' + str(directory))
+if {path.name for path in phase.iterdir()} != {
+    'logs', 'cache', 'tmp', 'basin_01142500', 'payload_manifest.json',
+    'tukf09_full_budget_01142500_20260929.py', 'full_budget_01142500_20260929.slurm',
+}:
+    raise SystemExit('staged top-level member set changed')
+if any(any((phase / name).iterdir()) for name in ('logs', 'cache', 'tmp')):
+    raise SystemExit('staged logs, cache, or temporary directory is not empty')
+control = phase / 'basin_01142500/control'
+if {path.name for path in control.iterdir()} != {'deployment.json'}:
+    raise SystemExit('staged control directory changed or submission already attempted')
+if any((phase / 'basin_01142500' / name).exists() or (phase / 'basin_01142500' / name).is_symlink()
+       for name in ('run', 'submission.json', 'submission_attempt.json')):
+    raise SystemExit('staged run or submission evidence unexpectedly exists')
+expected = {
+    phase / 'payload_manifest.json': 'ccf02a35c7f0c4e882a007de46512fd1b1556d38ccd350b9f2fee9533cd8a2cc',
+    phase / 'tukf09_full_budget_01142500_20260929.py': '52a79db0169082449c8ea10548f957a7f1a38b4a9fdba84eefa96b5a188cf60a',
+    phase / 'full_budget_01142500_20260929.slurm': 'b5c63276ba806f4c334486d57af9cb64367c40ac470563fdcf9e913f3038e364',
+    old / 'bundle_manifest.json': '4ebee2dcbd215e9751c86ca9895b84090956e7857d84b524fc87d60a3ea6afa1',
+    old / 'hpc/tukf09_455_scaled_noise_common_v1.py': 'b4b70d97e4fdeca92ef1a7a8a6335a41d45acead5b40db5bdf1ab92ff70a3a5e',
+    old / 'hpc/tukf09_455_scaled_noise_local_transfer_contract_v1.json': '27239212680bd370bd76f40e53337b7d68d80cbe4dc01feac2164bab4917f8a1',
+}
+for path, expected_sha in expected.items():
+    if path.is_symlink() or not path.is_file() or digest(path) != expected_sha:
+        raise SystemExit('staged or sealed fingerprint changed: ' + str(path))
+manifest = json.loads((phase / 'payload_manifest.json').read_text(encoding='utf-8'))
+if (manifest.get('basin_id') != '01142500' or manifest.get('dimension') != 20
+        or manifest.get('maximum_new_submissions') != 1 or manifest.get('wall_seconds') != 28800
+        or manifest.get('partition') != 'hcpu48y' or manifest.get('cpus_per_task') != 1
         or manifest.get('frozen_local_checkpoint_selection_authorized') is not True
         or manifest.get('formal_evaluation_authorized') is not False
         or manifest.get('other_basin_authorized') is not False
         or manifest.get('automatic_retry_authorized') is not False
         or manifest.get('scientific_contract_changes_authorized') is not False
         or manifest.get('old_evidence_overwrite_authorized') is not False):
-    raise SystemExit('full-budget payload scope changed')
-for name in expected_names - {'payload_manifest.json'}:
-    record = {'sha256': hashlib.sha256(data[name]).hexdigest(), 'size_bytes': len(data[name])}
-    if manifest['files'].get(name) != record:
-        raise SystemExit('full-budget member fingerprint changed: ' + name)
-phase.mkdir(mode=0o750, exist_ok=False)
-for sub in ('logs', 'cache', 'tmp', 'basin_01142500', 'basin_01142500/control'):
-    (phase / sub).mkdir(mode=0o750, exist_ok=False)
-for name in sorted(expected_names):
-    with (phase / name).open('xb') as stream:
-        stream.write(data[name])
-        stream.flush()
-        os.fsync(stream.fileno())
-record = {
-    'status': 'ONE_FULL_BUDGET_ATTEMPT2_STAGED_NOT_SUBMITTED',
-    'basin_id': '01142500', 'dimension': 20,
-    'archive_sha256': expected_archive_sha, 'manifest_sha256': expected_manifest_sha,
-    'old_bundle_manifest_sha256': manifest['old_manifest_sha256'],
-    'scheduler_submission_performed': False,
-    'formal_evaluation_authorized': False, 'other_basin_authorized': False,
+    raise SystemExit('staged manifest scope changed')
+deployment = json.loads((control / 'deployment.json').read_text(encoding='utf-8'))
+if (deployment.get('status') != 'ONE_FULL_BUDGET_ATTEMPT2_STAGED_NOT_SUBMITTED'
+        or deployment.get('archive_sha256') != '38d719ea23d2e95b7a8929ce341709dd4d60958b60ef79e37bb8a5391a5bce5b'
+        or deployment.get('manifest_sha256') != expected[phase / 'payload_manifest.json']
+        or deployment.get('scheduler_submission_performed') is not False):
+    raise SystemExit('exclusive deployment record changed')
+compile((phase / 'tukf09_full_budget_01142500_20260929.py').read_text(encoding='utf-8'),
+        str(phase / 'tukf09_full_budget_01142500_20260929.py'), 'exec')
+import numpy as np
+import torch
+from hpc import tukf09_455_scaled_noise_common_v1 as frozen
+frozen.configure_single_thread_execution()
+runtime = {
+    'python': sys.version, 'python_executable': str(Path(sys.executable).resolve()),
+    'numpy': np.__version__, 'numpy_path': str(Path(np.__file__).resolve()),
+    'torch': torch.__version__, 'torch_path': str(Path(torch.__file__).resolve()),
+    'torch_threads': torch.get_num_threads(), 'torch_interop_threads': torch.get_num_interop_threads(),
+    'frozen_source_path': str(Path(frozen.__file__).resolve()),
 }
-with (phase / 'basin_01142500/control/deployment.json').open('x', encoding='utf-8') as stream:
-    json.dump(record, stream, sort_keys=True, separators=(',', ':'))
-    stream.write('\n')
-    stream.flush()
-    os.fsync(stream.fileno())
-print('FULL_BUDGET_ATTEMPT2_DEPLOYED_NOT_SUBMITTED ' + json.dumps(record, sort_keys=True))
+if (not sys.version.startswith('3.11.13')
+        or Path(sys.executable).resolve() != Path('/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python').resolve()
+        or np.__version__ != '1.26.4' or not torch.__version__.startswith('2.2.2')
+        or not Path(np.__file__).resolve().is_relative_to(private)
+        or not Path(torch.__file__).resolve().is_relative_to(private)
+        or torch.get_num_threads() != 1 or torch.get_num_interop_threads() != 1
+        or Path(frozen.__file__).resolve() != (old / 'hpc/tukf09_455_scaled_noise_common_v1.py').resolve()):
+    raise SystemExit('intended job runtime identity changed: ' + json.dumps(runtime, sort_keys=True))
+partition = subprocess.run(['scontrol', 'show', 'partition', 'hcpu48y', '-o'], check=True,
+                           text=True, capture_output=True, timeout=30).stdout.strip()
+if ' State=UP ' not in (' ' + partition + ' ') or ' OverSubscribe=NO ' not in (' ' + partition + ' '):
+    raise SystemExit('partition unavailable or allocation mode changed')
+queue = subprocess.run(['squeue', '-u', 'sunyiq', '-h', '-o', '%i|%j|%T|%R'], check=True,
+                       text=True, capture_output=True, timeout=30).stdout
+if any('|tukf09-noise-' in line for line in queue.splitlines()):
+    raise SystemExit('another scaled-noise job is active')
+print('FULL_BUDGET_ATTEMPT2_STAGED_READONLY_PREFLIGHT ' + json.dumps({
+    'status': 'PASS_STAGED_NOT_SUBMITTED', 'basin_id': '01142500',
+    'manifest_sha256': expected[phase / 'payload_manifest.json'],
+    'wrapper_sha256': expected[phase / 'tukf09_full_budget_01142500_20260929.py'],
+    'slurm_sha256': expected[phase / 'full_budget_01142500_20260929.slurm'],
+    'runtime': runtime, 'partition': partition, 'own_queue': queue,
+    'scheduler_submission_performed': False, 'model_execution_performed': False,
+    'evaluation_array_reads': 0,
+}, sort_keys=True))
 PY
