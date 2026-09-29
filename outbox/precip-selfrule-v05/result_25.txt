@@ -1,0 +1,21 @@
+### channel=precip-selfrule-v05 seq=25
+### host=login4
+### started=2026-09-29T20:51:24+0800
+### ---------- output ----------
+wallclock 2026-09-29 20:51:24 +0800
+login4
+=== CURRENT USER JOBS (READ ONLY) ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+     231096_[61-113%2]            zj-arch-share     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+                202229             N22-agg-eval hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+                202294               N22-export hgpu4,hgpu PD       0:00      1 (Dependency)
+                202315                 N22-gate hgpu4,hgpu PD       0:00      1 (Dependency)
+                202507         N22-mask-iso-531 hgpu4,hgpu PD       0:00      1 (DependencyNeverSatisfied)
+                215429            id30_m01_s100      hgpu2 PD       0:00      1 (DependencyNeverSatisfied)
+                202293             N22-manifest hgpu4,hgpu PD       0:00      1 (JobHeldUser)
+             231096_60            zj-arch-share     hgpu2p  R    INVALID      1 ngu010
+             231096_59            zj-arch-share     hgpu2p  R       6:23      1 ngu007
+sha256sum: /data1/home/sunyiq/neuralhydrology/neuralhydrology/evaluation/assimilation.py: No such file or directory
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-29T20:51:24+0800
