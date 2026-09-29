@@ -1,0 +1,25 @@
+### channel=precip-selfrule-v05 seq=10
+### host=login4
+### started=2026-09-29T18:31:58+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:31:58 +0800
+=== BEFORE ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231259_[3-7%1]                  psv05t3     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231259_2                  psv05t3     hgpu2p  R       0:39      1 ngu011
+LEFT_UNCHANGED=231259_2 state=RUNNING
+CANCELLED_PENDING=231259_3
+CANCELLED_PENDING=231259_4
+CANCELLED_PENDING=231259_5
+CANCELLED_PENDING=231259_6
+CANCELLED_PENDING=231259_7
+RETRY_JOB_ID=231273
+RETRY_ARRAY_SPEC=3,4,5,6,7
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231273_[3-7%1]                 psv05t3r     hgpu2p PD       0:00      1 (None)
+=== AFTER ORIGINAL ARRAY ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+              231259_2                  psv05t3     hgpu2p  R       0:41      1 ngu011
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:32:00+0800
