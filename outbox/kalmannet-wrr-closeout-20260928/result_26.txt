@@ -1,0 +1,41 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=26
+### host=login4
+### started=2026-09-29T12:17:31+0800
+### ---------- output ----------
+NODELIST            GRES          GRES_USED               CPUS(A/I/O/T)       
+ngu001              gpu:2         gpu:2,dcu:0             80/16/0/96          
+ngu002              gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu004              gpu:2         gpu:2,dcu:0             18/78/0/96          
+ngu005              gpu:2         gpu:0,dcu:0             12/84/0/96          
+ngu006              gpu:2         gpu:2,dcu:0             44/52/0/96          
+ngu007              gpu:2         gpu:0,dcu:0             0/96/0/96           
+ngu008              gpu:2         gpu:2,dcu:0             18/78/0/96          
+ngu010              gpu:2         gpu:2,dcu:0             8/24/0/32           
+ngu011              gpu:2         gpu:0,dcu:0             0/32/0/32           
+229398|COMPLETED|0:0
+229399|COMPLETED|0:0
+229400|COMPLETED|0:0
+229401|COMPLETED|0:0
+229402|COMPLETED|0:0
+229403|COMPLETED|0:0
+229404|COMPLETED|0:0
+229405|COMPLETED|0:0
+229426|COMPLETED|0:0
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-wrr-closeout-20260928/completed_ten_audit_001.tar: OK
+audit_common.py: OK
+audit_completed_ten.py: OK
+audit_manifest_001.json: OK
+audit_saved_statistics.py: OK
+collect_statistics_headers.py: OK
+completed_ten.slurm: OK
+expected_formal_contract_001.json: OK
+original_run_index_001.json: OK
+task-1-independent-rereview_002.md: OK
+task-1-repair-report_002.md: OK
+verify_formal_receipts.py: OK
+Submitted batch job 230259
+CPU_ONLY_SAVED_RESULT_AUDIT_SUBMITTED=230259
+230259|knet-ten-saved-audit|PENDING|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/completed_ten_audit_001|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T12:17:31+0800
