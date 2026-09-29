@@ -1,0 +1,19 @@
+### channel=precip-selfrule-v05 seq=31
+### host=login4
+### started=2026-09-29T21:12:31+0800
+### ---------- output ----------
+wallclock 2026-09-29 21:12:31 +0800
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+                231412                  psv05c4     hgpu2p  R       7:06      1 ngu011
+JobIDRaw|JobName|State|ExitCode|Elapsed|ElapsedRaw|AllocTRES|MaxRSS|NodeList
+231412|psv05c4|RUNNING|0:0|00:08:28|508|billing=4,cpu=4,node=1||ngu011
+231412.batch|batch|RUNNING|0:0|00:08:28|508|cpu=4,mem=0,node=1||ngu011
+231412.extern|extern|RUNNING|0:0|00:08:28|508|billing=4,cpu=4,node=1||ngu011
+=== /data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/logs/probe-231412.out ===
+[2026-09-29 21:02:02 +0800] START concurrency-4 probe
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+=== /data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/logs/probe-231412.err ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:12:31+0800
