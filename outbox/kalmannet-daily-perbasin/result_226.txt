@@ -1,0 +1,62 @@
+### channel=kalmannet-daily-perbasin seq=226
+### host=login4
+### started=2026-09-29T21:43:45+0800
+### ---------- output ----------
+SLZ_SURVEY_READ_ONLY_MONITOR_V1
+sequence=226
+timestamp_utc=2026-09-29T13:43:45Z
+SQUEUE_BEGIN
+231448|kdpp_slz_survey|RUNNING|hcpu48|icn213|3:16|10:00:00
+SQUEUE_END
+SACCT_BEGIN
+231448|kdpp_slz_survey|sunyiq|hcpu48|RUNNING|0:0|00:04:37|2026-09-29T21:40:29|Unknown|icn213
+231448.batch|batch|||RUNNING|0:0|00:04:37|2026-09-29T21:40:29|Unknown|icn213
+231448.extern|extern|||RUNNING|0:0|00:04:37|2026-09-29T21:40:29|Unknown|icn213
+SACCT_END
+TOP_FILES_BEGIN
+submission_receipt.json|282|27e7abf6606a10429e2cbb1c9ef219610d55352a21a76ffc96fdc81ff673711d
+compute_admission.json|1215|c489d52816949ac9ee526cced50a3db1ba150b94335931346b091a3fc3b5258d
+termination.json|ABSENT
+completion.json|ABSENT
+aggregate.json|ABSENT
+TOP_FILES_END
+FILE_BEGIN compute_admission.json
+{
+  "bundle_sha256": {
+    "authorization_survey.json": "1678c7ceaec04084ff2c6c2ad13f337cb290ed15c55e6588a069dc75fea2f624",
+    "registered_inputs.json": "a6dbb1244cfd3bb0f4f98b2d236faa906b0c31672085322c00865bf5016d8473",
+    "run_coldstart_intervention.py": "308c72cff1ee1c269f8b5a641d907128364da9a917de199ed0383fe32a8d7110",
+    "run_slz_survey.py": "b086a2ba813dce2262c7f8816ad42b3959b53cd042e64e9172ac2b289517465e",
+    "run_training_mode_replay.py": "d1f8454dc1e105b31dc048299762fc0759d6ffe6e01e2e615807d0448d75c4b3",
+    "source_manifest.json": "030e8cce6c4818e35fba9dc22fb39e93fb118996ea1e77706f50c2367cd49ffe",
+    "submit.slurm": "f7ee4b0a8949b0c37d970541ffbce0dcf6b06213572d2ceee812998072f4c2b4"
+  },
+  "environment": {
+    "aten_cpu_capability": "default",
+    "capability": "NO AVX",
+    "cpu_models": [
+      "Intel(R) Xeon(R) Gold 6271 CPU @ 2.60GHz"
+    ],
+    "device": "cpu",
+    "interop_threads": 1,
+    "numpy": "2.3.3",
+    "python": "3.11.13",
+    "threads": 1,
+    "torch": "2.4.0"
+  },
+  "filter_day_budget": 2099576,
+  "observed_at_utc": "2026-09-29T13:39:35.628520+00:00",
+  "slurm_job_id": "231448",
+  "source_count": 25,
+  "status": "PASS",
+  "target_environment_synthetic_checks": 13
+}
+FILE_END compute_admission.json
+LOG_BEGIN slurm-231448.out bytes=0
+LOG_END
+LOG_BEGIN slurm-231448.err bytes=0
+LOG_END
+MONITOR_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:43:45+0800
