@@ -3,7 +3,7 @@ set -o pipefail
 readonly OUTPUT_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1"
 readonly JOB_ID="231448"
 echo "SLZ_SURVEY_READ_ONLY_MONITOR_V1"
-echo "sequence=227"
+echo "sequence=228"
 echo "timestamp_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "SQUEUE_BEGIN"
 squeue -j "$JOB_ID" -h -o '%i|%j|%T|%P|%R|%M|%l' 2>&1 || echo "SQUEUE_NO_RECORD"
