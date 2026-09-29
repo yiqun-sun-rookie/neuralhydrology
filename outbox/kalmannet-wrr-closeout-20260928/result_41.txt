@@ -1,0 +1,35 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=41
+### host=login4
+### started=2026-09-29T17:06:52+0800
+### ---------- output ----------
+231169|corrected14-saved-audit|FAILED|1:0|00:00:04|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1|ngu001
+
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/audit-231169.out
+
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/audit-231169.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/audit_corrected_fourteen.py", line 435, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/audit_corrected_fourteen.py", line 391, in main
+    output = check_output_target(args.output)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/audit_corrected_fourteen.py", line 43, in check_output_target
+    require(output == root / 'corrected_fourteen_audit_001/output_001' and
+  File "/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_fourteen_audit_002/build_manifest.py", line 24, in require
+    raise ValueError(message)
+ValueError: Output must be absent exclusive audit directory
+audit_corrected_fourteen.py: OK
+test_audit_corrected_fourteen.py: OK
+audit_manifest_001.json: OK
+build_manifest.py: OK
+run_cpu_audit.sh: OK
+independent_code_review.md: OK
+independent_repair_review_001.md: OK
+independent_repair_review_002.md: OK
+repair_report_002.md: OK
+repair_002.diff: OK
+independent_submit_review_002.md: OK
+TERMINAL_CORRECTED_SAVED_ARRAY_AUDIT_PENDING_INDEPENDENT_ACCEPTANCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T17:06:53+0800
