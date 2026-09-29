@@ -1,5 +1,5 @@
 #!/bin/bash
-# precip-selfrule-v05 seq=18: read-only status of batch-384 resource/equivalence probe.
+# precip-selfrule-v05 seq=19: read-only terminal check of batch-384 resource/equivalence probe.
 set -o pipefail
 
 ROOT=/data1/home/sunyiq/precip_input_selfrule_time_v05_batch384_probe_20260929
