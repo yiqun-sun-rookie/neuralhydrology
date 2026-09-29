@@ -1,0 +1,95 @@
+### channel=precip-selfrule-v05 seq=32
+### host=login4
+### started=2026-09-29T21:15:54+0800
+### ---------- output ----------
+wallclock 2026-09-29 21:15:54 +0800
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|ElapsedRaw|AllocTRES|MaxRSS|NodeList
+231412|psv05c4|FAILED|1:0|00:08:38|518|billing=4,cpu=4,node=1||ngu011
+231412.batch|batch|FAILED|1:0|00:08:38|518|cpu=4,mem=0,node=1|4651116K|ngu011
+231412.extern|extern|COMPLETED|0:0|00:08:38|518|billing=4,cpu=4,node=1|1792K|ngu011
+=== /data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/logs/probe-231412.out ===
+  ],
+  "complete_basins": [
+    "02245500"
+  ],
+  "elapsed_seconds": 399.74864085391164,
+  "peak_gpu_bytes": 5650876416,
+  "requested_basins": [
+    "02245500"
+  ],
+  "stage": "fit",
+  "technical_probe": false
+}
+TECHNICAL_RECORD_OK 02245500 5650876416
+{
+  "basins": [
+    {
+      "basin": "02245500",
+      "forcing_coverage": 1.0,
+      "forcing_sha256": "6a00e4053076f4c3a840087cf4be063726b602361dedf22a1a3df0aec562f9be",
+      "prediction_file": "predictions/02245500.npz",
+      "prediction_sha256": "fe0585aff0bdfbf4bed2f1526573bebcd4ff6c8d792d21642fbe975a8f74917f",
+      "target_count": 1461
+    }
+  ],
+  "complete": true,
+  "stage": "predict"
+}
+=== BASIN 09404450 LOG TAIL ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/scripts/run_selfrule_time_v05.py", line 79, in <module>
+    main()
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/scripts/run_selfrule_time_v05.py", line 62, in main
+    result = fit_stage(protocol, basins, args.device, technical=args.technical)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 264, in fit_stage
+    result = fit_one_basin(protocol, basin, static[index], device, deadline)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 128, in fit_one_basin
+    result = _fit_one_basin_claimed(protocol, basin, static_values, device, absolute_deadline,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 213, in _fit_one_basin_claimed
+    result = fit_rain_rule(
+             ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/fit.py", line 187, in fit_rain_rule
+    data_loss.sum().backward()
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.97 GiB. GPU 0 has a total capacity of 23.56 GiB of which 1.55 GiB is free. Process 936817 has 5.04 GiB memory in use. Including non-PyTorch memory, this process has 4.88 GiB memory in use. Process 936829 has 5.04 GiB memory in use. Process 936820 has 7.02 GiB memory in use. Of the allocated memory 3.29 GiB is allocated by PyTorch, and 1.27 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+=== BASIN 09512280 LOG TAIL ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/scripts/run_selfrule_time_v05.py", line 79, in <module>
+    main()
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/scripts/run_selfrule_time_v05.py", line 62, in main
+    result = fit_stage(protocol, basins, args.device, technical=args.technical)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 264, in fit_stage
+    result = fit_one_basin(protocol, basin, static[index], device, deadline)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 128, in fit_one_basin
+    result = _fit_one_basin_claimed(protocol, basin, static_values, device, absolute_deadline,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/pipeline.py", line 213, in _fit_one_basin_claimed
+    result = fit_rain_rule(
+             ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/code/src/precip_input_assimilation/selfrule/fit.py", line 187, in fit_rain_rule
+    data_loss.sum().backward()
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.97 GiB. GPU 0 has a total capacity of 23.56 GiB of which 1.88 GiB is free. Process 936817 has 4.88 GiB memory in use. Process 936821 has 4.88 GiB memory in use. Including non-PyTorch memory, this process has 4.88 GiB memory in use. Process 936820 has 7.02 GiB memory in use. Of the allocated memory 3.29 GiB is allocated by PyTorch, and 1.27 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+CONCURRENT_BASIN_PROCESS_FAILED
+=== /data1/home/sunyiq/precip_input_selfrule_time_v05_concurrency4_probe_20260929/logs/probe-231412.err ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T21:15:54+0800
