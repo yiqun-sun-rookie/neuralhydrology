@@ -1,0 +1,70 @@
+### channel=precip-selfrule-v05 seq=2
+### host=login4
+### started=2026-09-29T17:22:25+0800
+### ---------- output ----------
+wallclock 2026-09-29 17:22:25 +0800
+login4
+=== A. C4 ASSET HASHES ===
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4
+1c755b0d6ce977db38a8332b50160f2a62a732cb7835be8814d7c23f12a70e00  /data1/home/sunyiq/precip_input_da_2026_09/base/C4/model_epoch030.pt
+c5487945a42b04662a7ff9fd744dd78c1993d34bfadf31f6457a620cc74dfbfd  /data1/home/sunyiq/precip_input_da_2026_09/base/C4/config.yml
+d2a6ce291e137bcf30dbb39f140692882769760f59f71a29d674b02eafde14db  /data1/home/sunyiq/precip_input_da_2026_09/base/C4/train_data/train_data_scaler.yml
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200
+ecda5c6bc26a675f6f01199ab6d98d0e041934ca531c495886b9892cf86e6ec3  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/model_epoch030.pt
+9cbc2a9847cf0f7ca5cd2caf5ab78a28f9647fe94014317566814da74e344ded  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/config.yml
+d2a6ce291e137bcf30dbb39f140692882769760f59f71a29d674b02eafde14db  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200/train_data/train_data_scaler.yml
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300
+160c77ce3b095082fb06af813cd1d7d5f0db7681ce2880896b57e8a2dbbbded5  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/model_epoch030.pt
+3132ba5ad6c007dd0305305937f0cc0a4469d3986e3ab6655d164a44a6a0a216  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/config.yml
+d2a6ce291e137bcf30dbb39f140692882769760f59f71a29d674b02eafde14db  /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300/train_data/train_data_scaler.yml
+=== B. REPOSITORY STATE ===
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+=== C. CONFIG SEMANTICS ===
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4
+hidden_size: 256
+model: cudalstm
+output_dropout: 0.4
+predict_last_n: 1
+seed: 100
+seq_length: 270
+train_end_date: 30/09/2006
+train_start_date: 01/10/1999
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s200
+hidden_size: 256
+model: cudalstm
+output_dropout: 0.4
+predict_last_n: 1
+seed: 200
+seq_length: 270
+train_end_date: 30/09/2006
+train_start_date: 01/10/1999
+DIR /data1/home/sunyiq/precip_input_da_2026_09/base/C4_s300
+hidden_size: 256
+model: cudalstm
+output_dropout: 0.4
+predict_last_n: 1
+seed: 300
+seq_length: 270
+train_end_date: 30/09/2006
+train_start_date: 01/10/1999
+=== DONE READ-ONLY ASSET CHECK ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T17:22:26+0800
