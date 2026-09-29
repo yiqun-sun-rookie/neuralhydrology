@@ -1,0 +1,55 @@
+### channel=kalmannet-wrr-closeout-20260928 seq=32
+### host=login4
+### started=2026-09-29T13:13:20+0800
+### ---------- output ----------
+230414|COMPLETED|0:0|00:05:51|ngu011
+230415|COMPLETED|0:0|00:02:56|ngu010
+230416|RUNNING|0:0|00:02:02|ngu010
+230417|PENDING|0:0|00:00:00|None assigned
+230418|PENDING|0:0|00:00:00|None assigned
+230419|PENDING|0:0|00:00:00|None assigned
+230420|PENDING|0:0|00:00:00|None assigned
+230421|PENDING|0:0|00:00:00|None assigned
+230422|PENDING|0:0|00:00:00|None assigned
+230423|PENDING|0:0|00:00:00|None assigned
+230424|PENDING|0:0|00:00:00|None assigned
+230425|PENDING|0:0|00:00:00|None assigned
+230426|PENDING|0:0|00:00:00|None assigned
+230427|PENDING|0:0|00:00:00|None assigned
+LIVE_REQUESTED_GRAPHICS_RESOURCES
+230417|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230416
+230418|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230417
+230419|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230418
+230420|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230419
+230421|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230420
+230422|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230421
+230423|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230422
+230424|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230423
+230425|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230424
+230426|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230425
+230427|PENDING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|(Dependency)|afterany:230426
+230416|RUNNING|gpu:1|4|6:00:00|/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001|ngu010|
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001/logs/corrected-one-230414.out
+FORECAST_WINDOWS 8960/14981
+FORECAST_WINDOWS 10240/14981
+FORECAST_WINDOWS 11520/14981
+FORECAST_WINDOWS 12800/14981
+FORECAST_WINDOWS 14080/14981
+FORECAST_WINDOWS 14981/14981
+PLAIN_EVALUATION_COMPLETE main_seed43__corrected_outlet_original_states
+CORRECTED_ONE_COMPLETE_PENDING_INDEPENDENT_REVIEW case=main_seed43__corrected_outlet_original_states job=230414
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001/logs/corrected-one-230414.err
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001/logs/corrected-one-230415.out
+FORECAST_WINDOWS 8960/14981
+FORECAST_WINDOWS 10240/14981
+FORECAST_WINDOWS 11520/14981
+FORECAST_WINDOWS 12800/14981
+FORECAST_WINDOWS 14080/14981
+FORECAST_WINDOWS 14981/14981
+PLAIN_EVALUATION_COMPLETE main_seed43__corrected_outlet_corrected_states
+CORRECTED_ONE_COMPLETE_PENDING_INDEPENDENT_REVIEW case=main_seed43__corrected_outlet_corrected_states job=230415
+LOG=/data1/home/sunyiq/kalmannet_wrr_closeout_20260928_v1/corrected_launch_001/logs/corrected-one-230415.err
+READ_ONLY_NO_RESULT_ACCEPTANCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T13:13:20+0800
