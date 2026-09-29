@@ -1,0 +1,21 @@
+### channel=precip-selfrule-v05 seq=11
+### host=login4
+### started=2026-09-29T18:35:19+0800
+### ---------- output ----------
+wallclock 2026-09-29 18:35:19 +0800
+=== BEFORE ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231273_[4-7%1]                 psv05t3r     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231273_3                 psv05t3r     hgpu2p  R       1:57      1 ngu006
+              231259_2                  psv05t3     hgpu2p  R       4:00      1 ngu011
+RETRY_ALREADY_RUNNING=231273_3; LEFT_UNCHANGED
+=== AFTER ===
+                 JOBID                     NAME  PARTITION ST       TIME  NODES NODELIST(REASON)
+        231273_[4-7%1]                 psv05t3r     hgpu2p PD       0:00      1 (JobArrayTaskLimit)
+              231273_3                 psv05t3r     hgpu2p  R       1:57      1 ngu006
+              231259_2                  psv05t3     hgpu2p  R       4:00      1 ngu011
+Dependency=(null)
+Dependency=(null)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-29T18:35:23+0800
