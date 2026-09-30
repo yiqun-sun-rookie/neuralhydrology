@@ -22,14 +22,15 @@ with tarfile.open(fileobj=memory, mode='w:gz') as archive:
         checkpoint = entry['checkpoint']
         name = PurePosixPath(checkpoint['relative_path'])
         if (name.is_absolute() or '..' in name.parts or '\\' in str(name)
-                or len(name.parts)!=3 or name.parts[0]!='runs'
-                or name.parts[1]!=entry['run']['exp_id'] or name.suffix!='.pt'):
+                or len(name.parts)!=4 or name.parts[0]!='runs'
+                or name.parts[1]!=entry['run']['exp_id'] or name.parts[2]!='checkpoints'
+                or name.suffix!='.pt'):
             raise ValueError('path is not an exact registered epoch weight')
         root = Path(roots[entry['source']]['remote_root'])
         path = root.joinpath(*name.parts)
         if path.is_symlink() or not path.is_file() or path.stat().st_size!=checkpoint['bytes']:
             raise ValueError('selected file missing or different size')
-        epoch = path.with_suffix('.json')
+        epoch = root/'runs'/entry['run']['exp_id']/(path.stem+'.json')
         record = json.loads(epoch.read_bytes())
         if record['checkpoint']!=checkpoint or record['experiment_id']!=entry['run']['exp_id']:
             raise ValueError('epoch record and planned weight differ')
