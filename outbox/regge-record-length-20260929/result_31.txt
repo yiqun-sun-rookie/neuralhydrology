@@ -1,0 +1,60 @@
+### channel=regge-record-length-20260929 seq=31
+### host=login4
+### started=2026-09-30T21:40:53+0800
+### ---------- output ----------
+BINDING_DIAGNOSIS_BEGIN
+{
+  "schema": "regge_record_length_readonly_design_binding_v01",
+  "observed_utc": "2026-09-30T13:40:53.913316+00:00",
+  "formal_attempt": "20260929-004",
+  "job_id": "232312",
+  "exp_id": "RL-E1-M06",
+  "result_sha256": "a715b735fc401a51a7cc1837bef8b045fb72039f39f46878113695f90dd6cb2f",
+  "worker_status": "complete",
+  "worker_exit_code": 0,
+  "design_binding": {
+    "parameter": {
+      "canonical_array_sha256": "fa7a7a2625c20dc779aeb6df008da2d208af9fbe4c427446e5e96dc4a4128d6b",
+      "generated_array_sha256": "f84bc4b99536893761d8aedae20a88f880b97a5fd663c5ba728521a217d767e9",
+      "different_value_count": 2848,
+      "maximum_float64_steps": 1,
+      "canonical_bytes_used_for_execution": true
+    },
+    "noise": {
+      "canonical_array_sha256": "e30047bf3fb5b240aaf6ede664e9c89d72257aa1b717cb486de55477d6173d8b",
+      "generated_array_sha256": "3993fe59ef1cffac768d8cd8b48e4c6cd53eb2aa2df9f0c6aa1c3f2d990f0276",
+      "generated_matches_canonical_bytes": false,
+      "different_value_count": 281,
+      "maximum_float64_steps": 15,
+      "maximum_absolute_difference": 1.7763568394002505e-14,
+      "maximum_relative_difference": 1.928894053716072e-15,
+      "relative_tolerance": 1.4210854715202004e-14,
+      "tolerance_basis": "64_times_float64_machine_epsilon",
+      "zero_pattern_preserved": true,
+      "canonical_bytes_used_for_execution": true
+    }
+  },
+  "design_array_metadata": {
+    "parameter_values": {
+      "sha256": "fa7a7a2625c20dc779aeb6df008da2d208af9fbe4c427446e5e96dc4a4128d6b",
+      "dtype": "float64",
+      "shape": [
+        2048,
+        5
+      ]
+    },
+    "noise_design": {
+      "sha256": "e30047bf3fb5b240aaf6ede664e9c89d72257aa1b717cb486de55477d6173d8b",
+      "dtype": "float64",
+      "shape": [
+        128,
+        5
+      ]
+    }
+  },
+  "read_only": true
+}
+BINDING_DIAGNOSIS_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T21:40:53+0800
