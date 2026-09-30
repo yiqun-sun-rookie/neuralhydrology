@@ -1,0 +1,8 @@
+### channel=zhenjiang-target-state-diagnostic-20260930 seq=1
+### host=login4
+### started=2026-09-30T20:07:02+0800
+### ---------- output ----------
+{"new_root_absent": true, "parent_registered_inputs": 10, "parent_registry_verified": true, "resources": {"nodes": "ngu001|mix|gpu:2\nngu002|mix|gpu:2\nngu004|mix|gpu:2\nngu005|mix|gpu:2\nngu006|mix|gpu:2\nngu007|idle|gpu:2\nngu008|idle|gpu:2\nngu010|mix|gpu:2\nngu011|mix|gpu:2\n", "partition": "PartitionName=hgpu2p AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=ngu[001-002,004-008,010-011] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED\n"}, "status": "PASS_READ_ONLY_EXCLUSIVE_ROOT_PROBE"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:07:04+0800
