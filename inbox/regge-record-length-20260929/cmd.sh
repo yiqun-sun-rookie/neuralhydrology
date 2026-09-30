@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=29
+sequence=30
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
 OUTPUT=$ROOT/formal_calibration_004
 CAPSULE=$ROOT/deploy/formal_calibration_capsule_004
@@ -35,6 +35,8 @@ def event_summary(path):
     events = deque(maxlen=8)
     counts = Counter()
     stages = Counter()
+    latest_progress = {}
+    unique_failures = set()
     with path.open("r", encoding="utf-8") as stream:
         for line in stream:
             try:
@@ -43,10 +45,13 @@ def event_summary(path):
                 events.append({"unparsed_tail": line[-200:]})
                 continue
             counts[event.get("event", "unknown")] += 1
+            if event.get("event", "").endswith("_progress"):
+                latest_progress[event["event"]] = event
             if event.get("event") == "candidate_failure":
                 stages[event.get("stage", "unknown")] += 1
+                unique_failures.add((event.get("stage"), event.get("parameter_id"), event.get("noise_id")))
             events.append(event)
-    return {"count_by_event": dict(counts), "candidate_failures_by_stage": dict(stages), "last_events": list(events)}
+    return {"count_by_event": dict(counts), "candidate_failures_by_stage": dict(stages), "unique_stage_parameter_noise_failures": len(unique_failures), "latest_progress": latest_progress, "last_events": list(events)}
 ids = ["RL-E1-M06", "RL-E1-M12", "RL-E2-M06", "RL-E2-M12", "RL-E3-M06", "RL-E3-M12"]
 workers = []
 for exp_id in ids:
