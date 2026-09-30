@@ -1,0 +1,10 @@
+### channel=zhenjiang-target-state-diagnostic-20260930 seq=8
+### host=login4
+### started=2026-10-01T02:01:15+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 24, in <module>
+ValueError: path is not an exact registered epoch weight
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-01T02:01:17+0800
