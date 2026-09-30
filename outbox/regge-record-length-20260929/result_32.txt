@@ -1,0 +1,29 @@
+### channel=regge-record-length-20260929 seq=32
+### host=login4
+### started=2026-09-30T22:02:10+0800
+### ---------- output ----------
+2026-09-30T22:02:10+0800
+Filesystem                    1024-blocks         Used    Available Capacity Mounted on
+hhjt_parastor_hhjt_parastor 1024283213820 678717920664 345565293156      67% /data1
+PARTITION AVAIL TIMELIMIT NODES STATE
+hgpu2p up infinite 7 mix
+hgpu2p up infinite 2 idle
+HPC_PUBLIC_KEY_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAtM0+PhtG7BDKLeTrHqYa
+hDHREgb+X6AuWABnRgLz86HTzcjI19nc8514ZwF6RuXZHUfRTAq1iFs+wAdf2138
+Jdjwd1craYafkKPI9Q0j0+dPOSbkIPV7oz1StFc7VqJK22akB35WBdFVOnqWANjc
+ivUZocOMu/9J9HsqGJgGIFDlSW9JaU4mprSwlfMMg46Zz9odrxyUwEGTuhnoFOh8
+XpZsdmx8CjR17qNDzlhnMv801DO32OMh10zVBnhh6qo+YitawkzvoR8Fi7PsEASd
+IZz4XwUuF3YWDayR9pA66VL5rFvc7d0HNC9iLMsgFKYFbJt4z1UkWRO4SOqgdCEc
+bdA3saH8hxhr2CtZURn9ILtYqRcWan+TiSaEwyRdCWSpY7RBW9SMhmF9Zucoih6W
+ZT7z4RiP91/wTLNN00TiQyY69hialHEx5FxahiY6BCnZxD3Q7/Hbr71KPEpCTvQ9
+xPa0jVIJyFXGYCBctn+CYgiOqIdhJ0BacH1c+zUVOBX7AgMBAAE=
+-----END PUBLIC KEY-----
+HPC_PUBLIC_KEY_END
+c61674eebd71b54ca41add7face1eef170e85760cd55b56bf21f1b13bdfd0205  /data1/home/sunyiq/regge_record_length_20260929_001/transport_credentials_005/upload_token_public.pem
+600
+FIFTH_ATTEMPT_RESOURCE_AND_CREDENTIAL_GATE_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T22:02:12+0800
