@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=36
+sequence=37
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
 OUTPUT=$ROOT/formal_calibration_005
 CAPSULE=$ROOT/deploy/formal_calibration_capsule_005
@@ -33,7 +33,7 @@ def log_tail(path, count=10):
 def event_summary(path):
     if not path.is_file():
         return None
-    events = deque(maxlen=8)
+    events = deque(maxlen=16)
     counts = Counter()
     stages = Counter()
     latest_progress = {}
