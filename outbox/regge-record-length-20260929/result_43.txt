@@ -1,0 +1,11 @@
+### channel=regge-record-length-20260929 seq=43
+### host=login4
+### started=2026-10-01T05:32:04+0800
+### ---------- output ----------
+RETURN_DIAGNOSIS_BEGIN
+{"schema":"regge_encrypted_return_read_only_diagnosis_v01","formal_attempt":"20260930-005","sequence":43,"observed_utc":"2026-09-30T21:32:19.910255+00:00","payload_uploaded":false,"billing_configuration_changed":false,"http_status":403,"error_body_bytes":178,"error_body_sha256":"64b09f1b08ac4ccac6c9cc913f4dca5b7288ae658a3895fbe10ada32df670d24","server_message_redacted":"@yiqun-sun-rookie can not upload new objects to public fork yiqun-sun-rookie/neuralhydrology"}
+RETURN_DIAGNOSIS_END
+FIFTH_ATTEMPT_RETURN_DIAGNOSIS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-01T05:32:31+0800
