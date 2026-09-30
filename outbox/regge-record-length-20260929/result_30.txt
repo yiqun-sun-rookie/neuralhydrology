@@ -1,0 +1,492 @@
+### channel=regge-record-length-20260929 seq=30
+### host=login4
+### started=2026-09-30T21:21:28+0800
+### ---------- output ----------
+2026-09-30T21:21:28+0800
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|MaxRSS|NCPUS|NodeList
+232312|regge_rl_cal_004|hgpu2p|FAILED|1:0|00:48:32|2026-09-30T20:16:24|2026-09-30T21:04:56||4|ngu010
+232312.batch|batch||FAILED|1:0|00:48:32|2026-09-30T20:16:24|2026-09-30T21:04:56|632128K|4|ngu010
+232312.extern|extern||COMPLETED|0:0|00:48:33|2026-09-30T20:16:24|2026-09-30T21:04:57|2392K|4|ngu010
+MONITOR_JSON_BEGIN
+{
+  "observed_utc": "2026-09-30T13:21:29.791503+00:00",
+  "job_id": "232312",
+  "formal_attempt": "20260929-004",
+  "batch_failed": {
+    "schema": "regge_record_length_hpc_calibration_batch_v02_failure",
+    "status": "failed",
+    "passed": false,
+    "failed_utc": "2026-09-30T13:04:46.260270+00:00",
+    "current_experiment": "RL-E1-M06",
+    "attempts": [
+      {
+        "exp_id": "RL-E1-M06",
+        "status": "started",
+        "started_utc": "2026-09-30T12:16:40.030938+00:00",
+        "returncode": 0,
+        "process_evidence_present": true,
+        "receipt_evidence_present": true,
+        "stdout_present": true,
+        "stderr_present": true,
+        "finished_utc": "2026-09-30T13:04:38.872509+00:00"
+      }
+    ],
+    "completed": [],
+    "environment": {
+      "python": "3.11.5",
+      "numpy": "1.26.4",
+      "torch": "2.2.2",
+      "torch_threads": 1,
+      "cuda_available": false,
+      "slurm_job_id": "232312",
+      "slurm_job_name": "regge_rl_cal_004",
+      "slurm_cpus_per_task": "4",
+      "python_prefix": "/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005",
+      "python_dont_write_bytecode_flag": true,
+      "python_dont_write_bytecode_environment": "1",
+      "thread_environment": {
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "mkl_threading_layer": "GNU",
+      "mkl_service_force_intel": "1",
+      "hostname": "ngu010"
+    },
+    "capsule_manifest_sha256": "c31b04606f162bb777bed6943297aea7934b5e2c93db63601de32b25147a2efc",
+    "error": {
+      "type": "ValueError",
+      "reason": "calibration noise design binding differs: RL-E1-M06"
+    },
+    "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/hpc_calibration.py\", line 709, in run_remote_batch\n    record = _verify_worker(\n             ^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/hpc_calibration.py\", line 604, in _verify_worker\n    scientific_record = validate_new_calibration_artifact(\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/selection.py\", line 616, in validate_new_calibration_artifact\n    raise ValueError(f\"calibration {name} design binding differs: {exp_id}\")\nValueError: calibration noise design binding differs: RL-E1-M06\n",
+    "automatic_retry": false,
+    "elapsed_seconds": 2898.060844011605
+  },
+  "batch_receipt": null,
+  "wrapper_failed": null,
+  "batch_events": {
+    "count_by_event": {
+      "remote_calibration_batch_started": 1,
+      "remote_calibration_worker_started": 1
+    },
+    "candidate_failures_by_stage": {},
+    "unique_stage_parameter_noise_failures": 0,
+    "latest_progress": {},
+    "last_events": [
+      {
+        "utc": "2026-09-30T12:16:40.014886+00:00",
+        "event": "remote_calibration_batch_started",
+        "count": 6
+      },
+      {
+        "utc": "2026-09-30T12:16:40.032015+00:00",
+        "event": "remote_calibration_worker_started",
+        "exp_id": "RL-E1-M06"
+      }
+    ]
+  },
+  "slurm_stdout_tail": [
+    "==========================================\n",
+    "2026-09-30T20:16:13+08:00\n",
+    "Regge record-length study: six new calibrations\n",
+    "job_id=232312 host=ngu010\n",
+    "capsule=/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004\n",
+    "output=/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_004\n",
+    "==========================================\n"
+  ],
+  "slurm_stderr_tail": [
+    "    run_remote_batch(args.capsule_root, args.output_root)\n",
+    "  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/hpc_calibration.py\", line 709, in run_remote_batch\n",
+    "    record = _verify_worker(\n",
+    "             ^^^^^^^^^^^^^^^\n",
+    "  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/hpc_calibration.py\", line 604, in _verify_worker\n",
+    "    scientific_record = validate_new_calibration_artifact(\n",
+    "                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+    "  File \"/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_record_length_study/selection.py\", line 616, in validate_new_calibration_artifact\n",
+    "    raise ValueError(f\"calibration {name} design binding differs: {exp_id}\")\n",
+    "ValueError: calibration noise design binding differs: RL-E1-M06\n"
+  ],
+  "workers": [
+    {
+      "exp_id": "RL-E1-M06",
+      "directory_exists": true,
+      "files": {
+        "events.jsonl": {
+          "bytes": 113427,
+          "mtime_unix": 1790773405.0
+        },
+        "raw.npz": {
+          "bytes": 113866196,
+          "mtime_unix": 1790773405.0
+        },
+        "result.json": {
+          "bytes": 849769,
+          "mtime_unix": 1790773405.0
+        },
+        "receipt.json": {
+          "bytes": 4350,
+          "mtime_unix": 1790773405.0
+        },
+        "process.json": {
+          "bytes": 4602,
+          "mtime_unix": 1790773405.0
+        }
+      },
+      "receipt": {
+        "schema": "regge_record_length_calibration_receipt_v01",
+        "status": "complete",
+        "passed": true,
+        "exp_id": "RL-E1-M06",
+        "exit_code": 0,
+        "elapsed_seconds": 2868.324114367366,
+        "failure_stage": null,
+        "environment": {
+          "versions": {
+            "python": "3.11.5",
+            "numpy": "1.26.4",
+            "torch": "2.2.2"
+          },
+          "dtype_required": "float64",
+          "device_required": "cpu",
+          "gradients_observed": false,
+          "gradients_required": false,
+          "thread_settings": {
+            "cpu_threads_required": 1,
+            "torch_threads_observed": 1,
+            "loaded_threadpools_observed": [
+              {
+                "user_api": "blas",
+                "internal_api": "mkl",
+                "num_threads": 1,
+                "prefix": "libmkl_rt",
+                "filepath": "/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/libmkl_rt.so.2",
+                "version": "2023.1-Product",
+                "threading_layer": "gnu"
+              },
+              {
+                "user_api": "openmp",
+                "internal_api": "openmp",
+                "num_threads": 1,
+                "prefix": "libgomp",
+                "filepath": "/usr/lib64/libgomp.so.1.0.0",
+                "version": null
+              }
+            ],
+            "threadpool_observation_error": null
+          },
+          "sealed_runtime": "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_zero_probability_repair/runtime/walrus_history_conditioned_imm",
+          "dtype": "float64",
+          "device": "cpu",
+          "cpu_threads": 1,
+          "gradients": false,
+          "sealed_source_hashes": {
+            "__init__.py": "15c71ff39aee205220911ee1ca07832e8bb5e70b54a4cddacfa68ad6d11b50d1",
+            "data.py": "4107ca7823cc72667ef0b6e0bf5f0fc21f8a32a8dd27f260d91c8406ca294d0d",
+            "experiment.py": "0244f9a47f4802f3ddfdc0b22316aae38ab0c0e64f1fd9a86935e60037dc9438",
+            "filter.py": "150a46298aad9bd7df6448493383a7771d496f56154126e2da3fe001a739cd26",
+            "forecast.py": "826cd0bb724752d8f5b6fbaa7fd64a561288fd09243ea0191aecedf427e17a78",
+            "network.py": "95cd767985bffbd55aa49a7fd19178b339b5f29e1d840ff5dab8931a4c0274b8",
+            "noise_audit.py": "1d70fd15b33a09bcd73c348523c1b985c2c35eb8d242c5613dd4438ebd5d6811",
+            "noise_experiment.py": "86c88c89b5c76c5f6cbc5dc2d2c7a871fe58c14fc0c05f112b87317751db97b1",
+            "noise_filter.py": "90079213043a7ef9a1f85475cb06baf707977001ded388db0392848c65379d30",
+            "noise_search.py": "01bb4103e4c98f19b068b0e9bd44086b47e4379158c7581837f707960991ffb3",
+            "short_record_audit.py": "f47eac82dbbb05e64b4ca27dd3ff7c527cae0fb99144a5f3746dd434827daa43",
+            "short_record_calibration.py": "b5b7041f0df4bc570d354e67b25f7223388451855e3b8b6abeeb7c0876b14c37",
+            "short_record_contract.py": "d2dc38ebab23348985a88ae6b6d2be7159c3755f3d7fd5a52b2148a93f2789aa",
+            "short_record_experiment.py": "4c7d19a38194a87122a297a0b69178a7b612527ad9348fe48c49b8d0553eefa7",
+            "short_record_formal_v02.py": "cbccd5df61d31c6499f5b4397723825bdcfc309be17d2e9b91f5c835d18b5983",
+            "short_record_formal_v02_audit.py": "582e0e3946601568fb55e5dc71f4fb7d3c4d2ba6f8e31388f795e748f7930b6f",
+            "short_record_log_reference.py": "312fdeb62764b1aec8205d92b8dc0e8917c94631be9aff6b060e44bd48dc130a",
+            "short_record_reference_repair.py": "4ae0baa7b71eb11e92ac19bbb8fdb976c544ecf7fac8e6df78e4b06fabe4faa8",
+            "walrus.py": "92a24efce77a52618986cc9f6f9db0207c34f9ef78abdc11b29c47a53b7b82ad",
+            "configs/regge_short_record_v01.json": "5f175b2f09613b2090c379f57378cffd84daffb46d2a26b95fa3ec4bb2b1de0c"
+          }
+        },
+        "input_source_hashes": {
+          "raw_data": "64e9b1b3d47655e2008dd4dbb380d7a198811dd79b0094f1632467c0e6f605fa",
+          "warmup_timestamps": "6169b3547bf230af942036a1de4292daf8f1779cd33f0f62a6d5288661977faa",
+          "warmup_forcing": "74ff4af6425280d65e94448424e2806b7073044b239b059c983a19a55ec2afde",
+          "calibration_timestamps": "41b35228545a00a754791c2d391d5c31269d32a685cc947969463ee7f29f51c4",
+          "calibration_forcing": "6b305dad06def5fb18262aec8f0ec4b63b259f27a5fc31d06a1c72550d55d73c",
+          "calibration_observations": "7091931bb054cbe87f4fa3266426dbf8a71f1cec4c6e4b529075e13c7473146b"
+        },
+        "files": {
+          "raw.npz": "634f688d73f6e6069b6b0e650830a6aecafcfbf9ea7cb63848ea98587b38e986",
+          "result.json": "a715b735fc401a51a7cc1837bef8b045fb72039f39f46878113695f90dd6cb2f",
+          "events.jsonl": "286ed66c14bb2fc4fcc6c6ba0df246aa1353484ed15044c2489df0f63cafe623"
+        }
+      },
+      "process": {
+        "schema": "regge_record_length_calibration_process_v01",
+        "exp_id": "RL-E1-M06",
+        "started_utc": "2026-09-30T12:16:49.929595+00:00",
+        "finished_utc": "2026-09-30T13:04:38.309339+00:00",
+        "elapsed_seconds": 2868.37973247841,
+        "exit_code": 0,
+        "error": null,
+        "stdout": "/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_004/calibration_process_logs/RL-E1-M06.stdout.log",
+        "stderr": "/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_004/calibration_process_logs/RL-E1-M06.stderr.log",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "failure_stage": null,
+        "environment": {
+          "versions": {
+            "python": "3.11.5",
+            "numpy": "1.26.4",
+            "torch": "2.2.2"
+          },
+          "dtype_required": "float64",
+          "device_required": "cpu",
+          "gradients_observed": false,
+          "gradients_required": false,
+          "thread_settings": {
+            "cpu_threads_required": 1,
+            "torch_threads_observed": 1,
+            "loaded_threadpools_observed": [
+              {
+                "user_api": "blas",
+                "internal_api": "mkl",
+                "num_threads": 1,
+                "prefix": "libmkl_rt",
+                "filepath": "/data1/home/sunyiq/regge_record_length_20260929_001/runtime_probe_005/lib/libmkl_rt.so.2",
+                "version": "2023.1-Product",
+                "threading_layer": "gnu"
+              },
+              {
+                "user_api": "openmp",
+                "internal_api": "openmp",
+                "num_threads": 1,
+                "prefix": "libgomp",
+                "filepath": "/usr/lib64/libgomp.so.1.0.0",
+                "version": null
+              }
+            ],
+            "threadpool_observation_error": null
+          },
+          "sealed_runtime": "/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/project/python/regge_zero_probability_repair/runtime/walrus_history_conditioned_imm",
+          "dtype": "float64",
+          "device": "cpu",
+          "cpu_threads": 1,
+          "gradients": false,
+          "sealed_source_hashes": {
+            "__init__.py": "15c71ff39aee205220911ee1ca07832e8bb5e70b54a4cddacfa68ad6d11b50d1",
+            "data.py": "4107ca7823cc72667ef0b6e0bf5f0fc21f8a32a8dd27f260d91c8406ca294d0d",
+            "experiment.py": "0244f9a47f4802f3ddfdc0b22316aae38ab0c0e64f1fd9a86935e60037dc9438",
+            "filter.py": "150a46298aad9bd7df6448493383a7771d496f56154126e2da3fe001a739cd26",
+            "forecast.py": "826cd0bb724752d8f5b6fbaa7fd64a561288fd09243ea0191aecedf427e17a78",
+            "network.py": "95cd767985bffbd55aa49a7fd19178b339b5f29e1d840ff5dab8931a4c0274b8",
+            "noise_audit.py": "1d70fd15b33a09bcd73c348523c1b985c2c35eb8d242c5613dd4438ebd5d6811",
+            "noise_experiment.py": "86c88c89b5c76c5f6cbc5dc2d2c7a871fe58c14fc0c05f112b87317751db97b1",
+            "noise_filter.py": "90079213043a7ef9a1f85475cb06baf707977001ded388db0392848c65379d30",
+            "noise_search.py": "01bb4103e4c98f19b068b0e9bd44086b47e4379158c7581837f707960991ffb3",
+            "short_record_audit.py": "f47eac82dbbb05e64b4ca27dd3ff7c527cae0fb99144a5f3746dd434827daa43",
+            "short_record_calibration.py": "b5b7041f0df4bc570d354e67b25f7223388451855e3b8b6abeeb7c0876b14c37",
+            "short_record_contract.py": "d2dc38ebab23348985a88ae6b6d2be7159c3755f3d7fd5a52b2148a93f2789aa",
+            "short_record_experiment.py": "4c7d19a38194a87122a297a0b69178a7b612527ad9348fe48c49b8d0553eefa7",
+            "short_record_formal_v02.py": "cbccd5df61d31c6499f5b4397723825bdcfc309be17d2e9b91f5c835d18b5983",
+            "short_record_formal_v02_audit.py": "582e0e3946601568fb55e5dc71f4fb7d3c4d2ba6f8e31388f795e748f7930b6f",
+            "short_record_log_reference.py": "312fdeb62764b1aec8205d92b8dc0e8917c94631be9aff6b060e44bd48dc130a",
+            "short_record_reference_repair.py": "4ae0baa7b71eb11e92ac19bbb8fdb976c544ecf7fac8e6df78e4b06fabe4faa8",
+            "walrus.py": "92a24efce77a52618986cc9f6f9db0207c34f9ef78abdc11b29c47a53b7b82ad",
+            "configs/regge_short_record_v01.json": "5f175b2f09613b2090c379f57378cffd84daffb46d2a26b95fa3ec4bb2b1de0c"
+          }
+        },
+        "input_source_hashes": {
+          "raw_data": "64e9b1b3d47655e2008dd4dbb380d7a198811dd79b0094f1632467c0e6f605fa",
+          "warmup_timestamps": "6169b3547bf230af942036a1de4292daf8f1779cd33f0f62a6d5288661977faa",
+          "warmup_forcing": "74ff4af6425280d65e94448424e2806b7073044b239b059c983a19a55ec2afde",
+          "calibration_timestamps": "41b35228545a00a754791c2d391d5c31269d32a685cc947969463ee7f29f51c4",
+          "calibration_forcing": "6b305dad06def5fb18262aec8f0ec4b63b259f27a5fc31d06a1c72550d55d73c",
+          "calibration_observations": "7091931bb054cbe87f4fa3266426dbf8a71f1cec4c6e4b529075e13c7473146b"
+        }
+      },
+      "events": {
+        "count_by_event": {
+          "calibration_started": 1,
+          "selection_observation_access": 1,
+          "search_budget": 1,
+          "candidate_failure": 358,
+          "hydrologic_progress": 16,
+          "filter_progress": 96,
+          "joint_progress": 16,
+          "calibration_completed": 1
+        },
+        "candidate_failures_by_stage": {
+          "warmup": 348,
+          "hydrologic": 1,
+          "forecast": 6,
+          "filter": 3
+        },
+        "unique_stage_parameter_noise_failures": 358,
+        "latest_progress": {
+          "hydrologic_progress": {
+            "utc": "2026-09-30T12:54:44.960217+00:00",
+            "event": "hydrologic_progress",
+            "exp_id": "RL-E1-M06",
+            "completed_candidates": 2048,
+            "total_candidates": 2048
+          },
+          "filter_progress": {
+            "utc": "2026-09-30T13:04:37.083394+00:00",
+            "event": "filter_progress",
+            "exp_id": "RL-E1-M06",
+            "batch_start": 1920,
+            "completed_hours": 4320,
+            "total_hours": 4416,
+            "alive": 119
+          },
+          "joint_progress": {
+            "utc": "2026-09-30T13:04:37.596671+00:00",
+            "event": "joint_progress",
+            "exp_id": "RL-E1-M06",
+            "completed_candidates": 2048,
+            "total_candidates": 2048
+          }
+        },
+        "last_events": [
+          {
+            "utc": "2026-09-30T13:04:24.924376+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "filter",
+            "candidate_row": 1936,
+            "index": 3013,
+            "reason": "_LinAlgError: linalg.cholesky: (Batch element 0): The factorization could not be completed because the input is not positive-definite (the leading minor of order 5 is not positive-definite).",
+            "timestamp": "2001-11-03T13",
+            "parameter_id": 1662,
+            "noise_id": 16
+          },
+          {
+            "utc": "2026-09-30T13:04:28.088927+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "forecast",
+            "candidate_row": 1970,
+            "index": 3336,
+            "reason": "ForecastNumericalFailure: nonfinite complete forecast state at lead 74",
+            "timestamp": "2001-11-17T00",
+            "parameter_id": 1662,
+            "noise_id": 50
+          },
+          {
+            "utc": "2026-09-30T13:04:30.450938+00:00",
+            "event": "filter_progress",
+            "exp_id": "RL-E1-M06",
+            "batch_start": 1920,
+            "completed_hours": 3600,
+            "total_hours": 4416,
+            "alive": 121
+          },
+          {
+            "utc": "2026-09-30T13:04:32.096144+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "filter",
+            "candidate_row": 1923,
+            "index": 3792,
+            "reason": "_LinAlgError: linalg.cholesky: (Batch element 0): The factorization could not be completed because the input is not positive-definite (the leading minor of order 5 is not positive-definite).",
+            "timestamp": "2001-12-06T00",
+            "parameter_id": 1662,
+            "noise_id": 3
+          },
+          {
+            "utc": "2026-09-30T13:04:32.694887+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "forecast",
+            "candidate_row": 1980,
+            "index": 3792,
+            "reason": "ForecastNumericalFailure: nonfinite complete forecast state at lead 78",
+            "timestamp": "2001-12-06T00",
+            "parameter_id": 1662,
+            "noise_id": 60
+          },
+          {
+            "utc": "2026-09-30T13:04:37.083394+00:00",
+            "event": "filter_progress",
+            "exp_id": "RL-E1-M06",
+            "batch_start": 1920,
+            "completed_hours": 4320,
+            "total_hours": 4416,
+            "alive": 119
+          },
+          {
+            "utc": "2026-09-30T13:04:37.596671+00:00",
+            "event": "joint_progress",
+            "exp_id": "RL-E1-M06",
+            "completed_candidates": 2048,
+            "total_candidates": 2048
+          },
+          {
+            "utc": "2026-09-30T13:04:38.207884+00:00",
+            "event": "calibration_completed",
+            "exp_id": "RL-E1-M06",
+            "status": "complete"
+          }
+        ]
+      },
+      "stdout_tail": [],
+      "stderr_tail": []
+    },
+    {
+      "exp_id": "RL-E1-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E2-M06",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E2-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E3-M06",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E3-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    }
+  ]
+}
+MONITOR_JSON_END
+c31b04606f162bb777bed6943297aea7934b5e2c93db63601de32b25147a2efc  /data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/capsule_manifest.json
+80d815cd4ee52a63cf5f67e38372c07b246f80e5cf8da6d743e5f3609fa78376  /data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/calibration_authorization.json
+FOURTH_ATTEMPT_STATUS_READ_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T21:21:29+0800
