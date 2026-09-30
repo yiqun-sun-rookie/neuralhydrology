@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sequence=252
+# sequence=253
 set -euo pipefail
 readonly OUTPUT_ROOT='/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1'
 guard() {
@@ -25,22 +25,16 @@ pin "$OUTPUT_ROOT"
 [[ -d "$OUTPUT_ROOT" ]]
 check "$OUTPUT_ROOT/aggregate.json" 407042 'ffc8c51ed3c5fd5defeae4b7dcf9b36e06c4f04bbce6898d2483be0d76b09c92'
 check "$OUTPUT_ROOT/completion.json" 375 '591dc01c42da5f6ba7a004f90ef826ac4f5218e1013ea1f6c7bacd2dadbefe0c'
-printf '%s\n' 'SLZ_REPAIR_BEGIN 2118a2430dcd51044d3c11c3108c35a6556cf9ee3c997c8ed1c0dc7a2c9fed89 252 8'
+printf '%s\n' 'SLZ_REPAIR_BEGIN 2118a2430dcd51044d3c11c3108c35a6556cf9ee3c997c8ed1c0dc7a2c9fed89 253 9'
 printf '%s\n' 'OUTPUT_ROOT_RESOLVED=/data1/home/sunyiq/kalmannet_daily_camels_slz_survey_development_20260928_v1'
 printf '%s\n' 'AGGREGATE_SHA256=ffc8c51ed3c5fd5defeae4b7dcf9b36e06c4f04bbce6898d2483be0d76b09c92'
 printf '%s\n' 'COMPLETION_SHA256=591dc01c42da5f6ba7a004f90ef826ac4f5218e1013ea1f6c7bacd2dadbefe0c'
-check "$OUTPUT_ROOT/part_a/source_seed_20260908_epoch_history.json" 599574 'b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a'
-printf '%s\n' 'CHUNK_BEGIN part_a/source_seed_20260908_epoch_history.json 397935 201639 599574 b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a'
-dd if="$OUTPUT_ROOT/part_a/source_seed_20260908_epoch_history.json" bs=65536 iflag=skip_bytes,count_bytes skip=397935 count=201639 status=none | base64 --wrap=0
-printf '\n'
-printf '%s\n' 'CHUNK_END part_a/source_seed_20260908_epoch_history.json 397935 201639 599574 b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a'
-check "$OUTPUT_ROOT/part_a/source_seed_20260908_epoch_history.json" 599574 'b5b466c84139883e3955721fe451ebb6f05da0b861d9a9188b1728dc52befb4a'
 check "$OUTPUT_ROOT/part_a/source_seed_20260922_epoch_history.json" 521838 'f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
-printf '%s\n' 'CHUNK_BEGIN part_a/source_seed_20260922_epoch_history.json 0 448361 521838 f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
-dd if="$OUTPUT_ROOT/part_a/source_seed_20260922_epoch_history.json" bs=65536 iflag=skip_bytes,count_bytes skip=0 count=448361 status=none | base64 --wrap=0
+printf '%s\n' 'CHUNK_BEGIN part_a/source_seed_20260922_epoch_history.json 448361 73477 521838 f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
+dd if="$OUTPUT_ROOT/part_a/source_seed_20260922_epoch_history.json" bs=65536 iflag=skip_bytes,count_bytes skip=448361 count=73477 status=none | base64 --wrap=0
 printf '\n'
-printf '%s\n' 'CHUNK_END part_a/source_seed_20260922_epoch_history.json 0 448361 521838 f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
+printf '%s\n' 'CHUNK_END part_a/source_seed_20260922_epoch_history.json 448361 73477 521838 f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
 check "$OUTPUT_ROOT/part_a/source_seed_20260922_epoch_history.json" 521838 'f5712b39de1dc325d5054e5447a24c57d20d82f9c5f07bb22fca11b096dfd1c6'
 check "$OUTPUT_ROOT/aggregate.json" 407042 'ffc8c51ed3c5fd5defeae4b7dcf9b36e06c4f04bbce6898d2483be0d76b09c92'
 check "$OUTPUT_ROOT/completion.json" 375 '591dc01c42da5f6ba7a004f90ef826ac4f5218e1013ea1f6c7bacd2dadbefe0c'
-printf '%s\n' 'TRANSFER_COMPLETE 2118a2430dcd51044d3c11c3108c35a6556cf9ee3c997c8ed1c0dc7a2c9fed89 252 8'
+printf '%s\n' 'TRANSFER_COMPLETE 2118a2430dcd51044d3c11c3108c35a6556cf9ee3c997c8ed1c0dc7a2c9fed89 253 9'
