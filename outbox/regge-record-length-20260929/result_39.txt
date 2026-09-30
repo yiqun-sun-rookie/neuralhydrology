@@ -1,0 +1,17 @@
+### channel=regge-record-length-20260929 seq=39
+### host=login4
+### started=2026-10-01T04:59:27+0800
+### ---------- output ----------
+PACKAGE_TERMINAL_AND_IDENTITY_PREFLIGHT=PASS
+233416|regge_rl_cal_005|COMPLETED|0:0
+233416.batch|batch|COMPLETED|0:0
+233416.extern|extern|COMPLETED|0:0
+PACKAGE_SUBMISSION_RECEIPT_BEGIN
+{"schema":"regge_record_length_package_submission_receipt_v01","status":"submitted","formal_attempt":"20260930-005","sequence":39,"calibration_job_id":"233416","slurm_job_id":"233430","slurm_job_name":"regge_rl_pack_005","submission_count":1,"automatic_retry":false,"manual_reconciliation_required":false,"source_root":"/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_005","package_root":"/data1/home/sunyiq/regge_record_length_20260929_001/transport_package_005","submitted_utc":"2026-09-30T20:59:30.465659+00:00","evidence_sha256":{"package_005-seq39.requested.json":"d26a4f031b8161d95203f41105a1f1a6e624a9d3de1a46b2ce00a471c2c79960","package_005-seq39.stdout.txt":"cc16570e1d79bf33c9932ee412585e96ae42c2318877e4feba704078855ae63c","package_005-seq39.stderr.txt":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+PACKAGE_SUBMISSION_RECEIPT_END
+             JOBID                     NAME PARTITION      STATE               NODELIST(REASON)
+            233430        regge_rl_pack_005    hgpu2p    PENDING                         (None)
+PACKAGE_SINGLE_SUBMISSION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-01T04:59:30+0800
