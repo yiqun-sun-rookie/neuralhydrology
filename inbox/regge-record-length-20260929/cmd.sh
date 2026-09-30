@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=35
+sequence=36
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
 OUTPUT=$ROOT/formal_calibration_005
 CAPSULE=$ROOT/deploy/formal_calibration_capsule_005
@@ -82,7 +82,7 @@ print(json.dumps({
     "slurm_stdout_tail": log_tail(root / "logs/formal_calibration_005-233416.out"),
     "slurm_stderr_tail": log_tail(root / "logs/formal_calibration_005-233416.err"),
     "workers": workers,
-}, indent=2))
+}, separators=(",", ":")))
 print("MONITOR_JSON_END")
 PY
 
