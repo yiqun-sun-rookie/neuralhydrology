@@ -1,0 +1,9 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=86
+### host=login4
+### started=2026-09-30T21:07:36+0800
+### ---------- output ----------
+CANARY11_FINAL_PREFLIGHT_PASSED_SUBMISSION_ATTEMPT_CONSUMED {"canary_count": 11, "evaluation_array_reads": 0, "max_array_size": 1001, "maximum_concurrent_tasks": 4, "model_execution_performed_at_marker": false, "partition": "PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED", "scheduled_earliest_start_local": "2026-09-30T21:12:37", "scheduler_submission_performed_at_marker": false}
+CANARY11_ARRAY_SUBMISSION_CONFIRMED_NOT_MODEL_COMPLETION {"array_indices": "0-10", "evaluation_array_reads": 0, "formal_evaluation_performed": false, "job_id": "233308", "maximum_concurrent_tasks": 4, "model_completion_claim": false, "scheduled_earliest_start_local": "2026-09-30T21:12:37", "scheduler_submission_count": 1, "scontrol_exit_code": 0, "squeue": "233308_[0-10%4]|tukf09-noise-canary11-0930|PENDING|(BeginTime)|0:00\n", "squeue_exit_code": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T21:08:02+0800
