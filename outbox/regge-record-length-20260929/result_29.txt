@@ -1,0 +1,221 @@
+### channel=regge-record-length-20260929 seq=29
+### host=login4
+### started=2026-09-30T20:53:32+0800
+### ---------- output ----------
+2026-09-30T20:53:32+0800
+             JOBID                     NAME PARTITION      STATE               NODELIST(REASON)
+            232312         regge_rl_cal_004    hgpu2p    RUNNING                         ngu010
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|MaxRSS|NCPUS|NodeList
+232312|regge_rl_cal_004|hgpu2p|RUNNING|0:0|00:38:31|2026-09-30T20:16:24|Unknown||4|ngu010
+232312.batch|batch||RUNNING|0:0|00:38:31|2026-09-30T20:16:24|Unknown||4|ngu010
+232312.extern|extern||RUNNING|0:0|00:38:31|2026-09-30T20:16:24|Unknown||4|ngu010
+MONITOR_JSON_BEGIN
+{
+  "observed_utc": "2026-09-30T12:53:33.655897+00:00",
+  "job_id": "232312",
+  "formal_attempt": "20260929-004",
+  "batch_failed": null,
+  "batch_receipt": null,
+  "wrapper_failed": null,
+  "batch_events": {
+    "count_by_event": {
+      "remote_calibration_batch_started": 1,
+      "remote_calibration_worker_started": 1
+    },
+    "candidate_failures_by_stage": {},
+    "last_events": [
+      {
+        "utc": "2026-09-30T12:16:40.014886+00:00",
+        "event": "remote_calibration_batch_started",
+        "count": 6
+      },
+      {
+        "utc": "2026-09-30T12:16:40.032015+00:00",
+        "event": "remote_calibration_worker_started",
+        "exp_id": "RL-E1-M06"
+      }
+    ]
+  },
+  "slurm_stdout_tail": [
+    "==========================================\n",
+    "2026-09-30T20:16:13+08:00\n",
+    "Regge record-length study: six new calibrations\n",
+    "job_id=232312 host=ngu010\n",
+    "capsule=/data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004\n",
+    "output=/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_004\n",
+    "==========================================\n"
+  ],
+  "slurm_stderr_tail": [],
+  "workers": [
+    {
+      "exp_id": "RL-E1-M06",
+      "directory_exists": true,
+      "files": {
+        "events.jsonl": {
+          "bytes": 90969,
+          "mtime_unix": 1790772812.0
+        }
+      },
+      "receipt": null,
+      "process": null,
+      "events": {
+        "count_by_event": {
+          "calibration_started": 1,
+          "selection_observation_access": 1,
+          "search_budget": 1,
+          "candidate_failure": 349,
+          "hydrologic_progress": 16
+        },
+        "candidate_failures_by_stage": {
+          "warmup": 348,
+          "hydrologic": 1
+        },
+        "last_events": [
+          {
+            "utc": "2026-09-30T12:52:22.018177+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1928,
+            "index": 73,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-01-04T02",
+            "parameter_id": 1928
+          },
+          {
+            "utc": "2026-09-30T12:52:22.076780+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1986,
+            "index": 83,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-01-04T12",
+            "parameter_id": 1986
+          },
+          {
+            "utc": "2026-09-30T12:52:22.106621+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1949,
+            "index": 88,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-01-04T17",
+            "parameter_id": 1949
+          },
+          {
+            "utc": "2026-09-30T12:52:22.119356+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1950,
+            "index": 90,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-01-04T19",
+            "parameter_id": 1950
+          },
+          {
+            "utc": "2026-09-30T12:52:22.193725+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1985,
+            "index": 103,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-01-05T08",
+            "parameter_id": 1985
+          },
+          {
+            "utc": "2026-09-30T12:52:45.890183+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1991,
+            "index": 4379,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-07-02T12",
+            "parameter_id": 1991
+          },
+          {
+            "utc": "2026-09-30T12:52:49.744317+00:00",
+            "event": "candidate_failure",
+            "exp_id": "RL-E1-M06",
+            "stage": "warmup",
+            "candidate_row": 1920,
+            "index": 5081,
+            "reason": "nonfinite complete hydrologic state",
+            "timestamp": "1999-07-31T18",
+            "parameter_id": 1920
+          },
+          {
+            "utc": "2026-09-30T12:54:44.960217+00:00",
+            "event": "hydrologic_progress",
+            "exp_id": "RL-E1-M06",
+            "completed_candidates": 2048,
+            "total_candidates": 2048
+          }
+        ]
+      },
+      "stdout_tail": [],
+      "stderr_tail": []
+    },
+    {
+      "exp_id": "RL-E1-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E2-M06",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E2-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E3-M06",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    },
+    {
+      "exp_id": "RL-E3-M12",
+      "directory_exists": false,
+      "files": {},
+      "receipt": null,
+      "process": null,
+      "events": null,
+      "stdout_tail": null,
+      "stderr_tail": null
+    }
+  ]
+}
+MONITOR_JSON_END
+c31b04606f162bb777bed6943297aea7934b5e2c93db63601de32b25147a2efc  /data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/capsule_manifest.json
+80d815cd4ee52a63cf5f67e38372c07b246f80e5cf8da6d743e5f3609fa78376  /data1/home/sunyiq/regge_record_length_20260929_001/deploy/formal_calibration_capsule_004/calibration_authorization.json
+FOURTH_ATTEMPT_STATUS_READ_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:53:33+0800
