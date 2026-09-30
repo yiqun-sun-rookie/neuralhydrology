@@ -1,0 +1,34 @@
+### channel=regge-record-length-20260929 seq=27
+### host=login4
+### started=2026-09-30T20:14:35+0800
+### ---------- output ----------
+=== exclusive attempt-004 deployment preflight ===
+REMOTE_POSIX_PATH_GATE=PASS
+FORMAL_JOB_ID=232312
+{
+  "schema": "regge_record_length_hpc_submission_receipt_v01",
+  "status": "submitted",
+  "slurm_job_id": "232312",
+  "slurm_job_name": "regge_rl_cal_004",
+  "formal_attempt": "20260929-004",
+  "remote_output": "/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_004",
+  "archive_sha256": "9e1af0c4ff190f27aeaab34001db22b3d2328031439911526272a6982394045b",
+  "capsule_manifest_sha256": "c31b04606f162bb777bed6943297aea7934b5e2c93db63601de32b25147a2efc",
+  "authorization_sha256": "80d815cd4ee52a63cf5f67e38372c07b246f80e5cf8da6d743e5f3609fa78376",
+  "job_submitted": true,
+  "submission_evidence_sha256": {
+    "formal_calibration_004-seq27.requested.json": "5ec23c68e4f98ce07fbd439d3a919598a40350c835ea9cff84f85ccfc40fd32f",
+    "formal_calibration_004-seq27.stdout.txt": "2c94880d2d5e251084adcc5dadddcb6780d4820ae6c6f330c1a7205e40bebf0a",
+    "formal_calibration_004-seq27.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "submission_count": 1,
+  "manual_reconciliation_required": false,
+  "retry_policy": "none",
+  "submitted_utc": "2026-09-30T12:15:00.205711+00:00"
+}
+             JOBID                     NAME PARTITION      STATE               NODELIST(REASON)
+            232312         regge_rl_cal_004    hgpu2p    PENDING                     (Priority)
+FORMAL_SUBMISSION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:15:00+0800
