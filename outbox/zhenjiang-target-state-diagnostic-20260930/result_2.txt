@@ -1,0 +1,8 @@
+### channel=zhenjiang-target-state-diagnostic-20260930 seq=2
+### host=login4
+### started=2026-09-30T20:17:14+0800
+### ---------- output ----------
+{"deployment_sha256": "83cd01d71fb6d85a816a0eb839c65558023b52442b4f0cecb9c2456deebc672f", "job_sha256": "61a64baf325560d31de790e1829dffe8fb18ece5df0e71d97fbb83f998424615", "manifest_sha256": "cd05b3755e9fa675e1c6d4995f0016e65d277287a97c28e82f2d42bcb36dcbb9", "payload_sha256": "d8aebc3beef0812184d351ff0ebec994b7a21ae803603a0b97aef30be2e05b01", "protocol_sha256": "fca0880bde24d3392cfe2f28df7ce7d1797e4a1539662c6d159c50dd625127fa", "registered_training_inputs": 10, "registry_sha256": "84c707fd40f37d955417add0a5bd08c7ec8512ec266f82510433b094c11858ad", "root": "/data1/home/sunyiq/zhenjiang_target_state_diagnostic_20260930_001", "root_binding": {"device": 41, "inode": 8661643777, "mode": 448, "uid": 2272}, "status": "DEPLOYED_NO_TRAINING"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:17:17+0800
