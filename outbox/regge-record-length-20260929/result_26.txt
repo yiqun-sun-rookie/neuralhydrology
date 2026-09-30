@@ -1,0 +1,44 @@
+### channel=regge-record-length-20260929 seq=26
+### host=login4
+### started=2026-09-30T20:03:57+0800
+### ---------- output ----------
+2026-09-30T20:03:57+0800
+Filesystem                    1024-blocks         Used    Available Capacity Mounted on
+hhjt_parastor_hhjt_parastor 1024283213820 678651784100 345631429720      67% /data1
+ngu001 mixed 96 1 140815 30.95
+ngu002 mixed 96 1 248665 2.00
+ngu004 mixed 96 1 68718 47.22
+ngu005 mixed 96 1 85926 19.22
+ngu006 mixed 96 1 84514 9.92
+ngu007 idle 96 1 145777 0.00
+ngu008 idle 96 1 220022 0.00
+ngu010 mixed 32 1 63914 2.00
+ngu011 mixed 32 1 41424 9.04
+202229 N22-agg-eval hgpu4,hgpu8,hgpu2 PENDING (DependencyNeverSatisfied)
+202294 N22-export hgpu4,hgpu8,hgpu2 PENDING (Dependency)
+202315 N22-gate hgpu4,hgpu8,hgpu2 PENDING (Dependency)
+202507 N22-mask-iso-531 hgpu4,hgpu8,hgpu2 PENDING (DependencyNeverSatisfied)
+215429 id30_m01_s100 hgpu2 PENDING (DependencyNeverSatisfied)
+202293 N22-manifest hgpu4,hgpu8,hgpu2 PENDING (JobHeldUser)
+93229f625533fbec6b0a04ddb70b3b47c3c725cab4a9f99aa4f97c1c9280f463  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_005/runtime_ready.json
+15fd95da01a1f5884aa4a225165942b43f5db405a4f0d75fd400dac6468a82ac  /data1/home/sunyiq/regge_record_length_20260929_001/runtime_stage_005/pip_freeze.txt
+/data1/home/sunyiq/miniconda3/bin/openssl
+/data1/home/sunyiq/miniconda3/bin/zstd
+HPC_SIGNING_PUBLIC_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAjpfP+ODRD5HqqZS4FmON
+2DJ8HUuXuW1fCh5dljrCfFGO6JgKNFNpArxl8PzJtQCwUIqDUItfW3ClFOi5rTQl
+HQTUCitiC9tYdnA+i1OLxl1mpo/w/mejCSVM9S8SjKZvFmuyomBGJfatl7gAlZeX
+pC+0x7ODRlEEx3BSJLdW96AHdXhSabgA1OzK3Z/f4Ky8agCZktgfMBqkBHdpcc+L
+zkL7+xTIbwFiL3BFqqHnFpssunSzNkZdTdCq0Myx5tcF8/u2uYs4c5LGgC8b4uYW
+NnEuhjzbosKTeoNCfoHbZxEE6er3nBsZAnPI+IqfHY9Anl1d4tTyFbr58HET5O5N
+swth56EBam1IVkGuxumrVr4mV9GvAunMFlA4+PMDVWKAs8HyfQdzEJNC9+sZlDik
+fi3F2Hn2O1lCcfr5e6lCoFTNbcxADW/iU7Q3o9jizkf4so0oFDBmOCCjnbgRQjpx
+/RWQuWQRz2pSgmSxd5JXw/IckMhvgGMIXkZdrWxaQ3WxAgMBAAE=
+-----END PUBLIC KEY-----
+HPC_SIGNING_PUBLIC_END
+64d95166c7614c103ec0a33b8791f0f810a59ecea36d7efe21bd87fb792f2817  /data1/home/sunyiq/regge_record_length_20260929_001/transport_credentials_004/upload_token_public.pem
+FOURTH_ATTEMPT_TARGETS_AND_CREDENTIALS_READY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:03:58+0800
