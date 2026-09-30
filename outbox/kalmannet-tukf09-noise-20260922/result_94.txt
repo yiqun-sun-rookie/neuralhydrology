@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=94
+### host=login4
+### started=2026-10-01T02:51:11+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 245, in <module>
+  File "<stdin>", line 49, in require
+RuntimeError: terminal scheduler accounting query failed
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-01T02:51:16+0800
