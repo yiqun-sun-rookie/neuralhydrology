@@ -1,167 +1,126 @@
 #!/bin/bash
 set -euo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'ZJ_ARCH_SUBMIT'
-"""Template for one bounded 24-task cluster array submission.
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'ZJ_TARGET_STATUS'
+"""Template for bounded read-only monitoring of this 24-run array.
 
-The builder replaces both placeholders after a verified deployment receipt.
-This command never retries an ambiguous scheduler response.
+Builder substitutes the unique job ID. Reads only the registered directory,
+its source files, and that job's scheduling/accounting status. No mutation.
 """
-from __future__ import annotations
-
-import base64
 import hashlib
-import itertools
 import json
-import os
+import math
 from pathlib import Path
-import re
-import shutil
-import stat
 import subprocess
+import time
 
-
-RECEIPT_BASE64 = "eyJjb25kaXRpb25hbF9ydW5zX25vdF9zY2hlZHVsZWQiOjAsImV4cGVjdGVkX2Vwb2NoX3JlY29yZHMiOjI0MjQsImV4cGVyaW1lbnRfaWQiOiJ6aGVuamlhbmdfdGFyZ2V0X3N0YXRlX2RpYWdub3N0aWNfMjAyNjA5MzBfMDAxIiwiam9iX3NoYTI1NiI6IjYxYTY0YmFmMzI1NTYwZDMxZGU3OTBlMTgyOWRmZmU4ZmIxOGVjZTVkZjBlNzFkOTdmYmI4M2Y5OTg0MjQ2MTUiLCJtYW5kYXRvcnlfcnVucyI6MjQsIm1hbmlmZXN0X3NoYTI1NiI6ImNkMDViMzc1NWU5ZmE2NzVlMWM2ZDQ5OTVmMDAxNmU2NWQyNzcyODdhOTdjMjhlODJmMmQ0MmJjYjM2ZGNiYjkiLCJtZW1iZXJzIjo3NywicGF5bG9hZF9ieXRlcyI6MTU3MjI0LCJwYXlsb2FkX2luZGV4X3NoYTI1NiI6ImMzODBiYzUzMTZkODhkOTNjMTU3YjZjZjdhMTQ2NDgyNGU0MGY2ZjI2OWIzZTk1NmRlM2VlOTkyMGYyYTZkZGIiLCJwYXlsb2FkX3NoYTI1NiI6ImQ4YWViYzNiZWVmMDgxMjE4NGQzNTFmZjBlYmVjOTk0YjdhMjFhZTgwMzYwM2EwYjk3YWVmMzBiZTJlMDViMDEiLCJwcm90b2NvbF9zaGEyNTYiOiJmY2EwODgwYmRlMjRkMzM5MmNmZTJmMjhkZjdjZTdkMTc5N2U0YTE1Mzk2NjJjNmQxNTljNTBkZDYyNTEyN2ZhIiwicmVnaXN0cnlfc2hhMjU2IjoiODRjNzA3ZmQ0MGYzN2Q5NTU0MTdhZGQwYTViZDA4YzdlYzg1MTJlYzI2NmY4MjUxMDQzM2IwOTRjMTE4NThhZCIsInJlbW90ZV9yb290IjoiL2RhdGExL2hvbWUvc3VueWlxL3poZW5qaWFuZ190YXJnZXRfc3RhdGVfZGlhZ25vc3RpY18yMDI2MDkzMF8wMDEiLCJzb3VyY2VfZGF0YV9maWxlcyI6MTAsInN0YXR1cyI6IlNFQUxFRF9MT0NBTF9OT1RfREVQTE9ZRURfTk9UX1NVQk1JVFRFRCJ9"
-EXPECTED_DEPLOYMENT_SHA = "83cd01d71fb6d85a816a0eb839c65558023b52442b4f0cecb9c2456deebc672f"
-REMOTE = "/data1/home/sunyiq/zhenjiang_target_state_diagnostic_20260930_001"
+ROOT = Path('/data1/home/sunyiq/zhenjiang_target_state_diagnostic_20260930_001')
+JOB = '232378'
+REGISTRY_SHA = '84c707fd40f37d955417add0a5bd08c7ec8512ec266f82510433b094c11858ad'
+MANIFEST_SHA = 'cd05b3755e9fa675e1c6d4995f0016e65d277287a97c28e82f2d42bcb36dcbb9'
 
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-def canonical(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False,
-                      separators=(",", ":"), allow_nan=False).encode()
-
-
-def write_new(path, raw):
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    handle = os.open(path, flags, 0o600)
-    with os.fdopen(handle, "wb") as stream:
-        stream.write(raw)
-        stream.flush()
-        os.fsync(stream.fileno())
+def read(path, limit=500000):
+    raw = path.read_bytes()
+    if len(raw) > limit:
+        raise ValueError('registered receipt exceeded bound')
+    return json.loads(raw)
 
 
 def main():
-    receipt = json.loads(base64.b64decode(RECEIPT_BASE64, validate=True))
-    root = Path(REMOTE)
-    deployment = root / "deploy/deployment.json"
-    registry_path = root / "registry_frozen.json"
-    manifest_path = root / "reports/training_manifest.json"
-    job = root / "deploy/job.sh"
-    if (receipt["remote_root"] != REMOTE or root.is_symlink() or not root.is_dir()
-            or os.path.lexists(root / "submission")
-            or os.path.lexists(root / "runs")
-            or not (root / "slurm").is_dir()
-            or shutil.which("sbatch") is None):
-        raise ValueError("exclusive one-submission precondition differs")
-    raw = deployment.read_bytes()
-    deployed = json.loads(raw)
-    binding = {"device": root.stat().st_dev, "inode": root.stat().st_ino,
-               "uid": root.stat().st_uid,
-               "mode": stat.S_IMODE(root.stat().st_mode)}
-    if (sha(raw) != EXPECTED_DEPLOYMENT_SHA
-            or deployed["status"] != "DEPLOYED_NO_TRAINING"
-            or deployed["root"] != REMOTE
-            or deployed["root_binding"] != binding
-            or binding["mode"] != 0o700
-            or deployed["payload_sha256"] != receipt["payload_sha256"]
-            or deployed["protocol_sha256"] != receipt["protocol_sha256"]
-            or deployed["registry_sha256"] != receipt["registry_sha256"]
-            or deployed["manifest_sha256"] != receipt["manifest_sha256"]
-            or deployed["job_sha256"] != receipt["job_sha256"]
-            or sha(registry_path.read_bytes()) != receipt["registry_sha256"]
-            or sha(manifest_path.read_bytes()) != receipt["manifest_sha256"]
-            or sha(job.read_bytes()) != receipt["job_sha256"]):
-        raise ValueError("deployed training package identity differs")
-    registry = json.loads(registry_path.read_bytes())
-    manifest = json.loads(manifest_path.read_bytes())
-    if (registry["experiment_id"] != receipt["experiment_id"]
-            or manifest["experiment_id"] != receipt["experiment_id"]
-            or registry["status"] != "FROZEN_FOR_SINGLE_SUBMISSION"
-            or registry["execution_ready"] is not True
-            or registry["mandatory_runs"] != 24
-            or registry["expected_epoch_records_including_initial_state"] != 2424
-            or len(registry["runs"]) != 24
-            or registry["training_years"] != [2017, 2018, 2019, 2020, 2021]
-            or registry["selection_year"] != 2022
-            or registry["epochs_per_run"] != 100
-            or registry["seeds"] != [17, 29, 43]
-            or len(registry["training_sources"]) != 10):
-        raise ValueError("scientific experiment protocol differs")
-    expected_matrix = set(itertools.product(("available", "ideal_observed"),
-                         ("nanjing", "zhenjiang", "jiangyin", "xuliujing"), (17, 29, 43)))
-    if {(row["information_arm"], row["training_target"], row["seed"])
-            for row in registry["runs"]} != expected_matrix:
-        raise ValueError("diagnostic run matrix differs")
-    for row in registry["runs"]:
-        if (row["model_implementation"] != "single_explicit_target_state_with_eight_channel_history"
-                or row["allocated_trainable_parameters"] != 4911
-                or row["output_dimensions"] != 1 or row["state_or_hidden_width"] != 33
-                or row["epochs"] != 100):
-            raise ValueError("diagnostic model definition differs")
-    for relative, expected in manifest["files"].items():
-        path = root / relative
-        if (path.is_symlink() or not path.is_file()
-                or path.stat().st_size != expected["bytes"]
-                or sha(path.read_bytes()) != expected["sha256"]):
-            raise ValueError("sealed source changed before submission: " + relative)
-    partition = subprocess.run(["scontrol", "show", "partition", "hgpu2p", "-o"],
-                               capture_output=True, text=True, timeout=15, check=False)
-    if partition.returncode != 0 or "PartitionName=hgpu2p" not in partition.stdout:
-        raise ValueError("intended GPU partition is unavailable")
-
-    # Reservation happens before sbatch, so an ambiguous reply cannot trigger
-    # another submission into this root.
-    submission = root / "submission"
-    submission.mkdir(mode=0o700)
-    attempt = {"status": "RESERVED_NO_RETRY", "root": REMOTE,
-               "root_binding": binding,
-               "deployment_sha256": EXPECTED_DEPLOYMENT_SHA,
-               "registry_sha256": receipt["registry_sha256"],
-               "manifest_sha256": receipt["manifest_sha256"],
-               "job_sha256": receipt["job_sha256"],
-               "planned_tasks": 24,
-               "maximum_simultaneous_gpu_tasks": 2,
-               "time_limit_per_task": "02:00:00"}
-    attempt_raw = canonical(attempt)
-    write_new(submission / "attempt.json", attempt_raw)
-    # The campus sbatch wrapper can silently decline command-line options.
-    # Every scheduler option is bound in the audited job script instead.
-    command = ["sbatch", str(job)]
-    write_new(submission / "command.json", canonical({
-        "argv": command, "attempt_sha256": sha(attempt_raw)}))
-    clean_environment = {key: value for key, value in os.environ.items()
-                         if not key.upper().startswith("SBATCH_")}
-    try:
-        response = subprocess.run(command, capture_output=True, text=True,
-                                  encoding="utf-8", errors="replace", timeout=30,
-                                  check=False, env=clean_environment)
-        if len(response.stdout.encode()) + len(response.stderr.encode()) > 8192:
-            raise ValueError("scheduler reply exceeds bound")
-        write_new(submission / "scheduler_reply.json", canonical({
-            "returncode": response.returncode,
-            "stdout": response.stdout, "stderr": response.stderr}))
-        matches = re.findall(r"Submitted batch job ([1-9][0-9]*)",
-                             response.stdout)
-        if response.returncode != 0 or len(matches) != 1:
-            raise ValueError("scheduler submission uncertain; no retry")
-        success = {**attempt, "status": "SUBMITTED_ONCE",
-                   "job_id": matches[0],
-                   "attempt_sha256": sha(attempt_raw)}
-        write_new(submission / "submitted.json", canonical(success))
-        print(json.dumps({"status": "SUBMITTED_ONCE", "job_id": matches[0],
-                          "root": REMOTE, "planned_tasks": 24,
-                          "maximum_simultaneous_gpu_tasks": 2}), flush=True)
-    except BaseException as error:
-        write_new(submission / "failure.json", canonical({
-            "status": "STOPPED_NO_RETRY", "submission_uncertain": True,
-            "error": str(error)[:2000]}))
-        raise
+    submitted = read(ROOT / 'submission/submitted.json')
+    attempt = read(ROOT / 'submission/attempt.json')
+    scheduler = read(ROOT / 'submission/scheduler_reply.json')
+    if (submitted['status'] != 'SUBMITTED_ONCE' or submitted['job_id'] != JOB
+            or submitted['planned_tasks'] != 24 or attempt['planned_tasks'] != 24
+            or attempt['maximum_simultaneous_gpu_tasks'] != 2
+            or scheduler['returncode'] != 0
+            or scheduler['stdout'].count('Submitted batch job ' + JOB) != 1):
+        raise ValueError('unique submission receipt differs')
+    registry_raw = (ROOT / 'registry_frozen.json').read_bytes()
+    manifest_raw = (ROOT / 'reports/training_manifest.json').read_bytes()
+    if sha(registry_raw) != REGISTRY_SHA or sha(manifest_raw) != MANIFEST_SHA:
+        raise ValueError('registered source manifest or run list changed')
+    registry, manifest = json.loads(registry_raw), json.loads(manifest_raw)
+    issues = []
+    for relative, expected in manifest['files'].items():
+        path = ROOT / relative
+        if (path.is_symlink() or not path.is_file() or path.stat().st_size != expected['bytes']
+                or sha(path.read_bytes()) != expected['sha256']):
+            issues.append('sealed source changed: ' + relative)
+    expected_names = {row['exp_id'] for row in registry['runs']}
+    runs = ROOT / 'runs'
+    if runs.is_dir():
+        unknown = {p.name for p in runs.iterdir() if p.is_dir()} - expected_names
+        issues.extend('unregistered run directory: ' + name for name in sorted(unknown))
+    rows, completed, failed, records, started = [], 0, 0, 0, 0
+    gpu_names = set()
+    for index, row in enumerate(registry['runs']):
+        path = runs / row['exp_id']
+        epochs = sorted(path.glob('epoch_*.json')) if path.is_dir() else []
+        attempt_path, complete_path, failure_path = path / 'attempt.json', path / 'complete.json', path / 'failure.json'
+        item = {'experiment_id': row['exp_id'], 'array_index': index, 'epoch_records': len(epochs),
+                'last_epoch': None, 'last_epoch_modified_unix_seconds': None,
+                'complete': complete_path.is_file(), 'failure': failure_path.is_file()}
+        if path.is_dir():
+            started += 1
+        if attempt_path.is_file():
+            receipt = read(attempt_path)
+            gpu_names.add(receipt['hardware']['gpu_name'])
+            if (receipt['experiment_id'] != row['exp_id'] or receipt['array_index'] != index
+                    or receipt['registry_sha256'] != REGISTRY_SHA or receipt['manifest_sha256'] != MANIFEST_SHA
+                    or receipt['source_input_ledger'] != registry['training_sources']
+                    or 'RTX 3090' not in receipt['hardware']['gpu_name']
+                    or receipt['hardware']['slurm_array_job_id'] != JOB):
+                issues.append('training attempt or hardware identity differs: ' + row['exp_id'])
+        numbers = []
+        for epoch_path in epochs:
+            epoch = read(epoch_path)
+            number = int(epoch_path.stem.split('_')[1])
+            numbers.append(number)
+            if (epoch['epoch'] != number or epoch['experiment_id'] != row['exp_id']
+                    or not math.isfinite(epoch['selection_unweighted_error_m'])
+                    or (number > 0 and not math.isfinite(epoch['train_weighted_error_m']))
+                    or not (ROOT / epoch['checkpoint']['relative_path']).is_file()):
+                issues.append('epoch record differs or loss is nonfinite: ' + row['exp_id'])
+        if numbers:
+            item['last_epoch'] = max(numbers)
+            item['last_epoch_modified_unix_seconds'] = max(p.stat().st_mtime for p in epochs)
+            if numbers != list(range(len(numbers))) or len(numbers) > 101:
+                issues.append('noncontiguous epoch history: ' + row['exp_id'])
+        if item['complete']:
+            completed += 1
+            complete = read(complete_path)
+            if (numbers != list(range(101)) or complete['epoch_records'] != 101
+                    or complete['experiment_id'] != row['exp_id']
+                    or complete['registry_sha256'] != REGISTRY_SHA or complete['manifest_sha256'] != MANIFEST_SHA):
+                issues.append('completion receipt differs: ' + row['exp_id'])
+        if item['failure']:
+            failed += 1
+            failure = read(failure_path)
+            item['failure_reason'] = {key: failure.get(key) for key in ('phase', 'error')}
+        records += len(epochs)
+        rows.append(item)
+    state = {}
+    for key, argv in [('queue', ['squeue', '-r', '-j', JOB, '-h', '-o', '%A|%a|%T|%M|%R|%j']),
+                      ('accounting', ['sacct', '-j', JOB, '--starttime', '2026-09-30', '--noheader',
+                                      '--parsable2', '--format=JobIDRaw,State,ExitCode,Elapsed,NodeList'])]:
+        result = subprocess.run(argv, capture_output=True, text=True, timeout=15, check=False)
+        if len(result.stdout.encode()) + len(result.stderr.encode()) > 20000:
+            raise ValueError('bounded scheduling response exceeded limit')
+        state[key] = {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+    print(json.dumps({'status': 'BOUNDED_READ_ONLY_STATUS', 'job_id': JOB, 'root': str(ROOT),
+                      'query_unix_seconds': time.time(), 'planned_runs': 24, 'started_runs': started,
+                      'completed_runs': completed, 'failed_runs': failed, 'epoch_records': records,
+                      'expected_epoch_records': 2424, 'source_files_verified': len(manifest['files']),
+                      'source_registry_sha256': REGISTRY_SHA, 'source_manifest_sha256': MANIFEST_SHA,
+                      'gpu_names': sorted(gpu_names), 'issues': issues, 'runs': rows, 'scheduler': state}, sort_keys=True))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 
-ZJ_ARCH_SUBMIT
+ZJ_TARGET_STATUS
