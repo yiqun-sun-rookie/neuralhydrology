@@ -1,0 +1,10 @@
+### channel=regge-record-length-20260929 seq=42
+### host=login4
+### started=2026-10-01T05:27:16+0800
+### ---------- output ----------
+RETURN_UPLOAD_RECEIPT_BEGIN
+{"schema":"regge_record_length_encrypted_return_upload_failure_v01","formal_attempt":"20260930-005","sequence":42,"status":"failed","started_utc":"2026-09-30T21:27:18.207119+00:00","finished_utc":"2026-09-30T21:27:44.178423+00:00","oid":"3a635659d6f7d4a9740da1b0080006f354db926d6bffe951d5ba8808ffcd4579","bytes":731826948,"error_type":"HTTPError","http_status":403,"diagnostic":"transport_exception_redacted","automatic_retry":false,"science_failed":false,"credentials_recorded":false,"packaging_resubmitted":false,"calibration_resubmitted":false}
+RETURN_UPLOAD_RECEIPT_END
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-01T05:27:44+0800
