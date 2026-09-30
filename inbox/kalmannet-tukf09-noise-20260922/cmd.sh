@@ -243,8 +243,8 @@ require(
 )
 
 sacct = command([
-    'sacct', '-X', '-j', JOB_ID, '--array', '--noheader', '--parsable2',
-    '--format=JobID,JobIDRaw,ArrayTaskID,JobName,Partition,AllocCPUS,ElapsedRaw,State,ExitCode,Start,End,Timelimit,MaxRSS',
+    'sacct', '-j', JOB_ID, '--noheader', '--parsable2',
+    '--format=JobIDRaw,JobName,State,ExitCode,Elapsed,AllocCPUS,MaxRSS',
 ])
 squeue = command(['squeue', '-j', JOB_ID, '-h', '-o', '%i|%j|%T|%R|%M'])
 require(sacct['exit_code'] == 0 and not sacct['stderr'], 'terminal scheduler accounting query failed')
