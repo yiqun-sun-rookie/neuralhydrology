@@ -1,244 +1,90 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=33
+sequence=34
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-RUNTIME=$ROOT/runtime_probe_005
-PAYLOAD=inbox/regge-record-length-20260929/payload/formal_calibration_capsule_005.tar.gz
-DEPLOY=$ROOT/deploy
-REMOTE_ARCHIVE=$DEPLOY/formal_calibration_capsule_005.tar.gz
-CAPSULE=$DEPLOY/formal_calibration_capsule_005
-STAGE=$DEPLOY/.formal_calibration_capsule_005_stage_seq33
 OUTPUT=$ROOT/formal_calibration_005
-PACKAGE=$ROOT/transport_package_005
-CREDENTIALS=$ROOT/transport_credentials_005
-SUBMISSION_RECEIPTS=$ROOT/submission_receipts
-WRAPPER_RECEIPTS=$ROOT/wrapper_receipts
-DEPLOYMENT_RECEIPTS=$ROOT/deployment_receipts
-DEPLOYMENT_FAILURE=$DEPLOYMENT_RECEIPTS/formal_calibration_005-seq33.failed.json
-ARCHIVE_SHA=e630406eb0f160a4925182b6a5d0507c377c97b672d19e3e66caea862fbfe10f
-ARCHIVE_BYTES=1512405
-MANIFEST_SHA=314724ad9d6d1c107670dbd654a4fd244d4496e7eafd2d1f6cb3b2d4e1ae5122
-AUTHORIZATION_SHA=1863cff71e04a8d6b9b90216528bce6482d88d33aaec4c7e1cc56e955aaad14a
-HPC_PUBLIC_SHA=c61674eebd71b54ca41add7face1eef170e85760cd55b56bf21f1b13bdfd0205
-CURRENT_STAGE=preflight
-SUBMITTED_JOB_ID=
-JOB_SUBMITTED=false
-MANUAL_RECONCILIATION_REQUIRED=false
-
+CAPSULE=$ROOT/deploy/formal_calibration_capsule_004
+PYTHON=$ROOT/runtime_probe_005/bin/python
 export PYTHONDONTWRITEBYTECODE=1
 
-mkdir -p "$DEPLOY" "$ROOT/logs" "$SUBMISSION_RECEIPTS" \
-  "$WRAPPER_RECEIPTS" "$DEPLOYMENT_RECEIPTS"
-test ! -e "$DEPLOYMENT_FAILURE"
+date -Is
+squeue -j 233416 -o '%.18i %.24j %.9P %.10T %.30R' || true
+sacct -j 233416 --format=JobIDRaw,JobName%24,Partition,State,ExitCode,Elapsed,Start,End,MaxRSS,NCPUS,NodeList -P
+sstat -j 233416.batch --format=JobID,AveCPU,MaxRSS -P || true
 
-persist_deployment_failure() {
-  rc=$1
-  if [ "$rc" -ne 0 ] && [ ! -e "$DEPLOYMENT_FAILURE" ]; then
-    temporary=$DEPLOYMENT_FAILURE.tmp.$$
-    umask 077
-    printf '{"schema":"regge_record_length_hpc_deployment_failure_v01","status":"failed","passed":false,"sequence":33,"stage":"%s","exit_code":%s,"job_submitted":%s,"submitted_job_id":"%s","manual_reconciliation_required":%s,"automatic_retry":false}\n' \
-      "$CURRENT_STAGE" "$rc" "$JOB_SUBMITTED" "$SUBMITTED_JOB_ID" \
-      "$MANUAL_RECONCILIATION_REQUIRED" > "$temporary"
-    mv -n "$temporary" "$DEPLOYMENT_FAILURE"
-  fi
-}
-
-on_error() {
-  rc=$?
-  trap - ERR
-  persist_deployment_failure "$rc"
-  exit "$rc"
-}
-trap on_error ERR
-
-echo "=== exclusive attempt-005 deployment preflight ==="
-if ! DEPLOYMENT_MATCHES=$(find "$DEPLOYMENT_RECEIPTS" -maxdepth 1 -type f \
-    -name 'formal_calibration_005-*.json' -print); then
-  echo "DEPLOYMENT_RECEIPT_SCAN_FAILED"
-  false
-fi
-test -z "$DEPLOYMENT_MATCHES"
-if ! SUBMISSION_MATCHES=$(find "$SUBMISSION_RECEIPTS" -maxdepth 1 -type f \
-    -name 'formal_calibration_005-*.json' -print); then
-  echo "SUBMISSION_RECEIPT_SCAN_FAILED"
-  false
-fi
-test -z "$SUBMISSION_MATCHES"
-if ! WRAPPER_MATCHES=$(find "$WRAPPER_RECEIPTS" -maxdepth 1 -type f \
-    -name 'formal_calibration_005-*.failed.json' -print); then
-  echo "WRAPPER_RECEIPT_SCAN_FAILED"
-  false
-fi
-test -z "$WRAPPER_MATCHES"
-test -x "$RUNTIME/bin/python"
-test -f "$PAYLOAD"
-test "$(stat -c '%s' "$PAYLOAD")" = "$ARCHIVE_BYTES"
-test "$(sha256sum "$PAYLOAD" | awk '{print $1}')" = "$ARCHIVE_SHA"
-test -f "$CREDENTIALS/upload_token_private.pem"
-test -f "$CREDENTIALS/upload_token_public.pem"
-test "$(stat -c '%a' "$CREDENTIALS/upload_token_private.pem")" = "600"
-test "$(sha256sum "$CREDENTIALS/upload_token_public.pem" | awk '{print $1}')" = "$HPC_PUBLIC_SHA"
-test "$(openssl pkey -in "$CREDENTIALS/upload_token_private.pem" -pubout \
-  | sha256sum | awk '{print $1}')" = "$HPC_PUBLIC_SHA"
-test ! -e "$REMOTE_ARCHIVE"
-test ! -e "$CAPSULE"
-test ! -e "$STAGE"
-test ! -e "$OUTPUT"
-test ! -e "$PACKAGE"
-EXISTING_JOB=$(squeue -h -n regge_rl_cal_005 -o '%A')
-test -z "$EXISTING_JOB"
-
-CURRENT_STAGE=copy_archive
-"$RUNTIME/bin/python" -B - "$PAYLOAD" "$REMOTE_ARCHIVE" <<'PY'
-from pathlib import Path
-import shutil
-import sys
-
-source, target = map(Path, sys.argv[1:])
-with source.open("rb") as opened, target.open("xb") as saved:
-    shutil.copyfileobj(opened, saved, length=1024 * 1024)
-PY
-test "$(stat -c '%s' "$REMOTE_ARCHIVE")" = "$ARCHIVE_BYTES"
-test "$(sha256sum "$REMOTE_ARCHIVE" | awk '{print $1}')" = "$ARCHIVE_SHA"
-
-CURRENT_STAGE=extract_capsule
-mkdir "$STAGE"
-tar -xzf "$REMOTE_ARCHIVE" -C "$STAGE"
-test -d "$STAGE/formal_calibration_capsule_005"
-test "$(sha256sum "$STAGE/formal_calibration_capsule_005/capsule_manifest.json" | awk '{print $1}')" = "$MANIFEST_SHA"
-mv -T "$STAGE/formal_calibration_capsule_005" "$CAPSULE"
-rmdir "$STAGE"
-
-CURRENT_STAGE=verify_capsule
-export PYTHONPATH=$CAPSULE/project/python
-export REGGE_CORE_ROOT=$CAPSULE/core
-"$RUNTIME/bin/python" -B -u \
-  "$CAPSULE/project/python/run_regge_record_length_hpc_calibration.py" \
-  verify-capsule --capsule-root "$CAPSULE"
-"$RUNTIME/bin/python" -B - "$CAPSULE/calibration_authorization.json" <<'PY'
-import json
-from pathlib import Path
-import sys
-
-authorization = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-paths = [
-    authorization["runtime_root"],
-    authorization["runtime_ready_path"],
-    authorization["runtime_freeze_path"],
-]
-if authorization.get("formal_attempt") != "20260930-005":
-    raise SystemExit("formal attempt differs")
-if any(not value.startswith("/data1/") or "\\" in value for value in paths):
-    raise SystemExit("remote path is not a POSIX absolute path")
-print("REMOTE_POSIX_PATH_GATE=PASS")
-PY
-if ! BYTECODE_MATCH=$(find "$CAPSULE" -type d \
-    -name __pycache__ -print -quit); then
-  echo "BYTECODE_SCAN_FAILED"
-  false
-fi
-test -z "$BYTECODE_MATCH"
-test "$(sha256sum "$CAPSULE/capsule_manifest.json" | awk '{print $1}')" = "$MANIFEST_SHA"
-test "$(sha256sum "$CAPSULE/calibration_authorization.json" | awk '{print $1}')" = "$AUTHORIZATION_SHA"
-
-CURRENT_STAGE=final_submission_preflight
-test ! -e "$OUTPUT"
-test ! -e "$PACKAGE"
-EXISTING_JOB=$(squeue -h -n regge_rl_cal_005 -o '%A')
-test -z "$EXISTING_JOB"
-
-CURRENT_STAGE=record_single_submission_request
-SUBMISSION_REQUEST=$SUBMISSION_RECEIPTS/formal_calibration_005-seq33.requested.json
-SUBMISSION_STDOUT=$SUBMISSION_RECEIPTS/formal_calibration_005-seq33.stdout.txt
-SUBMISSION_STDERR=$SUBMISSION_RECEIPTS/formal_calibration_005-seq33.stderr.txt
-test ! -e "$SUBMISSION_STDOUT"
-test ! -e "$SUBMISSION_STDERR"
-"$RUNTIME/bin/python" -B - "$SUBMISSION_REQUEST" <<'PY'
+"$PYTHON" -B - "$OUTPUT" "$ROOT" <<'PY'
+from collections import Counter, deque
 from datetime import datetime, timezone
 import json
 from pathlib import Path
 import sys
 
-with Path(sys.argv[1]).open("x", encoding="utf-8") as target:
-    json.dump({
-        "schema": "regge_record_length_single_submission_request_v01",
-        "formal_attempt": "20260930-005",
-        "sequence": 33,
-        "requested_utc": datetime.now(timezone.utc).isoformat(),
-        "submission_count_authorized": 1,
-        "automatic_retry": False,
-    }, target, indent=2)
-    target.write("\n")
-PY
-
-CURRENT_STAGE=submit
-JOB_SUBMITTED=null
-MANUAL_RECONCILIATION_REQUIRED=true
-(
-  set -o noclobber
-  sbatch "$CAPSULE/hpc/regge_record_length_calibration_20260930_005.slurm" \
-    > "$SUBMISSION_STDOUT" 2> "$SUBMISSION_STDERR"
-)
-CURRENT_STAGE=parse_unique_submission_id
-SUBMITTED_JOB_ID=$("$RUNTIME/bin/python" -B - "$SUBMISSION_STDOUT" <<'PY'
-from pathlib import Path
-import re
-import sys
-
-text = Path(sys.argv[1]).read_text(encoding="utf-8")
-matches = re.findall(r"(?m)^Submitted batch job ([0-9]+)\s*$", text)
-if len(matches) != 1:
-    raise SystemExit("No unique scheduler submission identity; reconcile without retry")
-print(matches[0])
-PY
-)
-JOB_SUBMITTED=true
-
-CURRENT_STAGE=write_submission_receipt
-SUBMISSION_RECEIPT=$SUBMISSION_RECEIPTS/formal_calibration_005-$SUBMITTED_JOB_ID.json
-"$RUNTIME/bin/python" -B - "$SUBMISSION_RECEIPT" "$SUBMITTED_JOB_ID" \
-  "$ARCHIVE_SHA" "$MANIFEST_SHA" "$AUTHORIZATION_SHA" \
-  "$SUBMISSION_REQUEST" "$SUBMISSION_STDOUT" "$SUBMISSION_STDERR" <<'PY'
-from datetime import datetime, timezone
-import json
-from pathlib import Path
-import sys
-
-import hashlib
-
-(target, job_id, archive_sha, manifest_sha, authorization_sha,
- request_path, stdout_path, stderr_path) = sys.argv[1:]
-evidence = {
-    Path(path).name: hashlib.sha256(Path(path).read_bytes()).hexdigest()
-    for path in (request_path, stdout_path, stderr_path)
-}
-payload = {
-    "schema": "regge_record_length_hpc_submission_receipt_v01",
-    "status": "submitted",
-    "slurm_job_id": job_id,
-    "slurm_job_name": "regge_rl_cal_005",
+output, root = map(Path, sys.argv[1:])
+def read_receipt(path):
+    if not path.is_file():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+def log_tail(path, count=10):
+    if not path.is_file():
+        return None
+    with path.open("r", encoding="utf-8", errors="replace") as stream:
+        return list(deque(stream, maxlen=count))
+def event_summary(path):
+    if not path.is_file():
+        return None
+    events = deque(maxlen=8)
+    counts = Counter()
+    stages = Counter()
+    latest_progress = {}
+    unique_failures = set()
+    with path.open("r", encoding="utf-8") as stream:
+        for line in stream:
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                events.append({"unparsed_tail": line[-200:]})
+                continue
+            counts[event.get("event", "unknown")] += 1
+            if event.get("event", "").endswith("_progress"):
+                latest_progress[event["event"]] = event
+            if event.get("event") == "candidate_failure":
+                stages[event.get("stage", "unknown")] += 1
+                unique_failures.add((event.get("stage"), event.get("parameter_id"), event.get("noise_id")))
+            events.append(event)
+    return {"count_by_event": dict(counts), "candidate_failures_by_stage": dict(stages), "unique_stage_parameter_noise_failures": len(unique_failures), "latest_progress": latest_progress, "last_events": list(events)}
+ids = ["RL-E1-M06", "RL-E1-M12", "RL-E2-M06", "RL-E2-M12", "RL-E3-M06", "RL-E3-M12"]
+workers = []
+for exp_id in ids:
+    directory = output / "calibration" / exp_id
+    files = {path.name: {"bytes": path.stat().st_size, "mtime_unix": path.stat().st_mtime}
+             for path in directory.iterdir() if path.is_file()} if directory.is_dir() else {}
+    workers.append({
+        "exp_id": exp_id,
+        "directory_exists": directory.is_dir(),
+        "files": files,
+        "receipt": read_receipt(directory / "receipt.json"),
+        "process": read_receipt(directory / "process.json"),
+        "events": event_summary(directory / "events.jsonl"),
+        "stdout_tail": log_tail(output / "calibration_process_logs" / f"{exp_id}.stdout.log"),
+        "stderr_tail": log_tail(output / "calibration_process_logs" / f"{exp_id}.stderr.log"),
+    })
+print("MONITOR_JSON_BEGIN")
+print(json.dumps({
+    "observed_utc": datetime.now(timezone.utc).isoformat(),
+    "job_id": "233416",
     "formal_attempt": "20260930-005",
-    "remote_output": "/data1/home/sunyiq/regge_record_length_20260929_001/formal_calibration_005",
-    "archive_sha256": archive_sha,
-    "capsule_manifest_sha256": manifest_sha,
-    "authorization_sha256": authorization_sha,
-    "job_submitted": True,
-    "submission_evidence_sha256": evidence,
-    "submission_count": 1,
-    "manual_reconciliation_required": False,
-    "retry_policy": "none",
-    "submitted_utc": datetime.now(timezone.utc).isoformat(),
-}
-with Path(target).open("x", encoding="utf-8") as stream:
-    json.dump(payload, stream, ensure_ascii=False, indent=2)
-    stream.write("\n")
+    "batch_started": read_receipt(output / "batch_started.json"),
+    "batch_failed": read_receipt(output / "batch_failed.json"),
+    "batch_receipt": read_receipt(output / "batch_receipt.json"),
+    "wrapper_failed": read_receipt(root / "wrapper_receipts/formal_calibration_005-233416.failed.json"),
+    "batch_events": event_summary(output / "events.jsonl"),
+    "slurm_stdout_tail": log_tail(root / "logs/formal_calibration_005-233416.out"),
+    "slurm_stderr_tail": log_tail(root / "logs/formal_calibration_005-233416.err"),
+    "workers": workers,
+}, indent=2))
+print("MONITOR_JSON_END")
 PY
 
-CURRENT_STAGE=complete
-MANUAL_RECONCILIATION_REQUIRED=false
-trap - ERR
-echo "FORMAL_JOB_ID=$SUBMITTED_JOB_ID"
-cat "$SUBMISSION_RECEIPT" || true
-squeue -j "$SUBMITTED_JOB_ID" -o '%.18i %.24j %.9P %.10T %.30R' || true
-echo "FORMAL_SUBMISSION_COMPLETE"
+sha256sum "$CAPSULE/capsule_manifest.json" "$CAPSULE/calibration_authorization.json"
+echo FIFTH_ATTEMPT_STATUS_READ_COMPLETE
