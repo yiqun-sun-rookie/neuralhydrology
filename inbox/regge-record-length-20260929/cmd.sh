@@ -1,88 +1,37 @@
 #!/bin/bash
 set -eo pipefail
-
-sequence=30
+sequence=31
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
-OUTPUT=$ROOT/formal_calibration_004
-CAPSULE=$ROOT/deploy/formal_calibration_capsule_004
-PYTHON=$ROOT/runtime_probe_005/bin/python
 export PYTHONDONTWRITEBYTECODE=1
-
-date -Is
-squeue -j 232312 -o '%.18i %.24j %.9P %.10T %.30R' || true
-sacct -j 232312 --format=JobIDRaw,JobName%24,Partition,State,ExitCode,Elapsed,Start,End,MaxRSS,NCPUS,NodeList -P
-
-"$PYTHON" -B - "$OUTPUT" "$ROOT" <<'PY'
-from collections import Counter, deque
-from datetime import datetime, timezone
-import json
+"$ROOT/runtime_probe_005/bin/python" -B - "$ROOT/formal_calibration_004/calibration/RL-E1-M06" <<'PY'
 from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
 import sys
 
-output, root = map(Path, sys.argv[1:])
-def read_receipt(path):
-    if not path.is_file():
-        return None
-    return json.loads(path.read_text(encoding="utf-8"))
-def log_tail(path, count=10):
-    if not path.is_file():
-        return None
-    with path.open("r", encoding="utf-8", errors="replace") as stream:
-        return list(deque(stream, maxlen=count))
-def event_summary(path):
-    if not path.is_file():
-        return None
-    events = deque(maxlen=8)
-    counts = Counter()
-    stages = Counter()
-    latest_progress = {}
-    unique_failures = set()
-    with path.open("r", encoding="utf-8") as stream:
-        for line in stream:
-            try:
-                event = json.loads(line)
-            except json.JSONDecodeError:
-                events.append({"unparsed_tail": line[-200:]})
-                continue
-            counts[event.get("event", "unknown")] += 1
-            if event.get("event", "").endswith("_progress"):
-                latest_progress[event["event"]] = event
-            if event.get("event") == "candidate_failure":
-                stages[event.get("stage", "unknown")] += 1
-                unique_failures.add((event.get("stage"), event.get("parameter_id"), event.get("noise_id")))
-            events.append(event)
-    return {"count_by_event": dict(counts), "candidate_failures_by_stage": dict(stages), "unique_stage_parameter_noise_failures": len(unique_failures), "latest_progress": latest_progress, "last_events": list(events)}
-ids = ["RL-E1-M06", "RL-E1-M12", "RL-E2-M06", "RL-E2-M12", "RL-E3-M06", "RL-E3-M12"]
-workers = []
-for exp_id in ids:
-    directory = output / "calibration" / exp_id
-    files = {path.name: {"bytes": path.stat().st_size, "mtime_unix": path.stat().st_mtime}
-             for path in directory.iterdir() if path.is_file()} if directory.is_dir() else {}
-    workers.append({
-        "exp_id": exp_id,
-        "directory_exists": directory.is_dir(),
-        "files": files,
-        "receipt": read_receipt(directory / "receipt.json"),
-        "process": read_receipt(directory / "process.json"),
-        "events": event_summary(directory / "events.jsonl"),
-        "stdout_tail": log_tail(output / "calibration_process_logs" / f"{exp_id}.stdout.log"),
-        "stderr_tail": log_tail(output / "calibration_process_logs" / f"{exp_id}.stderr.log"),
-    })
-print("MONITOR_JSON_BEGIN")
+root = Path(sys.argv[1])
+result_path = root / "result.json"
+result = json.loads(result_path.read_text(encoding="utf-8"))
+receipt = json.loads((root / "receipt.json").read_text(encoding="utf-8"))
+process = json.loads((root / "process.json").read_text(encoding="utf-8"))
+digest = hashlib.sha256(result_path.read_bytes()).hexdigest()
+assert digest == "a715b735fc401a51a7cc1837bef8b045fb72039f39f46878113695f90dd6cb2f"
+assert digest == receipt["files"]["result.json"]
+print("BINDING_DIAGNOSIS_BEGIN")
 print(json.dumps({
+    "schema": "regge_record_length_readonly_design_binding_v01",
     "observed_utc": datetime.now(timezone.utc).isoformat(),
-    "job_id": "232312",
     "formal_attempt": "20260929-004",
-    "batch_failed": read_receipt(output / "batch_failed.json"),
-    "batch_receipt": read_receipt(output / "batch_receipt.json"),
-    "wrapper_failed": read_receipt(root / "wrapper_receipts/formal_calibration_004-232312.failed.json"),
-    "batch_events": event_summary(output / "events.jsonl"),
-    "slurm_stdout_tail": log_tail(root / "logs/formal_calibration_004-232312.out"),
-    "slurm_stderr_tail": log_tail(root / "logs/formal_calibration_004-232312.err"),
-    "workers": workers,
-}, indent=2))
-print("MONITOR_JSON_END")
+    "job_id": "232312",
+    "exp_id": result["exp_id"],
+    "result_sha256": digest,
+    "worker_status": receipt["status"],
+    "worker_exit_code": process["exit_code"],
+    "design_binding": result["design_binding"],
+    "design_array_metadata": {name: result["array_hashes"][name]
+                              for name in ("parameter_values", "noise_design")},
+    "read_only": True,
+}, indent=2, allow_nan=False))
+print("BINDING_DIAGNOSIS_END")
 PY
-
-sha256sum "$CAPSULE/capsule_manifest.json" "$CAPSULE/calibration_authorization.json"
-echo FOURTH_ATTEMPT_STATUS_READ_COMPLETE
