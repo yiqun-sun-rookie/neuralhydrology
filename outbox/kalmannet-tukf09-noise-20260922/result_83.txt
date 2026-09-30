@@ -1,0 +1,8 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=83
+### host=login4
+### started=2026-09-30T20:27:47+0800
+### ---------- output ----------
+CANARY11_REMOTE_READONLY_PREFLIGHT_PASS {"evaluation_array_reads": 0, "formal_evaluation_performed": false, "model_execution_performed": false, "own_queue": "202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)|0:00\n202294|N22-export|PENDING|(Dependency)|0:00\n202315|N22-gate|PENDING|(Dependency)|0:00\n202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)|0:00\n215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)|0:00\n232378_[2-23%2]|zj-target-state|PENDING|(JobArrayTaskLimit)|0:00\n202293|N22-manifest|PENDING|(JobHeldUser)|0:00\n232378_0|zj-target-state|RUNNING|ngu008|6:36\n232378_1|zj-target-state|RUNNING|ngu008|6:36\n232312|regge_rl_cal_004|RUNNING|ngu010|11:24\n", "parent_exists": false, "partition": "PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED", "phase_absent": true, "scheduler_submission_performed": false, "storage": "Filesystem                    1024-blocks         Used    Available Capacity Mounted on\nhhjt_parastor_hhjt_parastor 1024283213820 678666238440 345616975380      67% /data1\n"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-30T20:27:48+0800
