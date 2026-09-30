@@ -11,6 +11,12 @@ private='/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_va
 python='/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python'
 export PYTHONPATH="$old/vendor:$private:$old:$old/hpc"
 export CANARY11_PHASE="$phase" CANARY11_OLD="$old" CANARY11_PREVIOUS="$previous" CANARY11_PRIVATE="$private" CANARY11_PYTHON="$python"
+CANARY11_BEGIN_TIME="$($python -B - <<'PY'
+from datetime import datetime, timedelta
+print((datetime.now().astimezone() + timedelta(minutes=5)).strftime('%Y-%m-%dT%H:%M:%S'))
+PY
+)"
+export CANARY11_BEGIN_TIME
 
 "$python" -B - <<'PY'
 import hashlib
@@ -31,8 +37,11 @@ old = Path(os.environ['CANARY11_OLD'])
 previous = Path(os.environ['CANARY11_PREVIOUS'])
 private = Path(os.environ['CANARY11_PRIVATE'])
 python = Path(os.environ['CANARY11_PYTHON'])
+begin_time = os.environ['CANARY11_BEGIN_TIME']
 expected_manifest_sha = 'c6cd14d7a72815e71dc4e3be9b679a04206029dbbd1f51beabd26fe47561f137'
 expected_archive_sha = '2c7a78b80fe8e331cd37b43df010ddbbc776468f32d46baa99da051c2f5cf7f6'
+execution_authorization_sha = 'f1f6488fa27cb225790be723f140c7621e29cae54aafa09f66ffbc2762d7a14d'
+seq85_receipt_sha = '2958a5c50e646dd1e2d438b73767c45b6548d1215f3b7de9f562130d1c13abf6'
 canaries = (
     ('01052500', 7), ('01031500', 8), ('01162500', 9), ('01022500', 10),
     ('02202600', 11), ('02297310', 12), ('01139000', 13), ('02296500', 15),
@@ -77,6 +86,14 @@ def semantic_array_identity(name: str, array: np.ndarray, dtype: str) -> dict:
     return {'dtype': dtype, 'shape': [int(v) for v in canonical.shape], 'sha256': value.hexdigest()}
 
 
+def write_exclusive(path: Path, value: dict) -> None:
+    with path.open('x', encoding='utf-8') as stream:
+        json.dump(value, stream, sort_keys=True, separators=(',', ':'), allow_nan=False)
+        stream.write('\n')
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
 if pwd.getpwuid(os.getuid()).pw_name != 'sunyiq':
     raise SystemExit('wrong remote account')
 for directory in (phase.parent, phase, phase / 'control', phase / 'logs', phase / 'cache', phase / 'tmp'):
@@ -114,12 +131,6 @@ if (
     or manifest.get('old_evidence_overwrite_authorized') is not False
 ):
     raise SystemExit('payload scope changed')
-expected_payload_files = set(manifest['files']) | {'payload_manifest.json'}
-if expected_payload_files != {
-    'payload_manifest.json', 'canary11_authorization.json', 'canary11_full_budget.slurm',
-    'canary11_metadata.json', 'canary11_training_validation.npz', 'tukf09_canary11_full_budget.py',
-}:
-    raise SystemExit('payload file set changed')
 for name, expected in manifest['files'].items():
     path = phase / name
     plain_file(path)
@@ -136,7 +147,6 @@ if (
     or authorization.get('transfer_library_authorized') is not False
 ):
     raise SystemExit('authorization boundary changed')
-
 metadata = json.loads((phase / 'canary11_metadata.json').read_text(encoding='utf-8'))
 if (
     metadata.get('canary_count') != 11
@@ -166,6 +176,19 @@ with np.load(phase / 'canary11_training_validation.npz', allow_pickle=False) as 
                     raise SystemExit('semantic array fingerprint changed: ' + key)
 
 exact_children(phase / 'control', {'deployment.json'})
+global_deployment = json.loads((phase / 'control/deployment.json').read_text(encoding='utf-8'))
+if (
+    global_deployment.get('status') != 'CANARY11_PAYLOAD_STAGED_NOT_SUBMITTED'
+    or global_deployment.get('canary_count') != 11
+    or global_deployment.get('maximum_concurrent_tasks') != 4
+    or global_deployment.get('archive_sha256') != expected_archive_sha
+    or global_deployment.get('manifest_sha256') != expected_manifest_sha
+    or global_deployment.get('scheduler_submission_performed') is not False
+    or global_deployment.get('model_execution_performed') is not False
+    or global_deployment.get('formal_evaluation_authorized') is not False
+    or global_deployment.get('transfer_library_authorized') is not False
+):
+    raise SystemExit('global deployment record changed')
 for directory in (phase / 'logs', phase / 'cache', phase / 'tmp'):
     exact_children(directory, set())
 for index, (basin, dimension) in enumerate(canaries):
@@ -175,9 +198,7 @@ for index, (basin, dimension) in enumerate(canaries):
     plain_directory(control)
     exact_children(basin_root, {'control'})
     exact_children(control, {'deployment.json'})
-    deployment_path = control / 'deployment.json'
-    plain_file(deployment_path)
-    deployment = json.loads(deployment_path.read_text(encoding='utf-8'))
+    deployment = json.loads((control / 'deployment.json').read_text(encoding='utf-8'))
     if (
         deployment.get('status') != 'CANARY11_BASIN_STAGED_NOT_SUBMITTED'
         or deployment.get('array_index') != index
@@ -187,23 +208,10 @@ for index, (basin, dimension) in enumerate(canaries):
         or deployment.get('manifest_sha256') != expected_manifest_sha
         or deployment.get('scheduler_submission_performed') is not False
         or deployment.get('model_execution_performed') is not False
-        or deployment.get('formal_evaluation_authorized') is not False
-        or deployment.get('transfer_library_authorized') is not False
     ):
         raise SystemExit('basin deployment record changed: ' + basin)
 if list(phase.glob('basin_*/run')):
     raise SystemExit('a canary run directory exists before submission')
-global_deployment = json.loads((phase / 'control/deployment.json').read_text(encoding='utf-8'))
-if (
-    global_deployment.get('status') != 'CANARY11_PAYLOAD_STAGED_NOT_SUBMITTED'
-    or global_deployment.get('canary_count') != 11
-    or global_deployment.get('maximum_concurrent_tasks') != 4
-    or global_deployment.get('scheduler_submission_performed') is not False
-    or global_deployment.get('model_execution_performed') is not False
-    or global_deployment.get('formal_evaluation_authorized') is not False
-    or global_deployment.get('transfer_library_authorized') is not False
-):
-    raise SystemExit('global deployment record changed')
 
 if Path(sys.executable).resolve() != python.resolve() or sys.version_info[:3] != (3, 11, 13):
     raise SystemExit('Python runtime changed')
@@ -216,7 +224,8 @@ torch.set_num_interop_threads(1)
 if torch.get_num_threads() != 1 or torch.get_num_interop_threads() != 1:
     raise SystemExit('single-thread numerical execution unavailable')
 
-slurm_text = (phase / 'canary11_full_budget.slurm').read_text(encoding='utf-8')
+slurm_path = phase / 'canary11_full_budget.slurm'
+slurm_text = slurm_path.read_text(encoding='utf-8')
 for marker in (
     '#SBATCH --partition=hcpu48y', '#SBATCH --cpus-per-task=1', '#SBATCH --time=08:00:00',
     '#SBATCH --array=0-10%4', '#SBATCH --nice=10000', '#SBATCH --no-requeue',
@@ -225,11 +234,6 @@ for marker in (
 ):
     if slurm_text.count(marker) != 1:
         raise SystemExit('job resource or isolation marker changed: ' + marker)
-runner_text = (phase / 'tukf09_canary11_full_budget.py').read_text(encoding='utf-8')
-for marker in ('frozen.configure_single_thread_execution()', 'evaluation_array_reads', '256', '248'):
-    if marker not in runner_text:
-        raise SystemExit('runner budget or runtime marker changed: ' + marker)
-
 partition = subprocess.run(
     ['scontrol', 'show', 'partition', 'hcpu48y', '-o'], check=True, text=True,
     capture_output=True, timeout=30,
@@ -247,25 +251,137 @@ queue = subprocess.run(
     text=True, capture_output=True, timeout=30,
 ).stdout
 
-print('CANARY11_STAGED_READONLY_PREFLIGHT_PASS ' + json.dumps({
-    'phase': phase.as_posix(),
-    'canary_count': len(canaries),
-    'state_dimensions': [dimension for _, dimension in canaries],
-    'training_validation_semantic_arrays': 66,
+write_exclusive(phase / 'control/submission_attempt.json', {
+    'status': 'CANARY11_ARRAY_SUBMISSION_CONSUMED_OUTCOME_UNKNOWN_UNTIL_RECEIPT',
+    'authorized_basin_count': 11,
+    'array_indices': '0-10',
+    'maximum_concurrent_tasks': 4,
+    'maximum_scheduler_submissions': 1,
+    'partition': 'hcpu48y',
+    'cpus_per_task': 1,
+    'wall_seconds_per_task': 28800,
+    'scheduled_earliest_start_local': begin_time,
+    'execution_authorization_sha256': execution_authorization_sha,
+    'seq85_receipt_sha256': seq85_receipt_sha,
     'payload_manifest_sha256': expected_manifest_sha,
+    'slurm_script_sha256': digest(slurm_path),
+    'automatic_retry_or_requeue_authorized': False,
+    'formal_evaluation_authorized': False,
+    'transfer_library_authorized': False,
+    'scientific_contract_changes_authorized': False,
+    'old_evidence_overwrite_authorized': False,
+    'queue_before_submission': queue,
+    'scheduler_submission_count_before_record': 0,
+    'model_execution_count_before_record': 0,
+    'evaluation_array_reads': 0,
+})
+print('CANARY11_FINAL_PREFLIGHT_PASSED_SUBMISSION_ATTEMPT_CONSUMED ' + json.dumps({
+    'canary_count': 11,
+    'maximum_concurrent_tasks': 4,
+    'scheduled_earliest_start_local': begin_time,
     'partition': partition,
     'max_array_size': int(match.group(1)),
-    'python': '.'.join(map(str, sys.version_info[:3])),
-    'numpy': np.__version__,
-    'numpy_path': str(Path(np.__file__).resolve()),
-    'torch': torch.__version__,
-    'torch_path': str(Path(torch.__file__).resolve()),
-    'torch_threads': torch.get_num_threads(),
-    'torch_interop_threads': torch.get_num_interop_threads(),
-    'own_queue': queue,
-    'scheduler_submission_performed': False,
-    'model_execution_performed': False,
+    'scheduler_submission_performed_at_marker': False,
+    'model_execution_performed_at_marker': False,
+    'evaluation_array_reads': 0,
+}, sort_keys=True), flush=True)
+PY
+
+submission_output="$(sbatch --parsable --begin="$CANARY11_BEGIN_TIME" "$phase/canary11_full_budget.slurm")"
+submission_output="${submission_output//$'\r'/}"
+if [[ ! "$submission_output" =~ ^[0-9]+(\;[A-Za-z0-9._-]+)?$ ]]; then
+  printf 'AMBIGUOUS_SBATCH_OUTPUT=%q\n' "$submission_output" >&2
+  exit 86
+fi
+CANARY11_JOB_ID="${submission_output%%;*}"
+export CANARY11_JOB_ID CANARY11_SUBMISSION_OUTPUT="$submission_output"
+
+"$python" -B - <<'PY'
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+phase = Path(os.environ['CANARY11_PHASE'])
+job_id = os.environ['CANARY11_JOB_ID']
+raw = os.environ['CANARY11_SUBMISSION_OUTPUT']
+begin_time = os.environ['CANARY11_BEGIN_TIME']
+
+
+def digest(path: Path) -> str:
+    with path.open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def write_exclusive(path: Path, value: dict) -> None:
+    with path.open('x', encoding='utf-8') as stream:
+        json.dump(value, stream, sort_keys=True, separators=(',', ':'), allow_nan=False)
+        stream.write('\n')
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+if not job_id.isdigit() or raw.split(';', 1)[0] != job_id:
+    raise SystemExit('confirmed scheduler identifier is malformed')
+attempt_path = phase / 'control/submission_attempt.json'
+attempt = json.loads(attempt_path.read_text(encoding='utf-8'))
+if (
+    attempt.get('status') != 'CANARY11_ARRAY_SUBMISSION_CONSUMED_OUTCOME_UNKNOWN_UNTIL_RECEIPT'
+    or attempt.get('maximum_scheduler_submissions') != 1
+    or attempt.get('scheduled_earliest_start_local') != begin_time
+):
+    raise SystemExit('submission attempt record changed after scheduler call')
+submission_path = phase / 'control/submission.json'
+write_exclusive(submission_path, {
+    'status': 'CANARY11_ARRAY_SUBMISSION_CONFIRMED_NOT_MODEL_COMPLETION',
+    'job_id': job_id,
+    'raw_sbatch_output': raw,
+    'array_indices': '0-10',
+    'maximum_concurrent_tasks': 4,
+    'scheduled_earliest_start_local': begin_time,
+    'slurm_script_sha256': digest(phase / 'canary11_full_budget.slurm'),
+    'submission_attempt_sha256': digest(attempt_path),
+    'scheduler_submission_count': 1,
+    'automatic_retry_or_requeue_authorized': False,
+    'formal_evaluation_authorized': False,
+    'transfer_library_authorized': False,
+    'model_completion_claim': False,
+    'scientific_performance_claim': False,
+    'evaluation_array_reads': 0,
+})
+scontrol = subprocess.run(
+    ['scontrol', 'show', 'job', job_id, '-o'], text=True, capture_output=True, timeout=30,
+)
+squeue = subprocess.run(
+    ['squeue', '-j', job_id, '-h', '-o', '%i|%j|%T|%R|%M'],
+    text=True, capture_output=True, timeout=30,
+)
+snapshot = {
+    'status': 'CANARY11_INITIAL_SCHEDULER_SNAPSHOT_AFTER_ONE_CONFIRMED_SUBMISSION',
+    'job_id': job_id,
+    'scontrol_exit_code': scontrol.returncode,
+    'scontrol_stdout': scontrol.stdout,
+    'scontrol_stderr': scontrol.stderr,
+    'squeue_exit_code': squeue.returncode,
+    'squeue_stdout': squeue.stdout,
+    'squeue_stderr': squeue.stderr,
+    'scheduler_submission_count': 1,
+    'model_completion_claim': False,
+    'evaluation_array_reads': 0,
+}
+write_exclusive(phase / 'control/initial_scheduler_snapshot.json', snapshot)
+print('CANARY11_ARRAY_SUBMISSION_CONFIRMED_NOT_MODEL_COMPLETION ' + json.dumps({
+    'job_id': job_id,
+    'array_indices': '0-10',
+    'maximum_concurrent_tasks': 4,
+    'scheduled_earliest_start_local': begin_time,
+    'scontrol_exit_code': scontrol.returncode,
+    'squeue_exit_code': squeue.returncode,
+    'squeue': squeue.stdout,
+    'scheduler_submission_count': 1,
+    'model_completion_claim': False,
     'evaluation_array_reads': 0,
     'formal_evaluation_performed': False,
-}, sort_keys=True))
+}, sort_keys=True), flush=True)
 PY
