@@ -1,10 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 
-sequence=34
+sequence=35
 ROOT=/data1/home/sunyiq/regge_record_length_20260929_001
 OUTPUT=$ROOT/formal_calibration_005
-CAPSULE=$ROOT/deploy/formal_calibration_capsule_004
+CAPSULE=$ROOT/deploy/formal_calibration_capsule_005
 PYTHON=$ROOT/runtime_probe_005/bin/python
 export PYTHONDONTWRITEBYTECODE=1
 
