@@ -1,0 +1,29 @@
+### channel=precip-dynamic-filter-v03 seq=5
+### host=login4
+### started=2026-10-01T22:17:44+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-01T14:17:44Z
+
+FILE=synthetic/tests_stdout.txt
+Traceback (most recent call last):
+  File "<frozen runpy>", line 189, in _run_module_as_main
+  File "<frozen runpy>", line 148, in _get_module_details
+  File "<frozen runpy>", line 112, in _get_module_details
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/pytest/__init__.py", line 8, in <module>
+    from _pytest._code import ExceptionInfo
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/_pytest/_code/__init__.py", line 5, in <module>
+    from .code import Code
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/_pytest/_code/code.py", line 45, in <module>
+    from _pytest._io import TerminalWriter
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/_pytest/_io/__init__.py", line 3, in <module>
+    from .terminalwriter import get_terminal_width
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/_pytest/_io/terminalwriter.py", line 14, in <module>
+    from ..compat import assert_never
+  File "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_211612_19f6cfd5/vendor/_pytest/compat.py", line 20, in <module>
+    import py
+ModuleNotFoundError: No module named 'py'
+
+FILE=synthetic/tests.xml
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-01T22:17:44+0800
