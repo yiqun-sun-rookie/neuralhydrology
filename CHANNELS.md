@@ -140,3 +140,5 @@ git rm inbox/seq
 | `regge-record-length-20260929` | Regge流域3、6、12、24个月选参资料长度及匹配三个月状态准备评价 | 2026-09-29 | 独占新根目录 `/data1/home/sunyiq/regge_record_length_20260929_001`；只操作本通道与该根目录；`~/neuralhydrology`、其他通道、作业、实验和结果全部只读；纯中央处理器；先只读核查和小规模试跑，数值环境一致后才正式运行；不自动重试或重新排队。 |
 
 | `zhenjiang-target-state-diagnostic-20260930` | Target-only explicit stage diagnostic: 24 independent 100-epoch runs | 2026-09-30 | Exclusive root `/data1/home/sunyiq/zhenjiang_target_state_diagnostic_20260930_001`; prior 114 experiments read-only; 2017-2021 train, 2022 select; no 2023/2024 access before all 138 frozen; at most two RTX 3090 tasks, single bounded submission, no retry or requeue. |
+
+| precip-dynamic-filter-v03 | Single-basin dynamic neural rain correction | 2026-10-01 |
