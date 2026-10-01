@@ -6,11 +6,8 @@ test "$(readlink -f "$task_root")" = "$task_root"
 test "$(cat "$task_root/submission_receipt.txt")" = "$task_job"
 date -u '+SNAPSHOT_UTC=%Y-%m-%dT%H:%M:%SZ'
 printf 'OWN_JOB=%s\nOWN_ROOT=%s\n' "$task_job" "$task_root"
-# Slurm rounds a limit containing seconds up to a minute. Tighten only this
-# registered job to 71:58:00: with the first run's 108 s, the total stays <72 h.
-if scontrol show job "$task_job" > /dev/null 2>&1; then
-    scontrol update JobId="$task_job" TimeLimit=71:58:00
-fi
+# The minute-rounded 71:58:00 limit was confirmed in receipt 7. Later status
+# snapshots are read only and never adjust scheduling or touch other jobs.
 squeue -j "$task_job" -o '%.18i %.12T %.20R %.12M %.20N' || true
 sacct -j "$task_job" --format=JobID,State,ExitCode,Elapsed,MaxRSS,NodeList -P || true
 scontrol show job "$task_job" || true
