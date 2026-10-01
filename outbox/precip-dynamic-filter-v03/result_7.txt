@@ -1,0 +1,144 @@
+### channel=precip-dynamic-filter-v03 seq=7
+### host=login4
+### started=2026-10-01T22:28:03+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-01T14:28:03Z
+OWN_JOB=235201
+OWN_ROOT=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6
+             JOBID        STATE     NODELIST(REASON)         TIME             NODELIST
+            235201      RUNNING               ngu104         1:45               ngu104
+JobID|State|ExitCode|Elapsed|MaxRSS|NodeList
+235201|RUNNING|0:0|00:03:10||ngu104
+235201.batch|RUNNING|0:0|00:03:10||ngu104
+235201.extern|RUNNING|0:0|00:03:10||ngu104
+JobId=235201 JobName=precip-dynamic-v03
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200319 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:46 TimeLimit=2-23:58:00 TimeMin=N/A
+   SubmitTime=2026-10-01T22:26:18 EligibleTime=2026-10-01T22:26:18
+   AccrueTime=2026-10-01T22:26:18
+   StartTime=2026-10-01T22:26:18 EndTime=2026-10-04T22:24:18 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-01T22:26:18
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/hpc/dynamic_filter_pilot_v03.slurm
+   WorkDir=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code
+   StdErr=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.out
+   Power=
+   TresPerNode=gpu:1
+
+
+LOG=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.out
+mtime=2026-10-01 22:27:28.000000000 +0800 bytes=2778
+START_UTC=2026-10-01T14:24:57Z
+JOB_ID=235201
+RUN_ROOT=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6
+DATA_DIR=/data1/home/sunyiq/neuralhydrology/data/camels_us
+JobId=235201 JobName=precip-dynamic-v03
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=INVALID TimeLimit=2-23:59:00 TimeMin=N/A
+   SubmitTime=2026-10-01T22:26:18 EligibleTime=2026-10-01T22:26:18
+   AccrueTime=2026-10-01T22:26:18
+   StartTime=2026-10-01T22:26:18 EndTime=2026-10-04T22:25:18 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-01T22:26:18
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/hpc/dynamic_filter_pilot_v03.slurm
+   WorkDir=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code
+   StdErr=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.out
+   Power=
+   TresPerNode=gpu:1
+
+python /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python torch 2.4.0 gpu NVIDIA A40 core /data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/neuralhydrology/__init__.py
+{"verified": 565, "run_id": "run_20261001_222234_hpc_repair1_d27632e6"}
+......................                                                   [100%]
+=============================== warnings summary ===============================
+neuralhydrology/datautils/utils.py:258
+  /data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/neuralhydrology/datautils/utils.py:258: DeprecationWarning: invalid escape sequence '\d'
+    weekly_freq = re.match('(\d+)W(-(MON|TUE|WED|THU|FRI|SAT|SUN))?$', native_frequency)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/synthetic/tests.xml -
+22 passed, 1 warning in 59.50s
+
+
+LOG=/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/logs/pilot-235201.err
+mtime=2026-10-01 22:24:56.000000000 +0800 bytes=0
+
+RECORD=synthetic/technical_gate.json
+{
+  "success": true,
+  "kind": "synthetic",
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "--noconftest",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/tests/_tmp/synthetic/pytest",
+    "--junitxml",
+    "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/synthetic/tests.xml",
+    "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/tests/test_dynamic_filter_projection.py",
+    "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/tests/test_dynamic_filter_causality.py",
+    "/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6/code/src/precip_input_assimilation/tests/test_dynamic_filter_training.py",
+    "-q"
+  ],
+  "seconds": 62.798254635185,
+  "exit_code": 0,
+  "sources": {
+    "neuralhydrology/datasetzoo/basedataset.py": "82552d7113c9355608b0b8697277edd5015f5ed5a445ce9511facbde3f72ad69",
+    "neuralhydrology/datasetzoo/camelsus.py": "dbc427e8ae10fe9d7dcc334f0bd6f1f5a4bdbd7f0777aa5c2854a01037d7eb49",
+    "neuralhydrology/modelzoo/__init__.py": "f216281d782077a9d5046dfe78297423edfe424362d7f553844ad030f1e6c306",
+    "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+    "neuralhydrology/modelzoo/head.py": "762221303577933d1bb929d4c622a4a5ea4ef9190dadabaecf9398649e2d1858",
+    "neuralhydrology/modelzoo/inputlayer.py": "576104995453568ea75474260571c359ab8bfe1a0f5b40bae225f8aad2c2fd8c",
+    "neuralhydrology/utils/config.py": "952d146fdd2fe2a6a93c1758d75564fb43b43d97abe1992dd7aa9f56bf53db16",
+    "src/precip_input_assimilation/dynamic_filter/__init__.py": "4e234e895d6f6d7d233d05be3c095a447c6e226057d1bb44ed533c47f6ab9179",
+    "src/precip_input_assimilation/dynamic_filter/network.py": "069c1a69cc63cf9f31f0384abf759828dad75a99bdaf062ec9655a3ed41a2153",
+    "src/precip_input_assimilation/dynamic_filter/protocol.py": "8695f74f6b6ec8a0e30e9a16d304af93f13ba6692e330aad665798856e6c10dd",
+    "src/precip_input_assimilation/dynamic_filter/real_data.py": "3c8681be11ff6b52c69fdc8d53f1adf66e5d02e4916ce3946e63138e7606b358",
+    "src/precip_input_assimilation/dynamic_filter/report.py": "c7684a9b7911db986ca48ff1d55a7667d299e018912208a44ea2d385e74a106d",
+    "src/precip_input_assimilation/dynamic_filter/rollout.py": "9f4a1f0543d4ad2b03d377cbdd9eff802917c1b0f15527be32064f43f52bf5f7",
+    "src/precip_input_assimilation/dynamic_filter/stream.py": "4241707c00aad975eb3892c9b8d03c6e751bc92a8c3c4dc571642e43eecb701a",
+    "src/precip_input_assimilation/dynamic_filter/training.py": "80df2e2d2248e9acad12f2868c4d6956b78120baaf7c127438c72cc7e4006189",
+    "src/precip_input_assimilation/scripts/run_dynamic_filter_pilot.py": "d925eae90cbbe83d4a196c874c24e2822988e414eb68f4a82c0c43dbed470663",
+    "src/precip_input_assimilation/scripts/run_dynamic_filter_technical.py": "ba5112ea923eb18a94980b6271ef06257b515d6032ca47deb624488db15e4768",
+    "src/precip_input_assimilation/selfrule/data.py": "bb7a88795777dba14c56bdabd008b08bbf6f0292c0595c68fd42ff80b46fc81b",
+    "src/precip_input_assimilation/selfrule/model.py": "adf030f50226f6300779d1365013f49e59ac14ea4daa89e4a0f83670f07178c6",
+    "src/precip_input_assimilation/tests/test_dynamic_filter_causality.py": "53b3253a0d17a5effe21c352d6751dacf28129b63c8e7ec7e30df830438747f3",
+    "src/precip_input_assimilation/tests/test_dynamic_filter_projection.py": "c2d66b1fe1874733b9514bdc318ea0cf4a68313f96bb53de6a552e788137fba3",
+    "src/precip_input_assimilation/tests/test_dynamic_filter_training.py": "8771e0a9170a9cb0242ddbd1dfb75bade0584611052474052d39be57498a2f00"
+  },
+  "scope": "no real weather, flow, model weights or HPC"
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-01T22:28:04+0800
