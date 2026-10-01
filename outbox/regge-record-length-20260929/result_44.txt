@@ -1,0 +1,11 @@
+### channel=regge-record-length-20260929 seq=44
+### host=login4
+### started=2026-10-01T22:29:23+0800
+### ---------- output ----------
+PRIVATE_RETURN_LAUNCH_RECEIPT_BEGIN
+{"schema":"regge_private_return_launch_receipt_v01","formal_attempt":"20260930-005","sequence":44,"status":"launched","pid":41752,"launched_utc":"2026-10-01T14:29:25.732095+00:00","state_directory":"/data1/home/sunyiq/regge_record_length_20260929_001/return_transfer_private_001","repository":"yiqun-sun-rookie/regge-record-length-return-20260930-005","repository_id":1400121358,"oid":"3a635659d6f7d4a9740da1b0080006f354db926d6bffe951d5ba8808ffcd4579","bytes":731826948,"source_sha256":"16d61a2977381b728e708f3f1557087d74e18f855da1255ca537d5c4eeb4ad66","bounded_deadline_seconds":4500,"launch_count":1}
+PRIVATE_RETURN_LAUNCH_RECEIPT_END
+FIFTH_ATTEMPT_PRIVATE_RETURN_LAUNCHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-01T22:29:25+0800
