@@ -1,0 +1,53 @@
+### channel=precip-dynamic-filter-v03 seq=2
+### host=login4
+### started=2026-10-01T21:23:04+0800
+### ---------- output ----------
+UTC=2026-10-01T13:23:04Z
+EXISTS=/data1/home/sunyiq/neuralhydrology
+EXISTS=/data1/home/sunyiq/neuralhydrology/data/camels_us
+MISSING=/data1/home/sunyiq/neuralhydrology/data/CAMELS_US
+MISSING=/data1/home/sunyiq/data/camels_us
+MISSING=/data1/home/sunyiq/data/CAMELS_US
+MISSING=/data1/home/sunyiq/nh_data/camels_us
+EXISTS=/data1/home/sunyiq/precip_input_da_2026_09
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  633T  322T  67% /data1
+NODELIST            PARTITION           GRES              GRES_USED                     CPUS(A/I/O/T)       
+ngu001              hgpu2p              gpu:2             gpu:2,dcu:0                   2/94/0/96           
+ngu002              hgpu2p              gpu:2             gpu:0,dcu:0                   0/96/0/96           
+ngu004              hgpu2p              gpu:2             gpu:1,dcu:0                   52/44/0/96          
+ngu005              hgpu2p              gpu:2             gpu:0,dcu:0                   12/84/0/96          
+ngu006              hgpu2p              gpu:2             gpu:0,dcu:0                   12/84/0/96          
+ngu007              hgpu2p              gpu:2             gpu:1,dcu:0                   4/92/0/96           
+ngu008              hgpu2p              gpu:2             gpu:0,dcu:0                   0/96/0/96           
+ngu010              hgpu2p              gpu:2             gpu:2,dcu:0                   8/24/0/32           
+ngu011              hgpu2p              gpu:2             gpu:1,dcu:0                   4/28/0/32           
+ngu101              hgpu4               gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu102              hgpu4               gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu103              hgpu4               gpu:4             gpu:0,dcu:0                   0/0/96/96           
+ngu104              hgpu4               gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu201              hgpu8               gpu:8             gpu:4,dcu:0                   26/38/0/64          
+ngu202              hgpu8               gpu:8             gpu:0,dcu:0                   0/64/0/64           
+ngu203              hgpu8               gpu:8             gpu:8,dcu:0                   32/32/0/64          
+             JOBID      PARTITION                           NAME    STATE       TIME     NODELIST(REASON)
+            202229 hgpu4,hgpu8,hg                   N22-agg-eval  PENDING       0:00 (DependencyNeverSati
+            202294 hgpu4,hgpu8,hg                     N22-export  PENDING       0:00         (Dependency)
+            202315 hgpu4,hgpu8,hg                       N22-gate  PENDING       0:00         (Dependency)
+            202507 hgpu4,hgpu8,hg               N22-mask-iso-531  PENDING       0:00 (DependencyNeverSati
+            215429          hgpu2                  id30_m01_s100  PENDING       0:00 (DependencyNeverSati
+            202293 hgpu4,hgpu8,hg                   N22-manifest  PENDING       0:00        (JobHeldUser)
+PartitionName=hgpu4
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[101-104]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=384 TotalNodes=4 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-01T21:23:04+0800
