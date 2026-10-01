@@ -1,82 +1,77 @@
 #!/bin/bash
 set -eo pipefail
-umask 027
 python='/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python'
 export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 unset PYTHONPATH
 "$python" -B - <<'PY'
-import hashlib,json,os,pathlib,subprocess,time
+from datetime import datetime, timezone
+import hashlib,json,os,pathlib,stat,subprocess,time
 root=pathlib.Path('/data1/home/sunyiq/kalmannet_tukf09_protection_diagnostic_20261001_attempt1')
-for parent in (root,*root.parents):
-    assert parent.is_dir() and not parent.is_symlink()
-def read(name):
-    path=root/name
+assert root.is_dir() and not root.is_symlink()
+def small(path,limit=65536,mutable=False):
+    if not path.exists():
+        return None
     info=path.lstat()
-    assert path.is_file() and not path.is_symlink() and info.st_nlink==1
-    assert info.st_size<1048576
-    return path.read_bytes()
-manifest_raw=read('payload_manifest.json')
-assert hashlib.sha256(manifest_raw).hexdigest()=='b4a6b0158fcd6e88ba80688d0d92f6c7ae7ba334b79f89f256889173795ddaf6'
-manifest=json.loads(manifest_raw)
-assert len(manifest['members'])==9
-bindings={}
-for x in manifest['members']:
-    assert '/' not in x['path'] and '\\' not in x['path'] and x['path'] not in bindings
-    b=read(x['path'])
-    assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256']
-    bindings[x['path']]=x['sha256']
-review_raw=read('control/independent_static_review.json')
-assert hashlib.sha256(review_raw).hexdigest()=='4a0ea158080fee446cb735b81e7c736085e247c5ce26438934451ed0e7dfb784'
-review=json.loads(review_raw)
-assert review['admission']=='PASS' and review['payload_member_sha256']==bindings
-deployment=json.loads(read('control/deployment.json'))
-assert deployment['status']=='ISOLATED_DEPLOYMENT_VERIFIED_NO_DIAGNOSTIC_EXECUTION'
-assert deployment['payload_manifest_sha256']=='b4a6b0158fcd6e88ba80688d0d92f6c7ae7ba334b79f89f256889173795ddaf6'
-auth=json.loads(read('authorization.json')); contract=json.loads(read('diagnostic_contract.json'))
-assert auth['maximum_scheduler_submissions']==contract['maximum_submissions']==1
-assert auth['requested_cpus']==contract['requested_cpus']==1
-assert auth['scheduler_time_limit_seconds']==contract['job_seconds']==9000
-assert auth['gpu_requested'] is False and contract['automatic_retry'] is False
-assert not os.path.lexists(str(root/'results')) and not os.path.lexists(str(root/'control'/'io_budget.state'))
-script=read('diagnostic_job.slurm').decode()
-for required in ('#SBATCH --cpus-per-task=1','#SBATCH --time=02:30:00','#SBATCH --no-requeue','#SBATCH --nice=10000'):
-    assert required in script
-assert '--gres' not in script and '--array' not in script and '--exclusive' not in script
-def exclusive(name,value):
-    b=(json.dumps(value,sort_keys=True,indent=2)+'\n').encode()
-    assert len(b)<8192
-    fd=os.open(str(root/'control'/name),os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
-    with os.fdopen(fd,'wb') as f:
-        f.write(b);f.flush();os.fsync(f.fileno())
-exclusive('submission_attempt.json',{'status':'ONE_SUBMISSION_ATTEMPT_CONSUMED','time_unix':time.time(),
-           'payload_manifest_sha256':'b4a6b0158fcd6e88ba80688d0d92f6c7ae7ba334b79f89f256889173795ddaf6','independent_review_sha256':'4a0ea158080fee446cb735b81e7c736085e247c5ce26438934451ed0e7dfb784',
-           'maximum_submissions':1,'no_automatic_retry':True})
-try:
-    result=subprocess.run(['sbatch','--parsable',str(root/'diagnostic_job.slurm')],
-                         cwd=root,capture_output=True,timeout=60)
-except BaseException as exc:
-    exclusive('submission_unknown.json',{'status':'SUBMISSION_OUTCOME_UNKNOWN_NO_RETRY',
-                                         'type':type(exc).__name__,'error':str(exc)[:4096]})
-    raise
-assert len(result.stdout)+len(result.stderr)<16384
-text=result.stdout.decode('utf-8',errors='strict').strip()
-exclusive('submission_raw.json',{'returncode':result.returncode,'stdout':text,
-                                  'stderr':result.stderr.decode('utf-8',errors='replace')})
-assert result.returncode==0 and text.isdigit(), 'unique scheduler job id not confirmed; no retry'
-job=int(text)
-record={'status':'SINGLE_SYNTHETIC_JOB_SUBMISSION_CONFIRMED','job_id':job,'time_unix':time.time(),
-        'payload_manifest_sha256':'b4a6b0158fcd6e88ba80688d0d92f6c7ae7ba334b79f89f256889173795ddaf6','requested_cpus':1,'gpu_requested':False,
-        'scheduler_seconds':9000,'maximum_parallel_synthetic_workers':1,'maximum_submissions':1,
-        'scientific_model_execution':False,'automatic_retry':False}
-exclusive('submission_confirmed.json',record)
-print('SINGLE_SUBMISSION_CONFIRMED '+json.dumps(record,sort_keys=True),flush=True)
-for label,command in [('SCONTROL',['scontrol','show','job',str(job),'-o']),
-                      ('SQUEUE',['squeue','-j',str(job),'-h','-o','%i|%P|%T|%C|%M|%R'])]:
+    assert stat.S_ISREG(info.st_mode) and info.st_nlink==1 and info.st_size<=limit
+    data=path.read_bytes()
     try:
-        query=subprocess.run(command,capture_output=True,timeout=20)
-        assert len(query.stdout)+len(query.stderr)<16384
-        print(label+' '+json.dumps({'returncode':query.returncode,'stdout':query.stdout.decode(errors='replace'),
-                                    'stderr':query.stderr.decode(errors='replace')},sort_keys=True),flush=True)
+        return json.loads(data)
+    except json.JSONDecodeError as exc:
+        if not mutable:
+            raise
+        return {'status':'TRANSIENT_PARTIAL_READ','path':str(path.relative_to(root)),
+                'captured_bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),
+                'raw_prefix':data[:1024].decode(errors='replace'),'error':str(exc)}
+submission=small(root/'control'/'submission_confirmed.json')
+assert submission and submission['status']=='SINGLE_SYNTHETIC_JOB_SUBMISSION_CONFIRMED'
+job=str(submission['job_id'])
+assert job.isascii() and job.isdigit()
+queries={}
+for label,command in [('sacct',['sacct','-j',job,'-P','--format=JobID,State,ExitCode,Elapsed,MaxRSS,NodeList,AllocCPUS,Start,End']),
+                     ('squeue',['squeue','-j',job,'-h','-o','%i|%P|%T|%C|%M|%R'])]:
+    try:
+        result=subprocess.run(command,capture_output=True,timeout=30)
+        assert len(result.stdout)+len(result.stderr)<65536
+        queries[label]={'returncode':result.returncode,'stdout':result.stdout.decode(errors='replace'),
+                        'stderr':result.stderr.decode(errors='replace')}
     except Exception as exc:
-        print(label+'_READ_ONLY_QUERY_UNAVAILABLE '+repr(exc),flush=True)
+        queries[label]={'read_only_query_error':repr(exc)}
+results=root/'results'
+markers={name:small(results/name) for name in ('started.json','shorts_complete.json','long_started.json',
+                                              'result.json','complete.json','failed.json','failure.json')}
+cases=[]
+if (results/'configs').is_dir():
+    for path in sorted((results/'configs').glob('*.json')):
+        config=small(path)
+        name=config['case_id']
+        assert isinstance(name,str) and len(name)<128 and '/' not in name
+        out=results/'cases'/name
+        outer=results/'outer'/name
+        supervisor=small(out/'supervisor.json',mutable=True)
+        guard=small(out/'guard.result.json')
+        assertions=small(outer/'independent_assertions.json')
+        progress={'case_id':name,'supervisor':supervisor,'guard':guard,
+                  'worker_started':small(out/'worker'/'started.json'),
+                  'worker_completed':small(out/'worker'/'completed.json'),
+                  'assertions_passed':assertions.get('passed') if assertions else None,
+                  'failed_checks':[key for key,value in assertions.get('checks',{}).items() if not value] if assertions else None}
+        cases.append(progress)
+inventory=[]
+for path in root.rglob('*'):
+    info=path.lstat()
+    assert not stat.S_ISLNK(info.st_mode)
+    if stat.S_ISREG(info.st_mode):
+        assert info.st_nlink==1
+        inventory.append({'path':str(path.relative_to(root)), 'bytes':info.st_size,'mtime_ns':info.st_mtime_ns})
+    else:
+        assert stat.S_ISDIR(info.st_mode)
+assert len(inventory)<16384
+summary={'read_only_capture_time_unix':time.time(),
+         'read_only_capture_time_iso_utc':datetime.now(timezone.utc).isoformat(),
+         'job_id':int(job),'queries':queries,
+         'markers':markers,'cases':cases,'file_count':len(inventory),
+         'total_root_bytes':sum(x['bytes'] for x in inventory),
+         'payload_manifest_sha256':hashlib.sha256((root/'payload_manifest.json').read_bytes()).hexdigest(),
+         'diagnostic_data_only':True,'no_job_changes':True}
+print('READ_ONLY_SYNTHETIC_STATUS '+json.dumps(summary,sort_keys=True),flush=True)
 PY
