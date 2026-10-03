@@ -1,0 +1,10 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=102
+### host=login4
+### started=2026-10-03T13:21:34+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+NameError: name 'os' is not defined
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-03T13:21:35+0800
