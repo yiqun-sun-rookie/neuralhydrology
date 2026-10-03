@@ -1,0 +1,25 @@
+### channel=precip-dynamic-filter-v03 seq=13
+### host=login4
+### started=2026-10-03T23:03:50+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-03T15:03:50Z
+PRIOR_ACCOUNTING_BEGIN
+235197|FAILED|1:0|108|hgpu4|billing=2,cpu=2,node=1
+235201|COMPLETED|0:0|24270|hgpu4|billing=2,cpu=2,node=1
+PRIOR_ACCOUNTING_END
+PRIOR_COMPLETION_FILES_PRESENT
+OWN_PREVIOUS_JOBS_QUEUE
+PARTITION_GPU_AVAILABILITY
+NODELIST            PARTITION           GRES              GRES_USED                     CPUS(A/I/O/T)       
+ngu101              hgpu4               gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu102              hgpu4               gpu:4             gpu:0,dcu:0                   0/96/0/96           
+ngu103              hgpu4               gpu:4             gpu:0,dcu:0                   0/0/96/96           
+ngu104              hgpu4               gpu:4             gpu:1,dcu:0                   8/88/0/96           
+REGISTERED_DATA_ROOT
+DATA_ROOT_PRESENT
+DISK_AVAILABLE_BYTES
+Filesystem                          1-blocks            Used       Available Capacity Mounted on
+hhjt_parastor_hhjt_parastor 1048866010951680 697825675116544 351040335835136      67% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-03T23:03:50+0800
