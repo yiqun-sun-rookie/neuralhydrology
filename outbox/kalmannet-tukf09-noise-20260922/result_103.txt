@@ -1,0 +1,8 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=103
+### host=login4
+### started=2026-10-03T13:26:57+0800
+### ---------- output ----------
+FOUR_FAILED_READONLY_PREFLIGHT_PASS {"evaluation_array_reads": 0, "frozen_source_hashes_matched": 4, "model_executions": 0, "new_destination_absent": true, "own_queue": "202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)\n202294|N22-export|PENDING|(Dependency)\n202315|N22-gate|PENDING|(Dependency)\n202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)\n215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)\n202293|N22-manifest|PENDING|(JobHeldUser)", "partition": "PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED", "scheduler_submissions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-03T13:26:58+0800
