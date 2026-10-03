@@ -4,6 +4,7 @@ export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
 import hashlib
 import json
+import os
 from pathlib import Path
 import pwd
 import subprocess
