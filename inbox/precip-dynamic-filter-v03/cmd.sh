@@ -1,22 +1,9 @@
 #!/usr/bin/env bash
-# Read-only receipt for this experiment family and its two prior jobs.
 set -eo pipefail
-task_prior_root="/data1/home/sunyiq/precip_dynamic_filter_20260930/run_20261001_222234_hpc_repair1_d27632e6"
-test "$(readlink -f "$task_prior_root")" = "$task_prior_root"
-test "$(cat "$task_prior_root/submission_receipt.txt")" = "235201"
-date -u '+SNAPSHOT_UTC=%Y-%m-%dT%H:%M:%SZ'
-printf 'PRIOR_ACCOUNTING_BEGIN\n'
-sacct -X -n -P -j 235197,235201 --format=JobID,State,ExitCode,ElapsedRaw,Partition,AllocTRES
-printf 'PRIOR_ACCOUNTING_END\n'
-test -f "$task_prior_root/pilot/complete.json"
-test -f "$task_prior_root/pilot/selection_locked.json"
-printf 'PRIOR_COMPLETION_FILES_PRESENT\n'
-printf 'OWN_PREVIOUS_JOBS_QUEUE\n'
-squeue -h -j 235197,235201 -o '%.18i %.12T %.20R %.12M %.20N'
-printf 'PARTITION_GPU_AVAILABILITY\n'
-sinfo -p hgpu4 -N -O nodelist,partition,gres:18,gresused:30,cpusstate
-printf 'REGISTERED_DATA_ROOT\n'
-test -d "/data1/home/sunyiq/neuralhydrology/data/camels_us"
-printf 'DATA_ROOT_PRESENT\n'
-printf 'DISK_AVAILABLE_BYTES\n'
-df -P -B 1 "/data1/home/sunyiq/precip_dynamic_filter_20260930"
+task_base="$HOME/hpc_mailbox/inbox/precip-dynamic-filter-v03/payload"
+task_deploy="$task_base/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71_deploy_v02.sh"
+test -f "$task_deploy"
+task_actual=$(sha256sum "$task_deploy")
+task_actual=${task_actual%% *}
+test "$task_actual" = "5fc893cc94056a0531c5bd79a172bf6f04d5bfbdcb72b565cf319768c676651c"
+bash "$task_deploy" "$task_base/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71_payload_v02.tgz" "d5d7d6ff334d4ca31c576b050a2c2e0a7638e6b9bc7b02fb9875c569d33e1150" "3361652273484e838adea7682ae679b15738198da6a5e542c71d5fab173187a3" "$HOME/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71" "/data1/home/sunyiq/neuralhydrology/data/camels_us" "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python" "$task_base/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71_validator_v02.py" "b564539080b6ab7c53d3f4938ed6749e617ce4e11fb0e62cbb8e343078f032c1"
