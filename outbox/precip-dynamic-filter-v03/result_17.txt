@@ -1,0 +1,23 @@
+### channel=precip-dynamic-filter-v03 seq=17
+### host=login4
+### started=2026-10-04T23:37:42+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-04T15:37:42Z
+JOB_ID=236356
+236356|RUNNING|0:0|786|billing=2,cpu=2,node=1
+236356.batch|RUNNING|0:0|786|cpu=2,mem=0,node=1
+236356.extern|RUNNING|0:0|786|billing=2,cpu=2,node=1
+236356|RUNNING|11:36|2-17:01:24|ngu101
+{"bytes": 552, "file": "runtime/stage_0.json", "record": {"exit_code": 0, "index": 0, "job_elapsed_seconds": 239.89171533286572}, "sha256": "52973c3e40a39aa26f1dcbf2a897e4acff1d2f9540162f53db0ed80d2b043bac"}
+{"bytes": 1577, "file": "runtime/stage_1.json", "record": {"exit_code": 0, "index": 1, "job_elapsed_seconds": 293.71096237003803}, "sha256": "20f01f26b9e01091e4230e51aae28eb62cb86127af8ae6cdfa97da556faae791"}
+{"bytes": 1078, "file": "runtime/budget_runtime.json", "record": {"job_id": "236356", "requested_gpu_seconds": 234780}, "sha256": "99ad2cebb12e736cb02ded97db5036441c5aec277be9f010742ae17e61559f18"}
+{"bytes": 12163, "file": "runtime/synthetic/technical_gate.json", "record": {"exit_code": 0, "kind": "synthetic", "numeric_runtime": {"cuda_version": "12.1", "device": "cpu", "gpu_name": null, "torch_threads": 2, "torch_version": "2.4.0"}, "pytest_summary": "122 passed, 1 warning in 170.93s (0:02:50)", "seconds": 173.939507111907, "success": true}, "sha256": "4f993b8baedc8f05e96738d12f784b99433ae80100811be393143285eee50622"}
+{"bytes": 8541, "file": "runtime/preflight/preflight_gate.json", "record": {"contract_sha256": "3361652273484e838adea7682ae679b15738198da6a5e542c71d5fab173187a3", "score_observations_read": false, "success": true}, "sha256": "c3ef5b9037f54e38bf29875538922f008efbda0cb008c4b3e9df962f25ac90c9"}
+{"bytes": 78, "file": "runtime/preflight/complete.json", "record": {"success": true}, "sha256": "2d900a2a23c1acdb0c44461739bd028d99526a5620cb61d768058f760ae399e4"}
+{"file": "runtime/probe/01487000/resource_measurement.json", "record": {"basin": "01487000", "epoch_seconds": {"flow": 17.56620840728283, "historical": 32.14290803670883, "rain": 32.758996695280075}, "occupied_probe_seconds": 180.5597206056118, "peak_cuda_bytes": 144703488, "peak_system_bytes": 2184503296, "replay_seconds_per_day": 0.007547534814538987}, "sha256": "e02f67f7fddf253fbec259533f034c04b43d83d5a0d2aa078bb7bd9841c36792"}
+{"file": "runtime/probe/12040500/resource_measurement.json", "record": {"basin": "12040500", "epoch_seconds": {"flow": 17.33289934694767, "historical": 31.66022691130638, "rain": 30.32288447022438}, "occupied_probe_seconds": 176.72428642213345, "peak_cuda_bytes": 144703488, "peak_system_bytes": 2187694080, "replay_seconds_per_day": 0.007288736147400061}, "sha256": "333ae8b42caa53c6876f01cda4570cf79a728a8dfcc5a54e9380608cc454011c"}
+{"finished_fits": 0, "station_selection_locks": 0, "training_directory_exists": false, "scoring_directory_exists": false}
+LOG_TAIL=""
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-04T23:37:42+0800
