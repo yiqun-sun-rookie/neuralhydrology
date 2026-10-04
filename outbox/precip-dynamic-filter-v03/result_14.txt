@@ -1,0 +1,39 @@
+### channel=precip-dynamic-filter-v03 seq=14
+### host=login4
+### started=2026-10-04T23:24:30+0800
+### ---------- output ----------
+Submitted batch job 236356
+JOB_ID=236356
+RUN_ROOT=/data1/home/sunyiq/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71
+PAYLOAD_SHA256=d5d7d6ff334d4ca31c576b050a2c2e0a7638e6b9bc7b02fb9875c569d33e1150
+CONTRACT_SHA256=3361652273484e838adea7682ae679b15738198da6a5e542c71d5fab173187a3
+JobId=236356 JobName=precip-eight-v01
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=2-17:13:00 TimeMin=N/A
+   SubmitTime=2026-10-04T23:26:05 EligibleTime=2026-10-04T23:26:05
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-04T23:26:05
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71/submission.slurm
+   WorkDir=/data1/home/sunyiq/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71/payload/code
+   StdErr=/data1/home/sunyiq/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71/logs/eight-236356.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/precip_dynamic_eight_basins_20261003/eight_basin_fixed_recipe_v01_20261003_230000_d5028d71/logs/eight-236356.out
+   Power=
+   TresPerNode=gpu:1
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-04T23:24:35+0800
