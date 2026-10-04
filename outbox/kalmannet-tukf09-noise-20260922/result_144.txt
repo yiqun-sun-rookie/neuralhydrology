@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=144
+### host=login4
+### started=2026-10-05T01:48:34+0800
+### ---------- output ----------
+SBATCH_RETURN_CODE=0
+SBATCH_STDOUT='Submitted batch job 236375\n'
+SBATCH_STDERR=''
+FOUR_FAILED_SUBMISSION_CONFIRMED {"automatic_retry_authorized": false, "basin_id": "02108000", "job_id": "236375", "manifest_sha256": "590981edde63612507d2d18468baf1585fd0bafc825b44a7030778391c9e8b37", "sbatch_stderr": "", "sbatch_stdout": "Submitted batch job 236375\n", "script_sha256": "c038b056b92b8f942ca81f385004f1f916119f7297f0b4e750c2285bda1ad80d", "status": "SCHEDULER_SUBMISSION_CONFIRMED_NOT_MODEL_COMPLETION"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-05T01:48:35+0800
