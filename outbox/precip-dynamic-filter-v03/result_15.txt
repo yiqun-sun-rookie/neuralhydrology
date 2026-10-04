@@ -1,0 +1,16 @@
+### channel=precip-dynamic-filter-v03 seq=15
+### host=login4
+### started=2026-10-04T23:26:35+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-04T15:26:35Z
+JOB_ID=236356
+236356|RUNNING|0:0|119|billing=2,cpu=2,node=1
+236356.batch|RUNNING|0:0|119|cpu=2,mem=0,node=1
+236356.extern|RUNNING|0:0|119|billing=2,cpu=2,node=1
+236356|RUNNING|0:29|2-17:12:31|ngu101
+{"bytes": 1078, "file": "runtime/budget_runtime.json", "record": {"job_id": "236356", "requested_gpu_seconds": 234780}, "sha256": "99ad2cebb12e736cb02ded97db5036441c5aec277be9f010742ae17e61559f18"}
+{"finished_fits": 0, "station_selection_locks": 0, "training_directory_exists": false, "scoring_directory_exists": false}
+LOG_TAIL=""
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-04T23:26:36+0800
