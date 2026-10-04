@@ -1,0 +1,19 @@
+### channel=precip-dynamic-filter-v03 seq=16
+### host=login4
+### started=2026-10-04T23:32:49+0800
+### ---------- output ----------
+SNAPSHOT_UTC=2026-10-04T15:32:49Z
+JOB_ID=236356
+236356|RUNNING|0:0|494|billing=2,cpu=2,node=1
+236356.batch|RUNNING|0:0|494|cpu=2,mem=0,node=1
+236356.extern|RUNNING|0:0|494|billing=2,cpu=2,node=1
+236356|RUNNING|6:44|2-17:06:16|ngu101
+{"bytes": 552, "file": "runtime/stage_0.json", "record": {"exit_code": 0, "index": 0, "job_elapsed_seconds": 239.89171533286572}, "sha256": "52973c3e40a39aa26f1dcbf2a897e4acff1d2f9540162f53db0ed80d2b043bac"}
+{"bytes": 1577, "file": "runtime/stage_1.json", "record": {"exit_code": 0, "index": 1, "job_elapsed_seconds": 293.71096237003803}, "sha256": "20f01f26b9e01091e4230e51aae28eb62cb86127af8ae6cdfa97da556faae791"}
+{"bytes": 1078, "file": "runtime/budget_runtime.json", "record": {"job_id": "236356", "requested_gpu_seconds": 234780}, "sha256": "99ad2cebb12e736cb02ded97db5036441c5aec277be9f010742ae17e61559f18"}
+{"bytes": 12163, "file": "runtime/synthetic/technical_gate.json", "record": {"exit_code": 0, "kind": "synthetic", "numeric_runtime": {"cuda_version": "12.1", "device": "cpu", "gpu_name": null, "torch_threads": 2, "torch_version": "2.4.0"}, "pytest_summary": "122 passed, 1 warning in 170.93s (0:02:50)", "seconds": 173.939507111907, "success": true}, "sha256": "4f993b8baedc8f05e96738d12f784b99433ae80100811be393143285eee50622"}
+{"finished_fits": 0, "station_selection_locks": 0, "training_directory_exists": false, "scoring_directory_exists": false}
+LOG_TAIL=""
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-04T23:32:50+0800
