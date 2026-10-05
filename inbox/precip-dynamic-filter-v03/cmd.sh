@@ -37,3 +37,39 @@ for p in [root/'logs'/('eight-'+root.joinpath('submission_receipt.txt').read_tex
   with p.open('rb') as h:h.seek(max(0,p.stat().st_size-4096));raw=h.read(4096)
   print('LOG_TAIL='+json.dumps(raw.decode('utf-8',errors='replace')))
 PY
+
+"/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python" -B - "$task_run" <<'TRAINING_METADATA'
+import sys,json,hashlib,base64,stat
+from pathlib import Path
+root=Path(sys.argv[1]).resolve(strict=True)
+basins=('01487000','12040500','09312600','08198500','03078000','05362000','08267500','07145700')
+methods=('rain','flow','historical')
+names=['runtime/stage_3.json','runtime/stage_4.json','runtime/training/complete.json','runtime/locked/complete.json','runtime/locked/global_selection_locked.json','runtime/training/stage_manifest.json']
+for basin in basins:
+ names.extend(['runtime/training/basins/'+basin+'/selection_locked.json','runtime/training/basins/'+basin+'/input_gate.json'])
+ for method in methods:
+  for seed in (1001,1002,1003):names.append(f'runtime/training/basins/{basin}/fits/{method}/seed_{seed}/fit_summary.json')
+for name in ('runtime/locked/stage_manifest.json',):
+ if (root/name).is_file():names.append(name)
+assert len(names)==len(set(names))
+total=0
+records=[]
+for name in names:
+ p=root/name
+ for q in (p,*p.parents):
+  if q==root.parent:break
+  assert not q.is_symlink()
+ assert p.resolve(strict=True).is_relative_to(root) and stat.S_ISREG(p.stat().st_mode)
+ before=p.stat()
+ assert before.st_size<=1048576
+ raw=p.read_bytes()
+ after=p.stat()
+ assert (before.st_size,before.st_mtime_ns,before.st_ctime_ns,before.st_dev,before.st_ino)==(after.st_size,after.st_mtime_ns,after.st_ctime_ns,after.st_dev,after.st_ino)
+ json.loads(raw)
+ total+=len(raw)
+ assert total<=4194304
+ records.append({'file':name,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'base64':base64.b64encode(raw).decode()})
+print('EIGHT_TRAINING_METADATA_BEGIN')
+print(json.dumps({'files':records,'count':len(records),'raw_bytes':total},sort_keys=True))
+print('EIGHT_TRAINING_METADATA_END')
+TRAINING_METADATA
