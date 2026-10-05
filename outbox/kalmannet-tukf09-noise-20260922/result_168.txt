@@ -1,0 +1,8 @@
+### channel=kalmannet-tukf09-noise-20260922 seq=168
+### host=login4
+### started=2026-10-05T17:42:55+0800
+### ---------- output ----------
+FORECAST13_SUBMISSION {"automatic_resubmission": false, "job_id": "236561", "manifest_sha256": "c726bbb75c1f15b250f59162c87167f0acd5051b3923e6a7af2dc28a703f2e19", "partition_before": "PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED", "queue_before": "202229|N22-agg-eval|PENDING|(DependencyNeverSatisfied)\n202294|N22-export|PENDING|(Dependency)\n202315|N22-gate|PENDING|(Dependency)\n202507|N22-mask-iso-531|PENDING|(DependencyNeverSatisfied)\n215429|id30_m01_s100|PENDING|(DependencyNeverSatisfied)\n202293|N22-manifest|PENDING|(JobHeldUser)", "requested_cpus": 1, "script_sha256": "a19317305a9a0045284eaff0a680aa2149bed8d13d5fd280ecd1c75237ce22c1", "stage_id": "THIRTEEN_BASIN_FORECAST_COMPARISON_20261005_ATTEMPT1", "status": "SUBMITTED_NOT_COMPLETED", "wall_seconds": 28800}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-05T17:43:00+0800
