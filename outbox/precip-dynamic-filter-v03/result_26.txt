@@ -1,0 +1,12 @@
+### channel=precip-dynamic-filter-v03 seq=26
+### host=login4
+### started=2026-10-05T16:47:30+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 675, in <module>
+  File "<stdin>", line 669, in main
+  File "<stdin>", line 242, in inventory
+PermissionError: Result inventory contains a linked member
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-05T16:47:31+0800
