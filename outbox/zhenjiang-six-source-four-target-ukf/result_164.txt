@@ -1,0 +1,10 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=164
+### host=login4
+### started=2026-10-06T22:14:54+0800
+### ---------- output ----------
+{"status": "original_failed_job_has_no_active_allocation", "job_id": "236708", "queue_returncode": 1, "queue_stderr": "slurm_load_jobs error: Invalid job id specified", "accounting": "236708|FAILED|1:0"}
+{"status": "authenticated_continuation_prepared", "case": "explicit_gru__historical_capacity", "epochs_preserved": [83, 83, 82], "code_hash": "3b9b490021ac5f4893548822894540d81b5d9c125a57f0aff843cae21bc7b68b"}
+{"status": "recovery_job_submitted", "case": "explicit_gru__historical_capacity", "job_id": "236820", "root": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T22:15:20+0800
