@@ -1,0 +1,34 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=157
+### host=login4
+### started=2026-10-06T11:13:54+0800
+### ---------- output ----------
+
+slurm_load_jobs error: Invalid job id specified
+
+
+sacct: error: Invalid field requested: "SubmitLine"
+
+JOB_SCRIPT #!/usr/bin/env bash
+#SBATCH --job-name=zj_prepare_261006_r2
+#SBATCH -p hgpu2p
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=ngu002
+#SBATCH --time=0
+#SBATCH --output=/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_r2_002/logs/%x_%j.out
+set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=4
+cd /data1/home/sunyiq/zhenjiang_complete_comparison_20261006_r2_002
+python -B -u scripts/prepare_training_data.py
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T11:13:55+0800
