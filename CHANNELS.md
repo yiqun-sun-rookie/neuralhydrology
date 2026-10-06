@@ -142,3 +142,4 @@ git rm inbox/seq
 | `zhenjiang-target-state-diagnostic-20260930` | Target-only explicit stage diagnostic: 24 independent 100-epoch runs | 2026-09-30 | Exclusive root `/data1/home/sunyiq/zhenjiang_target_state_diagnostic_20260930_001`; prior 114 experiments read-only; 2017-2021 train, 2022 select; no 2023/2024 access before all 138 frozen; at most two RTX 3090 tasks, single bounded submission, no retry or requeue. |
 
 | precip-dynamic-filter-v03 | Single-basin dynamic neural rain correction | 2026-10-01 |
+| `china-negative-repair-20261006` | China negative-output repair resource preparation | 2026-10-06 | Exclusive root `/data1/home/sunyiq/china_negative_repair_20261006_001`; read-only metadata first, at most one synthetic GPU probe; no real training before data gates, no existing-job changes or automatic retry. |
