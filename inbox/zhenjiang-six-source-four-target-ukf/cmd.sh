@@ -1,28 +1,60 @@
 #!/usr/bin/env bash
 set -euo pipefail
-hostname
-date -Is
-command -v xbatch || true
-command -v sbatch || true
-sinfo -h -p hgpu2p -o '%P|%l|%G|%D|%T' || true
-set +u
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-python - <<'PY'
-import json,sys,pathlib,importlib.util
-import torch,numpy,pandas,scipy
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022')
-files=[]
-for role,stations in [('realtime_features',['datong','nanjing','zhenjiang','jiangyin','xuliujing','wusongkou']),('retrospective_targets',['nanjing','zhenjiang','jiangyin','xuliujing','wusongkou'])]:
-    for station in stations:
-        p=root/role/(station+'_'+role+'.csv')
-        row={'path':str(p),'exists':p.is_file()}
-        if p.is_file():
-            row['bytes']=p.stat().st_size
-            with p.open(encoding='utf-8-sig') as f: row['header']=f.readline().rstrip('\n')
-        files.append(row)
-print(json.dumps({'python':sys.version,'torch':torch.__version__,'numpy':numpy.__version__,'pandas':pandas.__version__,'scipy':scipy.__version__,'files':files,'evaluation_values_read':False}))
-for p in pathlib.Path('/data1/home/sunyiq/miniconda3/envs').iterdir():
-    if p.is_dir(): print('AVAILABLE_ENVIRONMENT',p.name)
+python3 - <<'PY'
+import hashlib,io,json,pathlib,tarfile
+payload=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf/payload_complete_comparison_20261006_147.tar.gz')
+raw=payload.read_bytes()
+if hashlib.sha256(raw).hexdigest()!='761cdd240f954fde3e361ae721c537b1390afd64b436e8e29ba33b781ac7ae04': raise ValueError('release archive identity differs')
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_001')
+if root.exists(): raise FileExistsError('preserve existing release and jobs')
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as tar:
+    members=tar.getmembers()
+    if len({m.name for m in members})!=len(members): raise ValueError('duplicate release member')
+    for member in members:
+        p=pathlib.PurePosixPath(member.name)
+        if p.is_absolute() or '..' in p.parts or not member.isfile(): raise ValueError('unsafe release entry')
+    content={m.name:tar.extractfile(m).read() for m in members}
+manifest=json.loads(content.pop('release_manifest.json'))
+if set(manifest['files'])!=set(content): raise ValueError('release allow-list differs')
+for name,data in content.items():
+    spec=manifest['files'][name]
+    if len(data)!=spec['bytes'] or hashlib.sha256(data).hexdigest()!=spec['sha256']: raise ValueError('release file changed')
+root.mkdir()
+for name,data in content.items():
+    p=root/name; p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes(data)
+(root/'release_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+for name in ('logs','runs','reports','predictions','artifacts'): (root/name).mkdir(exist_ok=True)
+print(json.dumps({'status':'code_release_verified','code_hash':manifest['code_hash'],'files':len(content)}))
 PY
+cd /data1/home/sunyiq/zhenjiang_complete_comparison_20261006_001
+export PYTHONDONTWRITEBYTECODE=1
+python3 - <<'PY'
+import json,pathlib
+p=pathlib.Path('records/scheduler_submission_started.json')
+with p.open('x') as f: json.dump({'status':'single_submission_attempt','evaluation_authorized':False},f)
+PY
+parse_job() {
+    local receipt="$1"
+    local last_line
+    last_line=$(printf '%s\n' "$receipt" | tail -n 1)
+    if [[ "$receipt" =~ Submitted[[:space:]]batch[[:space:]]job[[:space:]]([0-9]+) ]]; then
+        printf '%s' "${BASH_REMATCH[1]}"
+    elif [[ "$last_line" =~ ^([0-9]+)(\;[a-zA-Z0-9_.-]+)?$ ]]; then
+        printf '%s' "${BASH_REMATCH[1]}"
+    else
+        printf 'Unrecognized scheduler receipt; preserve attempt and inspect jobs.\n' >&2
+        return 1
+    fi
+}
+prep_receipt=$(xbatch --parsable hpc/prepare_data.sbatch)
+printf '%s\n' "$prep_receipt" > records/preparation_scheduler_receipt.txt
+prep_job=$(parse_job "$prep_receipt")
+[[ "$prep_job" =~ ^[0-9]+$ ]]
+for case_name in legacy_lstm__small explicit_gru__small legacy_lstm__historical_capacity explicit_gru__historical_capacity; do
+    receipt=$(xbatch --parsable --dependency=afterok:"$prep_job" --job-name="zj_${case_name}_261006" hpc/train_case.sbatch "$case_name")
+    printf '%s\n' "$receipt" > "records/scheduler_${case_name}.txt"
+    job=$(parse_job "$receipt")
+    printf 'TRAINING_CASE %s JOB %s\n' "$case_name" "$job"
+done
+printf 'PREPARATION_JOB %s\n' "$prep_job"
+squeue -u sunyiq -h -o '%i|%j|%T|%R'
