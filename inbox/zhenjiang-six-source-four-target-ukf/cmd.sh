@@ -5,8 +5,10 @@ date -Is
 command -v xbatch || true
 command -v sbatch || true
 sinfo -h -p hgpu2p -o '%P|%l|%G|%D|%T' || true
+set +u
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
+set -u
 python - <<'PY'
 import json,sys,pathlib,importlib.util
 import torch,numpy,pandas,scipy
