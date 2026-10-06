@@ -1,0 +1,23 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=163
+### host=login4
+### started=2026-10-06T21:58:14+0800
+### ---------- output ----------
+{"status": "isolated_numeric_recovery_release_verified", "root": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001", "code_hash": "3b9b490021ac5f4893548822894540d81b5d9c125a57f0aff843cae21bc7b68b"}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001/hpc/prepare_recovery.py", line 126, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001/hpc/prepare_recovery.py", line 55, in main
+    queue=subprocess.run(['squeue','-h','-j','236708','-o','%i|%T'],capture_output=True,text=True,check=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['squeue', '-h', '-j', '236708', '-o', '%i|%T']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "<stdin>", line 27, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python', '-B', '/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001/hpc/prepare_recovery.py']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-06T21:58:38+0800
