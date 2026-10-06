@@ -1,0 +1,45 @@
+### channel=china-negative-repair-20261006 seq=1
+### host=login4
+### started=2026-10-06T21:50:19+0800
+### ---------- output ----------
+RESOURCE_PROBE_UTC=2026-10-06T13:50:19Z
+drwx------. 218 sunyiq g_sunyiq 4096 Oct  6 21:50 /data1/home/sunyiq
+ROOT_ABSENT=/data1/home/sunyiq/china_negative_repair_20261006_001
+Filesystem                    1024-blocks         Used    Available Capacity Mounted on
+hhjt_parastor_hhjt_parastor 1024283213820 685830336736 338452877084      67% /data1
+OWN_EXISTING_JOBS_BEGIN
+              202229 hgpu4,hgpu8,                                       N22-agg-eval      PENDING       0:00      1 (DependencyNeverSati
+              202294 hgpu4,hgpu8,                                         N22-export      PENDING       0:00      1         (Dependency)
+              202315 hgpu4,hgpu8,                                           N22-gate      PENDING       0:00      1         (Dependency)
+              202507 hgpu4,hgpu8,                                   N22-mask-iso-531      PENDING       0:00      1 (DependencyNeverSati
+              215429        hgpu2                                      id30_m01_s100      PENDING       0:00      1 (DependencyNeverSati
+              202293 hgpu4,hgpu8,                                       N22-manifest      PENDING       0:00      1        (JobHeldUser)
+              236705       hgpu2p               zj_legacy_lstm__small_261006_pathfix      RUNNING   10:32:03      1               ngu011
+              236706       hgpu2p              zj_explicit_gru__small_261006_pathfix      RUNNING   10:32:03      1               ngu011
+              236707       hgpu2p zj_legacy_lstm__historical_capacity_261006_pathfix      RUNNING   10:32:03      1               ngu001
+OWN_EXISTING_JOBS_END
+GPU_RESOURCE_BEGIN
+NODELIST        PARTITION   GRES                    GRES_USED                       CPUS(A/I/O/T)     
+ngu001          hgpu2p      gpu:2                   gpu:2,dcu:0                     8/88/0/96         
+ngu002          hgpu2p      gpu:2                   gpu:2,dcu:0                     8/88/0/96         
+ngu003          hgpu2       gpu:2                   gpu:1,dcu:0                     8/88/0/96         
+ngu004          hgpu2p      gpu:2                   gpu:2,dcu:0                     2/94/0/96         
+ngu005          hgpu2p      gpu:2                   gpu:2,dcu:0                     2/94/0/96         
+ngu006          hgpu2p      gpu:2                   gpu:2,dcu:0                     2/94/0/96         
+ngu007          hgpu2p      gpu:2                   gpu:2,dcu:0                     2/94/0/96         
+ngu008          hgpu2p      gpu:2                   gpu:2,dcu:0                     8/88/0/96         
+ngu009          hgpu2       gpu:2                   gpu:0,dcu:0                     0/96/0/96         
+ngu010          hgpu2p      gpu:2                   gpu:2,dcu:0                     8/24/0/32         
+ngu011          hgpu2p      gpu:2                   gpu:2,dcu:0                     8/24/0/32         
+ngu101          hgpu4       gpu:4                   gpu:0,dcu:0                     0/96/0/96         
+ngu102          hgpu4       gpu:4                   gpu:0,dcu:0                     0/96/0/96         
+ngu103          hgpu4       gpu:4                   gpu:0,dcu:0                     0/0/96/96         
+ngu104          hgpu4       gpu:4                   gpu:1,dcu:0                     8/88/0/96         
+ngu201          hgpu8       gpu:8                   gpu:2,dcu:0                     10/54/0/64        
+ngu202          hgpu8       gpu:8                   gpu:0,dcu:0                     0/64/0/64         
+ngu203          hgpu8       gpu:8                   gpu:8,dcu:0                     32/32/0/64        
+GPU_RESOURCE_END
+READ_ONLY_RESOURCE_PROBE_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T21:50:23+0800
