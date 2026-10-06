@@ -1,0 +1,43 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=151
+### host=login4
+### started=2026-10-06T10:51:49+0800
+### ---------- output ----------
+/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch: Bourne-Again shell script, ASCII text executable
+
+WRAPPER_LINE 1 #!/bin/bash
+WRAPPER_LINE 7   echo "#			#!/bin/bash					  #"
+WRAPPER_LINE 8   echo "#			#SBATCH -J jobname				  #"
+WRAPPER_LINE 9   echo "#			#SBATCH -p hcpu48					  #"
+WRAPPER_LINE 10   echo "#			#SBATCH -n 20					  #"
+WRAPPER_LINE 11   echo "#			#SBATCH --error=%J.err				  #"
+WRAPPER_LINE 12   echo "#			#SBATCH --output=%J.out				  #"
+WRAPPER_LINE 14   echo "#			[xxxx@login $] sbatch job.slurm			  #"
+WRAPPER_LINE 20   echo "#                       #!/bin/bash                                       #"
+WRAPPER_LINE 21   echo "#                       #SBATCH -J jobname                                #"
+WRAPPER_LINE 22   echo "#                       #SBATCH -p hgpu8                                   #"
+WRAPPER_LINE 23   echo "#                       #SBATCH -n 8                                     #"
+WRAPPER_LINE 24   echo "#                       #SBATCH --gres=gpu:1                              #"
+WRAPPER_LINE 25   echo "#                       #SBATCH --error=%J.err                            #"
+WRAPPER_LINE 26   echo "#                       #SBATCH --output=%J.out                           #"
+WRAPPER_LINE 28   echo "#                       [xxxx@login $] sbatch job.slurm                   #"
+WRAPPER_LINE 31   exit
+WRAPPER_LINE 37     grep -E "^#SBATCH.*cpu.*gpu|^#SBATCH.*gpu.*cpu" $1 &>/dev/null
+WRAPPER_LINE 41       grep "^#SBATCH -p hcpu" $1 &>/dev/null
+WRAPPER_LINE 43         sbatch $@
+WRAPPER_LINE 45         grep -E "^#SBATCH -p hgpu.*" $1 &>/dev/null
+WRAPPER_LINE 47           grep "^#SBATCH --gres=gpu" $1 &>/dev/null
+WRAPPER_LINE 49             sbatch $@
+WRAPPER_LINE 58     exit
+WRAPPER_LINE 62 if (($# == 0)); then
+WRAPPER_LINE 65   exit
+WRAPPER_LINE 66 elif (($# == 1)); then
+WRAPPER_LINE 74 elif (($# > 1)); then
+RESPONSE submission_v2_preparation_response.json {
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}
+{"isolated_source_root_is_exact_resolved_directory": true, "roles_are_exact_resolved_directories": true}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T10:51:49+0800
