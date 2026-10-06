@@ -1,0 +1,18 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=146
+### host=login4
+### started=2026-10-06T10:31:11+0800
+### ---------- output ----------
+login4
+2026-10-06T10:31:11+0800
+/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch
+/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+hgpu2p|infinite|gpu:2|1|mixed
+hgpu2p|infinite|gpu:2|8|idle
+{"python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "torch": "2.4.0", "numpy": "2.3.3", "pandas": "2.3.2", "scipy": "1.16.2", "files": [{"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/datong_realtime_features.csv", "exists": true, "bytes": 4701303, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/nanjing_realtime_features.csv", "exists": true, "bytes": 4673779, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/zhenjiang_realtime_features.csv", "exists": true, "bytes": 4703128, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/jiangyin_realtime_features.csv", "exists": true, "bytes": 4673156, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/xuliujing_realtime_features.csv", "exists": true, "bytes": 4673755, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/wusongkou_realtime_features.csv", "exists": true, "bytes": 4671049, "header": "TIME,STAGE,time_beijing,time_utc,is_missing_for_model"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv", "exists": true, "bytes": 4674734, "header": "TIME,TARGET_STAGE,time_beijing,time_utc,is_missing_for_target"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv", "exists": true, "bytes": 4703632, "header": "TIME,TARGET_STAGE,time_beijing,time_utc,is_missing_for_target"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv", "exists": true, "bytes": 4674038, "header": "TIME,TARGET_STAGE,time_beijing,time_utc,is_missing_for_target"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv", "exists": true, "bytes": 4674687, "header": "TIME,TARGET_STAGE,time_beijing,time_utc,is_missing_for_target"}, {"path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv", "exists": true, "bytes": 4671875, "header": "TIME,TARGET_STAGE,time_beijing,time_utc,is_missing_for_target"}], "evaluation_values_read": false}
+AVAILABLE_ENVIRONMENT knet_clean
+AVAILABLE_ENVIRONMENT neuralhydrology
+AVAILABLE_ENVIRONMENT nh_clean
+AVAILABLE_ENVIRONMENT nh_final
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T10:31:39+0800
