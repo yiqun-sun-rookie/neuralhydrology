@@ -1,0 +1,154 @@
+### channel=china-negative-repair-20261006 seq=6
+### host=login4
+### started=2026-10-06T23:28:03+0800
+### ---------- output ----------
+OWN_CORRECTED_JOB_STATUS_UTC=2026-10-06T15:28:03Z
+OWN_JOB_ID=236830
+slurm_load_jobs error: Invalid job id specified
+JobID|JobName|State|ExitCode|Elapsed|MaxRSS|AllocCPUS|NodeList|Start|End
+236830|china-resource-fixed-1006|COMPLETED|0:0|00:00:30||4|ngu009|2026-10-06T23:26:10|2026-10-06T23:26:40
+236830.batch|batch|COMPLETED|0:0|00:00:30|1608K|4|ngu009|2026-10-06T23:26:10|2026-10-06T23:26:40
+236830.extern|extern|COMPLETED|0:0|00:00:30|1172K|4|ngu009|2026-10-06T23:26:10|2026-10-06T23:26:40
+PROBE_JSON_BEGIN
+{
+  "kind": "FULL_SHAPE_SYNTHETIC_CUDA_NETWORK_PROBE",
+  "status": "PASS_NETWORK_RESOURCE_ONLY",
+  "real_data_reads": 0,
+  "real_checkpoint_reads": 0,
+  "formal_training_fits": 0,
+  "batch": 256,
+  "days": 270,
+  "hidden_size": 256,
+  "dtype": "float32",
+  "route": "tanh_static",
+  "head": "physical_softplus",
+  "seed": 100,
+  "warmup_steps": 3,
+  "measured_steps": 12,
+  "cpu_threads": 4,
+  "target_mean_synthetic": 1.0,
+  "target_scale_synthetic": 1.0,
+  "torch": "2.4.0",
+  "torch_cuda": "12.1",
+  "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "host": "ngu009",
+  "slurm_job_id": "236830",
+  "limitations": [
+    "One route, synthetic repeated batch, no data loading or epoch evaluation",
+    "Not a scientific experiment or a formal trainer qualification",
+    "Timing includes model checks, synchronized compute, Adam and gradient clipping"
+  ],
+  "model_sha256": "3ea9eba46d57b53090b44ed8c8c2d2406b09c2c681667033dcb0ec2ea350e154",
+  "gpu_name": "NVIDIA GeForce RTX 3090",
+  "gpu_total_bytes": 25438126080,
+  "cudnn": 90100,
+  "rss_before_model_bytes": 327303168,
+  "parameter_count": 293673,
+  "step_seconds": [
+    0.03949891775846481,
+    0.03938986361026764,
+    0.03945690393447876,
+    0.03928796947002411,
+    0.03940269351005554,
+    0.039232172071933746,
+    0.039301954209804535,
+    0.037827104330062866,
+    0.037853531539440155,
+    0.041924744844436646,
+    0.041423626244068146,
+    0.041234053671360016
+  ],
+  "mean_step_seconds": 0.03965279459953308,
+  "minimum_step_seconds": 0.037827104330062866,
+  "maximum_step_seconds": 0.041924744844436646,
+  "synthetic_losses": [
+    0.3041793406009674,
+    0.2814769148826599,
+    0.22693945467472076,
+    0.2072700560092926,
+    0.18565669655799866,
+    0.17023780941963196,
+    0.1461726725101471,
+    0.1581728756427765,
+    0.13576950132846832,
+    0.14187534153461456,
+    0.13651126623153687,
+    0.13060477375984192,
+    0.127896249294281,
+    0.12248902022838593,
+    0.11556388437747955
+  ],
+  "cuda_allocated_peak_bytes": 973787648,
+  "cuda_reserved_peak_bytes": 1199570944,
+  "rss_after_steps_bytes": 1035362304,
+  "total_wall_seconds": 26.17061983793974
+}
+PROBE_JSON_END
+OWN_STDOUT_TAIL_BEGIN
+SYNTHETIC_GPU_PROBE_JOB=236830
+START_UTC=2026-10-06T15:26:11Z
+JobId=236830 JobName=china-resource-fixed-1006
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:01 TimeLimit=00:10:00 TimeMin=N/A
+   SubmitTime=2026-10-06T23:26:08 EligibleTime=2026-10-06T23:26:08
+   AccrueTime=2026-10-06T23:26:08
+   StartTime=2026-10-06T23:26:10 EndTime=2026-10-06T23:36:10 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-06T23:26:10
+   Partition=hgpu2 AllocNode:Sid=login04:46471
+   ReqNodeList=ngu009 ExcNodeList=(null)
+   NodeList=ngu009
+   BatchHost=ngu009
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/china_negative_repair_20261006_002/remote/synthetic_gpu_probe.sbatch
+   WorkDir=/data1/home/sunyiq/china_negative_repair_20261006_002
+   StdErr=/data1/home/sunyiq/china_negative_repair_20261006_002/logs/probe_236830.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/china_negative_repair_20261006_002/logs/probe_236830.out
+   Power=
+   TresPerNode=gpu:1
+
+STAGE_PASSED=slurm_allocation_metadata
+STAGE_PASSED=conda_profile
+STAGE_PASSED=conda_activation
+ACTUAL_PYTHON_COMMAND=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+ACTUAL_PYTHON_CANONICAL=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+EXPECTED_PYTHON_CANONICAL=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+STAGE_PASSED=interpreter_identity
+ALLOCATED_GPU_ENVIRONMENT=0
+NVIDIA GeForce RTX 3090, 24576, 24257
+NVIDIA GeForce RTX 3090, 24576, 24257
+STAGE_PASSED=gpu_metadata
+{"step": 1, "warmup": true, "seconds": 0.7796375602483749, "rss_bytes": 1034620928, "allocated_peak_bytes": 971435520, "reserved_peak_bytes": 1197473792}
+{"step": 2, "warmup": true, "seconds": 0.04271773248910904, "rss_bytes": 1035132928, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 3, "warmup": true, "seconds": 0.03975605219602585, "rss_bytes": 1035145216, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 4, "warmup": false, "seconds": 0.03949891775846481, "rss_bytes": 1035145216, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 5, "warmup": false, "seconds": 0.03938986361026764, "rss_bytes": 1035210752, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 6, "warmup": false, "seconds": 0.03945690393447876, "rss_bytes": 1035210752, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 7, "warmup": false, "seconds": 0.03928796947002411, "rss_bytes": 1035210752, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 8, "warmup": false, "seconds": 0.03940269351005554, "rss_bytes": 1035296768, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 9, "warmup": false, "seconds": 0.039232172071933746, "rss_bytes": 1035354112, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 10, "warmup": false, "seconds": 0.039301954209804535, "rss_bytes": 1035354112, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 11, "warmup": false, "seconds": 0.037827104330062866, "rss_bytes": 1035354112, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 12, "warmup": false, "seconds": 0.037853531539440155, "rss_bytes": 1035362304, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 13, "warmup": false, "seconds": 0.041924744844436646, "rss_bytes": 1035362304, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 14, "warmup": false, "seconds": 0.041423626244068146, "rss_bytes": 1035362304, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"step": 15, "warmup": false, "seconds": 0.041234053671360016, "rss_bytes": 1035362304, "allocated_peak_bytes": 973787648, "reserved_peak_bytes": 1199570944}
+{"kind": "FULL_SHAPE_SYNTHETIC_CUDA_NETWORK_PROBE", "status": "PASS_NETWORK_RESOURCE_ONLY", "real_data_reads": 0, "real_checkpoint_reads": 0, "formal_training_fits": 0, "batch": 256, "days": 270, "hidden_size": 256, "dtype": "float32", "route": "tanh_static", "head": "physical_softplus", "seed": 100, "warmup_steps": 3, "measured_steps": 12, "cpu_threads": 4, "target_mean_synthetic": 1.0, "target_scale_synthetic": 1.0, "torch": "2.4.0", "torch_cuda": "12.1", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "host": "ngu009", "slurm_job_id": "236830", "limitations": ["One route, synthetic repeated batch, no data loading or epoch evaluation", "Not a scientific experiment or a formal trainer qualification", "Timing includes model checks, synchronized compute, Adam and gradient clipping"], "model_sha256": "3ea9eba46d57b53090b44ed8c8c2d2406b09c2c681667033dcb0ec2ea350e154", "gpu_name": "NVIDIA GeForce RTX 3090", "gpu_total_bytes": 25438126080, "cudnn": 90100, "rss_before_model_bytes": 327303168, "parameter_count": 293673, "step_seconds": [0.03949891775846481, 0.03938986361026764, 0.03945690393447876, 0.03928796947002411, 0.03940269351005554, 0.039232172071933746, 0.039301954209804535, 0.037827104330062866, 0.037853531539440155, 0.041924744844436646, 0.041423626244068146, 0.041234053671360016], "mean_step_seconds": 0.03965279459953308, "minimum_step_seconds": 0.037827104330062866, "maximum_step_seconds": 0.041924744844436646, "synthetic_losses": [0.3041793406009674, 0.2814769148826599, 0.22693945467472076, 0.2072700560092926, 0.18565669655799866, 0.17023780941963196, 0.1461726725101471, 0.1581728756427765, 0.13576950132846832, 0.14187534153461456, 0.13651126623153687, 0.13060477375984192, 0.127896249294281, 0.12248902022838593, 0.11556388437747955], "cuda_allocated_peak_bytes": 973787648, "cuda_reserved_peak_bytes": 1199570944, "rss_after_steps_bytes": 1035362304, "total_wall_seconds": 26.17061983793974}
+STAGE_PASSED=full_shape_synthetic_model
+END_UTC=2026-10-06T15:26:40Z
+SYNTHETIC_GPU_PROBE_COMPLETED
+OWN_STDOUT_TAIL_END
+OWN_STDERR_TAIL_BEGIN
+OWN_STDERR_TAIL_END
+OWN_CORRECTED_JOB_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T23:28:03+0800
