@@ -1,0 +1,14 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=145
+### host=login4
+### started=2026-10-06T10:27:51+0800
+### ---------- output ----------
+login4
+2026-10-06T10:27:51+0800
+/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch
+/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+hgpu2p|infinite|gpu:2|1|mixed
+hgpu2p|infinite|gpu:2|8|idle
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-06T10:27:55+0800
