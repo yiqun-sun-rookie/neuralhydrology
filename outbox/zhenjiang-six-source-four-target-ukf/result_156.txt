@@ -1,0 +1,20 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=156
+### host=login4
+### started=2026-10-06T11:11:20+0800
+### ---------- output ----------
+{"own_jobs": ["236699", "236700", "236701", "236702", "236703"], "receipts": 5}
+236700|zj_legacy_lstm__small_261006_r2|PENDING|(DependencyNeverSatisfied)
+236701|zj_explicit_gru__small_261006_r2|PENDING|(DependencyNeverSatisfied)
+236702|zj_legacy_lstm__historical_capacity_261006_r2|PENDING|(DependencyNeverSatisfied)
+236703|zj_explicit_gru__historical_capacity_261006_r2|PENDING|(DependencyNeverSatisfied)
+
+236699|zj_prepare_261006_r2|FAILED|1:0
+236700|zj_legacy_lstm__small_261006_r2|PENDING|0:0
+236701|zj_explicit_gru__small_261006_r2|PENDING|0:0
+236702|zj_legacy_lstm__historical_capacity_261006_r2|PENDING|0:0
+236703|zj_explicit_gru__historical_capacity_261006_r2|PENDING|0:0
+
+{"runs_with_real_optimizer_step": 0, "evaluation_values_read": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T11:11:21+0800
