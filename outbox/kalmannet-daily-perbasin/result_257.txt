@@ -1,0 +1,10 @@
+### channel=kalmannet-daily-perbasin seq=257
+### host=login4
+### started=2026-10-06T22:12:39+0800
+### ---------- output ----------
+DIAGNOSTIC_JSON_BEGIN
+{"bundle_sha256":"ec78736f91998551adfa6628eaa37a6ce89b286a6e8e4ed0f1df59df26f979e5","clock":{"boot":"7ce0b7ee-3456-46f9-baf8-59157073ff9f","host":"login4","monotonic":98422560.21088195,"utc":"2026-10-06T14:12:40Z"},"eligible_nodes":["icn201","icn202","icn203","icn204","icn205","icn206","icn207","icn208","icn209","icn210","icn211","icn212","icn213","icn214","icn215","icn216","icn217","icn218","icn219","icn220","icn221","icn222","icn223","icn224","icn225","icn226","icn227","icn228","icn229","icn230","icn231","icn232","icn233","icn234","icn235","icn236","icn237","icn238","icn239","icn240","icn241","icn242","icn243","icn244","icn245","icn246","icn247","icn248","icn249","icn250","icn251","icn252","icn253","icn254","icn255","icn256","icn257","icn258","icn259","icn260","icn261","icn262","icn263","icn264"],"job_id":236819,"launch_manifest_sha256":"e79c3c113fbc5310da9f1a3db2ea88ebad6c3a67795a1b5d86a9355d0a771a62","node":"SCHEDULER_ASSIGNED","nonce":"a315165cb54fe3a3327b817b2b546d04","status":"SUBMITTED"}
+DIAGNOSTIC_JSON_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T22:12:40+0800
