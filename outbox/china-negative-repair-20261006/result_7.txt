@@ -1,0 +1,29 @@
+### channel=china-negative-repair-20261006 seq=7
+### host=login4
+### started=2026-10-07T00:19:17+0800
+### ---------- output ----------
+ORIGINAL_INPUT_METADATA_UTC=2026-10-06T16:19:17Z
+CANDIDATE_LITERAL=/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us
+CANDIDATE_RESOLVED=/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us
+METADATA_LIST_BEGIN
+d|4096|
+d|4096|basin_mean_forcing
+d|4096|basin_mean_forcing/era5l_caravan_pmaurer
+l|90|basin_mean_forcing/maurer
+d|4096|basin_mean_forcing/era5l_caravan
+l|80|usgs_streamflow
+l|87|camels_attributes_v2.0
+METADATA_TRUNCATED=0
+METADATA_EMITTED_ENTRIES=7
+METADATA_EMITTED_BYTES=202
+METADATA_LIST_END
+FIND_EXIT=0
+LIMITER_EXIT=0
+TOTAL_OUTPUT_TRUNCATED=0
+TOTAL_BODY_OUTPUT_BYTES=564
+QUERY_EXIT=0
+TOTAL_LIMITER_EXIT=0
+ORIGINAL_INPUT_METADATA_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-07T00:19:17+0800
