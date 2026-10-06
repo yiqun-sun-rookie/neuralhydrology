@@ -1,0 +1,21 @@
+### channel=china-negative-repair-20261006 seq=4
+### host=login4
+### started=2026-10-06T23:15:37+0800
+### ---------- output ----------
+READ_ONLY_ENVIRONMENT_PATH_DIAGNOSIS_UTC=2026-10-06T15:15:38Z
+NEXT_ROOT_ABSENT=/data1/home/sunyiq/china_negative_repair_20261006_002
+PROFILE_SOURCE_EXIT=0
+CONDA_ACTIVATION_EXIT=0
+ACTUAL_PYTHON_COMMAND=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+ACTUAL_PYTHON_CANONICAL=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+EXPECTED_PYTHON_LITERAL=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+EXPECTED_PYTHON_CANONICAL=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+lrwxr-xr-x. 1 sunyiq g_sunyiq       10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -> python3.11
+lrwxr-xr-x. 1 sunyiq g_sunyiq       10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3 -> python3.11
+-rwxr-xr-x. 1 sunyiq g_sunyiq 25382192 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+OLD_LITERAL_PATH_TEST_EXIT=1
+BOTH_CANONICAL_PATH_TEST_EXIT=0
+READ_ONLY_ENVIRONMENT_PATH_DIAGNOSIS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T23:15:41+0800
