@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=154
+### host=login4
+### started=2026-10-06T11:01:50+0800
+### ---------- output ----------
+{"rows": 52584, "expected_rows": 52584, "first_rows": [{"TIME": "2017-01-01T00:00:00+08:00", "time_beijing": "2017-01-01T00:00:00+08:00", "time_utc": "2016-12-31T16:00:00+00:00"}, {"TIME": "2017-01-01T01:00:00+08:00", "time_beijing": "2017-01-01T01:00:00+08:00", "time_utc": "2016-12-31T17:00:00+00:00"}, {"TIME": "2017-01-01T02:00:00+08:00", "time_beijing": "2017-01-01T02:00:00+08:00", "time_utc": "2016-12-31T18:00:00+00:00"}], "last_rows": [{"TIME": "2022-12-31T21:00:00+08:00", "time_beijing": "2022-12-31T21:00:00+08:00", "time_utc": "2022-12-31T13:00:00+00:00"}, {"TIME": "2022-12-31T22:00:00+08:00", "time_beijing": "2022-12-31T22:00:00+08:00", "time_utc": "2022-12-31T14:00:00+00:00"}, {"TIME": "2022-12-31T23:00:00+08:00", "time_beijing": "2022-12-31T23:00:00+08:00", "time_utc": "2022-12-31T15:00:00+00:00"}], "parsed_dtype": "datetime64[ns, UTC+08:00]", "parsed_first": "2016-12-31T16:00:00.000000000", "parsed_last": "2022-12-31T15:00:00.000000000", "expected_first": "2017-01-01T00:00:00.000000000", "equal_calendar": false, "source_timezone": "UTC+08:00", "source_read_is_training_only": true}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T11:02:08+0800
