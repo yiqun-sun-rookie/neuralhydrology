@@ -1,0 +1,140 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=159
+### host=login4
+### started=2026-10-06T11:18:59+0800
+### ---------- output ----------
+{"own_jobs": ["236704", "236705", "236706", "236707", "236708"], "receipts": 5}
+236705|zj_legacy_lstm__small_261006_pathfix|RUNNING|ngu011
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|ngu011
+236707|zj_legacy_lstm__historical_capacity_261006_pathfix|RUNNING|ngu001
+236708|zj_explicit_gru__historical_capacity_261006_pathfix|RUNNING|ngu001
+
+236704|zj_prepare_261006_pathfix|COMPLETED|0:0
+236705|zj_legacy_lstm__small_261006_pathfix|RUNNING|0:0
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|0:0
+236707|zj_legacy_lstm__historical_capacity_261006_pathfix|RUNNING|0:0
+236708|zj_explicit_gru__historical_capacity_261006_pathfix|RUNNING|0:0
+
+LOG zj_explicit_gru__historical_capacity_261006_pathfix_236708.out
+{"status": "starting_formal_group", "group": "explicit_gru__historical_capacity__tune_foundation_group", "physical_fits": 3}
+{"run": "explicit_gru__historical_capacity__tune_foundation__foundation__s101__lr0p0003", "status": "first_optimizer_step_completed", "loss_cm": 86.29873155840079}
+
+LOG zj_explicit_gru__small_261006_pathfix_236706.out
+{"status": "starting_formal_group", "group": "explicit_gru__small__tune_foundation_group", "physical_fits": 3}
+{"run": "explicit_gru__small__tune_foundation__foundation__s101__lr0p0003", "status": "first_optimizer_step_completed", "loss_cm": 91.40234896092753}
+
+LOG zj_legacy_lstm__historical_capacity_261006_pathfix_236707.out
+{"status": "starting_formal_group", "group": "legacy_lstm__historical_capacity__tune_foundation_group", "physical_fits": 3}
+{"run": "legacy_lstm__historical_capacity__tune_foundation__foundation__s101__lr0p0003", "status": "first_optimizer_step_completed", "loss_cm": 87.0794259164719}
+
+LOG zj_legacy_lstm__small_261006_pathfix_236705.out
+{"status": "starting_formal_group", "group": "legacy_lstm__small__tune_foundation_group", "physical_fits": 3}
+{"run": "legacy_lstm__small__tune_foundation__foundation__s101__lr0p0003", "status": "first_optimizer_step_completed", "loss_cm": 85.59763767761945}
+
+LOG zj_prepare_261006_pathfix_236704.out
+{"status": "eleven_training_sources_verified", "years": [2017, 2018, 2019, 2020, 2021, 2022], "rows_per_source": 52584, "evaluation_values_read": false}
+{"status": "fitting_fresh_astronomical_tide", "split": "tuning", "training_years": [2017, 2018, 2019, 2020]}
+{"split": "tuning", "eligible_windows": {"tuning_train": 29383, "tuning_select": 7804}, "tide_training_years": [2017, 2018, 2019, 2020]}
+{"status": "fitting_fresh_astronomical_tide", "split": "final", "training_years": [2017, 2018, 2019, 2020, 2021]}
+{"split": "final", "eligible_windows": {"final_train": 37187, "final_select": 7837}, "tide_training_years": [2017, 2018, 2019, 2020, 2021]}
+
+PROGRESS records/explicit_gru__historical_capacity/progress.json {
+  "status": "executing_group",
+  "group": "explicit_gru__historical_capacity__tune_foundation_group",
+  "case": "explicit_gru__historical_capacity",
+  "completed_fits": 0,
+  "completed_groups": [],
+  "selected_rates": {},
+  "job_id": "236708",
+  "evaluation_values_read": false
+}
+
+PROGRESS records/explicit_gru__small/progress.json {
+  "status": "executing_group",
+  "group": "explicit_gru__small__tune_foundation_group",
+  "case": "explicit_gru__small",
+  "completed_fits": 0,
+  "completed_groups": [],
+  "selected_rates": {},
+  "job_id": "236706",
+  "evaluation_values_read": false
+}
+
+PROGRESS records/legacy_lstm__historical_capacity/progress.json {
+  "status": "executing_group",
+  "group": "legacy_lstm__historical_capacity__tune_foundation_group",
+  "case": "legacy_lstm__historical_capacity",
+  "completed_fits": 0,
+  "completed_groups": [],
+  "selected_rates": {},
+  "job_id": "236707",
+  "evaluation_values_read": false
+}
+
+PROGRESS records/legacy_lstm__small/progress.json {
+  "status": "executing_group",
+  "group": "legacy_lstm__small__tune_foundation_group",
+  "case": "legacy_lstm__small",
+  "completed_fits": 0,
+  "completed_groups": [],
+  "selected_rates": {},
+  "job_id": "236705",
+  "evaluation_values_read": false
+}
+
+{"runs_with_real_optimizer_step": 4, "evaluation_values_read": false}
+FIRST_STEP explicit_gru__historical_capacity__tune_foundation__foundation__s101__lr0p0003 {
+  "status": "real_optimizer_step_completed",
+  "epoch": 1,
+  "training_batch_size": 16,
+  "method": "foundation",
+  "loss_cm": 86.29873155840079,
+  "device_identity": {
+    "device": "cuda:0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  }
+}
+
+FIRST_STEP explicit_gru__small__tune_foundation__foundation__s101__lr0p0003 {
+  "status": "real_optimizer_step_completed",
+  "epoch": 1,
+  "training_batch_size": 16,
+  "method": "foundation",
+  "loss_cm": 91.40234896092753,
+  "device_identity": {
+    "device": "cuda:0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  }
+}
+
+FIRST_STEP legacy_lstm__historical_capacity__tune_foundation__foundation__s101__lr0p0003 {
+  "status": "real_optimizer_step_completed",
+  "epoch": 1,
+  "training_batch_size": 16,
+  "method": "foundation",
+  "loss_cm": 87.0794259164719,
+  "device_identity": {
+    "device": "cuda:0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  }
+}
+
+FIRST_STEP legacy_lstm__small__tune_foundation__foundation__s101__lr0p0003 {
+  "status": "real_optimizer_step_completed",
+  "epoch": 1,
+  "training_batch_size": 16,
+  "method": "foundation",
+  "loss_cm": 85.59763767761945,
+  "device_identity": {
+    "device": "cuda:0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  }
+}
+
+{"data_status": "admitted", "source_files": 11, "fresh_tide_fits": 2, "eligible_windows": {"tuning": {"tuning_train": 29383, "tuning_select": 7804}, "final": {"final_train": 37187, "final_select": 7837}}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T11:18:59+0800
