@@ -1,0 +1,32 @@
+### channel=china-negative-repair-20261006 seq=2
+### host=login4
+### started=2026-10-06T22:37:09+0800
+### ---------- output ----------
+tar: bundle/src/model_variants.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/review/MODEL_VENDOR_MANIFEST.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/utils/config.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/utils/samplingutils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/datautils/utils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/training/loss.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/training/regularization.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/cudalstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/basemodel.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/inputlayer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/fc.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/positional_encoding.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/utils/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/training/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/modelzoo/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/vendor/neuralhydrology/datautils/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/full_shape_synthetic_probe.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: remote/synthetic_gpu_probe.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+SOFTWARE_PAYLOAD_VERIFIED_SHA256=9ad0f51bdbcea592d95660ea1d711ee318bc52b72488e74d0c7fe2e104a81527
+SBATCH_PROCESS_EXIT=0
+Submitted batch job 236823
+OWN_SYNTHETIC_GPU_JOB_ID=236823
+ISOLATED_SYNTHETIC_PROBE_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T22:37:09+0800
