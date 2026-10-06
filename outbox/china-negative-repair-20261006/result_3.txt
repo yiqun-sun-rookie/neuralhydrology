@@ -1,0 +1,54 @@
+### channel=china-negative-repair-20261006 seq=3
+### host=login4
+### started=2026-10-06T22:40:37+0800
+### ---------- output ----------
+OWN_JOB_STATUS_UTC=2026-10-06T14:40:37Z
+OWN_JOB_ID=236823
+slurm_load_jobs error: Invalid job id specified
+SQUEUE_QUERY_FAILED
+JobID|JobName|State|ExitCode|Elapsed|NodeList|AllocCPUS|Start|End
+236823|china-resource-1006|FAILED|1:0|00:00:02|ngu009|4|2026-10-06T22:38:43|2026-10-06T22:38:45
+236823.batch|batch|FAILED|1:0|00:00:02|ngu009|4|2026-10-06T22:38:43|2026-10-06T22:38:45
+236823.extern|extern|COMPLETED|0:0|00:00:02|ngu009|4|2026-10-06T22:38:43|2026-10-06T22:38:45
+PROBE_JSON_BEGIN
+PROBE_JSON_PENDING
+
+PROBE_JSON_END
+OWN_STDOUT_TAIL_BEGIN
+SYNTHETIC_GPU_PROBE_JOB=236823
+START_UTC=2026-10-06T14:38:43Z
+JobId=236823 JobName=china-resource-1006
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:10:00 TimeMin=N/A
+   SubmitTime=2026-10-06T22:38:42 EligibleTime=2026-10-06T22:38:42
+   AccrueTime=2026-10-06T22:38:42
+   StartTime=2026-10-06T22:38:43 EndTime=2026-10-06T22:48:43 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-06T22:38:43
+   Partition=hgpu2 AllocNode:Sid=login04:46471
+   ReqNodeList=ngu009 ExcNodeList=(null)
+   NodeList=ngu009
+   BatchHost=ngu009
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/china_negative_repair_20261006_001/remote/synthetic_gpu_probe.sbatch
+   WorkDir=/data1/home/sunyiq/china_negative_repair_20261006_001
+   StdErr=/data1/home/sunyiq/china_negative_repair_20261006_001/logs/probe_236823.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/china_negative_repair_20261006_001/logs/probe_236823.out
+   Power=
+   TresPerNode=gpu:1
+
+OWN_STDOUT_TAIL_END
+OWN_STDERR_TAIL_BEGIN
+OWN_STDERR_TAIL_END
+READ_ONLY_OWN_JOB_EXPORT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T22:40:38+0800
