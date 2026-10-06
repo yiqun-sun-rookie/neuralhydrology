@@ -1,0 +1,33 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=153
+### host=login4
+### started=2026-10-06T10:57:58+0800
+### ---------- output ----------
+{"own_jobs": ["236694", "236695", "236696", "236697", "236698"], "receipts": 5}
+236695|zj_legacy_lstm__small_261006|PENDING|(DependencyNeverSatisfied)
+236696|zj_explicit_gru__small_261006|PENDING|(DependencyNeverSatisfied)
+236697|zj_legacy_lstm__historical_capacity_261006|PENDING|(DependencyNeverSatisfied)
+236698|zj_explicit_gru__historical_capacity_261006|PENDING|(DependencyNeverSatisfied)
+
+236694|zj_prepare_261006|FAILED|1:0
+236695|zj_legacy_lstm__small_261006|PENDING|0:0
+236696|zj_explicit_gru__small_261006|PENDING|0:0
+236697|zj_legacy_lstm__historical_capacity_261006|PENDING|0:0
+236698|zj_explicit_gru__historical_capacity_261006|PENDING|0:0
+
+LOG zj_prepare_261006_236694.out
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_001/scripts/prepare_training_data.py", line 150, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_001/scripts/prepare_training_data.py", line 100, in main
+    times,values=validate_csv(raw,entry['role'])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_001/scripts/prepare_training_data.py", line 34, in validate_csv
+    if not np.array_equal(times,expected): raise ValueError('isolated source calendar changed')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: isolated source calendar changed
+
+{"runs_with_real_optimizer_step": 0, "evaluation_values_read": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T10:57:58+0800
