@@ -1,0 +1,19 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=155
+### host=login4
+### started=2026-10-06T11:08:45+0800
+### ---------- output ----------
+{"status": "recovery_release_verified", "files": 283, "code_hash": "343af2846edcab85a98bab74c777fc91c7fcae191e6ed30727cb99f77b722c9d"}
+{"status": "submitted", "key": "preparation", "job_id": "236699"}
+{"status": "submitted", "key": "legacy_lstm__small", "job_id": "236700"}
+{"status": "submitted", "key": "explicit_gru__small", "job_id": "236701"}
+{"status": "submitted", "key": "legacy_lstm__historical_capacity", "job_id": "236702"}
+{"status": "submitted", "key": "explicit_gru__historical_capacity", "job_id": "236703"}
+236700|zj_legacy_lstm__small_261006_r2|PENDING|(Dependency)
+236701|zj_explicit_gru__small_261006_r2|PENDING|(Dependency)
+236702|zj_legacy_lstm__historical_capacity_261006_r2|PENDING|(Dependency)
+236703|zj_explicit_gru__historical_capacity_261006_r2|PENDING|(Dependency)
+236699|zj_prepare_261006_r2|RUNNING|ngu011
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-06T11:08:47+0800
