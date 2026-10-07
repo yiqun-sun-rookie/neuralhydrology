@@ -1,0 +1,26 @@
+### channel=china-negative-repair-20261006 seq=23
+### host=login4
+### started=2026-10-08T01:19:33+0800
+### ---------- output ----------
+INPUT_HEADER_ROOT=/data1/home/sunyiq/us_raw_source_schema_20261007_001
+INPUT_HEADER_JOB_ID=237172
+ACCOUNTING_BEGIN
+237172|FAILED|1:0|2|1||ngu011
+237172.batch|FAILED|1:0|2|1|3168K|ngu011
+237172.extern|COMPLETED|0:0|2|1|1372K|ngu011
+
+ACCOUNTING_END
+HEADER_REPORT_NOT_PRESENT
+OWN_ERROR_LOG_BEGIN
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/us_raw_source_schema_20261007_001/src/run_schema_query_v1.py", line 10, in <module>
+    from raw_netcdf_schema_v1 import inspect_exact
+  File "/data1/home/sunyiq/us_raw_source_schema_20261007_001/src/raw_netcdf_schema_v1.py", line 9, in <module>
+    import h5py
+ModuleNotFoundError: No module named 'h5py'
+
+OWN_ERROR_LOG_END
+INPUT_HEADER_COLLECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T01:19:33+0800
