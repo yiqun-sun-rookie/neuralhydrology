@@ -1,0 +1,871 @@
+### channel=china-negative-repair-20261006 seq=13
+### host=login4
+### started=2026-10-07T19:35:05+0800
+### ---------- output ----------
+NODE_IDENTITY_ROOT=/data1/home/sunyiq/china_us_result_identity_20261007_001
+NODE_IDENTITY_JOB_ID=237088
+ACCOUNTING_BEGIN
+237088|COMPLETED|0:0|1|1||ngu011
+237088.batch|COMPLETED|0:0|1|1|3212K|ngu011
+237088.extern|COMPLETED|0:0|2|1|2436K|ngu011
+
+ACCOUNTING_END
+REPORT_SHA256=968b06db27e33b2f57647314b3571380a49612d1100ec42847692a99c6941e9d
+REPORT_JSON_BEGIN
+{
+  "status": "COMPUTE_METADATA_DIFFERENCES_REPORTED_NOT_ACCEPTED_AS_NEW_IDENTITY",
+  "job_id": "237088",
+  "node": "ngu011",
+  "objects": [
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30",
+      "registered_login": {
+        "device": 41,
+        "inode": 10228207622,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 5,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10228207622,
+        "bytes": 4096,
+        "mtime": 1788867533,
+        "ctime": 1788867533,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788867533000000000,
+        "ctime_ns": 1788867533000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "mtime": {
+          "registered": 1788867783,
+          "actual": 1788867533
+        },
+        "ctime": {
+          "registered": 1788867783,
+          "actual": 1788867533
+        },
+        "nlink": {
+          "registered": 5,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": false
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/train_data",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6063990279,
+        "bytes": 4096,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6063990279,
+        "bytes": 4096,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788860841000000000,
+        "ctime_ns": 1788860841000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6925220098,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 3,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6925220098,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 3,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test/model_epoch030",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 8967380227,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 8967380227,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/config.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 10188077072,
+        "bytes": 1785,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10188077072,
+        "bytes": 1785,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860841000000000,
+        "ctime_ns": 1788860841000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/model_epoch030.pt",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 10228458758,
+        "bytes": 1174917,
+        "mtime": 1788867533,
+        "ctime": 1788867533,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10228458758,
+        "bytes": 1174917,
+        "mtime": 1788867533,
+        "ctime": 1788867533,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788867533000000000,
+        "ctime_ns": 1788867533000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6063996935,
+        "bytes": 2642,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6063996935,
+        "bytes": 2642,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860841000000000,
+        "ctime_ns": 1788860841000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "100",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 9128248069,
+        "bytes": 46791786,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 9128248069,
+        "bytes": 46791786,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30",
+      "registered_login": {
+        "device": 41,
+        "inode": 11406030600,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 5,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 11406030600,
+        "bytes": 4096,
+        "mtime": 1788865254,
+        "ctime": 1788865254,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788865254000000000,
+        "ctime_ns": 1788865254000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "mtime": {
+          "registered": 1788867783,
+          "actual": 1788865254
+        },
+        "ctime": {
+          "registered": 1788867783,
+          "actual": 1788865254
+        },
+        "nlink": {
+          "registered": 5,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": false
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/train_data",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 8257367308,
+        "bytes": 4096,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 8257367308,
+        "bytes": 4096,
+        "mtime": 1788860696,
+        "ctime": 1788860696,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788860696000000000,
+        "ctime_ns": 1788860696000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "mtime": {
+          "registered": 1788860841,
+          "actual": 1788860696
+        },
+        "ctime": {
+          "registered": 1788860841,
+          "actual": 1788860696
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6473383945,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 3,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6473383945,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 3,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test/model_epoch030",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 10228459782,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10228459782,
+        "bytes": 4096,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/config.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 11406039816,
+        "bytes": 1785,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 11406039816,
+        "bytes": 1785,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860841000000000,
+        "ctime_ns": 1788860841000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/model_epoch030.pt",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 10526603022,
+        "bytes": 1174917,
+        "mtime": 1788867513,
+        "ctime": 1788867513,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10526603022,
+        "bytes": 1174917,
+        "mtime": 1788867513,
+        "ctime": 1788867513,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788867513000000000,
+        "ctime_ns": 1788867513000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 7462810113,
+        "bytes": 2642,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 7462810113,
+        "bytes": 2642,
+        "mtime": 1788860841,
+        "ctime": 1788860841,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860841000000000,
+        "ctime_ns": 1788860841000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "200",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 10228460294,
+        "bytes": 46791786,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 10228460294,
+        "bytes": 46791786,
+        "mtime": 1788867783,
+        "ctime": 1788867783,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788867783000000000,
+        "ctime_ns": 1788867783000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30",
+      "registered_login": {
+        "device": 41,
+        "inode": 7462792449,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 5,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 7462792449,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788868212000000000,
+        "ctime_ns": 1788868212000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 5,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": false
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/train_data",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6021954827,
+        "bytes": 4096,
+        "mtime": 1788860860,
+        "ctime": 1788860860,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6021954827,
+        "bytes": 4096,
+        "mtime": 1788860860,
+        "ctime": 1788860860,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788860860000000000,
+        "ctime_ns": 1788860860000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 8967433475,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 3,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 8967433475,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788868212000000000,
+        "ctime_ns": 1788868212000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 3,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test/model_epoch030",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 11406392840,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 2,
+        "mode": "41ed"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 11406392840,
+        "bytes": 4096,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 1,
+        "mode": "41ed",
+        "mtime_ns": 1788868212000000000,
+        "ctime_ns": 1788868212000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        },
+        "nlink": {
+          "registered": 2,
+          "actual": 1
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/config.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 8257382668,
+        "bytes": 1785,
+        "mtime": 1788860862,
+        "ctime": 1788860862,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 8257382668,
+        "bytes": 1785,
+        "mtime": 1788860862,
+        "ctime": 1788860862,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860862000000000,
+        "ctime_ns": 1788860862000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/model_epoch030.pt",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 8257826060,
+        "bytes": 1174917,
+        "mtime": 1788867981,
+        "ctime": 1788867981,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 8257826060,
+        "bytes": 1174917,
+        "mtime": 1788867981,
+        "ctime": 1788867981,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788867981000000000,
+        "ctime_ns": 1788867981000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 6021967371,
+        "bytes": 2642,
+        "mtime": 1788860860,
+        "ctime": 1788860860,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 6021967371,
+        "bytes": 2642,
+        "mtime": 1788860860,
+        "ctime": 1788860860,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788860860000000000,
+        "ctime_ns": 1788860860000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    },
+    {
+      "seed": "300",
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "registered_login": {
+        "exists": true,
+        "device": 41,
+        "inode": 11406393096,
+        "bytes": 46791786,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 1,
+        "mode": "81a4"
+      },
+      "compute_node": {
+        "device": 42,
+        "inode": 11406393096,
+        "bytes": 46791786,
+        "mtime": 1788868212,
+        "ctime": 1788868212,
+        "nlink": 1,
+        "mode": "81a4",
+        "mtime_ns": 1788868212000000000,
+        "ctime_ns": 1788868212000000000
+      },
+      "differences": {
+        "device": {
+          "registered": 41,
+          "actual": 42
+        }
+      },
+      "same_path_before_after_equal": true
+    }
+  ],
+  "object_count": 24,
+  "original_file_bodies_opened": 0,
+  "prediction_values_read": 0,
+  "model_calls": 0,
+  "training_fits": 0
+}
+REPORT_JSON_END
+OWN_ERROR_LOG_BEGIN
+
+OWN_ERROR_LOG_END
+NODE_IDENTITY_COLLECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-07T19:35:05+0800
