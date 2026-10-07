@@ -1,0 +1,19 @@
+### channel=china-negative-repair-20261006 seq=37
+### host=login4
+### started=2026-10-08T06:31:28+0800
+### ---------- output ----------
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/src/run_numeric_diagnostic_v1.py: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/src/numeric_diagnostic_core_v1.py: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/src/netcdf3_schema_v1.py: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/contracts/EXACT_SOURCE_SCHEMA_v1.json: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/contracts/NUMERIC_DIAGNOSTIC_SOURCE_v1.json: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/references/ACTUAL_FORMAT_RECEIPT_seq28.json: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/references/ACCEPTED_DATE_REPORT_v1.json.gz: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/references/ACCEPTED_GLOBAL_REPORT_v1.json.gz: OK
+/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001/numeric_v1.sbatch: OK
+NUMERIC_ROOT=/data1/home/sunyiq/us_original_numeric_diagnostic_20261008_001
+NUMERIC_JOB_ID=237185
+NUMERIC_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T06:31:28+0800
