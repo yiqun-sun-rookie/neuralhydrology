@@ -1,0 +1,602 @@
+### channel=china-negative-repair-20261006 seq=15
+### host=login4
+### started=2026-10-07T20:01:41+0800
+### ---------- output ----------
+US_STATISTICS_ROOT=/data1/home/sunyiq/china_us_negative_comparison_20261007_002
+US_STATISTICS_JOB_ID=237105
+ACCOUNTING_BEGIN
+237105|COMPLETED|0:0|14|4||ngu011
+237105.batch|COMPLETED|0:0|14|4|3180K|ngu011
+237105.extern|COMPLETED|0:0|14|4|2636K|ngu011
+
+ACCOUNTING_END
+SUMMARY_SHA256=901cf4f4f7b64e4bff30aa633dcd8f1e61a02a2d0ef328e79a9dded13903c460
+SUMMARY_JSON_BEGIN
+{
+  "status": "PASS_SAVED_US_OUTPUT_DIAGNOSIS_ONLY",
+  "job_id": "237105",
+  "new_model_calls": 0,
+  "new_training_fits": 0,
+  "original_data_accepted_for_training": false,
+  "china_skill_verified": false,
+  "start_date": "1989-10-01",
+  "end_date": "1999-09-30",
+  "basins": 529,
+  "days": 3652,
+  "models": {
+    "100": {
+      "total_slots": 1931908,
+      "finite_predictions": 1931908,
+      "missing_predictions": 0,
+      "negative_predictions": 10549,
+      "negative_percent_of_finite": 0.5460404946819414,
+      "has_valid_predictions": true,
+      "below_minus_0_1": 693,
+      "below_minus_1": 409,
+      "below_minus_10": 227,
+      "negative_abs_at_most_1e_6": 0,
+      "minimum_mm_day": -65.87986755371094,
+      "maximum_mm_day": 145.0782012939453,
+      "basins_with_any_negative": 140
+    },
+    "200": {
+      "total_slots": 1931908,
+      "finite_predictions": 1931908,
+      "missing_predictions": 0,
+      "negative_predictions": 8477,
+      "negative_percent_of_finite": 0.43878901065682213,
+      "has_valid_predictions": true,
+      "below_minus_0_1": 199,
+      "below_minus_1": 7,
+      "below_minus_10": 0,
+      "negative_abs_at_most_1e_6": 1,
+      "minimum_mm_day": -2.881753921508789,
+      "maximum_mm_day": 152.58804321289062,
+      "basins_with_any_negative": 148
+    },
+    "300": {
+      "total_slots": 1931908,
+      "finite_predictions": 1931908,
+      "missing_predictions": 0,
+      "negative_predictions": 14953,
+      "negative_percent_of_finite": 0.7740016605345597,
+      "has_valid_predictions": true,
+      "below_minus_0_1": 161,
+      "below_minus_1": 21,
+      "below_minus_10": 4,
+      "negative_abs_at_most_1e_6": 3,
+      "minimum_mm_day": -18.098535537719727,
+      "maximum_mm_day": 146.6376495361328,
+      "basins_with_any_negative": 135
+    },
+    "equal_mean": {
+      "total_slots": 1931908,
+      "finite_predictions": 1931908,
+      "missing_predictions": 0,
+      "negative_predictions": 3499,
+      "negative_percent_of_finite": 0.1811162850404885,
+      "has_valid_predictions": true,
+      "below_minus_0_1": 386,
+      "below_minus_1": 295,
+      "below_minus_10": 52,
+      "negative_abs_at_most_1e_6": 1,
+      "minimum_mm_day": -21.395310123761494,
+      "maximum_mm_day": 141.78337605794272,
+      "basins_with_any_negative": 89
+    }
+  },
+  "all_three_model_records": {
+    "total_slots": 5795724,
+    "finite_predictions": 5795724,
+    "missing_predictions": 0,
+    "negative_predictions": 33979,
+    "negative_percent_of_finite": 0.5862770552911077,
+    "has_valid_predictions": true,
+    "below_minus_0_1": 1053,
+    "below_minus_1": 437,
+    "below_minus_10": 231,
+    "negative_abs_at_most_1e_6": 4,
+    "minimum_mm_day": -65.87986755371094,
+    "maximum_mm_day": 152.58804321289062
+  },
+  "all_three_negative_same_basin_day": 178,
+  "all_three_common_finite_basin_days": 1931908,
+  "input_file_provenance": [
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/config.yml",
+      "bytes": 1785,
+      "sha256": "b6c609ab5e43724f0ae73ba98b39dc46cc47b0d45122281252c13ab53eb724f8",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/model_epoch030.pt",
+      "bytes": 1174917,
+      "sha256": "7a639f47e8bea6d7ee1ee9a3a71bf54aba890163d9220c2b13bed47ff22a4abe",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "bytes": 2642,
+      "sha256": "013fc684e37914dbd0765095577e153f9cba6835a4f494db5b349ef33c7d7b97",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "bytes": 46791786,
+      "sha256": "1250919f476ffa1f2bf40bb440609547425482bbc5dc1566b190cd98325fd778",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true,
+      "actual_start": "1989-10-01",
+      "actual_end": "1999-09-30",
+      "actual_days": 3652,
+      "actual_basins": 529,
+      "date_filtering_applied": false,
+      "exposed_observations_embedded_in_pickle": true,
+      "observations_used_for_statistics": false
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/config.yml",
+      "bytes": 1785,
+      "sha256": "d73ed4a77d44bb351e19b3d978326b96dd7274156b795ab7ce0187c6f0525f6c",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/model_epoch030.pt",
+      "bytes": 1174917,
+      "sha256": "26c42eb0db6c4f7d6df0cddb874156e472fbfe66b1270a63180b8ec5211f19a1",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "bytes": 2642,
+      "sha256": "013fc684e37914dbd0765095577e153f9cba6835a4f494db5b349ef33c7d7b97",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "bytes": 46791786,
+      "sha256": "6ccc9740ff3ba9dca85e748fb58e2b107a181010a76f57b6200cf0f86084f882",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true,
+      "actual_start": "1989-10-01",
+      "actual_end": "1999-09-30",
+      "actual_days": 3652,
+      "actual_basins": 529,
+      "date_filtering_applied": false,
+      "exposed_observations_embedded_in_pickle": true,
+      "observations_used_for_statistics": false
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/config.yml",
+      "bytes": 1785,
+      "sha256": "61e6b1ec2ad08cba5aafa06328fd9533443c832743fde029e17b3e57f0ce1bf2",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/model_epoch030.pt",
+      "bytes": 1174917,
+      "sha256": "a73ed6780dadd354d68e4d2ff220c6060b6e2a41ff54c077ebf9a545d82302c8",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/train_data/train_data_scaler.yml",
+      "bytes": 2642,
+      "sha256": "013fc684e37914dbd0765095577e153f9cba6835a4f494db5b349ef33c7d7b97",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test/model_epoch030/test_results.p",
+      "bytes": 46791786,
+      "sha256": "b840ee9beac1fe65fd6c101ac8df195d4a0e49f8a57fabee562329493e896faf",
+      "device_on_compute_node": 42,
+      "device_on_metadata_host": 41,
+      "portable_metadata_matched": true,
+      "same_handle_before_after_matched": true,
+      "named_path_matches_open_handle_after_read": true,
+      "actual_start": "1989-10-01",
+      "actual_end": "1999-09-30",
+      "actual_days": 3652,
+      "actual_basins": 529,
+      "date_filtering_applied": false,
+      "exposed_observations_embedded_in_pickle": true,
+      "observations_used_for_statistics": false
+    }
+  ],
+  "directory_audits": [
+    {
+      "seed": 100,
+      "records": [
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30",
+          "before": {
+            "device": 42,
+            "inode": 10228207622,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 10228207622,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/train_data",
+          "before": {
+            "device": 42,
+            "inode": 6063990279,
+            "bytes": 4096,
+            "mtime": 1788860841,
+            "ctime": 1788860841,
+            "mtime_ns": 1788860841000000000,
+            "ctime_ns": 1788860841000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 6063990279,
+            "bytes": 4096,
+            "mtime": 1788860841,
+            "ctime": 1788860841,
+            "mtime_ns": 1788860841000000000,
+            "ctime_ns": 1788860841000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test",
+          "before": {
+            "device": 42,
+            "inode": 6925220098,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 6925220098,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/test/model_epoch030",
+          "before": {
+            "device": 42,
+            "inode": 8967380227,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 8967380227,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        }
+      ]
+    },
+    {
+      "seed": 200,
+      "records": [
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30",
+          "before": {
+            "device": 42,
+            "inode": 11406030600,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 11406030600,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/train_data",
+          "before": {
+            "device": 42,
+            "inode": 8257367308,
+            "bytes": 4096,
+            "mtime": 1788860841,
+            "ctime": 1788860841,
+            "mtime_ns": 1788860841000000000,
+            "ctime_ns": 1788860841000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 8257367308,
+            "bytes": 4096,
+            "mtime": 1788860841,
+            "ctime": 1788860841,
+            "mtime_ns": 1788860841000000000,
+            "ctime_ns": 1788860841000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test",
+          "before": {
+            "device": 42,
+            "inode": 6473383945,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 6473383945,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/test/model_epoch030",
+          "before": {
+            "device": 42,
+            "inode": 10228459782,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 10228459782,
+            "bytes": 4096,
+            "mtime": 1788867783,
+            "ctime": 1788867783,
+            "mtime_ns": 1788867783000000000,
+            "ctime_ns": 1788867783000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        }
+      ]
+    },
+    {
+      "seed": 300,
+      "records": [
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30",
+          "before": {
+            "device": 42,
+            "inode": 7462792449,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 7462792449,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 5,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/train_data",
+          "before": {
+            "device": 42,
+            "inode": 6021954827,
+            "bytes": 4096,
+            "mtime": 1788860860,
+            "ctime": 1788860860,
+            "mtime_ns": 1788860860000000000,
+            "ctime_ns": 1788860860000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 6021954827,
+            "bytes": 4096,
+            "mtime": 1788860860,
+            "ctime": 1788860860,
+            "mtime_ns": 1788860860000000000,
+            "ctime_ns": 1788860860000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test",
+          "before": {
+            "device": 42,
+            "inode": 8967433475,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 8967433475,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 3,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        },
+        {
+          "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/test/model_epoch030",
+          "before": {
+            "device": 42,
+            "inode": 11406392840,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "after": {
+            "device": 42,
+            "inode": 11406392840,
+            "bytes": 4096,
+            "mtime": 1788868212,
+            "ctime": 1788868212,
+            "mtime_ns": 1788868212000000000,
+            "ctime_ns": 1788868212000000000,
+            "nlink": 2,
+            "mode": "41ed"
+          },
+          "changed_telemetry": [],
+          "structural_identity_stable": true
+        }
+      ]
+    }
+  ],
+  "directory_time_and_nlink_treated_as_telemetry": true,
+  "observations_used": false,
+  "output_units": "mm/day",
+  "elapsed_seconds": 6.158874176442623
+}
+SUMMARY_JSON_END
+BY_BASIN_CSV_BYTES=193132
+b27edf5060df35085edf6db314ab90eb423075765e0b9c6cbe4c3da2b458de8b  /data1/home/sunyiq/china_us_negative_comparison_20261007_002/results/negative_by_basin_model.csv
+OWN_ERROR_LOG_BEGIN
+
+OWN_ERROR_LOG_END
+US_STATISTICS_COLLECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-07T20:01:41+0800
