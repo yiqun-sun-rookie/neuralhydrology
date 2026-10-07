@@ -143,3 +143,5 @@ git rm inbox/seq
 
 | precip-dynamic-filter-v03 | Single-basin dynamic neural rain correction | 2026-10-01 |
 | `china-negative-repair-20261006` | China negative-output repair resource preparation | 2026-10-06 | Exclusive root `/data1/home/sunyiq/china_negative_repair_20261006_001`; read-only metadata first, at most one synthetic GPU probe; no real training before data gates, no existing-job changes or automatic retry. |
+
+| `kalmannet-joint-adaptive-20261007` | Isolated compute; encrypted inputs and outputs | 2026-10-07 | Exclusive transport workspace |
