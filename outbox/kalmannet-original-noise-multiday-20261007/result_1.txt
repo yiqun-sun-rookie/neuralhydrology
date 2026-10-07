@@ -1,0 +1,51 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=1
+### host=login4
+### started=2026-10-07T22:31:14+0800
+### ---------- output ----------
+PRIVATE_ROOT_ABSENT
+PartitionName=hcpu48y
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=icn[270-281]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+PARTITION AVAIL TIMELIMIT NODES STATE NODELIST
+hcpu48y up infinite 1 down* icn279
+hcpu48y up infinite 4 mix icn[270,274,277,281]
+hcpu48y up infinite 1 alloc icn280
+hcpu48y up infinite 6 idle icn[271-273,275-276,278]
+202229 N22-agg-eval PD 4 0:00 (DependencyNeverSatisfied)
+202294 N22-export PD 4 0:00 (Dependency)
+202315 N22-gate PD 2 0:00 (Dependency)
+202507 N22-mask-iso-531 PD 4 0:00 (DependencyNeverSatisfied)
+215429 id30_m01_s100 PD 4 0:00 (DependencyNeverSatisfied)
+202293 N22-manifest PD 4 0:00 (JobHeldUser)
+236820 zj_gru_history_recovery_261006_001 R 4 21:35 ngu001
+236705 zj_legacy_lstm__small_261006_pathfix R 4 1-11:12:54 ngu011
+236706 zj_explicit_gru__small_261006_pathfix R 4 1-11:12:54 ngu011
+236707 zj_legacy_lstm__historical_capacity_261006_pathfix R 4 1-11:12:54 ngu001
+236823|china-resource-1006|FAILED|hgpu2|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+236830|china-resource-fixed-1006|COMPLETED|hgpu2|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+236958|author-reference-task1|FAILED|hgpu2p|4|billing=4,cpu=4,mem=32G,node=1|
+236976|author-reference-task1-a002|FAILED|hgpu2p|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+236992|author-reference-task1-a003|FAILED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237067|author-reference-task1-a004|FAILED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237070|author-causality-diagnostic-a001|COMPLETED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237083|china-us-negative-1007|FAILED|hgpu2p|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237084|author-reference-task1-a006|COMPLETED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237088|china-us-identity-1007|COMPLETED|hgpu2p|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1
+237092|joint-comparison-contract-a001|FAILED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237105|china-us-negative-v2-1007|COMPLETED|hgpu2p|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237127|joint-comparison-contract-a002|FAILED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237149|joint-comparison-contract-a003|FAILED|hgpu8|4|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+237150|us-input-headers-1007|FAILED|hgpu2p|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1
+{"python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "numpy": "2.3.3", "psutil": "7.0.0"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-07T22:31:20+0800
