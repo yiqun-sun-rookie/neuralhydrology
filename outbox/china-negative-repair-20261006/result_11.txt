@@ -1,0 +1,33 @@
+### channel=china-negative-repair-20261006 seq=11
+### host=login4
+### started=2026-10-07T19:07:38+0800
+### ---------- output ----------
+US_STATISTICS_ROOT=/data1/home/sunyiq/china_us_negative_comparison_20261007_001
+US_STATISTICS_JOB_ID=237083
+ACCOUNTING_BEGIN
+237083|FAILED|1:0|10|4||ngu011
+237083.batch|FAILED|1:0|10|4|3152K|ngu011
+237083.extern|COMPLETED|0:0|10|4|2384K|ngu011
+
+ACCOUNTING_END
+SUMMARY_SHA256=fbf0770976c12c080b44a3e5334960cb7971d0b1294800bd9bec5079bc0889b0
+SUMMARY_JSON_BEGIN
+{
+  "status": "STOP_SAVED_OUTPUT_DIAGNOSIS_NO_RETRY",
+  "job_id": "237083",
+  "new_model_calls": 0,
+  "new_training_fits": 0,
+  "original_data_accepted_for_training": false,
+  "china_skill_verified": false,
+  "error_type": "ValueError",
+  "error": "Registered directory identity differs",
+  "elapsed_seconds": 0.014832276850938797
+}
+SUMMARY_JSON_END
+OWN_ERROR_LOG_BEGIN
+
+OWN_ERROR_LOG_END
+US_STATISTICS_COLLECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-07T19:07:40+0800
