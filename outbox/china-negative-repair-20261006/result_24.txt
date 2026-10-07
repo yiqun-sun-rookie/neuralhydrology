@@ -1,0 +1,47 @@
+### channel=china-negative-repair-20261006 seq=24
+### host=login4
+### started=2026-10-08T01:47:11+0800
+### ---------- output ----------
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/US_OUTPUT_REPAIR_PROTOCOL_DRAFT_v1.md: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/src/us_repair_pipeline_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/src/date_isolated_arrays_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/src/model_variants.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/src/prepare_repair_software_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/tests/test_us_repair_pipeline_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/tests/test_date_isolated_arrays_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/reports/SYNTHETIC_PIPELINE_PREFLIGHT_v2.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/reports/SYNTHETIC_PIPELINE_PREFLIGHT_v3.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/reports/SYNTHETIC_PIPELINE_PREFLIGHT_v4.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/review/MODEL_VENDOR_MANIFEST.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/linear_seed100.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/linear_seed200.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/linear_seed300.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/physical_softplus_seed100.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/physical_softplus_seed200.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/configs/physical_softplus_seed300.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/utils/config.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/utils/samplingutils.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/datautils/utils.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/training/loss.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/training/regularization.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/head.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/cudalstm.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/basemodel.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/inputlayer.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/fc.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/positional_encoding.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/__init__.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/utils/__init__.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/training/__init__.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/modelzoo/__init__.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/base/vendor/neuralhydrology/datautils/__init__.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/references/ORIGINAL_SOFTWARE_DECISION_v1.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/contracts/COMPONENTS_v1.json: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/src/profile_runtime_v1.py: OK
+/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/profile_v1.sbatch: OK
+PROFILE_ROOT=/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001
+PROFILE_JOB_ID=237173
+PROFILE_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T01:47:11+0800
