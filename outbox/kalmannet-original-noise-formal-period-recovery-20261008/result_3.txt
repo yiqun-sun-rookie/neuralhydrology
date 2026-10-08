@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-formal-period-recovery-20261008 seq=3
+### host=login4
+### started=2026-10-08T23:29:13+0800
+### ---------- output ----------
+STATUS_JSON={"utc": "2026-10-08T15:29:15.547793+00:00", "counts": {"computed": 10, "failed": 0, "missing": 381}, "jobs": [{"job_id": "237982", "batch": [0, 100], "accounting": "237982|RUNNING|0:0|00:03:18|1|billing=1,cpu=1,node=1", "receipt": null, "stdout_tail": ["actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_basin_complete 01078000 COMPUTED_PENDING_INDEPENDENT_REVIEW 104.824s", "actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_forecast_origins 500/1826"], "stderr_tail": []}], "queue": "237982 R 1:42 icn281"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T23:29:15+0800
