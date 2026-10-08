@@ -153,3 +153,4 @@ git rm inbox/seq
 | kalmannet-original-noise-runtime-diagnostic-20261008 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
 | kalmannet-original-noise-multiday-recovery-20261008 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
 | kalmannet-original-noise-formal-period-recovery-20261008 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
+| kalmannet-original-noise-submission-diagnostic-20261008 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
