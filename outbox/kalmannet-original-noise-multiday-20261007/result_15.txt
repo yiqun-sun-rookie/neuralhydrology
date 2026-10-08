@@ -1,0 +1,20 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=15
+### host=login4
+### started=2026-10-08T18:13:52+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 90, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python', '-X', 'utf8', '-B', '/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery2/code/setup_runtime.py', '--contract', '/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery2/results/control/contract_v6.json']' timed out after 600 seconds
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-08T18:24:07+0800
