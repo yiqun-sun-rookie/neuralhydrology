@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=188
+### host=login4
+### started=2026-10-08T22:09:26+0800
+### ---------- output ----------
+{"job_id": "237920", "commands": [{"command": ["squeue", "-h", "-j", "237920", "-o", "%i|%T|%R|%N"], "returncode": 1, "stdout": "", "stderr": "slurm_load_jobs error: Invalid job id specified\n"}, {"command": ["sacct", "-n", "-X", "-j", "237920", "--format=JobID,State,ExitCode,NodeList", "-P"], "returncode": 0, "stdout": "237920|COMPLETED|0:0|ngu007\n", "stderr": ""}], "compatibility_result": {"status": "synthetic_gpu_compatibility_probe", "job_id": "237920", "node": "ngu007", "device_identity": {"device": "cuda:0", "name": "NVIDIA GeForce RTX 3090", "total_memory_bytes": 25296044032}, "matches_frozen_device": true, "scalar_result": 0.14000000059604645, "real_training_started": false, "evaluation_values_read": false, "checked_at": "2026-10-08T22:04:49.924582+08:00"}, "logs": [{"path": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002/logs/zj_gpu_compatibility_261008_007_237920.out", "tail": "{\"status\": \"synthetic_gpu_compatibility_probe\", \"job_id\": \"237920\", \"node\": \"ngu007\", \"device_identity\": {\"device\": \"cuda:0\", \"name\": \"NVIDIA GeForce RTX 3090\", \"total_memory_bytes\": 25296044032}, \"matches_frozen_device\": true, \"scalar_result\": 0.14000000059604645, \"real_training_started\": false, \"evaluation_values_read\": false, \"checked_at\": \"2026-10-08T22:04:49.924582+08:00\"}\n"}]}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T22:09:26+0800
