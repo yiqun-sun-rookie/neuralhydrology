@@ -1,0 +1,88 @@
+### channel=hydrol85935-revision-20261008-001 seq=8
+### host=login4
+### started=2026-10-08T21:19:54+0800
+### ---------- output ----------
+2026-10-08T21:19:54+0800
+=== own preflight status ===
+JobIDRaw|JobName|State|ExitCode|Elapsed|AllocCPUS|MaxRSS
+237883|hydrol85935-preflight|FAILED|1:0|00:04:31|4|
+237883.batch|batch|FAILED|1:0|00:04:31|4|1194448K
+237883.extern|extern|COMPLETED|0:0|00:04:33|4|1676K
+slurm_load_jobs error: Invalid job id specified
+Job no longer in live queue; use accounting above
+slurm_load_jobs error: Invalid job id specified
+Start forecast unavailable
+=== own output ===
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/preflight-237883.out
+2026-10-08T20:57:43+08:00
+JOB_ID=237883 CUDA_VISIBLE_DEVICES=0
+name, memory.total [MiB], memory.used [MiB]
+NVIDIA GeForce RTX 3090, 24576 MiB, 3 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 3 MiB
+2.4.0 /data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/neuralhydrology/__init__.py
+INPUTS_MATERIALIZED_AND_VERIFIED 1069; SHARED_DATA_UNCHANGED
+DATA_IDENTITY_PASS 1069 files
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/preflight-237883.err
+test_each_original_asset_changed_before_inference_fails (test_revision_20261008_fix1.ReviewFixTests.test_each_original_asset_changed_before_inference_fails) ... /data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/neuralhydrology/datautils/utils.py:258: DeprecationWarning: invalid escape sequence '\d'
+  weekly_freq = re.match('(\d+)W(-(MON|TUE|WED|THU|FRI|SAT|SUN))?$', native_frequency)
+ok
+test_empty_and_partial_full_acceptance_never_overall_pass (test_revision_20261008_fix1.ReviewFixTests.test_empty_and_partial_full_acceptance_never_overall_pass) ... ok
+test_low_flow_large_negative_nse_float64_roundtrip (test_revision_20261008_fix1.ReviewFixTests.test_low_flow_large_negative_nse_float64_roundtrip) ... ok
+test_missing_and_wrong_clean_reference_rejected (test_revision_20261008_fix1.ReviewFixTests.test_missing_and_wrong_clean_reference_rejected) ... ok
+test_old_manifest_record_rejected_without_trusting_internal_hash (test_revision_20261008_fix1.ReviewFixTests.test_old_manifest_record_rejected_without_trusting_internal_hash) ... ok
+test_required_restore_missing_fails_even_without_importance_metadata (test_revision_20261008_fix1.ReviewFixTests.test_required_restore_missing_fails_even_without_importance_metadata) ... ok
+test_training_actual_scaler_config_and_index_are_verified (test_revision_20261008_fix1.ReviewFixTests.test_training_actual_scaler_config_and_index_are_verified) ... ok
+test_training_foreign_manifest_rejected_before_model_load (test_revision_20261008_fix1.ReviewFixTests.test_training_foreign_manifest_rejected_before_model_load) ... ok
+test_undefined_clean_metric_change_has_both_sides_and_reason (test_revision_20261008_fix1.ReviewFixTests.test_undefined_clean_metric_change_has_both_sides_and_reason) ... ok
+test_validation_and_report_both_exclude_wrong_stale_and_missing_reference (test_revision_20261008_fix1.ReviewFixTests.test_validation_and_report_both_exclude_wrong_stale_and_missing_reference) ... ok
+test_wrong_combination_and_basin_slots_rejected_by_validator (test_revision_20261008_fix1.ReviewFixTests.test_wrong_combination_and_basin_slots_rejected_by_validator) ... ok
+test_100_candidates_with_clean_and_seven_day_blocks (test_revision_20261008_runner.ContractTests.test_100_candidates_with_clean_and_seven_day_blocks) ... ok
+test_52_exact_scopes (test_revision_20261008_runner.ContractTests.test_52_exact_scopes) ... ok
+test_actual_dates_gaps_and_overlap_refused (test_revision_20261008_runner.ContractTests.test_actual_dates_gaps_and_overlap_refused) ... ok
+test_complete_record_identity_checksum_and_partial (test_revision_20261008_runner.ContractTests.test_complete_record_identity_checksum_and_partial) ... ok
+test_duplicate_temperature_and_scaler_refused (test_revision_20261008_runner.ContractTests.test_duplicate_temperature_and_scaler_refused) ... ok
+test_name_mapping_and_temperature_gradient_sum (test_revision_20261008_runner.ContractTests.test_name_mapping_and_temperature_gradient_sum) ... ok
+test_nonfinite_model_output_fails (test_revision_20261008_runner.ContractTests.test_nonfinite_model_output_fails) ... ok
+test_output_path_isolation_and_training_only_duplicate_removed (test_revision_20261008_runner.ContractTests.test_output_path_isolation_and_training_only_duplicate_removed) ... ok
+test_overlapping_gradient_is_chunk_independent (test_revision_20261008_runner.ContractTests.test_overlapping_gradient_is_chunk_independent) ... ok
+test_peak_before_union_includes_other_peak_but_random_excludes (test_revision_20261008_runner.ContractTests.test_peak_before_union_includes_other_peak_but_random_excludes) ... ok
+test_physical_budget_conversion (test_revision_20261008_runner.ContractTests.test_physical_budget_conversion) ... ok
+test_physical_metrics_kge_not_normalized_and_undefined (test_revision_20261008_runner.ContractTests.test_physical_metrics_kge_not_normalized_and_undefined) ... ok
+test_physical_projection_and_unknown_constraint (test_revision_20261008_runner.ContractTests.test_physical_projection_and_unknown_constraint) ... ok
+test_step_schedule_and_best_prediction_arrays (test_revision_20261008_runner.ContractTests.test_step_schedule_and_best_prediction_arrays) ... ok
+test_undefined_peak_target_is_not_epsilon_denominator (test_revision_20261008_runner.ContractTests.test_undefined_peak_target_is_not_epsilon_denominator) ... ok
+test_zero_start_first_update_equals_single_step (test_revision_20261008_runner.ContractTests.test_zero_start_first_update_equals_single_step) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 95.867s
+
+OK
+FAIL: ValueError: Baseline reproduction failed: NSE difference=5.3660850277137406e-05, max prediction error=0.009308332522152796
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/data_identity-237883.txt
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/preflight/v002/control/preflight_failure.json
+{
+  "reason": "Baseline reproduction failed: NSE difference=5.3660850277137406e-05, max prediction error=0.009308332522152796",
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/src/adversarial/scripts/revision_20261008/run.py\", line 313, in cli\n    result = preflight(workspace, args, fingerprint)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/src/adversarial/scripts/revision_20261008/run.py\", line 140, in preflight\n    engine, identity, baseline = make_engine(workspace, model, basin, args.device, args.chunk, reference)\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/src/adversarial/scripts/revision_20261008/run.py\", line 67, in make_engine\n    baseline = baseline_check(workspace, wrapper, basin_id, data, engine.clean_pred, q_center, q_scale) if model_id.startswith(\"original_\") else None\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/src/adversarial/scripts/revision_20261008/data.py\", line 182, in baseline_check\n    raise ValueError(f\"Baseline reproduction failed: NSE difference={abs(old-new)}, max prediction error={error}\")\nValueError: Baseline reproduction failed: NSE difference=5.3660850277137406e-05, max prediction error=0.009308332522152796\n"
+}
+=== current resources ===
+NODELIST            PARTITION   STATE           CPUS(A/I/O/T)           GRES_USED                               
+ngu001              hgpu2p      mixed           80/16/0/96              gpu:2,dcu:0                             
+ngu002              hgpu2p      mixed           8/88/0/96               gpu:1,dcu:0                             
+ngu004              hgpu2p      mixed           16/80/0/96              gpu:1,dcu:0                             
+ngu005              hgpu2p      mixed           12/84/0/96              gpu:0,dcu:0                             
+ngu006              hgpu2p      mixed           12/84/0/96              gpu:0,dcu:0                             
+ngu007              hgpu2p      idle            0/96/0/96               gpu:0,dcu:0                             
+ngu008              hgpu2p      idle            0/96/0/96               gpu:0,dcu:0                             
+ngu010              hgpu2p      mixed           8/24/0/32               gpu:2,dcu:0                             
+ngu011              hgpu2p      mixed           8/24/0/32               gpu:2,dcu:0                             
+ngu101              hgpu4       allocated       96/0/0/96               gpu:3,dcu:0                             
+ngu102              hgpu4       mixed           74/22/0/96              gpu:4,dcu:0                             
+ngu103              hgpu4       down*           0/0/96/96               gpu:0,dcu:0                             
+ngu104              hgpu4       mixed           44/52/0/96              gpu:4,dcu:0                             
+ngu201              hgpu8       allocated       64/0/0/64               gpu:5,dcu:0                             
+ngu202              hgpu8       mixed           36/28/0/64              gpu:8,dcu:0                             
+ngu203              hgpu8       mixed$          32/32/0/64              gpu:8,dcu:0                             
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T21:19:54+0800
