@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=7
+### host=login4
+### started=2026-10-08T15:54:04+0800
+### ---------- output ----------
+DEPLOYMENT_JSON={"status": "ISOLATED_RECOVERY_DEPLOYED_VERIFIED_NO_SUBMISSION", "old_job": "237583", "old_accounting": "237583|FAILED|1:0", "old_queue": "", "remote_root": "/data1/home/sunyiq/kalmannet_original_noise_multiday_20261008_recovery1", "manifest_sha256": "2e13b988a5f0250de8e6e0415b296e59be6e001f4d490199910845018d28ccd3", "contract_sha256": "d22108134d2cfbab3719d7b8657af4105a64eb58f38bb4bc5329050980d2d12e", "admission_sha256": "4f0d4cfddbc5f4130fe162dbff817a45870002db6fb363eac30122c17d5cf1e2", "copied_input_files": 926, "carried_complete_basins": ["01022500", "02297310"], "scientific_jobs_submitted": 0, "old_directory_modified": false, "remote_check_stdout": "REMOTE_PACKAGE_VERIFIED"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T15:54:20+0800
