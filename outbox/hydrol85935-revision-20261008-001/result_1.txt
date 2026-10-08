@@ -1,0 +1,71 @@
+### channel=hydrol85935-revision-20261008-001 seq=1
+### host=login4
+### started=2026-10-08T16:27:36+0800
+### ---------- output ----------
+=== identity ===
+2026-10-08T16:27:36+0800
+login4
+uid=2272(sunyiq) gid=2269(g_sunyiq) groups=2269(g_sunyiq) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+=== existing user jobs - read only ===
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            237173         hgpu2p              us-output-profile-1008    PENDING         0:00        1                gpu:1                    (Resources)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820         hgpu2p  zj_gru_history_recovery_261006_001    RUNNING     18:17:57        4                gpu:1                         ngu001
+            236705         hgpu2p zj_legacy_lstm__small_261006_pathfi    RUNNING   2-05:09:16        4                gpu:1                         ngu011
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   2-05:09:16        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   2-05:09:16        4                gpu:1                         ngu001
+=== partition resources ===
+NODELIST            PARTITION   STATE           CPUS(A/I/O/T)           GRES                          GRES_USED                               
+ngu001              hgpu2p      mixed           80/16/0/96              gpu:2                         gpu:2,dcu:0                             
+ngu002              hgpu2p      idle            0/96/0/96               gpu:2                         gpu:0,dcu:0                             
+ngu003              hgpu2       mixed           64/32/0/96              gpu:2                         gpu:2,dcu:0                             
+ngu004              hgpu2p      mixed           20/76/0/96              gpu:2                         gpu:2,dcu:0                             
+ngu005              hgpu2p      mixed           14/82/0/96              gpu:2                         gpu:2,dcu:0                             
+ngu006              hgpu2p      mixed           12/84/0/96              gpu:2                         gpu:0,dcu:0                             
+ngu007              hgpu2p      idle            0/96/0/96               gpu:2                         gpu:0,dcu:0                             
+ngu008              hgpu2p      idle            0/96/0/96               gpu:2                         gpu:0,dcu:0                             
+ngu009              hgpu2       mixed           80/16/0/96              gpu:2                         gpu:2,dcu:0                             
+ngu010              hgpu2p      mixed           4/28/0/32               gpu:2                         gpu:1,dcu:0                             
+ngu011              hgpu2p      mixed           8/24/0/32               gpu:2                         gpu:2,dcu:0                             
+ngu101              hgpu4       allocated       96/0/0/96               gpu:4                         gpu:3,dcu:0                             
+ngu102              hgpu4       mixed           66/30/0/96              gpu:4                         gpu:3,dcu:0                             
+ngu103              hgpu4       down*           0/0/96/96               gpu:4                         gpu:0,dcu:0                             
+ngu104              hgpu4       mixed           44/52/0/96              gpu:4                         gpu:4,dcu:0                             
+ngu201              hgpu8       mixed           62/2/0/64               gpu:8                         gpu:4,dcu:0                             
+ngu202              hgpu8       mixed           12/52/0/64              gpu:8                         gpu:2,dcu:0                             
+ngu203              hgpu8       mixed$          32/32/0/64              gpu:8                         gpu:8,dcu:0                             
+=== storage ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  647T  308T  68% /data1
+=== intended root must not exist ===
+ROOT_AVAILABLE /data1/home/sunyiq/hydrol85935_revision_20261008_001
+=== known data and runtime paths ===
+drwxr-xr-x. 8 sunyiq g_sunyiq 4096 Jan 24  2026 /data1/home/sunyiq/neuralhydrology/data/camels_us
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+MISSING /data1/home/sunyiq/neuralhydrology/data/CAMELS_US
+lrwxr-xr-x. 1 sunyiq g_sunyiq 10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -> python3.11
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11
+MISSING /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531
+drwxr-xr-x. 9 sunyiq g_sunyiq 4096 Aug  7 15:31 /data1/home/sunyiq/adv531
+/data1/home/sunyiq/adv531
+=== known original model identities ===
+/data1/home/sunyiq/adv531/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/config.yml
+/data1/home/sunyiq/adv531/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt
+=== compatibility metadata ===
+sbatch is /usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
++conda-forge/linux-64::libssh2-1.11.1-hcf80075_0
++conda-forge/linux-64::libzip-1.11.2-h6991a6a_0
++conda-forge/linux-64::netcdf4-1.7.4-nompi_py311h66524b1_102
++conda-forge/linux-64::openssl-3.6.1-h35e630c_1
++conda-forge/noarch::ca-certificates-2026.1.4-hbd8a1cb_0
++conda-forge/noarch::certifi-2026.1.4-pyhd8ed1ab_0
+# update specs: ['netcdf4']
+# neutered specs: ['ca-certificates==2026.1.4', 'openssl==3.6.1', 'certifi==2026.1.4']
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T16:27:36+0800
