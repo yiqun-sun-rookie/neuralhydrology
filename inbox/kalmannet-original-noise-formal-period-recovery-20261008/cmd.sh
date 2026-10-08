@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery3/runtime/venv/bin/python -X utf8 -B /data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery4/code/remote.py submit --start 0 --stop 100
+/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery3/runtime/venv/bin/python -X utf8 -B /data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery4/code/remote.py status
