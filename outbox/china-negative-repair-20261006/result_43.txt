@@ -1,0 +1,17 @@
+### channel=china-negative-repair-20261006 seq=43
+### host=login4
+### started=2026-10-08T16:19:10+0800
+### ---------- output ----------
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/src/run_saved_observation_v1.py: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/src/saved_observation_core_v1.py: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/src/saved_results_reader_v2.py: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/src/collect_saved_observation_v1.py: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/contracts/SAVED_OBSERVATION_SOURCE_v1.json: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/contracts/CURRENT_RAW_ZERO_REFERENCE_v1.json: OK
+/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001/saved_observation_v1.sbatch: OK
+SAVED_OBS_ROOT=/data1/home/sunyiq/us_saved_observation_zero_diagnostic_20261008_001
+SAVED_OBS_JOB_ID=237643
+SAVED_OBS_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T16:19:10+0800
