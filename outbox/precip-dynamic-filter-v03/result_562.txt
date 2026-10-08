@@ -1,0 +1,8 @@
+### channel=precip-dynamic-filter-v03 seq=562
+### host=login4
+### started=2026-10-09T01:44:49+0800
+### ---------- output ----------
+{"conda_history_metadata": {"bytes": 50595, "mtime_utc": "2026-02-02T12:40:10+00:00", "path": "/data1/home/sunyiq/miniconda3/envs/nh_final/conda-meta/history", "sha256": "a17198e64341aa311e7c2ae206a220b9986b2d6c987e96197ae5e06fc473685e"}, "fixed_synthetic_quantile": 32.21650314331055, "jobs_submitted": false, "kind": "read_only_original_interpreter_metadata_v1", "lerp_source": null, "numpy_conda_records": [{"bytes": 660908, "mtime_utc": "2026-01-22T11:59:56+00:00", "package": {"build": "py311h2e04523_0", "build_number": 0, "name": "numpy", "subdir": "linux-64", "timestamp": 1757505084000, "version": "2.3.3"}, "path": "/data1/home/sunyiq/miniconda3/envs/nh_final/conda-meta/numpy-2.3.3-py311h2e04523_0.json", "sha256": "c01986cf3cddf5f8c997694e5c3836e8d0405f03a9ccbaeb4dea14c21c322677"}], "numpy_file": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/__init__.py", "numpy_history_sections": [{"action": "+", "package": "numpy-2.3.3-py311h2e04523_0", "transaction": "==> 2026-01-22 20:01:39 <=="}], "numpy_version": "2.3.3", "observed_at_utc": "2026-10-08T17:44:54.608115+00:00", "original_job_numpy_version_not_inferred_without_history_evidence": true, "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "quantile_source_sha256": "32c164e3d864cc11dc44d3e1f85963efcc41f71439f2efb92df05844865a26d5", "science_inputs_read": false, "scores_read": false, "weights_loaded": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T01:44:54+0800
