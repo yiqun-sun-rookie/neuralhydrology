@@ -1,0 +1,161 @@
+### channel=hydrol85935-revision-20261008-001 seq=2
+### host=login4
+### started=2026-10-08T16:41:08+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/assets_20261008_001.tar.gz: OK
+code/draft/papers/05_adversarial_latex/revision_HYDROL85935_20261006/parallel_tasks_20261008/experiment_preparation/implementation_spec.md: OK
+code/draft/papers/05_adversarial_latex/revision_HYDROL85935_20261006/parallel_tasks_20261008/experiment_preparation/proposed_execution_matrix.csv: OK
+code/draft/papers/05_adversarial_latex/revision_HYDROL85935_20261006/parallel_tasks_20261008/experiment_preparation/supplemented_experiment_plan.md: OK
+code/neuralhydrology/__about__.py: OK
+code/neuralhydrology/__init__.py: OK
+code/neuralhydrology/datasetzoo/__init__.py: OK
+code/neuralhydrology/datasetzoo/basedataset.py: OK
+code/neuralhydrology/datasetzoo/camelsaus.py: OK
+code/neuralhydrology/datasetzoo/camelsbr.py: OK
+code/neuralhydrology/datasetzoo/camelscl.py: OK
+code/neuralhydrology/datasetzoo/camelsde.py: OK
+code/neuralhydrology/datasetzoo/camelsgb.py: OK
+code/neuralhydrology/datasetzoo/camelsind.py: OK
+code/neuralhydrology/datasetzoo/camelsus.py: OK
+code/neuralhydrology/datasetzoo/caravan.py: OK
+code/neuralhydrology/datasetzoo/datasetregistry.py: OK
+code/neuralhydrology/datasetzoo/genericdataset.py: OK
+code/neuralhydrology/datasetzoo/hourlycamelsh.py: OK
+code/neuralhydrology/datasetzoo/hourlycamelsus.py: OK
+code/neuralhydrology/datasetzoo/lamah.py: OK
+code/neuralhydrology/datasetzoo/template.py: OK
+code/neuralhydrology/datautils/__init__.py: OK
+code/neuralhydrology/datautils/climateindices.py: OK
+code/neuralhydrology/datautils/pet.py: OK
+code/neuralhydrology/datautils/utils.py: OK
+code/neuralhydrology/evaluation/__init__.py: OK
+code/neuralhydrology/evaluation/evaluate.py: OK
+code/neuralhydrology/evaluation/metrics.py: OK
+code/neuralhydrology/evaluation/plots.py: OK
+code/neuralhydrology/evaluation/signatures.py: OK
+code/neuralhydrology/evaluation/tester.py: OK
+code/neuralhydrology/evaluation/utils.py: OK
+code/neuralhydrology/hydroagent/__init__.py: OK
+code/neuralhydrology/modelzoo/__init__.py: OK
+code/neuralhydrology/modelzoo/arlstm.py: OK
+code/neuralhydrology/modelzoo/baseconceptualmodel.py: OK
+code/neuralhydrology/modelzoo/basemodel.py: OK
+code/neuralhydrology/modelzoo/cudalstm.py: OK
+code/neuralhydrology/modelzoo/customlstm.py: OK
+code/neuralhydrology/modelzoo/ealstm.py: OK
+code/neuralhydrology/modelzoo/embcudalstm.py: OK
+code/neuralhydrology/modelzoo/fc.py: OK
+code/neuralhydrology/modelzoo/filmlstm.py: OK
+code/neuralhydrology/modelzoo/gru.py: OK
+code/neuralhydrology/modelzoo/handoff_forecast_lstm.py: OK
+code/neuralhydrology/modelzoo/head.py: OK
+code/neuralhydrology/modelzoo/hybridmodel.py: OK
+code/neuralhydrology/modelzoo/inputlayer.py: OK
+code/neuralhydrology/modelzoo/mamba.py: OK
+code/neuralhydrology/modelzoo/mclstm.py: OK
+code/neuralhydrology/modelzoo/mtslstm.py: OK
+code/neuralhydrology/modelzoo/mtsmamba.py: OK
+code/neuralhydrology/modelzoo/multihead_forecast_lstm.py: OK
+code/neuralhydrology/modelzoo/odelstm.py: OK
+code/neuralhydrology/modelzoo/positional_encoding.py: OK
+code/neuralhydrology/modelzoo/sequential_forecast_lstm.py: OK
+code/neuralhydrology/modelzoo/shm.py: OK
+code/neuralhydrology/modelzoo/stacked_forecast_lstm.py: OK
+code/neuralhydrology/modelzoo/template.py: OK
+code/neuralhydrology/modelzoo/transformer.py: OK
+code/neuralhydrology/nh_run.py: OK
+code/neuralhydrology/nh_run_scheduler.py: OK
+code/neuralhydrology/training/__init__.py: OK
+code/neuralhydrology/training/basetrainer.py: OK
+code/neuralhydrology/training/earlystopper.py: OK
+code/neuralhydrology/training/logger.py: OK
+code/neuralhydrology/training/loss.py: OK
+code/neuralhydrology/training/regularization.py: OK
+code/neuralhydrology/training/train.py: OK
+code/neuralhydrology/utils/__init__.py: OK
+code/neuralhydrology/utils/config.py: OK
+code/neuralhydrology/utils/configutils.py: OK
+code/neuralhydrology/utils/era5l_export.py: OK
+code/neuralhydrology/utils/era5l_hourly_processing.py: OK
+code/neuralhydrology/utils/errors.py: OK
+code/neuralhydrology/utils/logging_utils.py: OK
+code/neuralhydrology/utils/nh_results_ensemble.py: OK
+code/neuralhydrology/utils/ratingcurve.py: OK
+code/neuralhydrology/utils/samplingutils.py: OK
+code/src/adversarial/__init__.py: OK
+code/src/adversarial/data/531_basins.txt: OK
+code/src/adversarial/model_wrapper.py: OK
+code/src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/baseline_epoch030.npz: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/test/model_epoch030/test_metrics.csv: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/train_data/train_data_scaler.yml: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/baseline_epoch030.npz: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/test/model_epoch030/test_metrics.csv: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/train_data/train_data_scaler.yml: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/baseline_epoch030.npz: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/test/model_epoch030/test_metrics.csv: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/train_data/train_data_scaler.yml: OK
+=== current queue - read only ===
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            237173         hgpu2p              us-output-profile-1008    PENDING         0:00        1                gpu:1                    (Resources)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820         hgpu2p  zj_gru_history_recovery_261006_001    RUNNING     18:31:30        4                gpu:1                         ngu001
+            236705         hgpu2p zj_legacy_lstm__small_261006_pathfi    RUNNING   2-05:22:49        4                gpu:1                         ngu011
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   2-05:22:49        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   2-05:22:49        4                gpu:1                         ngu001
+=== partition rules ===
+PartitionName=hgpu2p
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[001-002,004-008,010-011]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+=== existing waiting task scheduling constraints - read only ===
+JobId=237173 JobName=us-output-profile-1008
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=288690 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Resources Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A
+   SubmitTime=2026-10-08T01:48:47 EligibleTime=2026-10-08T01:48:47
+   AccrueTime=2026-10-08T01:48:47
+   StartTime=2027-10-06T11:18:20 EndTime=2027-10-06T11:23:20 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-08T16:42:17
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=ngu011 ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=1,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/profile_v1.sbatch
+   WorkDir=/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001
+   StdErr=/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/logs/profile_237173.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/us_server_synthetic_resource_profile_20261008_001/logs/profile_237173.out
+   Power=
+   TresPerNode=gpu:1
+
+ASSETS_DEPLOYED /data1/home/sunyiq/hydrol85935_revision_20261008_001
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T16:41:09+0800
