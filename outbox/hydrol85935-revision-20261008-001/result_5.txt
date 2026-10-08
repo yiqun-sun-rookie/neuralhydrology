@@ -1,0 +1,53 @@
+### channel=hydrol85935-revision-20261008-001 seq=5
+### host=login4
+### started=2026-10-08T17:58:34+0800
+### ---------- output ----------
+2026-10-08T17:58:34+0800
+=== own preflight status ===
+JobIDRaw|JobName|State|ExitCode|Elapsed|AllocCPUS|MaxRSS
+237696|hydrol85935-preflight|FAILED|4:0|00:00:55|4|
+237696.batch|batch|FAILED|4:0|00:00:55|4|7.50M
+237696.extern|extern|COMPLETED|0:0|00:00:55|4|1632K
+slurm_load_jobs error: Invalid job id specified
+Job no longer in live queue; use accounting above
+slurm_load_jobs error: Invalid job id specified
+Start forecast unavailable
+=== own output ===
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/preflight-237696.out
+2026-10-08T17:29:45+08:00
+JOB_ID=237696 CUDA_VISIBLE_DEVICES=1
+name, memory.total [MiB], memory.used [MiB]
+NVIDIA GeForce RTX 3090, 24576 MiB, 309 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 3 MiB
+2.4.0 /data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v001/code/neuralhydrology/__init__.py
+basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt: FAILED
+basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt: FAILED
+basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt: FAILED
+sha256sum: WARNING: 3 computed checksums did NOT match
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/preflight-237696.err
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/data_identity-237696.txt
+basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt: FAILED
+basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt: FAILED
+basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt: FAILED
+sha256sum: WARNING: 3 computed checksums did NOT match
+=== current resources ===
+NODELIST            PARTITION   STATE           CPUS(A/I/O/T)           GRES_USED                               
+ngu001              hgpu2p      mixed           80/16/0/96              gpu:2,dcu:0                             
+ngu002              hgpu2p      mixed           8/88/0/96               gpu:2,dcu:0                             
+ngu004              hgpu2p      mixed           20/76/0/96              gpu:2,dcu:0                             
+ngu005              hgpu2p      mixed           14/82/0/96              gpu:2,dcu:0                             
+ngu006              hgpu2p      mixed           20/76/0/96              gpu:2,dcu:0                             
+ngu007              hgpu2p      mixed           8/88/0/96               gpu:2,dcu:0                             
+ngu008              hgpu2p      mixed           8/88/0/96               gpu:2,dcu:0                             
+ngu010              hgpu2p      mixed           8/24/0/32               gpu:2,dcu:0                             
+ngu011              hgpu2p      mixed           8/24/0/32               gpu:2,dcu:0                             
+ngu101              hgpu4       allocated       96/0/0/96               gpu:3,dcu:0                             
+ngu102              hgpu4       mixed           66/30/0/96              gpu:3,dcu:0                             
+ngu103              hgpu4       down*           0/0/96/96               gpu:0,dcu:0                             
+ngu104              hgpu4       mixed           44/52/0/96              gpu:4,dcu:0                             
+ngu201              hgpu8       allocated       64/0/0/64               gpu:5,dcu:0                             
+ngu202              hgpu8       mixed           44/20/0/64              gpu:8,dcu:0                             
+ngu203              hgpu8       mixed$          32/32/0/64              gpu:8,dcu:0                             
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T17:58:34+0800
