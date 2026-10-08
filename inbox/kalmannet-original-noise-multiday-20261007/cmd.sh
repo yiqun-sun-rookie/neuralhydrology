@@ -1,27 +1,15 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -X utf8 -B - <<'READ_ONLY_ENVIRONMENT_INVENTORY'
-import json
-from pathlib import Path
-base = Path('/data1/home/sunyiq/miniconda3')
-roots = [base] + sorted(path for path in (base / 'envs').iterdir() if path.is_dir())
-results = []
-for root in roots:
-    item = {'root': str(root), 'python_executable_exists': (root / 'bin/python').is_file(), 'packages': []}
-    for directory in sorted((root / 'lib').glob('python*/site-packages')):
-        for package in ('numpy', 'scipy'):
-            for metadata in sorted(directory.glob(package + '-*.dist-info/METADATA')):
-                fields = {}
-                requirements = []
-                for line in metadata.read_text(encoding='utf-8', errors='replace').splitlines():
-                    if line.startswith(('Name: ', 'Version: ', 'Requires-Python: ')):
-                        key, value = line.split(': ', 1)
-                        fields[key] = value
-                    elif line.startswith('Requires-Dist: numpy'):
-                        requirements.append(line)
-                item['packages'].append({'metadata': str(metadata), 'fields': fields, 'numpy_requirements': requirements})
-    item['conda_python_records'] = [path.name for path in sorted((root / 'conda-meta').glob('python-*.json'))]
-    results.append(item)
-cache = [path.name for path in sorted((base / 'pkgs').glob('numpy-1.26*'))]
-print('NUMERIC_ENVIRONMENT_JSON=' + json.dumps({'mode': 'read-only filesystem metadata', 'environments': results, 'numpy126_cache': cache, 'scientific_model_runs': 0, 'changed_environment_files': 0}), flush=True)
-READ_ONLY_ENVIRONMENT_INVENTORY
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -X utf8 -B - <<'WHEEL_ACCESS'
+import json, shutil, urllib.request
+url = 'https://files.pythonhosted.org/packages/3a/d0/edc009c27b406c4f9cbc79274d6e46d634d139075492ad055e3d68445925/numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl'
+record = {'mode': 'read-only HEAD and disk metadata', 'url': url, 'downloaded_bytes': 0, 'scientific_model_runs': 0, 'modified_environment_files': 0}
+try:
+    with urllib.request.urlopen(urllib.request.Request(url, method='HEAD'), timeout=30) as handle:
+        record.update(status=handle.status, content_length=handle.headers.get('Content-Length'))
+except Exception as error:
+    record.update(error_type=type(error).__name__, error=str(error))
+space = shutil.disk_usage('/data1/home/sunyiq')
+record.update(disk_free_bytes=space.free)
+print('WHEEL_ACCESS_JSON=' + json.dumps(record), flush=True)
+WHEEL_ACCESS
