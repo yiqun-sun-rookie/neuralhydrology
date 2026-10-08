@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-reference-audit-20261009 seq=3
+### host=login4
+### started=2026-10-09T02:16:00+0800
+### ---------- output ----------
+STATUS_JSON={"utc": "2026-10-08T18:16:01.787081+00:00", "counts": {"computed": 12, "failed": 0, "missing": 379}, "jobs": [{"job_id": "238095", "batch": [0, 100], "accounting": "", "receipt": null, "stdout_tail": ["actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826"], "stderr_tail": []}], "queue": "238095 R INVALID icn281"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T02:16:01+0800
