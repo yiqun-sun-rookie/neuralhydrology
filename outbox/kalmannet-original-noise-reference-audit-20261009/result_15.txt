@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-reference-audit-20261009 seq=15
+### host=login4
+### started=2026-10-09T03:06:10+0800
+### ---------- output ----------
+STATUS_JSON={"utc": "2026-10-08T19:06:11.185060+00:00", "counts": {"computed": 41, "failed": 0, "missing": 350}, "jobs": [{"job_id": "238095", "batch": [0, 100], "accounting": "238095|RUNNING|0:0|00:51:26|1|billing=1,cpu=1,node=1", "receipt": null, "stdout_tail": ["actual_basin_complete 01542810 COMPUTED_PENDING_INDEPENDENT_REVIEW 102.449s", "actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_basin_complete 01543000 COMPUTED_PENDING_INDEPENDENT_REVIEW 102.176s"], "stderr_tail": []}], "queue": "238095 R 49:49 icn281"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T03:06:11+0800
