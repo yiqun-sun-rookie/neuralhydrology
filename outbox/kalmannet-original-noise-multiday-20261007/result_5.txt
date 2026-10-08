@@ -1,0 +1,16 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=5
+### host=login4
+### started=2026-10-08T14:52:03+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_original_noise_multiday_20261007_attempt1/code/remote.py", line 165, in <module>
+    export(args.start, args.stop, args.chunk)
+  File "/data1/home/sunyiq/kalmannet_original_noise_multiday_20261007_attempt1/code/remote.py", line 109, in export
+    queued = subprocess.run(["squeue", "--noheader", "--jobs=" + job, "--format=%i %t"],
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['squeue', '--noheader', '--jobs=237583', '--format=%i %t']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-08T14:52:04+0800
