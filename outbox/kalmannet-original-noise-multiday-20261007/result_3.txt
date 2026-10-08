@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=3
+### host=login4
+### started=2026-10-08T14:46:32+0800
+### ---------- output ----------
+{"status": "SUBMITTED", "utc": "2026-10-08T06:46:42.437585+00:00", "job_id": "237583", "batch": [0, 195], "command": ["sbatch", "--parsable", "/data1/home/sunyiq/kalmannet_original_noise_multiday_20261007_attempt1/code/forecast_batch.slurm", "0", "195"]}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T14:46:42+0800
