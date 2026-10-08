@@ -1,0 +1,12 @@
+### channel=hydrol85935-revision-20261008-001 seq=12
+### host=login4
+### started=2026-10-08T21:47:46+0800
+### ---------- output ----------
+2026-10-08T21:47:46+0800
+{"environment": "knet_clean", "path": "/data1/home/sunyiq/miniconda3/envs/knet_clean", "packages": {"numpy": "2.3.3", "pandas": "2.3.2", "scipy": "1.16.2"}}
+{"environment": "neuralhydrology", "path": "/data1/home/sunyiq/miniconda3/envs/neuralhydrology", "packages": {"numpy": "2.3.5", "pandas": "2.3.3", "xarray": "2025.12.0", "scipy": "1.17.0", "pyyaml": "6.0.3"}}
+{"environment": "nh_clean", "path": "/data1/home/sunyiq/miniconda3/envs/nh_clean", "packages": {"numpy": "2.2.6", "pandas": "2.3.3", "scipy": "1.15.2"}}
+{"environment": "nh_final", "path": "/data1/home/sunyiq/miniconda3/envs/nh_final", "packages": {"numpy": "2.3.3", "pandas": "2.3.2", "xarray": "2025.12.0", "scipy": "1.16.2"}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T21:47:52+0800
