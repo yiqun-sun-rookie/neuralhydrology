@@ -1,0 +1,25 @@
+### channel=hydrol85935-revision-20261008-001 seq=3
+### host=login4
+### started=2026-10-08T17:28:03+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/runner_v001.tar.gz: OK
+tar: preflight.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: CODE.sha256: implausibly old time stamp 1970-01-01 08:00:00
+code/src/adversarial/scripts/revision_20261008/__init__.py: OK
+code/src/adversarial/scripts/revision_20261008/contracts.py: OK
+code/src/adversarial/scripts/revision_20261008/data.py: OK
+code/src/adversarial/scripts/revision_20261008/engine.py: OK
+code/src/adversarial/scripts/revision_20261008/records.py: OK
+code/src/adversarial/scripts/revision_20261008/reporting.py: OK
+code/src/adversarial/scripts/revision_20261008/run.py: OK
+code/src/adversarial/scripts/revision_20261008/training.py: OK
+code/test/test_adversarial/test_revision_20261008_runner.py: OK
+DATA.sha256: OK
+data_identity.json: OK
+preflight.sbatch: OK
+Submitted batch job 237696
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            237696         hgpu2p               hydrol85935-preflight    PENDING         0:00        4                gpu:1                     (Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T17:28:05+0800
