@@ -1,0 +1,13 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=186
+### host=login4
+### started=2026-10-08T21:47:47+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002/records/monitoring_3h/gpu_compatibility_submission_007_attempt.json'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-08T21:47:49+0800
