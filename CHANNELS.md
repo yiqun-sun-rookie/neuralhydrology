@@ -148,3 +148,5 @@ git rm inbox/seq
 
 | kalmannet-local-02092500-20261007-001 | One exact trained checkpoint transfer for authorized local 02092500 diagnostic | 2026-10-07 | File copy only; no remote model job; own inbox/outbox only |
 | kalmannet-original-noise-multiday-20261007 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
+
+| `hydrol85935-revision-20261008-001` | HYDROL85935 revision: isolated supplemental training and attacks | 2026-10-08 | Only /data1/home/sunyiq/hydrol85935_revision_20261008_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
