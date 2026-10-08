@@ -6,8 +6,8 @@ job=$(cat "$ROOT/control/preflight_v001_job_id")
 case "$job" in *[!0-9]*|'') echo INVALID_OWN_JOB_ID; exit 3;; esac
 date -Is
 printf '=== own preflight status ===\n'
-squeue -j "$job" -o '%.18i %.14P %.35j %.10T %.12M %.8C %.20b %.30R'
 sacct -j "$job" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,AllocCPUS,MaxRSS -P
+if squeue -j "$job" -o '%.18i %.14P %.35j %.10T %.12M %.8C %.20b %.30R'; then :; else printf 'Job no longer in live queue; use accounting above\n'; fi
 if squeue -j "$job" --start; then :; else printf 'Start forecast unavailable\n'; fi
 printf '=== own output ===\n'
 for p in "$ROOT/logs/preflight-$job.out" "$ROOT/logs/preflight-$job.err" "$ROOT/logs/data_identity-$job.txt"; do
