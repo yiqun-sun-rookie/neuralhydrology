@@ -1,0 +1,25 @@
+### channel=china-negative-repair-20261006 seq=47
+### host=login4
+### started=2026-10-08T22:49:37+0800
+### ---------- output ----------
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/diagnostic_status_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/run_flow_pair_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/full_observation_core_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/saved_results_reader_v2.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/flow_pair_core_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/raw_pair_reader_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/netcdf3_schema_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/numeric_diagnostic_core_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/src/collect_flow_pair_v1.py: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/contracts/FLOW_PAIR_SOURCE_v1.json: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/contracts/EXACT_SOURCE_SCHEMA_v1.json: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/references/ACCEPTED_DATE_REPORT_v1.json.gz: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/references/ACCEPTED_GLOBAL_REPORT_v1.json.gz: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/references/ACTUAL_FORMAT_RECEIPT_seq28.json: OK
+/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001/flow_pair_v1.sbatch: OK
+FLOW_PAIR_ROOT=/data1/home/sunyiq/us_flow_representation_pair_diagnostic_20261008_001
+FLOW_PAIR_JOB_ID=237953
+FLOW_PAIR_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T22:49:37+0800
