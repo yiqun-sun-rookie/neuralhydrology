@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 python3 - <<'PY'
+import json,subprocess,pathlib,re
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
+job=str(json.loads((root/'records/scheduler_jobs.json').read_text())['legacy_lstm__small'])
+r=subprocess.run(['scontrol','show','job','-o',job],capture_output=True,text=True,timeout=15)
+report={'read_only':True,'registered_job':job,'scheduler':{'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr}}
+match=re.search(r'(?:^| )NodeList=([a-zA-Z0-9_-]+)(?: |$)',r.stdout)
+if match and 'JobState=RUNNING' in r.stdout and ('WorkDir='+str(root)+' ') in r.stdout:
+ command='python3 -c '+repr("import base64;exec(compile(base64.b64decode('aW1wb3J0IHBhdGhsaWIsb3MsanNvbixzdWJwcm9jZXNzLHNodXRpbCxkYXRldGltZSx0aW1lCnJvb3Q9Jy9kYXRhMS9ob21lL3N1bnlpcS96aGVuamlhbmdfY29tcGxldGVfY29tcGFyaXNvbl8yMDI2MTAwNl8wMDInCnI9eydjaGVja2VkX2F0JzpkYXRldGltZS5kYXRldGltZS5ub3coKS5hc3RpbWV6b25lKCkuaXNvZm9ybWF0KCksJ3Rvb2xzJzp7bjpzaHV0aWwud2hpY2gobikgZm9yIG4gaW4gKCdnZGInLCdwc3RhY2snLCdwZXJmJywncHktc3B5Jyl9LCdwaWQnOk5vbmUsJ3N0YWNrX3NhbXBsZXMnOltdfQpmb3IgcCBpbiBwYXRobGliLlBhdGgoJy9wcm9jJykuaXRlcmRpcigpOgogaWYgcC5uYW1lLmlzZGlnaXQoKToKICB0cnk6CiAgIGlmICdzY3JpcHRzL3RyYWluX3N1cGVyY29tcHV0ZXJfY2FzZS5weSAtLWNhc2UgbGVnYWN5X2xzdG1fX3NtYWxsJyBpbiAocC8nY21kbGluZScpLnJlYWRfYnl0ZXMoKS5yZXBsYWNlKGInXDAnLGInICcpLmRlY29kZSgpIGFuZCBzdHIoKHAvJ2N3ZCcpLnJlc29sdmUoKSk9PXJvb3QgYW5kICgnam9iXycrc3RyKGpzb24ubG9hZHMocGF0aGxpYi5QYXRoKHJvb3QsJ3JlY29yZHMvc2NoZWR1bGVyX2pvYnMuanNvbicpLnJlYWRfdGV4dCgpKVsnbGVnYWN5X2xzdG1fX3NtYWxsJ10pKSBpbiAocC8nY2dyb3VwJykucmVhZF90ZXh0KCk6clsncGlkJ109aW50KHAubmFtZSkKICBleGNlcHQgT1NFcnJvcjpwYXNzCmlmIHJbJ3BpZCddIGFuZCByWyd0b29scyddWydnZGInXToKIGZvciBpIGluIHJhbmdlKDIpOgogIGNtZD1bclsndG9vbHMnXVsnZ2RiJ10sJy1ueCcsJy1iYXRjaCcsJy1wJyxzdHIoclsncGlkJ10pLCctZXgnLCdzZXQgcGFnaW5hdGlvbiBvZmYnLCctZXgnLCd0aHJlYWQgYXBwbHkgYWxsIGJ0IDE4JywnLWV4JywnZGV0YWNoJ10KICB0cnk6CiAgIHg9c3VicHJvY2Vzcy5ydW4oY21kLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlLHRpbWVvdXQ9MTgpO3JbJ3N0YWNrX3NhbXBsZXMnXS5hcHBlbmQoeydhdCc6ZGF0ZXRpbWUuZGF0ZXRpbWUubm93KCkuYXN0aW1lem9uZSgpLmlzb2Zvcm1hdCgpLCdyZXR1cm5jb2RlJzp4LnJldHVybmNvZGUsJ3N0ZG91dCc6eC5zdGRvdXRbLTQwMDAwOl0sJ3N0ZGVycic6eC5zdGRlcnJbLTQwMDA6XX0pCiAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOnJbJ3N0YWNrX3NhbXBsZXMnXS5hcHBlbmQoeydlcnJvcic6c3RyKGUpfSkKICBpZiBpPT0wOnRpbWUuc2xlZXAoNSkKcHJpbnQoanNvbi5kdW1wcyhyLGVuc3VyZV9hc2NpaT1UcnVlKSkK'),'own_job_stack','exec'))")
+ r=subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',match.group(1),command],capture_output=True,text=True,timeout=55)
+ report['node_stack']={'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr}
+print(json.dumps(report,ensure_ascii=True))
+PY
+
+#!/usr/bin/env bash
+set -euo pipefail
+python3 - <<'PY'
 import contextlib,datetime,io,json,os,pathlib,subprocess
 ORIGINAL=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
 RECOVERY=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001')
@@ -45,20 +61,4 @@ if str(RECOVERY) in snapshots:
  result['checked_at_beijing']=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()
 result['scope']='active_cases_with_preserved_historical_failure'
 print(json.dumps(result,ensure_ascii=True,sort_keys=True))
-PY
-
-python3 - <<'PY'
-import json,subprocess,pathlib,re
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
-job=str(json.loads((root/'records/scheduler_jobs.json').read_text())['legacy_lstm__small'])
-r=subprocess.run(['scontrol','show','job','-o',job],capture_output=True,text=True,timeout=15)
-report={'read_only':True,'registered_job':job,'scheduler':{'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr}}
-match=re.search(r'(?:^| )NodeList=([a-zA-Z0-9_-]+)(?: |$)',r.stdout)
-if match and 'JobState=RUNNING' in r.stdout and ('WorkDir='+str(root)+' ') in r.stdout:
- host=match.group(1)
- command='python3 -c '+repr("import base64;exec(compile(base64.b64decode('aW1wb3J0IG9zLHBhdGhsaWIsanNvbixzdWJwcm9jZXNzLHRpbWUsZGF0ZXRpbWUsc2h1dGlsCnJvb3Q9Jy9kYXRhMS9ob21lL3N1bnlpcS96aGVuamlhbmdfY29tcGxldGVfY29tcGFyaXNvbl8yMDI2MTAwNl8wMDInCnJlcG9ydD17J3NhbXBsZXMnOltdLCdyZWFkX29ubHknOlRydWV9CmZvciBpIGluIHJhbmdlKDMpOgogc2FtcGxlPXsnYXQnOmRhdGV0aW1lLmRhdGV0aW1lLm5vdygpLmFzdGltZXpvbmUoKS5pc29mb3JtYXQoKSwncHJvY2Vzc2VzJzpbXSwnZ3B1JzpbXX0KIGZvciBwIGluIHBhdGhsaWIuUGF0aCgnL3Byb2MnKS5pdGVyZGlyKCk6CiAgaWYgbm90IHAubmFtZS5pc2RpZ2l0KCk6Y29udGludWUKICB0cnk6CiAgIGNvbW1hbmQ9KHAvJ2NtZGxpbmUnKS5yZWFkX2J5dGVzKCkucmVwbGFjZShiJ1wwJyxiJyAnKS5kZWNvZGUoKQogICBpZiAnc2NyaXB0cy90cmFpbl9zdXBlcmNvbXB1dGVyX2Nhc2UucHkgLS1jYXNlIGxlZ2FjeV9sc3RtX19zbWFsbCcgbm90IGluIGNvbW1hbmQ6Y29udGludWUKICAgaWYgc3RyKChwLydjd2QnKS5yZXNvbHZlKCkpIT1yb290OmNvbnRpbnVlCiAgIHJvdz17J3BpZCc6aW50KHAubmFtZSksJ2NvbW1hbmQnOmNvbW1hbmQsJ2N3ZCc6c3RyKChwLydjd2QnKS5yZXNvbHZlKCkpfQogICBmb3IgbiBpbiAoJ3N0YXQnLCdzdGF0dXMnLCd3Y2hhbicsJ3N5c2NhbGwnLCdjZ3JvdXAnLCdpbycsJ3N0YWNrJyk6CiAgICB0cnk6cm93W25dPShwL24pLnJlYWRfdGV4dCgpWzoxMjAwMF0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZTpyb3dbbl09eydlcnJvcic6c3RyKGUpfQogICBjbWQ9WydwcycsJy1MJywnLXAnLHAubmFtZSwnLW8nLCd0aWQscGNwdSx0aW1lLHN0YXQsd2NoYW46MzAsY29tbSddCiAgIHI9c3VicHJvY2Vzcy5ydW4oY21kLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlLHRpbWVvdXQ9NSk7cm93Wyd0aHJlYWRzJ109eydyZXR1cm5jb2RlJzpyLnJldHVybmNvZGUsJ3N0ZG91dCc6ci5zdGRvdXQsJ3N0ZGVycic6ci5zdGRlcnJ9CiAgIGlmIGk9PTA6CiAgICBzcHk9c2h1dGlsLndoaWNoKCdweS1zcHknKQogICAgaWYgbm90IHNweToKICAgICBjYW5kaWRhdGU9cGF0aGxpYi5QYXRoKCcvZGF0YTEvaG9tZS9zdW55aXEvLmNvbmRhL2VudnMvbmhfZmluYWwvYmluL3B5LXNweScpCiAgICAgaWYgY2FuZGlkYXRlLmlzX2ZpbGUoKTpzcHk9c3RyKGNhbmRpZGF0ZSkKICAgIHJvd1sncHlfc3B5X2F2YWlsYWJsZSddPWJvb2woc3B5KQogICAgaWYgc3B5OgogICAgIHI9c3VicHJvY2Vzcy5ydW4oW3NweSwnZHVtcCcsJy0tcGlkJyxwLm5hbWVdLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlLHRpbWVvdXQ9MTApO3Jvd1sncHl0aG9uX3N0YWNrJ109eydyZXR1cm5jb2RlJzpyLnJldHVybmNvZGUsJ3N0ZG91dCc6ci5zdGRvdXQsJ3N0ZGVycic6ci5zdGRlcnJ9CiAgIHNhbXBsZVsncHJvY2Vzc2VzJ10uYXBwZW5kKHJvdykKICBleGNlcHQgKE9TRXJyb3IsVmFsdWVFcnJvcik6Y29udGludWUKIGZvciBjbWQgaW4gKFsnbnZpZGlhLXNtaScsJy0tcXVlcnktZ3B1PWluZGV4LHV1aWQsdXRpbGl6YXRpb24uZ3B1LHV0aWxpemF0aW9uLm1lbW9yeSxtZW1vcnkudXNlZCxwb3dlci5kcmF3JywnLS1mb3JtYXQ9Y3N2J10sWydudmlkaWEtc21pJywnLS1xdWVyeS1jb21wdXRlLWFwcHM9cGlkLGdwdV91dWlkLHVzZWRfbWVtb3J5JywnLS1mb3JtYXQ9Y3N2J10pOgogIHI9c3VicHJvY2Vzcy5ydW4oY21kLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlLHRpbWVvdXQ9NSk7c2FtcGxlWydncHUnXS5hcHBlbmQoeydyZXR1cm5jb2RlJzpyLnJldHVybmNvZGUsJ3N0ZG91dCc6ci5zdGRvdXQsJ3N0ZGVycic6ci5zdGRlcnJ9KQogcmVwb3J0WydzYW1wbGVzJ10uYXBwZW5kKHNhbXBsZSkKIGlmIGk8Mjp0aW1lLnNsZWVwKDgpCnByaW50KGpzb24uZHVtcHMocmVwb3J0LGVuc3VyZV9hc2NpaT1UcnVlKSkK'),'read_only_activity','exec'))")
- r=subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',host,command],capture_output=True,text=True,timeout=65)
- report['node_activity']={'node':host,'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr}
-else:report['node_activity']={'not_run':'job mapping or running node unavailable'}
-print(json.dumps(report,ensure_ascii=True))
 PY
