@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-multiday-20261007 seq=10
+### host=login4
+### started=2026-10-08T16:08:29+0800
+### ---------- output ----------
+STATUS_JSON={"utc": "2026-10-08T08:08:30.307429+00:00", "counts": {"computed": 6, "failed": 0, "missing": 385}, "jobs": [{"job_id": "237631", "batch": [0, 100], "accounting": "237631|RUNNING|0:0|00:06:35|1|billing=1,cpu=1,node=1", "receipt": null, "stdout_tail": ["actual_basin_complete 01052500 COMPUTED_PENDING_INDEPENDENT_REVIEW 96.538s", "actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_forecast_origins 500/1826", "actual_forecast_origins 1000/1826", "actual_forecast_origins 1500/1826", "actual_basin_complete 01054200 COMPUTED_PENDING_INDEPENDENT_REVIEW 97.270s"], "stderr_tail": []}], "queue": "237631 R 4:59 icn281"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T16:08:30+0800
