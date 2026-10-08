@@ -1,0 +1,16 @@
+### channel=hydrol85935-revision-20261008-001 seq=14
+### host=login4
+### started=2026-10-08T22:23:40+0800
+### ---------- output ----------
+2026-10-08T22:23:40+0800
+JobIDRaw|State|ExitCode|Elapsed|MaxRSS
+237936|RUNNING|0:0|00:01:55|
+237936.batch|RUNNING|0:0|00:01:55|
+237936.extern|RUNNING|0:0|00:01:55|
+             JOBID    PARTITION                           NAME      STATE         TIME               NODELIST(REASON)
+            237936       hgpu2p       hydrol85935-inputcompare    RUNNING         0:18                         ngu011
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/inputcompare-237936.out
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/inputcompare-237936.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T22:23:40+0800
