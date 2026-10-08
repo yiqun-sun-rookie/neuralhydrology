@@ -1,0 +1,13 @@
+### channel=hydrol85935-revision-20261008-001 seq=10
+### host=login4
+### started=2026-10-08T21:33:10+0800
+### ---------- output ----------
+2026-10-08T21:33:10+0800
+JobIDRaw|State|ExitCode|Elapsed|MaxRSS
+             JOBID    PARTITION                           NAME      STATE         TIME               NODELIST(REASON)
+            237904       hgpu2p            hydrol85935-backend    RUNNING      INVALID                         ngu005
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/backend-237904.out
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/backend-237904.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-08T21:33:10+0800
