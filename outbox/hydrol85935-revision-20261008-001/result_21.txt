@@ -1,0 +1,41 @@
+### channel=hydrol85935-revision-20261008-001 seq=21
+### host=login4
+### started=2026-10-09T16:18:41+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/continuation_v003_20261009_001.tar.gz: OK
+continue_after_runtime.py: OK
+run_resource_pilot.py: OK
+resource_pilot.sbatch: OK
+runner_v003.tar.gz: OK
+full_pipeline_v003_inputs_v001_runtime271.tar.gz: OK
+FULL.sha256: OK
+code/src/adversarial/scripts/revision_20261008/__init__.py: OK
+code/src/adversarial/scripts/revision_20261008/assets.py: OK
+code/src/adversarial/scripts/revision_20261008/contracts.py: OK
+code/src/adversarial/scripts/revision_20261008/data.py: OK
+code/src/adversarial/scripts/revision_20261008/engine.py: OK
+code/src/adversarial/scripts/revision_20261008/records.py: OK
+code/src/adversarial/scripts/revision_20261008/reporting.py: OK
+code/src/adversarial/scripts/revision_20261008/run.py: OK
+code/src/adversarial/scripts/revision_20261008/training.py: OK
+code/src/adversarial/scripts/revision_20261008/validation.py: OK
+code/test/test_adversarial/test_revision_20261008_fix1.py: OK
+code/test/test_adversarial/test_revision_20261008_runner.py: OK
+DATA.sha256: OK
+data_identity.json: OK
+verify_isolated_runtime.py: OK
+materialize_inputs.py: OK
+input_overrides/basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt: OK
+input_overrides/basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt: OK
+input_overrides/basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt: OK
+preflight.sbatch: OK
+train.template.sbatch: OK
+attacks.template.sbatch: OK
+report.template.sbatch: OK
+submit_full.py: OK
+verify_preflight.py: OK
+verify_isolated_runtime.py: OK
+FINITE_CONTINUATION_STARTED pid=18522
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T16:18:43+0800
