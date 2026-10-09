@@ -1,0 +1,230 @@
+### channel=hydrol85935-revision-20261008-001 seq=26
+### host=login4
+### started=2026-10-09T21:03:14+0800
+### ---------- output ----------
+2026-10-09T21:03:14+0800
+238886|COMPLETED|0:0|00:01:17||ngu010
+238886.batch|COMPLETED|0:0|00:01:17|684500K|ngu010
+238886.extern|COMPLETED|0:0|00:01:17|2424K|ngu010
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820         hgpu2p  zj_gru_history_recovery_261006_001    RUNNING   1-22:53:35        4                gpu:1                         ngu001
+            237928         hgpu2p   zj_lstm_small_recovery_261008_002    RUNNING     22:45:49        4                gpu:1                         ngu007
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   3-09:44:54        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   3-09:44:54        4                gpu:1                         ngu001
+
+FILE runtime.json
+{
+  "python": "3.11.13",
+  "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+  "torch": "2.7.1+cu118",
+  "torch_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site/torch/__init__.py",
+  "cuda": "11.8",
+  "cudnn": 90100,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "capability": [
+    8,
+    6
+  ],
+  "job_id": "238886",
+  "core_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v003/code/neuralhydrology/__init__.py",
+  "script_sha256": "df8588e86ee3a7706881ba00a1deabf2af1ab1838858b53f00de76a20e2109d4",
+  "input_npz_sha256": "81a1127d3c0a332c0a5a82964635266b01bc54321879a948e76a9f70e4cfe4fb",
+  "note": "Fixed default and deterministic diagnostics; no gate or scientific source changes"
+}
+
+FILE summary.json
+{
+  "status": "DIAGNOSTIC_COMPLETE_NOT_SCIENTIFIC_ACCEPTANCE",
+  "cases": 24,
+  "settings": {
+    "default": {
+      "cases": 12,
+      "passed": 3
+    },
+    "deterministic": {
+      "cases": 12,
+      "passed": 3
+    }
+  },
+  "tolerance": 1e-05,
+  "job_id": "238886",
+  "trace_sha256": "eb5d1942dee0b892a922b482f51d0020e1d568710ecc9a5a9933906971b14ebb"
+}
+
+FILE comparisons.json
+[
+  {
+    "setting": "default",
+    "stage": "lstm_last",
+    "shape": [
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0007481873035430908,
+    "mean_absolute_error": 1.8217373222371396e-05
+  },
+  {
+    "setting": "default",
+    "stage": "hidden",
+    "shape": [
+      1,
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0007481873035430908,
+    "mean_absolute_error": 1.8217373222371396e-05
+  },
+  {
+    "setting": "default",
+    "stage": "cell",
+    "shape": [
+      1,
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0296630859375,
+    "mean_absolute_error": 0.000753666947571785
+  },
+  {
+    "setting": "default",
+    "stage": "prediction",
+    "shape": [
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0008008480072021484,
+    "mean_absolute_error": 0.00014046538854017854
+  },
+  {
+    "setting": "default",
+    "stage": "head_replay_on_local_lstm_last",
+    "max_absolute_error": 3.5762786865234375e-07
+  },
+  {
+    "setting": "deterministic",
+    "stage": "lstm_last",
+    "shape": [
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0007481873035430908,
+    "mean_absolute_error": 1.8217373222371396e-05
+  },
+  {
+    "setting": "deterministic",
+    "stage": "hidden",
+    "shape": [
+      1,
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0007481873035430908,
+    "mean_absolute_error": 1.8217373222371396e-05
+  },
+  {
+    "setting": "deterministic",
+    "stage": "cell",
+    "shape": [
+      1,
+      256,
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0296630859375,
+    "mean_absolute_error": 0.000753666947571785
+  },
+  {
+    "setting": "deterministic",
+    "stage": "prediction",
+    "shape": [
+      256
+    ],
+    "exact_equal": false,
+    "max_absolute_error": 0.0008008480072021484,
+    "mean_absolute_error": 0.00014046538854017854
+  },
+  {
+    "setting": "deterministic",
+    "stage": "head_replay_on_local_lstm_last",
+    "max_absolute_error": 3.5762786865234375e-07
+  }
+]
+
+FILE default_stage.json
+{
+  "lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294",
+  "lstm_input_shape": [
+    270,
+    256,
+    32
+  ],
+  "lstm_input_stride": [
+    8192,
+    32,
+    1
+  ]
+}
+
+FILE deterministic_stage.json
+{
+  "lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294",
+  "lstm_input_shape": [
+    270,
+    256,
+    32
+  ],
+  "lstm_input_stride": [
+    8192,
+    32,
+    1
+  ]
+}
+{"setting": "default", "stage_input_identity_equal": true, "remote": {"lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294", "lstm_input_shape": [270, 256, 32], "lstm_input_stride": [8192, 32, 1]}, "local": {"lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294", "lstm_input_shape": [270, 256, 32], "lstm_input_stride": [8192, 32, 1]}}
+{"setting": "deterministic", "stage_input_identity_equal": true, "remote": {"lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294", "lstm_input_shape": [270, 256, 32], "lstm_input_stride": [8192, 32, 1]}, "local": {"lstm_input_sha256": "ccc3cc5078d8bacf3c869bc352b726910209680abdbcacbc720147c68a27a294", "lstm_input_shape": [270, 256, 32], "lstm_input_stride": [8192, 32, 1]}}
+{"setting": "default", "cuda_kernel_count": 9, "kernels": ["ampere_sgemm_128x64_tn", "void at::native::(anonymous namespace)::CatArrayBatchedCopy<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 3, 64, 64>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 64, 64>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)", "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1})", "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})", "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)", "void cutlass::Kernel<cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4>(cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4::Params)", "void cutlass::Kernel<cutlass_80_tensorop_s1688gemm_64x64_16x6_tn_align4>(cutlass_80_tensorop_s1688gemm_64x64_16x6_tn_align4::Params)", "void elemWiseRNNcell<float, float, float, (cudnnRNNMode_t)2, (cudnnRNNBiasMode_t)2>(int, int, int, int, int, bool, float const*, float const*, float const*, float const*, float const*, float const*, float const*, float*, float*, float*, float*, float*, cudnnRNNClipMode_t, cudnnNanPropagation_t, float, float)", "void gemv2T_kernel_val<int, int, float, float, float, float, 128, 16, 2, 2, false, false, cublasGemvParams<cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float> >(cublasGemvParams<cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float>, float, float)"]}
+{"setting": "deterministic", "cuda_kernel_count": 9, "kernels": ["ampere_sgemm_128x64_tn", "void at::native::(anonymous namespace)::CatArrayBatchedCopy<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 3, 64, 64>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 64, 64>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)", "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1})", "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})", "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)", "void cutlass::Kernel<cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4>(cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4::Params)", "void cutlass::Kernel<cutlass_80_tensorop_s1688gemm_64x64_16x6_tn_align4>(cutlass_80_tensorop_s1688gemm_64x64_16x6_tn_align4::Params)", "void elemWiseRNNcell<float, float, float, (cudnnRNNMode_t)2, (cudnnRNNBiasMode_t)2>(int, int, int, int, int, bool, float const*, float const*, float const*, float const*, float const*, float const*, float const*, float*, float*, float*, float*, float*, cudnnRNNClipMode_t, cudnnNanPropagation_t, float, float)", "void gemv2T_kernel_val<int, int, float, float, float, float, 128, 16, 2, 2, false, false, cublasGemvParams<cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float> >(cublasGemvParams<cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float>, float, float)"]}
+{"model": "original_s100", "basin": "01022500", "setting": "default", "nse_difference": 5.3660850277137406e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.009308332522152796, "seconds": 0.31890906393527985}
+{"model": "original_s100", "basin": "02108000", "setting": "default", "nse_difference": 4.95922987076014e-06, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.013545377062769148, "seconds": 0.07653935253620148}
+{"model": "original_s100", "basin": "05120500", "setting": "default", "nse_difference": 6.030061528083941e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00019433825438142094, "seconds": 0.07612106949090958}
+{"model": "original_s100", "basin": "09492400", "setting": "default", "nse_difference": 1.691046408236474e-06, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.0013155340852222253, "seconds": 0.07676476240158081}
+{"model": "original_s100", "basin": "01022500", "setting": "deterministic", "nse_difference": 5.3660850277137406e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.009308332522152796, "seconds": 0.3882625810801983}
+{"model": "original_s100", "basin": "02108000", "setting": "deterministic", "nse_difference": 4.95922987076014e-06, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.013545377062769148, "seconds": 0.06806481257081032}
+{"model": "original_s100", "basin": "05120500", "setting": "deterministic", "nse_difference": 6.030061528083941e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00019433825438142094, "seconds": 0.06891069188714027}
+{"model": "original_s100", "basin": "09492400", "setting": "deterministic", "nse_difference": 1.691046408236474e-06, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.0013155340852222253, "seconds": 0.06894663348793983}
+{"model": "original_s200", "basin": "01022500", "setting": "default", "nse_difference": 4.747411955030589e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.008704262313187883, "seconds": 0.06923253461718559}
+{"model": "original_s200", "basin": "02108000", "setting": "default", "nse_difference": 9.731180640182302e-07, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.010290925718663857, "seconds": 0.06867820024490356}
+{"model": "original_s200", "basin": "05120500", "setting": "default", "nse_difference": 7.785070979915432e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00028158210856332744, "seconds": 0.06875983998179436}
+{"model": "original_s200", "basin": "09492400", "setting": "default", "nse_difference": 2.452886897086337e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.0013761793615785223, "seconds": 0.07281061261892319}
+{"model": "original_s200", "basin": "01022500", "setting": "deterministic", "nse_difference": 4.747411955030589e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.008704262313187883, "seconds": 0.06882914528250694}
+{"model": "original_s200", "basin": "02108000", "setting": "deterministic", "nse_difference": 9.731180640182302e-07, "passed": true, "tolerance": 1e-05, "max_daily_error": 0.010290925718663857, "seconds": 0.06874140352010727}
+{"model": "original_s200", "basin": "05120500", "setting": "deterministic", "nse_difference": 7.785070979915432e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00028158210856332744, "seconds": 0.06874619424343109}
+{"model": "original_s200", "basin": "09492400", "setting": "deterministic", "nse_difference": 2.452886897086337e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.0013761793615785223, "seconds": 0.06871354207396507}
+{"model": "original_s300", "basin": "01022500", "setting": "default", "nse_difference": 4.043877342052582e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.009047862647094007, "seconds": 0.06924671679735184}
+{"model": "original_s300", "basin": "02108000", "setting": "default", "nse_difference": 6.0867351054927354e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.011168767994149675, "seconds": 0.06893304735422134}
+{"model": "original_s300", "basin": "05120500", "setting": "default", "nse_difference": 7.560970387410215e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00026760075853360377, "seconds": 0.06907574459910393}
+{"model": "original_s300", "basin": "09492400", "setting": "default", "nse_difference": 9.75754688228303e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.0038562890912601233, "seconds": 0.06901319324970245}
+{"model": "original_s300", "basin": "01022500", "setting": "deterministic", "nse_difference": 4.043877342052582e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.009047862647094007, "seconds": 0.06874806061387062}
+{"model": "original_s300", "basin": "02108000", "setting": "deterministic", "nse_difference": 6.0867351054927354e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.011168767994149675, "seconds": 0.06882357597351074}
+{"model": "original_s300", "basin": "05120500", "setting": "deterministic", "nse_difference": 7.560970387410215e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00026760075853360377, "seconds": 0.06882926821708679}
+{"model": "original_s300", "basin": "09492400", "setting": "deterministic", "nse_difference": 9.75754688228303e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.0038562890912601233, "seconds": 0.06930898874998093}
+
+STDOUT_TAIL
+{"model": "original_s300", "basin": "05120500", "setting": "deterministic", "nse_difference": 7.560970387410215e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.00026760075853360377, "seconds": 0.06882926821708679}
+{"model": "original_s300", "basin": "09492400", "setting": "deterministic", "nse_difference": 9.75754688228303e-05, "passed": false, "tolerance": 1e-05, "max_daily_error": 0.0038562890912601233, "seconds": 0.06930898874998093}
+{"status": "DIAGNOSTIC_COMPLETE_NOT_SCIENTIFIC_ACCEPTANCE", "cases": 24, "settings": {"default": {"cases": 12, "passed": 3}, "deterministic": {"cases": 12, "passed": 3}}, "tolerance": 1e-05, "job_id": "238886", "trace_sha256": "eb5d1942dee0b892a922b482f51d0020e1d568710ecc9a5a9933906971b14ebb"}
+
+STDERR_TAIL
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T21:03:15+0800
