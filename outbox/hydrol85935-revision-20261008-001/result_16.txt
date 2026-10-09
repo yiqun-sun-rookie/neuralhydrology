@@ -1,0 +1,35 @@
+### channel=hydrol85935-revision-20261008-001 seq=16
+### host=login4
+### started=2026-10-09T14:59:52+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/runtime_setup_20261009_001.tar.gz: OK
+Filesystem                    1024-blocks         Used    Available Capacity Mounted on
+hhjt_parastor_hhjt_parastor 1024283213820 693717195928 330566017892      68% /data1
+             JOBID                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            202229                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820  zj_gru_history_recovery_261006_001    RUNNING   1-16:50:13        4                gpu:1                         ngu001
+            237928   zj_lstm_small_recovery_261008_002    RUNNING     16:42:27        4                gpu:1                         ngu007
+            236706 zj_explicit_gru__small_261006_pathf    RUNNING   3-03:41:32        4                gpu:1                         ngu011
+            236707 zj_legacy_lstm__historical_capacity    RUNNING   3-03:41:32        4                gpu:1                         ngu001
+tar: prepare_isolated_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: validate_matched_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: proposed_runtime_downloads.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: install_validate.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: download_then_submit.sh: implausibly old time stamp 1970-01-01 08:00:00
+tar: AUTHORIZATION.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: SETUP.sha256: implausibly old time stamp 1970-01-01 08:00:00
+prepare_isolated_runtime.py: OK
+validate_matched_runtime.py: OK
+proposed_runtime_downloads.json: OK
+install_validate.sbatch: OK
+download_then_submit.sh: OK
+AUTHORIZATION.json: OK
+DOWNLOAD_SUPERVISOR_STARTED pid=33835
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T14:59:52+0800
