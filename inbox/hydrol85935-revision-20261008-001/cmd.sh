@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
 set -eo pipefail
 ROOT=/data1/home/sunyiq/hydrol85935_revision_20261008_001
+DIAG="$ROOT/control/path_trace_20261009_001"
+PAYLOAD="$HOME/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/path_trace_20261009_001.tar.gz"
+test "$(readlink -f "$ROOT")" = "$ROOT"
 test "$(cat "$ROOT/OWNER")" = hydrol85935_revision_20261008_001
+test ! -e "$DIAG"
+test ! -e "$ROOT/diagnostics/path_trace_20261009_001"
 date -Is
-pid=$(cat "$ROOT/control/continuation_v003/coordinator_pid")
-ps -p "$pid" -o pid,etime,args || true
-for file in control/continuation_v003/status.json control/runtime_setup_20261009_001/supervisor_exit_code runtime_torch271cu118/DOWNLOAD_COMPLETE.json runtime_torch271cu118/INSTALL_COMPLETE.json diagnostics/matched_runtime_20261009/summary.json control/resource_pilot_v003.json control/full_v003/jobs.json; do
-  if test -f "$ROOT/$file"; then printf '\nFILE %s\n' "$file"; cat "$ROOT/$file"; fi
-done
-printf '\nCONTINUATION_LOG\n'
-tail -25 "$ROOT/logs/continuation-v003.log"
-printf '\nDOWNLOAD_LOG\n'
-tail -20 "$ROOT/logs/runtime-download-20261009.log"
-printf '\nDOWNLOADED_FILE_SIZES\n'
-find "$ROOT/runtime_torch271cu118/wheels" -maxdepth 1 -type f -printf '%f %s bytes\n'
-for item in 'control/runtime_setup_20261009_001/job_id:runtime' 'control/preflight_v003_job_id:preflight' 'control/resource_pilot_v003_job_id:resource-pilot'; do
-  file=${item%:*}
-  kind=${item#*:}
-  if test -f "$ROOT/$file"; then
-    job=$(cat "$ROOT/$file")
-    printf '\nSTAGE %s JOB_ID %s\n' "$kind" "$job"
-    sacct -j "$job" -n -P --format=JobIDRaw,State,ExitCode,Elapsed,MaxRSS
-    for suffix in out err; do if test -f "$ROOT/logs/$kind-$job.$suffix"; then tail -25 "$ROOT/logs/$kind-$job.$suffix"; fi; done
-  fi
-done
+squeue -u "$USER" -o '%.18i %.14P %.35j %.10T %.12M %.8C %.20b %.30R'
+# The previous coordinator stopped after a confirmed failed validation. No
+# concurrent own compute stage is permitted before this diagnostic submission.
+test "$(/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -c 'import json; print(json.load(open("/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v003/status.json"))["phase"])')" = STOPPED_WITHOUT_RETRY
+test -z "$(squeue -h -u "$USER" -o '%j' | grep '^hydrol85935-' || true)"
+printf '%s  %s\n' '4b417535fb5aa5d07421173b18d75d7321756ac0a70a77b784880360f2c6b9dc' "$PAYLOAD" | sha256sum -c -
+mkdir "$DIAG"
+tar -xzf "$PAYLOAD" -C "$DIAG"
+cd "$DIAG"
+sha256sum -c PAYLOAD.sha256
+cd "$ROOT"
+sha256sum -c "$DIAG/EXPECTED_MODELS.sha256"
+printf 'SUBMISSION_ATTEMPTED\n' > "$DIAG/submission_attempt"
+set +e
+timeout 120 sbatch "$DIAG/diagnose.sbatch" > "$DIAG/submission.out" 2> "$DIAG/submission.err"
+rc=$?
+set -e
+cat "$DIAG/submission.out" "$DIAG/submission.err"
+printf '%s\n' "$rc" > "$DIAG/submission_exit_code"
+test "$rc" -eq 0
+test "$(grep -cE '^Submitted batch job [0-9]+$' "$DIAG/submission.out")" -eq 1
+sed -nE 's/^Submitted batch job ([0-9]+)$/\1/p' "$DIAG/submission.out" > "$DIAG/job_id"
+printf 'READ_ONLY_NUMERICAL_DIAGNOSTIC_SUBMITTED job_id=%s\n' "$(cat "$DIAG/job_id")"
