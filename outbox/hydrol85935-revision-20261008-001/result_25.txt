@@ -1,0 +1,44 @@
+### channel=hydrol85935-revision-20261008-001 seq=25
+### host=login4
+### started=2026-10-09T20:59:49+0800
+### ---------- output ----------
+2026-10-09T20:59:49+0800
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820         hgpu2p  zj_gru_history_recovery_261006_001    RUNNING   1-22:50:10        4                gpu:1                         ngu001
+            237928         hgpu2p   zj_lstm_small_recovery_261008_002    RUNNING     22:42:24        4                gpu:1                         ngu007
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   3-09:41:29        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   3-09:41:29        4                gpu:1                         ngu001
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/path_trace_20261009_001.tar.gz: OK
+trace_prediction_backend.py: OK
+local_input_reference_s100.npz: OK
+local_input_reference_s100.json: OK
+local_traces.npz: OK
+local_summary.json: OK
+local_runtime.json: OK
+local_default_stage.json: OK
+local_deterministic_stage.json: OK
+EXPECTED_MODELS.sha256: OK
+diagnose.sbatch: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/train_data/train_data_scaler.yml: OK
+original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/baseline_epoch030.npz: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/train_data/train_data_scaler.yml: OK
+original_models/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/baseline_epoch030.npz: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/config.yml: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/model_epoch030.pt: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/train_data/train_data_scaler.yml: OK
+original_models/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/baseline_epoch030.npz: OK
+Submitted batch job 238886
+READ_ONLY_NUMERICAL_DIAGNOSTIC_SUBMITTED job_id=238886
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T20:59:51+0800
