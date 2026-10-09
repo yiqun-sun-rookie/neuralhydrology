@@ -1,0 +1,124 @@
+### channel=hydrol85935-revision-20261008-001 seq=24
+### host=login4
+### started=2026-10-09T20:42:25+0800
+### ---------- output ----------
+2026-10-09T20:42:25+0800
+  PID     ELAPSED COMMAND
+
+FILE control/continuation_v003/status.json
+{
+  "utc": "2026-10-09T10:18:45.953169+00:00",
+  "phase": "STOPPED_WITHOUT_RETRY",
+  "error_type": "RuntimeError",
+  "reason": "RUNTIME_VALIDATION job 238679 stopped with FAILED 4:0; no automatic retry"
+}
+FILE control/runtime_setup_20261009_001/supervisor_exit_code
+0
+
+FILE runtime_torch271cu118/DOWNLOAD_COMPLETE.json
+{
+  "status": "COMPLETE",
+  "manifest_sha256": "ab681606445561fdbaec820186b7bf7b8ceb95f2ab7311bc0c3fe74874c71eb5",
+  "files": 14,
+  "bytes": 2892971578
+}
+FILE runtime_torch271cu118/INSTALL_COMPLETE.json
+{
+  "status": "INSTALLED_NOT_VALIDATED",
+  "manifest_sha256": "ab681606445561fdbaec820186b7bf7b8ceb95f2ab7311bc0c3fe74874c71eb5",
+  "site": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site",
+  "scheduler_job_id": "238679"
+}
+FILE diagnostics/matched_runtime_20261009/summary.json
+{
+  "status": "FAIL",
+  "cases": 12,
+  "passed": 3,
+  "tolerance": 1e-05,
+  "job_id": "238679",
+  "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"
+}
+CONTINUATION_LOG
+{"utc": "2026-10-09T08:18:44.694293+00:00", "phase": "WAITING_FOR_APPROVED_DOWNLOAD_AND_RUNTIME_JOB"}
+{"utc": "2026-10-09T10:15:45.625843+00:00", "phase": "RUNTIME_VALIDATION", "scheduler_job_id": "238679", "scheduler_state": "RUNNING", "exit_code": "0:0"}
+{"utc": "2026-10-09T10:18:45.942690+00:00", "phase": "RUNTIME_VALIDATION", "scheduler_job_id": "238679", "scheduler_state": "FAILED", "exit_code": "4:0"}
+{"utc": "2026-10-09T10:18:45.953169+00:00", "phase": "STOPPED_WITHOUT_RETRY", "error_type": "RuntimeError", "reason": "RUNTIME_VALIDATION job 238679 stopped with FAILED 4:0; no automatic retry"}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v003/continue_after_runtime.py", line 167, in <module>
+    main()
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v003/continue_after_runtime.py", line 132, in main
+    wait_job(runtime_job, 'RUNTIME_VALIDATION', deadline)
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v003/continue_after_runtime.py", line 78, in wait_job
+    raise RuntimeError(f'{stage} job {job} stopped with {state} {exit_code}; no automatic retry')
+RuntimeError: RUNTIME_VALIDATION job 238679 stopped with FAILED 4:0; no automatic retry
+
+DOWNLOAD_LOG
+proposed_runtime_downloads.json: OK
+install_validate.sbatch: OK
+download_then_submit.sh: OK
+AUTHORIZATION.json: OK
+{"filename": "torch-2.7.1+cu118-cp311-cp311-manylinux_2_28_x86_64.whl", "expected_bytes": 905345785}
+{"filename": "nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 23173745}
+{"filename": "nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 875592}
+{"filename": "nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 13093662}
+{"filename": "nvidia_cudnn_cu11-9.1.0.70-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 663919573}
+{"filename": "nvidia_cublas_cu11-11.11.3.6-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 417870460}
+{"filename": "nvidia_cufft_cu11-10.9.0.58-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 168405419}
+{"filename": "nvidia_curand_cu11-10.3.0.86-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 58124497}
+{"filename": "nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 128246438}
+{"filename": "nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 204126227}
+{"filename": "nvidia_nccl_cu11-2.21.5-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 147811630}
+{"filename": "nvidia_nvtx_cu11-11.8.86-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 99130}
+{"filename": "triton-3.3.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", "expected_bytes": 155689937}
+{"filename": "sympy-1.13.3-py3-none-any.whl", "expected_bytes": 6189483}
+PINNED_DOWNLOAD_COMPLETE
+Submitted batch job 238679
+
+DOWNLOADED_FILE_SIZES
+torch-2.7.1+cu118-cp311-cp311-manylinux_2_28_x86_64.whl 905345785 bytes
+nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl 875592 bytes
+nvidia_nvtx_cu11-11.8.86-py3-none-manylinux2014_x86_64.whl 99130 bytes
+nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl 13093662 bytes
+nvidia_cudnn_cu11-9.1.0.70-py3-none-manylinux2014_x86_64.whl 663919573 bytes
+nvidia_nccl_cu11-2.21.5-py3-none-manylinux2014_x86_64.whl 147811630 bytes
+sympy-1.13.3-py3-none-any.whl 6189483 bytes
+nvidia_cublas_cu11-11.11.3.6-py3-none-manylinux2014_x86_64.whl 417870460 bytes
+nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl 23173745 bytes
+nvidia_cufft_cu11-10.9.0.58-py3-none-manylinux2014_x86_64.whl 168405419 bytes
+nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux2014_x86_64.whl 128246438 bytes
+nvidia_curand_cu11-10.3.0.86-py3-none-manylinux2014_x86_64.whl 58124497 bytes
+nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux2014_x86_64.whl 204126227 bytes
+triton-3.3.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl 155689937 bytes
+
+STAGE runtime JOB_ID 238679
+238679|FAILED|4:0|00:04:05|
+238679.batch|FAILED|4:0|00:04:05|1180348K
+238679.extern|COMPLETED|0:0|00:04:05|2128K
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/nvidia_curand_cu11-10.3.0.86-py3-none-manylinux2014_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux2014_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux2014_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/nvidia_nccl_cu11-2.21.5-py3-none-manylinux2014_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/nvidia_nvtx_cu11-11.8.86-py3-none-manylinux2014_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/triton-3.3.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Processing /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/wheels/sympy-1.13.3-py3-none-any.whl
+Installing collected packages: triton, torch, sympy, nvidia-nvtx-cu11, nvidia-nccl-cu11, nvidia-cusparse-cu11, nvidia-cusolver-cu11, nvidia-curand-cu11, nvidia-cufft-cu11, nvidia-cudnn-cu11, nvidia-cuda-runtime-cu11, nvidia-cuda-nvrtc-cu11, nvidia-cuda-cupti-cu11, nvidia-cublas-cu11
+
+Successfully installed nvidia-cublas-cu11-11.11.3.6 nvidia-cuda-cupti-cu11-11.8.87 nvidia-cuda-nvrtc-cu11-11.8.89 nvidia-cuda-runtime-cu11-11.8.89 nvidia-cudnn-cu11-9.1.0.70 nvidia-cufft-cu11-10.9.0.58 nvidia-curand-cu11-10.3.0.86 nvidia-cusolver-cu11-11.4.1.48 nvidia-cusparse-cu11-11.7.5.86 nvidia-nccl-cu11-2.21.5 nvidia-nvtx-cu11-11.8.86 sympy-1.13.3 torch-2.7.1+cu118 triton-3.3.1
+ISOLATED_RUNTIME_INSTALLED_NOT_YET_VALIDATED
+{"python": "3.11.13", "torch": "2.7.1+cu118", "numpy": "2.3.3", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "cuda_runtime": "11.8", "cuda_device": "NVIDIA GeForce RTX 3090", "scipy": "1.16.2", "cudnn_version": 90100, "neuralhydrology_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v002/code/neuralhydrology/__init__.py", "cuda_visible_devices": "1", "cuda_device_count": 1, "cudnn_enabled": true, "cudnn_allow_tf32": true, "cudnn_benchmark": false, "cudnn_deterministic": false, "matmul_allow_tf32": false, "job_id": "238679", "torch_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site/torch/__init__.py", "dependencies": [{"name": "filelock", "version": "3.19.1"}, {"name": "typing-extensions", "version": "4.15.0"}, {"name": "sympy", "version": "1.13.3"}, {"name": "networkx", "version": "3.5"}, {"name": "jinja2", "version": "3.1.6"}, {"name": "fsspec", "version": "2026.1.0"}, {"name": "nvidia-cuda-nvrtc-cu11", "version": "11.8.89"}, {"name": "nvidia-cuda-runtime-cu11", "version": "11.8.89"}, {"name": "nvidia-cuda-cupti-cu11", "version": "11.8.87"}, {"name": "nvidia-cudnn-cu11", "version": "9.1.0.70"}, {"name": "nvidia-cublas-cu11", "version": "11.11.3.6"}, {"name": "nvidia-cufft-cu11", "version": "10.9.0.58"}, {"name": "nvidia-curand-cu11", "version": "10.3.0.86"}, {"name": "nvidia-cusolver-cu11", "version": "11.4.1.48"}, {"name": "nvidia-cusparse-cu11", "version": "11.7.5.86"}, {"name": "nvidia-nccl-cu11", "version": "2.21.5"}, {"name": "nvidia-nvtx-cu11", "version": "11.8.86"}, {"name": "triton", "version": "3.3.1"}]}
+{"model": "original_s100", "basin": "01022500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=5.3660850277137406e-05, max prediction error=0.009308332522152796", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s100", "basin": "02108000", "status": "PASS", "baseline": {"status": "PASS", "stored_nse": 0.902051258575308, "reproduced_nse": 0.9020462993454372, "nse_difference": 4.95922987076014e-06, "max_daily_error_mm_day": 0.013545377062769148, "baseline_sha256": "19c790d08faf943df0bee064a029f6cecc07aadc63d785f1cf39cad5d3e96c1d"}, "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s100", "basin": "05120500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=6.030061528083941e-05, max prediction error=0.00019433825438142094", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s100", "basin": "09492400", "status": "PASS", "baseline": {"status": "PASS", "stored_nse": 0.7285584707364845, "reproduced_nse": 0.7285601617828927, "nse_difference": 1.691046408236474e-06, "max_daily_error_mm_day": 0.0013155340852222253, "baseline_sha256": "19c790d08faf943df0bee064a029f6cecc07aadc63d785f1cf39cad5d3e96c1d"}, "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s200", "basin": "01022500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=4.747411955030589e-05, max prediction error=0.008704262313187883", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s200", "basin": "02108000", "status": "PASS", "baseline": {"status": "PASS", "stored_nse": 0.8999020803918555, "reproduced_nse": 0.8999030535099195, "nse_difference": 9.731180640182302e-07, "max_daily_error_mm_day": 0.010290925718663857, "baseline_sha256": "450c7dff0047fb9cae0ea2dd1442034450ced0883620968b9d3674f83de15dc1"}, "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s200", "basin": "05120500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=7.785070979915432e-05, max prediction error=0.00028158210856332744", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s200", "basin": "09492400", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=2.452886897086337e-05, max prediction error=0.0013761793615785223", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s300", "basin": "01022500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=4.043877342052582e-05, max prediction error=0.009047862647094007", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s300", "basin": "02108000", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=6.0867351054927354e-05, max prediction error=0.011168767994149675", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s300", "basin": "05120500", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=7.560970387410215e-05, max prediction error=0.00026760075853360377", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"model": "original_s300", "basin": "09492400", "status": "FAIL", "error": "Baseline reproduction failed: NSE difference=9.75754688228303e-05, max prediction error=0.0038562890912601233", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+{"status": "FAIL", "cases": 12, "passed": 3, "tolerance": 1e-05, "job_id": "238679", "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T20:42:26+0800
