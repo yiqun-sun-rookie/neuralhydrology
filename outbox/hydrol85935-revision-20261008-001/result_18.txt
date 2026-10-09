@@ -1,0 +1,22 @@
+### channel=hydrol85935-revision-20261008-001 seq=18
+### host=login4
+### started=2026-10-09T15:16:08+0800
+### ---------- output ----------
+2026-10-09T15:16:08+0800
+prepare_isolated_runtime.py: OK
+validate_matched_runtime.py: OK
+proposed_runtime_downloads.json: OK
+install_validate.sbatch: OK
+download_then_submit.sh: OK
+AUTHORIZATION.json: OK
+{"filename": "torch-2.7.1+cu118-cp311-cp311-manylinux_2_28_x86_64.whl", "expected_bytes": 905345785}
+{"filename": "nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 23173745}
+{"filename": "nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 875592}
+{"filename": "nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl", "expected_bytes": 13093662}
+torch-2.7.1+cu118-cp311-cp311-manylinux_2_28_x86_64.whl 905345785 bytes
+nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl 875592 bytes
+nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl.partial 4194304 bytes
+nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl 23173745 bytes
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-09T15:16:08+0800
