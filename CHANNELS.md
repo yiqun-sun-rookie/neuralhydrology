@@ -156,3 +156,4 @@ git rm inbox/seq
 | kalmannet-original-noise-submission-diagnostic-20261008 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
 | kalmannet-original-noise-reference-audit-20261009 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
 | `china-us-input-provenance-20261009` | US input provenance and existing job 237173 report only | 2026-10-09 | One bounded read-only query; no new compute, training, data-series read, retries or existing-job changes. |
+| `china-us-source-version-20261010` | One Caravan VERSION metadata text, max 4096 bytes | 2026-10-10 | No training, data numeric reads, job submission, retry, or existing experiment changes. |
