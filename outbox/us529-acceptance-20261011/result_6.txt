@@ -1,0 +1,36 @@
+### channel=us529-acceptance-20261011 seq=6
+### host=login4
+### started=2026-10-11T18:09:29+0800
+### ---------- output ----------
+DEPLOYMENT_COLLECTION_UTC=2026-10-11T10:09:29Z
+OWN_READONLY_GPU_PARTITION_SNAPSHOT
+NODELIST            GRES                GRES_USED           CPUS(A/I/O/T)       
+ngu001              gpu:2               gpu:2,dcu:0         80/16/0/96          
+ngu002              gpu:2               gpu:2,dcu:0         8/88/0/96           
+ngu004              gpu:2               gpu:2,dcu:0         56/40/0/96          
+ngu005              gpu:2               gpu:2,dcu:0         44/52/0/96          
+ngu006              gpu:2               gpu:2,dcu:0         44/52/0/96          
+ngu007              gpu:2               gpu:2,dcu:0         20/76/0/96          
+ngu008              gpu:2               gpu:2,dcu:0         20/76/0/96          
+ngu010              gpu:2               gpu:2,dcu:0         8/24/0/32           
+ngu011              gpu:2               gpu:2,dcu:0         8/24/0/32           
+ngu101              gpu:4               gpu:3,dcu:0         96/0/0/96           
+ngu102              gpu:4               gpu:3,dcu:0         96/0/0/96           
+ngu103              gpu:4               gpu:0,dcu:0         0/0/96/96           
+ngu104              gpu:4               gpu:4,dcu:0         86/10/0/96          
+ngu201              gpu:8               gpu:8,dcu:0         64/0/0/64           
+ngu202              gpu:8               gpu:8,dcu:0         34/30/0/64          
+ngu203              gpu:8               gpu:8,dcu:0         32/32/0/64          
+OWN_COMMON_PACKAGE_VERIFIED_FILES=21
+Submitted batch job 240041
+OWN_COMMON_SUBMIT_EXIT=0
+OWN_COMMON_PREPARATION_JOB_ID=240041
+240041|us529_common_prepare|PENDING|(Priority)
+OWN_COMMON_CANDIDATE_SUMMARY={"status": "COMMON_INPUT_CANDIDATE_COMPLETE_NOT_INPUT_ACCEPTANCE", "error": null, "elapsed_seconds": 6.612393997609615, "input_accepted": false, "training_authorized": false}
+OWN_COMMON_CANDIDATE_RECEIPT={"raw_bytes": 5998, "raw_sha256": "efbac94f1819e278fd43166cde18ed9dd438bb7ad37c9eac8969b1b0b39a11be", "gzip_bytes": 2215, "gzip_sha256": "e87d590bc4d6c9385812ce79e61ce5f737d38250500267dbcb77a2a57a24b851"}
+OWN_COMMON_CANDIDATE_GZIP_BASE64=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
+OWN_COMMON_SAVED_AUDIT_MISSING
+OWN_COMMON_COLLECTION_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T18:10:12+0800
