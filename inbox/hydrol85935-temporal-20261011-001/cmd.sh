@@ -22,6 +22,9 @@ assert all(re.fullmatch(r'[0-9]+',v) for v in jobs), jobs
 if jobs:
     r=subprocess.run(['sacct','-j',','.join(sorted(jobs)),'-n','-P','--format=JobID,State,ExitCode,Elapsed,Start'],text=True,capture_output=True,timeout=45,check=True)
     print(json.dumps({'parent_registered_jobs':r.stdout.splitlines()}))
+queue=subprocess.run(['squeue','--noheader','--user','sunyiq','--format=%i|%T|%r|%M|%l'],text=True,capture_output=True,timeout=45,check=True)
+owned=[line.strip() for line in queue.stdout.splitlines() if line.split('|',1)[0].strip().split('_',1)[0] in jobs]
+print(json.dumps({'parent_queue_status':owned}))
 for seed in [100,200,300]:
     folder=parent/'execution/v004/training'/('s'+str(seed))
     marker=folder/'complete.json'
