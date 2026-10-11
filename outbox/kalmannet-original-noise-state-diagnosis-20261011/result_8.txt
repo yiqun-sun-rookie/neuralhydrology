@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=8
+### host=login4
+### started=2026-10-11T20:51:56+0800
+### ---------- output ----------
+REMOTE_JSON={"utc": "2026-10-11T12:51:56.631015+00:00", "basin": "03340800", "job_id": "240067", "queue": "240067|noise-state-six|R|1|icn277", "accounting_raw": "240067|RUNNING|0:0|105|1|1|1|08:00:00|icn277", "submission": {"utc": "2026-10-11T12:49:57.729556+00:00", "exit_code": 0, "stdout": "Submitted batch job 240067\n", "stderr": "", "basin": "03340800", "job_id": "240067", "contract_sha256": "9af889459145e358afef24f20dd93918cfa261bf7513957b57b586870fd75f36", "script_sha256": "031e81fe1df4a4781eaa6181481c9f65049fd6f1cdbeba3e63cabf1a63bb770f", "job_name": "noise-state-six", "partition": "hcpu48y", "cpu_cores": 1, "gpu_count": 0, "automatic_retry": false}, "scheduler_row": ["240067", "RUNNING", "0:0", "105", "1", "1", "1", "08:00:00", "icn277"], "files": [{"name": "baseline_process_launch.json", "bytes": 609}, {"name": "baseline_runtime.json", "bytes": 1072}, {"name": "baseline_stderr.log", "bytes": 0}, {"name": "baseline_stdout.log", "bytes": 101}, {"name": "supervisor_launch.json", "bytes": 2314}], "log_tails": {"baseline_stdout.log": "actual_forecast_origins 500/1826\nactual_forecast_origins 1000/1826\nactual_forecast_origins 1500/1826\n", "baseline_stderr.log": ""}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T20:51:56+0800
