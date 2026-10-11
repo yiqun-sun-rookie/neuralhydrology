@@ -1,39 +1,41 @@
 #!/usr/bin/env bash
-set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'PY'
-import hashlib,io,json,pathlib,subprocess,tarfile
-inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
-seq=int((inbox/'seq').read_text());assert seq==218
-payload=inbox/('payload_complete_comparison_20261006_'+str(seq)+'.tar.gz')
-raw=payload.read_bytes()
-assert hashlib.sha256(raw).hexdigest()=='b6cf983ce2a03b24bed24ec43bfea4761c62efb881336886c1a89a6ac27a002e'
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
-if root.exists():raise FileExistsError('preserve existing diagnostic deployment; inspect its exclusive submission records without repeating')
-with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as tar:
-    members=tar.getmembers()
-    assert len({m.name for m in members})==len(members)
-    for member in members:
-        p=pathlib.PurePosixPath(member.name)
-        assert not p.is_absolute() and '..' not in p.parts and member.isfile()
-    content={m.name:tar.extractfile(m).read() for m in members}
-manifest_raw=content.pop('release_manifest.json');manifest=json.loads(manifest_raw)
-assert manifest['diagnostic_root']==str(root) and not manifest['formal_training_sources_changed']
-assert set(content)==set(manifest['files'])
-for name,data in content.items():
-    identity=manifest['files'][name]
-    assert len(data)==identity['bytes'] and hashlib.sha256(data).hexdigest()==identity['sha256']
-spec=json.loads(content['diagnostic_spec.json'])
-assert spec['diagnostic_root']==str(root) and spec['formal_checkpoint_write_allowed'] is False
-root.mkdir()
-for name,data in content.items():
-    p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
-    with p.open('xb') as f:f.write(data)
-with (root/'release_manifest.json').open('xb') as f:f.write(manifest_raw)
-(root/'logs').mkdir()
-print(json.dumps({'status':'isolated_gradient_diagnostic_release_verified','root':str(root),'archive_sha256':hashlib.sha256(raw).hexdigest(),'formal_training_sources_changed':False,'evaluation_values_read':False}),flush=True)
-subprocess.run(['python','-B',str(root/'hpc/submit_gradient_diagnostic_20261011.py')],cwd=root,check=True)
+set -euo pipefail
+python3 - <<'PY'
+import datetime,hashlib,json,pathlib,subprocess
+ROOT=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
+report={'status':'read_only_isolated_gradient_diagnostic_status','root':str(ROOT),'checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'training_inputs_read':False,'checkpoints_loaded':False,'evaluation_values_read':False,'formal_training_recovery_confirmed':False}
+def record(p,whole=True):
+    if not p.exists():return {'path':str(p),'exists':False}
+    st=p.stat();d={'path':str(p),'exists':True,'bytes':st.st_size,'mtime_ns':st.st_mtime_ns}
+    if whole:
+        raw=p.read_bytes();d['sha256']=hashlib.sha256(raw).hexdigest();d['value']=json.loads(raw)
+    return d
+def query(args):
+    p=subprocess.run(args,capture_output=True,text=True,timeout=30)
+    return {'command':args,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+for name in ['diagnostic_spec.json','release_manifest.json','records/diagnostic_submission_attempt.json','records/diagnostic_submission_response.json','records/scheduler_jobs.json','evidence/replay_identity.json','evidence/failed_batch_start_identity.json','evidence/diagnostic_result.json']:
+    report[name]=record(ROOT/name)
+mapping=report['records/scheduler_jobs.json'].get('value',{})
+spec=report['diagnostic_spec.json'].get('value',{})
+report['source_and_duplicate_guard_queries']=[]
+if spec:
+    report['source_and_duplicate_guard_queries']=[query(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%R|%N']),query(['sacct','-n','-X','-j',str(spec['source_job']),'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
+jobs=[str(x) for x in mapping.values()];assert all(x.isdigit() for x in jobs)
+report['scheduler_queries']=[]
+if jobs:
+    ids=','.join(jobs);report['scheduler_queries']=[query(['squeue','-h','-j',ids,'-o','%i|%j|%T|%R|%N|%M']),query(['sacct','-n','-X','-j',ids,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
+report['logs']=[]
+for p in sorted((ROOT/'logs').glob('*.out')):
+    d=record(p,False)
+    with p.open('rb') as f:f.seek(max(0,d['bytes']-60000));d['tail']=f.read().decode('utf-8','replace')
+    report['logs'].append(d)
+p=ROOT/'evidence/events.jsonl';report['events']=record(p,False)
+if p.exists():
+    with p.open('rb') as f:f.seek(max(0,p.stat().st_size-120000));tail=f.read().decode('utf-8','replace')
+    rows=[]
+    for line in tail.splitlines():
+        try: rows.append(json.loads(line))
+        except json.JSONDecodeError:pass
+    report['events']['recent_rows']=rows[-5:]
+print(json.dumps(report,sort_keys=True,allow_nan=False))
 PY
