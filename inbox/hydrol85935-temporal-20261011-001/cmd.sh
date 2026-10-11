@@ -2,87 +2,39 @@
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY'
-from pathlib import Path, PurePosixPath
-import datetime, hashlib, json, os, re, shutil, subprocess, tarfile
-root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-addon=Path('/data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001')
-cont=root/'control/continuation_v004'
-version=root/'versions/v004'
-full=root/'control/full_v004'
-validation=root/'control/runtime_revalidation_v004'
-python='/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python'
-payload=Path('/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-temporal-20261011-001/payload/acceptance_v004_37f5f046b62a.tar.gz')
-def sha(p):
-    h=hashlib.sha256()
-    with p.open('rb') as f:
-        for b in iter(lambda:f.read(1048576), b''):h.update(b)
-    return h.hexdigest()
-def check_manifest(folder,name):
-    for line in (folder/name).read_text().splitlines():
-        expected,rel=line.split(None,1)
-        p=(folder/rel.lstrip('*')).resolve(strict=True)
-        assert p.is_relative_to(folder.resolve()) and sha(p)==expected, str(p)
-def extract(path, target, overlay=False):
-    with tarfile.open(path) as archive:
-        for m in archive.getmembers():
-            assert m.isfile() and not PurePosixPath(m.name).is_absolute()
-            p=target/m.name
-            assert p.resolve().is_relative_to(target.resolve())
-            p.parent.mkdir(parents=True,exist_ok=True)
-            with p.open('wb' if overlay else 'xb') as out:out.write(archive.extractfile(m).read())
-for owned in [root,addon]:
-    assert owned.resolve(strict=True)==owned and (owned/'OWNER').read_text().strip()==owned.name
-assert sha(payload)=='37f5f046b62a0a39b7775f2fb47ae8ab68feb42bb6294fe6da7b9f209e4a6f71'
-assert sorted(p.name for p in (root/'versions').iterdir() if re.fullmatch(r'v\d{3}',p.name))==['v001','v002','v003']
-assert not (root/'control/full_v003/jobs.json').exists()
-assert not (root/'execution/v003').exists()
-assert not (root/'control/formal_v003_attempt.json').exists()
-assert not (addon/'control/submissions').exists() and not (addon/'frozen').exists()
-assert not (addon/'versions/v002').exists()
-for p in [cont,version,full,validation,root/'preflight/v004',root/'execution/v004',root/'diagnostics/accepted_runtime_v004_20261011']:
-    assert not p.exists(), 'Preserve existing attempt: '+str(p)
-old_status=json.loads((root/'control/continuation_v003/status.json').read_text())
-assert old_status['phase']=='STOPPED_WITHOUT_RETRY'
-pid=int((root/'control/continuation_v003/coordinator_pid').read_text())
-try:os.kill(pid,0)
-except ProcessLookupError:pass
-else:raise RuntimeError('Previous coordinator PID is alive; no new submission')
-check_manifest(root/'versions/v003','CODE.sha256')
-check_manifest(root/'control/full_v003','FULL.sha256')
-inventory=json.loads((addon/'deployment_manifest.json').read_text())
-for rel,expected in inventory['sha256'].items():assert sha(addon/rel)==expected
-protected=[root/'versions/v003/CODE.sha256',root/'control/full_v003/FULL.sha256',root/'control/continuation_v003/status.json',root/'diagnostics/matched_runtime_20261009/summary.json',addon/'deployment_manifest.json']
-before={str(p):sha(p) for p in protected}
-cont.mkdir();extract(payload,cont);check_manifest(cont,'RECOVERY.sha256')
-assert sha(cont/'authorization.json')=='42bdfc07c8429c276bcadfece20d1ddb217bd5d4862ddf2c2ee4114449437842'
-version.mkdir();shutil.copytree(root/'versions/v003/code',version/'code')
-extract(cont/'runner_v004.tar.gz',version,overlay=True);check_manifest(version,'CODE.sha256')
-full.mkdir();extract(cont/'full_v004.tar.gz',full);check_manifest(full,'FULL.sha256')
-new_controller=addon/'versions/v002';new_controller.mkdir(parents=True)
-shutil.copyfile(cont/'temporal_advance_v002.py',new_controller/'advance.py')
-shutil.copyfile(cont/'authorization.json',new_controller/'authorization.json')
-shutil.copyfile(cont/'controller_manifest.json',new_controller/'controller_manifest.json')
-for name,expected in json.loads((new_controller/'controller_manifest.json').read_text())['sha256'].items():assert sha(new_controller/name)==expected
-assert before=={str(p):sha(p) for p in protected}
-validation.mkdir()
-attempt={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'version':'v004','authorization_sha256':sha(cont/'authorization.json'),'script_sha256':sha(cont/'revalidation.sbatch'),'protected_before_sha256':before}
-with (validation/'attempt.json').open('x') as f:json.dump(attempt,f,indent=2)
-try:
-    result=subprocess.run(['sbatch',str(cont/'revalidation.sbatch')],capture_output=True,text=True,timeout=120)
-except subprocess.TimeoutExpired as error:
-    with (validation/'submission_uncertain.json').open('x') as f:json.dump({'error':'timeout','stdout':str(error.stdout),'stderr':str(error.stderr)},f)
-    raise
-output=result.stdout+result.stderr
-(validation/'submission.txt').write_text(output)
-jobs=re.findall(r'(?m)^Submitted batch job ([0-9]+)$',output)
-assert result.returncode==0 and len(jobs)==1, 'Unconfirmed submission; do not repeat: '+output
-with (validation/'job_id').open('x') as f:f.write(jobs[0]+'\n')
-with (cont/'coordinator.log').open('xb') as log:
-    child=subprocess.Popen([python,'-u',str(cont/'continue_after_runtime.py')],stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1'))
-with (cont/'coordinator_pid').open('x') as f:f.write(str(child.pid)+'\n')
-receipt=dict(status='REVALIDATION_SUBMITTED_WITH_FINITE_CONTINUATION',version='v004',job_id=int(jobs[0]),coordinator_pid=child.pid,acceptance_tolerance=0.0001,policy_sha256=sha(cont/'authorization.json'),previous_evidence_preserved=True,temporal_controller='versions/v002/advance.py',max_simultaneous_gpus=1,cpu_cores=4)
-with (cont/'deployment_receipt.json').open('x') as f:json.dump(receipt,f,indent=2)
-print(json.dumps(receipt),flush=True)
+from pathlib import Path
+import hashlib,json,tarfile,subprocess
+root=Path('/data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001')
+parent=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+target=root/'versions/v002'
+payload=Path('/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-temporal-20261011-001/payload/temporal_bridge_v002_28994ee5a248.tar.gz')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert root.resolve()==root and (root/'OWNER').read_text().strip()==root.name
+assert sha(payload)=='28994ee5a248c87d4889f6d1312804ae766d6afead072cad3e6a81fb1de64d4a'
+assert not target.exists() and not (root/'control/submissions').exists() and not (root/'frozen').exists()
+binding={'version': 'v004', 'code_manifest_sha256': '9b4b4fd7f3b49da4eda0b6e371d5a26bd68625800d5f084998e07569c22e68ac', 'full_manifest_sha256': 'd5dfc837d6b4dcec417419653bbdb834518f82860ffdcdb1de3619e64db42db6', 'acceptance_amendment_sha256': '2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed', 'baseline_nse_tolerance': 0.0001, 'new_model_interface_tolerance': 1e-05}
+checks={'versions/v004/CODE.sha256':binding['code_manifest_sha256'],'control/full_v004/FULL.sha256':binding['full_manifest_sha256'],'control/continuation_v004/reproduction_acceptance_amendment.json':binding['acceptance_amendment_sha256']}
+for rel,expected in checks.items():assert sha(parent/rel)==expected,rel
+for rel,expected in json.loads((root/'deployment_manifest.json').read_text())['sha256'].items():assert sha(root/rel)==expected
+target.mkdir(parents=True)
+with tarfile.open(payload) as tar:
+    assert set(tar.getnames())=={'advance.py','authorization.json','controller_manifest.json'}
+    for m in tar.getmembers():
+        assert m.isfile() and Path(m.name).name==m.name
+        with (target/m.name).open('xb') as f:f.write(tar.extractfile(m).read())
+for rel,expected in json.loads((target/'controller_manifest.json').read_text())['sha256'].items():assert sha(target/rel)==expected
+print(json.dumps({'status':'ADDITIONAL_CONTROLLER_V002_DEPLOYED_BOUND_TO_EXISTING_PARENT_V004','parent_written':False,'parent_binding':binding,'controller_manifest_sha256':sha(target/'controller_manifest.json')}))
+jobs=set()
+for rel in ['control/continuation_v004/status.json','control/preflight_v004_job_id','control/resource_pilot_v004_job_id','control/full_v004/jobs.json']:
+    p=parent/rel
+    if p.exists():
+        value=p.read_text()
+        print(json.dumps({'parent_file':rel,'content':value}))
+        if rel.endswith('_job_id'):jobs.add(value.strip())
+        if rel.endswith('jobs.json'):jobs.update(str(v) for v in json.loads(value).values())
+if jobs:
+    result=subprocess.run(['sacct','-j',','.join(sorted(jobs)),'-n','-P','--format=JobID,State,ExitCode,Elapsed'],capture_output=True,text=True,timeout=60,check=True)
+    print(json.dumps({'parent_registered_jobs':result.stdout.splitlines()}))
 
 PY
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001/versions/v002/advance.py --root /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001 --parent /data1/home/sunyiq/hydrol85935_revision_20261008_001 --version v004
