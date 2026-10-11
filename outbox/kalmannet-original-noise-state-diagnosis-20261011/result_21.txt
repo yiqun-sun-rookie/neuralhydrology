@@ -1,0 +1,9 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=21
+### host=login4
+### started=2026-10-11T22:08:29+0800
+### ---------- output ----------
+TERMINAL_LIST_ABSENCE_BRIDGE_JSON={"job_id": "240067", "original_query": ["squeue", "-j", "240067", "--noheader", "--format=%i|%j|%t|%C|%R"], "original_exit_code": 1, "original_stdout": "", "original_stderr": "slurm_load_jobs error: Invalid job id specified\n", "owned_queue": "", "accounting": "240067|COMPLETED|0:0\n", "terminal_row": ["240067", "COMPLETED", "0:0"], "scientific_job_repeated": false}
+REMOTE_JSON={"status": "EXISTING_SEAL_VERIFIED", "manifest": {"path": "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/results/cases/03340800/attempt_001/raw_manifest.json", "bytes": 4267, "sha256": "f3c16844c12a4b254f123180129eef1f461cf2f8f31224bcaaa0d9b538f6ee0e"}, "scheduler": {"utc": "2026-10-11T13:31:57.330532+00:00", "job_id": "240067", "state": "COMPLETED", "exit_code": "0:0", "elapsed_seconds": 634, "allocated_cpu_cores": 1, "nodes": 1, "requested_cpu_cores": 1, "time_limit": "08:00:00", "node_list": "icn277", "gpu_count_requested": 0, "queue_empty": true, "accounting_raw": "240067|COMPLETED|0:0|634|1|1|1|08:00:00|icn277", "submission": {"utc": "2026-10-11T12:49:57.729556+00:00", "exit_code": 0, "stdout": "Submitted batch job 240067\n", "stderr": "", "basin": "03340800", "job_id": "240067", "contract_sha256": "9af889459145e358afef24f20dd93918cfa261bf7513957b57b586870fd75f36", "script_sha256": "031e81fe1df4a4781eaa6181481c9f65049fd6f1cdbeba3e63cabf1a63bb770f", "job_name": "noise-state-six", "partition": "hcpu48y", "cpu_cores": 1, "gpu_count": 0, "automatic_retry": false}}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T22:08:30+0800
