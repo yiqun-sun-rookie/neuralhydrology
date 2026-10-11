@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=12
+### host=login4
+### started=2026-10-11T21:02:40+0800
+### ---------- output ----------
+REMOTE_ERROR_JSON={"exit_code": 1, "stderr": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/code/remote_state.py\", line 210, in <module>\n    value={'status':'FROZEN_DEPLOYMENT_VERIFIED','basins':check()['basins']} if args.operation=='check' else globals()[args.operation](args.basin)\n                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/code/remote_state.py\", line 99, in status\n    queue = command(['squeue','-j',job,'--noheader','--format=%i|%j|%t|%C|%R']).strip()\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/code/remote_state.py\", line 28, in command\n    raise RuntimeError(json.dumps({'command': argv, 'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr}))\nRuntimeError: {\"command\": [\"squeue\", \"-j\", \"240067\", \"--noheader\", \"--format=%i|%j|%t|%C|%R\"], \"exit_code\": 1, \"stdout\": \"\", \"stderr\": \"slurm_load_jobs error: Invalid job id specified\\n\"}\n", "stdout": ""}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T21:02:40+0800
