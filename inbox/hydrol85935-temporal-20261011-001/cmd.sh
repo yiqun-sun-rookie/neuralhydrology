@@ -6,6 +6,10 @@ from pathlib import Path
 import datetime,json,re,subprocess
 parent=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
 print(json.dumps({'observed_at':datetime.datetime.now().astimezone().isoformat()}))
+versions={name:sorted(v.name for v in (parent/name).iterdir() if v.is_dir() and re.fullmatch(r'v[0-9]{3}',v.name)) for name in ('versions','execution')}
+print(json.dumps({'parent_versions':versions}))
+if any(names and names[-1]!='v004' for names in versions.values()):
+    raise SystemExit('PARENT_VERSION_CHANGE_REQUIRES_REVIEW')
 jobs=set()
 for rel in ['control/continuation_v004/status.json','control/preflight_v004_job_id','control/resource_pilot_v004_job_id','control/full_v004/jobs.json']:
     path=parent/rel
