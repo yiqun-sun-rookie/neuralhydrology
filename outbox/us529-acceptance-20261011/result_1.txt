@@ -1,0 +1,34 @@
+### channel=us529-acceptance-20261011 seq=1
+### host=login4
+### started=2026-10-11T14:50:56+0800
+### ---------- output ----------
+RESOURCE_COLLECTION_UTC=2026-10-11T06:50:56Z
+ISOLATED_TARGET_ABSENT=/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001
+EXISTING_PYTHON_PATH_PRESENT
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  648T  307T  68% /data1
+239882|author-solver-capture-20261011|PENDING|hgpu8|1|(Priority)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|(JobHeldUser)
+236820|zj_gru_history_recovery_261006_001|RUNNING|hgpu2p|1|ngu001
+237928|zj_lstm_small_recovery_261008_002|RUNNING|hgpu2p|1|ngu007
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|hgpu2p|1|ngu011
+236707|zj_legacy_lstm__historical_capacity_261006_pathfix|RUNNING|hgpu2p|1|ngu001
+NODELIST            GRES          GRES_USED               CPUS(A/I/O/T)       
+ngu001              gpu:2         gpu:2,dcu:0             80/16/0/96          
+ngu002              gpu:2         gpu:2,dcu:0             8/88/0/96           
+ngu004              gpu:2         gpu:2,dcu:0             56/40/0/96          
+ngu005              gpu:2         gpu:2,dcu:0             44/52/0/96          
+ngu006              gpu:2         gpu:2,dcu:0             44/52/0/96          
+ngu007              gpu:2         gpu:2,dcu:0             20/76/0/96          
+ngu008              gpu:2         gpu:2,dcu:0             20/76/0/96          
+ngu010              gpu:2         gpu:2,dcu:0             8/24/0/32           
+ngu011              gpu:2         gpu:2,dcu:0             8/24/0/32           
+READ_ONLY_RESOURCE_PROBE_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T14:50:56+0800
