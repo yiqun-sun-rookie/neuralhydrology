@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=3
+### host=login4
+### started=2026-10-11T20:24:09+0800
+### ---------- output ----------
+REMOTE_ERROR_JSON={"exit_code": 1, "stderr": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011/code/remote_state.py\", line 210, in <module>\n    value={'status':'FROZEN_DEPLOYMENT_VERIFIED','basins':check()['basins']} if args.operation=='check' else globals()[args.operation](args.basin)\n                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011/code/remote_state.py\", line 84, in submit\n    raise RuntimeError('Submission not uniquely confirmed; preserve original response and read only')\nRuntimeError: Submission not uniquely confirmed; preserve original response and read only\n", "stdout": ""}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T20:24:10+0800
