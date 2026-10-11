@@ -1,0 +1,9 @@
+### channel=hydrol85935-temporal-20261011-001 seq=1
+### host=login4
+### started=2026-10-11T15:13:01+0800
+### ---------- output ----------
+{"status": "DEPLOYED_VERIFIED", "files": 13, "root": "/data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001"}
+{"status": "WAITING_FOR_TRAINING", "missing_seeds": [100, 200, 300], "parent_execution": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/execution/v003"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T15:13:02+0800
