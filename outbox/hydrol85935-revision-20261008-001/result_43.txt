@@ -1,0 +1,83 @@
+### channel=hydrol85935-revision-20261008-001 seq=43
+### host=login4
+### started=2026-10-11T22:01:47+0800
+### ---------- output ----------
+2026-10-11T22:01:47+0800
+  PID COMMAND
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/continuation_v004_20261011_001.tar.gz: OK
+tar: CONTINUATION.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: FULL.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: continue_after_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: full_pipeline_v004_inputs_v001_runtime271.tar.gz: implausibly old time stamp 1970-01-01 08:00:00
+tar: reproduction_acceptance_amendment.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: resource_pilot.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: run_resource_pilot.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: runner_v004.tar.gz: implausibly old time stamp 1970-01-01 08:00:00
+FULL.sha256: OK
+continue_after_runtime.py: OK
+full_pipeline_v004_inputs_v001_runtime271.tar.gz: OK
+reproduction_acceptance_amendment.json: OK
+resource_pilot.sbatch: OK
+run_resource_pilot.py: OK
+runner_v004.tar.gz: OK
+tar: CODE.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: DATA.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/assets.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/contracts.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/engine.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/records.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/reporting.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/run.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/src/adversarial/scripts/revision_20261008/validation.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/test/test_adversarial/test_revision_20261008_fix1.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/test/test_adversarial/test_revision_20261008_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: data_identity.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: input_overrides/basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: input_overrides/basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: input_overrides/basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: materialize_inputs.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: preflight.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: reproduction_acceptance_v004.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: verify_isolated_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+DATA.sha256: OK
+code/src/adversarial/scripts/revision_20261008/__init__.py: OK
+code/src/adversarial/scripts/revision_20261008/assets.py: OK
+code/src/adversarial/scripts/revision_20261008/contracts.py: OK
+code/src/adversarial/scripts/revision_20261008/data.py: OK
+code/src/adversarial/scripts/revision_20261008/engine.py: OK
+code/src/adversarial/scripts/revision_20261008/records.py: OK
+code/src/adversarial/scripts/revision_20261008/reporting.py: OK
+code/src/adversarial/scripts/revision_20261008/run.py: OK
+code/src/adversarial/scripts/revision_20261008/training.py: OK
+code/src/adversarial/scripts/revision_20261008/validation.py: OK
+code/test/test_adversarial/test_revision_20261008_fix1.py: OK
+code/test/test_adversarial/test_revision_20261008_runner.py: OK
+data_identity.json: OK
+input_overrides/basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt: OK
+input_overrides/basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt: OK
+input_overrides/basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt: OK
+materialize_inputs.py: OK
+preflight.sbatch: OK
+reproduction_acceptance_v004.py: OK
+verify_isolated_runtime.py: OK
+tar: attacks.template.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: report.template.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: reproduction_acceptance_v004.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: submit_full.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: train.template.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: verify_isolated_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: verify_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+attacks.template.sbatch: OK
+report.template.sbatch: OK
+reproduction_acceptance_v004.py: OK
+submit_full.py: OK
+train.template.sbatch: OK
+verify_isolated_runtime.py: OK
+verify_preflight.py: OK
+FINITE_CONTINUATION_STARTED version=v004 pid=15736
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T22:01:49+0800
