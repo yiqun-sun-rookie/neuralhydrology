@@ -1,0 +1,33 @@
+### channel=us529-acceptance-20261011 seq=8
+### host=login4
+### started=2026-10-11T19:12:28+0800
+### ---------- output ----------
+DEPLOYMENT_COLLECTION_UTC=2026-10-11T11:12:28Z
+OWN_READONLY_GPU_PARTITION_SNAPSHOT
+NODELIST            GRES                GRES_USED           CPUS(A/I/O/T)       
+ngu001              gpu:2               gpu:2,dcu:0         80/16/0/96          
+ngu002              gpu:2               gpu:2,dcu:0         8/88/0/96           
+ngu004              gpu:2               gpu:2,dcu:0         56/40/0/96          
+ngu005              gpu:2               gpu:2,dcu:0         44/52/0/96          
+ngu006              gpu:2               gpu:2,dcu:0         44/52/0/96          
+ngu007              gpu:2               gpu:2,dcu:0         20/76/0/96          
+ngu008              gpu:2               gpu:2,dcu:0         20/76/0/96          
+ngu010              gpu:2               gpu:2,dcu:0         8/24/0/32           
+ngu011              gpu:2               gpu:2,dcu:0         8/24/0/32           
+ngu101              gpu:4               gpu:3,dcu:0         96/0/0/96           
+ngu102              gpu:4               gpu:3,dcu:0         96/0/0/96           
+ngu103              gpu:4               gpu:0,dcu:0         0/0/96/96           
+ngu104              gpu:4               gpu:3,dcu:0         84/12/0/96          
+ngu201              gpu:8               gpu:8,dcu:0         64/0/0/64           
+ngu202              gpu:8               gpu:8,dcu:0         34/30/0/64          
+ngu203              gpu:8               gpu:8,dcu:0         32/32/0/64          
+OWN_EXECUTION_PACKAGE_VERIFIED_FILES=47
+OWN_ACCEPTED_COMMON_ARRAYS_COPIED=5
+Submitted batch job 240054
+OWN_SIX_SUBMIT_EXIT=0
+OWN_SIX_TRAINING_JOB_ID=240054
+240054|us529_six_repair|RUNNING|ngu104
+OWN_SIX_COLLECTION_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T19:12:31+0800
