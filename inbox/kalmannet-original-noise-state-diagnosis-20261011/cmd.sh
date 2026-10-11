@@ -1,20 +1,25 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery3/runtime/venv/bin/python -X utf8 -B - <<'CLOSED_SAVED_CHECK_OPERATION'
-import hashlib,importlib.util,json,sys
+/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery3/runtime/venv/bin/python -X utf8 -B - <<'EXACT_EXISTING_REPORT_ACCEPTANCE'
+import hashlib,json
 from pathlib import Path
-p=Path('/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/v3/remote_saved_review.py')
-assert hashlib.sha256(p.read_bytes()).hexdigest()=='c307b44ddc06d674a4359bac1822dd42ba75cedce099a86ff62f6ffe89b91e82'
-spec=importlib.util.spec_from_file_location('preserved_closed_job_helper',p)
-h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)
-h.BOUND=h.Bound(whole=False)
-assert h.read(h.FOLDER/'submission.json')['job_id']=='240096'
-queue=h.command(['squeue','--user=sunyiq','--noheader','--format=%i|%j|%t'])
-queue=[x for x in queue.splitlines() if x.split('|')[0].strip()=='240096']
-account=h.command(['sacct','-j','240096','--allocations','--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocCPUS,ReqCPUS,NNodes,Timelimit,NodeList'])
-rows=[x.rstrip('|').split('|') for x in account.splitlines() if x.split('|')[0].strip()=='240096']
-row=rows[0] if len(rows)==1 else None
-terminal=bool(not queue and row and row[1].split()[0] in h.TERMINAL)
-assert terminal, 'Closed-artifact read prohibited until exact scheduler terminal identity and absent queue'
-h.export(0)
-CLOSED_SAVED_CHECK_OPERATION
+r=Path('/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/results')
+p=r/'review/cases'/'03340800'/'review.json'
+b=p.read_bytes()
+assert hashlib.sha256(b).hexdigest()=='a12ab99302ce8fb9724eb1f8806ead401ffb17d2249274252ec46e4f11edfc33'
+v=json.loads(b)
+assert v['status']=='PASS' and v['basin']=='03340800' and not v['findings'] and all(x['passed'] for x in v['checks'])
+assert v['contract_sha256']==hashlib.sha256((r/'control/contract.json').read_bytes()).hexdigest()=='9af889459145e358afef24f20dd93918cfa261bf7513957b57b586870fd75f36'
+assert v['source_review_sha256']==hashlib.sha256((r/'review/source_review.json').read_bytes()).hexdigest()=='aeac9a3acfb9ea4173db1a3bb22e99d5b498c087b7edbdb20bb4edb8c3de0e99'
+assert v['package_manifest_sha256']==hashlib.sha256((r/'control/package_manifest.json').read_bytes()).hexdigest()=='41229ee05254080974558af9331bb8b5cf2f329e318414695fe58380e2cd16fa'
+assert v['checker_sha256']=='25f2083e808ae54edb5e2a15dd3baa3d22356885d7011dbf03ad334b545b8dde'
+assert v['raw_manifest_sha256']==hashlib.sha256((r/'cases'/'03340800'/'attempt_001/raw_manifest.json').read_bytes()).hexdigest()
+d=r/'review/accepted'/'03340800.json'
+d.parent.mkdir(parents=True,exist_ok=True)
+if d.exists():
+ assert d.read_bytes()==b
+else:
+ with d.open('xb') as h:h.write(b)
+assert d.read_bytes()==b
+print('REMOTE_JSON='+json.dumps({'status':'EXISTING_STRICT_CHECK_ACCEPTED','basin':v['basin'],'review_sha256':hashlib.sha256(b).hexdigest(),'scientific_repeated':False}))
+EXACT_EXISTING_REPORT_ACCEPTANCE
