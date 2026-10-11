@@ -1,0 +1,16 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=46
+### host=login4
+### started=2026-10-12T01:10:11+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/knet_clean/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/results/control/package_manifest.json'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-12T01:10:11+0800
