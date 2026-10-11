@@ -159,3 +159,5 @@ git rm inbox/seq
 | `china-us-source-version-20261010` | One Caravan VERSION metadata text, max 4096 bytes | 2026-10-10 | No training, data numeric reads, job submission, retry, or existing experiment changes. |
 
 | `us529-acceptance-20261011` | Fixed 529 US common-input acceptance and gated six output repair fits | 2026-10-11 | Exclusive root `/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001`; one CPU preparation, one GPU sequential six fits only after input and execution gates; no existing experiment changes, cancellation or automatic retries. |
+
+| `hydrol85935-temporal-20261011-001` | HYDROL85935 additional seven-day persistence search; no new training | 2026-10-11 | Only /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
