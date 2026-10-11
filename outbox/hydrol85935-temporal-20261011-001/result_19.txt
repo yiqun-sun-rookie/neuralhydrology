@@ -1,0 +1,18 @@
+### channel=hydrol85935-temporal-20261011-001 seq=19
+### host=login4
+### started=2026-10-12T01:41:39+0800
+### ---------- output ----------
+{"observed_at": "2026-10-12T01:41:39.695846+08:00"}
+{"parent_versions": {"versions": ["v001", "v002", "v003", "v004"], "execution": ["v004"]}}
+{"parent_file": "control/continuation_v004/status.json", "content": "{\n  \"utc\": \"2026-10-11T14:10:45.967252+00:00\",\n  \"phase\": \"FORMAL_PIPELINE_SUBMITTED_NOT_SCIENTIFICALLY_COMPLETE\",\n  \"jobs\": {\n    \"train\": 240076,\n    \"attacks\": 240077,\n    \"report\": 240078\n  },\n  \"resource_pilot\": {\n    \"status\": \"PASS\",\n    \"scheduler_job_id\": \"240075\",\n    \"scope\": \"Two fixed planned records on the first basin; no search or hyperparameter selection\",\n    \"basin\": \"01022500\",\n    \"runtime\": {\n      \"python\": \"3.11.13\",\n      \"torch\": \"2.7.1+cu118\",\n      \"numpy\": \"2.3.3\",\n      \"platform\": \"Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34\",\n      \"cuda_runtime\": \"11.8\",\n      \"cuda_device\": \"NVIDIA GeForce RTX 3090\",\n      \"scipy\": \"1.16.2\",\n      \"cudnn_version\": 90100,\n      \"neuralhydrology_source\": \"/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/neuralhydrology/__init__.py\",\n      \"cuda_visible_devices\": \"1\",\n      \"cuda_device_count\": 1,\n      \"cudnn_enabled\": true,\n      \"cudnn_allow_tf32\": true,\n      \"cudnn_benchmark\": false,\n      \"cudnn_deterministic\": false,\n      \"matmul_allow_tf32\": false\n    },\n    \"records\": [\n      {\n        \"combination\": \"original_s100_gaussian_eps0p1_bound_only\",\n        \"exit_code\": 0,\n        \"wall_seconds\": 55.20701548084617,\n        \"peak_allocated_bytes\": 455991808,\n        \"peak_reserved_bytes\": 822083584,\n        \"max_rss_bytes\": 1238478848\n      },\n      {\n        \"combination\": \"original_s100_iterative_eps0p1_bound_only\",\n        \"exit_code\": 0,\n        \"wall_seconds\": 39.82462701573968,\n        \"peak_allocated_bytes\": 1090985472,\n        \"peak_reserved_bytes\": 1809842176,\n        \"max_rss_bytes\": 1409060864\n      }\n    ]\n  }\n}"}
+{"parent_file": "control/preflight_v004_job_id", "content": "240074\n"}
+{"parent_file": "control/resource_pilot_v004_job_id", "content": "240075\n"}
+{"parent_file": "control/full_v004/jobs.json", "content": "{\n  \"train\": 240076,\n  \"attacks\": 240077,\n  \"report\": 240078\n}"}
+{"parent_registered_jobs": ["240074|COMPLETED|0:0|00:04:20|2026-10-11T22:03:43", "240074.batch|COMPLETED|0:0|00:04:20|2026-10-11T22:03:43", "240074.extern|COMPLETED|0:0|00:04:21|2026-10-11T22:03:43", "240075|COMPLETED|0:0|00:02:15|2026-10-11T22:09:14", "240075.batch|COMPLETED|0:0|00:02:15|2026-10-11T22:09:14", "240075.extern|COMPLETED|0:0|00:02:15|2026-10-11T22:09:14", "240078|PENDING|0:0|00:00:00|Unknown", "240076_[0-2%1]|PENDING|0:0|00:00:00|Unknown", "240077_[0-131%1]|PENDING|0:0|00:00:00|Unknown"]}
+{"training_seed": 100, "training_directory_exists": false, "completion_marker_exists": false, "completion": null}
+{"training_seed": 200, "training_directory_exists": false, "completion_marker_exists": false, "completion": null}
+{"training_seed": 300, "training_directory_exists": false, "completion_marker_exists": false, "completion": null}
+{"status": "WAITING_FOR_TRAINING", "missing_seeds": [100, 200, 300], "parent_execution": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/execution/v004"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T01:41:40+0800
