@@ -161,3 +161,4 @@ git rm inbox/seq
 | `us529-acceptance-20261011` | Fixed 529 US common-input acceptance and gated six output repair fits | 2026-10-11 | Exclusive root `/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001`; one CPU preparation, one GPU sequential six fits only after input and execution gates; no existing experiment changes, cancellation or automatic retries. |
 
 | `hydrol85935-temporal-20261011-001` | HYDROL85935 additional seven-day persistence search; no new training | 2026-10-11 | Only /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
+| kalmannet-original-noise-state-diagnosis-20261011 | 原已学噪声六个代表流域内部状态诊断 | 2026-10-11 | 活动 |
