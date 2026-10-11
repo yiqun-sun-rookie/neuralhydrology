@@ -157,3 +157,5 @@ git rm inbox/seq
 | kalmannet-original-noise-reference-audit-20261009 | 原已学噪声391流域未来一二三天补评 | 2026-10-07 | 活动 |
 | `china-us-input-provenance-20261009` | US input provenance and existing job 237173 report only | 2026-10-09 | One bounded read-only query; no new compute, training, data-series read, retries or existing-job changes. |
 | `china-us-source-version-20261010` | One Caravan VERSION metadata text, max 4096 bytes | 2026-10-10 | No training, data numeric reads, job submission, retry, or existing experiment changes. |
+
+| `us529-acceptance-20261011` | Fixed 529 US common-input acceptance and gated six output repair fits | 2026-10-11 | Exclusive root `/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001`; one CPU preparation, one GPU sequential six fits only after input and execution gates; no existing experiment changes, cancellation or automatic retries. |
