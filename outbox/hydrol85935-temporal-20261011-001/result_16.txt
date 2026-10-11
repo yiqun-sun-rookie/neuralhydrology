@@ -1,0 +1,13 @@
+### channel=hydrol85935-temporal-20261011-001 seq=16
+### host=login4
+### started=2026-10-11T22:10:29+0800
+### ---------- output ----------
+{"status": "ADDITIONAL_CONTROLLER_V002_DEPLOYED_BOUND_TO_EXISTING_PARENT_V004", "parent_written": false, "parent_binding": {"version": "v004", "code_manifest_sha256": "9b4b4fd7f3b49da4eda0b6e371d5a26bd68625800d5f084998e07569c22e68ac", "full_manifest_sha256": "d5dfc837d6b4dcec417419653bbdb834518f82860ffdcdb1de3619e64db42db6", "acceptance_amendment_sha256": "2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed", "baseline_nse_tolerance": 0.0001, "new_model_interface_tolerance": 1e-05}, "controller_manifest_sha256": "5179fe2484809c091a8f97a63de3281d7d6a20b502bc343a032a6311619f4fe6"}
+{"parent_file": "control/continuation_v004/status.json", "content": "{\n  \"utc\": \"2026-10-11T14:10:18.356614+00:00\",\n  \"phase\": \"FORMAL_SUBMISSION_STARTED\",\n  \"resource_pilot_job\": \"240075\"\n}"}
+{"parent_file": "control/preflight_v004_job_id", "content": "240074\n"}
+{"parent_file": "control/resource_pilot_v004_job_id", "content": "240075\n"}
+{"parent_registered_jobs": ["240074|COMPLETED|0:0|00:04:20", "240074.batch|COMPLETED|0:0|00:04:20", "240074.extern|COMPLETED|0:0|00:04:21", "240075|COMPLETED|0:0|00:02:15", "240075.batch|COMPLETED|0:0|00:02:15", "240075.extern|COMPLETED|0:0|00:02:15"]}
+{"status": "WAITING_FOR_TRAINING", "missing_seeds": [100, 200, 300], "parent_execution": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/execution/v004"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T22:10:30+0800
