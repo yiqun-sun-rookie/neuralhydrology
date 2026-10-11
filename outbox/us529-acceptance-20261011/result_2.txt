@@ -1,0 +1,29 @@
+### channel=us529-acceptance-20261011 seq=2
+### host=login4
+### started=2026-10-11T15:20:16+0800
+### ---------- output ----------
+DEPLOYMENT_COLLECTION_UTC=2026-10-11T07:20:16Z
+/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001/preparation_v1/weather_source_payload.tar.gz: OK
+tar: src/read_selected_weather.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/netcdf3_schema_v1.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: contracts/WEATHER_READING_CONTRACT.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: 天气数值读取范围.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: references/WEATHER_PRODUCER_SOURCE.py.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: reports/WEATHER_SOURCE_DEFINITION_CANDIDATE.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/run_weather_with_date_evidence.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: 天气日期保存范围.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/WEATHER_NUMERIC_ENTRY_DECISION.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/WEATHER_DATE_CAPTURE_ENTRY_DECISION.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/audit_saved_weather_candidate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/test_saved_weather_candidate_audit.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/WEATHER_ACTUAL_CHECKER_SOFTWARE_REVIEW.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: remote/weather_prepare_v3.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/print_weather_review_receipt.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: review/WEATHER_ACTUAL_CHECKER_SOFTWARE_REVIEW.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: DEPLOYMENT_FILE_MANIFEST.json: implausibly old time stamp 1970-01-01 08:00:00
+Submitted batch job 240023
+OWN_WEATHER_PREPARATION_JOB_ID=240023
+240023|us529_weather_prepare|PENDING|(Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T15:20:16+0800
