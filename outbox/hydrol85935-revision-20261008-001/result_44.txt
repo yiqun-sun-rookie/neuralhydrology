@@ -1,0 +1,376 @@
+### channel=hydrol85935-revision-20261008-001 seq=44
+### host=login4
+### started=2026-10-11T22:06:27+0800
+### ---------- output ----------
+2026-10-11T22:06:27+0800
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            239882          hgpu8      author-solver-capture-20261011    PENDING         0:00        4                gpu:1                     (Priority)
+            240053         hgpu2p     zj_gru_gradient_diag_261011_001    PENDING         0:00        4                gpu:1                     (Priority)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            240054          hgpu4                    us529_six_repair    RUNNING      2:52:14        4                gpu:1                         ngu104
+            237928         hgpu2p   zj_lstm_small_recovery_261008_002    RUNNING   2-23:49:02        4                gpu:1                         ngu007
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   5-10:48:07        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   5-10:48:07        4                gpu:1                         ngu001
+
+FILE control/continuation_v004/status.json
+{"bytes": 157, "mtime_ns": 1791727433000000000}
+{
+  "utc": "2026-10-11T14:03:53.605072+00:00",
+  "phase": "PREFLIGHT",
+  "scheduler_job_id": "240074",
+  "scheduler_state": "RUNNING",
+  "exit_code": "0:0"
+}
+
+FILE control/continuation_v004/coordinator_pid
+{"bytes": 6, "mtime_ns": 1791727309000000000}
+15736
+
+
+FILE control/preflight_v004_job_id
+{"bytes": 7, "mtime_ns": 1791727313000000000}
+240074
+
+
+FILE control/preflight_v004_submission.txt
+{"bytes": 27, "mtime_ns": 1791727313000000000}
+Submitted batch job 240074
+
+
+FILE preflight/v004/preflight/original_s100_01022500/report.json
+{"bytes": 6476, "mtime_ns": 1791727563000000000}
+{
+  "actual_calendar_start": "1989-01-05",
+  "actual_prediction_end": "1999-09-30",
+  "actual_prediction_start": "1989-10-01",
+  "baseline": {
+    "acceptance_amendment_sha256": "2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed",
+    "accepted_tolerance": 0.0001,
+    "baseline_sha256": "19c790d08faf943df0bee064a029f6cecc07aadc63d785f1cf39cad5d3e96c1d",
+    "max_daily_error_mm_day": 0.009308332522152796,
+    "nse_difference": 5.3660850277137406e-05,
+    "original_strict_pass": false,
+    "original_strict_tolerance": 1e-05,
+    "reproduced_nse": 0.7718266400082617,
+    "status": "PASS",
+    "stored_nse": 0.7717729791579846
+  },
+  "basin_id": "01022500",
+  "chunk": 256,
+  "constraints": {
+    "actual_max_abs_normalized": [
+      0.10000000149011612,
+      0.10000000149011612,
+      0.10000000149011612,
+      0.10000000149011612
+    ],
+    "amplitude_violations": 0,
+    "clean_physical_violations": 0,
+    "finite": true,
+    "physical_maximum": [
+      37.245540618896484,
+      24.163293838500977,
+      600.6675415039062,
+      1960.17138671875
+    ],
+    "physical_mean_shift": [
+      0.0834648609161377,
+      -0.3046107292175293,
+      -1.124359130859375,
+      -20.0946044921875
+    ],
+    "physical_minimum": [
+      -0.6955406665802002,
+      -21.593292236328125,
+      105.42245483398438,
+      -5.14154052734375
+    ],
+    "physical_std_shift": [
+      0.11043691635131836,
+      -0.20785903930664062,
+      0.5672454833984375,
+      -0.071868896484375
+    ],
+    "physical_violations": 0
+  },
+  "cuda_peak_allocated_bytes": 1090353664,
+  "cuda_peak_reserved_bytes": 1807745024,
+  "date_validation": "PASS",
+  "full_calendar_count": 3921,
+  "full_prediction_count": 3652,
+  "gradient_path_check": {
+    "absolute_nse_difference": 7.873773574829102e-05,
+    "finite_gradient": true,
+    "gradient_path_nse": 0.8936495184898376,
+    "inference_path_nse": 0.8937282562255859,
+    "max_prediction_difference_mm_day": 0.003761039071491723,
+    "nonzero_gradient_entries": 2100,
+    "rule": "record numerical path differences; require finite nonzero gradient; no unregistered allclose gate"
+  },
+  "manifest_sha256": "bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826",
+  "mapping": {
+    "dynamic_feature_names": [
+      "PRCP(mm/day)",
+      "Tmin(C)",
+      "Tmax(C)",
+      "SRAD(W/m2)",
+      "Vp(Pa)"
+    ],
+    "reference_signal_std_physical": [
+      6.955404281616211,
+      10.73293399810791,
+      131.17544555664062,
+      631.7147827148438
+    ],
+    "signal_budget_normalized": [
+      0.10000000149011612,
+      0.10000000149011612,
+      0.10000000149011612,
+      0.10000000149011612
+    ],
+    "signal_budget_physical": [
+      0.6955404281616211,
+      1.0732934474945068,
+      13.117545127868652,
+      63.171478271484375
+    ],
+    "signal_center_physical": [
+      3.1751224994659424,
+      10.403558731079102,
+      375.16156005859375,
+      931.1626586914062
+    ],
+    "signal_scale_physical": [
+      6.955404281616211,
+      10.73293399810791,
+      131.17544555664062,
+      631.7147827148438
+    ],
+    "signal_to_feature_columns": {
+      "precipitation": [
+        0
+      ],
+      "shortwave_radiation": [
+        3
+      ],
+      "temperature_mean": [
+        1,
+        2
+      ],
+      "vapor_pressure": [
+        4
+      ]
+    },
+    "signal_units": [
+      "mm/day",
+      "degree Celsius (daily mean)",
+      "W/m2",
+      "Pa"
+    ]
+  },
+  "model_id": "original_s100",
+  "model_identity": {
+    "asset_index_sha256": "2c244453ea86c6ff81441736c5e29fe881692cd4e3d5fc8d4bfb4a7338ad6469",
+    "config_sha256": "e873fea95ee215179f284f14ec900068c5151f41b4622a342e59255aa642e4f9",
+    "dynamic_feature_names": [
+      "PRCP(mm/day)",
+      "Tmin(C)",
+      "Tmax(C)",
+      "SRAD(W/m2)",
+      "Vp(Pa)"
+    ],
+    "epoch": 30,
+    "model_id": "original_s100",
+    "scaler_sha256": "44040690367606c52c7f6a142d506e52433494ccdcd728fdfcc6fd6b9f57d5c7",
+    "static_feature_names": [
+      "p_mean",
+      "pet_mean",
+      "aridity",
+      "p_seasonality",
+      "frac_snow",
+      "high_prec_freq",
+      "high_prec_dur",
+      "low_prec_freq",
+      "low_prec_dur",
+      "elev_mean",
+      "slope_mean",
+      "area_gages2",
+      "frac_forest",
+      "lai_max",
+      "lai_diff",
+      "gvf_max",
+      "gvf_diff",
+      "soil_depth_pelletier",
+      "soil_depth_statsgo",
+      "soil_porosity",
+      "soil_conductivity",
+      "max_water_content",
+      "sand_frac",
+      "silt_frac",
+      "clay_frac",
+      "carbonate_rocks_frac",
+      "geol_permeability"
+    ],
+    "weight_sha256": "f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654"
+  },
+  "rss_bytes": 1350008832,
+  "runtime": {
+    "cuda_device": "NVIDIA GeForce RTX 3090",
+    "cuda_device_count": 1,
+    "cuda_runtime": "11.8",
+    "cuda_visible_devices": "1",
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "cudnn_enabled": true,
+    "cudnn_version": 90100,
+    "matmul_allow_tf32": false,
+    "neuralhydrology_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/neuralhydrology/__init__.py",
+    "numpy": "2.3.3",
+    "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.13",
+    "scipy": "1.16.2",
+    "torch": "2.7.1+cu118"
+  },
+  "scope": "one basin interface smoke; not full scientific experiment",
+  "single_batch_training_smoke": {
+    "basin": "01022500",
+    "batch_size": 256,
+    "config_identity": "4a1e4948488f15d7a09a48dd3142f9d90d9907167eab92142bf9842be59dad57",
+    "configured_epochs": 30,
+    "cuda_peak_allocated_bytes": 968814080,
+    "features": [
+      "PRCP(mm/day)",
+      "Tmin(C)",
+      "SRAD(W/m2)",
+      "Vp(Pa)"
+    ],
+    "optimizer_updates": 1,
+    "prediction_dates": "training interval only",
+    "reference_scaler": "original scaler supplied and reused for this smoke; full training computes its own 531-basin scaler",
+    "scope": "one batch resource/interface check; not one of three scientific trainings",
+    "single_update_seconds": 1.0159636959433556,
+    "status": "PASS",
+    "total_seconds": 2.6223615519702435,
+    "training_loss": 0.06240091472864151,
+    "training_windows": 3288,
+    "weights_saved": false
+  },
+  "status": "PASS",
+  "timings": {
+    "full_baseline_seconds": 43.12954642623663,
+    "tiny_two_update_attack_seconds": 0.3690612427890301
+  },
+  "tiny_prediction_count": 256,
+  "tiny_updates": 2,
+  "wall_seconds": 53.00921240448952
+}
+
+
+FILE control/resource_pilot_v004_job_id
+NOT_CREATED
+
+FILE control/resource_pilot_v004_submission.txt
+NOT_CREATED
+
+FILE control/resource_pilot_v004.json
+NOT_CREATED
+
+FILE control/full_v004/jobs.json
+NOT_CREATED
+
+FILE control/continuation_v004/formal_submission.log
+NOT_CREATED
+
+COORDINATOR_PROCESS
+  PID ELAPSED COMMAND
+15736     277 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v004/continue_after_runtime.py
+
+PS_EXIT_CODE=0
+
+REGISTERED_V004_SCHEDULER
+240074|COMPLETED|0:0|00:04:20||ngu007
+240074.batch|COMPLETED|0:0|00:04:20|1323744K|ngu007
+240074.extern|COMPLETED|0:0|00:04:21|1656K|ngu007
+
+
+TAIL logs/continuation-v004.log
+{"utc": "2026-10-11T14:01:49.994566+00:00", "phase": "VERIFYING_USER_ACCEPTED_NUMERICAL_DRIFT"}
+{"utc": "2026-10-11T14:01:53.273326+00:00", "phase": "USER_ACCEPTED_NUMERICAL_DRIFT", "acceptance": {"status": "ACCEPTED_WITH_USER_AUTHORIZED_NUMERICAL_DRIFT", "amendment_id": "reproduction_drift_user_acceptance_20261011_001", "cases": 12, "accepted": 12, "original_strict_passed": 3, "original_strict_failed": 9, "original_tolerance": 1e-05, "accepted_tolerance": 0.0001, "historical_job_id": "238679", "historical_scheduler_state": "FAILED", "historical_exit_code": "4:0", "maximum_nse_difference": 9.75754688228303e-05, "cases_evidence": [{"model": "original_s100", "basin": "01022500", "nse_difference": 5.3660850277137406e-05, "max_daily_error_mm_day": 0.009308332522152796, "original_strict_pass": false}, {"model": "original_s100", "basin": "02108000", "nse_difference": 4.95922987076014e-06, "max_daily_error_mm_day": 0.013545377062769148, "original_strict_pass": true}, {"model": "original_s100", "basin": "05120500", "nse_difference": 6.030061528083941e-05, "max_daily_error_mm_day": 0.00019433825438142094, "original_strict_pass": false}, {"model": "original_s100", "basin": "09492400", "nse_difference": 1.691046408236474e-06, "max_daily_error_mm_day": 0.0013155340852222253, "original_strict_pass": true}, {"model": "original_s200", "basin": "01022500", "nse_difference": 4.747411955030589e-05, "max_daily_error_mm_day": 0.008704262313187883, "original_strict_pass": false}, {"model": "original_s200", "basin": "02108000", "nse_difference": 9.731180640182302e-07, "max_daily_error_mm_day": 0.010290925718663857, "original_strict_pass": true}, {"model": "original_s200", "basin": "05120500", "nse_difference": 7.785070979915432e-05, "max_daily_error_mm_day": 0.00028158210856332744, "original_strict_pass": false}, {"model": "original_s200", "basin": "09492400", "nse_difference": 2.452886897086337e-05, "max_daily_error_mm_day": 0.0013761793615785223, "original_strict_pass": false}, {"model": "original_s300", "basin": "01022500", "nse_difference": 4.043877342052582e-05, "max_daily_error_mm_day": 0.009047862647094007, "original_strict_pass": false}, {"model": "original_s300", "basin": "02108000", "nse_difference": 6.0867351054927354e-05, "max_daily_error_mm_day": 0.011168767994149675, "original_strict_pass": false}, {"model": "original_s300", "basin": "05120500", "nse_difference": 7.560970387410215e-05, "max_daily_error_mm_day": 0.00026760075853360377, "original_strict_pass": false}, {"model": "original_s300", "basin": "09492400", "nse_difference": 9.75754688228303e-05, "max_daily_error_mm_day": 0.0038562890912601233, "original_strict_pass": false}]}, "acceptance_amendment_sha256": "2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed"}
+{"utc": "2026-10-11T14:01:53.312055+00:00", "phase": "preflight_v004_SUBMITTED", "scheduler_job_id": "240074"}
+{"utc": "2026-10-11T14:03:53.605072+00:00", "phase": "PREFLIGHT", "scheduler_job_id": "240074", "scheduler_state": "RUNNING", "exit_code": "0:0"}
+
+TAIL control/continuation_v004/events.jsonl
+{"utc": "2026-10-11T14:01:49.994566+00:00", "phase": "VERIFYING_USER_ACCEPTED_NUMERICAL_DRIFT"}
+{"utc": "2026-10-11T14:01:53.273326+00:00", "phase": "USER_ACCEPTED_NUMERICAL_DRIFT", "acceptance": {"status": "ACCEPTED_WITH_USER_AUTHORIZED_NUMERICAL_DRIFT", "amendment_id": "reproduction_drift_user_acceptance_20261011_001", "cases": 12, "accepted": 12, "original_strict_passed": 3, "original_strict_failed": 9, "original_tolerance": 1e-05, "accepted_tolerance": 0.0001, "historical_job_id": "238679", "historical_scheduler_state": "FAILED", "historical_exit_code": "4:0", "maximum_nse_difference": 9.75754688228303e-05, "cases_evidence": [{"model": "original_s100", "basin": "01022500", "nse_difference": 5.3660850277137406e-05, "max_daily_error_mm_day": 0.009308332522152796, "original_strict_pass": false}, {"model": "original_s100", "basin": "02108000", "nse_difference": 4.95922987076014e-06, "max_daily_error_mm_day": 0.013545377062769148, "original_strict_pass": true}, {"model": "original_s100", "basin": "05120500", "nse_difference": 6.030061528083941e-05, "max_daily_error_mm_day": 0.00019433825438142094, "original_strict_pass": false}, {"model": "original_s100", "basin": "09492400", "nse_difference": 1.691046408236474e-06, "max_daily_error_mm_day": 0.0013155340852222253, "original_strict_pass": true}, {"model": "original_s200", "basin": "01022500", "nse_difference": 4.747411955030589e-05, "max_daily_error_mm_day": 0.008704262313187883, "original_strict_pass": false}, {"model": "original_s200", "basin": "02108000", "nse_difference": 9.731180640182302e-07, "max_daily_error_mm_day": 0.010290925718663857, "original_strict_pass": true}, {"model": "original_s200", "basin": "05120500", "nse_difference": 7.785070979915432e-05, "max_daily_error_mm_day": 0.00028158210856332744, "original_strict_pass": false}, {"model": "original_s200", "basin": "09492400", "nse_difference": 2.452886897086337e-05, "max_daily_error_mm_day": 0.0013761793615785223, "original_strict_pass": false}, {"model": "original_s300", "basin": "01022500", "nse_difference": 4.043877342052582e-05, "max_daily_error_mm_day": 0.009047862647094007, "original_strict_pass": false}, {"model": "original_s300", "basin": "02108000", "nse_difference": 6.0867351054927354e-05, "max_daily_error_mm_day": 0.011168767994149675, "original_strict_pass": false}, {"model": "original_s300", "basin": "05120500", "nse_difference": 7.560970387410215e-05, "max_daily_error_mm_day": 0.00026760075853360377, "original_strict_pass": false}, {"model": "original_s300", "basin": "09492400", "nse_difference": 9.75754688228303e-05, "max_daily_error_mm_day": 0.0038562890912601233, "original_strict_pass": false}]}, "acceptance_amendment_sha256": "2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed"}
+{"utc": "2026-10-11T14:01:53.312055+00:00", "phase": "preflight_v004_SUBMITTED", "scheduler_job_id": "240074"}
+{"utc": "2026-10-11T14:03:53.605072+00:00", "phase": "PREFLIGHT", "scheduler_job_id": "240074", "scheduler_state": "RUNNING", "exit_code": "0:0"}
+
+TAIL logs/preflight-240074.out
+{"bytes": 6852, "mtime_ns": 1791727582000000000}
+2026-10-11T22:03:36+08:00
+JOB_ID=240074 CUDA_VISIBLE_DEVICES=1
+name, memory.total [MiB], memory.used [MiB]
+NVIDIA GeForce RTX 3090, 24576 MiB, 743 MiB
+NVIDIA GeForce RTX 3090, 24576 MiB, 0 MiB
+{"status": "PASS", "runtime_identity_sha256": "202f2d9e7f66b59691ab686df1c6aa03fa6057c325b6d733652bae85e86df1e2", "install_job_id": "238679", "validation_job_id": "238679", "cases": 12, "accepted": 12, "original_strict_passed": 3, "original_strict_tolerance": 1e-05, "accepted_tolerance": 0.0001, "acceptance": "ACCEPTED_WITH_USER_AUTHORIZED_NUMERICAL_DRIFT"}
+EXISTING_INPUTS_VERIFIED 1069
+DATA_IDENTITY_PASS 1069 files
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00,  6.22it/s]100%|██████████| 1/1 [00:00<00:00,  6.21it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1170.94it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.30s/it]100%|██████████| 1/1 [00:01<00:00,  1.30s/it]
+{"status": "PASS", "scope": "one basin interface smoke; not full scientific experiment", "model_id": "original_s100", "basin_id": "01022500", "full_prediction_count": 3652, "full_calendar_count": 3921, "tiny_prediction_count": 256, "tiny_updates": 2, "baseline": {"status": "PASS", "stored_nse": 0.7717729791579846, "reproduced_nse": 0.7718266400082617, "nse_difference": 5.3660850277137406e-05, "max_daily_error_mm_day": 0.009308332522152796, "baseline_sha256": "19c790d08faf943df0bee064a029f6cecc07aadc63d785f1cf39cad5d3e96c1d", "original_strict_tolerance": 1e-05, "original_strict_pass": false, "accepted_tolerance": 0.0001, "acceptance_amendment_sha256": "2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed"}, "model_identity": {"model_id": "original_s100", "config_sha256": "e873fea95ee215179f284f14ec900068c5151f41b4622a342e59255aa642e4f9", "weight_sha256": "f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654", "scaler_sha256": "44040690367606c52c7f6a142d506e52433494ccdcd728fdfcc6fd6b9f57d5c7", "epoch": 30, "dynamic_feature_names": ["PRCP(mm/day)", "Tmin(C)", "Tmax(C)", "SRAD(W/m2)", "Vp(Pa)"], "static_feature_names": ["p_mean", "pet_mean", "aridity", "p_seasonality", "frac_snow", "high_prec_freq", "high_prec_dur", "low_prec_freq", "low_prec_dur", "elev_mean", "slope_mean", "area_gages2", "frac_forest", "lai_max", "lai_diff", "gvf_max", "gvf_diff", "soil_depth_pelletier", "soil_depth_statsgo", "soil_porosity", "soil_conductivity", "max_water_content", "sand_frac", "silt_frac", "clay_frac", "carbonate_rocks_frac", "geol_permeability"], "asset_index_sha256": "2c244453ea86c6ff81441736c5e29fe881692cd4e3d5fc8d4bfb4a7338ad6469"}, "actual_prediction_start": "1989-10-01", "actual_prediction_end": "1999-09-30", "actual_calendar_start": "1989-01-05", "date_validation": "PASS", "gradient_path_check": {"max_prediction_difference_mm_day": 0.003761039071491723, "gradient_path_nse": 0.8936495184898376, "inference_path_nse": 0.8937282562255859, "absolute_nse_difference": 7.873773574829102e-05, "nonzero_gradient_entries": 2100, "finite_gradient": true, "rule": "record numerical path differences; require finite nonzero gradient; no unregistered allclose gate"}, "constraints": {"finite": true, "amplitude_violations": 0, "physical_violations": 0, "clean_physical_violations": 0, "actual_max_abs_normalized": [0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612], "physical_minimum": [-0.6955406665802002, -21.593292236328125, 105.42245483398438, -5.14154052734375], "physical_maximum": [37.245540618896484, 24.163293838500977, 600.6675415039062, 1960.17138671875], "physical_mean_shift": [0.0834648609161377, -0.3046107292175293, -1.124359130859375, -20.0946044921875], "physical_std_shift": [0.11043691635131836, -0.20785903930664062, 0.5672454833984375, -0.071868896484375]}, "mapping": {"dynamic_feature_names": ["PRCP(mm/day)", "Tmin(C)", "Tmax(C)", "SRAD(W/m2)", "Vp(Pa)"], "signal_to_feature_columns": {"precipitation": [0], "temperature_mean": [1, 2], "shortwave_radiation": [3], "vapor_pressure": [4]}, "reference_signal_std_physical": [6.955404281616211, 10.73293399810791, 131.17544555664062, 631.7147827148438], "signal_budget_physical": [0.6955404281616211, 1.0732934474945068, 13.117545127868652, 63.171478271484375], "signal_budget_normalized": [0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612], "signal_center_physical": [3.1751224994659424, 10.403558731079102, 375.16156005859375, 931.1626586914062], "signal_scale_physical": [6.955404281616211, 10.73293399810791, 131.17544555664062, 631.7147827148438], "signal_units": ["mm/day", "degree Celsius (daily mean)", "W/m2", "Pa"]}, "runtime": {"python": "3.11.13", "torch": "2.7.1+cu118", "numpy": "2.3.3", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "cuda_runtime": "11.8", "cuda_device": "NVIDIA GeForce RTX 3090", "scipy": "1.16.2", "cudnn_version": 90100, "neuralhydrology_source": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/neuralhydrology/__init__.py", "cuda_visible_devices": "1", "cuda_device_count": 1, "cudnn_enabled": true, "cudnn_allow_tf32": true, "cudnn_benchmark": false, "cudnn_deterministic": false, "matmul_allow_tf32": false}, "timings": {"full_baseline_seconds": 43.12954642623663, "tiny_two_update_attack_seconds": 0.3690612427890301}, "wall_seconds": 53.00921240448952, "rss_bytes": 1350008832, "cuda_peak_allocated_bytes": 1090353664, "cuda_peak_reserved_bytes": 1807745024, "chunk": 256, "manifest_sha256": "bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826", "single_batch_training_smoke": {"status": "PASS", "scope": "one batch resource/interface check; not one of three scientific trainings", "basin": "01022500", "batch_size": 256, "features": ["PRCP(mm/day)", "Tmin(C)", "SRAD(W/m2)", "Vp(Pa)"], "prediction_dates": "training interval only", "training_windows": 3288, "single_update_seconds": 1.0159636959433556, "total_seconds": 2.6223615519702435, "training_loss": 0.06240091472864151, "reference_scaler": "original scaler supplied and reused for this smoke; full training computes its own 531-basin scaler", "weights_saved": false, "optimizer_updates": 1, "configured_epochs": 30, "config_identity": "4a1e4948488f15d7a09a48dd3142f9d90d9907167eab92142bf9842be59dad57", "cuda_peak_allocated_bytes": 968814080}}
+{"status": "PASS", "runtime_identity_sha256": "202f2d9e7f66b59691ab686df1c6aa03fa6057c325b6d733652bae85e86df1e2", "install_job_id": "238679", "validation_job_id": "238679", "cases": 12, "accepted": 12, "original_strict_passed": 3, "original_strict_tolerance": 1e-05, "accepted_tolerance": 0.0001, "acceptance": "ACCEPTED_WITH_USER_AUTHORIZED_NUMERICAL_DRIFT"}
+2026-10-11T22:07:55+08:00
+PREFLIGHT_COMPLETED
+
+
+TAIL logs/preflight-240074.err
+{"bytes": 5276, "mtime_ns": 1791727490000000000}
+test_actual_search_target_calculation_required_and_verified_on_load (test_revision_20261008_fix1.ReviewFixTests.test_actual_search_target_calculation_required_and_verified_on_load) ... ok
+test_auxiliary_peak_rmse_normalized_correlation_and_event_pairs (test_revision_20261008_fix1.ReviewFixTests.test_auxiliary_peak_rmse_normalized_correlation_and_event_pairs) ... ok
+test_data_manifest_change_fails_before_freeze_or_inference (test_revision_20261008_fix1.ReviewFixTests.test_data_manifest_change_fails_before_freeze_or_inference) ... ok
+test_each_original_asset_changed_before_inference_fails (test_revision_20261008_fix1.ReviewFixTests.test_each_original_asset_changed_before_inference_fails) ... /data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/neuralhydrology/datautils/utils.py:258: DeprecationWarning: invalid escape sequence '\d'
+  weekly_freq = re.match('(\d+)W(-(MON|TUE|WED|THU|FRI|SAT|SUN))?$', native_frequency)
+ok
+test_empty_and_partial_full_acceptance_never_overall_pass (test_revision_20261008_fix1.ReviewFixTests.test_empty_and_partial_full_acceptance_never_overall_pass) ... ok
+test_low_flow_large_negative_nse_float64_roundtrip (test_revision_20261008_fix1.ReviewFixTests.test_low_flow_large_negative_nse_float64_roundtrip) ... ok
+test_low_variance_actual_float32_target_roundtrip (test_revision_20261008_fix1.ReviewFixTests.test_low_variance_actual_float32_target_roundtrip) ... ok
+test_missing_and_wrong_clean_reference_rejected (test_revision_20261008_fix1.ReviewFixTests.test_missing_and_wrong_clean_reference_rejected) ... ok
+test_old_manifest_record_rejected_without_trusting_internal_hash (test_revision_20261008_fix1.ReviewFixTests.test_old_manifest_record_rejected_without_trusting_internal_hash) ... ok
+test_required_restore_missing_fails_even_without_importance_metadata (test_revision_20261008_fix1.ReviewFixTests.test_required_restore_missing_fails_even_without_importance_metadata) ... ok
+test_training_actual_scaler_config_and_index_are_verified (test_revision_20261008_fix1.ReviewFixTests.test_training_actual_scaler_config_and_index_are_verified) ... ok
+test_training_foreign_manifest_rejected_before_model_load (test_revision_20261008_fix1.ReviewFixTests.test_training_foreign_manifest_rejected_before_model_load) ... ok
+test_undefined_clean_metric_change_has_both_sides_and_reason (test_revision_20261008_fix1.ReviewFixTests.test_undefined_clean_metric_change_has_both_sides_and_reason) ... ok
+test_validation_and_report_both_exclude_wrong_stale_and_missing_reference (test_revision_20261008_fix1.ReviewFixTests.test_validation_and_report_both_exclude_wrong_stale_and_missing_reference) ... ok
+test_wrong_combination_and_basin_slots_rejected_by_validator (test_revision_20261008_fix1.ReviewFixTests.test_wrong_combination_and_basin_slots_rejected_by_validator) ... ok
+test_100_candidates_with_clean_and_seven_day_blocks (test_revision_20261008_runner.ContractTests.test_100_candidates_with_clean_and_seven_day_blocks) ... ok
+test_52_exact_scopes (test_revision_20261008_runner.ContractTests.test_52_exact_scopes) ... ok
+test_actual_dates_gaps_and_overlap_refused (test_revision_20261008_runner.ContractTests.test_actual_dates_gaps_and_overlap_refused) ... ok
+test_complete_record_identity_checksum_and_partial (test_revision_20261008_runner.ContractTests.test_complete_record_identity_checksum_and_partial) ... ok
+test_duplicate_temperature_and_scaler_refused (test_revision_20261008_runner.ContractTests.test_duplicate_temperature_and_scaler_refused) ... ok
+test_name_mapping_and_temperature_gradient_sum (test_revision_20261008_runner.ContractTests.test_name_mapping_and_temperature_gradient_sum) ... ok
+test_nonfinite_model_output_fails (test_revision_20261008_runner.ContractTests.test_nonfinite_model_output_fails) ... ok
+test_output_path_isolation_and_training_only_duplicate_removed (test_revision_20261008_runner.ContractTests.test_output_path_isolation_and_training_only_duplicate_removed) ... ok
+test_overlapping_gradient_is_chunk_independent (test_revision_20261008_runner.ContractTests.test_overlapping_gradient_is_chunk_independent) ... ok
+test_peak_before_union_includes_other_peak_but_random_excludes (test_revision_20261008_runner.ContractTests.test_peak_before_union_includes_other_peak_but_random_excludes) ... ok
+test_physical_budget_conversion (test_revision_20261008_runner.ContractTests.test_physical_budget_conversion) ... ok
+test_physical_metrics_kge_not_normalized_and_undefined (test_revision_20261008_runner.ContractTests.test_physical_metrics_kge_not_normalized_and_undefined) ... ok
+test_physical_projection_and_unknown_constraint (test_revision_20261008_runner.ContractTests.test_physical_projection_and_unknown_constraint) ... ok
+test_step_schedule_and_best_prediction_arrays (test_revision_20261008_runner.ContractTests.test_step_schedule_and_best_prediction_arrays) ... ok
+test_undefined_peak_target_is_not_epsilon_denominator (test_revision_20261008_runner.ContractTests.test_undefined_peak_target_is_not_epsilon_denominator) ... ok
+test_zero_start_first_update_equals_single_step (test_revision_20261008_runner.ContractTests.test_zero_start_first_update_equals_single_step) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 85.857s
+
+OK
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T22:06:27+0800
