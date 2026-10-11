@@ -1,0 +1,37 @@
+### channel=us529-acceptance-20261011 seq=5
+### host=login4
+### started=2026-10-11T17:36:49+0800
+### ---------- output ----------
+OWN_COMMON_READONLY_COLLECTION_UTC=2026-10-11T09:36:49Z
+OWN_COMMON_PREPARATION_JOB_ID=240033
+slurm_load_jobs error: Invalid job id specified
+OWN_COMMON_SQUEUE_EXIT=1
+240033|us529_common_prepare|FAILED|1:0|00:00:03|1|billing=1,cpu=1,node=1|billing=1,cpu=1,node=1
+240033.batch|batch|FAILED|1:0|00:00:03|1||cpu=1,mem=0,node=1
+240033.extern|extern|COMPLETED|0:0|00:00:03|1||billing=1,cpu=1,node=1
+OWN_COMMON_SACCT_EXIT=0
+slurm_load_jobs error: Invalid job id specified
+OWN_COMMON_SCONTROL_EXIT=1
+OWN_COMMON_LOG_TAIL=out
+OWN_COMMON_CANDIDATE_EXIT=1
+OWN_COMMON_SAVED_AUDIT_EXIT=125
+OWN_COMMON_CANDIDATE_MISSING
+OWN_COMMON_SAVED_AUDIT_MISSING
+
+OWN_COMMON_LOG_TAIL=err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001/common_preparation_v1/src/assemble_saved_common_inputs.py", line 252, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001/common_preparation_v1/src/assemble_saved_common_inputs.py", line 182, in main
+    OUTPUT.mkdir()
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/us_nonnegative_repair_execution_20261010_001/common_preparation_v1/reports/COMMON_INPUT_CANDIDATE_v1'
+
+OWN_COMMON_CANDIDATE_MISSING
+OWN_COMMON_SAVED_AUDIT_MISSING
+OWN_COMMON_COLLECTION_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T17:36:50+0800
