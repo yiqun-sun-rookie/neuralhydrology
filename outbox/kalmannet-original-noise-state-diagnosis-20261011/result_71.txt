@@ -1,0 +1,15 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=71
+### host=login4
+### started=2026-10-12T03:30:08+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/v6/remote_saved_review.py", line 351, in <module>
+    else:print('REMOTE_JSON='+json.dumps(globals()[a.operation]()),flush=True)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/v6/remote_saved_review.py", line 161, in submit
+    if p.returncode or not re.fullmatch(r'[0-9]+(?:;[^\s]+)?\s*',p.stdout):raise RuntimeError('Verification submission failed or identity unknown; preserve it')
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Verification submission failed or identity unknown; preserve it
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-12T03:30:32+0800
