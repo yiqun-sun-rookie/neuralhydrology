@@ -1,0 +1,23 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=218
+### host=login4
+### started=2026-10-11T18:35:10+0800
+### ---------- output ----------
+{"status": "isolated_gradient_diagnostic_release_verified", "root": "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001", "archive_sha256": "b6cf983ce2a03b24bed24ec43bfea4761c62efb881336886c1a89a6ac27a002e", "formal_training_sources_changed": false, "evaluation_values_read": false}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011.py", line 105, in <module>
+    main()
+  File "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011.py", line 33, in main
+    queued = query(['squeue', '-h', '-j', str(spec['source_job']), '-o', '%i|%j|%T|%N'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011.py", line 23, in query
+    raise RuntimeError('scheduler query failed: ' + repr(args) + p.stderr)
+RuntimeError: scheduler query failed: ['squeue', '-h', '-j', '236820', '-o', '%i|%j|%T|%N']slurm_load_jobs error: Invalid job id specified
+
+Traceback (most recent call last):
+  File "<stdin>", line 31, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python', '-B', '/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011.py']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-11T18:35:13+0800
