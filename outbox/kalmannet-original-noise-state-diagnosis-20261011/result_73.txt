@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=73
+### host=login4
+### started=2026-10-12T05:13:28+0800
+### ---------- output ----------
+REMOTE_JSON={"status": "EXACT_VERIFICATION_DEPLOYMENT", "files": [{"name": "remote_saved_review.py", "bytes": 25095, "sha256": "77f8f18f31ba20ebe6632729df327a1aa6d6dac8c56b93884dc84c609fdaaeba"}, {"name": "check_state_records.py", "bytes": 49909, "sha256": "25f2083e808ae54edb5e2a15dd3baa3d22356885d7011dbf03ad334b545b8dde"}, {"name": "check_saved.slurm", "bytes": 256, "sha256": "5b60722e08b92523adc3e16e2714c11782c97966cab8334edc149ad9267e1279"}, {"name": "manifest.json", "bytes": 615, "sha256": "9b1bd23f004dd805fa28cbdc8ab60c144246716ec3c5b272b89067181259416e"}], "scientific_executions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T05:13:28+0800
