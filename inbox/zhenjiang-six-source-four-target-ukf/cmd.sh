@@ -1,40 +1,39 @@
 #!/usr/bin/env bash
-set -euo pipefail
-python3 - <<'PY'
-import base64,datetime,hashlib,json,pathlib,subprocess
-ORIGINAL=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
-ROOT=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001')
-CASE='explicit_gru__historical_capacity'
-RUN=CASE+'__tune_branch__filter_joint__s101__lr0p003'
-def sha(path):
-    h=hashlib.sha256()
-    with path.open('rb') as f:
-        for chunk in iter(lambda:f.read(1048576),b''): h.update(chunk)
-    return h.hexdigest()
-def evidence(path,include=False):
-    if not path.exists(): return {'path':str(path),'exists':False}
-    st=path.stat(); d={'path':str(path),'exists':True,'bytes':st.st_size,'mtime_ns':st.st_mtime_ns,'sha256':sha(path)}
-    if include: d['base64']=base64.b64encode(path.read_bytes()).decode()
-    return d
-def command(args):
-    p=subprocess.run(args,capture_output=True,text=True,timeout=30)
-    return {'command':args,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
-jobs=json.loads((ROOT/'records/scheduler_jobs.json').read_text())
-job=str(jobs[CASE]); assert job.isdigit()
-report={'status':'read_only_gradient_fault_source_probe','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'source_root':str(ROOT),'case':CASE,'run':RUN,'scheduler_jobs':jobs,'scheduler_queries':[command(['squeue','-h','-j',job,'-o','%i|%j|%T|%R|%N']),command(['sacct','-n','-X','-j',job,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P']),command(['scontrol','show','job',job])],'training_inputs_read':False,'checkpoints_loaded':False,'evaluation_values_read':False,'source_files_written':False}
-files=sorted([*ROOT.joinpath('src').glob('*.py'),*ROOT.joinpath('scripts').glob('*.py'),*ROOT.joinpath('vendor/pytides').glob('*.py')])
-hashes={p.relative_to(ROOT).as_posix():sha(p) for p in files}
-report['code_file_hashes']=hashes
-report['code_hash']=hashlib.sha256(json.dumps(hashes,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
-report['metadata_files']={}
-for name in ['records/authorization.json','records/data_preparation_complete.json','configs/protocol-v3.json','configs/registry-v3.json','prepared/tuning_manifest.json','records/'+CASE+'/tune_foundation_group_outcome.json','records/'+CASE+'/tune_branch_group_configs.json']:
-    p=ROOT/name;d=evidence(p);report['metadata_files'][name]=d
-    if p.exists() and p.stat().st_size<200000 and not name.endswith('registry-v3.json'): d['value']=json.loads(p.read_text())
-report['runs']={}
-for folder in sorted(ROOT.joinpath('runs').glob(CASE+'__tune_branch__*')):
-    report['runs'][folder.name]={n:evidence(folder/n,include=(n=='config.json' and folder.name==RUN)) for n in ['config.json','continuation.pt','metrics.json','failure.json']}
-    report['runs'][folder.name]['failure_value']=json.loads((folder/'failure.json').read_text())
-report['slurm_sources']=[evidence(ORIGINAL/'hpc/pathfix_explicit_gru__historical_capacity.slurm',True),evidence(ROOT/'hpc/recover_case.slurm',True)]
-report['submission_provenance']=[evidence(p,True) for p in sorted(ORIGINAL.joinpath('hpc').glob('pathfix*historical_capacity*.json'))]+[evidence(ROOT/'records/recovery_submission_attempt.json',True),evidence(ROOT/'records/recovery_submission_response.json',True)]
-print(json.dumps(report,sort_keys=True,allow_nan=False))
+set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+python -B - <<'PY'
+import hashlib,io,json,pathlib,subprocess,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
+seq=int((inbox/'seq').read_text());assert seq==218
+payload=inbox/('payload_complete_comparison_20261006_'+str(seq)+'.tar.gz')
+raw=payload.read_bytes()
+assert hashlib.sha256(raw).hexdigest()=='b6cf983ce2a03b24bed24ec43bfea4761c62efb881336886c1a89a6ac27a002e'
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
+if root.exists():raise FileExistsError('preserve existing diagnostic deployment; inspect its exclusive submission records without repeating')
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as tar:
+    members=tar.getmembers()
+    assert len({m.name for m in members})==len(members)
+    for member in members:
+        p=pathlib.PurePosixPath(member.name)
+        assert not p.is_absolute() and '..' not in p.parts and member.isfile()
+    content={m.name:tar.extractfile(m).read() for m in members}
+manifest_raw=content.pop('release_manifest.json');manifest=json.loads(manifest_raw)
+assert manifest['diagnostic_root']==str(root) and not manifest['formal_training_sources_changed']
+assert set(content)==set(manifest['files'])
+for name,data in content.items():
+    identity=manifest['files'][name]
+    assert len(data)==identity['bytes'] and hashlib.sha256(data).hexdigest()==identity['sha256']
+spec=json.loads(content['diagnostic_spec.json'])
+assert spec['diagnostic_root']==str(root) and spec['formal_checkpoint_write_allowed'] is False
+root.mkdir()
+for name,data in content.items():
+    p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
+    with p.open('xb') as f:f.write(data)
+with (root/'release_manifest.json').open('xb') as f:f.write(manifest_raw)
+(root/'logs').mkdir()
+print(json.dumps({'status':'isolated_gradient_diagnostic_release_verified','root':str(root),'archive_sha256':hashlib.sha256(raw).hexdigest(),'formal_training_sources_changed':False,'evaluation_values_read':False}),flush=True)
+subprocess.run(['python','-B',str(root/'hpc/submit_gradient_diagnostic_20261011.py')],cwd=root,check=True)
 PY
