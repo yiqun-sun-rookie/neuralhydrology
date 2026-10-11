@@ -1,0 +1,9 @@
+### channel=hydrol85935-temporal-20261011-001 seq=10
+### host=login4
+### started=2026-10-11T19:50:30+0800
+### ---------- output ----------
+{"parent_version_check": {"versions": ["v001", "v002", "v003"], "execution": []}}
+{"status": "WAITING_FOR_TRAINING", "missing_seeds": [100, 200, 300], "parent_execution": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/execution/v003"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T19:50:31+0800
