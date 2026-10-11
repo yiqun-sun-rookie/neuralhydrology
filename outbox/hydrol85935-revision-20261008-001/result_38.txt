@@ -1,0 +1,137 @@
+### channel=hydrol85935-revision-20261008-001 seq=38
+### host=login4
+### started=2026-10-11T08:51:15+0800
+### ---------- output ----------
+2026-10-11T08:51:15+0800
+             JOBID      PARTITION                                NAME      STATE         TIME     CPUS        TRES_PER_NODE               NODELIST(REASON)
+            239882          hgpu8      author-solver-capture-20261011    PENDING         0:00        4                gpu:1                     (Priority)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval    PENDING         0:00        4                  N/A     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export    PENDING         0:00        4                  N/A                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate    PENDING         0:00        2                  N/A                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100    PENDING         0:00        4                gpu:1     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hg                        N22-manifest    PENDING         0:00        4                  N/A                  (JobHeldUser)
+            236820         hgpu2p  zj_gru_history_recovery_261006_001    RUNNING   3-10:41:36        4                gpu:1                         ngu001
+            237928         hgpu2p   zj_lstm_small_recovery_261008_002    RUNNING   2-10:33:50        4                gpu:1                         ngu007
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf    RUNNING   4-21:32:55        4                gpu:1                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity    RUNNING   4-21:32:55        4                gpu:1                         ngu001
+            239937        hcpu48y             original-noise-multiday    RUNNING      1:09:03        1                  N/A                         icn274
+237696|FAILED|4:0|00:00:55||ngu006
+237696.batch|FAILED|4:0|00:00:55|7.50M|ngu006
+237696.extern|COMPLETED|0:0|00:00:55|1632K|ngu006
+237883|FAILED|1:0|00:04:31||ngu004
+237883.batch|FAILED|1:0|00:04:31|1194448K|ngu004
+237883.extern|COMPLETED|0:0|00:04:33|1676K|ngu004
+237904|COMPLETED|0:0|00:03:08||ngu005
+237904.batch|COMPLETED|0:0|00:03:08|1231740K|ngu005
+237904.extern|COMPLETED|0:0|00:03:08|1664K|ngu005
+237936|COMPLETED|0:0|00:02:03||ngu011
+237936.batch|COMPLETED|0:0|00:02:03|1279604K|ngu011
+237936.extern|COMPLETED|0:0|00:02:04|2168K|ngu011
+238679|FAILED|4:0|00:04:05||ngu010
+238679.batch|FAILED|4:0|00:04:05|1180348K|ngu010
+238679.extern|COMPLETED|0:0|00:04:05|2128K|ngu010
+238886|COMPLETED|0:0|00:01:17||ngu010
+238886.batch|COMPLETED|0:0|00:01:17|684500K|ngu010
+238886.extern|COMPLETED|0:0|00:01:17|2424K|ngu010
+
+FILE control/continuation_v003/status.json
+2026-10-09 18:18:45.000000000 +0800 204 bytes
+{
+  "utc": "2026-10-09T10:18:45.953169+00:00",
+  "phase": "STOPPED_WITHOUT_RETRY",
+  "error_type": "RuntimeError",
+  "reason": "RUNTIME_VALIDATION job 238679 stopped with FAILED 4:0; no automatic retry"
+}
+FILE control/runtime_setup_20261009_001/supervisor_exit_code
+2026-10-09 18:13:48.000000000 +0800 2 bytes
+0
+
+FILE control/runtime_setup_20261009_001/job_id
+2026-10-09 18:13:48.000000000 +0800 7 bytes
+238679
+
+FILE runtime_torch271cu118/DOWNLOAD_COMPLETE.json
+2026-10-09 18:13:47.000000000 +0800 153 bytes
+{
+  "status": "COMPLETE",
+  "manifest_sha256": "ab681606445561fdbaec820186b7bf7b8ceb95f2ab7311bc0c3fe74874c71eb5",
+  "files": 14,
+  "bytes": 2892971578
+}
+FILE runtime_torch271cu118/INSTALL_COMPLETE.json
+2026-10-09 18:16:22.000000000 +0800 255 bytes
+{
+  "status": "INSTALLED_NOT_VALIDATED",
+  "manifest_sha256": "ab681606445561fdbaec820186b7bf7b8ceb95f2ab7311bc0c3fe74874c71eb5",
+  "site": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site",
+  "scheduler_job_id": "238679"
+}
+FILE diagnostics/matched_runtime_20261009/summary.json
+2026-10-09 18:18:10.000000000 +0800 185 bytes
+{
+  "status": "FAIL",
+  "cases": 12,
+  "passed": 3,
+  "tolerance": 1e-05,
+  "job_id": "238679",
+  "manifest_sha256": "3c32901873a888599a7badd3709f4d6a365647a3166d137c5c672166fd674c2f"
+}
+FILE diagnostics/path_trace_20261009_001/summary.json
+2026-10-09 21:01:08.000000000 +0800 357 bytes
+{
+  "status": "DIAGNOSTIC_COMPLETE_NOT_SCIENTIFIC_ACCEPTANCE",
+  "cases": 24,
+  "settings": {
+    "default": {
+      "cases": 12,
+      "passed": 3
+    },
+    "deterministic": {
+      "cases": 12,
+      "passed": 3
+    }
+  },
+  "tolerance": 1e-05,
+  "job_id": "238886",
+  "trace_sha256": "eb5d1942dee0b892a922b482f51d0020e1d568710ecc9a5a9933906971b14ebb"
+}
+
+FILE control/full_v003/jobs.json
+NOT_CREATED
+
+CONTINUATION_PROCESS
+  PID ELAPSED COMMAND
+
+CONTINUATION_EVENTS
+{"utc": "2026-10-09T08:18:44.694293+00:00", "phase": "WAITING_FOR_APPROVED_DOWNLOAD_AND_RUNTIME_JOB"}
+{"utc": "2026-10-09T10:15:45.625843+00:00", "phase": "RUNTIME_VALIDATION", "scheduler_job_id": "238679", "scheduler_state": "RUNNING", "exit_code": "0:0"}
+{"utc": "2026-10-09T10:18:45.942690+00:00", "phase": "RUNTIME_VALIDATION", "scheduler_job_id": "238679", "scheduler_state": "FAILED", "exit_code": "4:0"}
+{"utc": "2026-10-09T10:18:45.953169+00:00", "phase": "STOPPED_WITHOUT_RETRY", "error_type": "RuntimeError", "reason": "RUNTIME_VALIDATION job 238679 stopped with FAILED 4:0; no automatic retry"}
+
+STAGE_LOGS
+backend-237904.err 0 bytes 2026-10-08T21:31:51.0000000000
+backend-237904.out 12493 bytes 2026-10-08T21:34:52.0000000000
+continuation-v003.log 1302 bytes 2026-10-09T18:18:45.0000000000
+data_identity-237696.txt 280 bytes 2026-10-08T17:29:00.0000000000
+data_identity-237883.txt 0 bytes 2026-10-08T20:57:11.0000000000
+inputcompare-237936.err 0 bytes 2026-10-08T22:21:45.0000000000
+inputcompare-237936.out 10044 bytes 2026-10-08T22:23:48.0000000000
+path-trace-238886.err 0 bytes 2026-10-09T20:59:53.0000000000
+path-trace-238886.out 7007 bytes 2026-10-09T21:01:08.0000000000
+preflight-237696.err 0 bytes 2026-10-08T17:28:06.0000000000
+preflight-237696.out 579 bytes 2026-10-08T17:29:00.0000000000
+preflight-237883.err 5065 bytes 2026-10-08T21:00:36.0000000000
+preflight-237883.out 388 bytes 2026-10-08T20:57:16.0000000000
+runtime-238679.err 0 bytes 2026-10-09T18:14:06.0000000000
+runtime-238679.out 8632 bytes 2026-10-09T18:18:12.0000000000
+runtime-download-20261009.log 1701 bytes 2026-10-09T18:13:48.0000000000
+
+EXECUTION_COMPLETION_MARKERS
+0
+
+NONSECRET_NUMERIC_RUNTIME_ENVIRONMENT
+{"NVIDIA_TF32_OVERRIDE": null, "TORCH_ALLOW_TF32_CUBLAS_OVERRIDE": null, "CUBLAS_WORKSPACE_CONFIG": null, "CUDA_MODULE_LOADING": null, "CUDNN_LOGLEVEL_DBG": null, "CUDNN_LOGDEST_DBG": null, "CUDNN_LOGINFO_DBG": null}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T08:51:16+0800
