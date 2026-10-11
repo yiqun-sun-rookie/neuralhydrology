@@ -1,0 +1,20 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=220
+### host=login4
+### started=2026-10-11T18:40:32+0800
+### ---------- output ----------
+{"status": "diagnostic_submission_query_fix_v2_deployed", "root": "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001", "archive_sha256": "45a14162ed9c713c73c7613fa8ee856f12578540d1ce9d8f8c91bc37476ed4ce", "original_submitter_preserved": true, "formal_training_sources_changed": false}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011_v2.py", line 106, in <module>
+    main()
+  File "/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011_v2.py", line 36, in main
+    assert not queued.strip() and str(spec['source_job']) + '|FAILED|1:0|' in accounting
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+Traceback (most recent call last):
+  File "<stdin>", line 28, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python', '-B', '/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001/hpc/submit_gradient_diagnostic_20261011_v2.py']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-11T18:40:33+0800
