@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=4
+### host=login4
+### started=2026-10-11T20:32:08+0800
+### ---------- output ----------
+SUBMISSION_OUTCOME_JSON={"files": {"03340800_intent.json": "{\n  \"utc\": \"2026-10-11T12:24:10.467202+00:00\",\n  \"basin\": \"03340800\",\n  \"contract_sha256\": \"ffb3178c091d0abbbbb89617ac89936c6ff754b94468e513aa54fe7d97b04e89\",\n  \"script_sha256\": \"968ad680468e152a3fdaf60a82dddf5852ed498110de17eabf763bc04f242727\",\n  \"status\": \"SUBMISSION_ATTEMPT_CONSUMED\",\n  \"previous\": []\n}\n", "03340800_response.json": "{\n  \"utc\": \"2026-10-11T12:24:10.492437+00:00\",\n  \"exit_code\": 1,\n  \"stdout\": \"\",\n  \"stderr\": \"sbatch: error: Memory specification can not be satisfied\\nsbatch: error: Batch job submission failed: Requested node configuration is not available\\n\"\n}\n"}, "scientific_submissions": 0, "scientific_retries": 0, "queue": {"exit_code": 0, "stdout": "", "stderr": ""}, "accounting": {"exit_code": 0, "stdout": "240064|noise-state-six|FAILED|1:0|2026-10-11T20:25:52|2026-10-11T20:25:52|2026-10-11T20:25:52|1|/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011\n", "stderr": ""}, "sbatch_identity": {"exit_code": 0, "stdout": "sbatch is /usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch\n/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch\n", "stderr": ""}, "case_files": []}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T20:32:14+0800
