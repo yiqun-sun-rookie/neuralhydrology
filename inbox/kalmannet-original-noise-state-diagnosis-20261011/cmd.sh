@@ -16,5 +16,5 @@ rows=[x.rstrip('|').split('|') for x in account.splitlines() if x.split('|')[0].
 row=rows[0] if len(rows)==1 else None
 terminal=bool(not queue and row and row[1].split()[0] in h.TERMINAL)
 assert terminal, 'Closed-artifact read prohibited until exact scheduler terminal identity and absent queue'
-h.export(-1)
+h.export(0)
 CLOSED_SAVED_CHECK_OPERATION
