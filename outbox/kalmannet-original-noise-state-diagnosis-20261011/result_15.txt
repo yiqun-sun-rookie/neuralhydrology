@@ -1,0 +1,9 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=15
+### host=login4
+### started=2026-10-11T21:31:56+0800
+### ---------- output ----------
+TERMINAL_LIST_ABSENCE_BRIDGE_JSON={"job_id": "240067", "original_query": ["squeue", "-j", "240067", "--noheader", "--format=%i|%j|%t|%C|%R"], "original_exit_code": 1, "original_stdout": "", "original_stderr": "slurm_load_jobs error: Invalid job id specified\n", "owned_queue": "", "accounting": "240067|COMPLETED|0:0\n", "terminal_row": ["240067", "COMPLETED", "0:0"], "scientific_job_repeated": false}
+REMOTE_JSON={"status": "SEALED_INACTIVE_RAW_RESULT", "manifest": {"path": "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/results/cases/03340800/attempt_001/raw_manifest.json", "bytes": 4267, "sha256": "f3c16844c12a4b254f123180129eef1f461cf2f8f31224bcaaa0d9b538f6ee0e"}, "files": 25, "bytes": 37276960}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-11T21:31:57+0800
