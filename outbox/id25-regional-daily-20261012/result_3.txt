@@ -1,0 +1,31 @@
+### channel=id25-regional-daily-20261012 seq=3
+### host=login4
+### started=2026-10-12T20:52:10+0800
+### ---------- output ----------
+Mon Oct 12 12:52:10 UTC 2026
+JOB_ID=241347
+241347|id25_rds01_261012|RUNNING|hcpu48|icn248
+241347|id25_rds01_261012|RUNNING|0:0|00:02:27|icn248
+241347.batch|batch|RUNNING|0:0|00:02:27|icn248
+241347.extern|extern|RUNNING|0:0|00:02:27|icn248
+LOG=/data1/home/sunyiq/id25_regional_daily_storage_20261012_001/logs/rds01-241347.out
+{"state": "RUNNING", "epoch": 33, "epochs": 80, "train_rmse_cm": 4.747201798059465, "val_rmse_cm": 5.167180538259315, "best_val_rmse_cm": 5.167180538259315, "gradient_norm": 2.542661190032959, "epoch_seconds": 2.9413916170597076, "updated_at": "2026-10-12T12:51:59.412196+00:00", "job_id": "241347"}
+{"state": "RUNNING", "epoch": 34, "epochs": 80, "train_rmse_cm": 4.700154427771226, "val_rmse_cm": 5.110520540662487, "best_val_rmse_cm": 5.110520540662487, "gradient_norm": 2.5904884338378906, "epoch_seconds": 2.9407780170440674, "updated_at": "2026-10-12T12:52:02.364458+00:00", "job_id": "241347"}
+{"state": "RUNNING", "epoch": 35, "epochs": 80, "train_rmse_cm": 4.653383947459696, "val_rmse_cm": 5.060755299523991, "best_val_rmse_cm": 5.060755299523991, "gradient_norm": 2.562610149383545, "epoch_seconds": 2.9602163583040237, "updated_at": "2026-10-12T12:52:05.333623+00:00", "job_id": "241347"}
+{"state": "RUNNING", "epoch": 36, "epochs": 80, "train_rmse_cm": 4.607392689805297, "val_rmse_cm": 5.022538123890412, "best_val_rmse_cm": 5.022538123890412, "gradient_norm": 2.5599238872528076, "epoch_seconds": 2.937357112765312, "updated_at": "2026-10-12T12:52:08.278697+00:00", "job_id": "241347"}
+LOG=/data1/home/sunyiq/id25_regional_daily_storage_20261012_001/logs/rds01-241347.err
+{
+  "state": "RUNNING",
+  "epoch": 36,
+  "epochs": 80,
+  "train_rmse_cm": 4.607392689805297,
+  "val_rmse_cm": 5.022538123890412,
+  "best_val_rmse_cm": 5.022538123890412,
+  "gradient_norm": 2.5599238872528076,
+  "epoch_seconds": 2.937357112765312,
+  "updated_at": "2026-10-12T12:52:08.278697+00:00",
+  "job_id": "241347"
+}CHECKPOINT_BYTES=30116 MODIFIED=2026-10-12 20:52:08.000000000 +0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:52:10+0800
