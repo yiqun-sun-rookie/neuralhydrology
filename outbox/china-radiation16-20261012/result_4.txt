@@ -1,0 +1,16 @@
+### channel=china-radiation16-20261012 seq=4
+### host=login4
+### started=2026-10-12T20:21:04+0800
+### ---------- output ----------
+/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/network_probe_v1/network_probe.py: OK
+/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/network_probe_v1/network_probe.sbatch: OK
+OWN_LOGIN_NETWORK_PROCESS_EXIT=124
+Submitted batch job 241340
+OWN_NETWORK_SUBMIT_EXIT=0
+OWN_NETWORK_JOB_ID=241340
+241340|china16_rad_netprobe|PENDING|(Priority)
+OWN_NETWORK_SQUEUE_EXIT=0
+OWN_NETWORK_DEPLOY_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:23:24+0800
