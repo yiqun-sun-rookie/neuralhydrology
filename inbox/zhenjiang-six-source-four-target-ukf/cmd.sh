@@ -7,8 +7,8 @@ D=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
 E=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_export_20261012_001')
 spec=json.loads((D/'diagnostic_spec.json').read_text()); run=spec['run_id']; case=spec['case']
 job=str(json.loads((S/'records/scheduler_jobs.json').read_text())[case])
-q=subprocess.run(['squeue','-h','-j',job,'-o','%i|%T'],capture_output=True,text=True,timeout=30)
-assert q.returncode==0 and not q.stdout.strip(),q.stdout
+q=subprocess.run(['squeue','-h','-u','sunyiq','-o','%i|%T'],capture_output=True,text=True,timeout=30)
+assert q.returncode==0 and not any(line.split('|')[0]==job for line in q.stdout.splitlines()),(q.returncode,q.stdout,q.stderr)
 a=subprocess.run(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode','-P'],capture_output=True,text=True,timeout=30)
 assert a.returncode==0 and job+'|FAILED|1:0' in a.stdout,a.stdout
 E.mkdir(exist_ok=False)
