@@ -1,53 +1,66 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import hashlib, json, re, subprocess, sys
 from pathlib import Path
-import hashlib,json,tarfile,subprocess,datetime
-root=Path('/data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001')
-parent=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-target=root/'versions/v003'
-payload=Path('/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-temporal-20261011-001/payload/temporal_bridge_v003_hpc_v009_20261012_001.tar.gz')
-sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-binding={'assignment_sha256': 'b044450cc6a5ab723c7b470423d0dedb0b581d7f6e00efd53f07fb9613068c6c', 'code_version': 'v004', 'execution_plan_version': 'hybrid_v009_20261012_001', 'execution_version': 'hpc_v009', 'historical_prediction_nse_tolerance': 0.0001, 'identity': 'hydrol85935_temporal_persistence_20261011_001', 'jobs': {'attacks': 241336, 'train': 241335, 'validate': 241337}, 'new_model_interface_nse_tolerance': 1e-05, 'parent_identity': 'hydrol85935_revision_20261008_001', 'parent_other_attacks_need_not_complete': True, 'parent_submission_receipt_sequence': 85, 'parent_submission_receipt_sha256': '68798a0e696c7705214c35181e04d4acf6252a3b3ea55a6afb9137062c6750f9', 'source_code_unchanged': True, 'source_control': 'control/hybrid_v009_20261012_001', 'source_files_manifest_sha256': '6ac9c97748e45270866c8640b567cbc85bfa5a14655ef852673d86e98290802f'}
-assert root.resolve()==root and (root/'OWNER').read_text().strip()==root.name
-assert not target.exists(), 'Keep existing v003 and reconcile its previous deployment receipt'
-assert not (root/'frozen').exists(), 'Do not rebind after scientific output has frozen another source'
-submissions=root/'control/submissions'
-assert not submissions.exists() or not any(submissions.iterdir()), 'Preserve and reconcile any existing submission attempt'
-checks={'versions/v004/CODE.sha256':'9b4b4fd7f3b49da4eda0b6e371d5a26bd68625800d5f084998e07569c22e68ac','control/full_v004/FULL.sha256':'d5dfc837d6b4dcec417419653bbdb834518f82860ffdcdb1de3619e64db42db6','control/continuation_v004/reproduction_acceptance_amendment.json':'2325729582c264dae40b226b8c1189196077e7cf2a768f6c715080375d0825ed'}
-for relative,expected in checks.items():assert sha(parent/relative)==expected,relative
-source=parent/binding['source_control']
-assert sha(source/'FILES.sha256')==binding['source_files_manifest_sha256']
-for line in (source/'FILES.sha256').read_text().splitlines():
- expected,relative=line.split(None,1)
- path=(source/relative).resolve(strict=True)
- assert path.is_relative_to(source.resolve()) and sha(path)==expected,relative
-assert sha(source/'assignment.json')==binding['assignment_sha256']
-assert json.loads((source/'assignment.json').read_text())['hpc_training_seeds']==[100,200,300]
-assert json.loads((source/'jobs.json').read_text())==binding['jobs']
-assert sha(root/'versions/v002/controller_manifest.json')=='5179fe2484809c091a8f97a63de3281d7d6a20b502bc343a032a6311619f4fe6'
-for relative,expected in json.loads((root/'deployment_manifest.json').read_text())['sha256'].items():assert sha(root/relative)==expected
-assert sha(payload)=='88ecc3dedffc60cd4c5117623fbcdb9391361e615510631fd7e7e1c1dc5fc04b'
-with tarfile.open(payload) as archive:
- assert set(archive.getnames())=={'advance.py','authorization.json','parent_source_binding.json','controller_manifest.json'}
- values={}
- for member in archive.getmembers():
-  assert member.isfile() and Path(member.name).name==member.name
-  values[member.name]=archive.extractfile(member).read()
- manifest=json.loads(values['controller_manifest.json'])
- assert hashlib.sha256(values['controller_manifest.json']).hexdigest()=='b547c53644b06f0771c00e79160fadf8ec5f3f9ba43d779aa3c292963c49dc2c'
- for name,expected in manifest['sha256'].items():assert hashlib.sha256(values[name]).hexdigest()==expected
- compile(values['advance.py'],str(target/'advance.py'),'exec')
- target.mkdir(parents=True)
- for name,data in values.items():
-  with (target/name).open('xb') as stream:stream.write(data)
-print(json.dumps(dict(status='ADDITIONAL_CONTROLLER_V003_DEPLOYED_BOUND_TO_HPC_V009',parent_written=False,scientific_code_changed=False,controller_manifest_sha256=sha(target/'controller_manifest.json'),source_binding=binding,observed_at=datetime.datetime.now().astimezone().isoformat())))
-queue=subprocess.run(['squeue','--noheader','-j',','.join(str(j) for j in binding['jobs'].values()),'--format=%i|%T|%r|%M'],capture_output=True,text=True,timeout=45,check=True)
-print(json.dumps(dict(parent_actual_jobs=queue.stdout.splitlines())))
+
+parent = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+root = Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001')
+def sha(path):
+    h = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''): h.update(block)
+    return h.hexdigest()
+def read(path): return json.loads(path.read_text(encoding='utf8'))
+assert root.resolve() == root and parent.resolve() == parent
+assert not root.is_relative_to(parent) and not parent.is_relative_to(root)
+assert (root / 'OWNER').read_text().strip() == root.name
+assert (parent / 'OWNER').read_text().strip() == parent.name
+assert sha(root / 'deployment_manifest.json') == '821e431a231448d656f3c40e5b1809fb8d2746b9dbbcd29b250267d9ff87964e'
+inventory = read(root / 'deployment_manifest.json')
+for relative, expected in inventory['sha256'].items():
+    path = (root / relative).resolve(strict=True)
+    assert path.is_relative_to(root) and sha(path) == expected, relative
+assert sha(root / 'versions/v002/controller_manifest.json') == '94041e68d4a8242f1dbb70d26db37b2562dbe915c5e36a8741af97d6ec63406f'
+binding = read(root / 'control/parent_binding_v010.json')
+assert binding['parent_code_version'] == 'v004' and binding['parent_execution_version'] == 'hpc_v009'
+assert binding['parent_execution'] == str(parent / 'execution/hpc_v009')
+assert binding['serial_dependency_job'] == 241344 and binding['parent_training_job'] == 241335
+assert binding['parent_validation_job'] == 241337 and binding['new_model_interface_tolerance'] == 0.00001
+assignment = parent / 'control/hybrid_v009_20261012_001/assignment.json'
+assert sha(assignment) == binding['assignment_sha256'] == 'b044450cc6a5ab723c7b470423d0dedb0b581d7f6e00efd53f07fb9613068c6c'
+assert read(parent / 'control/hybrid_v009_20261012_001/jobs.json') == {'train':241335, 'attacks':241336, 'validate':241337}
+assert read(parent / 'control/workflow_v010_20261012_001/jobs.json') == {'export':241344}
+preflight = read(root / 'control/submissions/preflight.json')
+assert preflight['job_id'] == 241345 and preflight['serial_parent_dependency'] == 241344
+assert preflight['deployment_sha256'] == '94041e68d4a8242f1dbb70d26db37b2562dbe915c5e36a8741af97d6ec63406f'
+assert preflight['actual_parent_execution'] == 'hpc_v009' and preflight['parent_version'] == 'v004'
+assert sha(root / 'control/submissions/preflight.sbatch') == preflight['script_sha256'] == '093faa4894aab80834c8e475e02b0b7a86cab8bc45a9a835baa58f478f00f57e'
+print('SOURCE_V010 ' + json.dumps({'root':str(root), 'binding':binding, 'preflight':preflight, 'old_controller_executed':False}), flush=True)
+jobs = [(241335, parent/'control/hybrid_v009_20261012_001/train.sbatch', parent/'control/hybrid_v009_20261012_001'),
+        (241336, parent/'control/hybrid_v009_20261012_001/attacks.sbatch', parent/'control/hybrid_v009_20261012_001'),
+        (241337, parent/'control/hybrid_v009_20261012_001/validate.sbatch', parent/'control/hybrid_v009_20261012_001'),
+        (241344, parent/'control/workflow_v010_20261012_001/export.sbatch', Path('/data1/home/sunyiq/hpc_mailbox')),
+        (241345, root/'control/submissions/preflight.sbatch', Path('/data1/home/sunyiq/hpc_mailbox'))]
+for jid, command, workdir in jobs:
+    result = subprocess.run(['scontrol','show','job','-o',str(jid)], capture_output=True, text=True, timeout=30)
+    print('REGISTERED_JOB ' + json.dumps({'job_id':jid, 'returncode':result.returncode, 'stdout':result.stdout, 'stderr':result.stderr}), flush=True)
+    if result.returncode == 0:
+        assert 'Command='+str(command)+' ' in result.stdout and 'WorkDir='+str(workdir)+' ' in result.stdout
+        assert 'NumCPUs=4 ' in result.stdout and 'TresPerNode=gres:gpu:1' in result.stdout
+    else:
+        account = subprocess.run(['sacct','-j',str(jid),'-n','-P','--format=JobID,State,ExitCode'], capture_output=True, text=True, timeout=30, check=True)
+        print('ARCHIVED_JOB ' + json.dumps({'job_id':jid, 'stdout':account.stdout}), flush=True)
+        assert account.stdout.strip(), 'Unknown registered job outcome; reconcile before advancing'
+models = []
 for seed in (100,200,300):
- execution=parent/'execution/hpc_v009';folder=execution/f'training/s{seed}'
- checkpoints=sorted(folder.glob('runs/*/model_epoch*.pt'))
- print(json.dumps(dict(parent_execution=str(execution),training_seed=seed,completion_marker_exists=(folder/'complete.json').is_file(),checkpoint_count=len(checkpoints),latest_checkpoint=checkpoints[-1].name if checkpoints else None)))
+    folder = parent / 'execution/hpc_v009/training' / ('s'+str(seed))
+    models.append({'seed':seed, 'complete_marker_exists':(folder/'complete.json').is_file(),
+                   'epoch30_weights': [str(p.relative_to(parent/'execution/hpc_v009')) for p in folder.rglob('model_epoch030.pt')]})
+print('MODEL_PROGRESS ' + json.dumps(models), flush=True)
+submissions = [read(p) for p in sorted((root/'control/submissions').glob('*.json')) if not p.name.endswith('.attempt.json')]
+print('EXISTING_SUBMISSIONS ' + json.dumps(submissions), flush=True)
+# The preflight is already registered. Never pass --register-after here.
+subprocess.run([sys.executable, str(root/'code/temporal_hpc_v010.py'), '--root',str(root), '--parent',str(parent)], check=True, timeout=360)
 PY
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001/versions/v003/advance.py --root /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001 --parent /data1/home/sunyiq/hydrol85935_revision_20261008_001 --version v004
