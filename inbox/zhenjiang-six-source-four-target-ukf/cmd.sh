@@ -1,75 +1,50 @@
 #!/usr/bin/env bash
 set -euo pipefail
 python3 - <<'PY'
-import datetime,hashlib,json,pathlib,subprocess
-ROOT=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
-report={'status':'read_only_isolated_gradient_diagnostic_status','root':str(ROOT),'checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'training_inputs_read':False,'checkpoints_loaded':False,'evaluation_values_read':False,'formal_training_recovery_confirmed':False}
-def record(p,whole=True):
-    if not p.exists():return {'path':str(p),'exists':False}
-    st=p.stat();d={'path':str(p),'exists':True,'bytes':st.st_size,'mtime_ns':st.st_mtime_ns}
-    if whole:
-        raw=p.read_bytes();d['sha256']=hashlib.sha256(raw).hexdigest();d['value']=json.loads(raw)
-    return d
-def query(args):
-    p=subprocess.run(args,capture_output=True,text=True,timeout=30)
-    return {'command':args,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
-for name in ['diagnostic_spec.json','release_manifest.json','records/diagnostic_submission_attempt.json','records/diagnostic_submission_response.json','records/scheduler_jobs.json','evidence/replay_identity.json','evidence/failed_batch_start_identity.json','evidence/diagnostic_result.json']:
-    report[name]=record(ROOT/name)
-mapping=report['records/scheduler_jobs.json'].get('value',{})
-spec=report['diagnostic_spec.json'].get('value',{})
-report['source_and_duplicate_guard_queries']=[]
-if spec:
-    report['source_and_duplicate_guard_queries']=[query(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%R|%N']),query(['sacct','-n','-X','-j',str(spec['source_job']),'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P']),query(['sacct','-n','-X','-j',str(spec['source_job']),'--format=JobID,State,ExitCode','-P'])]
-jobs=[str(x) for x in mapping.values()];assert all(x.isdigit() for x in jobs)
-report['scheduler_queries']=[]
-if jobs:
-    ids=','.join(jobs);report['scheduler_queries']=[query(['squeue','-h','-j',ids,'-o','%i|%j|%T|%R|%N|%M']),query(['sacct','-n','-X','-j',ids,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
-report['logs']=[]
-for p in sorted((ROOT/'logs').glob('*.out')):
-    d=record(p,False)
-    with p.open('rb') as f:f.seek(max(0,d['bytes']-60000));d['tail']=f.read().decode('utf-8','replace')
-    report['logs'].append(d)
-p=ROOT/'evidence/events.jsonl';report['events']=record(p,False)
-if p.exists():
-    with p.open('rb') as f:f.seek(max(0,p.stat().st_size-120000));tail=f.read().decode('utf-8','replace')
-    rows=[]
-    for line in tail.splitlines():
-        try: rows.append(json.loads(line))
-        except json.JSONDecodeError:pass
-    report['events']['recent_rows']=rows[-5:]
-print(json.dumps(report,sort_keys=True,allow_nan=False))
-PY
-set -euo pipefail
-python3 - <<'PY'
-"""Inspect only the registered diagnostic job and its scheduling constraints."""
-import datetime
-import json
-from pathlib import Path
-import subprocess
-
-root = Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
-jobs = json.loads((root / 'records/scheduler_jobs.json').read_text())
-spec = json.loads((root / 'diagnostic_spec.json').read_text())
-job = str(jobs['gradient_diagnostic'])
-assert job.isdigit()
-commands = [
-    ['scontrol', 'show', 'job', '-o', job],
-    ['squeue', '-h', '-j', job, '-o', '%i|%j|%T|%R|%N|%M|%V|%S'],
-    ['sacct', '-n', '-X', '-j', job, '--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason', '-P'],
-    ['sprio', '-j', job, '-l'],
-    ['sinfo', '-h', '-p', 'hgpu2p', '-N', '-o', '%N|%T|%G|%C|%m'],
-]
-queries = []
-for command in commands:
-    try:
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
-        queries.append({'command': command, 'returncode': result.returncode,
-                        'stdout': result.stdout, 'stderr': result.stderr})
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        queries.append({'command': command, 'error': str(exc)})
-print(json.dumps({'schema': 'read_only_registered_diagnostic_queue_detail_v1',
-                  'checked_at_beijing': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
-                  'diagnostic_root': str(root), 'job_id': job, 'expected_job_name': spec['job_name'],
-                  'queries': queries, 'scheduler_mutated': False, 'training_data_read': False,
-                  'evaluation_values_read': False}, sort_keys=True))
+import base64,datetime,gzip,hashlib,io,json,pathlib,subprocess,tarfile
+S=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001')
+D=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
+E=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_export_20261012_001')
+spec=json.loads((D/'diagnostic_spec.json').read_text()); run=spec['run_id']; case=spec['case']
+job=str(json.loads((S/'records/scheduler_jobs.json').read_text())[case])
+q=subprocess.run(['squeue','-h','-j',job,'-o','%i|%T'],capture_output=True,text=True,timeout=30)
+assert q.returncode==0 and not q.stdout.strip(),q.stdout
+a=subprocess.run(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode','-P'],capture_output=True,text=True,timeout=30)
+assert a.returncode==0 and job+'|FAILED|1:0' in a.stdout,a.stdout
+E.mkdir(exist_ok=False)
+files={}; identities={}
+def add(path,name,expected=None):
+ raw=path.read_bytes(); h=hashlib.sha256(raw).hexdigest()
+ assert expected is None or h==expected,(str(path),h)
+ assert name not in files and not name.startswith('/') and '..' not in pathlib.PurePosixPath(name).parts
+ files[name]=raw; identities[name]={'remote_path':str(path),'bytes':len(raw),'sha256':h}
+for name,identity in spec['source_run_files'].items():add(S/'runs'/run/name,'source/runs/'+run+'/'+name,identity['sha256'])
+for name,h in spec['source_code_file_hashes'].items():add(S/name,'source/'+name,h)
+for name in ['configs/protocol-v3.json','configs/registry-v3.json','records/authorization.json','records/data_preparation_complete.json','prepared/tuning/manifest.json','records/'+case+'/tune_foundation_group_outcome.json','records/'+case+'/tune_branch_group_configs.json']:
+ add(S/name,'source/'+name)
+config=json.loads(files['source/runs/'+run+'/config.json']); effective=config['effective_config']
+parent=pathlib.Path(effective['parent_checkpoint']);add(parent,'parent/best.pt',effective['parent_hash'])
+manifest=json.loads(files['source/prepared/tuning/manifest.json'])
+assert manifest['status']=='admitted' and not manifest.get('evaluation_year_reads',False)
+entries=[e for e in manifest['files'] if 'tuning_train' in e.get('phases',[])]
+assert len(entries)>0
+for i,e in enumerate(entries):
+ assert set(e['years']).issubset({2017,2018,2019,2020}) and e['role'] in ('realtime_inputs','qc_labels','astronomical_tide')
+ p=pathlib.Path(e['path']);assert any(p.resolve()==pathlib.Path(r).resolve() or pathlib.Path(r).resolve() in p.resolve().parents for r in manifest['approved_roots'])
+ assert not any(p.resolve()==pathlib.Path(r).resolve() or pathlib.Path(r).resolve() in p.resolve().parents for r in manifest.get('forbidden_roots',[]))
+ add(p,'training/'+str(i)+'_'+p.name,e['sha256'])
+add(D/'diagnostic_spec.json','diagnostic_spec.json')
+meta={'schema':'read_only_training_only_diagnostic_export_v1','at':datetime.datetime.now().astimezone().isoformat(),'source_root':str(S),'run_id':run,'source_job':job,'files':identities,'training_years_only':[2017,2018,2019,2020],'evaluation_values_read':False,'formal_training_outputs_allowed':False,'purpose':'local auxiliary gradient diagnosis; different hardware cannot prove formal recovery','scheduler':{'squeue':q.stdout,'sacct':a.stdout}}
+files['export_manifest.json']=(json.dumps(meta,sort_keys=True,indent=2)+'\n').encode()
+buf=io.BytesIO()
+with gzip.GzipFile(fileobj=buf,mode='wb',compresslevel=6,mtime=0) as gz:
+ with tarfile.open(fileobj=gz,mode='w|') as t:
+  for name,raw in sorted(files.items()):
+   info=tarfile.TarInfo(name);info.size=len(raw);info.mtime=0;t.addfile(info,io.BytesIO(raw))
+raw=buf.getvalue(); bundle=E/'training_diagnostic.tar.gz'
+with bundle.open('xb') as f:f.write(raw)
+for name,d in identities.items():assert hashlib.sha256(pathlib.Path(d['remote_path']).read_bytes()).hexdigest()==d['sha256'],name
+report={'status':'diagnostic_export_ready','bundle_path':str(bundle),'bundle_bytes':len(raw),'bundle_sha256':hashlib.sha256(raw).hexdigest(),'source_files_unchanged':True,'file_count':len(files),'evaluation_values_read':False,'offset':0,'chunk_bytes':min(len(raw),8000000),'base64':base64.b64encode(raw[:8000000]).decode()}
+with (E/'export_receipt.json').open('x') as f:json.dump({k:v for k,v in report.items() if k!='base64'},f,indent=2)
+print(json.dumps(report,sort_keys=True))
 PY
