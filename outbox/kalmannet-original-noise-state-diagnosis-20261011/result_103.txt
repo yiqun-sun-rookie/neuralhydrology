@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=103
+### host=login4
+### started=2026-10-12T08:22:51+0800
+### ---------- output ----------
+REMOTE_JSON={"job_id": "240202", "queue": [], "accounting_raw": "240202|FAILED|1:0|1|1|1|1|00:10:00|icn277\n", "row": ["240202", "FAILED", "1:0", "1", "1", "1", "1", "00:10:00", "icn277"], "terminal_proven": true, "closed_json_read": true, "supervision": {"status": "FAILED_PRESERVED", "stop_reason": "Expecting value: line 1 column 1 (char 0)", "seconds": 0.3976963981986046, "peak_memory_bytes": 18481152, "memory_bytes": 18481152, "output_bytes": 2336, "cpu_affinity": [0], "job_id": "240202", "science_executions": 0, "deferred_failure_receipts_outside_admission": true}, "whole_stage_closure": {"status": "FAILED_PRESERVED", "stop_reason": "Expecting value: line 1 column 1 (char 0)", "seconds": 0.3976963981986046, "peak_memory_bytes": 18481152, "memory_bytes": 18481152, "output_bytes": 2336, "cpu_affinity": [0], "job_id": "240202", "science_executions": 0, "deferred_failure_receipts_outside_admission": true}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T08:22:52+0800
