@@ -1,0 +1,10 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=242
+### host=login4
+### started=2026-10-12T15:32:42+0800
+### ---------- output ----------
+{"status": "gradient_recovery_release_verified", "root": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261012_recovery_003", "code_hash": "19bf9eb19614f62a329da1cac2f2ec377558ff7f72d32ac5f5d935f30415eca0", "files": 297}
+{"status": "authenticated_continuation_prepared", "epochs": [41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 40], "code_hash": "19bf9eb19614f62a329da1cac2f2ec377558ff7f72d32ac5f5d935f30415eca0"}
+{"status": "authenticated_gradient_continuation_submitted", "case": "explicit_gru__historical_capacity", "job_id": "241234", "root": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261012_recovery_003", "formal_progress_confirmed": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T15:34:50+0800
