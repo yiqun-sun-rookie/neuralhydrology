@@ -12,57 +12,58 @@ import subprocess
 from pathlib import Path
 
 root = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-jobs = dict(train=240076, attacks=240077, report=240078)
-assert json.loads((root / 'control/full_v004/jobs.json').read_text()) == jobs
-dest = root / 'control/local_takeover_20261012_002'
-dest.mkdir(exist_ok=False)
 
-def query(args):
-    r = subprocess.run(args, capture_output=True, text=True, timeout=45)
-    row = dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), command=args,
-               returncode=r.returncode, stdout=r.stdout, stderr=r.stderr)
-    with (dest / 'operations.jsonl').open('a') as f:
-        f.write(json.dumps(row) + '\n')
-    print('OPERATION ' + json.dumps(row), flush=True)
-    if r.returncode:
-        raise RuntimeError('Scheduler action could not be confirmed')
-    return r.stdout
+def output(label, value):
+    print(label + ' ' + json.dumps(value, ensure_ascii=False), flush=True)
 
-def verify(stage, held=False):
-    evidence = {}
-    queue = query(['squeue', '-h', '-j', ','.join(map(str, jobs.values())), '-o', '%i|%T|%R'])
-    if not queue.strip() or any(line.split('|')[1].strip() != 'PENDING' for line in queue.splitlines()):
-        raise RuntimeError('A registered task is no longer exclusively pending; local takeover denied')
-    for label, job in jobs.items():
-        raw = query(['scontrol', 'show', 'job', '-o', str(job)])
-        lines = raw.splitlines()
-        if not lines:
-            raise ValueError('Missing scheduler job identity')
-        for line in lines:
-            fields = dict(re.findall(r'(?:^|\s)([A-Za-z_]+)=([^\s]+)', line))
-            assert fields['Command'] == str(root / 'control/full_v004' / (label + '.sbatch'))
-            assert fields['WorkDir'] == str(root / 'control/continuation_v004')
-            assert fields['JobState'] == 'PENDING'
-            assert fields['NodeList'] == '(null)' and fields['RunTime'] == '00:00:00'
-            assert fields['JobId'].split('_')[0] == str(job)
-            if held:
-                assert fields['Priority'] == '0' and fields['Reason'] == 'JobHeldUser'
-        evidence[label] = raw
-    (dest / (stage + '.json')).write_text(json.dumps(evidence, indent=2))
-    return evidence
+def query(label, command):
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    output(label, dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
+    if result.returncode:
+        raise RuntimeError('Cannot verify ' + label)
+    return result.stdout
 
-before = verify('before')
-for label, job in jobs.items():
-    query(['scontrol', 'hold', str(job)])
-after = verify('after', held=True)
-owner = dict(status='HPC_HELD_LOCAL_OWNERSHIP_CONFIRMED', owner='local',
-             identity='hydrol85935_revision_20261008_001', version='local_v006_20261012_001',
-             jobs=jobs, local_root=r'G:\hydrol85935_revision_20261008_001\local_v006',
-             utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-             path_identity_verified=True, all_formal_jobs_pending_and_user_held=True,
-             other_experiments_modified=False, scientific_jobs_started=0,
-             authorization='2026-10-12 user: start locally if feasible; protect existing work; avoid HPC duplication')
-with (dest / 'ownership.json').open('x') as f:
-    json.dump(owner, f, indent=2)
-print('LOCAL_OWNERSHIP ' + json.dumps(owner), flush=True)
+output('OBSERVATION', dict(time=datetime.datetime.now().astimezone().isoformat(),
+       scope='read-only GPU inventory and registered scheduler state; not a full experiment audit'))
+jobs = json.loads((root / 'control/full_v004/jobs.json').read_text())
+if jobs != dict(train=240076, attacks=240077, report=240078):
+    raise ValueError('Job registry changed; review version and ownership before using a new probe')
+probe_path = root / 'control/migration_probe_20261012_002/jobs.json'
+if probe_path.exists():
+    probe_registry = json.loads(probe_path.read_text())
+    if probe_registry['formal_jobs'] != jobs or probe_registry['probes'] != dict(ngu201=241239, ngu002=241240):
+        raise ValueError('Compatibility job registry changed; review identity before querying')
+    jobs = dict(jobs, compatibility_ngu201=241239, compatibility_ngu002=241240)
+output('REGISTERED_JOBS', jobs)
+query('SQUEUE', ['squeue', '-j', ','.join(str(j) for j in jobs.values()), '-o',
+                 '%.24i %.10T %.12M %.6C %.16b %.30R'])
+query('SACCT', ['sacct', '-X', '-j', ','.join(str(j) for j in jobs.values()),
+               '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList'])
+query('ALL_PARTITIONS', ['sinfo', '-h', '-o', '%P|%a|%l|%D|%t|%G|%N'])
+result = subprocess.run(['sinfo', '-N', '-h', '-O',
+    'partitionname:20,nodelist:20,statelong:20,gres:20,gresused:30,cpusstate:22'],
+    capture_output=True, text=True, timeout=45)
+if result.returncode:
+    output('ALL_GPU_NODES', dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
+    raise RuntimeError('Cannot enumerate GPU resources')
+
+def has_accelerator(line):
+    fields = line.split()
+    if len(fields) < 6:
+        raise ValueError('Malformed node inventory row')
+    return any(re.fullmatch(r'(?:gpu|dcu):(?:[^:,]+:)?[1-9][0-9]*(?:[(].*[)])?', item)
+               for item in fields[3].split(','))
+
+rows = [line for line in result.stdout.splitlines() if has_accelerator(line)]
+output('ALL_GPU_NODES', dict(returncode=0, stdout='\n'.join(rows)+'\n', stderr=result.stderr,
+       all_node_rows=len(result.stdout.splitlines()), gpu_node_rows=len(rows)))
+owner_path = root / 'control/local_takeover_20261012_002/ownership.json'
+if not owner_path.exists():
+    raise RuntimeError('Local ownership record missing; do not release or submit compute')
+owner = json.loads(owner_path.read_text())
+if owner['owner'] != 'local' or owner['jobs'] != dict(train=240076, attacks=240077, report=240078):
+    raise RuntimeError('Local ownership identity changed')
+output('REMOTE_LOCAL_OWNER', owner)
+for label, job in owner['jobs'].items():
+    query('LOCAL_HELD_JOB_' + label, ['scontrol', 'show', 'job', '-o', str(job)])
 PY
