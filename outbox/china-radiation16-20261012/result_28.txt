@@ -1,0 +1,29 @@
+### channel=china-radiation16-20261012 seq=28
+### host=login4
+### started=2026-10-13T00:01:52+0800
+### ---------- output ----------
+OWN_REQUEST_BUILD_QUERY_JOB_ID=241367
+slurm_load_jobs error: Invalid job id specified
+241367|china16_summary_requests|FAILED|1:0|00:00:19|2|ngu001|billing=2,cpu=2,node=1
+241367.batch|batch|FAILED|1:0|00:00:19|2|ngu001|cpu=2,mem=0,node=1
+241367.extern|extern|COMPLETED|0:0|00:00:19|2|ngu001|billing=2,cpu=2,node=1
+OWN_REQUEST_BUILD_SQUEUE_EXIT=1
+OWN_REQUEST_BUILD_SACCT_EXIT=0
+OWN_REQUEST_BUILD_LOG_out_BEGIN
+
+OWN_REQUEST_BUILD_LOG_out_END
+OWN_REQUEST_BUILD_LOG_err_BEGIN
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/coordinate_repair_attempt2/hpc_summary_builder.py", line 128, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/coordinate_repair_attempt2/hpc_summary_builder.py", line 120, in main
+    packet=gzip.compress(stream.getvalue(),mtime=0);assert len(packet)<=4*1024**2
+                                                           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+OWN_REQUEST_BUILD_LOG_err_END
+OWN_REQUEST_BUILD_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T00:01:52+0800
