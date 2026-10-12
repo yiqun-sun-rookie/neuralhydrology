@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=105
+### host=login4
+### started=2026-10-12T08:28:15+0800
+### ---------- output ----------
+EXPORT_META={"basin": "01487000", "job_id": "240202", "archive_bytes": 2275, "archive_sha256": "11a364b4268d7895bdbbf538a7c189e56204e292514b6a2b645eae5c205841bd", "chunks": 1, "chunk_bytes": 2097152, "index": -1, "selected_bytes": 0, "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "bundle_manifest": {"path": "verification/v8/cases/01487000/bundle_manifest.json", "bytes": 3912, "sha256": "fbe698210a561b39b7166d3be6515303b8ecfff350739e42ee361f398f8d11db"}, "persistent_remote_archive_copies": 0, "checker_sha256": "25f2083e808ae54edb5e2a15dd3baa3d22356885d7011dbf03ad334b545b8dde", "science_executions": 0, "check_status": "HPC_STRICT_CHECK_FAILED_PRESERVED", "missing_files": ["report/checker_execution.json", "report/parity_report.json", "report/review.json", "report/saved_check_location.json", "verify/checker_child.json", "verify/guardian_launch.json", "verify/launch.json", "verify/stderr.log", "verify/stdout.log", "verify/work_result.json", "verify/worker_stderr.log", "verify/worker_stdout.log"]}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T08:28:18+0800
