@@ -1,0 +1,14 @@
+### channel=china-radiation16-20261012 seq=16
+### host=login4
+### started=2026-10-12T22:57:11+0800
+### ---------- output ----------
+OWN_BYTE_INGEST_SHA256=02067548869086b5532574ba2e5b2069b4233cbcaf4d65a283ecf90ee3662005 hpc_summary_builder.py
+OWN_BYTE_INGEST_SHA256=e3d787184a3584234884984eb274135631be6e1fa92d3b7193ac11f0887d280b hpc_radiation_reconstruct.py
+OWN_BYTE_INGEST_SHA256=8d740c1d5ca5e5a3543c07ff58931de6d4d4e8a468345b5f82c75813de829e9d hpc_independent_radiation_review.py
+OWN_BYTE_INGEST_SHA256=bdbe3a98560bd38af75232974594f5be630d007048458ad8c4e0456302d55282 summary_requests.sbatch
+OWN_BYTE_INGEST_SHA256=acf29430e3d6605f5f06c3db2454fc93a6128e638321e7f315e0051081aaf0e4 radiation_numerical.sbatch
+OWN_BYTE_INGEST_SHA256=be8a47d203eeadcd8fa265022b60790b63b2a7db608a626182973f9b733ee8ce radiation_independent.sbatch
+OWN_BYTE_INGEST_DONE=runtime_sources_v1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T22:57:11+0800
