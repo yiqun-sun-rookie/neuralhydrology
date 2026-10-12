@@ -48,7 +48,7 @@ for jid, command, workdir in jobs:
     print('REGISTERED_JOB ' + json.dumps({'job_id':jid, 'returncode':result.returncode, 'stdout':result.stdout, 'stderr':result.stderr}), flush=True)
     if result.returncode == 0:
         assert 'Command='+str(command)+' ' in result.stdout and 'WorkDir='+str(workdir)+' ' in result.stdout
-        assert 'NumCPUs=4 ' in result.stdout and 'TresPerNode=gres:gpu:1' in result.stdout
+        assert 'NumCPUs=4 ' in result.stdout and re.search(r'TresPerNode=(?:gres:)?gpu:1(?:\s|$)', result.stdout)
     else:
         account = subprocess.run(['sacct','-j',str(jid),'-n','-P','--format=JobID,State,ExitCode'], capture_output=True, text=True, timeout=30, check=True)
         print('ARCHIVED_JOB ' + json.dumps({'job_id':jid, 'stdout':account.stdout}), flush=True)
