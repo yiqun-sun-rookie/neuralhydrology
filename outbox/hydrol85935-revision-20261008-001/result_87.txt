@@ -1,0 +1,18 @@
+### channel=hydrol85935-revision-20261008-001 seq=87
+### host=login4
+### started=2026-10-12T20:46:44+0800
+### ---------- output ----------
+Submitted batch job 241344
+
+TEMPORAL_V010 {"stage": "preflight", "parent_version": "v004", "actual_parent_execution": "hpc_v009", "script_sha256": "093faa4894aab80834c8e475e02b0b7a86cab8bc45a9a835baa58f478f00f57e", "deployment_sha256": "94041e68d4a8242f1dbb70d26db37b2562dbe915c5e36a8741af97d6ec63406f", "array_tasks": 0, "serial_parent_dependency": 241344, "job_id": 241345, "status": "SUBMITTED"}
+
+WORKFLOW_V010 {
+  "export_job": 241344,
+  "temporal_preflight_job": 241345,
+  "temporal_root": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001",
+  "parent_jobs_unchanged": true,
+  "scientific_rules_changed": false
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:46:46+0800
