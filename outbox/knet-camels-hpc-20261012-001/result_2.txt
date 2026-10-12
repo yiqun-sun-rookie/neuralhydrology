@@ -1,0 +1,73 @@
+### channel=knet-camels-hpc-20261012-001 seq=2
+### host=login4
+### started=2026-10-12T20:13:36+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/knet-camels-hpc-20261012-001/payload/v1/recipe.tar.gz: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/knet-camels-hpc-20261012-001/payload/v1/probe_report.py: OK
+/data1/home/sunyiq/hpc_mailbox/inbox/knet-camels-hpc-20261012-001/payload/v1/compatibility.slurm: OK
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: last150_full_training_20261011_001/evaluation/long_081_2557_0.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: last150_full_training_20261011_001/nse_comparison_20261011_001/physical_validation_arrays.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/04105700/plan.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/08070200/plan.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/09035800/plan.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/approved_plan.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/diagnosis_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/evaluate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/evaluation_loops.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/evaluation_sources.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/execution_sources.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/finalize.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/hpc_worker.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/input_catalog.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/original_training_helpers.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/pair_functions.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/reference_inputs.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/source_probe.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/supervisor.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/train.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/training_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/training_support.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/worker.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02092500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_04105700.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08070200.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_04105700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08070200.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/aligned_rematch/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/aligned_rematch/contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/aligned_rematch/knet_arm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/aligned_rematch/trainer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/aligned_rematch/ukf_arm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: recipe/workspace/src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: safe_io.py: implausibly old time stamp 1970-01-01 08:00:00
+DEPLOYED_ROOT=/data1/home/sunyiq/knet_camels_hpc_20261012_001
+Submitted batch job 241332
+jobid=241332
+241332|knet_camels_import_261012|PENDING|hgpu4|1|(Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:13:36+0800
