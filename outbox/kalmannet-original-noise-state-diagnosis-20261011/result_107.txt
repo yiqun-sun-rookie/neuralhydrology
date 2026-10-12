@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=107
+### host=login4
+### started=2026-10-12T10:06:57+0800
+### ---------- output ----------
+REMOTE_JSON={"status": "EXACT_VERIFICATION_DEPLOYMENT", "files": [{"name": "remote_saved_review.py", "bytes": 25689, "sha256": "814a29f555b559ae7171deaeddea2c984e0c0f839a41cf85e05c574dda4543b6"}, {"name": "check_state_records.py", "bytes": 49909, "sha256": "25f2083e808ae54edb5e2a15dd3baa3d22356885d7011dbf03ad334b545b8dde"}, {"name": "check_saved.slurm", "bytes": 256, "sha256": "5b60722e08b92523adc3e16e2714c11782c97966cab8334edc149ad9267e1279"}, {"name": "manifest.json", "bytes": 626, "sha256": "28643c5be94cf9cf76b4cd0f944089a7ac33a2888c6e0fa93058881a39179c55"}], "atomic_visibility_probe_pass": true, "old_failure_preserved": true, "science_terminal_rows": [["240128", "COMPLETED", "0:0"], ["240202", "FAILED", "1:0"]], "queue_raw": "240053|zj_gru_gradient_diag_261011_001|PD\n240076_[0-2%1]|hydrol85935-train|PD\n240268|cpu240124-release-probe-20261012-001|PD\n202229|N22-agg-eval|PD\n202294|N22-export|PD\n202315|N22-gate|PD\n202507|N22-mask-iso-531|PD\n215429|id30_m01_s100|PD\n240077_[0-131%1]|hydrol85935-attacks|PD\n240078|hydrol85935-report|PD\n202293|N22-manifest|PD\n237928|zj_lstm_small_recovery_261008_002|R\n236706|zj_explicit_gru__small_261006_pathfix|R\n236707|zj_legacy_lstm__historical_capacity_261006_pathfix|R\n", "scientific_executions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T10:06:58+0800
