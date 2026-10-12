@@ -8,8 +8,9 @@ parent=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
 print(json.dumps({'observed_at':datetime.datetime.now().astimezone().isoformat()}))
 versions={name:sorted(v.name for v in (parent/name).iterdir() if v.is_dir() and re.fullmatch(r'v[0-9]{3}',v.name)) for name in ('versions','execution')}
 print(json.dumps({'parent_versions':versions}))
-if any(names and names[-1]!='v004' for names in versions.values()):
-    raise SystemExit('PARENT_VERSION_CHANGE_REQUIRES_REVIEW')
+if versions['execution'] and versions['execution'][-1]!='v004':
+    raise SystemExit('PARENT_EXECUTION_VERSION_CHANGE_REQUIRES_REVIEW')
+print(json.dumps({'candidate_parent_versions': [v for v in versions['versions'] if v!='v004'], 'required_parent_execution_version':'v004', 'candidate_directory_does_not_change_active_model_source':True}))
 jobs=set()
 for rel in ['control/continuation_v004/status.json','control/preflight_v004_job_id','control/resource_pilot_v004_job_id','control/full_v004/jobs.json']:
     path=parent/rel
@@ -19,6 +20,19 @@ for rel in ['control/continuation_v004/status.json','control/preflight_v004_job_
         if rel.endswith('_job_id'):jobs.add(value.strip())
         if rel.endswith('jobs.json'):jobs.update(str(v) for v in json.loads(value).values())
 assert all(re.fullmatch(r'[0-9]+',v) for v in jobs), jobs
+formal_jobs=json.loads((parent/'control/full_v004/jobs.json').read_text())
+train_id=str(formal_jobs['train'])
+all_training_markers_present=all((parent/'execution/v004/training'/('s'+str(seed))/'complete.json').is_file() for seed in (100,200,300))
+if not all_training_markers_present:
+    r=subprocess.run(['scontrol','show','job',train_id,'--oneliner'],text=True,capture_output=True,timeout=45,check=True)
+    print(json.dumps({'registered_training_job_identity':{'job_id':train_id,'stdout':r.stdout,'stderr':r.stderr}}))
+    command=re.search(r'(?:^| )Command=(\S+)',r.stdout)
+    state=re.search(r'(?:^| )JobState=(\S+)',r.stdout)
+    expected=str(parent/'control/full_v004/train.sbatch')
+    if not command or command.group(1)!=expected or not state or state.group(1) not in ('PENDING','RUNNING','COMPLETING','COMPLETED'):
+        raise SystemExit('REGISTERED_PARENT_TRAINING_IDENTITY_REQUIRES_REVIEW')
+else:
+    print(json.dumps({'registered_training_job_identity':{'job_id':train_id,'all_completion_markers_present':True,'next_check':'controller verifies each marker and model asset hash'}}))
 if jobs:
     r=subprocess.run(['sacct','-j',','.join(sorted(jobs)),'-n','-P','--format=JobID,State,ExitCode,Elapsed,Start'],text=True,capture_output=True,timeout=45,check=True)
     print(json.dumps({'parent_registered_jobs':r.stdout.splitlines()}))
