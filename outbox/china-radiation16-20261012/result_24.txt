@@ -1,0 +1,6901 @@
+### channel=china-radiation16-20261012 seq=24
+### host=login4
+### started=2026-10-12T23:36:17+0800
+### ---------- output ----------
+OWN_REQUEST_BUILD_QUERY_JOB_ID=241366
+slurm_load_jobs error: Invalid job id specified
+241366|china16_coordinate_diag|COMPLETED|0:0|00:00:05|2|ngu001|billing=2,cpu=2,node=1
+241366.batch|batch|COMPLETED|0:0|00:00:05|2|ngu001|cpu=2,mem=0,node=1
+241366.extern|extern|COMPLETED|0:0|00:00:06|2|ngu001|billing=2,cpu=2,node=1
+OWN_SQUEUE_EXIT=1
+OWN_SACCT_EXIT=0
+OWN_COORDINATE_LOG_out_BEGIN
+OWN_COORDINATE_DIAGNOSTIC_COMPLETE
+
+OWN_COORDINATE_LOG_out_END
+OWN_COORDINATE_LOG_err_BEGIN
+
+OWN_COORDINATE_LOG_err_END
+OWN_COORDINATE_REPORT_BEGIN
+{
+  "status": "SAVED_COORDINATE_DIAGNOSTIC_COMPLETE",
+  "hpc_job_id": "241366",
+  "total_members": 16,
+  "total_records": 32,
+  "rows": [
+    {
+      "basin_id": "25911",
+      "label": "space_002_time_010",
+      "identity": "raw_25911_space_002_time_010",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          11
+        ],
+        "y": [
+          13,
+          11
+        ],
+        "A": [
+          13,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 11)": 409
+        },
+        "H": {
+          "(13, 11)": 409
+        },
+        "cm": {
+          "(13, 11)": 409
+        },
+        "hm": {
+          "(13, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5,
+          2977.5,
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5
+        ],
+        "minimum": 2972.5,
+        "maximum": 2982.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5
+        ],
+        "minimum": 516.5,
+        "maximum": 528.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 143,
+      "unique_coordinate_pairs": 143,
+      "first_coordinate_pairs": [
+        [
+          2972.5,
+          516.5
+        ],
+        [
+          2973.5,
+          516.5
+        ],
+        [
+          2974.5,
+          516.5
+        ],
+        [
+          2975.5,
+          516.5
+        ],
+        [
+          2976.5,
+          516.5
+        ],
+        [
+          2977.5,
+          516.5
+        ],
+        [
+          2978.5,
+          516.5
+        ],
+        [
+          2979.5,
+          516.5
+        ],
+        [
+          2980.5,
+          516.5
+        ],
+        [
+          2981.5,
+          516.5
+        ],
+        [
+          2982.5,
+          516.5
+        ],
+        [
+          2972.5,
+          517.5
+        ],
+        [
+          2973.5,
+          517.5
+        ],
+        [
+          2974.5,
+          517.5
+        ],
+        [
+          2975.5,
+          517.5
+        ],
+        [
+          2976.5,
+          517.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "25911",
+      "label": "space_002_time_019",
+      "identity": "raw_25911_space_002_time_019",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          11
+        ],
+        "y": [
+          13,
+          11
+        ],
+        "A": [
+          13,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 11)": 409
+        },
+        "H": {
+          "(13, 11)": 409
+        },
+        "cm": {
+          "(13, 11)": 409
+        },
+        "hm": {
+          "(13, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5,
+          2977.5,
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5
+        ],
+        "minimum": 2972.5,
+        "maximum": 2982.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5
+        ],
+        "minimum": 516.5,
+        "maximum": 528.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 143,
+      "unique_coordinate_pairs": 143,
+      "first_coordinate_pairs": [
+        [
+          2972.5,
+          516.5
+        ],
+        [
+          2973.5,
+          516.5
+        ],
+        [
+          2974.5,
+          516.5
+        ],
+        [
+          2975.5,
+          516.5
+        ],
+        [
+          2976.5,
+          516.5
+        ],
+        [
+          2977.5,
+          516.5
+        ],
+        [
+          2978.5,
+          516.5
+        ],
+        [
+          2979.5,
+          516.5
+        ],
+        [
+          2980.5,
+          516.5
+        ],
+        [
+          2981.5,
+          516.5
+        ],
+        [
+          2982.5,
+          516.5
+        ],
+        [
+          2972.5,
+          517.5
+        ],
+        [
+          2973.5,
+          517.5
+        ],
+        [
+          2974.5,
+          517.5
+        ],
+        [
+          2975.5,
+          517.5
+        ],
+        [
+          2976.5,
+          517.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "25911",
+      "label": "space_002_time_020",
+      "identity": "raw_25911_space_002_time_020",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          11
+        ],
+        "y": [
+          13,
+          11
+        ],
+        "A": [
+          13,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 11)": 409
+        },
+        "H": {
+          "(13, 11)": 409
+        },
+        "cm": {
+          "(13, 11)": 409
+        },
+        "hm": {
+          "(13, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5,
+          2977.5,
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5
+        ],
+        "minimum": 2972.5,
+        "maximum": 2982.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5
+        ],
+        "minimum": 516.5,
+        "maximum": 528.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 143,
+      "unique_coordinate_pairs": 143,
+      "first_coordinate_pairs": [
+        [
+          2972.5,
+          516.5
+        ],
+        [
+          2973.5,
+          516.5
+        ],
+        [
+          2974.5,
+          516.5
+        ],
+        [
+          2975.5,
+          516.5
+        ],
+        [
+          2976.5,
+          516.5
+        ],
+        [
+          2977.5,
+          516.5
+        ],
+        [
+          2978.5,
+          516.5
+        ],
+        [
+          2979.5,
+          516.5
+        ],
+        [
+          2980.5,
+          516.5
+        ],
+        [
+          2981.5,
+          516.5
+        ],
+        [
+          2982.5,
+          516.5
+        ],
+        [
+          2972.5,
+          517.5
+        ],
+        [
+          2973.5,
+          517.5
+        ],
+        [
+          2974.5,
+          517.5
+        ],
+        [
+          2975.5,
+          517.5
+        ],
+        [
+          2976.5,
+          517.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "25911",
+      "label": "space_002_time_031",
+      "identity": "raw_25911_space_002_time_031",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          11
+        ],
+        "y": [
+          13,
+          11
+        ],
+        "A": [
+          13,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 11)": 409
+        },
+        "H": {
+          "(13, 11)": 409
+        },
+        "cm": {
+          "(13, 11)": 409
+        },
+        "hm": {
+          "(13, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5,
+          2977.5,
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5
+        ],
+        "minimum": 2972.5,
+        "maximum": 2982.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5
+        ],
+        "minimum": 516.5,
+        "maximum": 528.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 143,
+      "unique_coordinate_pairs": 143,
+      "first_coordinate_pairs": [
+        [
+          2972.5,
+          516.5
+        ],
+        [
+          2973.5,
+          516.5
+        ],
+        [
+          2974.5,
+          516.5
+        ],
+        [
+          2975.5,
+          516.5
+        ],
+        [
+          2976.5,
+          516.5
+        ],
+        [
+          2977.5,
+          516.5
+        ],
+        [
+          2978.5,
+          516.5
+        ],
+        [
+          2979.5,
+          516.5
+        ],
+        [
+          2980.5,
+          516.5
+        ],
+        [
+          2981.5,
+          516.5
+        ],
+        [
+          2982.5,
+          516.5
+        ],
+        [
+          2972.5,
+          517.5
+        ],
+        [
+          2973.5,
+          517.5
+        ],
+        [
+          2974.5,
+          517.5
+        ],
+        [
+          2975.5,
+          517.5
+        ],
+        [
+          2976.5,
+          517.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "25911",
+      "label": "space_002_time_032",
+      "identity": "raw_25911_space_002_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          11
+        ],
+        "y": [
+          13,
+          11
+        ],
+        "A": [
+          13,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 11)": 409
+        },
+        "H": {
+          "(13, 11)": 409
+        },
+        "cm": {
+          "(13, 11)": 409
+        },
+        "hm": {
+          "(13, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5,
+          2977.5,
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2972.5,
+          2973.5,
+          2974.5,
+          2975.5,
+          2976.5
+        ],
+        "minimum": 2972.5,
+        "maximum": 2982.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          11
+        ],
+        "finite_count": 143,
+        "nonfinite_count": 0,
+        "first_values": [
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          516.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5,
+          517.5
+        ],
+        "minimum": 516.5,
+        "maximum": 528.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 143,
+      "unique_coordinate_pairs": 143,
+      "first_coordinate_pairs": [
+        [
+          2972.5,
+          516.5
+        ],
+        [
+          2973.5,
+          516.5
+        ],
+        [
+          2974.5,
+          516.5
+        ],
+        [
+          2975.5,
+          516.5
+        ],
+        [
+          2976.5,
+          516.5
+        ],
+        [
+          2977.5,
+          516.5
+        ],
+        [
+          2978.5,
+          516.5
+        ],
+        [
+          2979.5,
+          516.5
+        ],
+        [
+          2980.5,
+          516.5
+        ],
+        [
+          2981.5,
+          516.5
+        ],
+        [
+          2982.5,
+          516.5
+        ],
+        [
+          2972.5,
+          517.5
+        ],
+        [
+          2973.5,
+          517.5
+        ],
+        [
+          2974.5,
+          517.5
+        ],
+        [
+          2975.5,
+          517.5
+        ],
+        [
+          2976.5,
+          517.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26344",
+      "label": "space_003_time_010",
+      "identity": "raw_26344_space_003_time_010",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          7
+        ],
+        "y": [
+          6,
+          7
+        ],
+        "A": [
+          6,
+          7
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 7)": 409
+        },
+        "H": {
+          "(6, 7)": 409
+        },
+        "cm": {
+          "(6, 7)": 409
+        },
+        "hm": {
+          "(6, 7)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5
+        ],
+        "minimum": 2985.5,
+        "maximum": 2991.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          527.5,
+          527.5
+        ],
+        "minimum": 525.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 42,
+      "unique_coordinate_pairs": 42,
+      "first_coordinate_pairs": [
+        [
+          2985.5,
+          525.5
+        ],
+        [
+          2986.5,
+          525.5
+        ],
+        [
+          2987.5,
+          525.5
+        ],
+        [
+          2988.5,
+          525.5
+        ],
+        [
+          2989.5,
+          525.5
+        ],
+        [
+          2990.5,
+          525.5
+        ],
+        [
+          2991.5,
+          525.5
+        ],
+        [
+          2985.5,
+          526.5
+        ],
+        [
+          2986.5,
+          526.5
+        ],
+        [
+          2987.5,
+          526.5
+        ],
+        [
+          2988.5,
+          526.5
+        ],
+        [
+          2989.5,
+          526.5
+        ],
+        [
+          2990.5,
+          526.5
+        ],
+        [
+          2991.5,
+          526.5
+        ],
+        [
+          2985.5,
+          527.5
+        ],
+        [
+          2986.5,
+          527.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26346",
+      "label": "space_003_time_010",
+      "identity": "raw_26346_space_003_time_010",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          13
+        ],
+        "y": [
+          7,
+          13
+        ],
+        "A": [
+          7,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 13)": 409
+        },
+        "H": {
+          "(7, 13)": 409
+        },
+        "cm": {
+          "(7, 13)": 409
+        },
+        "hm": {
+          "(7, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2983.5,
+          2984.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2978.5,
+          2979.5,
+          2980.5
+        ],
+        "minimum": 2978.5,
+        "maximum": 2990.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          525.5,
+          525.5,
+          525.5
+        ],
+        "minimum": 524.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 91,
+      "unique_coordinate_pairs": 91,
+      "first_coordinate_pairs": [
+        [
+          2978.5,
+          524.5
+        ],
+        [
+          2979.5,
+          524.5
+        ],
+        [
+          2980.5,
+          524.5
+        ],
+        [
+          2981.5,
+          524.5
+        ],
+        [
+          2982.5,
+          524.5
+        ],
+        [
+          2983.5,
+          524.5
+        ],
+        [
+          2984.5,
+          524.5
+        ],
+        [
+          2985.5,
+          524.5
+        ],
+        [
+          2986.5,
+          524.5
+        ],
+        [
+          2987.5,
+          524.5
+        ],
+        [
+          2988.5,
+          524.5
+        ],
+        [
+          2989.5,
+          524.5
+        ],
+        [
+          2990.5,
+          524.5
+        ],
+        [
+          2978.5,
+          525.5
+        ],
+        [
+          2979.5,
+          525.5
+        ],
+        [
+          2980.5,
+          525.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26344",
+      "label": "space_003_time_020",
+      "identity": "raw_26344_space_003_time_020",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          7
+        ],
+        "y": [
+          6,
+          7
+        ],
+        "A": [
+          6,
+          7
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 7)": 409
+        },
+        "H": {
+          "(6, 7)": 409
+        },
+        "cm": {
+          "(6, 7)": 409
+        },
+        "hm": {
+          "(6, 7)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5
+        ],
+        "minimum": 2985.5,
+        "maximum": 2991.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          527.5,
+          527.5
+        ],
+        "minimum": 525.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 42,
+      "unique_coordinate_pairs": 42,
+      "first_coordinate_pairs": [
+        [
+          2985.5,
+          525.5
+        ],
+        [
+          2986.5,
+          525.5
+        ],
+        [
+          2987.5,
+          525.5
+        ],
+        [
+          2988.5,
+          525.5
+        ],
+        [
+          2989.5,
+          525.5
+        ],
+        [
+          2990.5,
+          525.5
+        ],
+        [
+          2991.5,
+          525.5
+        ],
+        [
+          2985.5,
+          526.5
+        ],
+        [
+          2986.5,
+          526.5
+        ],
+        [
+          2987.5,
+          526.5
+        ],
+        [
+          2988.5,
+          526.5
+        ],
+        [
+          2989.5,
+          526.5
+        ],
+        [
+          2990.5,
+          526.5
+        ],
+        [
+          2991.5,
+          526.5
+        ],
+        [
+          2985.5,
+          527.5
+        ],
+        [
+          2986.5,
+          527.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26346",
+      "label": "space_003_time_020",
+      "identity": "raw_26346_space_003_time_020",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          13
+        ],
+        "y": [
+          7,
+          13
+        ],
+        "A": [
+          7,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 13)": 409
+        },
+        "H": {
+          "(7, 13)": 409
+        },
+        "cm": {
+          "(7, 13)": 409
+        },
+        "hm": {
+          "(7, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2983.5,
+          2984.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2978.5,
+          2979.5,
+          2980.5
+        ],
+        "minimum": 2978.5,
+        "maximum": 2990.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          525.5,
+          525.5,
+          525.5
+        ],
+        "minimum": 524.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 91,
+      "unique_coordinate_pairs": 91,
+      "first_coordinate_pairs": [
+        [
+          2978.5,
+          524.5
+        ],
+        [
+          2979.5,
+          524.5
+        ],
+        [
+          2980.5,
+          524.5
+        ],
+        [
+          2981.5,
+          524.5
+        ],
+        [
+          2982.5,
+          524.5
+        ],
+        [
+          2983.5,
+          524.5
+        ],
+        [
+          2984.5,
+          524.5
+        ],
+        [
+          2985.5,
+          524.5
+        ],
+        [
+          2986.5,
+          524.5
+        ],
+        [
+          2987.5,
+          524.5
+        ],
+        [
+          2988.5,
+          524.5
+        ],
+        [
+          2989.5,
+          524.5
+        ],
+        [
+          2990.5,
+          524.5
+        ],
+        [
+          2978.5,
+          525.5
+        ],
+        [
+          2979.5,
+          525.5
+        ],
+        [
+          2980.5,
+          525.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26344",
+      "label": "space_003_time_019",
+      "identity": "raw_26344_space_003_time_019",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          7
+        ],
+        "y": [
+          6,
+          7
+        ],
+        "A": [
+          6,
+          7
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 7)": 409
+        },
+        "H": {
+          "(6, 7)": 409
+        },
+        "cm": {
+          "(6, 7)": 409
+        },
+        "hm": {
+          "(6, 7)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5
+        ],
+        "minimum": 2985.5,
+        "maximum": 2991.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          527.5,
+          527.5
+        ],
+        "minimum": 525.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 42,
+      "unique_coordinate_pairs": 42,
+      "first_coordinate_pairs": [
+        [
+          2985.5,
+          525.5
+        ],
+        [
+          2986.5,
+          525.5
+        ],
+        [
+          2987.5,
+          525.5
+        ],
+        [
+          2988.5,
+          525.5
+        ],
+        [
+          2989.5,
+          525.5
+        ],
+        [
+          2990.5,
+          525.5
+        ],
+        [
+          2991.5,
+          525.5
+        ],
+        [
+          2985.5,
+          526.5
+        ],
+        [
+          2986.5,
+          526.5
+        ],
+        [
+          2987.5,
+          526.5
+        ],
+        [
+          2988.5,
+          526.5
+        ],
+        [
+          2989.5,
+          526.5
+        ],
+        [
+          2990.5,
+          526.5
+        ],
+        [
+          2991.5,
+          526.5
+        ],
+        [
+          2985.5,
+          527.5
+        ],
+        [
+          2986.5,
+          527.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26346",
+      "label": "space_003_time_019",
+      "identity": "raw_26346_space_003_time_019",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          13
+        ],
+        "y": [
+          7,
+          13
+        ],
+        "A": [
+          7,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 13)": 409
+        },
+        "H": {
+          "(7, 13)": 409
+        },
+        "cm": {
+          "(7, 13)": 409
+        },
+        "hm": {
+          "(7, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2983.5,
+          2984.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2978.5,
+          2979.5,
+          2980.5
+        ],
+        "minimum": 2978.5,
+        "maximum": 2990.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          525.5,
+          525.5,
+          525.5
+        ],
+        "minimum": 524.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 91,
+      "unique_coordinate_pairs": 91,
+      "first_coordinate_pairs": [
+        [
+          2978.5,
+          524.5
+        ],
+        [
+          2979.5,
+          524.5
+        ],
+        [
+          2980.5,
+          524.5
+        ],
+        [
+          2981.5,
+          524.5
+        ],
+        [
+          2982.5,
+          524.5
+        ],
+        [
+          2983.5,
+          524.5
+        ],
+        [
+          2984.5,
+          524.5
+        ],
+        [
+          2985.5,
+          524.5
+        ],
+        [
+          2986.5,
+          524.5
+        ],
+        [
+          2987.5,
+          524.5
+        ],
+        [
+          2988.5,
+          524.5
+        ],
+        [
+          2989.5,
+          524.5
+        ],
+        [
+          2990.5,
+          524.5
+        ],
+        [
+          2978.5,
+          525.5
+        ],
+        [
+          2979.5,
+          525.5
+        ],
+        [
+          2980.5,
+          525.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26344",
+      "label": "space_003_time_032",
+      "identity": "raw_26344_space_003_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          7
+        ],
+        "y": [
+          6,
+          7
+        ],
+        "A": [
+          6,
+          7
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 7)": 409
+        },
+        "H": {
+          "(6, 7)": 409
+        },
+        "cm": {
+          "(6, 7)": 409
+        },
+        "hm": {
+          "(6, 7)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5
+        ],
+        "minimum": 2985.5,
+        "maximum": 2991.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          527.5,
+          527.5
+        ],
+        "minimum": 525.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 42,
+      "unique_coordinate_pairs": 42,
+      "first_coordinate_pairs": [
+        [
+          2985.5,
+          525.5
+        ],
+        [
+          2986.5,
+          525.5
+        ],
+        [
+          2987.5,
+          525.5
+        ],
+        [
+          2988.5,
+          525.5
+        ],
+        [
+          2989.5,
+          525.5
+        ],
+        [
+          2990.5,
+          525.5
+        ],
+        [
+          2991.5,
+          525.5
+        ],
+        [
+          2985.5,
+          526.5
+        ],
+        [
+          2986.5,
+          526.5
+        ],
+        [
+          2987.5,
+          526.5
+        ],
+        [
+          2988.5,
+          526.5
+        ],
+        [
+          2989.5,
+          526.5
+        ],
+        [
+          2990.5,
+          526.5
+        ],
+        [
+          2991.5,
+          526.5
+        ],
+        [
+          2985.5,
+          527.5
+        ],
+        [
+          2986.5,
+          527.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26346",
+      "label": "space_003_time_032",
+      "identity": "raw_26346_space_003_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          13
+        ],
+        "y": [
+          7,
+          13
+        ],
+        "A": [
+          7,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 13)": 409
+        },
+        "H": {
+          "(7, 13)": 409
+        },
+        "cm": {
+          "(7, 13)": 409
+        },
+        "hm": {
+          "(7, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2983.5,
+          2984.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2978.5,
+          2979.5,
+          2980.5
+        ],
+        "minimum": 2978.5,
+        "maximum": 2990.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          525.5,
+          525.5,
+          525.5
+        ],
+        "minimum": 524.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 91,
+      "unique_coordinate_pairs": 91,
+      "first_coordinate_pairs": [
+        [
+          2978.5,
+          524.5
+        ],
+        [
+          2979.5,
+          524.5
+        ],
+        [
+          2980.5,
+          524.5
+        ],
+        [
+          2981.5,
+          524.5
+        ],
+        [
+          2982.5,
+          524.5
+        ],
+        [
+          2983.5,
+          524.5
+        ],
+        [
+          2984.5,
+          524.5
+        ],
+        [
+          2985.5,
+          524.5
+        ],
+        [
+          2986.5,
+          524.5
+        ],
+        [
+          2987.5,
+          524.5
+        ],
+        [
+          2988.5,
+          524.5
+        ],
+        [
+          2989.5,
+          524.5
+        ],
+        [
+          2990.5,
+          524.5
+        ],
+        [
+          2978.5,
+          525.5
+        ],
+        [
+          2979.5,
+          525.5
+        ],
+        [
+          2980.5,
+          525.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26344",
+      "label": "space_003_time_031",
+      "identity": "raw_26344_space_003_time_031",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          7
+        ],
+        "y": [
+          6,
+          7
+        ],
+        "A": [
+          6,
+          7
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 7)": 409
+        },
+        "H": {
+          "(6, 7)": 409
+        },
+        "cm": {
+          "(6, 7)": 409
+        },
+        "hm": {
+          "(6, 7)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2991.5,
+          2985.5,
+          2986.5
+        ],
+        "minimum": 2985.5,
+        "maximum": 2991.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          7
+        ],
+        "finite_count": 42,
+        "nonfinite_count": 0,
+        "first_values": [
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          525.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          526.5,
+          527.5,
+          527.5
+        ],
+        "minimum": 525.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 42,
+      "unique_coordinate_pairs": 42,
+      "first_coordinate_pairs": [
+        [
+          2985.5,
+          525.5
+        ],
+        [
+          2986.5,
+          525.5
+        ],
+        [
+          2987.5,
+          525.5
+        ],
+        [
+          2988.5,
+          525.5
+        ],
+        [
+          2989.5,
+          525.5
+        ],
+        [
+          2990.5,
+          525.5
+        ],
+        [
+          2991.5,
+          525.5
+        ],
+        [
+          2985.5,
+          526.5
+        ],
+        [
+          2986.5,
+          526.5
+        ],
+        [
+          2987.5,
+          526.5
+        ],
+        [
+          2988.5,
+          526.5
+        ],
+        [
+          2989.5,
+          526.5
+        ],
+        [
+          2990.5,
+          526.5
+        ],
+        [
+          2991.5,
+          526.5
+        ],
+        [
+          2985.5,
+          527.5
+        ],
+        [
+          2986.5,
+          527.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "26346",
+      "label": "space_003_time_031",
+      "identity": "raw_26346_space_003_time_031",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          13
+        ],
+        "y": [
+          7,
+          13
+        ],
+        "A": [
+          7,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 13)": 409
+        },
+        "H": {
+          "(7, 13)": 409
+        },
+        "cm": {
+          "(7, 13)": 409
+        },
+        "hm": {
+          "(7, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          2978.5,
+          2979.5,
+          2980.5,
+          2981.5,
+          2982.5,
+          2983.5,
+          2984.5,
+          2985.5,
+          2986.5,
+          2987.5,
+          2988.5,
+          2989.5,
+          2990.5,
+          2978.5,
+          2979.5,
+          2980.5
+        ],
+        "minimum": 2978.5,
+        "maximum": 2990.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          13
+        ],
+        "finite_count": 91,
+        "nonfinite_count": 0,
+        "first_values": [
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          524.5,
+          525.5,
+          525.5,
+          525.5
+        ],
+        "minimum": 524.5,
+        "maximum": 530.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 91,
+      "unique_coordinate_pairs": 91,
+      "first_coordinate_pairs": [
+        [
+          2978.5,
+          524.5
+        ],
+        [
+          2979.5,
+          524.5
+        ],
+        [
+          2980.5,
+          524.5
+        ],
+        [
+          2981.5,
+          524.5
+        ],
+        [
+          2982.5,
+          524.5
+        ],
+        [
+          2983.5,
+          524.5
+        ],
+        [
+          2984.5,
+          524.5
+        ],
+        [
+          2985.5,
+          524.5
+        ],
+        [
+          2986.5,
+          524.5
+        ],
+        [
+          2987.5,
+          524.5
+        ],
+        [
+          2988.5,
+          524.5
+        ],
+        [
+          2989.5,
+          524.5
+        ],
+        [
+          2990.5,
+          524.5
+        ],
+        [
+          2978.5,
+          525.5
+        ],
+        [
+          2979.5,
+          525.5
+        ],
+        [
+          2980.5,
+          525.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27456",
+      "label": "space_005_time_010",
+      "identity": "raw_27456_space_005_time_010",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          9
+        ],
+        "y": [
+          8,
+          9
+        ],
+        "A": [
+          8,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 9)": 409
+        },
+        "H": {
+          "(8, 9)": 409
+        },
+        "cm": {
+          "(8, 9)": 409
+        },
+        "hm": {
+          "(8, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5,
+          3018.5,
+          3019.5,
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5
+        ],
+        "minimum": 3011.5,
+        "maximum": 3019.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5
+        ],
+        "minimum": 583.5,
+        "maximum": 590.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 72,
+      "unique_coordinate_pairs": 72,
+      "first_coordinate_pairs": [
+        [
+          3011.5,
+          583.5
+        ],
+        [
+          3012.5,
+          583.5
+        ],
+        [
+          3013.5,
+          583.5
+        ],
+        [
+          3014.5,
+          583.5
+        ],
+        [
+          3015.5,
+          583.5
+        ],
+        [
+          3016.5,
+          583.5
+        ],
+        [
+          3017.5,
+          583.5
+        ],
+        [
+          3018.5,
+          583.5
+        ],
+        [
+          3019.5,
+          583.5
+        ],
+        [
+          3011.5,
+          584.5
+        ],
+        [
+          3012.5,
+          584.5
+        ],
+        [
+          3013.5,
+          584.5
+        ],
+        [
+          3014.5,
+          584.5
+        ],
+        [
+          3015.5,
+          584.5
+        ],
+        [
+          3016.5,
+          584.5
+        ],
+        [
+          3017.5,
+          584.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27456",
+      "label": "space_005_time_020",
+      "identity": "raw_27456_space_005_time_020",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          9
+        ],
+        "y": [
+          8,
+          9
+        ],
+        "A": [
+          8,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 9)": 409
+        },
+        "H": {
+          "(8, 9)": 409
+        },
+        "cm": {
+          "(8, 9)": 409
+        },
+        "hm": {
+          "(8, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5,
+          3018.5,
+          3019.5,
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5
+        ],
+        "minimum": 3011.5,
+        "maximum": 3019.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5
+        ],
+        "minimum": 583.5,
+        "maximum": 590.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 72,
+      "unique_coordinate_pairs": 72,
+      "first_coordinate_pairs": [
+        [
+          3011.5,
+          583.5
+        ],
+        [
+          3012.5,
+          583.5
+        ],
+        [
+          3013.5,
+          583.5
+        ],
+        [
+          3014.5,
+          583.5
+        ],
+        [
+          3015.5,
+          583.5
+        ],
+        [
+          3016.5,
+          583.5
+        ],
+        [
+          3017.5,
+          583.5
+        ],
+        [
+          3018.5,
+          583.5
+        ],
+        [
+          3019.5,
+          583.5
+        ],
+        [
+          3011.5,
+          584.5
+        ],
+        [
+          3012.5,
+          584.5
+        ],
+        [
+          3013.5,
+          584.5
+        ],
+        [
+          3014.5,
+          584.5
+        ],
+        [
+          3015.5,
+          584.5
+        ],
+        [
+          3016.5,
+          584.5
+        ],
+        [
+          3017.5,
+          584.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27456",
+      "label": "space_005_time_019",
+      "identity": "raw_27456_space_005_time_019",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          9
+        ],
+        "y": [
+          8,
+          9
+        ],
+        "A": [
+          8,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 9)": 409
+        },
+        "H": {
+          "(8, 9)": 409
+        },
+        "cm": {
+          "(8, 9)": 409
+        },
+        "hm": {
+          "(8, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5,
+          3018.5,
+          3019.5,
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5
+        ],
+        "minimum": 3011.5,
+        "maximum": 3019.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5
+        ],
+        "minimum": 583.5,
+        "maximum": 590.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 72,
+      "unique_coordinate_pairs": 72,
+      "first_coordinate_pairs": [
+        [
+          3011.5,
+          583.5
+        ],
+        [
+          3012.5,
+          583.5
+        ],
+        [
+          3013.5,
+          583.5
+        ],
+        [
+          3014.5,
+          583.5
+        ],
+        [
+          3015.5,
+          583.5
+        ],
+        [
+          3016.5,
+          583.5
+        ],
+        [
+          3017.5,
+          583.5
+        ],
+        [
+          3018.5,
+          583.5
+        ],
+        [
+          3019.5,
+          583.5
+        ],
+        [
+          3011.5,
+          584.5
+        ],
+        [
+          3012.5,
+          584.5
+        ],
+        [
+          3013.5,
+          584.5
+        ],
+        [
+          3014.5,
+          584.5
+        ],
+        [
+          3015.5,
+          584.5
+        ],
+        [
+          3016.5,
+          584.5
+        ],
+        [
+          3017.5,
+          584.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27456",
+      "label": "space_005_time_031",
+      "identity": "raw_27456_space_005_time_031",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          9
+        ],
+        "y": [
+          8,
+          9
+        ],
+        "A": [
+          8,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 9)": 409
+        },
+        "H": {
+          "(8, 9)": 409
+        },
+        "cm": {
+          "(8, 9)": 409
+        },
+        "hm": {
+          "(8, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5,
+          3018.5,
+          3019.5,
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5
+        ],
+        "minimum": 3011.5,
+        "maximum": 3019.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5
+        ],
+        "minimum": 583.5,
+        "maximum": 590.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 72,
+      "unique_coordinate_pairs": 72,
+      "first_coordinate_pairs": [
+        [
+          3011.5,
+          583.5
+        ],
+        [
+          3012.5,
+          583.5
+        ],
+        [
+          3013.5,
+          583.5
+        ],
+        [
+          3014.5,
+          583.5
+        ],
+        [
+          3015.5,
+          583.5
+        ],
+        [
+          3016.5,
+          583.5
+        ],
+        [
+          3017.5,
+          583.5
+        ],
+        [
+          3018.5,
+          583.5
+        ],
+        [
+          3019.5,
+          583.5
+        ],
+        [
+          3011.5,
+          584.5
+        ],
+        [
+          3012.5,
+          584.5
+        ],
+        [
+          3013.5,
+          584.5
+        ],
+        [
+          3014.5,
+          584.5
+        ],
+        [
+          3015.5,
+          584.5
+        ],
+        [
+          3016.5,
+          584.5
+        ],
+        [
+          3017.5,
+          584.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27456",
+      "label": "space_005_time_032",
+      "identity": "raw_27456_space_005_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          9
+        ],
+        "y": [
+          8,
+          9
+        ],
+        "A": [
+          8,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 9)": 409
+        },
+        "H": {
+          "(8, 9)": 409
+        },
+        "cm": {
+          "(8, 9)": 409
+        },
+        "hm": {
+          "(8, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5,
+          3018.5,
+          3019.5,
+          3011.5,
+          3012.5,
+          3013.5,
+          3014.5,
+          3015.5,
+          3016.5,
+          3017.5
+        ],
+        "minimum": 3011.5,
+        "maximum": 3019.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          9
+        ],
+        "finite_count": 72,
+        "nonfinite_count": 0,
+        "first_values": [
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          583.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5,
+          584.5
+        ],
+        "minimum": 583.5,
+        "maximum": 590.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 72,
+      "unique_coordinate_pairs": 72,
+      "first_coordinate_pairs": [
+        [
+          3011.5,
+          583.5
+        ],
+        [
+          3012.5,
+          583.5
+        ],
+        [
+          3013.5,
+          583.5
+        ],
+        [
+          3014.5,
+          583.5
+        ],
+        [
+          3015.5,
+          583.5
+        ],
+        [
+          3016.5,
+          583.5
+        ],
+        [
+          3017.5,
+          583.5
+        ],
+        [
+          3018.5,
+          583.5
+        ],
+        [
+          3019.5,
+          583.5
+        ],
+        [
+          3011.5,
+          584.5
+        ],
+        [
+          3012.5,
+          584.5
+        ],
+        [
+          3013.5,
+          584.5
+        ],
+        [
+          3014.5,
+          584.5
+        ],
+        [
+          3015.5,
+          584.5
+        ],
+        [
+          3016.5,
+          584.5
+        ],
+        [
+          3017.5,
+          584.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27379",
+      "label": "space_005_time_036",
+      "identity": "raw_27379_space_005_time_036",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          7,
+          10
+        ],
+        "y": [
+          7,
+          10
+        ],
+        "A": [
+          7,
+          10
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(7, 10)": 409
+        },
+        "H": {
+          "(7, 10)": 409
+        },
+        "cm": {
+          "(7, 10)": 409
+        },
+        "hm": {
+          "(7, 10)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          7,
+          10
+        ],
+        "finite_count": 70,
+        "nonfinite_count": 0,
+        "first_values": [
+          2760.5,
+          2761.5,
+          2762.5,
+          2763.5,
+          2764.5,
+          2765.5,
+          2766.5,
+          2767.5,
+          2768.5,
+          2769.5,
+          2760.5,
+          2761.5,
+          2762.5,
+          2763.5,
+          2764.5,
+          2765.5
+        ],
+        "minimum": 2760.5,
+        "maximum": 2769.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          7,
+          10
+        ],
+        "finite_count": 70,
+        "nonfinite_count": 0,
+        "first_values": [
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          562.5,
+          562.5,
+          562.5,
+          562.5,
+          562.5,
+          562.5
+        ],
+        "minimum": 561.5,
+        "maximum": 567.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 70,
+      "unique_coordinate_pairs": 70,
+      "first_coordinate_pairs": [
+        [
+          2760.5,
+          561.5
+        ],
+        [
+          2761.5,
+          561.5
+        ],
+        [
+          2762.5,
+          561.5
+        ],
+        [
+          2763.5,
+          561.5
+        ],
+        [
+          2764.5,
+          561.5
+        ],
+        [
+          2765.5,
+          561.5
+        ],
+        [
+          2766.5,
+          561.5
+        ],
+        [
+          2767.5,
+          561.5
+        ],
+        [
+          2768.5,
+          561.5
+        ],
+        [
+          2769.5,
+          561.5
+        ],
+        [
+          2760.5,
+          562.5
+        ],
+        [
+          2761.5,
+          562.5
+        ],
+        [
+          2762.5,
+          562.5
+        ],
+        [
+          2763.5,
+          562.5
+        ],
+        [
+          2764.5,
+          562.5
+        ],
+        [
+          2765.5,
+          562.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "27392",
+      "label": "space_005_time_036",
+      "identity": "raw_27392_space_005_time_036",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          13,
+          14
+        ],
+        "y": [
+          13,
+          14
+        ],
+        "A": [
+          13,
+          14
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(13, 14)": 409
+        },
+        "H": {
+          "(13, 14)": 409
+        },
+        "cm": {
+          "(13, 14)": 409
+        },
+        "hm": {
+          "(13, 14)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          13,
+          14
+        ],
+        "finite_count": 182,
+        "nonfinite_count": 0,
+        "first_values": [
+          2749.5,
+          2750.5,
+          2751.5,
+          2752.5,
+          2753.5,
+          2754.5,
+          2755.5,
+          2756.5,
+          2757.5,
+          2758.5,
+          2759.5,
+          2760.5,
+          2761.5,
+          2762.5,
+          2749.5,
+          2750.5
+        ],
+        "minimum": 2749.5,
+        "maximum": 2762.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          13,
+          14
+        ],
+        "finite_count": 182,
+        "nonfinite_count": 0,
+        "first_values": [
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          544.5,
+          545.5,
+          545.5
+        ],
+        "minimum": 544.5,
+        "maximum": 556.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 182,
+      "unique_coordinate_pairs": 182,
+      "first_coordinate_pairs": [
+        [
+          2749.5,
+          544.5
+        ],
+        [
+          2750.5,
+          544.5
+        ],
+        [
+          2751.5,
+          544.5
+        ],
+        [
+          2752.5,
+          544.5
+        ],
+        [
+          2753.5,
+          544.5
+        ],
+        [
+          2754.5,
+          544.5
+        ],
+        [
+          2755.5,
+          544.5
+        ],
+        [
+          2756.5,
+          544.5
+        ],
+        [
+          2757.5,
+          544.5
+        ],
+        [
+          2758.5,
+          544.5
+        ],
+        [
+          2759.5,
+          544.5
+        ],
+        [
+          2760.5,
+          544.5
+        ],
+        [
+          2761.5,
+          544.5
+        ],
+        [
+          2762.5,
+          544.5
+        ],
+        [
+          2749.5,
+          545.5
+        ],
+        [
+          2750.5,
+          545.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "28468",
+      "label": "space_006_time_018",
+      "identity": "raw_28468_space_006_time_018",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          10,
+          9
+        ],
+        "y": [
+          10,
+          9
+        ],
+        "A": [
+          10,
+          9
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(10, 9)": 409
+        },
+        "H": {
+          "(10, 9)": 409
+        },
+        "cm": {
+          "(10, 9)": 409
+        },
+        "hm": {
+          "(10, 9)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          10,
+          9
+        ],
+        "finite_count": 90,
+        "nonfinite_count": 0,
+        "first_values": [
+          2718.5,
+          2719.5,
+          2720.5,
+          2721.5,
+          2722.5,
+          2723.5,
+          2724.5,
+          2725.5,
+          2726.5,
+          2718.5,
+          2719.5,
+          2720.5,
+          2721.5,
+          2722.5,
+          2723.5,
+          2724.5
+        ],
+        "minimum": 2718.5,
+        "maximum": 2726.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          10,
+          9
+        ],
+        "finite_count": 90,
+        "nonfinite_count": 0,
+        "first_values": [
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          585.5,
+          586.5,
+          586.5,
+          586.5,
+          586.5,
+          586.5,
+          586.5,
+          586.5
+        ],
+        "minimum": 585.5,
+        "maximum": 594.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 90,
+      "unique_coordinate_pairs": 90,
+      "first_coordinate_pairs": [
+        [
+          2718.5,
+          585.5
+        ],
+        [
+          2719.5,
+          585.5
+        ],
+        [
+          2720.5,
+          585.5
+        ],
+        [
+          2721.5,
+          585.5
+        ],
+        [
+          2722.5,
+          585.5
+        ],
+        [
+          2723.5,
+          585.5
+        ],
+        [
+          2724.5,
+          585.5
+        ],
+        [
+          2725.5,
+          585.5
+        ],
+        [
+          2726.5,
+          585.5
+        ],
+        [
+          2718.5,
+          586.5
+        ],
+        [
+          2719.5,
+          586.5
+        ],
+        [
+          2720.5,
+          586.5
+        ],
+        [
+          2721.5,
+          586.5
+        ],
+        [
+          2722.5,
+          586.5
+        ],
+        [
+          2723.5,
+          586.5
+        ],
+        [
+          2724.5,
+          586.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "35306",
+      "label": "space_007_time_016",
+      "identity": "raw_35306_space_007_time_016",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          12,
+          11
+        ],
+        "y": [
+          12,
+          11
+        ],
+        "A": [
+          12,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(12, 11)": 409
+        },
+        "H": {
+          "(12, 11)": 409
+        },
+        "cm": {
+          "(12, 11)": 409
+        },
+        "hm": {
+          "(12, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          12,
+          11
+        ],
+        "finite_count": 132,
+        "nonfinite_count": 0,
+        "first_values": [
+          2627.5,
+          2628.5,
+          2629.5,
+          2630.5,
+          2631.5,
+          2632.5,
+          2633.5,
+          2634.5,
+          2635.5,
+          2636.5,
+          2637.5,
+          2627.5,
+          2628.5,
+          2629.5,
+          2630.5,
+          2631.5
+        ],
+        "minimum": 2627.5,
+        "maximum": 2637.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          12,
+          11
+        ],
+        "finite_count": 132,
+        "nonfinite_count": 0,
+        "first_values": [
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          426.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5
+        ],
+        "minimum": 426.5,
+        "maximum": 437.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 132,
+      "unique_coordinate_pairs": 132,
+      "first_coordinate_pairs": [
+        [
+          2627.5,
+          426.5
+        ],
+        [
+          2628.5,
+          426.5
+        ],
+        [
+          2629.5,
+          426.5
+        ],
+        [
+          2630.5,
+          426.5
+        ],
+        [
+          2631.5,
+          426.5
+        ],
+        [
+          2632.5,
+          426.5
+        ],
+        [
+          2633.5,
+          426.5
+        ],
+        [
+          2634.5,
+          426.5
+        ],
+        [
+          2635.5,
+          426.5
+        ],
+        [
+          2636.5,
+          426.5
+        ],
+        [
+          2637.5,
+          426.5
+        ],
+        [
+          2627.5,
+          427.5
+        ],
+        [
+          2628.5,
+          427.5
+        ],
+        [
+          2629.5,
+          427.5
+        ],
+        [
+          2630.5,
+          427.5
+        ],
+        [
+          2631.5,
+          427.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "35307",
+      "label": "space_007_time_016",
+      "identity": "raw_35307_space_007_time_016",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          12,
+          24
+        ],
+        "y": [
+          12,
+          24
+        ],
+        "A": [
+          12,
+          24
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(12, 24)": 409
+        },
+        "H": {
+          "(12, 24)": 409
+        },
+        "cm": {
+          "(12, 24)": 409
+        },
+        "hm": {
+          "(12, 24)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          12,
+          24
+        ],
+        "finite_count": 288,
+        "nonfinite_count": 0,
+        "first_values": [
+          2627.5,
+          2628.5,
+          2629.5,
+          2630.5,
+          2631.5,
+          2632.5,
+          2633.5,
+          2634.5,
+          2635.5,
+          2636.5,
+          2637.5,
+          2638.5,
+          2639.5,
+          2640.5,
+          2641.5,
+          2642.5
+        ],
+        "minimum": 2627.5,
+        "maximum": 2650.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          12,
+          24
+        ],
+        "finite_count": 288,
+        "nonfinite_count": 0,
+        "first_values": [
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5,
+          427.5
+        ],
+        "minimum": 427.5,
+        "maximum": 438.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 288,
+      "unique_coordinate_pairs": 288,
+      "first_coordinate_pairs": [
+        [
+          2627.5,
+          427.5
+        ],
+        [
+          2628.5,
+          427.5
+        ],
+        [
+          2629.5,
+          427.5
+        ],
+        [
+          2630.5,
+          427.5
+        ],
+        [
+          2631.5,
+          427.5
+        ],
+        [
+          2632.5,
+          427.5
+        ],
+        [
+          2633.5,
+          427.5
+        ],
+        [
+          2634.5,
+          427.5
+        ],
+        [
+          2635.5,
+          427.5
+        ],
+        [
+          2636.5,
+          427.5
+        ],
+        [
+          2637.5,
+          427.5
+        ],
+        [
+          2638.5,
+          427.5
+        ],
+        [
+          2639.5,
+          427.5
+        ],
+        [
+          2640.5,
+          427.5
+        ],
+        [
+          2641.5,
+          427.5
+        ],
+        [
+          2642.5,
+          427.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "35415",
+      "label": "space_007_time_018",
+      "identity": "raw_35415_space_007_time_018",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          11,
+          22
+        ],
+        "y": [
+          11,
+          22
+        ],
+        "A": [
+          11,
+          22
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(11, 22)": 409
+        },
+        "H": {
+          "(11, 22)": 409
+        },
+        "cm": {
+          "(11, 22)": 409
+        },
+        "hm": {
+          "(11, 22)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          11,
+          22
+        ],
+        "finite_count": 242,
+        "nonfinite_count": 0,
+        "first_values": [
+          2639.5,
+          2640.5,
+          2641.5,
+          2642.5,
+          2643.5,
+          2644.5,
+          2645.5,
+          2646.5,
+          2647.5,
+          2648.5,
+          2649.5,
+          2650.5,
+          2651.5,
+          2652.5,
+          2653.5,
+          2654.5
+        ],
+        "minimum": 2639.5,
+        "maximum": 2660.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          11,
+          22
+        ],
+        "finite_count": 242,
+        "nonfinite_count": 0,
+        "first_values": [
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5,
+          433.5
+        ],
+        "minimum": 433.5,
+        "maximum": 443.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 242,
+      "unique_coordinate_pairs": 242,
+      "first_coordinate_pairs": [
+        [
+          2639.5,
+          433.5
+        ],
+        [
+          2640.5,
+          433.5
+        ],
+        [
+          2641.5,
+          433.5
+        ],
+        [
+          2642.5,
+          433.5
+        ],
+        [
+          2643.5,
+          433.5
+        ],
+        [
+          2644.5,
+          433.5
+        ],
+        [
+          2645.5,
+          433.5
+        ],
+        [
+          2646.5,
+          433.5
+        ],
+        [
+          2647.5,
+          433.5
+        ],
+        [
+          2648.5,
+          433.5
+        ],
+        [
+          2649.5,
+          433.5
+        ],
+        [
+          2650.5,
+          433.5
+        ],
+        [
+          2651.5,
+          433.5
+        ],
+        [
+          2652.5,
+          433.5
+        ],
+        [
+          2653.5,
+          433.5
+        ],
+        [
+          2654.5,
+          433.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "34336",
+      "label": "space_007_time_032",
+      "identity": "raw_34336_space_007_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          8,
+          12
+        ],
+        "y": [
+          8,
+          12
+        ],
+        "A": [
+          8,
+          12
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(8, 12)": 409
+        },
+        "H": {
+          "(8, 12)": 409
+        },
+        "cm": {
+          "(8, 12)": 409
+        },
+        "hm": {
+          "(8, 12)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          8,
+          12
+        ],
+        "finite_count": 96,
+        "nonfinite_count": 0,
+        "first_values": [
+          2616.5,
+          2617.5,
+          2618.5,
+          2619.5,
+          2620.5,
+          2621.5,
+          2622.5,
+          2623.5,
+          2624.5,
+          2625.5,
+          2626.5,
+          2627.5,
+          2616.5,
+          2617.5,
+          2618.5,
+          2619.5
+        ],
+        "minimum": 2616.5,
+        "maximum": 2627.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          8,
+          12
+        ],
+        "finite_count": 96,
+        "nonfinite_count": 0,
+        "first_values": [
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          462.5,
+          463.5,
+          463.5,
+          463.5,
+          463.5
+        ],
+        "minimum": 462.5,
+        "maximum": 469.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 96,
+      "unique_coordinate_pairs": 96,
+      "first_coordinate_pairs": [
+        [
+          2616.5,
+          462.5
+        ],
+        [
+          2617.5,
+          462.5
+        ],
+        [
+          2618.5,
+          462.5
+        ],
+        [
+          2619.5,
+          462.5
+        ],
+        [
+          2620.5,
+          462.5
+        ],
+        [
+          2621.5,
+          462.5
+        ],
+        [
+          2622.5,
+          462.5
+        ],
+        [
+          2623.5,
+          462.5
+        ],
+        [
+          2624.5,
+          462.5
+        ],
+        [
+          2625.5,
+          462.5
+        ],
+        [
+          2626.5,
+          462.5
+        ],
+        [
+          2627.5,
+          462.5
+        ],
+        [
+          2616.5,
+          463.5
+        ],
+        [
+          2617.5,
+          463.5
+        ],
+        [
+          2618.5,
+          463.5
+        ],
+        [
+          2619.5,
+          463.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "34337",
+      "label": "space_007_time_032",
+      "identity": "raw_34337_space_007_time_032",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          9,
+          11
+        ],
+        "y": [
+          9,
+          11
+        ],
+        "A": [
+          9,
+          11
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(9, 11)": 409
+        },
+        "H": {
+          "(9, 11)": 409
+        },
+        "cm": {
+          "(9, 11)": 409
+        },
+        "hm": {
+          "(9, 11)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          9,
+          11
+        ],
+        "finite_count": 99,
+        "nonfinite_count": 0,
+        "first_values": [
+          2618.5,
+          2619.5,
+          2620.5,
+          2621.5,
+          2622.5,
+          2623.5,
+          2624.5,
+          2625.5,
+          2626.5,
+          2627.5,
+          2628.5,
+          2618.5,
+          2619.5,
+          2620.5,
+          2621.5,
+          2622.5
+        ],
+        "minimum": 2618.5,
+        "maximum": 2628.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          9,
+          11
+        ],
+        "finite_count": 99,
+        "nonfinite_count": 0,
+        "first_values": [
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          460.5,
+          461.5,
+          461.5,
+          461.5,
+          461.5,
+          461.5
+        ],
+        "minimum": 460.5,
+        "maximum": 468.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 99,
+      "unique_coordinate_pairs": 99,
+      "first_coordinate_pairs": [
+        [
+          2618.5,
+          460.5
+        ],
+        [
+          2619.5,
+          460.5
+        ],
+        [
+          2620.5,
+          460.5
+        ],
+        [
+          2621.5,
+          460.5
+        ],
+        [
+          2622.5,
+          460.5
+        ],
+        [
+          2623.5,
+          460.5
+        ],
+        [
+          2624.5,
+          460.5
+        ],
+        [
+          2625.5,
+          460.5
+        ],
+        [
+          2626.5,
+          460.5
+        ],
+        [
+          2627.5,
+          460.5
+        ],
+        [
+          2628.5,
+          460.5
+        ],
+        [
+          2618.5,
+          461.5
+        ],
+        [
+          2619.5,
+          461.5
+        ],
+        [
+          2620.5,
+          461.5
+        ],
+        [
+          2621.5,
+          461.5
+        ],
+        [
+          2622.5,
+          461.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "35538",
+      "label": "space_007_time_034",
+      "identity": "raw_35538_space_007_time_034",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          12,
+          13
+        ],
+        "y": [
+          12,
+          13
+        ],
+        "A": [
+          12,
+          13
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(12, 13)": 409
+        },
+        "H": {
+          "(12, 13)": 409
+        },
+        "cm": {
+          "(12, 13)": 409
+        },
+        "hm": {
+          "(12, 13)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          12,
+          13
+        ],
+        "finite_count": 156,
+        "nonfinite_count": 0,
+        "first_values": [
+          2612.5,
+          2613.5,
+          2614.5,
+          2615.5,
+          2616.5,
+          2617.5,
+          2618.5,
+          2619.5,
+          2620.5,
+          2621.5,
+          2622.5,
+          2623.5,
+          2624.5,
+          2612.5,
+          2613.5,
+          2614.5
+        ],
+        "minimum": 2612.5,
+        "maximum": 2624.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          12,
+          13
+        ],
+        "finite_count": 156,
+        "nonfinite_count": 0,
+        "first_values": [
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          444.5,
+          445.5,
+          445.5,
+          445.5
+        ],
+        "minimum": 444.5,
+        "maximum": 455.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 156,
+      "unique_coordinate_pairs": 156,
+      "first_coordinate_pairs": [
+        [
+          2612.5,
+          444.5
+        ],
+        [
+          2613.5,
+          444.5
+        ],
+        [
+          2614.5,
+          444.5
+        ],
+        [
+          2615.5,
+          444.5
+        ],
+        [
+          2616.5,
+          444.5
+        ],
+        [
+          2617.5,
+          444.5
+        ],
+        [
+          2618.5,
+          444.5
+        ],
+        [
+          2619.5,
+          444.5
+        ],
+        [
+          2620.5,
+          444.5
+        ],
+        [
+          2621.5,
+          444.5
+        ],
+        [
+          2622.5,
+          444.5
+        ],
+        [
+          2623.5,
+          444.5
+        ],
+        [
+          2624.5,
+          444.5
+        ],
+        [
+          2612.5,
+          445.5
+        ],
+        [
+          2613.5,
+          445.5
+        ],
+        [
+          2614.5,
+          445.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "29006",
+      "label": "space_007_time_036",
+      "identity": "raw_29006_space_007_time_036",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          12,
+          14
+        ],
+        "y": [
+          12,
+          14
+        ],
+        "A": [
+          12,
+          14
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(12, 14)": 409
+        },
+        "H": {
+          "(12, 14)": 409
+        },
+        "cm": {
+          "(12, 14)": 409
+        },
+        "hm": {
+          "(12, 14)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          12,
+          14
+        ],
+        "finite_count": 168,
+        "nonfinite_count": 0,
+        "first_values": [
+          2756.5,
+          2757.5,
+          2758.5,
+          2759.5,
+          2760.5,
+          2761.5,
+          2762.5,
+          2763.5,
+          2764.5,
+          2765.5,
+          2766.5,
+          2767.5,
+          2768.5,
+          2769.5,
+          2756.5,
+          2757.5
+        ],
+        "minimum": 2756.5,
+        "maximum": 2769.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          12,
+          14
+        ],
+        "finite_count": 168,
+        "nonfinite_count": 0,
+        "first_values": [
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          574.5,
+          575.5,
+          575.5
+        ],
+        "minimum": 574.5,
+        "maximum": 585.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 168,
+      "unique_coordinate_pairs": 168,
+      "first_coordinate_pairs": [
+        [
+          2756.5,
+          574.5
+        ],
+        [
+          2757.5,
+          574.5
+        ],
+        [
+          2758.5,
+          574.5
+        ],
+        [
+          2759.5,
+          574.5
+        ],
+        [
+          2760.5,
+          574.5
+        ],
+        [
+          2761.5,
+          574.5
+        ],
+        [
+          2762.5,
+          574.5
+        ],
+        [
+          2763.5,
+          574.5
+        ],
+        [
+          2764.5,
+          574.5
+        ],
+        [
+          2765.5,
+          574.5
+        ],
+        [
+          2766.5,
+          574.5
+        ],
+        [
+          2767.5,
+          574.5
+        ],
+        [
+          2768.5,
+          574.5
+        ],
+        [
+          2769.5,
+          574.5
+        ],
+        [
+          2756.5,
+          575.5
+        ],
+        [
+          2757.5,
+          575.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "29027",
+      "label": "space_007_time_035",
+      "identity": "raw_29027_space_007_time_035",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          9,
+          12
+        ],
+        "y": [
+          9,
+          12
+        ],
+        "A": [
+          9,
+          12
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(9, 12)": 409
+        },
+        "H": {
+          "(9, 12)": 409
+        },
+        "cm": {
+          "(9, 12)": 409
+        },
+        "hm": {
+          "(9, 12)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          9,
+          12
+        ],
+        "finite_count": 108,
+        "nonfinite_count": 0,
+        "first_values": [
+          2737.5,
+          2738.5,
+          2739.5,
+          2740.5,
+          2741.5,
+          2742.5,
+          2743.5,
+          2744.5,
+          2745.5,
+          2746.5,
+          2747.5,
+          2748.5,
+          2737.5,
+          2738.5,
+          2739.5,
+          2740.5
+        ],
+        "minimum": 2737.5,
+        "maximum": 2748.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          9,
+          12
+        ],
+        "finite_count": 108,
+        "nonfinite_count": 0,
+        "first_values": [
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          564.5,
+          565.5,
+          565.5,
+          565.5,
+          565.5
+        ],
+        "minimum": 564.5,
+        "maximum": 572.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 108,
+      "unique_coordinate_pairs": 108,
+      "first_coordinate_pairs": [
+        [
+          2737.5,
+          564.5
+        ],
+        [
+          2738.5,
+          564.5
+        ],
+        [
+          2739.5,
+          564.5
+        ],
+        [
+          2740.5,
+          564.5
+        ],
+        [
+          2741.5,
+          564.5
+        ],
+        [
+          2742.5,
+          564.5
+        ],
+        [
+          2743.5,
+          564.5
+        ],
+        [
+          2744.5,
+          564.5
+        ],
+        [
+          2745.5,
+          564.5
+        ],
+        [
+          2746.5,
+          564.5
+        ],
+        [
+          2747.5,
+          564.5
+        ],
+        [
+          2748.5,
+          564.5
+        ],
+        [
+          2737.5,
+          565.5
+        ],
+        [
+          2738.5,
+          565.5
+        ],
+        [
+          2739.5,
+          565.5
+        ],
+        [
+          2740.5,
+          565.5
+        ]
+      ]
+    },
+    {
+      "basin_id": "37124",
+      "label": "space_008_time_015",
+      "identity": "raw_37124_space_008_time_015",
+      "source_times_match": true,
+      "source_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "expected_grid": {
+        "type": "Projection",
+        "crs": "EPSG:4326",
+        "transform": [
+          0.1,
+          0,
+          -180.05,
+          0,
+          -0.1,
+          90.05
+        ]
+      },
+      "all_409_source_projection_pairs_match": true,
+      "coordinate_and_area_shapes": {
+        "x": [
+          6,
+          8
+        ],
+        "y": [
+          6,
+          8
+        ],
+        "A": [
+          6,
+          8
+        ]
+      },
+      "hourly_band_shape_counts": {
+        "C": {
+          "(6, 8)": 409
+        },
+        "H": {
+          "(6, 8)": 409
+        },
+        "cm": {
+          "(6, 8)": 409
+        },
+        "hm": {
+          "(6, 8)": 409
+        }
+      },
+      "x": {
+        "shape": [
+          6,
+          8
+        ],
+        "finite_count": 48,
+        "nonfinite_count": 0,
+        "first_values": [
+          2610.5,
+          2611.5,
+          2612.5,
+          2613.5,
+          2614.5,
+          2615.5,
+          2616.5,
+          2617.5,
+          2610.5,
+          2611.5,
+          2612.5,
+          2613.5,
+          2614.5,
+          2615.5,
+          2616.5,
+          2617.5
+        ],
+        "minimum": 2610.5,
+        "maximum": 2617.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 0.0,
+        "row_step_maximum": 0.0,
+        "column_step_minimum": 1.0,
+        "column_step_maximum": 1.0
+      },
+      "y": {
+        "shape": [
+          6,
+          8
+        ],
+        "finite_count": 48,
+        "nonfinite_count": 0,
+        "first_values": [
+          560.5,
+          560.5,
+          560.5,
+          560.5,
+          560.5,
+          560.5,
+          560.5,
+          560.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5,
+          561.5
+        ],
+        "minimum": 560.5,
+        "maximum": 565.5,
+        "maximum_distance_to_integer": 0.5,
+        "maximum_distance_to_half_integer": 0.0,
+        "exact_integer_values": 0,
+        "row_step_minimum": 1.0,
+        "row_step_maximum": 1.0,
+        "column_step_minimum": 0.0,
+        "column_step_maximum": 0.0
+      },
+      "area_finite": true,
+      "area_positive": true,
+      "coordinate_pairs": 48,
+      "unique_coordinate_pairs": 48,
+      "first_coordinate_pairs": [
+        [
+          2610.5,
+          560.5
+        ],
+        [
+          2611.5,
+          560.5
+        ],
+        [
+          2612.5,
+          560.5
+        ],
+        [
+          2613.5,
+          560.5
+        ],
+        [
+          2614.5,
+          560.5
+        ],
+        [
+          2615.5,
+          560.5
+        ],
+        [
+          2616.5,
+          560.5
+        ],
+        [
+          2617.5,
+          560.5
+        ],
+        [
+          2610.5,
+          561.5
+        ],
+        [
+          2611.5,
+          561.5
+        ],
+        [
+          2612.5,
+          561.5
+        ],
+        [
+          2613.5,
+          561.5
+        ],
+        [
+          2614.5,
+          561.5
+        ],
+        [
+          2615.5,
+          561.5
+        ],
+        [
+          2616.5,
+          561.5
+        ],
+        [
+          2617.5,
+          561.5
+        ]
+      ]
+    }
+  ],
+  "input_files": [
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/FAILED_BATCH_INPUTS.json",
+      "bytes": 375103,
+      "sha256": "08dd954e645ec34442c874483e5e1fdbc3f862e72c2cb9e106e75a88ca301ae9"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/coordinate_diagnostic_v1/hpc_coordinate_diagnostic.py",
+      "bytes": 5718,
+      "sha256": "c08ad14888b7a0b3d413ffae674a52b48e33c5adb4e643fb3d735523b41cdb75"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_010_meta.json",
+      "bytes": 605,
+      "sha256": "e81371a7b2901163e93220f8d1badf23341016b39c34e7198b346a52cb0ebb38"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_010_body.bin",
+      "bytes": 4540080,
+      "sha256": "88fe684455c94d333f34d03168f0d4fa72f4dcf95c2a3edbbd1d8d744f5cf3a9"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_25911_space_002_time_010.json",
+      "bytes": 1113010,
+      "sha256": "164ff5fe2e02371f62d7e6278568085d82fcba66d07170d57b9d05b6b8ac227b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_019_meta.json",
+      "bytes": 604,
+      "sha256": "60236846f2090099087e77935a3f46863014ef469f9c1104cf74e2f5d22417f2"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_019_body.bin",
+      "bytes": 4365719,
+      "sha256": "1aacd0feac007d096401dc283dea32e74d5368c94af528ad6944736b10b37e77"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_25911_space_002_time_019.json",
+      "bytes": 1113010,
+      "sha256": "da7de83851f566a4d4c9d57c58f1b34675a0612e565681e903a2b6718383177b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_020_meta.json",
+      "bytes": 604,
+      "sha256": "b73601048ca2e42622f813afaf4660243e36f23611528e1c78533463d2dfd10d"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_020_body.bin",
+      "bytes": 4455414,
+      "sha256": "9622421f3e7f7048d7e0b20ca8636f2f25595ec704bd5a893d0bcf5ad855b45f"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_25911_space_002_time_020.json",
+      "bytes": 1113010,
+      "sha256": "61ba1fd335f29fc5c566bab17509fc8de7a34096b139908b01ed58080bc5556b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_031_meta.json",
+      "bytes": 604,
+      "sha256": "248e316aee726325cc4f7bb2877a304d81fa3f0312c1e6ca3384859716050d72"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_031_body.bin",
+      "bytes": 4412942,
+      "sha256": "db9ee9a04a75b71a1db045a7805586790e5922c616243619c3944bd03f7a2f85"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_25911_space_002_time_031.json",
+      "bytes": 1113010,
+      "sha256": "65467e3a4c9a161dc7abe13fb7b2a1d3bb96595e676305ccbc3782505a081284"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_032_meta.json",
+      "bytes": 604,
+      "sha256": "431d0f71dbbcd9eb3676ac1a9f282d107c56afefe8251dca414ad57413d17164"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_25911_space_002_time_032_body.bin",
+      "bytes": 4362542,
+      "sha256": "7aebd8046391675afd72a46dbb63714a33bb3688f89a3653c02d568cc8970295"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_25911_space_002_time_032.json",
+      "bytes": 1113010,
+      "sha256": "1799687e27eee59510b98d463ce7f48aba5388501156b8959170d38679434a1a"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_010_meta.json",
+      "bytes": 592,
+      "sha256": "22cedae92c9d320ca7ed54269a1da12d7ad2a09b9a1c10287e040e4bb69eed71"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_010_body.bin",
+      "bytes": 1565546,
+      "sha256": "c0ce12ccfd0d698a8b148c15484731538e96a714e3ad7e1639c708364a52da86"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26344_space_003_time_010.json",
+      "bytes": 1113010,
+      "sha256": "a9bf5af48e71bdb3a7412063c7c05d2d16b7361c8bb13af9ae430c8cebbaeb0b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_010_meta.json",
+      "bytes": 604,
+      "sha256": "f05bc4793113c1849b2370edb7f0df777332c6b22cc8ed2f90e49088b2b1f09b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_010_body.bin",
+      "bytes": 2970154,
+      "sha256": "8f43ae9b987cfa915988efb8b37fa1dd7ac4f951ab858757577dcb402b178ce2"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26346_space_003_time_010.json",
+      "bytes": 1113010,
+      "sha256": "4f91d1067c0b3949accf30dcdeb26fc859fab9cd6906eb5ec57d5aaf5439b21d"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_020_meta.json",
+      "bytes": 604,
+      "sha256": "a25b8a1d5820ed5178e59d6a8f627a17422e8e608ef0f4cde9037677f87e7053"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_020_body.bin",
+      "bytes": 1544130,
+      "sha256": "5e2d5519c49115b83eb6968dd164b7e533f0c01e63edaafe6bc96b8e6fcc9b70"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26344_space_003_time_020.json",
+      "bytes": 1113010,
+      "sha256": "2c02dae6fc285fdeda6886fc762ed6dc855d3a6644d077a45824296b763e53a7"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_020_meta.json",
+      "bytes": 604,
+      "sha256": "4bbde0e2146587201335084e9873537a9f4a40def4cabb9ce08806dab1f34c9f"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_020_body.bin",
+      "bytes": 2914610,
+      "sha256": "5a323943711a1f110c4a386e43f6e2acb53fd8a69bf581275d2d0226f0091b01"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26346_space_003_time_020.json",
+      "bytes": 1113010,
+      "sha256": "91bac073090b4c9fd30edfd5835af2788f0001f2bd45654726dc9e421c3026e9"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_019_meta.json",
+      "bytes": 605,
+      "sha256": "87998c1e8b350bfe5454878bb0d157a16270ab30e85368419e0b4624bee88d97"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_019_body.bin",
+      "bytes": 1521394,
+      "sha256": "265522f4bcad23fb31d44084bc53586093a4b1607d1d55c0618eca5b818bf699"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26344_space_003_time_019.json",
+      "bytes": 1113010,
+      "sha256": "8400523218fa0d70731e609b2ceb5186826741bc8c1ea655464747698ba22568"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_019_meta.json",
+      "bytes": 604,
+      "sha256": "69fdd9cec7937dcc47ee05d90337f7630c27971da9222dd8204e4539cfc32b44"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_019_body.bin",
+      "bytes": 2855762,
+      "sha256": "1d103e804a16c6cb6a217034642ae18c8c7283c95169d112a188588ab7316ecb"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26346_space_003_time_019.json",
+      "bytes": 1113010,
+      "sha256": "21c269408ab20d612783e6d760788d013a25ae4c8ba31f6998198b2d075840fc"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_032_meta.json",
+      "bytes": 604,
+      "sha256": "15526e97c724e669d196800df915809287678f3213abf6fa2ce3f990423382cc"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_032_body.bin",
+      "bytes": 1519777,
+      "sha256": "63450e7093f39a79de23bc16e45a340b0c180e916a583e01ec42272f796815cf"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26344_space_003_time_032.json",
+      "bytes": 1113010,
+      "sha256": "e9a149038837de3c90f399b15072208924e9d6fc17a83f889be229864181dc72"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_032_meta.json",
+      "bytes": 605,
+      "sha256": "7fb1e39e284cd1395181b8d455a5f2ce866503d84848b887fa7fc3497554abd0"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_032_body.bin",
+      "bytes": 2849787,
+      "sha256": "20b55dcb251a2c05737d88fc8c535ec6c6ca4b1bdb4cd3369f83efea2b1cae32"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26346_space_003_time_032.json",
+      "bytes": 1113010,
+      "sha256": "5ea4fdea676ea36ad6f0862201db7dd70c581af58bf1ab489d57968cfdbd8cea"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_031_meta.json",
+      "bytes": 604,
+      "sha256": "98b86e5daae660682a003ab8e831a4ff11c3df649708edbcdbca61bad66729ab"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26344_space_003_time_031_body.bin",
+      "bytes": 1534211,
+      "sha256": "124b76f0c2973b1013316c7462bb66fcc1df414385b7a6586fdccdbe9a586979"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26344_space_003_time_031.json",
+      "bytes": 1113010,
+      "sha256": "ab0ae91b98ece08ac34a8a46f0ae9dc7905ce2d1abd361a98eae6cf5964897f5"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_031_meta.json",
+      "bytes": 605,
+      "sha256": "4dd1f16a6ad828984f5b462ed4eb9aee2d08b8c250e53430839b5703c64da0af"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_26346_space_003_time_031_body.bin",
+      "bytes": 2887890,
+      "sha256": "583f807054ae21b0ab0e034b3c53a4e93757f875ae58dd4dc2b55356a962a82c"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_26346_space_003_time_031.json",
+      "bytes": 1113010,
+      "sha256": "aa8cc4ac7d8b1ff5c4e1c758cdfa039d0eb476dfbaeb48bce7a7cd44dd372ecd"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_010_meta.json",
+      "bytes": 605,
+      "sha256": "671c7e5e94ce94f7812667b424e43baafb87b464528bf26a651dc3995e416a48"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_010_body.bin",
+      "bytes": 2409833,
+      "sha256": "bfa92ff653a65a576326c06b89f21fbc63356a221771bf2a890402951b5663f5"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27456_space_005_time_010.json",
+      "bytes": 1113012,
+      "sha256": "38d4294fe45053795c70fe8387352d8116d0a440d9978728754ace42af45ec93"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_020_meta.json",
+      "bytes": 593,
+      "sha256": "6b4ca3af5bf2a40df650ec074d9d850c5d68a0fd95472919853f672d142bf78d"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_020_body.bin",
+      "bytes": 2364035,
+      "sha256": "748607705c46c7827fbc68ef31dc074fa49f870bf3c77ff0645d1c3c59eafd9b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27456_space_005_time_020.json",
+      "bytes": 1113012,
+      "sha256": "6c3ad387b61f53b5b0a4e73e94623195c35e8c1b9b1383d7e650c2a695b0ad53"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_019_meta.json",
+      "bytes": 604,
+      "sha256": "0f07d05d7e1563c4240b0f9de93251223c3a332a171b504e2c5df99d937d262a"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_019_body.bin",
+      "bytes": 2337758,
+      "sha256": "8e3ccdae4e2668ac5511ccac6260ced1c63c1a86d6286dede6f5e7b9eb8d1d88"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27456_space_005_time_019.json",
+      "bytes": 1113012,
+      "sha256": "7764116ce2c643c93e2dcf59cd22b006073daf6cd69b18543fcba02c52bab37e"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_031_meta.json",
+      "bytes": 604,
+      "sha256": "3ef2654ac9572afec803c9272cbb1c750e9db90ddd92de9d05f85b5364072274"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_031_body.bin",
+      "bytes": 2352959,
+      "sha256": "3f874025bf0a68fe4fc5ab4d4460146ae9cf08884fde48d156164681e9630afe"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27456_space_005_time_031.json",
+      "bytes": 1113012,
+      "sha256": "68ab77d9130c416355858be3e64cbed53bf63037085aba2921a727793d52982e"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_032_meta.json",
+      "bytes": 605,
+      "sha256": "cae5a2556728eb3bbb2cbd6a11def21f70a8151710116138619aaf27406cd6f9"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27456_space_005_time_032_body.bin",
+      "bytes": 2334134,
+      "sha256": "3161dc640bb367f49045302700e902e2a3b298b27bc898029d613638716cbe6f"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27456_space_005_time_032.json",
+      "bytes": 1113012,
+      "sha256": "e10ad45d4d36b8808e2af7ae3c23ad9c41795eb5d027c6a3f9d7f7eecd45bf7f"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27379_space_005_time_036_meta.json",
+      "bytes": 604,
+      "sha256": "6e36da88fc1e481c3dc7954d661f6812833877479254ef0bac9f2e41310a931c"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27379_space_005_time_036_body.bin",
+      "bytes": 2243380,
+      "sha256": "cdb8b3ad87524953d16ea59fe0c848fa8f6130b139f8350b9781b0b52ee474f6"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27379_space_005_time_036.json",
+      "bytes": 1113008,
+      "sha256": "050203eb267da4015f31cd0ea5e641ca37373f1057616619610ce4e71021072c"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27392_space_005_time_036_meta.json",
+      "bytes": 605,
+      "sha256": "7d0e856f5ecbb2d22e3f53dad558d70c442269192a1d5f8783433f1f92087a19"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_27392_space_005_time_036_body.bin",
+      "bytes": 5206498,
+      "sha256": "e96baabffa56d15df97c77b79aa2166feee35a0de9f1380d91880a574cb4dacd"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_27392_space_005_time_036.json",
+      "bytes": 1113008,
+      "sha256": "8e4f74e82a9d139fc67277debde8421e969a72660382c972f554cd68f62a696b"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_28468_space_006_time_018_meta.json",
+      "bytes": 604,
+      "sha256": "1544cb0ee27b0f7dac9395c1d6d1fccb4a9b9ba0c97a7164f2800cd4fd8b440f"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_28468_space_006_time_018_body.bin",
+      "bytes": 2849474,
+      "sha256": "5a60d747434237155e4e3073ff5021d39d66ac9c07a00d69e2eeee6a2fa7319c"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_28468_space_006_time_018.json",
+      "bytes": 1113009,
+      "sha256": "74fa9760b61e2797e89e8ee83f0149142127320f8839e171ca765232f89039eb"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35306_space_007_time_016_meta.json",
+      "bytes": 604,
+      "sha256": "325b58c7215a9da9a1c651f875452311354a9c20997325b86fcf8158079a50de"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35306_space_007_time_016_body.bin",
+      "bytes": 3856512,
+      "sha256": "c480ea191fe7b29822376a7fad9a8c0cba2b0966235e67d899cb5da1724ba0e1"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_35306_space_007_time_016.json",
+      "bytes": 1113008,
+      "sha256": "86222dc18573c711f9494cd1f5712429afba38e33455c257bee543f166c44266"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35307_space_007_time_016_meta.json",
+      "bytes": 604,
+      "sha256": "7f5c9f7805a077c834761e2cc1902f45f7793bd25946d5ef701e6753c4ada167"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35307_space_007_time_016_body.bin",
+      "bytes": 7619559,
+      "sha256": "597c116b144e68bd35dffde9e550e40b33c5d98768d521170b6352a1bfa578da"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_35307_space_007_time_016.json",
+      "bytes": 1113009,
+      "sha256": "5085b235bd7927ee465e948370b16a871d3c2d6b7885fef3cb06d0e8f0672ab7"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35415_space_007_time_018_meta.json",
+      "bytes": 604,
+      "sha256": "d30300072fd9dcdcc039295e019ee2620b08e01f2720fb4aa88bde3155892684"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35415_space_007_time_018_body.bin",
+      "bytes": 6583783,
+      "sha256": "e9e4d3e2f1e7b7862a06cc7d08892e0d91391cfc51ba2e35fe53dd32ea5dcd3c"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_35415_space_007_time_018.json",
+      "bytes": 1113008,
+      "sha256": "2b88687c1add678fbd7791176d9490c22f79336792dda3c68d4d16657a9e5b5d"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_34336_space_007_time_032_meta.json",
+      "bytes": 603,
+      "sha256": "c5f164a49df7398bd230aa28dd6814079b72e052593f3c30dd7b0dbfa3550659"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_34336_space_007_time_032_body.bin",
+      "bytes": 3045554,
+      "sha256": "d835ee473ddfb0656fdd9a89dde15240381b95c96997b041c321d60b75fbcfbf"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_34336_space_007_time_032.json",
+      "bytes": 1113008,
+      "sha256": "295071ffea8554306dbb224c5add9b39960d0d81d380569f90b2db266ce6d7cb"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_34337_space_007_time_032_meta.json",
+      "bytes": 605,
+      "sha256": "d41d38042bf48183876532d1eb73c31fb33be1b7236e8d527a1ab1b709084b2e"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_34337_space_007_time_032_body.bin",
+      "bytes": 3156177,
+      "sha256": "da89cf652ab31a0ac0dc79827037e42008cffe4f307f1152eaa1ab732c6a0d1e"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_34337_space_007_time_032.json",
+      "bytes": 1113008,
+      "sha256": "3da66b2b021c1acbf12133719838e56b5863d232d9e7fc5ea67b34481caa8c52"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35538_space_007_time_034_meta.json",
+      "bytes": 604,
+      "sha256": "5b20431d172ae5df0a70e937f144e336b9a39a1269eba42da18f76f0dfdc5ad3"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_35538_space_007_time_034_body.bin",
+      "bytes": 4492644,
+      "sha256": "6095d76acbb2caf03126a3a741969428509437a3fc15190678158caadefcb658"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_35538_space_007_time_034.json",
+      "bytes": 1113010,
+      "sha256": "f860cb51f43f71fd8362f5c2743b8cae5eb6f629b0fcbd98cbbd3012b0cdb9de"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_29006_space_007_time_036_meta.json",
+      "bytes": 604,
+      "sha256": "dbec24ed39746813e61c33c6267b6bc35b9ecc7480d62a3819034ff0537a86fc"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_29006_space_007_time_036_body.bin",
+      "bytes": 4830840,
+      "sha256": "b376c93709e5b46d257b277f2ff2526c771beccb154b68a16c56b4801f422bf8"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_29006_space_007_time_036.json",
+      "bytes": 1113009,
+      "sha256": "de797b98f4d56fbede8815d2a3d3eedbe7dda62bb7b6f2a32f802910711de13a"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_29027_space_007_time_035_meta.json",
+      "bytes": 604,
+      "sha256": "bb46b429d316e3b888807be2f0853db65e40f2be2a2006903ef66975e657f763"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_29027_space_007_time_035_body.bin",
+      "bytes": 3253760,
+      "sha256": "14b65ae4463a42af1c480c294fa2eb11f7595876b9d3aa710e406d063c905859"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_29027_space_007_time_035.json",
+      "bytes": 1113008,
+      "sha256": "e2ffa0718016acc587a43366040c9bb40a7ba2c631cdf177ef5c2e377176f73e"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_37124_space_008_time_015_meta.json",
+      "bytes": 604,
+      "sha256": "d405c0e18a4234eb73cc97e0e45421356b97a0050159b697272dd00295a1cef9"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_responses_v1/raw_37124_space_008_time_015_body.bin",
+      "bytes": 1664528,
+      "sha256": "bc357fc0a14c06ee7d36454edbfe3c82ae06a3d8b36ae7f18336d58c7babe089"
+    },
+    {
+      "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/raw_recovery_attempt1/raw_requests_v1/raw_37124_space_008_time_015.json",
+      "bytes": 1113009,
+      "sha256": "89f6da5ec269f5f2a5f223d6306643e0f32917cd273f84f455a9e59233109702"
+    }
+  ],
+  "errors": 0,
+  "elapsed_seconds": 3.2888829559087753,
+  "source_requests": 0,
+  "coordinates_modified": 0,
+  "summary_requests_generated": 0,
+  "radiation_acceptance": 0,
+  "model_calls": 0,
+  "training": 0,
+  "local_numerical_operations": 0
+}
+OWN_COORDINATE_REPORT_END
+OWN_COORDINATE_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T23:36:17+0800
