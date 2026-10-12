@@ -2,38 +2,37 @@
 set -eo pipefail
 test "$(id -un)" = sunyiq
 task_root='/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/network_probe_v1'
-test -d "$(dirname "$task_root")/preflight_v1"
-umask 077
-set -o noclobber
-mkdir "$task_root"
-mkdir "$task_root/logs"
-printf '%s' 'IiIiQW5vbnltb3VzLCBib3VuZGVkIGRpYWdub3N0aWNzOyBjb250YWlucyBubyBkYXRhIHJlcXVlc3Qgb3IgYXV0aGVudGljYXRpb24uIiIiCmltcG9ydCBqc29uCmltcG9ydCBvcwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IHBsYXRmb3JtCmltcG9ydCBzb2NrZXQKaW1wb3J0IHN5cwppbXBvcnQgdGltZQpmcm9tIHVybGxpYi5lcnJvciBpbXBvcnQgSFRUUEVycm9yLCBVUkxFcnJvcgpmcm9tIHVybGxpYi5yZXF1ZXN0IGltcG9ydCBSZXF1ZXN0LCB1cmxvcGVuCgpvdXRwdXQgPSBQYXRoKHN5cy5hcmd2WzFdKQphc3NlcnQgbm90IG91dHB1dC5leGlzdHMoKQpzdGFydGVkID0gdGltZS5tb25vdG9uaWMoKQpyZXBvcnQgPSBkaWN0KGhvc3RuYW1lPXBsYXRmb3JtLm5vZGUoKSwgam9iX2lkPW9zLmVudmlyb24uZ2V0KCdTTFVSTV9KT0JfSUQnKSwKICAgICAgICAgICAgICBhbGxvY2F0ZWRfY3B1cz1vcy5lbnZpcm9uLmdldCgnU0xVUk1fQ1BVU19QRVJfVEFTSycpLCBncHVfcmVxdWVzdGVkPTAsCiAgICAgICAgICAgICAgZGF0YV9yZXF1ZXN0cz0wLCBjcmVkZW50aWFsX3JlYWRzPTAsIG1vZGVsX2NhbGxzPTAsIHRyYWluaW5nPTAsCiAgICAgICAgICAgICAgcHJveHlfdmFyaWFibGVzX3ByZXNlbnQ9e2s6Ym9vbChvcy5lbnZpcm9uLmdldChrKSkgZm9yIGsgaW4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgWydIVFRQX1BST1hZJywnSFRUUFNfUFJPWFknLCdBTExfUFJPWFknLCdodHRwX3Byb3h5JywnaHR0cHNfcHJveHknXX0sCiAgICAgICAgICAgICAgY2hlY2tzPVtdKQpmb3IgaG9zdG5hbWUgaW4gWydlYXJ0aGVuZ2luZS5nb29nbGVhcGlzLmNvbScsJ29hdXRoMi5nb29nbGVhcGlzLmNvbScsJ3B5cGkub3JnJ106CiAgICBpdGVtID0gZGljdChob3N0bmFtZT1ob3N0bmFtZSwgaHR0cF90aW1lb3V0X3NlY29uZHM9MzUpCiAgICB0cnk6CiAgICAgICAgYWRkcmVzc2VzID0gc29ja2V0LmdldGFkZHJpbmZvKGhvc3RuYW1lLDQ0Myx0eXBlPXNvY2tldC5TT0NLX1NUUkVBTSkKICAgICAgICBpdGVtWydkbnNfc3VjY2VzcyddID0gYm9vbChhZGRyZXNzZXMpCiAgICAgICAgaXRlbVsnZG5zX2FkZHJlc3NfY291bnQnXSA9IGxlbihhZGRyZXNzZXMpCiAgICBleGNlcHQgT1NFcnJvciBhcyBlcnJvcjoKICAgICAgICBpdGVtLnVwZGF0ZShkbnNfc3VjY2Vzcz1GYWxzZSxkbnNfZXhjZXB0aW9uX3R5cGU9dHlwZShlcnJvcikuX19uYW1lX18sCiAgICAgICAgICAgICAgICAgICAgZG5zX2Vycm5vPWVycm9yLmVycm5vLGRuc19tZXNzYWdlPXN0cihlcnJvcilbOjI0MF0pCiAgICB0cnk6CiAgICAgICAgd2l0aCB1cmxvcGVuKFJlcXVlc3QoJ2h0dHBzOi8vJyArIGhvc3RuYW1lICsgJy8nLG1ldGhvZD0nSEVBRCcpLHRpbWVvdXQ9MzUpIGFzIHJlc3BvbnNlOgogICAgICAgICAgICBpdGVtLnVwZGF0ZSh0bHNfaHR0cF9yZWFjaGVkPVRydWUsaHR0cF9zdGF0dXM9cmVzcG9uc2Uuc3RhdHVzKQogICAgZXhjZXB0IEhUVFBFcnJvciBhcyBlcnJvcjoKICAgICAgICBpdGVtLnVwZGF0ZSh0bHNfaHR0cF9yZWFjaGVkPVRydWUsaHR0cF9zdGF0dXM9ZXJyb3IuY29kZSxodHRwX2V4Y2VwdGlvbl90eXBlPXR5cGUoZXJyb3IpLl9fbmFtZV9fKQogICAgZXhjZXB0IFVSTEVycm9yIGFzIGVycm9yOgogICAgICAgIHJlYXNvbiA9IGVycm9yLnJlYXNvbgogICAgICAgIGl0ZW0udXBkYXRlKHRsc19odHRwX3JlYWNoZWQ9RmFsc2UsaHR0cF9leGNlcHRpb25fdHlwZT10eXBlKGVycm9yKS5fX25hbWVfXywKICAgICAgICAgICAgICAgICAgICByZWFzb25fdHlwZT10eXBlKHJlYXNvbikuX19uYW1lX18scmVhc29uX2Vycm5vPWdldGF0dHIocmVhc29uLCdlcnJubycsTm9uZSksCiAgICAgICAgICAgICAgICAgICAgcmVhc29uX21lc3NhZ2U9c3RyKHJlYXNvbilbOjI0MF0pCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGVycm9yOgogICAgICAgIGl0ZW0udXBkYXRlKHRsc19odHRwX3JlYWNoZWQ9RmFsc2UsaHR0cF9leGNlcHRpb25fdHlwZT10eXBlKGVycm9yKS5fX25hbWVfXywKICAgICAgICAgICAgICAgICAgICByZWFzb25fZXJybm89Z2V0YXR0cihlcnJvciwnZXJybm8nLE5vbmUpLHJlYXNvbl9tZXNzYWdlPXN0cihlcnJvcilbOjI0MF0pCiAgICByZXBvcnRbJ2NoZWNrcyddLmFwcGVuZChpdGVtKQpyZXBvcnRbJ2VsYXBzZWRfc2Vjb25kcyddID0gdGltZS5tb25vdG9uaWMoKS1zdGFydGVkCnJlcG9ydFsnc3RhdHVzJ10gPSAnQU5PTllNT1VTX05FVFdPUktfUkVBQ0hBQkxFJyBpZiBhbGwoCiAgICB4LmdldCgndGxzX2h0dHBfcmVhY2hlZCcpIGZvciB4IGluIHJlcG9ydFsnY2hlY2tzJ10pIGVsc2UgJ0FOT05ZTU9VU19ORVRXT1JLX0hFTEQnCndpdGggb3V0cHV0Lm9wZW4oJ3gnLGVuY29kaW5nPSd1dGYtOCcpIGFzIHN0cmVhbToKICAgIGpzb24uZHVtcChyZXBvcnQsc3RyZWFtLGVuc3VyZV9hc2NpaT1GYWxzZSxpbmRlbnQ9MixhbGxvd19uYW49RmFsc2UpCnByaW50KCdPV05fTkVUV09SS19SRVBPUlQ9JyArIGpzb24uZHVtcHMocmVwb3J0LGVuc3VyZV9hc2NpaT1GYWxzZSxhbGxvd19uYW49RmFsc2UpLGZsdXNoPVRydWUpCnByaW50KCdPV05fTkVUV09SS19QUk9CRV9QUk9DRVNTX0RPTkUnLGZsdXNoPVRydWUpCg==' | base64 --decode > "$task_root/network_probe.py"
-printf '%s  %s\n' '0d7f93e5c129afd989a9ab82142d431fe9f026340f881c3a09c180fb99cba12d' "$task_root/network_probe.py" | sha256sum -c
-printf '%s' 'IyEvYmluL2Jhc2gKI1NCQVRDSCAtLWpvYi1uYW1lPWNoaW5hMTZfcmFkX25ldHByb2JlCiNTQkFUQ0ggLS1wYXJ0aXRpb249aGdwdTJwCiNTQkFUQ0ggLS1ub2Rlcz0xCiNTQkFUQ0ggLS1udGFza3M9MQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz0xCiNTQkFUQ0ggLS1leGNsdWRlPW5ndTAwMgojU0JBVENIIC0tdGltZT0wMDowMzowMAojU0JBVENIIC0tbm8tcmVxdWV1ZQojU0JBVENIIC0tY2hkaXI9L2RhdGExL2hvbWUvc3VueWlxL2NoaW5hX3JhZGlhdGlvbl8xNl9ocGNfMjAyNjEwMTJfMDAxL25ldHdvcmtfcHJvYmVfdjEKI1NCQVRDSCAtLW91dHB1dD0vZGF0YTEvaG9tZS9zdW55aXEvY2hpbmFfcmFkaWF0aW9uXzE2X2hwY18yMDI2MTAxMl8wMDEvbmV0d29ya19wcm9iZV92MS9sb2dzL3Byb2JlLSVqLm91dAojU0JBVENIIC0tZXJyb3I9L2RhdGExL2hvbWUvc3VueWlxL2NoaW5hX3JhZGlhdGlvbl8xNl9ocGNfMjAyNjEwMTJfMDAxL25ldHdvcmtfcHJvYmVfdjEvbG9ncy9wcm9iZS0lai5lcnIKc2V0IC1lbyBwaXBlZmFpbAp0ZXN0IC1uICIkU0xVUk1fSk9CX0lEIgp0ZXN0ICIke1NMVVJNX1JFU1RBUlRfQ09VTlQ6LTB9IiA9IDAKZXhwb3J0IENVREFfVklTSUJMRV9ERVZJQ0VTPScnIFBZVEhPTkRPTlRXUklURUJZVEVDT0RFPTEKZXhwb3J0IE9NUF9OVU1fVEhSRUFEUz0xIE9QRU5CTEFTX05VTV9USFJFQURTPTEgTUtMX05VTV9USFJFQURTPTEKdWxpbWl0IC12IDEwNDg1NzYKdGltZW91dCAtLXNpZ25hbD1URVJNIC0ta2lsbC1hZnRlcj01cyAxNDBzIC9kYXRhMS9ob21lL3N1bnlpcS9taW5pY29uZGEzL2VudnMvbmhfZmluYWwvYmluL3B5dGhvbiAtQiAtdSBuZXR3b3JrX3Byb2JlLnB5IENPTVBVVEVfTkVUV09SS19SRVNVTFQuanNvbgo=' | base64 --decode > "$task_root/network_probe.sbatch"
-printf '%s  %s\n' 'a7a99ea78aee6ed2502388b8175ac37834015b53518947b6d7069a3f990c7cd7' "$task_root/network_probe.sbatch" | sha256sum -c
-set +e
-timeout --signal=TERM --kill-after=5s 140s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u "$task_root/network_probe.py" "$task_root/LOGIN_NETWORK_RESULT.json"
-task_login_probe_exit=$?
-set -e
-printf 'OWN_LOGIN_NETWORK_PROCESS_EXIT=%s\n' "$task_login_probe_exit"
-printf '%s\n' "SUBMISSION_STARTED_NO_RETRY" > "$task_root/SUBMISSION_STARTED.txt"
-set +e
-task_submission=$(sbatch "$task_root/network_probe.sbatch" 2>&1)
-task_exit=$?
-set -e
-printf '%s\n' "$task_submission" > "$task_root/SUBMISSION_OUTPUT.txt"
-printf '%s\nOWN_NETWORK_SUBMIT_EXIT=%s\n' "$task_submission" "$task_exit"
-test "$task_exit" -eq 0
-if [[ "$task_submission" =~ ^Submitted\ batch\ job\ ([0-9]+)$ ]]; then
-    task_job="${BASH_REMATCH[1]}"
-else
-    printf 'OWN_NETWORK_SUBMISSION_UNCERTAIN_NO_RETRY\n'
-    exit 1
-fi
-printf '%s\n' "$task_job" > "$task_root/OWN_NETWORK_JOB_ID.txt"
-printf 'OWN_NETWORK_JOB_ID=%s\n' "$task_job"
+task_expected_job='241340'
+test -f "$task_root/OWN_NETWORK_JOB_ID.txt"
+test ! -L "$task_root/OWN_NETWORK_JOB_ID.txt"
+task_job=$(cat "$task_root/OWN_NETWORK_JOB_ID.txt")
+test "$task_job" = "$task_expected_job"
+printf 'OWN_NETWORK_QUERY_JOB_ID=%s\n' "$task_job"
 set +e
 timeout 12s squeue -j "$task_job" -h -o '%i|%j|%T|%R'
-task_query_exit=$?
+task_queue_exit=$?
+timeout 12s sacct -X -j "$task_job" -n -P --format=JobID,JobName,State,ExitCode,Elapsed,AllocCPUS,NodeList,AllocTRES
+task_accounting_exit=$?
 set -e
-printf 'OWN_NETWORK_SQUEUE_EXIT=%s\nOWN_NETWORK_DEPLOY_DONE\n' "$task_query_exit"
+printf 'OWN_NETWORK_SQUEUE_EXIT=%s\nOWN_NETWORK_SACCT_EXIT=%s\n' "$task_queue_exit" "$task_accounting_exit"
+if test -f "$task_root/COMPUTE_NETWORK_RESULT.json"; then
+    printf 'OWN_NETWORK_SAVED_JSON_BEGIN\n'
+    cat "$task_root/COMPUTE_NETWORK_RESULT.json"
+    printf '\nOWN_NETWORK_SAVED_JSON_END\n'
+else
+    printf 'OWN_NETWORK_RESULT_MISSING\n'
+fi
+if test -f "$task_root/LOGIN_NETWORK_RESULT.json"; then
+    printf 'OWN_LOGIN_NETWORK_SAVED_JSON_BEGIN\n'
+    cat "$task_root/LOGIN_NETWORK_RESULT.json"
+    printf '\nOWN_LOGIN_NETWORK_SAVED_JSON_END\n'
+fi
+for task_suffix in out err; do
+    task_log="$task_root/logs/probe-$task_job.$task_suffix"
+    if test -f "$task_log"; then
+        printf 'OWN_NETWORK_LOG_%s_BEGIN\n' "$task_suffix"
+        tail -c 16384 "$task_log"
+        printf '\nOWN_NETWORK_LOG_%s_END\n' "$task_suffix"
+    fi
+done
+printf 'OWN_NETWORK_READ_DONE\n'
