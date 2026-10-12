@@ -164,3 +164,5 @@ git rm inbox/seq
 | kalmannet-original-noise-state-diagnosis-20261011 | 原已学噪声六个代表流域内部状态诊断 | 2026-10-11 | 活动 |
 
 | `kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
+
+| `000-kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
