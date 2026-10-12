@@ -1,5 +1,5 @@
 #!/bin/bash
-sequence=1
+sequence=2
 umask 077
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'READONLY_DIAG'
 import os,json,subprocess,hashlib,datetime,base64
@@ -47,6 +47,23 @@ try:
  rows=[x for x in q.stdout.decode(errors='replace').splitlines() if ('cmd_221.sh' in x or 'sequence_221' in x or str(R) in x)]
  out['matching_processes']=[x[:2048] for x in rows][:30]
 except Exception as e:out['ps_error']=type(e).__name__
+
+OLD=Path('/data1/home/sunyiq/kalmannet_cpu240124_node_release_probe_20261012_001')
+for folder in ('','logs','output','native','metadata'):
+ take(OLD/folder)
+ if folder in ('logs','output','native'):
+  q=OLD/folder
+  if q.is_dir() and not q.is_symlink():
+   for f in sorted(q.iterdir())[:25]:
+    if f.is_file() and not f.is_symlink() and (f.suffix in ('.json','.log','.out','.err','.stdout','.stderr','.txt') or folder=='logs'):take(f,65536,True)
+for name in ('submission_receipt.json','root_admission.json','metadata/source_manifest.json','node_binding.json','node_result.json','probe_result.json'):
+ take(OLD/name)
+query(['scontrol','show','job','241249'])
+query(['scontrol','show','job','240268'])
+query(['sprio','--jobs=241249'])
+query(['scontrol','show','nodes','ngu201,ngu202,ngu203'])
+query(['scontrol','show','partition','hgpu8'])
+
 raw=json.dumps(out,ensure_ascii=False,sort_keys=True).encode();assert len(raw)<2*1024*1024
 print(raw.decode())
 READONLY_DIAG
