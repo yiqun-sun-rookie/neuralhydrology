@@ -1,0 +1,81 @@
+### channel=knet-camels-hpc-20261012-001 seq=4
+### host=login4
+### started=2026-10-12T20:24:22+0800
+### ---------- output ----------
+TIME_UTC=2026-10-12T12:24:22Z
+241332|knet_camels_import_261012|COMPLETED|0:0|00:00:18||2|hgpu4|ngu104
+241332.batch|batch|COMPLETED|0:0|00:00:18|1608K|2||ngu104
+241332.extern|extern|COMPLETED|0:0|00:00:18|1372K|2||ngu104
+PROBE_RESULT_BEGIN
+{
+  "status": "PASS",
+  "job_id": "241332",
+  "node": "ngu104",
+  "completed_utc": "2026-10-12T12:13:54.889507+00:00",
+  "exit_code": 0,
+  "scientific_forwards": 0,
+  "optimizer_updates": 0,
+  "payload_files_verified": 58,
+  "scientific_source_files_byte_identical": 37,
+  "versions": {
+    "torch": "2.4.0",
+    "numpy": "2.3.3",
+    "pandas": "2.3.2",
+    "scipy": "1.16.2",
+    "psutil": "7.0.0"
+  },
+  "worker_stdout": "{\"status\": \"IMPORTS_AND_REGISTRY_PASS\", \"scientific_forwards\": 0, \"optimizer_updates\": 0, \"dimensions\": [[\"04105700\", 7], [\"08070200\", 11], [\"09035800\", 18]], \"torch_threads\": 1, \"torch_interop_threads\": 1, \"affinity\": [0], \"priority_nice\": 10, \"python\": \"3.11.13\"}\n",
+  "worker_stderr": ""
+}
+PROBE_RESULT_END
+LOG=/data1/home/sunyiq/knet_camels_hpc_20261012_001/logs/compatibility-241332.out
+{"status": "IMPORTS_AND_REGISTRY_PASS", "scientific_forwards": 0, "optimizer_updates": 0, "dimensions": [["04105700", 7], ["08070200", 11], ["09035800", 18]], "torch_threads": 1, "torch_interop_threads": 1, "affinity": [0], "priority_nice": 10, "python": "3.11.13"}
+{"status": "PASS", "job_id": "241332", "node": "ngu104", "completed_utc": "2026-10-12T12:13:54.889507+00:00", "exit_code": 0, "scientific_forwards": 0, "optimizer_updates": 0, "payload_files_verified": 58, "scientific_source_files_byte_identical": 37, "versions": {"torch": "2.4.0", "numpy": "2.3.3", "pandas": "2.3.2", "scipy": "1.16.2", "psutil": "7.0.0"}, "worker_stdout": "{\"status\": \"IMPORTS_AND_REGISTRY_PASS\", \"scientific_forwards\": 0, \"optimizer_updates\": 0, \"dimensions\": [[\"04105700\", 7], [\"08070200\", 11], [\"09035800\", 18]], \"torch_threads\": 1, \"torch_interop_threads\": 1, \"affinity\": [0], \"priority_nice\": 10, \"python\": \"3.11.13\"}\n", "worker_stderr": ""}
+JobId=241332 JobName=knet_camels_import_261012
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=INVALID TimeLimit=00:05:00 TimeMin=N/A
+   SubmitTime=2026-10-12T20:15:20 EligibleTime=2026-10-12T20:15:20
+   AccrueTime=2026-10-12T20:15:20
+   StartTime=2026-10-12T20:15:20 EndTime=2026-10-12T20:20:20 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-12T20:15:20
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/knet_camels_hpc_20261012_001/compatibility.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/knet_camels_hpc_20261012_001/logs/compatibility-241332.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/knet_camels_hpc_20261012_001/logs/compatibility-241332.out
+   Power=
+
+LOG=/data1/home/sunyiq/knet_camels_hpc_20261012_001/logs/compatibility-241332.err
+EXISTING_USER_JOBS
+241234|zj_gru_gradient_recovery_261012_003|PENDING|hgpu2p|4|(Priority)
+241335_[0-2%1]|hydrol85935-v009-train|PENDING|hgpu2p|4|(Priority)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|4|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|4|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|2|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|4|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|4|(DependencyNeverSatisfied)
+241336_[0-129%1]|hydrol85935-v009-attacks|PENDING|hgpu2p|4|(Dependency)
+241337|hydrol85935-v009-validate|PENDING|hgpu2p|4|(Dependency)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|4|(JobHeldUser)
+240076_[0-2%1]|hydrol85935-train|PENDING|hgpu2p|4|(JobHeldUser)
+240077_[0-131%1]|hydrol85935-attacks|PENDING|hgpu2p|4|(JobHeldUser)
+240078|hydrol85935-report|PENDING|hgpu2p|4|(JobHeldUser)
+237928|zj_lstm_small_recovery_261008_002|RUNNING|hgpu2p|4|ngu007
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|hgpu2p|4|ngu011
+236707|zj_legacy_lstm__historical_capacity_261006_pathfix|RUNNING|hgpu2p|4|ngu001
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:24:22+0800
