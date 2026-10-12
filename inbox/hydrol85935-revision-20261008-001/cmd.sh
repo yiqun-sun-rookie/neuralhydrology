@@ -98,4 +98,15 @@ for name, pattern in [('attack_complete_markers', 'records/attacks/*/*/complete.
                                'latest': [metadata(p) for p in sorted(paths, key=lambda p: p.stat().st_mtime_ns)[-3:]],
                                'complete_coverage_audit': False})
 tail(execution / 'records/ledger.jsonl', 4000)
+
+for label, command in [
+    ('QUEUE_START_ESTIMATE', ['squeue', '--start', '-j', '240076', '-o',
+                             '%.24i %.10T %.19S %.30R']),
+    ('JOB_PRIORITY', ['sprio', '-j', '240076', '-l']),
+    ('USER_FAIR_SHARE', ['sshare', '-U', '-P']),
+    ('PARTITION_LOAD', ['sinfo', '-p', 'hgpu2p', '-N', '-O',
+                        'nodelist,statelong,gres,gresused']),
+]:
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    output(label, {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
 PY
