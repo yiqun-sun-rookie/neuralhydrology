@@ -14,7 +14,7 @@ from pathlib import Path
 root = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
 jobs = dict(train=240076, attacks=240077, report=240078)
 assert json.loads((root / 'control/full_v004/jobs.json').read_text()) == jobs
-dest = root / 'control/local_takeover_20261012_001'
+dest = root / 'control/local_takeover_20261012_002'
 dest.mkdir(exist_ok=False)
 
 def query(args):
@@ -43,7 +43,7 @@ def verify(stage, held=False):
             assert fields['Command'] == str(root / 'control/full_v004' / (label + '.sbatch'))
             assert fields['WorkDir'] == str(root / 'control/continuation_v004')
             assert fields['JobState'] == 'PENDING'
-            assert fields['StartTime'] == 'Unknown'
+            assert fields['NodeList'] == '(null)' and fields['RunTime'] == '00:00:00'
             assert fields['JobId'].split('_')[0] == str(job)
             if held:
                 assert fields['Priority'] == '0' and fields['Reason'] == 'JobHeldUser'
