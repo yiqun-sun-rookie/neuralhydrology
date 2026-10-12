@@ -1,110 +1,114 @@
 #!/usr/bin/env bash
 set -euo pipefail
 python3 - <<'PY'
-import contextlib,datetime,io,json,os,pathlib,subprocess
-ORIGINAL=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
-ROOTS={'legacy_lstm__small':pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261008_recovery_002'),'explicit_gru__historical_capacity':pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001'),'explicit_gru__small':ORIGINAL,'legacy_lstm__historical_capacity':ORIGINAL}
-SOURCE='import datetime\nimport hashlib\nimport json\nimport pathlib\nimport re\nimport subprocess\n\nROOT = pathlib.Path.cwd()\nUTC = datetime.timezone.utc\nBEIJING = datetime.timezone(datetime.timedelta(hours=8))\nERRORS = []\n\n\ndef relative(path):\n    return path.relative_to(ROOT).as_posix()\n\n\ndef error(path, exc):\n    record = {\'path\': relative(path), \'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n    ERRORS.append(record)\n    return record\n\n\ndef metadata(path):\n    try:\n        stat = path.stat()\n        moment = datetime.datetime.fromtimestamp(stat.st_mtime, UTC)\n        return {\'exists\': True, \'bytes\': stat.st_size, \'mtime_ns\': stat.st_mtime_ns,\n                \'mtime_utc\': moment.isoformat(), \'mtime_beijing\': moment.astimezone(BEIJING).isoformat()}\n    except FileNotFoundError:\n        return {\'exists\': False}\n    except Exception as exc:\n        return {\'exists\': None, \'error\': error(path, exc)}\n\n\ndef read_json(path):\n    info = metadata(path)\n    record = {\'path\': relative(path), \'stat\': info}\n    if not info.get(\'exists\'):\n        return record, None\n    try:\n        raw = path.read_bytes()\n        record[\'sha256\'] = hashlib.sha256(raw).hexdigest()\n        value = json.loads(raw)\n        record[\'json_valid\'] = True\n        return record, value\n    except Exception as exc:\n        record[\'json_valid\'] = False\n        record[\'error\'] = error(path, exc)\n        return record, None\n\n\ndef json_record(path):\n    record, value = read_json(path)\n    if value is not None:\n        record[\'value\'] = value\n    return record\n\n\ndef run_command(command):\n    try:\n        result = subprocess.run(command, capture_output=True, text=True, timeout=30)\n        return {\'command\': command, \'returncode\': result.returncode,\n                \'stdout\': result.stdout[:60000], \'stderr\': result.stderr[:10000],\n                \'stdout_truncated\': len(result.stdout) > 60000}\n    except Exception as exc:\n        return {\'command\': command, \'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n\n\nnow = datetime.datetime.now(UTC)\nreport = {\'status\': \'read_only_training_snapshot\', \'root\': str(ROOT),\n          \'checked_at_utc\': now.isoformat(), \'checked_at_beijing\': now.astimezone(BEIJING).isoformat(),\n          \'evaluation_values_read\': False, \'data_inputs_read\': False,\n          \'checkpoints_loaded\': False, \'checkpoint_stat_only\': True}\n\njob_record, job_mapping = read_json(ROOT / \'records/scheduler_jobs.json\')\nreport[\'scheduler_jobs_file\'] = job_record\nreport[\'scheduler_jobs\'] = job_mapping\njob_ids = []\nif isinstance(job_mapping, dict):\n    for key, value in job_mapping.items():\n        if re.fullmatch(r\'[0-9]+\', str(value)):\n            job_ids.append(str(value))\n        else:\n            ERRORS.append({\'path\': \'records/scheduler_jobs.json\', \'error\': \'invalid job id\', \'key\': str(key)})\njob_ids = sorted(set(job_ids), key=int)\nreport[\'own_job_ids\'] = job_ids\nreport[\'scheduler_queries\'] = []\nif job_ids:\n    own_ids = \',\'.join(job_ids)\n    report[\'scheduler_queries\'] = [\n        run_command([\'squeue\', \'-h\', \'-j\', own_ids, \'-o\', \'%i|%j|%T|%R|%M|%N|%b\']),\n        run_command([\'sacct\', \'-n\', \'-X\', \'-j\', own_ids,\n                     \'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason\', \'-P\'])]\n\nreport[\'identities\'] = {}\nfor name in [\'records/authorization.json\', \'records/data_preparation_complete.json\',\n             \'configs/protocol-v3.json\', \'configs/registry-v3.json\']:\n    record, value = read_json(ROOT / name)\n    if isinstance(value, dict):\n        record[\'binding_fields\'] = {key: value[key] for key in\n            (\'status\', \'protocol_sha256\', \'code_hash\', \'scientific_factors_sha256\',\n             \'execution_policy\', \'evaluation_values_read\', \'evaluation_year_reads\',\n             \'source_files\', \'training_authority\', \'version\') if key in value}\n        if name.endswith(\'registry-v3.json\'):\n            record[\'logical_runs\'] = len(value.get(\'runs\', []))\n            record[\'gates\'] = len(value.get(\'gates\', []))\n    report[\'identities\'][name] = record\ntry:\n    source_files = sorted([*ROOT.joinpath(\'src\').glob(\'*.py\'),\n                           *ROOT.joinpath(\'scripts\').glob(\'*.py\'),\n                           *ROOT.joinpath(\'vendor/pytides\').glob(\'*.py\')])\n    hashes = {relative(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in source_files}\n    canonical = json.dumps(hashes, sort_keys=True, separators=(\',\', \':\'), allow_nan=False).encode()\n    report[\'actual_code_identity\'] = {\'code_hash\': hashlib.sha256(canonical).hexdigest(),\n                                      \'source_file_count\': len(hashes)}\n    authorization_record, authorization = read_json(ROOT / \'records/authorization.json\')\n    authorized_hash = authorization.get(\'code_hash\') if isinstance(authorization, dict) else None\n    report[\'actual_code_identity\'][\'authorized_code_hash\'] = authorized_hash\n    report[\'actual_code_identity\'][\'matches_authorized_code\'] = (\n        report[\'actual_code_identity\'][\'code_hash\'] == authorized_hash) if authorized_hash else None\nexcept Exception as exc:\n    report[\'actual_code_identity\'] = {\'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n\nreport[\'cases\'] = {}\ncase_names = [key for key in (job_mapping or {}) if key != \'preparation\'] if isinstance(job_mapping, dict) else []\ncase_names = sorted(set(case_names) | {path.parent.name for path in ROOT.joinpath(\'records\').glob(\'*/progress.json\')})\nfor case in case_names:\n    if not re.fullmatch(r\'[A-Za-z0-9_]+\', case):\n        ERRORS.append({\'case\': case, \'error\': \'unsafe case name ignored\'})\n        continue\n    folder = ROOT / \'records\' / case\n    detail = {\'progress\': json_record(folder / \'progress.json\'),\n              \'training_complete\': json_record(folder / \'training_complete.json\'),\n              \'selected_rates\': json_record(folder / \'selected_rates_2021.json\'),\n              \'allocations\': [json_record(path) for path in sorted(folder.glob(\'allocation_*.json\'))],\n              \'outcomes\': []}\n    for path in sorted(folder.glob(\'*_outcome.json\')):\n        record, value = read_json(path)\n        if isinstance(value, dict):\n            members = value.get(\'members\', {})\n            seal = value.get(\'seal\', {})\n            if not isinstance(members, dict):\n                record[\'error\'] = error(path, ValueError(\'outcome members are not an object\'))\n                detail[\'outcomes\'].append(record)\n                continue\n            record.update(status=value.get(\'status\'), member_count=len(members), seal=seal)\n            record[\'members\'] = {}\n            for member, result in members.items():\n                if not isinstance(result, dict):\n                    record[\'members\'][member] = {\'error\': \'member result is not an object\'}\n                    continue\n                values = result.get(\'validation_mae\', [])\n                record[\'members\'][member] = {key: result.get(key) for key in\n                    (\'status\', \'epochs\', \'budget_final\', \'best_epoch\', \'method\',\n                     \'learning_rate\', \'checkpoint_sha256\', \'checkpoint_path\')}\n                record[\'members\'][member][\'validation_history_length\'] = len(values) if isinstance(values, list) else None\n        detail[\'outcomes\'].append(record)\n    report[\'cases\'][case] = detail\n\nreport[\'runs\'] = {}\nfor folder in sorted(ROOT.joinpath(\'runs\').glob(\'*\')):\n    if not folder.is_dir():\n        continue\n    detail = {\'continuation_checkpoint_stat\': metadata(folder / \'continuation.pt\'),\n              \'temporary_continuation_stat\': metadata(folder / \'continuation.pt.tmp\'),\n              \'best_checkpoint_stat\': metadata(folder / \'best.pt\'),\n              \'epoch_checkpoint_stats\': {path.name: metadata(path) for path in sorted(folder.glob(\'epoch_*.pt\'))},\n              \'first_optimizer_step\': json_record(folder / \'first_optimizer_step.json\'),\n              \'failure\': json_record(folder / \'failure.json\')}\n    config_record, config = read_json(folder / \'config.json\')\n    if isinstance(config, dict):\n        effective = config.get(\'effective_config\', {})\n        config_record[\'binding_fields\'] = {key: effective.get(key) for key in\n            (\'code_hash\', \'training_data_hash\', \'normalization_hash\', \'parent_hash\',\n             \'parent_run_id\', \'device_identity\', \'scheduler_continuation\', \'learning_rate\')}\n        config_record[\'registration\'] = config.get(\'registration\')\n        config_record[\'protocol_sha256\'] = config.get(\'protocol_sha256\')\n    detail[\'config\'] = config_record\n    path = folder / \'metrics.json\'\n    metrics = {\'path\': relative(path), \'stat\': metadata(path)}\n    if metrics[\'stat\'].get(\'exists\'):\n        try:\n            # Histories precede bulky per-batch training metrics. Read just this prefix.\n            with path.open(\'rb\') as stream:\n                prefix = stream.read(131072).decode(\'utf-8\')\n            match = re.search(r\'"validation_mae_cm"\\s*:\\s*\', prefix)\n            if match is None:\n                raise ValueError(\'validation history missing from metrics prefix\')\n            values, end = json.JSONDecoder().raw_decode(prefix[match.end():])\n            if not isinstance(values, list):\n                raise ValueError(\'validation history is not a list\')\n            metrics.update(completed_epochs=len(values), validation_history_length=len(values),\n                           recent_validation_mae_cm=values[-5:],\n                           validation_history_sha256=hashlib.sha256(json.dumps(values, separators=(\',\', \':\')).encode()).hexdigest(),\n                           validation_prefix_parsed=True, full_json_validity_checked=False)\n        except Exception as exc:\n            metrics[\'error\'] = error(path, exc)\n    detail[\'metrics\'] = metrics\n    report[\'runs\'][folder.name] = detail\n\nreport[\'logs\'] = []\nfor path in sorted(ROOT.joinpath(\'logs\').glob(\'*.out\')):\n    item = {\'path\': relative(path), \'stat\': metadata(path)}\n    try:\n        with path.open(\'rb\') as stream:\n            stream.seek(max(0, path.stat().st_size - 20000))\n            tail = stream.read().decode(\'utf-8\', errors=\'replace\')\n        item[\'tail\'] = tail\n        item[\'error_lines_in_tail\'] = [line[:1800] for line in tail.splitlines() if\n            re.search(r\'Traceback|Error|Exception|CUDA|out of memory|training_stopped|slurmstepd|Killed\', line, re.I)][-15:]\n    except Exception as exc:\n        item[\'error\'] = error(path, exc)\n    report[\'logs\'].append(item)\n\nreport[\'summary\'] = {\'case_count\': len(report[\'cases\']), \'run_directories\': len(report[\'runs\']),\n    \'runs_with_completed_epoch_history\': sum(bool(v[\'metrics\'].get(\'completed_epochs\')) for v in report[\'runs\'].values()),\n    \'completed_member_epochs\': sum(v[\'metrics\'].get(\'completed_epochs\', 0) for v in report[\'runs\'].values()),\n    \'runs_with_failure_file\': sum(v[\'failure\'][\'stat\'].get(\'exists\') is True for v in report[\'runs\'].values()),\n    \'complete_case_records\': sum(v[\'training_complete\'][\'stat\'].get(\'exists\') is True for v in report[\'cases\'].values())}\nreport[\'read_errors\'] = ERRORS\nreport[\'finished_at_utc\'] = datetime.datetime.now(UTC).isoformat()\nprint(json.dumps(report, ensure_ascii=True, sort_keys=True))'
-snapshots={}
-for folder in sorted(set(ROOTS.values()),key=str):
- if not (folder/'records/scheduler_jobs.json').exists():raise ValueError('registered continuation job mapping unavailable: '+str(folder))
- os.chdir(folder);stream=io.StringIO()
- with contextlib.redirect_stdout(stream):exec(compile(SOURCE,'registered_read_only_training_snapshot','exec'),{})
- snapshots[str(folder)]=json.loads(stream.getvalue())
-original=snapshots[str(ORIGINAL)];result=dict(original);result['cases']={};result['runs']={};result['logs']=[];result['scheduler_jobs']={'preparation':original['scheduler_jobs']['preparation']};result['case_roots']={k:str(v) for k,v in ROOTS.items()};result['read_errors']=[]
-for case,folder in ROOTS.items():
- snap=snapshots[str(folder)];result['cases'][case]=snap['cases'][case];result['runs'].update({k:v for k,v in snap['runs'].items() if k.startswith(case+'__')});job=str(snap['scheduler_jobs'][case]);result['scheduler_jobs'][case]=job
- result['logs'] += [v for v in snap['logs'] if v['path'].endswith('_'+job+'.out')]
-for snap in snapshots.values():result['read_errors']+=snap['read_errors']
-result['root_snapshots_identity']={r:{'actual_code_identity':v['actual_code_identity'],'identities':v['identities'],'checked_at_beijing':v['checked_at_beijing']} for r,v in snapshots.items()}
-result['historical_source_cases']={case:{'root':str(ORIGINAL),'source_job':original['scheduler_jobs'][case],'progress':original['cases'][case]['progress'],'runs':{k:{'failure':v['failure'],'metrics':v['metrics'],'continuation_checkpoint_stat':v['continuation_checkpoint_stat']} for k,v in original['runs'].items() if k.startswith(case+'__')}} for case in ('legacy_lstm__small','explicit_gru__historical_capacity')}
-result['recovery_records']={}
-for case,folder in ROOTS.items():
- if folder==ORIGINAL:continue
- rows={}
- for n in ('recovery_preparation_complete.json','source_stop_confirmed.json','recovery_submission_response.json','gpu_compatibility_admission.json'):
-  p=folder/'records'/n
-  if p.exists():rows[n]=json.loads(p.read_text())
- result['recovery_records'][case]=rows
-ids=','.join(sorted(set(result['scheduler_jobs'].values()),key=int));result['own_job_ids']=ids.split(',');result['scheduler_queries']=[]
-for command in (['squeue','-h','-j',ids,'-o','%i|%j|%T|%R|%M|%N|%b'],['sacct','-n','-X','-j',ids,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P']):
- r=subprocess.run(command,capture_output=True,text=True,timeout=30);result['scheduler_queries'].append({'command':command,'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr})
-result['summary']={'case_count':len(result['cases']),'run_directories':len(result['runs']),'runs_with_completed_epoch_history':sum(bool(v['metrics'].get('completed_epochs')) for v in result['runs'].values()),'completed_member_epochs':sum(v['metrics'].get('completed_epochs',0) for v in result['runs'].values()),'runs_with_failure_file':sum(v['failure']['stat'].get('exists') is True for v in result['runs'].values()),'complete_case_records':sum(v['training_complete']['stat'].get('exists') is True for v in result['cases'].values())}
-now=datetime.datetime.now(datetime.timezone.utc);result['checked_at_utc']=now.isoformat();result['checked_at_beijing']=now.astimezone(datetime.timezone(datetime.timedelta(hours=8))).isoformat();result['scope']='current_registered_four_cases_across_original_and_two_authenticated_recovery_roots'
-print(json.dumps(result,ensure_ascii=True,sort_keys=True))
-PY
-
-set -euo pipefail
-python3 - <<'PY'
-import datetime,hashlib,json,pathlib,subprocess
-ROOT=pathlib.Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
-report={'status':'read_only_isolated_gradient_diagnostic_status','root':str(ROOT),'checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'training_inputs_read':False,'checkpoints_loaded':False,'evaluation_values_read':False,'formal_training_recovery_confirmed':False}
-def record(p,whole=True):
-    if not p.exists():return {'path':str(p),'exists':False}
-    st=p.stat();d={'path':str(p),'exists':True,'bytes':st.st_size,'mtime_ns':st.st_mtime_ns}
-    if whole:
-        raw=p.read_bytes();d['sha256']=hashlib.sha256(raw).hexdigest();d['value']=json.loads(raw)
-    return d
-def query(args):
-    p=subprocess.run(args,capture_output=True,text=True,timeout=30)
-    return {'command':args,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
-for name in ['diagnostic_spec.json','release_manifest.json','records/diagnostic_submission_attempt.json','records/diagnostic_submission_response.json','records/scheduler_jobs.json','evidence/replay_identity.json','evidence/failed_batch_start_identity.json','evidence/diagnostic_result.json']:
-    report[name]=record(ROOT/name)
-mapping=report['records/scheduler_jobs.json'].get('value',{})
-spec=report['diagnostic_spec.json'].get('value',{})
-report['source_and_duplicate_guard_queries']=[]
-if spec:
-    report['source_and_duplicate_guard_queries']=[query(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%R|%N']),query(['sacct','-n','-X','-j',str(spec['source_job']),'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P']),query(['sacct','-n','-X','-j',str(spec['source_job']),'--format=JobID,State,ExitCode','-P'])]
-jobs=[str(x) for x in mapping.values()];assert all(x.isdigit() for x in jobs)
-report['scheduler_queries']=[]
-if jobs:
-    ids=','.join(jobs);report['scheduler_queries']=[query(['squeue','-h','-j',ids,'-o','%i|%j|%T|%R|%N|%M']),query(['sacct','-n','-X','-j',ids,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
-report['logs']=[]
-for p in sorted((ROOT/'logs').glob('*.out')):
-    d=record(p,False)
-    with p.open('rb') as f:f.seek(max(0,d['bytes']-60000));d['tail']=f.read().decode('utf-8','replace')
-    report['logs'].append(d)
-p=ROOT/'evidence/events.jsonl';report['events']=record(p,False)
-if p.exists():
-    with p.open('rb') as f:f.seek(max(0,p.stat().st_size-120000));tail=f.read().decode('utf-8','replace')
-    rows=[]
-    for line in tail.splitlines():
-        try: rows.append(json.loads(line))
-        except json.JSONDecodeError:pass
-    report['events']['recent_rows']=rows[-5:]
-print(json.dumps(report,sort_keys=True,allow_nan=False))
-PY
-set -euo pipefail
-python3 - <<'PY'
-"""Inspect only the registered diagnostic job and its scheduling constraints."""
+"""Bound only the existing, pending, one-epoch diagnostic; never submit jobs."""
 import datetime
+import hashlib
 import json
+import os
 from pathlib import Path
+import re
 import subprocess
 
 root = Path('/data1/home/sunyiq/zhenjiang_gradient_diagnostic_20261011_001')
-jobs = json.loads((root / 'records/scheduler_jobs.json').read_text())
 spec = json.loads((root / 'diagnostic_spec.json').read_text())
-job = str(jobs['gradient_diagnostic'])
+job = str(json.loads((root / 'records/scheduler_jobs.json').read_text())['gradient_diagnostic'])
 assert job.isdigit()
-commands = [
-    ['scontrol', 'show', 'job', '-o', job],
-    ['squeue', '-h', '-j', job, '-o', '%i|%j|%T|%R|%N|%M|%V|%S'],
-    ['sacct', '-n', '-X', '-j', job, '--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason', '-P'],
-    ['sprio', '-j', job, '-l'],
-    ['sinfo', '-h', '-p', 'hgpu2p', '-N', '-o', '%N|%T|%G|%C|%m'],
-]
-queries = []
-for command in commands:
-    try:
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
-        queries.append({'command': command, 'returncode': result.returncode,
-                        'stdout': result.stdout, 'stderr': result.stderr})
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        queries.append({'command': command, 'error': str(exc)})
-print(json.dumps({'schema': 'read_only_registered_diagnostic_queue_detail_v1',
-                  'checked_at_beijing': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
-                  'diagnostic_root': str(root), 'job_id': job, 'expected_job_name': spec['job_name'],
-                  'queries': queries, 'scheduler_mutated': False, 'training_data_read': False,
-                  'evaluation_values_read': False}, sort_keys=True))
+source = Path(spec['source_root']) if 'source_root' in spec else Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001')
+source_jobs = json.loads((source / 'records/scheduler_jobs.json').read_text())
+source_job = str(source_jobs[spec['case']])
+assert source_job.isdigit() and source_job != job
+assert spec['replayed_epoch'] == 41 and spec['expected_saved_epoch'] == 40
+assert spec['formal_checkpoint_write_allowed'] is False
+assert spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
+assert spec['admitted_training_phase_only'] == 'tuning_train'
+
+def run(command):
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    return {'command': command, 'returncode': result.returncode,
+            'stdout': result.stdout, 'stderr': result.stderr}
+
+def fields(result):
+    assert result['returncode'] == 0, result
+    return dict(re.findall(r'(\w+)=([^\s]+)', result['stdout']))
+
+def save_new(path, value):
+    with path.open('x', encoding='utf-8') as stream:
+        json.dump(value, stream, ensure_ascii=False, sort_keys=True, indent=2)
+        stream.write('\n')
+        stream.flush()
+        os.fsync(stream.fileno())
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+script = root / 'hpc/gradient_diagnostic.slurm'
+replay = root / 'hpc/replay_gradient_diagnostic_20261011.py'
+expected = {
+    script: '8c6c90074458b2f4a873b4e32dec193dc88a367809a559ad0374f645d42c71fc',
+    replay: '7b39e92b45e4f41ec5cb9078dbd885bd2df53e0dd3eaa73cfa1b3f0099d94421',
+}
+assert all(sha(path) == digest for path, digest in expected.items())
+before = run(['scontrol', 'show', 'job', '-o', job])
+before_fields = fields(before)
+guard = run(['sacct', '-n', '-X', '-j', source_job, '--format=JobID,State,ExitCode', '-P'])
+assert guard['returncode'] == 0
+assert guard['stdout'].strip().split('|')[:3] == [source_job, 'FAILED', '1:0']
+queue = run(['squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%R|%N'])
+assert queue['returncode'] == 0
+rows = [row.split('|') for row in queue['stdout'].splitlines()]
+assert not any(row[0] == source_job for row in rows)
+assert sum(row[0] == job for row in rows) == 1
+assert sum(row[1] == spec['job_name'] for row in rows) == 1
+expected_fields = {
+    'JobId': job, 'JobName': spec['job_name'], 'UserId': 'sunyiq(2272)',
+    'Partition': 'hgpu2p', 'NumCPUs': '4', 'NumTasks': '1',
+    'TresPerNode': 'gpu:1', 'ExcNodeList': 'ngu[002,011]',
+    'Dependency': '(null)', 'WorkDir': str(root), 'Command': str(script),
+    'StdOut': str(root / 'logs' / (spec['job_name'] + '_' + job + '.out')),
+    'StdErr': str(root / 'logs' / (spec['job_name'] + '_' + job + '.out')),
+}
+assert all(before_fields.get(key) == value for key, value in expected_fields.items())
+attempt = root / 'records/diagnostic_time_limit_adjustment_20261012_001.attempt.json'
+response = root / 'records/diagnostic_time_limit_adjustment_20261012_001.response.json'
+record = {
+    'schema': 'registered_one_epoch_diagnostic_resource_adjustment_v1',
+    'checked_at_beijing': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+    'job_id': job, 'source_failed_job': source_job, 'source_root': str(source),
+    'diagnostic_root': str(root), 'before': before, 'source_failure_guard': guard,
+    'duplicate_guard': queue, 'script_and_replay_sha256': {str(p): h for p, h in expected.items()},
+    'new_time_limit_minutes': 720, 'new_jobs_submitted': False,
+    'formal_training_budget_changed': False, 'scientific_rules_changed': False,
+    'evaluation_values_read': False,
+    'reason': 'one-epoch isolated numerical diagnostic has no formal training writes; bound its scheduler reservation without resubmission',
+    'time_limit_is_not_a_runtime_estimate': True,
+    'shorter_reservation_improving_backfill_is_an_inference_not_a_guarantee': True,
+}
+if attempt.exists():
+    record['status'] = 'prior_exclusive_attempt_exists_no_repeat'
+    record['prior_attempt'] = json.loads(attempt.read_text())
+    if response.exists():
+        record['prior_response'] = json.loads(response.read_text())
+elif before_fields.get('JobState') != 'PENDING':
+    record['status'] = 'diagnostic_already_started_no_limit_change'
+elif before_fields.get('TimeLimit') != 'UNLIMITED':
+    record['status'] = 'already_bounded_no_limit_change'
+else:
+    assert before_fields.get('Reason') == 'Priority'
+    assert before_fields.get('RunTime') == '00:00:00' and before_fields.get('NodeList') == '(null)'
+    save_new(attempt, record)
+    update = run(['scontrol', 'update', 'JobId=' + job, 'TimeLimit=720'])
+    after = run(['scontrol', 'show', 'job', '-o', job])
+    after_fields = fields(after)
+    assert all(after_fields.get(key) == value for key, value in expected_fields.items())
+    assert all(sha(path) == digest for path, digest in expected.items())
+    record.update(update=update, after=after, scheduler_state_after=after_fields.get('JobState'),
+                  time_limit_after=after_fields.get('TimeLimit'),
+                  script_and_replay_unchanged=True)
+    if after_fields.get('TimeLimit') == '12:00:00':
+        record['status'] = 'existing_diagnostic_time_limit_verified_12_hours'
+    else:
+        record['status'] = 'time_limit_adjustment_not_confirmed_do_not_repeat'
+    save_new(response, record)
+print(json.dumps(record, sort_keys=True))
 PY
