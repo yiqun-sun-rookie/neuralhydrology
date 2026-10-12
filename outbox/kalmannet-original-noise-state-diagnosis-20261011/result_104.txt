@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=104
+### host=login4
+### started=2026-10-12T08:26:10+0800
+### ---------- output ----------
+REMOTE_JSON={"status": "SAVED_REVIEW_SEALED", "check_status": "HPC_STRICT_CHECK_FAILED_PRESERVED", "missing_files": ["report/checker_execution.json", "report/parity_report.json", "report/review.json", "report/saved_check_location.json", "verify/checker_child.json", "verify/guardian_launch.json", "verify/launch.json", "verify/stderr.log", "verify/stdout.log", "verify/work_result.json", "verify/worker_stderr.log", "verify/worker_stdout.log"], "manifest": {"path": "verification/v8/cases/01487000/bundle_manifest.json", "bytes": 3912, "sha256": "fbe698210a561b39b7166d3be6515303b8ecfff350739e42ee361f398f8d11db"}, "science_executions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T08:26:17+0800
