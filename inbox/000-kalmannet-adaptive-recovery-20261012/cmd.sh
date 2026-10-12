@@ -1,16 +1,16 @@
 #!/bin/bash
-sequence=9
+sequence=10
 umask 077
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -S -B - <<'CHECK'
-import os,json,base64,hashlib,datetime
+import os,json,datetime,subprocess
 from pathlib import Path
-R=Path('/data1/home/sunyiq/kalmannet_cpu_remaining_fourteen_prefix_20261012_006')
 assert os.getuid()==os.geteuid()==2272
-r={'read_only':True,'scientific_submissions':0,'observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'files':{}}
-for p in sorted((R/'output/case_025').rglob('*'))+sorted((R/'output/runtime').glob('case_025*')):
- if p.is_file() and not p.is_symlink():
-  b=p.read_bytes()
-  r['files'][str(p)]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-  if len(b)<=1024**2:r['files'][str(p)]['base64']=base64.b64encode(b).decode()
+roots=['/data1/home/sunyiq/kalmannet_cpu_remaining_fourteen_prefix_20261012_007','/data1/home/sunyiq/kalmannet_cpu_remaining_fourteen_prefix_20261012_007_transport_boot','/data1/home/sunyiq/kalmannet_remaining_twelve_rtx3090_prefix_20261012_004','/data1/home/sunyiq/kalmannet_remaining_twelve_rtx3090_prefix_20261012_004_transport_boot']
+r={'read_only':True,'scientific_submissions':0,'observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'roots':{p:{'exists':Path(p).exists(),'symlink':Path(p).is_symlink()} for p in roots},'queries':[]}
+for a in [['squeue','--noheader','--user','sunyiq','--format=%i|%j|%T|%Z|%o'],['scontrol','show','job','241249','--oneliner']]:
+ try:
+  q=subprocess.run(a,capture_output=True,stdin=subprocess.DEVNULL,timeout=20,env={**os.environ,'TZ':'UTC','LC_ALL':'C'})
+  r['queries'].append({'argv':a,'returncode':q.returncode,'stdout':q.stdout.decode(errors='replace'),'stderr':q.stderr.decode(errors='replace')})
+ except BaseException as e:r['queries'].append({'argv':a,'error_type':type(e).__name__})
 print(json.dumps(r,sort_keys=True))
 CHECK
