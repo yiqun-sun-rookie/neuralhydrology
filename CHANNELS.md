@@ -168,3 +168,5 @@ git rm inbox/seq
 | `000-kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
 
 | china-radiation16-20261012 | China16 radiation HPC 20261012; isolated; no training |
+
+| `knet-camels-hpc-20261012-001` | Knet CAMELS future HPC preparation; current three-basin run remains local | 2026-10-12 | Only /data1/home/sunyiq/knet_camels_hpc_20261012_001; one short CPU import probe, no real training during preparation; preserve existing jobs, shared environments and all other channels. |
