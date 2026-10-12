@@ -1,0 +1,8 @@
+### channel=kalmannet-original-noise-state-diagnosis-20261011 seq=137
+### host=login4
+### started=2026-10-12T11:26:40+0800
+### ---------- output ----------
+REMOTE_JSON={"argv": ["sbatch", "--parsable", "--partition=hcpu48y", "--job-name=noise-state-verify", "--nodes=1", "--ntasks=1", "--cpus-per-task=1", "--time=00:10:00", "--nodelist=icn277", "--output=/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/r10/cases/01583500/job-%j.out", "--error=/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/r10/cases/01583500/job-%j.err", "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/r10/check_saved.slurm", "/data1/home/sunyiq/kalmannet_original_noise_internal_state_diagnosis_20261011_recovery1/verification/r10", "/data1/home/sunyiq/kalmannet_original_noise_multiday_evaluation_20261008_recovery3/runtime/venv/bin/python", "01583500"], "scientific_model_runs": 0, "original_raw_manifest": {"path": "cases/01583500/attempt_001/raw_manifest.json", "bytes": 4267, "sha256": "46c713ab1e5380604b1a2184ffeae53d9dd4659135ebe4f5c2efb2f492087d13"}, "epoch": 1791775623.2584362, "exit_code": 0, "stdout": "240869\n", "stderr": "", "job_id": "240869"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T11:27:05+0800
