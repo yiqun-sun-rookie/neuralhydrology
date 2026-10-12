@@ -1,0 +1,83 @@
+### channel=china-radiation16-20261012 seq=6
+### host=login4
+### started=2026-10-12T20:39:58+0800
+### ---------- output ----------
+OWN_NETWORK_QUERY_JOB_ID=241340
+slurm_load_jobs error: Invalid job id specified
+241340|china16_rad_netprobe|COMPLETED|0:0|00:00:03|2|ngu001|billing=2,cpu=2,node=1
+OWN_NETWORK_SQUEUE_EXIT=1
+OWN_NETWORK_SACCT_EXIT=0
+OWN_NETWORK_SAVED_JSON_BEGIN
+{
+  "hostname": "ngu001",
+  "job_id": "241340",
+  "allocated_cpus": "1",
+  "gpu_requested": 0,
+  "data_requests": 0,
+  "credential_reads": 0,
+  "model_calls": 0,
+  "training": 0,
+  "proxy_variables_present": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false,
+    "http_proxy": false,
+    "https_proxy": false
+  },
+  "checks": [
+    {
+      "hostname": "earthengine.googleapis.com",
+      "http_timeout_seconds": 35,
+      "dns_success": false,
+      "dns_exception_type": "gaierror",
+      "dns_errno": -2,
+      "dns_message": "[Errno -2] Name or service not known",
+      "tls_http_reached": false,
+      "http_exception_type": "URLError",
+      "reason_type": "gaierror",
+      "reason_errno": -2,
+      "reason_message": "[Errno -2] Name or service not known"
+    },
+    {
+      "hostname": "oauth2.googleapis.com",
+      "http_timeout_seconds": 35,
+      "dns_success": false,
+      "dns_exception_type": "gaierror",
+      "dns_errno": -2,
+      "dns_message": "[Errno -2] Name or service not known",
+      "tls_http_reached": false,
+      "http_exception_type": "URLError",
+      "reason_type": "gaierror",
+      "reason_errno": -2,
+      "reason_message": "[Errno -2] Name or service not known"
+    },
+    {
+      "hostname": "pypi.org",
+      "http_timeout_seconds": 35,
+      "dns_success": false,
+      "dns_exception_type": "gaierror",
+      "dns_errno": -2,
+      "dns_message": "[Errno -2] Name or service not known",
+      "tls_http_reached": false,
+      "http_exception_type": "URLError",
+      "reason_type": "gaierror",
+      "reason_errno": -2,
+      "reason_message": "[Errno -2] Name or service not known"
+    }
+  ],
+  "elapsed_seconds": 0.06469324976205826,
+  "status": "ANONYMOUS_NETWORK_HELD"
+}
+OWN_NETWORK_SAVED_JSON_END
+OWN_NETWORK_LOG_out_BEGIN
+OWN_NETWORK_REPORT={"hostname": "ngu001", "job_id": "241340", "allocated_cpus": "1", "gpu_requested": 0, "data_requests": 0, "credential_reads": 0, "model_calls": 0, "training": 0, "proxy_variables_present": {"HTTP_PROXY": false, "HTTPS_PROXY": false, "ALL_PROXY": false, "http_proxy": false, "https_proxy": false}, "checks": [{"hostname": "earthengine.googleapis.com", "http_timeout_seconds": 35, "dns_success": false, "dns_exception_type": "gaierror", "dns_errno": -2, "dns_message": "[Errno -2] Name or service not known", "tls_http_reached": false, "http_exception_type": "URLError", "reason_type": "gaierror", "reason_errno": -2, "reason_message": "[Errno -2] Name or service not known"}, {"hostname": "oauth2.googleapis.com", "http_timeout_seconds": 35, "dns_success": false, "dns_exception_type": "gaierror", "dns_errno": -2, "dns_message": "[Errno -2] Name or service not known", "tls_http_reached": false, "http_exception_type": "URLError", "reason_type": "gaierror", "reason_errno": -2, "reason_message": "[Errno -2] Name or service not known"}, {"hostname": "pypi.org", "http_timeout_seconds": 35, "dns_success": false, "dns_exception_type": "gaierror", "dns_errno": -2, "dns_message": "[Errno -2] Name or service not known", "tls_http_reached": false, "http_exception_type": "URLError", "reason_type": "gaierror", "reason_errno": -2, "reason_message": "[Errno -2] Name or service not known"}], "elapsed_seconds": 0.06469324976205826, "status": "ANONYMOUS_NETWORK_HELD"}
+OWN_NETWORK_PROBE_PROCESS_DONE
+
+OWN_NETWORK_LOG_out_END
+OWN_NETWORK_LOG_err_BEGIN
+
+OWN_NETWORK_LOG_err_END
+OWN_NETWORK_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:40:00+0800
