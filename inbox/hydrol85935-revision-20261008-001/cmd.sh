@@ -67,3 +67,20 @@ output('REMOTE_LOCAL_OWNER', owner)
 for label, job in owner['jobs'].items():
     query('LOCAL_HELD_JOB_' + label, ['scontrol', 'show', 'job', '-o', str(job)])
 PY
+
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import json,subprocess,datetime
+from pathlib import Path
+root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+old=json.loads((root/'control/local_takeover_20261012_002/ownership.json').read_text())
+for label,job in old['jobs'].items():
+ r=subprocess.run(['scontrol','show','job','-o',str(job)],capture_output=True,text=True,check=True,timeout=45)
+ fields=dict(part.split('=',1) for part in r.stdout.split() if '=' in part)
+ expected={'JobState':'PENDING','Reason':'JobHeldUser','Priority':'0','RunTime':'00:00:00','NodeList':'(null)','Command':str(root/'control/full_v004'/f'{label}.sbatch'),'WorkDir':str(root/'control/continuation_v004')}
+ assert all(fields.get(k)==v for k,v in expected.items()), (label,fields)
+folder=root/'control/local_cpu_partial_20261012_001'
+folder.mkdir(exist_ok=False)
+owner=dict(old,version='local_cpu_v007_20261012_001',local_root='G:/hydrol85935_revision_20261008_001/local_cpu_v007',assignment_sha256='89eb3fe342fb32e2792df828e2227d93c5dfb55868f4daef13157f0de17884b6',assigned_attacks=275,assigned_clean=25,assigned_restore_series=100,cpu_limit=2,device='cpu',global_science_complete=False,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),previous_ownership_record='control/local_takeover_20261012_002/ownership.json',full_HPC_attack_array_must_not_be_released=True)
+(folder/'ownership.json').write_text(json.dumps(owner,indent=2))
+print('NEW_LOCAL_PARTIAL_OWNER '+json.dumps(owner),flush=True)
+PY
