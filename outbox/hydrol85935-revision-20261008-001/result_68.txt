@@ -1,0 +1,13 @@
+### channel=hydrol85935-revision-20261008-001 seq=68
+### host=login4
+### started=2026-10-12T17:25:09+0800
+### ---------- output ----------
+OPERATION {"utc": "2026-10-12T09:25:09.898548+00:00", "command": ["squeue", "-h", "-j", "240076,240077,240078", "-o", "%i|%T|%R"], "returncode": 0, "stdout": "240076_[0-2%1]|PENDING|(Priority)\n240077_[0-131%1]|PENDING|(Dependency)\n240078|PENDING|(Dependency)\n", "stderr": ""}
+OPERATION {"utc": "2026-10-12T09:25:09.931389+00:00", "command": ["scontrol", "show", "job", "-o", "240076"], "returncode": 0, "stdout": "JobId=240076 ArrayJobId=240076 ArrayTaskId=0-2%1 ArrayTaskThrottle=1 JobName=hydrol85935-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=209729 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=12:00:00 TimeMin=N/A SubmitTime=2026-10-11T22:12:27 EligibleTime=2026-10-12T15:44:43 AccrueTime=2026-10-12T15:44:43 StartTime=2026-10-18T12:05:30 EndTime=2026-10-19T00:05:30 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-12T17:26:29 Partition=hgpu2p AllocNode:Sid=login04:46471 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/full_v004/train.sbatch WorkDir=/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/continuation_v004 StdErr=/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/train-240076_4294967294.err StdIn=/dev/null StdOut=/data1/home/sunyiq/hydrol85935_revision_20261008_001/logs/train-240076_4294967294.out Power= TresPerNode=gpu:1\n", "stderr": ""}
+Traceback (most recent call last):
+  File "<stdin>", line 47, in <module>
+  File "<stdin>", line 39, in verify
+AssertionError
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-12T17:25:09+0800
