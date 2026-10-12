@@ -1,0 +1,80 @@
+### channel=china-radiation16-20261012 seq=3
+### host=login4
+### started=2026-10-12T20:09:39+0800
+### ---------- output ----------
+OWN_PREFLIGHT_QUERY_JOB_ID=241330
+slurm_load_jobs error: Invalid job id specified
+241330|china16_rad_probe|COMPLETED|0:0|00:00:02|2|ngu001|billing=2,cpu=2,node=1
+OWN_PREFLIGHT_SQUEUE_EXIT=1
+OWN_PREFLIGHT_SACCT_EXIT=0
+OWN_PREFLIGHT_SAVED_JSON_BEGIN
+{
+  "job_id": "241330",
+  "hostname": "ngu001",
+  "python": "3.11.13",
+  "model_calls": 0,
+  "training": 0,
+  "observations_read": 0,
+  "failed_batch_requests": 0,
+  "gpu_requested": 0,
+  "modules": {
+    "numpy": {
+      "available": true,
+      "required": true,
+      "actual_import_passed": true,
+      "version": "2.3.3"
+    },
+    "ee": {
+      "available": false,
+      "required": true,
+      "actual_import_passed": false
+    },
+    "requests": {
+      "available": true,
+      "required": false,
+      "actual_import_passed": false,
+      "version": "2.32.5"
+    },
+    "rasterio": {
+      "available": false,
+      "required": false,
+      "actual_import_passed": false
+    },
+    "shapely": {
+      "available": false,
+      "required": false,
+      "actual_import_passed": false
+    },
+    "pyproj": {
+      "available": false,
+      "required": false,
+      "actual_import_passed": false
+    }
+  },
+  "credential_file_exists": false,
+  "earthengine_initialized": false,
+  "grid": null,
+  "required_modules": [
+    "numpy",
+    "ee"
+  ],
+  "network_probe_exception_type": "URLError",
+  "network_http_status": null,
+  "elapsed_seconds": 0.9983831308782101,
+  "status": "PREFLIGHT_HELD"
+}
+OWN_PREFLIGHT_SAVED_JSON_END
+OWN_PREFLIGHT_LOG_out_BEGIN
+OWN_PREFLIGHT_STARTED_UTC=2026-10-12T12:08:42Z
+OWN_PREFLIGHT_RESULT={"job_id": "241330", "hostname": "ngu001", "python": "3.11.13", "model_calls": 0, "training": 0, "observations_read": 0, "failed_batch_requests": 0, "gpu_requested": 0, "modules": {"numpy": {"available": true, "required": true, "actual_import_passed": true, "version": "2.3.3"}, "ee": {"available": false, "required": true, "actual_import_passed": false}, "requests": {"available": true, "required": false, "actual_import_passed": false, "version": "2.32.5"}, "rasterio": {"available": false, "required": false, "actual_import_passed": false}, "shapely": {"available": false, "required": false, "actual_import_passed": false}, "pyproj": {"available": false, "required": false, "actual_import_passed": false}}, "credential_file_exists": false, "earthengine_initialized": false, "grid": null, "required_modules": ["numpy", "ee"], "network_probe_exception_type": "URLError", "network_http_status": null, "elapsed_seconds": 0.9983831308782101, "status": "PREFLIGHT_HELD"}
+OWN_PREFLIGHT_PROCESS_DONE
+OWN_PREFLIGHT_FINISHED_UTC=2026-10-12T12:08:44Z
+
+OWN_PREFLIGHT_LOG_out_END
+OWN_PREFLIGHT_LOG_err_BEGIN
+
+OWN_PREFLIGHT_LOG_err_END
+OWN_PREFLIGHT_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-12T20:09:39+0800
