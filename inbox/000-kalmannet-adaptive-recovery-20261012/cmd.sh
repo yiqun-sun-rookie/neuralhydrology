@@ -1,5 +1,5 @@
 #!/bin/bash
-sequence=2
+sequence=3
 umask 077
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -I -B - <<'READONLY_DIAG'
 import os,json,subprocess,hashlib,datetime,base64
@@ -49,6 +49,24 @@ try:
 except Exception as e:out['ps_error']=type(e).__name__
 
 OLD=Path('/data1/home/sunyiq/kalmannet_cpu240124_node_release_probe_20261012_001')
+
+try:
+ args=['/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python','-I','-S','-B',str(OLD/'control/launcher.py'),'collect','002']
+ if (OLD/'output/collection_002').exists():out['final_old_collection']={'not_repeated':True,'already_exists':True}
+ else:
+  result=subprocess.run(args,stdin=subprocess.DEVNULL,capture_output=True,timeout=90)
+  out['final_old_collection']={'argv':args,'returncode':result.returncode,'stdout':result.stdout.decode(errors='replace')[:131072],'stderr':result.stderr.decode(errors='replace')[:65536],'scientific_calls':0}
+except Exception as exc:out['final_old_collection']={'error_type':type(exc).__name__,'no_replay':True}
+for folder in ('output/node_native','output/collection_002','output/collection_002/native'):
+ q=OLD/folder;take(q)
+ if q.is_dir() and not q.is_symlink():
+  for f in sorted(q.iterdir())[:30]:
+   if f.is_file() and not f.is_symlink():take(f,262144)
+for name in ('metadata/root_admission.json','output/submission_receipt.json'):take(OLD/name)
+query(['sacct','-n','-P','--format=JobIDRaw,JobName,User,UID,Partition,Submit,Start,End,ElapsedRaw,AllocCPUS,AllocTRES,ReqTRES,State,ExitCode,NodeList,WorkDir,TimelimitRaw,Comment,CPUTimeRAW,TotalCPU','-j','240268'])
+query(['squeue','--noheader','--user=sunyiq','--format=%i|%j|%u|%P|%T|%M|%l|%D|%R|%Z'])
+query(['scontrol','show','node','icn274'])
+
 for folder in ('','logs','output','native','metadata'):
  take(OLD/folder)
  if folder in ('logs','output','native'):
