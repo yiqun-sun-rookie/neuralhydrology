@@ -29,5 +29,8 @@ for seed in [100,200,300]:
     folder=parent/'execution/v004/training'/('s'+str(seed))
     marker=folder/'complete.json'
     print(json.dumps({'training_seed':seed,'training_directory_exists':folder.is_dir(),'completion_marker_exists':marker.is_file(),'completion':json.loads(marker.read_text()) if marker.is_file() else None}))
+    checkpoints=sorted(folder.glob('runs/*/model_epoch*.pt'))
+    epochs=[int(re.search(r'model_epoch([0-9]+)',p.name).group(1)) for p in checkpoints if re.search(r'model_epoch([0-9]+)',p.name)]
+    print(json.dumps({'training_checkpoint_progress':{'seed':seed,'saved_checkpoint_count':len(checkpoints),'latest_saved_epoch':max(epochs) if epochs else None}}))
 PY
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001/versions/v002/advance.py --root /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001 --parent /data1/home/sunyiq/hydrol85935_revision_20261008_001 --version v004
