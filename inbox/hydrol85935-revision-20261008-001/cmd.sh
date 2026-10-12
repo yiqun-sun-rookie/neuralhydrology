@@ -1,44 +1,104 @@
 #!/usr/bin/env bash
 set -eo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 ROOT=/data1/home/sunyiq/hydrol85935_revision_20261008_001
-FOLDER=/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v009_20261012_001
-PAYLOAD="$HOME/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/hybrid_v009_20261012_001.tar.gz"
 test "$(readlink -f "$ROOT")" = "$ROOT"
 test "$(cat "$ROOT/OWNER")" = hydrol85935_revision_20261008_001
-test ! -e "$FOLDER"
-test ! -e "$ROOT/execution/hpc_v009"
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - "$PAYLOAD" <<'PY'
-import hashlib,json,sys,tarfile,subprocess
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import datetime
+import json
+import re
+import subprocess
 from pathlib import Path
-root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001');folder=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v009_20261012_001');payload=Path(sys.argv[1])
-assert hashlib.sha256(payload.read_bytes()).hexdigest()=='68ad28fca0eec29807a9e415ed8001eec9f92ca43e75c5506b6c916e7c739e20'
-expected={'train':240076,'attacks':240077,'report':240078}
-assert json.loads((root/'control/full_v004/jobs.json').read_text())==expected
-before={}
-for name,jid in expected.items():
- r=subprocess.run(['scontrol','show','job','-o',str(jid)],capture_output=True,text=True,timeout=30);assert r.returncode==0
- s=r.stdout
- for token in [f'JobId={jid} ', 'JobState=PENDING ', 'Priority=0 ', 'Reason=JobHeldUser ', 'RunTime=00:00:00 ', f'Command={root}/control/full_v004/{name}.sbatch ',f'WorkDir={root}/control/continuation_v004 ']:assert token in s,token
- before[name]=s
-assert not list((root/'execution/v004/training').glob('s*/complete.json'))
-assert not list((root/'execution/v004/training').rglob('model_epoch*.pt'))
-folder.mkdir();(folder/'logs').mkdir();(folder/'stage_results').mkdir()
-with tarfile.open(payload,'r:gz') as t:
- for member in t.getmembers():
-  assert member.isfile() and len(Path(member.name).parts)==1
-  with (folder/member.name).open('xb') as f:f.write(t.extractfile(member).read())
-for line in (folder/'FILES.sha256').read_text().splitlines():
- expected_hash,name=line.split(None,1);assert hashlib.sha256((folder/name).read_bytes()).hexdigest()==expected_hash
-assignment=json.loads((folder/'assignment.json').read_text())
-assert hashlib.sha256((folder/'assignment.json').read_bytes()).hexdigest()=='b044450cc6a5ab723c7b470423d0dedb0b581d7f6e00efd53f07fb9613068c6c'
-for name,index in [('local_cpu_partial_20261012_001',0),('local_gpu_partial_20261012_001',1)]:
- old=json.loads((root/'control'/name/'ownership.json').read_text())
- assert old['owner']=='local' and old['assignment_sha256']==assignment['local_assignments'][index]['sha256']
-owner=dict(owner='split_local_hpc',version='hybrid_v009_20261012_001',assignment_sha256='b044450cc6a5ab723c7b470423d0dedb0b581d7f6e00efd53f07fb9613068c6c',old_jobs_remain_held=expected,
-           local_reserved_attacks=550,hpc_reserved_attacks=27062,local_training=False,hpc_training_seeds=[100,200,300],
-           hpc_max_gpus=1,hpc_max_cpu_cores=4,local_max_gpus=1,local_max_cpu_cores=4,other_experiments_modified=False)
-(folder/'ownership.json').write_text(json.dumps(owner,indent=2));(folder/'old_jobs_before.json').write_text(json.dumps(before,indent=2))
-print('SPLIT_OWNERSHIP '+json.dumps(owner),flush=True)
+
+root = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+
+def output(label, value):
+    print(label + ' ' + json.dumps(value, ensure_ascii=False), flush=True)
+
+def query(label, command):
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    output(label, dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
+    if result.returncode:
+        raise RuntimeError('Cannot verify ' + label)
+    return result.stdout
+
+output('OBSERVATION', dict(time=datetime.datetime.now().astimezone().isoformat(),
+       scope='read-only GPU inventory and registered scheduler state; not a full experiment audit'))
+jobs = json.loads((root / 'control/full_v004/jobs.json').read_text())
+if jobs != dict(train=240076, attacks=240077, report=240078):
+    raise ValueError('Job registry changed; review version and ownership before using a new probe')
+probe_path = root / 'control/migration_probe_20261012_002/jobs.json'
+if probe_path.exists():
+    probe_registry = json.loads(probe_path.read_text())
+    if probe_registry['formal_jobs'] != jobs or probe_registry['probes'] != dict(ngu201=241239, ngu002=241240):
+        raise ValueError('Compatibility job registry changed; review identity before querying')
+    jobs = dict(jobs, compatibility_ngu201=241239, compatibility_ngu002=241240)
+output('REGISTERED_JOBS', jobs)
+query('SQUEUE', ['squeue', '-j', ','.join(str(j) for j in jobs.values()), '-o',
+                 '%.24i %.10T %.12M %.6C %.16b %.30R'])
+query('SACCT', ['sacct', '-X', '-j', ','.join(str(j) for j in jobs.values()),
+               '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList'])
+query('ALL_PARTITIONS', ['sinfo', '-h', '-o', '%P|%a|%l|%D|%t|%G|%N'])
+result = subprocess.run(['sinfo', '-N', '-h', '-O',
+    'partitionname:20,nodelist:20,statelong:20,gres:20,gresused:30,cpusstate:22'],
+    capture_output=True, text=True, timeout=45)
+if result.returncode:
+    output('ALL_GPU_NODES', dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
+    raise RuntimeError('Cannot enumerate GPU resources')
+
+def has_accelerator(line):
+    fields = line.split()
+    if len(fields) < 6:
+        raise ValueError('Malformed node inventory row')
+    return any(re.fullmatch(r'(?:gpu|dcu):(?:[^:,]+:)?[1-9][0-9]*(?:[(].*[)])?', item)
+               for item in fields[3].split(','))
+
+rows = [line for line in result.stdout.splitlines() if has_accelerator(line)]
+output('ALL_GPU_NODES', dict(returncode=0, stdout='\n'.join(rows)+'\n', stderr=result.stderr,
+       all_node_rows=len(result.stdout.splitlines()), gpu_node_rows=len(rows)))
+folder = root / 'control/hybrid_v009_20261012_001'
+import hashlib
+owner = json.loads((folder/'ownership.json').read_text())
+assignment_raw=(folder/'assignment.json').read_bytes()
+if owner['owner']!='split_local_hpc' or hashlib.sha256(assignment_raw).hexdigest()!=owner['assignment_sha256']:
+    raise RuntimeError('Hybrid assignment or owner identity changed')
+output('HYBRID_OWNER',owner)
+current=json.loads((folder/'jobs.json').read_text())
+output('HYBRID_JOBS',current)
+for label,job in dict(train=240076,attacks=240077,report=240078).items():
+    result=query('OLD_HELD_JOB_'+label,['scontrol','show','job','-o',str(job)])
+    for token in ['JobState=PENDING ','Reason=JobHeldUser ','Priority=0 ',f'Command={root}/control/full_v004/{label}.sbatch ',f'WorkDir={root}/control/continuation_v004 ']:
+        if token not in result:raise RuntimeError('Old full-job hold or path identity changed: '+label)
+if current:
+    ids=','.join(str(j) for j in current.values())
+    query('HYBRID_SQUEUE',['squeue','-j',ids,'-o','%.24i %.10T %.12M %.6C %.16b %.40R'])
+    query('HYBRID_SACCT',['sacct','-X','-j',ids,'-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList'])
+    for label,job in current.items():
+        r=subprocess.run(['scontrol','show','job','-o',str(job)],capture_output=True,text=True,timeout=45)
+        output('HYBRID_JOB_'+label,dict(returncode=r.returncode,stdout=r.stdout,stderr=r.stderr))
+        if r.returncode==0:
+            for token in [f'Command={folder}/{label}.sbatch ',f'WorkDir={folder} ','CPUs/Task=4 ','TresPerNode=gpu:1']:
+                if token not in r.stdout:raise RuntimeError('New job identity/resource mismatch: '+label)
+            if label in ('train','attacks') and 'ArrayTaskThrottle=1 ' not in r.stdout:raise RuntimeError('Array concurrency changed')
 PY
-cd "$FOLDER"
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python "$FOLDER/submit.py"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import json,subprocess
+from pathlib import Path
+root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+folder=root/'control/hybrid_v009_20261012_001';execution=root/'execution/hpc_v009'
+def emit(label,value):print(label+' '+json.dumps(value),flush=True)
+for name in ['submission_attempt.json','jobs.json','ownership.json']:
+    path=folder/name;emit('HYBRID_CONTROL',dict(path=str(path),value=json.loads(path.read_text()) if path.exists() else None))
+for seed in (100,200,300):
+    files=list((execution/f'training/s{seed}').rglob('model_epoch*.pt'))
+    emit('HYBRID_TRAINING',dict(seed=seed,checkpoint_count=len(files),complete=(execution/f'training/s{seed}/complete.json').exists(),latest=[dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime) for p in sorted(files,key=lambda q:q.stat().st_mtime)[-3:]]))
+for label,pattern in [('attacks','records/attacks/*/*/complete.json'),('clean','records/clean/*/*/complete.json')]:
+    files=list(execution.glob(pattern));emit('HYBRID_OUTPUT_METADATA',dict(kind=label,marker_count=len(files),not_full_slot_validation=True))
+for p in sorted((folder/'stage_results').glob('*.json'),key=lambda q:q.stat().st_mtime)[-8:]:
+    value=json.loads(p.read_text());emit('HYBRID_STAGE',dict(path=str(p),bytes=p.stat().st_size,status=value.get('status'),stage=value.get('stage'),index=value.get('index'),exit_code=value.get('exit_code'),counts=value.get('counts'),failures_count=len(value.get('failures',[])),traceback=value.get('traceback'),global_science_complete=False))
+for p in sorted((folder/'logs').glob('*'),key=lambda q:q.stat().st_mtime)[-6:]:
+    with p.open('rb') as f:
+        f.seek(max(0,p.stat().st_size-3500));tail=f.read().decode('utf8',errors='replace')
+    emit('HYBRID_LOG',dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime,tail=tail))
+PY
