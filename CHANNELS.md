@@ -166,3 +166,5 @@ git rm inbox/seq
 | `kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
 
 | `000-kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
+
+| china-radiation16-20261012 | China16 radiation HPC 20261012; isolated; no training |
