@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-export PYTHONDONTWRITEBYTECODE=1
 ROOT=/data1/home/sunyiq/hydrol85935_revision_20261008_001
 test "$(readlink -f "$ROOT")" = "$ROOT"
 test "$(cat "$ROOT/OWNER")" = hydrol85935_revision_20261008_001
@@ -8,47 +7,137 @@ test "$(cat "$ROOT/OWNER")" = hydrol85935_revision_20261008_001
 import datetime
 import json
 import re
-import subprocess
 from pathlib import Path
+import subprocess
 
 root = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+execution = root / 'execution/v004'
 
 def output(label, value):
     print(label + ' ' + json.dumps(value, ensure_ascii=False), flush=True)
 
-def query(label, command):
-    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
-    output(label, dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
-    if result.returncode:
-        raise RuntimeError('Cannot verify ' + label)
-    return result.stdout
+def safe(path):
+    path.resolve().relative_to(root)
+    return path
 
-output('OBSERVATION', dict(time=datetime.datetime.now().astimezone().isoformat(),
-       scope='read-only GPU inventory and registered scheduler state; not a full experiment audit'))
+def metadata(path):
+    path = safe(path)
+    if not path.exists():
+        return {'path': str(path.relative_to(root)), 'exists': False}
+    s = path.stat()
+    return {'path': str(path.relative_to(root)), 'exists': True,
+            'bytes': s.st_size, 'mtime_ns': s.st_mtime_ns}
+
+def small_file(relative):
+    p = root / relative
+    result = metadata(p)
+    if result['exists']:
+        if result['bytes'] > 65536:
+            raise ValueError('Unexpectedly large status file: ' + relative)
+        result['text'] = p.read_text()
+    output('FILE', result)
+
+def tail(path, limit=5000):
+    info = metadata(path)
+    if info['exists']:
+        with path.open('rb') as stream:
+            stream.seek(max(0, info['bytes'] - limit))
+            info['tail'] = stream.read().decode(errors='replace')
+    output('LOG', info)
+
+output('OBSERVATION', {'time': datetime.datetime.now().astimezone().isoformat(),
+                       'scope': 'read-only scheduler, task status, logs and output metadata; no science execution'})
+for relative in [
+    'control/continuation_v004/status.json', 'control/full_v004/jobs.json',
+    'control/continuation_v004/coordinator_pid',
+    'runtime_torch271cu118/DOWNLOAD_COMPLETE.json',
+    'runtime_torch271cu118/INSTALL_COMPLETE.json',
+    'control/resource_pilot_v004.json',
+    'execution/v004/control/train_failure.json',
+    'execution/v004/control/main_failure.json',
+    'execution/v004/control/validation.json',
+]:
+    small_file(relative)
 jobs = json.loads((root / 'control/full_v004/jobs.json').read_text())
-if jobs != dict(train=240076, attacks=240077, report=240078):
-    raise ValueError('Job registry changed; review version and ownership before using a new probe')
-output('REGISTERED_JOBS', jobs)
-query('SQUEUE', ['squeue', '-j', ','.join(str(j) for j in jobs.values()), '-o',
-                 '%.24i %.10T %.12M %.6C %.16b %.30R'])
-query('SACCT', ['sacct', '-X', '-j', ','.join(str(j) for j in jobs.values()),
-               '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList'])
-query('ALL_PARTITIONS', ['sinfo', '-h', '-o', '%P|%a|%l|%D|%t|%G|%N'])
-result = subprocess.run(['sinfo', '-N', '-h', '-O',
-    'partitionname:20,nodelist:20,statelong:20,gres:20,gresused:30,cpusstate:22'],
-    capture_output=True, text=True, timeout=45)
-if result.returncode:
-    output('ALL_GPU_NODES', dict(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr))
-    raise RuntimeError('Cannot enumerate GPU resources')
+if jobs != {'train': 240076, 'attacks': 240077, 'report': 240078}:
+    raise ValueError('Unrecognized job registry; stop rather than infer ownership')
+for label, command in [
+    ('SQUEUE', ['squeue', '-j', ','.join(str(j) for j in jobs.values()), '-o',
+                '%.24i %.10T %.12M %.6C %.16b %.30R']),
+    ('SACCT', ['sacct', '-X', '-j', '240074,240075,' + ','.join(str(j) for j in jobs.values()),
+               '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList']),
+    ('TRAIN_DETAIL', ['scontrol', '-o', 'show', 'job', str(jobs['train'])]),
+]:
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    output(label, {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+pid = (root / 'control/continuation_v004/coordinator_pid').read_text().strip()
+if not pid.isdigit():
+    raise ValueError('Invalid coordinator PID')
+result = subprocess.run(['ps', '-p', pid, '-o', 'pid,etimes,args'], capture_output=True, text=True, timeout=15)
+output('COORDINATOR', {'returncode': result.returncode, 'stdout': result.stdout,
+                       'absence_expected_after_formal_handoff': True})
+for seed in (100, 200, 300):
+    directory = execution / 'training' / ('s' + str(seed))
+    small_file(str((directory / 'complete.json').relative_to(root)))
+    files = sorted(directory.glob('runs/*/model_epoch*.pt'))
+    output('TRAIN_CHECKPOINTS', {'seed': seed, 'count': len(files),
+                                'latest': [metadata(p) for p in files[-3:]]})
+    for p in sorted(directory.glob('runs/*/*.log'))[-3:]:
+        tail(p)
+for pattern in ['train-240076_*.out', 'train-240076_*.err',
+                'attacks-240077_*.out', 'attacks-240077_*.err',
+                'report-240078*.out', 'report-240078*.err']:
+    paths = sorted((root / 'logs').glob(pattern), key=lambda p: p.stat().st_mtime_ns)
+    output('LOG_INVENTORY', {'pattern': pattern, 'count': len(paths)})
+    for p in paths[-4:]:
+        tail(p)
+for name, pattern in [('attack_complete_markers', 'records/attacks/*/*/complete.json'),
+                      ('clean_complete_markers', 'records/clean/*/*/complete.json'),
+                      ('chunk_summaries', 'control/chunk_*.json')]:
+    paths = list(execution.glob(pattern))
+    output('OUTPUT_METADATA', {'kind': name, 'count': len(paths),
+                               'latest': [metadata(p) for p in sorted(paths, key=lambda p: p.stat().st_mtime_ns)[-3:]],
+                               'complete_coverage_audit': False})
+tail(execution / 'records/ledger.jsonl', 4000)
 
-def has_accelerator(line):
+for label, command in [
+    ('QUEUE_START_ESTIMATE', ['squeue', '--start', '-j', '240076', '-o',
+                             '%.24i %.10T %.19S %.30R']),
+    ('JOB_PRIORITY', ['sprio', '-j', '240076', '-l']),
+    ('USER_FAIR_SHARE', ['sshare', '-U', '-P']),
+    ('PARTITION_LOAD', ['sinfo', '-p', 'hgpu2p', '-N', '-O',
+                        'nodelist,statelong,gres,gresused']),
+]:
+    result = subprocess.run(command, capture_output=True, text=True, timeout=45)
+    output(label, {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+
+result = subprocess.run(['sinfo', '-h', '-o', '%P|%a|%l|%D|%t|%G|%N'], capture_output=True, text=True, timeout=45)
+output('ALL_PARTITIONS', {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+if result.returncode:
+    raise RuntimeError('Cannot enumerate all partitions')
+result = subprocess.run(['sinfo', '-N', '-h', '-O', 'partitionname:20,nodelist:20,statelong:20,gres:20,gresused:30,cpusstate:22'], capture_output=True, text=True, timeout=45)
+if result.returncode:
+    output('ALL_GPU_NODES', {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+    raise RuntimeError('Cannot enumerate allocated GPU resources')
+def has_configured_accelerator(line):
     fields = line.split()
     if len(fields) < 6:
         raise ValueError('Malformed node inventory row')
+    # Capacity is the fourth column; allocated gpu:0 on CPU nodes is not capacity.
     return any(re.fullmatch(r'(?:gpu|dcu):(?:[^:,]+:)?[1-9][0-9]*(?:[(].*[)])?', item)
                for item in fields[3].split(','))
+gpu_lines = [line for line in result.stdout.splitlines() if has_configured_accelerator(line)]
+output('ALL_GPU_NODES', {'returncode': 0, 'stdout': '\n'.join(gpu_lines) + '\n', 'stderr': result.stderr, 'all_node_rows': len(result.stdout.splitlines()), 'gpu_node_rows': len(gpu_lines)})
+PY
 
-rows = [line for line in result.stdout.splitlines() if has_accelerator(line)]
-output('ALL_GPU_NODES', dict(returncode=0, stdout='\n'.join(rows)+'\n', stderr=result.stderr,
-       all_node_rows=len(result.stdout.splitlines()), gpu_node_rows=len(rows)))
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import json,subprocess
+for node in ['ngu002','ngu201','ngu202']:
+ r=subprocess.run(['scontrol','-o','show','node',node],text=True,capture_output=True,timeout=45)
+ print('CANDIDATE_NODE '+json.dumps(dict(node=node,returncode=r.returncode,stdout=r.stdout,stderr=r.stderr)),flush=True)
+ if r.returncode:raise RuntimeError('Candidate metadata unavailable')
+for job in ['240076','240077','240078']:
+ r=subprocess.run(['scontrol','-o','show','job',job],text=True,capture_output=True,timeout=45)
+ print('OWN_JOB_DETAIL '+json.dumps(dict(job=job,returncode=r.returncode,stdout=r.stdout,stderr=r.stderr)),flush=True)
+ if r.returncode:raise RuntimeError('Registered job metadata unavailable')
 PY
