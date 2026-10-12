@@ -162,3 +162,5 @@ git rm inbox/seq
 
 | `hydrol85935-temporal-20261011-001` | HYDROL85935 additional seven-day persistence search; no new training | 2026-10-11 | Only /data1/home/sunyiq/hydrol85935_temporal_persistence_20261011_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
 | kalmannet-original-noise-state-diagnosis-20261011 | 原已学噪声六个代表流域内部状态诊断 | 2026-10-11 | 活动 |
+
+| `kalmannet-adaptive-recovery-20261012` | Read-only recovery of authorized adaptive capture221 | 2026-10-12 | Metadata/logs only; zero scientific submission, cancellation, runner or existing experiment modification |
