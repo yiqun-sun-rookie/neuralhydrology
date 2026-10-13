@@ -1,0 +1,86 @@
+### channel=tessera-joint-01073000-20261013 seq=5
+### host=login4
+### started=2026-10-13T16:42:31+0800
+### ---------- output ----------
+Tue Oct 13 08:42:31 UTC 2026
+241691 hgpu2p,hgpu4,hgpu8 tessera_01073000_abc_261013 PENDING 0:00 (Priority)
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            241691 hgpu2p,hg tessera_   sunyiq PD 2026-10-14T17:35:42      1 (null)               (Priority)
+       JobID      State ExitCode    Elapsed     MaxRSS 
+------------ ---------- -------- ---------- ---------- 
+241691          PENDING      0:0   00:00:00            
+JobId=241691 JobName=tessera_01073000_abc_261013
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=203117 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2026-10-13T16:11:22 EligibleTime=2026-10-13T16:11:22
+   AccrueTime=2026-10-13T16:11:22
+   StartTime=2026-10-14T17:35:42 EndTime=2026-10-14T18:05:42 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-13T16:43:56
+   Partition=hgpu2p,hgpu4,hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/tessera_joint_01073000_20261013_001/src/tessera_joint/hpc/temporal_01073000.slurm
+   WorkDir=/data1/home/sunyiq/tessera_joint_01073000_20261013_001
+   StdErr=/data1/home/sunyiq/tessera_joint_01073000_20261013_001/logs/abc-241691.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/tessera_joint_01073000_20261013_001/logs/abc-241691.out
+   Power=
+   TresPerNode=gpu:1
+
+          JOBID PARTITION     USER   PRIORITY       SITE        AGE      ASSOC  FAIRSHARE    JOBSIZE  PARTITION        QOS        NICE                 TRES
+         241691 hgpu2p      sunyiq     203117          0       3112          0          0          6          0     200000           0                     
+         241691 hgpu4       sunyiq     203117          0       3112          0          0          6          0     200000           0                     
+         241691 hgpu8       sunyiq     203117          0       3112          0          0          6          0     200000           0                     
+          JOBID PARTITION   PRIORITY       SITE        AGE    JOBSIZE        QOS
+        Weights                               1    1000000       1000    2000000
+Account|User|RawShares|NormShares|RawUsage|EffectvUsage|FairShare
+g_sunyiq|sunyiq|1|0.500000|8780142|1.000000|0.349398
+NODELIST            PARTITION           STATE               GRES                GRES_USED           
+ngu001              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu002              hgpu2p              down*               gpu:2               gpu:0,dcu:0         
+ngu004              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu005              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu006              hgpu2p              mix                 gpu:2               gpu:1,dcu:0         
+ngu007              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu008              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu010              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu011              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu101              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu102              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu103              hgpu4               down*               gpu:4               gpu:0,dcu:0         
+ngu104              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu201              hgpu8               mix                 gpu:8               gpu:8,dcu:0         
+ngu202              hgpu8               mix                 gpu:8               gpu:8,dcu:0         
+ngu203              hgpu8               mix$                gpu:8               gpu:8,dcu:0         
+241234 hgpu2p zj_gru_gradient_recovery_261012_003 PENDING 0:00 (Priority)
+241335_[0-2%1] hgpu2p hydrol85935-v009-train PENDING 0:00 (Priority)
+241691 hgpu2p,hgpu4,hgpu8 tessera_01073000_abc_261013 PENDING 0:00 (Priority)
+202229 hgpu4,hgpu8,hgpu2 N22-agg-eval PENDING 0:00 (DependencyNeverSatisfied)
+202294 hgpu4,hgpu8,hgpu2 N22-export PENDING 0:00 (Dependency)
+202315 hgpu4,hgpu8,hgpu2 N22-gate PENDING 0:00 (Dependency)
+202507 hgpu4,hgpu8,hgpu2 N22-mask-iso-531 PENDING 0:00 (DependencyNeverSatisfied)
+215429 hgpu2 id30_m01_s100 PENDING 0:00 (DependencyNeverSatisfied)
+241336_[0-129%1] hgpu2p hydrol85935-v009-attacks PENDING 0:00 (Dependency)
+241337 hgpu2p hydrol85935-v009-validate PENDING 0:00 (Dependency)
+241344 hgpu2p hydrol85935-v010-export PENDING 0:00 (Dependency)
+241345 hgpu2p hydrol85935-temporal-preflight PENDING 0:00 (Dependency)
+202293 hgpu4,hgpu8,hgpu2 N22-manifest PENDING 0:00 (JobHeldUser)
+240076_[0-2%1] hgpu2p hydrol85935-train PENDING 0:00 (JobHeldUser)
+240077_[0-131%1] hgpu2p hydrol85935-attacks PENDING 0:00 (JobHeldUser)
+240078 hgpu2p hydrol85935-report PENDING 0:00 (JobHeldUser)
+237928 hgpu2p zj_lstm_small_recovery_261008_002 RUNNING 4-18:25:06 ngu007
+236706 hgpu2p zj_explicit_gru__small_261006_pathfix RUNNING 7-05:24:11 ngu011
+236707 hgpu2p zj_legacy_lstm__historical_capacity_261006_pathfix RUNNING 7-05:24:11 ngu001
+QUEUE_INSPECTION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T16:42:31+0800
