@@ -175,3 +175,5 @@ git rm inbox/seq
 | kalmannet-noise-x0-20261012 | 两流域原噪声起报均值对照 | 2026-10-13 | 活动 |
 
 | `tessera-joint-01073000-20261013` | TESSERA single-basin A/B/C | isolated 20261013 root; no other jobs modified |
+
+| `id25-snowloss-20261013` | RDS02 single-coefficient snow-loss calibration and 3-hour recovery | 2026-10-13 | Only /data1/home/sunyiq/id25_regional_snowloss_20261013_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
