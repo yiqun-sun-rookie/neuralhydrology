@@ -178,3 +178,5 @@ git rm inbox/seq
 
 | `id25-snowloss-20261013` | RDS02 single-coefficient snow-loss calibration and 3-hour recovery | 2026-10-13 | Only /data1/home/sunyiq/id25_regional_snowloss_20261013_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
 | kalmannet-noise-xp-20261013 | Original noise state-covariance pairing | 2026-10-13 | active |
+
+| china-input-semantics-20261013 | China input source metadata; CPU only; no scientific arrays |
