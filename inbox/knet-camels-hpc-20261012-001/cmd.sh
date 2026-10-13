@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B "$PWD/inbox/knet-camels-hpc-20261012-001/payload/recheck3_r3_deploy.py" "$PWD/inbox/knet-camels-hpc-20261012-001/payload/recheck3_r3.tar.gz"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/three_basin_rule_recheck_20261013_001/query_collect.py /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/three_basin_rule_recheck_20261013_001 241881
