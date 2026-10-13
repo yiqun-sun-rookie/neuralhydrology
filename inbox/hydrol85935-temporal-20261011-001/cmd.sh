@@ -2,6 +2,31 @@
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import ast,hashlib,json
+from pathlib import Path
+p=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+v=p/'control/hybrid_v011_20261013_001'
+def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+def read(path):return json.loads(path.read_text(encoding='utf8'))
+expected={'assignment.json':'40bf00394e99d3785a47add4f83b937658a47ca66d41b32a8051fe7ec1f6ab0e','previous_assignment.json':'b044450cc6a5ab723c7b470423d0dedb0b581d7f6e00efd53f07fb9613068c6c','original_worker_v009.py':'c5740af702e1302fa93cf2211bb7dd8b034cf49d60b0fb28d8f0b138d134d924','worker.py':'7f531145d8fcbdcde3499a0f72badf4640aa252a3ae73cc898427578c1a67c72','worker_bridge.py':'07e947dbfb54f4a4f04911c5bdf42c0fd1d90205c7ce4dadf8f32df1e78f3384','federated_v010.py':'a2f0234fb9e5003522105b92975a72b9b0f4db6bbbbf5125391487213dcf2aee','export_bridge.py':'b7ad61bd69dbde9f0ede5e7ea2ceb34576f99a67cc15baef2b6e55db0daf9c9e'}
+for name,digest in expected.items():assert sha(v/name)==digest,name
+assert sha(p/'control/hybrid_v009_20261012_001/worker.py')==expected['worker_bridge.py']
+assert sha(p/'control/workflow_v010_20261012_001/federated_v010.py')==expected['export_bridge.py']
+assert (v/'previous_assignment.json').read_bytes()==(p/'control/hybrid_v009_20261012_001/assignment.json').read_bytes()
+a=read(v/'previous_assignment.json');b=read(v/'assignment.json')
+assert a['hpc_training_seeds']==b['hpc_training_seeds']==[100,200,300]
+for key in ['scientific_code','output','resource_limits','science_rules_changed']:assert a[key]==b[key],key
+assert b['scientific_code']==str(p/'versions/v004/code') and b['output']==str(p/'execution/hpc_v009')
+assert a['hpc_tasks'][1:]==b['hpc_tasks'][1:] and b['hpc_tasks'][0]['original_task']==a['hpc_tasks'][0]
+assert b['local_assignments'][:2]==a['local_assignments']
+def train_branch(path):
+ for node in ast.walk(ast.parse(path.read_text(encoding='utf8'))):
+  if isinstance(node,ast.If) and ast.unparse(node.test)=="args.stage == 'train'":return ast.dump(ast.Module(body=node.body,type_ignores=[]),include_attributes=False)
+ raise ValueError('training branch missing')
+assert train_branch(v/'worker.py')==train_branch(v/'original_worker_v009.py')
+print('PARENT_DISTRIBUTION_REVIEW '+json.dumps({'orchestration_version':'hybrid_v011_20261013_001','assignment_sha256':expected['assignment.json'],'historical_binding_assignment_sha256':expected['previous_assignment.json'],'parent_model_execution':str(p/'execution/hpc_v009'),'parent_science_code':str(p/'versions/v004/code'),'training_branch_unchanged':True,'hpc_training_job':241335,'actual_model_assets_verified':False,'only_original_model_attack_scope_reallocated':True}),flush=True)
+PY
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
 import hashlib, json, re, subprocess, sys
 from pathlib import Path
 
