@@ -1,0 +1,8 @@
+### channel=kalmannet-noise-ptrace-20261013 seq=2
+### host=login4
+### started=2026-10-13T22:16:11+0800
+### ---------- output ----------
+RESULT={"deployment": "PASS", "input_count": 39, "submission": {"utc": "2026-10-13T14:16:12.986223+00:00", "attempt": "001", "job_id": 241884, "script": {"path": "code/submit_trace.slurm", "bytes": 1029, "sha256": "5eaa0c2b5061eff50db637eee6605b5ab1c0fb32e4886b1e3cca9ae82f3ef907"}, "response": {"command": ["sbatch", "/data1/home/sunyiq/kalmannet_original_noise_origin_covariance_trace_20261013/code/submit_trace.slurm"], "returncode": 0, "stdout": "Submitted batch job 241884\n", "stderr": ""}}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T22:16:13+0800
