@@ -1,0 +1,46 @@
+### channel=knet-camels-hpc-20261012-001 seq=6
+### host=login4
+### started=2026-10-13T12:05:29+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/knet-camels-hpc-20261012-001/payload/correction_effect_20261013_001/diagnostic.tar.gz: OK
+tar: inputs/02092500/selected_checkpoint.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/main.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04105700/reused_cumulative_metrics.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04105700/selected_checkpoint.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04105700/main.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08070200/reused_cumulative_metrics.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08070200/selected_checkpoint.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08070200/main.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09035800/reused_cumulative_metrics.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09035800/selected_checkpoint.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09035800/main.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_366.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_731.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_1096.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_1461.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_1827.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_2192.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_81_2557.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/last_checkpoint.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_366.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_731.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_1096.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_1461.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_1827.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_2192.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500/cold_121_2557.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/main_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: worker.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: controller.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: safe_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: diagnostic.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: plan_contract.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: input_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: 执行计划.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: execution_authorization.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: deployment_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+{"status": "DEPLOYMENT_HASH_PASS", "files": 35}
+Submitted batch job 241629
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T12:05:32+0800
