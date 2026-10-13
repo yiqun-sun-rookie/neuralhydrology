@@ -1,0 +1,43 @@
+### channel=id25-snowloss-20261013 seq=3
+### host=login4
+### started=2026-10-13T17:05:36+0800
+### ---------- output ----------
+241786|PENDING|2026-10-14T22:36:47|(Priority)
+          JOBID PARTITION   PRIORITY       SITE        AGE    JOBSIZE        QOS
+         241786 hcpu48        200160          0        150         10     200000
+hcpu48*|up|14|alloc$|672/0/0/672
+hcpu48*|up|1|maint|0/48/0/48
+hcpu48*|up|17|down*|0/0/816/816
+hcpu48*|up|32|alloc|1536/0/0/1536
+hcpu48y|up|1|down*|0/0/48/48
+hcpu48y|up|10|mix|350/130/0/480
+hcpu48y|up|1|alloc|48/0/0/48
+JobId=241786 JobName=id25_snowloss_261013
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200160 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-10-13T17:01:13 EligibleTime=2026-10-13T17:01:13
+   AccrueTime=2026-10-13T17:01:13
+   StartTime=2026-10-14T22:36:47 EndTime=2026-10-15T04:36:47 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-13T17:06:59
+   Partition=hcpu48 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/id25_regional_snowloss_20261013_001/code/hpc/regional_daily_storage_rds02_snowloss01_20261013.slurm
+   WorkDir=/data1/home/sunyiq/id25_regional_snowloss_20261013_001
+   StdErr=/data1/home/sunyiq/id25_regional_snowloss_20261013_001/logs/rds02-241786.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/id25_regional_snowloss_20261013_001/logs/rds02-241786.out
+   Power=
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T17:05:36+0800
