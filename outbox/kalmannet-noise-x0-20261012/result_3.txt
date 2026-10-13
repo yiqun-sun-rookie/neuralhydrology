@@ -1,0 +1,8 @@
+### channel=kalmannet-noise-x0-20261012 seq=3
+### host=login4
+### started=2026-10-13T12:16:21+0800
+### ---------- output ----------
+RESULT={"deployment": "PASS", "input_count": 37, "submission": {"utc": "2026-10-13T04:16:23.944257+00:00", "basin": "06431500", "job_id": 241631, "script_sha256": "a15b342e73cedb2965a3573babe28a0a5bca5b32378ba06f0f50daddcc667948", "response": {"command": ["sbatch", "/data1/home/sunyiq/kalmannet_original_noise_initial_state_counterfactual_20261012/cases/06431500/attempt_001/submit_case.slurm"], "returncode": 0, "stdout": "Submitted batch job 241631\n", "stderr": ""}}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T12:16:23+0800
