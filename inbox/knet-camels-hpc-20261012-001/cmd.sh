@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B "$PWD/inbox/knet-camels-hpc-20261012-001/payload/origins_041_r2_deploy.py" "$PWD/inbox/knet-camels-hpc-20261012-001/payload/origins_041_r2.tar.gz"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/origins_041_20261013_001/query_collect.py /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/origins_041_20261013_001 241681
