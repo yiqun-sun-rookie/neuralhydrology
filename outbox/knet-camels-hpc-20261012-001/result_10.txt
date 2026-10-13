@@ -1,0 +1,8 @@
+### channel=knet-camels-hpc-20261012-001 seq=10
+### host=login4
+### started=2026-10-13T15:58:23+0800
+### ---------- output ----------
+SUBMISSION_JSON={"status": "SUBMITTED", "job_id": "241668", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/origins_041_20261013_001", "submitted_utc": "2026-10-13T07:58:26.402801+00:00", "sbatch_reply": "Submitted batch job 241668\n", "partition_snapshot": "ngu101|mixed|16/80/0/96\nngu102|mixed|16/80/0/96\nngu103|down*|0/0/96/96\nngu104|mixed|16/80/0/96\n", "archive_sha256": "d819f253f34d6163fcc34b6517fd4b089490ba0840ca7ee7f1645464e810f217", "source_files_verified": 16}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T15:58:26+0800
