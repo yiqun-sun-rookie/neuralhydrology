@@ -1,0 +1,15 @@
+### channel=kalmannet-noise-x0-20261012 seq=5
+### host=login4
+### started=2026-10-13T12:28:34+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "<string>", line 24, in <module>
+  File "/data1/home/sunyiq/kalmannet_original_noise_initial_state_counterfactual_20261012/code/remote_ops.py", line 81, in status
+    state=scheduler(submission['job_id']);case=root/'cases'/basin/'attempt_001'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 11, in scheduler
+RuntimeError: Scheduler query failed: {"queue": {"command": ["squeue", "-j", "241631", "-h", "-o", "%i|%T|%R"], "returncode": 1, "stdout": "", "stderr": "slurm_load_jobs error: Invalid job id specified\n"}, "accounting": {"command": ["sacct", "-j", "241631", "-P", "-n", "--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocCPUS,NNodes,NodeList"], "returncode": 0, "stdout": "241631|COMPLETED|0:0|100|1|1|icn280\n241631.batch|COMPLETED|0:0|100|1|1|icn280\n241631.extern|COMPLETED|0:0|100|1|1|icn280\n", "stderr": ""}}
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-13T12:28:36+0800
