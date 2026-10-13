@@ -1,0 +1,499 @@
+### channel=china-input-semantics-20261013 seq=2
+### host=login4
+### started=2026-10-13T21:58:07+0800
+### ---------- output ----------
+OWN_METADATA_QUERY_JOB_ID=241882
+OWN_METADATA_SERVER_QUERY_UTC=2026-10-13T13:58:07Z
+slurm_load_jobs error: Invalid job id specified
+OWN_METADATA_SQUEUE_EXIT=1
+241882|COMPLETED|0:0|00:00:04|2|billing=2,cpu=2,node=1|
+241882.batch|COMPLETED|0:0|00:00:04|2|cpu=2,mem=0,node=1|3092K
+241882.extern|COMPLETED|0:0|00:00:04|2|billing=2,cpu=2,node=1|1704K
+OWN_METADATA_SACCT_EXIT=0
+OWN_METADATA_LOG_PATH=/data1/home/sunyiq/china_input_semantics_hpc_20261013_001/execution_v1/logs/probe-241882.out
+OWN_METADATA_PROBE_COMPLETE
+
+OWN_METADATA_LOG_BYTES=28
+OWN_METADATA_LOG_PATH=/data1/home/sunyiq/china_input_semantics_hpc_20261013_001/execution_v1/logs/probe-241882.err
+
+OWN_METADATA_LOG_BYTES=0
+OWN_METADATA_REPORT_BYTES=28201
+cb5a3da4f7145a97e7919bebae0a950d8e13dd0984f8052929f46f4a1702b2d7  /data1/home/sunyiq/china_input_semantics_hpc_20261013_001/execution_v1/PROBE_RESULT.json
+OWN_METADATA_REPORT_BEGIN
+{
+  "status": "BOUNDED_SOURCE_METADATA_PROBE_SAVED",
+  "hpc_job_id": "241882",
+  "host": "ngu001",
+  "requested_cpu_env": "2",
+  "contract_sha256": "6d87f559f879deaa0f638931a333ac08ffc56dbee9c7d68a218d5bd4774d3f0f",
+  "source_sha256": "41d163a1a82e2465e9890691c4867a87a13be5304d4bdb721a09dccc75829af3",
+  "source_text": [
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/config.yml",
+      "required": true,
+      "status": "BOUNDED_TEXT_SAVED",
+      "bytes": 1785,
+      "sha256": "b6c609ab5e43724f0ae73ba98b39dc46cc47b0d45122281252c13ab53eb724f8",
+      "text_prefix": "batch_size: 256\nclip_gradient_norm: 1.0\ncommit_hash:\ndata_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us\ndataset: camels_us\ndevice: cuda:0\ndynamic_inputs:\n- PRCP(mm/day)\n- Tmin(C)\n- Tmax(C)\n- SRAD(W/m2)\n- Vp(Pa)\nepochs: 30\nexperiment_name: fswap_armE23_s100\nforcings:\n- era5l_caravan\nhead: regression\nhidden_size: 256\nimg_log_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/img_log\ninitial_forget_bias: 5\nlearning_rate:\n  0: 0.001\n  11: 0.0005\n  21: 0.0001\nlog_n_figures: 0\nlog_tensorboard: false\nloss: NSE\nmetrics:\n- NSE\nmodel: cudalstm\nnum_workers: 4\nnumber_of_basins: 529\noptimizer: Adam\noutput_activation: linear\noutput_dropout: 0.4\npackage_version: 1.12.0\npredict_last_n: 1\nrun_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30\nsave_weights_every: 10\nseed: 100\nseq_length: 270\nstatic_attributes:\n- p_mean\n- pet_mean\n- aridity\n- p_seasonality\n- frac_snow\n- high_prec_freq\n- high_prec_dur\n- low_prec_freq\n- low_prec_dur\n- elev_mean\n- slope_mean\n- area_gages2\n- for_pc_use\n- lai_max\n- lai_diff\n- gvf_max\n- gvf_diff\n- soil_depth_pelletier\n- snd_pc_uav\n- slt_pc_uav\n- cly_pc_uav\n- carbonate_rocks_frac\n- geol_permeability\ntarget_variables:\n- QObs(mm/d)\ntest_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntest_end_date: 30/09/1999\ntest_start_date: 01/10/1989\ntrain_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntrain_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s100_2026_0908_1745_ep30/train_data\ntrain_end_date: 30/09/2008\ntrain_start_date: 01/10/1999\nvalidation_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\n",
+      "text_prefix_is_complete": true,
+      "matches_bound_source": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/config.yml",
+      "required": true,
+      "status": "BOUNDED_TEXT_SAVED",
+      "bytes": 1785,
+      "sha256": "d73ed4a77d44bb351e19b3d978326b96dd7274156b795ab7ce0187c6f0525f6c",
+      "text_prefix": "batch_size: 256\nclip_gradient_norm: 1.0\ncommit_hash:\ndata_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us\ndataset: camels_us\ndevice: cuda:0\ndynamic_inputs:\n- PRCP(mm/day)\n- Tmin(C)\n- Tmax(C)\n- SRAD(W/m2)\n- Vp(Pa)\nepochs: 30\nexperiment_name: fswap_armE23_s200\nforcings:\n- era5l_caravan\nhead: regression\nhidden_size: 256\nimg_log_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/img_log\ninitial_forget_bias: 5\nlearning_rate:\n  0: 0.001\n  11: 0.0005\n  21: 0.0001\nlog_n_figures: 0\nlog_tensorboard: false\nloss: NSE\nmetrics:\n- NSE\nmodel: cudalstm\nnum_workers: 4\nnumber_of_basins: 529\noptimizer: Adam\noutput_activation: linear\noutput_dropout: 0.4\npackage_version: 1.12.0\npredict_last_n: 1\nrun_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30\nsave_weights_every: 10\nseed: 200\nseq_length: 270\nstatic_attributes:\n- p_mean\n- pet_mean\n- aridity\n- p_seasonality\n- frac_snow\n- high_prec_freq\n- high_prec_dur\n- low_prec_freq\n- low_prec_dur\n- elev_mean\n- slope_mean\n- area_gages2\n- for_pc_use\n- lai_max\n- lai_diff\n- gvf_max\n- gvf_diff\n- soil_depth_pelletier\n- snd_pc_uav\n- slt_pc_uav\n- cly_pc_uav\n- carbonate_rocks_frac\n- geol_permeability\ntarget_variables:\n- QObs(mm/d)\ntest_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntest_end_date: 30/09/1999\ntest_start_date: 01/10/1989\ntrain_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntrain_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s200_2026_0908_1745_ep30/train_data\ntrain_end_date: 30/09/2008\ntrain_start_date: 01/10/1999\nvalidation_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\n",
+      "text_prefix_is_complete": true,
+      "matches_bound_source": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/config.yml",
+      "required": true,
+      "status": "BOUNDED_TEXT_SAVED",
+      "bytes": 1785,
+      "sha256": "61e6b1ec2ad08cba5aafa06328fd9533443c832743fde029e17b3e57f0ce1bf2",
+      "text_prefix": "batch_size: 256\nclip_gradient_norm: 1.0\ncommit_hash:\ndata_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us\ndataset: camels_us\ndevice: cuda:0\ndynamic_inputs:\n- PRCP(mm/day)\n- Tmin(C)\n- Tmax(C)\n- SRAD(W/m2)\n- Vp(Pa)\nepochs: 30\nexperiment_name: fswap_armE23_s300\nforcings:\n- era5l_caravan\nhead: regression\nhidden_size: 256\nimg_log_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/img_log\ninitial_forget_bias: 5\nlearning_rate:\n  0: 0.001\n  11: 0.0005\n  21: 0.0001\nlog_n_figures: 0\nlog_tensorboard: false\nloss: NSE\nmetrics:\n- NSE\nmodel: cudalstm\nnum_workers: 4\nnumber_of_basins: 529\noptimizer: Adam\noutput_activation: linear\noutput_dropout: 0.4\npackage_version: 1.12.0\npredict_last_n: 1\nrun_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30\nsave_weights_every: 10\nseed: 300\nseq_length: 270\nstatic_attributes:\n- p_mean\n- pet_mean\n- aridity\n- p_seasonality\n- frac_snow\n- high_prec_freq\n- high_prec_dur\n- low_prec_freq\n- low_prec_dur\n- elev_mean\n- slope_mean\n- area_gages2\n- for_pc_use\n- lai_max\n- lai_diff\n- gvf_max\n- gvf_diff\n- soil_depth_pelletier\n- snd_pc_uav\n- slt_pc_uav\n- cly_pc_uav\n- carbonate_rocks_frac\n- geol_permeability\ntarget_variables:\n- QObs(mm/d)\ntest_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntest_end_date: 30/09/1999\ntest_start_date: 01/10/1989\ntrain_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\ntrain_dir: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/runs/fswap_armE23_s300_2026_0908_1745_ep30/train_data\ntrain_end_date: 30/09/2008\ntrain_start_date: 01/10/1999\nvalidation_basin_file: \n  /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt\n",
+      "text_prefix_is_complete": true,
+      "matches_bound_source": true
+    },
+    {
+      "path": "/data1/home/sunyiq/forcing_swap_daily_2026_09/hpc_deploy/build_era5l_forcing.py",
+      "required": true,
+      "status": "BOUNDED_TEXT_SAVED",
+      "bytes": 10271,
+      "sha256": "73a8da835ee12b93716e5941e09d650101fd1722e3741c22b41ddc329cf3d6ad",
+      "text_prefix": "\"\"\"Build CAMELS-US-format daily forcing files from the Caravan ERA5-Land netCDF, then verify them.\n\nWrites two forcing products under <dest>/basin_mean_forcing/:\n  era5l_caravan/          all 5 variables from Caravan ERA5-Land\n  era5l_caravan_pmaurer/  4 from Caravan ERA5-Land, PRCP copied from Maurer (precipitation-decomposition arm)\n\nDesign rules (PLAN_20260907 section 4):\n  * the date index of every output file is COPIED from that basin's Maurer file -- identical dates, identical row count\n  * the first three header lines (lat, elev, area) are copied VERBATIM from the Maurer file; area is the QObs(mm/d)\n    denominator and must not change\n  * column names are identical to Maurer's, so the training config differs from the frozen one by the `forcings:`\n    line only\n  * vapour pressure from dewpoint by Magnus:  e[Pa] = 611.2 * exp(17.67 * Td / (Td + 243.5)),  Td in degC\n  * downward shortwave has no Caravan equivalent; surface_net_solar_radiation_mean is used (declared, D3)\n\nVerification (every check must pass or the script exits non-zero, which cancels the dependent training jobs):\n  V1 file count == number of basins, for both products\n  V2 header lines 1-3 byte-identical to Maurer\n  V3 date index identical to Maurer (length and every date)\n  V4 no NaN inside 1989-01-01..2008-09-30 (the modelled span incl. 270-day warmup before the test period)\n  V5 20 random basins: written values round-trip to the netCDF source within 1e-4\n  V6 precipitation cross-correlation with Maurer peaks at lag 0 for >= 99% of basins, every exception registered\n     by name (amendment A, approved 2026-09-08: the check targets a SYSTEMATIC offset between the two products;\n     its original per-basin form over-fired on one basin whose Maurer record is shifted only inside 1999-2008)\n  V7 physical ranges: PRCP >= 0, SRAD >= 0, Tmax >= Tmin, Vp > 0\n  V8 the hybrid product's PRCP column is byte-identical to Maurer's, and its other 4 columns to era5l_caravan's\n\"\"\"\nimport argparse\nimport glob\nimport json\nimport os\nimport random\nimport sys\n\nimport numpy as np\nimport pandas as pd\nimport xarray as xr\n\nP = argparse.ArgumentParser()\nP.add_argument('--caravan', default='/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels')\nP.add_argument('--maurer', required=True, help='basin_mean_forcing/maurer directory')\nP.add_argument('--dest', required=True, help='basin_mean_forcing directory to write the two products into')\nP.add_argument('--basins', required=True)\nP.add_argument('--report', required=True)\nA = P.parse_args()\n\nMODEL_START, MODEL_END = '1989-01-01', '2008-09-30'\nV6_MIN_LAG0_SHARE = 0.99  # amendment A, approved by the user 2026-09-08 14:20, before any arm had trained\nCOLS = ['PRCP(mm/day)', 'SRAD(W/m2)', 'Tmax(C)', 'Tmin(C)', 'Vp(Pa)']\nHEADER = 'Year Mnth Day Hr\\t' + '\\t'.join(COLS)\nSRC = {'PRCP(mm/day)': 'total_precipitation_sum', 'SRAD(W/m2)': 'surface_net_solar_radiation_mean',\n       'Tmax(C)': 'temperature_2m_max', 'Tmin(C)': 'temperature_2m_min'}\nFAIL = []\nNOTE = []\n\n\ndef fail(msg):\n    FAIL.append(msg)\n    print('FAIL ' + msg, flush=True)\n\n\ndef vapour_pressure_pa(td_c):\n    return 611.2 * np.exp(17.67 * td_c / (td_c + 243.5))\n\n\ndef read_maurer(path):\n    with open(path) as fh:\n        head3 = [fh.readline() for _ in range(3)]\n    df = pd.read_csv(path, sep=r'\\s+', header=0, skiprows=3)\n    df['date'] = pd.to_datetime(dict(year=df.Year, month=df.Mnth, day=df.Day))\n    return head3, df.set_index('date')\n\n\ndef write_product(path, head3, frame):\n    os.makedirs(os.path.dirname(path), exist_ok=True)\n    lines = [head3[0], head3[1], head3[2], HEADER + '\\n']\n    for d, r in frame.iterrows():\n        lines.append(f'{d.year:04d} {d.month:02d} {d.day:02d} 12\\t{r[\"PRCP(mm/day)\"]:.4f}\\t{r[\"SRAD(W/m2)\"]:.4f}'\n                     f'\\t{r[\"Tmax(C)\"]:.4f}\\t{r[\"Tmin(C)\"]:.4f}\\t{r[\"Vp(Pa)\"]:.2f}\\n')\n    with open(path, 'w', newline='\\n') as fh:\n        fh.writelines(lines)\n\n\ndef main():\n    basins = [l.strip().zfill(8) for l in open(A.basins) if l.strip()]\n    print(f'basins: {len(basins)}', flush=True)\n    lags, ratios, written = {}, {}, {'era5l_caravan': 0, 'era5l_caravan_pmaurer': 0}\n    nan_bad, range_bad = [], []\n\n    for i, b in enumerate(basins):\n        mfiles = glob.glob(f'{A.maurer}/**/{b}_*_forcing_leap.txt', recursive=True)\n        if len(mfiles) != 1:\n            fail(f'{b}: {len(mfiles)} maurer files'); continue\n        mf = mfiles[0]\n        huc = os.path.basename(os.path.dirname(mf))\n        head3, m = read_maurer(mf)\n\n        nc = f'{A.caravan}/camels_{b}.nc'\n        if not os.path.exists(nc):\n            fail(f'{b}: caravan file missing'); continue\n        ds = xr.open_dataset(nc)\n        c = ds[[SRC[k] for k in SRC] + ['dewpoint_temperature_2m_mean']].to_dataframe()\n        c.index = pd.to_datetime(c.index)\n\n        missing = m.index.difference(c.index)\n        if len(missing):\n            fail(f'{b}: caravan misses {len(missing)} of the maurer dates, first {missing[0].date()}'); continue\n\n        out = pd.DataFrame(index=m.index)\n        for k, v in SRC.items():\n            out[k] = c.loc[m.index, v].to_numpy()\n        out['Vp(Pa)'] = vapour_pressure_pa(c.loc[m.index, 'dewpoint_temperature_2m_mean'].to_numpy())\n\n        span = out.loc[MODEL_START:MODEL_END]\n        n_nan = int(span.isna().sum().sum())\n        if n_nan:\n            nan_bad.append((b, n_nan))\n        bad = int((span['PRCP(mm/day)'] < 0).sum() + (span['SRAD(W/m2)'] < 0).sum() +\n                  (span['Tmax(C)'] < span['Tmin(C)']).sum() + (span['Vp(Pa)'] <= 0).sum())\n        if bad:\n            range_bad.append((b, bad))\n\n        mp = m.loc[span.index, 'PRCP(mm/day)']\n        cp = span['PRCP(mm/day)']\n        r = {k: float(mp.corr(cp.shift(k))) for k in (-2, -1, 0, 1, 2)}\n        lags[b] = max(r, key=r.get)\n        ratios[b] = float(cp.mean() / mp.mean()) if mp.mean() > 0 else float('nan')\n\n        write_product(f'{A.dest}/era5l_caravan/{huc}/{b}_lump_era5l_caravan_forcing_leap.txt', head3, out)\n        written['era5l_caravan']",
+      "text_prefix_is_complete": false,
+      "matches_bound_source": true
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/README.md",
+      "required": false,
+      "status": "MISSING"
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/README.txt",
+      "required": false,
+      "status": "MISSING"
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/code/caravan_utils.py",
+      "required": false,
+      "status": "MISSING"
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/code/README.md",
+      "required": false,
+      "status": "MISSING"
+    }
+  ],
+  "original_headers": [
+    {
+      "basin": "01022500",
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_01022500.nc",
+      "data_array_index_operations": 0,
+      "date_coordinate_index_operations": 0,
+      "fingerprint": {
+        "ino": 3237693443,
+        "size": 4377804,
+        "mtime_ns": 1768915711000000000,
+        "ctime_ns": 1768915711000000000,
+        "nlink": 1,
+        "mode": 33188
+      },
+      "matches_bound_fingerprint": true,
+      "data_model": "NETCDF3_64BIT_OFFSET",
+      "global_attributes": {
+        "Units": "dewpoint_temperature_2m: Dew point temperature [°C]\npotential_evaporation_sum_ERA5_LAND: Potential Evaporation [mm] (original potential_evaporation from ERA5-Land)\npotential_evaporation_sum_FAO_PENMAN_MONTEITH: Potential Evaporation [mm] (FAO Penman-Monteith computed from ERA5-Land inputs)\nsnow_depth_water_equivalent: Snow-Water-Equivalent [mm]\nsurface_net_solar_radiation: Surface net solar radiation [W/m2]\nsurface_net_thermal_radiation: Surface net thermal radiation [W/m2]\nsurface_pressure: Surface pressure [kPa]\ntemperature_2m: 2m air temperature [°C]\nu_component_of_wind_10m: U-component of wind at 10m [m/s]\nv_component_of_wind_10m: V-component of wind at 10m [m/s]\nvolumetric_soil_water_layer_1: Volumetric soil water layer 1 (0-7cm) [m3/m3]\nvolumetric_soil_water_layer_2: Volumetric soil water layer 2 (7-28cm) [m3/m3]\nvolumetric_soil_water_layer_3: Volumetric soil water layer 3 (28-100cm) [m3/m3]\nvolumetric_soil_water_layer_4: Volumetric soil water layer 4 (100-289cm) [m3/m3]\ntotal_precipitation: Total precipitation [mm]",
+        "Timezone": "America/New_York",
+        "Sources": "All forcing and state variables are derived from ERA5-Land hourly by ECMWF. Streamflow data was taken from the CAMELS (US) dataset by Newman et al. (2014)."
+      },
+      "dimensions": {
+        "date": 26662
+      },
+      "weather_variable_metadata": {
+        "total_precipitation_sum": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "surface_net_solar_radiation_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_max": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_min": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "dewpoint_temperature_2m_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        }
+      },
+      "date_coordinate_metadata": {
+        "dimensions": [
+          "date"
+        ],
+        "dtype": "int32",
+        "attributes": {
+          "units": "days since 1951-01-01 00:00:00",
+          "calendar": "proleptic_gregorian"
+        }
+      },
+      "status": "HEADER_ONLY_SAVED",
+      "timezone_rule_metadata": {
+        "status": "REFERENCE_RULES_ONLY_NOT_ORIGINAL_GENERATION_PROOF",
+        "timezone": "America/New_York",
+        "reference_dates": [
+          {
+            "reference_date": "2020-01-01",
+            "utc_offset_seconds": -18000.0,
+            "dst_seconds": 0.0
+          },
+          {
+            "reference_date": "2020-08-01",
+            "utc_offset_seconds": -14400.0,
+            "dst_seconds": 3600.0
+          }
+        ],
+        "historical_generation_offset_verified": false
+      }
+    },
+    {
+      "basin": "05495500",
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_05495500.nc",
+      "data_array_index_operations": 0,
+      "date_coordinate_index_operations": 0,
+      "fingerprint": {
+        "ino": 3439501573,
+        "size": 4377804,
+        "mtime_ns": 1768915715000000000,
+        "ctime_ns": 1768915715000000000,
+        "nlink": 1,
+        "mode": 33188
+      },
+      "matches_bound_fingerprint": true,
+      "data_model": "NETCDF3_64BIT_OFFSET",
+      "global_attributes": {
+        "Units": "dewpoint_temperature_2m: Dew point temperature [°C]\npotential_evaporation_sum_ERA5_LAND: Potential Evaporation [mm] (original potential_evaporation from ERA5-Land)\npotential_evaporation_sum_FAO_PENMAN_MONTEITH: Potential Evaporation [mm] (FAO Penman-Monteith computed from ERA5-Land inputs)\nsnow_depth_water_equivalent: Snow-Water-Equivalent [mm]\nsurface_net_solar_radiation: Surface net solar radiation [W/m2]\nsurface_net_thermal_radiation: Surface net thermal radiation [W/m2]\nsurface_pressure: Surface pressure [kPa]\ntemperature_2m: 2m air temperature [°C]\nu_component_of_wind_10m: U-component of wind at 10m [m/s]\nv_component_of_wind_10m: V-component of wind at 10m [m/s]\nvolumetric_soil_water_layer_1: Volumetric soil water layer 1 (0-7cm) [m3/m3]\nvolumetric_soil_water_layer_2: Volumetric soil water layer 2 (7-28cm) [m3/m3]\nvolumetric_soil_water_layer_3: Volumetric soil water layer 3 (28-100cm) [m3/m3]\nvolumetric_soil_water_layer_4: Volumetric soil water layer 4 (100-289cm) [m3/m3]\ntotal_precipitation: Total precipitation [mm]",
+        "Timezone": "America/Chicago",
+        "Sources": "All forcing and state variables are derived from ERA5-Land hourly by ECMWF. Streamflow data was taken from the CAMELS (US) dataset by Newman et al. (2014)."
+      },
+      "dimensions": {
+        "date": 26662
+      },
+      "weather_variable_metadata": {
+        "total_precipitation_sum": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "surface_net_solar_radiation_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_max": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_min": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "dewpoint_temperature_2m_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        }
+      },
+      "date_coordinate_metadata": {
+        "dimensions": [
+          "date"
+        ],
+        "dtype": "int32",
+        "attributes": {
+          "units": "days since 1951-01-01 00:00:00",
+          "calendar": "proleptic_gregorian"
+        }
+      },
+      "status": "HEADER_ONLY_SAVED",
+      "timezone_rule_metadata": {
+        "status": "REFERENCE_RULES_ONLY_NOT_ORIGINAL_GENERATION_PROOF",
+        "timezone": "America/Chicago",
+        "reference_dates": [
+          {
+            "reference_date": "2020-01-01",
+            "utc_offset_seconds": -21600.0,
+            "dst_seconds": 0.0
+          },
+          {
+            "reference_date": "2020-08-01",
+            "utc_offset_seconds": -18000.0,
+            "dst_seconds": 3600.0
+          }
+        ],
+        "historical_generation_offset_verified": false
+      }
+    },
+    {
+      "basin": "11532500",
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_11532500.nc",
+      "data_array_index_operations": 0,
+      "date_coordinate_index_operations": 0,
+      "fingerprint": {
+        "ino": 3439527685,
+        "size": 4377808,
+        "mtime_ns": 1768915722000000000,
+        "ctime_ns": 1768915722000000000,
+        "nlink": 1,
+        "mode": 33188
+      },
+      "matches_bound_fingerprint": true,
+      "data_model": "NETCDF3_64BIT_OFFSET",
+      "global_attributes": {
+        "Units": "dewpoint_temperature_2m: Dew point temperature [°C]\npotential_evaporation_sum_ERA5_LAND: Potential Evaporation [mm] (original potential_evaporation from ERA5-Land)\npotential_evaporation_sum_FAO_PENMAN_MONTEITH: Potential Evaporation [mm] (FAO Penman-Monteith computed from ERA5-Land inputs)\nsnow_depth_water_equivalent: Snow-Water-Equivalent [mm]\nsurface_net_solar_radiation: Surface net solar radiation [W/m2]\nsurface_net_thermal_radiation: Surface net thermal radiation [W/m2]\nsurface_pressure: Surface pressure [kPa]\ntemperature_2m: 2m air temperature [°C]\nu_component_of_wind_10m: U-component of wind at 10m [m/s]\nv_component_of_wind_10m: V-component of wind at 10m [m/s]\nvolumetric_soil_water_layer_1: Volumetric soil water layer 1 (0-7cm) [m3/m3]\nvolumetric_soil_water_layer_2: Volumetric soil water layer 2 (7-28cm) [m3/m3]\nvolumetric_soil_water_layer_3: Volumetric soil water layer 3 (28-100cm) [m3/m3]\nvolumetric_soil_water_layer_4: Volumetric soil water layer 4 (100-289cm) [m3/m3]\ntotal_precipitation: Total precipitation [mm]",
+        "Timezone": "America/Los_Angeles",
+        "Sources": "All forcing and state variables are derived from ERA5-Land hourly by ECMWF. Streamflow data was taken from the CAMELS (US) dataset by Newman et al. (2014)."
+      },
+      "dimensions": {
+        "date": 26662
+      },
+      "weather_variable_metadata": {
+        "total_precipitation_sum": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "surface_net_solar_radiation_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_max": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "temperature_2m_min": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        },
+        "dewpoint_temperature_2m_mean": {
+          "dimensions": [
+            "date"
+          ],
+          "dtype": "float32",
+          "attributes": {
+            "_FillValue": "NaN"
+          }
+        }
+      },
+      "date_coordinate_metadata": {
+        "dimensions": [
+          "date"
+        ],
+        "dtype": "int32",
+        "attributes": {
+          "units": "days since 1951-01-01 00:00:00",
+          "calendar": "proleptic_gregorian"
+        }
+      },
+      "status": "HEADER_ONLY_SAVED",
+      "timezone_rule_metadata": {
+        "status": "REFERENCE_RULES_ONLY_NOT_ORIGINAL_GENERATION_PROOF",
+        "timezone": "America/Los_Angeles",
+        "reference_dates": [
+          {
+            "reference_date": "2020-01-01",
+            "utc_offset_seconds": -28800.0,
+            "dst_seconds": 0.0
+          },
+          {
+            "reference_date": "2020-08-01",
+            "utc_offset_seconds": -25200.0,
+            "dst_seconds": 3600.0
+          }
+        ],
+        "historical_generation_offset_verified": false
+      }
+    }
+  ],
+  "directory_metadata": [
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan",
+      "present": true,
+      "complete_listing": true,
+      "entries": [
+        {
+          "name": "531_basin_list.txt",
+          "is_directory": false,
+          "is_link": false
+        },
+        {
+          "name": "Caravan",
+          "is_directory": false,
+          "is_link": true
+        },
+        {
+          "name": "all_basins.txt",
+          "is_directory": false,
+          "is_link": false
+        },
+        {
+          "name": "attributes",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "camels_clean_basins.txt",
+          "is_directory": false,
+          "is_link": false
+        },
+        {
+          "name": "caravan-long-logo.png",
+          "is_directory": false,
+          "is_link": false
+        },
+        {
+          "name": "licenses",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "timeseries",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "valid_basins.txt",
+          "is_directory": false,
+          "is_link": false
+        }
+      ]
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data/Caravan/code",
+      "present": false,
+      "complete_listing": false,
+      "entries": []
+    },
+    {
+      "path": "/data1/home/sunyiq/neuralhydrology/data",
+      "present": true,
+      "complete_listing": true,
+      "entries": [
+        {
+          "name": "Caravan",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "camels_us",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "camelsh",
+          "is_directory": true,
+          "is_link": false
+        },
+        {
+          "name": "namou_kuwei_hourly",
+          "is_directory": true,
+          "is_link": false
+        }
+      ]
+    }
+  ],
+  "original_header_records": 3,
+  "source_text_bytes": 15626,
+  "source_data_array_reads": 0,
+  "date_coordinate_array_reads": 0,
+  "weather_values_read": 0,
+  "flow_values_read": 0,
+  "raster_values_read": 0,
+  "scientific_data_requests": 0,
+  "model_calls": 0,
+  "training": 0,
+  "gpu_requested": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0,
+  "historical_generation_offset_parameters_verified": false,
+  "elapsed_seconds": 2.8459274731576443,
+  "peak_rss_kib": 62700
+}
+OWN_METADATA_REPORT_END
+OWN_METADATA_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T21:58:08+0800
