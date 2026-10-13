@@ -173,3 +173,5 @@ git rm inbox/seq
 
 | `id25-regional-daily-20261012` | Regional daily snow-fast-slow storage training and 3-hour recovery | 2026-10-12 | Only /data1/home/sunyiq/id25_regional_daily_storage_20261012_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
 | kalmannet-noise-x0-20261012 | 两流域原噪声起报均值对照 | 2026-10-13 | 活动 |
+
+| `tessera-joint-01073000-20261013` | TESSERA single-basin A/B/C | isolated 20261013 root; no other jobs modified |
