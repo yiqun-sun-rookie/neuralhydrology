@@ -1,0 +1,24 @@
+### channel=id25-snowloss-20261013 seq=1
+### host=login4
+### started=2026-10-13T16:59:28+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/id25-snowloss-20261013/payload/snowloss_payload_v001.tar.gz: OK
+tar: baseline_monthly.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/hpc/regional_daily_storage_rds02_snowloss01_20261013.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/regional_daily_storage.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/regional_daily_storage_snowloss.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/regional_storage_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/scripts/calibrate_regional_snowloss.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: config.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: fit_scales.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: parent/metadata.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: parent/references.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: parent/static_features.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: parent/weights.pt: implausibly old time stamp 1970-01-01 08:00:00
+Submitted batch job 241786
+CAMPAIGN_ROOT=/data1/home/sunyiq/id25_regional_snowloss_20261013_001
+JOB_ID=241786
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T16:59:28+0800
