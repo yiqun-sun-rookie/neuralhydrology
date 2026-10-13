@@ -1,0 +1,8 @@
+### channel=knet-camels-hpc-20261012-001 seq=23
+### host=login4
+### started=2026-10-13T21:35:49+0800
+### ---------- output ----------
+SUBMISSION_JSON={"status": "SUBMITTED", "job_id": "241880", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/three_basin_rule_recheck_20261013_001", "submitted_utc": "2026-10-13T13:35:50.016557+00:00", "sbatch_reply": "Submitted batch job 241880\n", "partition_snapshot": "ngu101|mixed|16/80/0/96\nngu102|mixed|16/80/0/96\nngu103|down*|0/0/96/96\nngu104|mixed|16/80/0/96\n", "archive_sha256": "78fa0b330714e5d5382bc705a5390b8f42d7b2717e4b6afee3b88d18919d0780", "source_files_verified": 5}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T21:35:50+0800
