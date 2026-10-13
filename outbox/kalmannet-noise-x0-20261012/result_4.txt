@@ -1,0 +1,16 @@
+### channel=kalmannet-noise-x0-20261012 seq=4
+### host=login4
+### started=2026-10-13T12:17:47+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "<string>", line 6, in <module>
+  File "/data1/home/sunyiq/kalmannet_original_noise_initial_state_counterfactual_20261012/code/remote_ops.py", line 81, in status
+    state=scheduler(submission['job_id']);case=root/'cases'/basin/'attempt_001'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_original_noise_initial_state_counterfactual_20261012/code/remote_ops.py", line 36, in scheduler
+    raise RuntimeError('Incomplete scheduler response: '+json.dumps({'queue':queue,'accounting':accounting}))
+RuntimeError: Incomplete scheduler response: {"queue": {"command": ["squeue", "-j", "241631", "-h", "-o", "%i|%T|%R"], "returncode": 0, "stdout": "241631|RUNNING|icn280\n", "stderr": ""}, "accounting": {"command": ["sacct", "-j", "241631", "-P", "-n", "--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocCPUS,NNodes,NodeList"], "returncode": 0, "stdout": "", "stderr": ""}}
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-13T12:17:48+0800
