@@ -1,0 +1,53 @@
+### channel=tessera-joint-01073000-20261013 seq=1
+### host=login4
+### started=2026-10-13T15:59:04+0800
+### ---------- output ----------
+Tue Oct 13 07:59:04 UTC 2026
+login4
+sunyiq
+             JOBID    PARTITION                             NAME      STATE       TIME  NODES NODELIST(REASON)
+            241234       hgpu2p zj_gru_gradient_recovery_261012_    PENDING       0:00      1 (Priority)
+    241335_[0-2%1]       hgpu2p           hydrol85935-v009-train    PENDING       0:00      1 (Priority)
+            202229 hgpu4,hgpu8,                     N22-agg-eval    PENDING       0:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,                       N22-export    PENDING       0:00      1 (Dependency)
+            202315 hgpu4,hgpu8,                         N22-gate    PENDING       0:00      1 (Dependency)
+            202507 hgpu4,hgpu8,                 N22-mask-iso-531    PENDING       0:00      1 (DependencyNeverSatisfied)
+            215429        hgpu2                    id30_m01_s100    PENDING       0:00      1 (DependencyNeverSatisfied)
+  241336_[0-129%1]       hgpu2p         hydrol85935-v009-attacks    PENDING       0:00      1 (Dependency)
+            241337       hgpu2p        hydrol85935-v009-validate    PENDING       0:00      1 (Dependency)
+            241344       hgpu2p          hydrol85935-v010-export    PENDING       0:00      1 (Dependency)
+            241345       hgpu2p   hydrol85935-temporal-preflight    PENDING       0:00      1 (Dependency)
+            202293 hgpu4,hgpu8,                     N22-manifest    PENDING       0:00      1 (JobHeldUser)
+    240076_[0-2%1]       hgpu2p                hydrol85935-train    PENDING       0:00      1 (JobHeldUser)
+  240077_[0-131%1]       hgpu2p              hydrol85935-attacks    PENDING       0:00      1 (JobHeldUser)
+            240078       hgpu2p               hydrol85935-report    PENDING       0:00      1 (JobHeldUser)
+            237928       hgpu2p zj_lstm_small_recovery_261008_00    RUNNING 4-17:41:39      1 ngu007
+            236706       hgpu2p zj_explicit_gru__small_261006_pa    RUNNING 7-04:40:44      1 ngu011
+            236707       hgpu2p zj_legacy_lstm__historical_capac    RUNNING 7-04:40:44      1 ngu001
+            241653      hcpu48y cpu-sixteen-full-validation-2026    RUNNING      57:24      1 icn280
+NODELIST            PARTITION           STATE               GRES                GRES_USED           
+ngu001              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu002              hgpu2p              down*               gpu:2               gpu:0,dcu:0         
+ngu004              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu005              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu006              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu007              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu008              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu010              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu011              hgpu2p              mix                 gpu:2               gpu:2,dcu:0         
+ngu101              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu102              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu103              hgpu4               down*               gpu:4               gpu:0,dcu:0         
+ngu104              hgpu4               mix                 gpu:4               gpu:4,dcu:0         
+ngu201              hgpu8               mix                 gpu:8               gpu:8,dcu:0         
+ngu202              hgpu8               mix                 gpu:8               gpu:8,dcu:0         
+ngu203              hgpu8               mix$                gpu:8               gpu:8,dcu:0         
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  656T  299T  69% /data1
+ROOT_AVAILABLE
+NOT_PRESENT /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt
+NOT_PRESENT /data1/home/sunyiq/neuralhydrology/external/tessera_v2_small_9e1a725/ckpt/student_small.pt
+PREFLIGHT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-13T15:59:04+0800
