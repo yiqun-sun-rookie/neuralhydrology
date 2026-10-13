@@ -5,11 +5,13 @@ JID=$(cat "$ROOT/job_id.txt")
 test "$JID" = 241691 || { echo UNEXPECTED_JOB_ID; exit 1; }
 STATE=$(squeue -j "$JID" -h -o '%T')
 if [ "$STATE" = PENDING ]; then
-  /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python "$HOME/hpc_mailbox/inbox/tessera-joint-01073000-20261013/payload/patch_absolute_config.py"
-  cd "$ROOT"
-  sha256sum -c MANIFEST.sha256 > logs/input_verification_after_path_fix.txt
-  echo QUEUED_LAUNCH_FIX_CONFIRMED
+  INFO=$(scontrol show job "$JID" -o)
+  case "$INFO" in
+    *"WorkDir=$ROOT"*) scontrol hold "$JID" ;;
+    *) echo WRONG_WORK_DIRECTORY_NO_ACTION; exit 1 ;;
+  esac
+  echo HELD_OWN_JOB_FOR_CONFIRMED_STATIC_FEATURE_ORDER_BUG
 else
-  echo "NO_PATCH_STATE=$STATE"
+  echo "NO_HOLD_STATE=$STATE"
 fi
 squeue -j "$JID" -h -o '%i %P %j %T %M %R' || true
