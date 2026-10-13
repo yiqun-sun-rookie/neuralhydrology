@@ -180,3 +180,4 @@ git rm inbox/seq
 | kalmannet-noise-xp-20261013 | Original noise state-covariance pairing | 2026-10-13 | active |
 
 | china-input-semantics-20261013 | China input source metadata; CPU only; no scientific arrays |
+| kalmannet-noise-ptrace-20261013 | Original noise origin covariance trace | 2026-10-13 | active |
