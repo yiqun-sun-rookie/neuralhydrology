@@ -172,3 +172,4 @@ git rm inbox/seq
 | `knet-camels-hpc-20261012-001` | Knet CAMELS future HPC preparation; current three-basin run remains local | 2026-10-12 | Only /data1/home/sunyiq/knet_camels_hpc_20261012_001; one short CPU import probe, no real training during preparation; preserve existing jobs, shared environments and all other channels. |
 
 | `id25-regional-daily-20261012` | Regional daily snow-fast-slow storage training and 3-hour recovery | 2026-10-12 | Only /data1/home/sunyiq/id25_regional_daily_storage_20261012_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
+| kalmannet-noise-x0-20261012 | 两流域原噪声起报均值对照 | 2026-10-13 | 活动 |
