@@ -1,5 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-python -B "$PWD/inbox/knet-camels-hpc-20261012-001/payload/origins_041_20261013_001_deploy.py" "$PWD/inbox/knet-camels-hpc-20261012-001/payload/origins_041_20261013_001.tar.gz"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/origins_041_20261013_001/query_collect.py /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/origins_041_20261013_001 241668
