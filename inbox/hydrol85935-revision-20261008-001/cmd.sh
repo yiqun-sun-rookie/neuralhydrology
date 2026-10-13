@@ -1,6 +1,89 @@
 #!/usr/bin/env bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import datetime,hashlib,json,os,re,subprocess,tarfile
+from pathlib import Path
+ROOT=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+NEW=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v012_20261013_001')
+PREVIOUS=ROOT/'control/hybrid_v011_20261013_001'
+SCHED=ROOT/'control/hybrid_v009_20261012_001'
+WF=ROOT/'control/workflow_v010_20261012_001'
+PAYLOAD=Path('/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-revision-20261008-001/payload/hybrid_v012_20261013_001.tar.gz')
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,v):
+    with p.open('x') as f: json.dump(v,f,indent=2)
+def emit(k,v): print(k+' '+json.dumps(v),flush=True)
+assert ROOT.resolve()==ROOT and (ROOT/'OWNER').read_text().strip()=='hydrol85935_revision_20261008_001'
+assert sha(PAYLOAD)=='7a693d4adc8c2e196b4bcd62a213773138ac6be0d34aa43b7d2c2455aabc45d0'
+assert not NEW.exists(),'Existing attempt; retrieve evidence instead of replaying'
+with tarfile.open(PAYLOAD) as archive:
+    members=archive.getmembers()
+    assert all(m.isfile() and Path(m.name).name==m.name for m in members)
+    blobs={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(blobs['payload_files.json'])
+assert set(blobs)==set(manifest)|{'payload_files.json'}
+for name,h in manifest.items(): assert hashlib.sha256(blobs[name]).hexdigest()==h
+registered=json.loads(blobs['registered_job_identity.json'])
+scope=json.loads(blobs['delegation_scope.json'])
+def jobs_check():
+    rows={}
+    for jid,expected in registered.items():
+        r=subprocess.run(['scontrol','show','job','-o',jid],text=True,capture_output=True,timeout=45)
+        assert r.returncode==0,(jid,r.stderr)
+        value=dict(re.findall(r'(\S+?)=(\S*)',r.stdout))
+        assert value['JobId']==jid and value['JobState']=='PENDING',(jid,value)
+        assert value.get('Restarts','0')=='0' and value.get('RunTime')=='00:00:00',(jid,value)
+        for k,v in expected.items(): assert value.get(k)==v,(jid,k,value.get(k),v)
+        rows[jid]=dict(fields=value,raw=r.stdout)
+    return rows
+def unused():
+    execution=ROOT/'execution/hpc_v009'
+    for b in scope['basins']:
+        assert not (execution/'records/clean'/scope['model']/b).exists(),b
+        for cid in scope['combinations']:
+            assert not (execution/'records/attacks'/cid/b).exists(),(cid,b)
+    ledger=execution/'records/ledger.jsonl'
+    if ledger.exists():
+        for line in ledger.open():
+            if line.strip():
+                row=json.loads(line)
+                assert not (str(row.get('basin_id')) in scope['basins'] and row.get('combination_id') in scope['combinations']),row
+    for control in [SCHED,PREVIOUS]:
+        assert not list((control/'stage_results').glob('attacks_1_*.json')),'Candidate task has receipt history'
+    assert not list((SCHED/'logs').glob('attacks-241336_1.*')),'Candidate task has scheduler log history'
+    assert not (PREVIOUS/'hpc_packet_001').exists() and not (WF/'hpc_packet_001').exists()
+before=jobs_check(); unused()
+assert sha(PREVIOUS/'assignment.json')=='40bf00394e99d3785a47add4f83b937658a47ca66d41b32a8051fe7ec1f6ab0e'
+assert sha(SCHED/'worker.py')==manifest['previous_worker_bridge.py']
+assert sha(WF/'federated_v010.py')==manifest['previous_export_bridge.py']
+NEW.mkdir()
+for name,data in blobs.items():
+    with (NEW/name).open('xb') as f:f.write(data)
+save(NEW/'scheduler_before.json',before)
+entries=[dict(path=str(SCHED/'worker.py'),original_sha256=sha(SCHED/'worker.py'),new_sha256=manifest['worker_bridge.py'],source='worker_bridge.py'),
+         dict(path=str(WF/'federated_v010.py'),original_sha256=sha(WF/'federated_v010.py'),new_sha256=manifest['export_bridge.py'],source='export_bridge.py')]
+save(NEW/'deployment_transaction.json',dict(status='PREPARED',entrypoints=entries,assignment_sha256=manifest['assignment.json'],no_scheduler_mutation=True))
+jobs_check(); unused()
+for entry in reversed(entries):
+    target=Path(entry['path']); assert sha(target)==entry['original_sha256']
+    tmp=target.with_name(target.name+'.v012.tmp')
+    with tmp.open('xb') as f:f.write(blobs[entry['source']])
+    os.replace(tmp,target); assert sha(target)==entry['new_sha256']
+after=jobs_check(); unused()
+save(NEW/'scheduler_after.json',after)
+confirmation=dict(status='DEPLOYMENT_CONFIRMED',assignment_sha256=manifest['assignment.json'],delegation_scope=scope,
+    entrypoints=entries,old_full_jobs_held=True,existing_job_ids_unchanged=True,
+    dependencies_resources_submit_times_unchanged=True,no_scheduler_mutation=True,
+    scientific_code_modified=False,other_experiments_modified=False,
+    remote_utc=datetime.datetime.now(datetime.timezone.utc).isoformat())
+save(NEW/'deployment_confirmation.json',confirmation)
+emit('CPU_PARALLEL_DEPLOYMENT',confirmation)
+
+PY
+#!/usr/bin/env bash
+set -eo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 ROOT=/data1/home/sunyiq/hydrol85935_revision_20261008_001
 test "$(readlink -f "$ROOT")" = "$ROOT"
 test "$(cat "$ROOT/OWNER")" = hydrol85935_revision_20261008_001
@@ -57,7 +140,7 @@ def has_accelerator(line):
 rows = [line for line in result.stdout.splitlines() if has_accelerator(line)]
 output('ALL_GPU_NODES', dict(returncode=0, stdout='\n'.join(rows)+'\n', stderr=result.stderr,
        all_node_rows=len(result.stdout.splitlines()), gpu_node_rows=len(rows)))
-folder = root / 'control/hybrid_v011_20261013_001'
+folder = root / 'control/hybrid_v012_20261013_001'
 scheduler_folder = root / 'control/hybrid_v009_20261012_001'
 import hashlib
 owner = json.loads((folder/'ownership.json').read_text())
@@ -92,7 +175,7 @@ PY
 import json,subprocess
 from pathlib import Path
 root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-folder=root/'control/hybrid_v011_20261013_001';scheduler_folder=root/'control/hybrid_v009_20261012_001';execution=root/'execution/hpc_v009'
+folder=root/'control/hybrid_v012_20261013_001';scheduler_folder=root/'control/hybrid_v009_20261012_001';execution=root/'execution/hpc_v009'
 def emit(label,value):print(label+' '+json.dumps(value),flush=True)
 for name in ['submission_attempt.json','jobs.json','ownership.json']:
     path=folder/name;emit('HYBRID_CONTROL',dict(path=str(path),value=json.loads(path.read_text()) if path.exists() else None))
@@ -137,6 +220,6 @@ else:
    if name.startswith('temporal_main') and 'ArrayTaskThrottle=1 ' not in r.stdout:raise RuntimeError('Temporal concurrency changed')
   a=subprocess.run(['sacct','-X','-j',str(jid),'-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList'],capture_output=True,text=True,timeout=45)
   emit('WORKFLOW_ACCOUNTING',dict(name=name,job_id=jid,returncode=a.returncode,stdout=a.stdout,stderr=a.stderr))
- for p in [root/'control/hybrid_v011_20261013_001/hpc_packet_001/index.json',t/'control/parent_binding_v010.json',t/'control/new_models_verified.json',t/'control/resource_pilot.json',t/'reports/coverage_and_summary.json']:
+ for p in [root/'control/hybrid_v012_20261013_001/hpc_packet_001/index.json',t/'control/parent_binding_v010.json',t/'control/new_models_verified.json',t/'control/resource_pilot.json',t/'reports/coverage_and_summary.json']:
   if p.is_file():emit('WORKFLOW_RESULT',dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),value=json.loads(p.read_text())))
 PY
