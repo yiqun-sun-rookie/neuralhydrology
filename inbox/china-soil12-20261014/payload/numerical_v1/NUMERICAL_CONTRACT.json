@@ -1,0 +1,82 @@
+{
+  "numerical_root": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1",
+  "ids": [
+    "17456",
+    "24934",
+    "26031",
+    "26574",
+    "27111",
+    "27608",
+    "27982",
+    "30969",
+    "35582",
+    "36621",
+    "36857",
+    "37225"
+  ],
+  "files": {
+    "depth": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/depth_original.tif",
+      "bytes": 73091828,
+      "sha256": "9ba08f1c45ee38ed2f22316c51de9fdb218fe42256415ef3b90b4c53bf768181"
+    },
+    "mask": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/mask_original.tif",
+      "bytes": 15654859,
+      "sha256": "3fc82a6a8ba90404d7e1c2f41eb2a03f0fa6072aef2f48a6cfe1e843c4b7f5b9"
+    },
+    "geometry": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/geometry_original.geojson",
+      "bytes": 97391,
+      "sha256": "7c95350f5c283d73651b42dfce404615359a2feed09c719616541a0b07eea7e1"
+    },
+    "old_reference": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/old_soil_reference.csv",
+      "bytes": 334182,
+      "sha256": "1ce8a13e33f4fb4db89c072a5de1680b46726e595b9b162dd66ec8fdbc4ce8e2"
+    }
+  },
+  "geometry_sha256": {
+    "17456": "963be85639fad12d98ff790de80f85ebee5da728ef018b953833f33aab7f1991",
+    "24934": "fed65efa790c7a0952daada5978758195ca7e688fbf68c536c58d99c826128fa",
+    "26031": "855d4d773e48325ca2dcae7437768cdc67f9c65941bdb5fe2e33f565e751c54a",
+    "26574": "466b63048a6f2554334d688fe1d11e1dc1af32f17cfa33d0dec3dc8dbac388af",
+    "27111": "8a8bfdb4af2cc93620835a9004cd27317210e7c8529d6b48f8bb754f23f34095",
+    "27608": "776cf82e71e2f57fcc8531b290c47db99219e8b36135a3a90b3bccf613cb1239",
+    "27982": "07e296fb07d5c102c45b4ad093cee56261c1e3615112ddf687a16a3101e46697",
+    "30969": "d4846e6c8b60fc0fc710baf0616a6986e06897995163c53b53321b192e38ca8b",
+    "35582": "fc1b5f6b31c391d77d30b33cffedc4640d57cf87d80fa2b0e69119758182e3ec",
+    "36621": "6f4d1cce511373f07e6225ab7cf61da56e16e6591df3e3d249ad020d8a1fc17b",
+    "36857": "35559818d704b4ecbacb0d96cf6cca3989478464f42fd74a14dc303b87303b25",
+    "37225": "4e0d8d0cde10f6435bd1cbba4bd9c263d4b5df1ffdbfd85b25108550354bed5c"
+  },
+  "maximum_window_pixels": {
+    "17456": 12870,
+    "24934": 5405,
+    "26031": 13824,
+    "26574": 4428,
+    "27111": 986,
+    "27608": 2793,
+    "27982": 5740,
+    "30969": 1696,
+    "35582": 8730,
+    "36621": 6497,
+    "36857": 4661,
+    "37225": 5508
+  },
+  "maximum_total_window_pixels": 73138,
+  "resource_bound_from_hpc_integer_windows": true,
+  "source_metadata_job_id": "242478",
+  "source_metadata_sha256": "4287fa71fbc2694efeb2c76edbd5741ec75d3426e95702545a1cc166f4b993c6",
+  "boundary_allowance_cells_each_dimension": 2,
+  "maximum_polygon_grid_relative_area_error": 0.005,
+  "nodata_fill_operations": 0,
+  "model_calls": 0,
+  "training": 0,
+  "observed_station_validations": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0,
+  "nominal_grid_coefficient_absolute_degrees": 1e-12,
+  "nominal_grid_coefficient_relative_tolerance": 0,
+  "zero_rotation_required": true
+}

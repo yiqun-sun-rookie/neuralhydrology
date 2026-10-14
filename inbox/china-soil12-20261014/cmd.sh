@@ -1,37 +1,77 @@
 #!/bin/bash
 set -eo pipefail
-ROOT=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v2
-EXPECTED=242478
-test -f "$ROOT/OWN_RUNTIME_JOB_ID"
-test "$(cat "$ROOT/OWN_RUNTIME_JOB_ID")" = "$EXPECTED"
-printf 'OWN_RUNTIME_QUERY_JOB_ID=%s\n' "$EXPECTED"
-date -u '+OWN_RUNTIME_SERVER_QUERY_UTC=%Y-%m-%dT%H:%M:%SZ'
+umask 077
+ROOT=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1
+test ! -e "$ROOT"
+test -d /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_COPY'
+import hashlib,io,json,os,pathlib,zipfile
+root=pathlib.Path('/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1')
+base=pathlib.Path('/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001')
+assert base.resolve(strict=True)==base and not root.exists()
+runtime=(base/'runtime_recovery_v2/RUNTIME_INSTALL_RESULT.json').read_bytes()
+assert len(runtime)==11565 and hashlib.sha256(runtime).hexdigest()=='4287fa71fbc2694efeb2c76edbd5741ec75d3426e95702545a1cc166f4b993c6'
+assert json.loads(runtime)['status']=='PASS_PRIVATE_RUNTIME_AND_PROVISIONAL_WINDOWS'
+source=pathlib.Path(os.environ['HOME'])/'hpc_mailbox/inbox/china-soil12-20261014/payload/numerical_v1'
+members=json.loads('[{"name":"NUMERICAL_CONTRACT.json","local_path":"inputs/soil_main_payload_v2/NUMERICAL_CONTRACT.json","bytes":3181,"sha256":"6d2f2177870775ac8307a14b5263297369cf4c9f70554aa70b9d8c1c80c42087","git_blob_sha1":"8a9c43898ed189122d3d25f0d47c37f14cac9c47"},{"name":"numerical_main.py","local_path":"inputs/soil_main_payload_v2/numerical_main.py","bytes":12283,"sha256":"16ff3fb81d966416c7f4b169cd1e53aa2d74782422655c560ab1f7bb6fc2115f","git_blob_sha1":"cc26520e9f8f8253adbac06ac46a26fda8b087a4"},{"name":"soil_main.sbatch","local_path":"inputs/soil_main_payload_v2/soil_main.sbatch","bytes":1065,"sha256":"7726a2dcb39719e86e58a1b2142459605f73faacfe5c3fd909d249191bdaf25b","git_blob_sha1":"03e86156d4b2c8a63529c0d54f905fb8a25114f2"},{"name":"source_archive_000.bin","local_path":"inputs/soil_main_payload_v2/source_archive_000.bin","bytes":2097152,"sha256":"483b58c0a985adca212f0c049cffb4d2b53bd4a8d0c3a3b663765da74726ecd6","git_blob_sha1":"65f08cc80155e23006e62cf73a121677c7b27d6f"},{"name":"source_archive_001.bin","local_path":"inputs/soil_main_payload_v2/source_archive_001.bin","bytes":2097152,"sha256":"ace3a455be6f70626517c346e3aad69eaaae308d7b9a738d7b69651d8af4ca45","git_blob_sha1":"5fc1fd8794202c96ff2e1d6fc55001931d474ee4"},{"name":"source_archive_002.bin","local_path":"inputs/soil_main_payload_v2/source_archive_002.bin","bytes":2097152,"sha256":"5fbdaafb5f0ae87b9d12f598d3661db82d07bc009ffd2a31479e18fcd27fb088","git_blob_sha1":"a28954e3bf92843c0fe1ce09c9d3a8e16e91bf4d"},{"name":"source_archive_003.bin","local_path":"inputs/soil_main_payload_v2/source_archive_003.bin","bytes":2097152,"sha256":"258057e97d78cb6e2ae89819705badff0353e432ec48157b2d0083b744db4361","git_blob_sha1":"62cad7fa7314ce192f0f07ee40b776fe064783d5"},{"name":"source_archive_004.bin","local_path":"inputs/soil_main_payload_v2/source_archive_004.bin","bytes":2097152,"sha256":"668e11961fa3ea5c35d507542a0bceecfdba2257a933ba12b6e6601266c00ee9","git_blob_sha1":"32854114160636db0a564e32d789d3cfd8541b70"},{"name":"source_archive_005.bin","local_path":"inputs/soil_main_payload_v2/source_archive_005.bin","bytes":2097152,"sha256":"eb1acbb9a026782af9554b095c0777a22c4ce0b27545eed2ae0bbe3d6ae1a148","git_blob_sha1":"82703aa8ff757342b82486e1859e4929947f0003"},{"name":"source_archive_006.bin","local_path":"inputs/soil_main_payload_v2/source_archive_006.bin","bytes":2097152,"sha256":"da0e2768b5ed2e9b77fda5c119a0996806e40a2bf81bcd94431703e94d0dbb9f","git_blob_sha1":"56470f0b4f5dea4aa3c5b78f831212d88441b4c7"},{"name":"source_archive_007.bin","local_path":"inputs/soil_main_payload_v2/source_archive_007.bin","bytes":2097152,"sha256":"6e4ef60827b19260bff3ad824344e6373e9ddc9677b728c90d4dc2069ff2947e","git_blob_sha1":"5809b3295a5a8ed96bbdeda78c1bcc37f7261f49"},{"name":"source_archive_008.bin","local_path":"inputs/soil_main_payload_v2/source_archive_008.bin","bytes":2097152,"sha256":"852038142c4ea11a63742a03bd40c0341702ac69940e69525a215d995ef77131","git_blob_sha1":"de02ef3d1cbadf2aca0aa127a4ef0f04667b6311"},{"name":"source_archive_009.bin","local_path":"inputs/soil_main_payload_v2/source_archive_009.bin","bytes":2097152,"sha256":"512adfe724f2bf51f4653dfd575fe3ded6536b112182675bf99deb4245c86c71","git_blob_sha1":"b54f27466f83de2f0dac1c33a97994c049c71db4"},{"name":"source_archive_010.bin","local_path":"inputs/soil_main_payload_v2/source_archive_010.bin","bytes":2097152,"sha256":"d8582fd878f2c746dbfad5d9e00f5c9b3c2ddb1ddb2a7282fd6111958fde6b7b","git_blob_sha1":"94286d15ad91d15cf08df46019585372087f7ae1"},{"name":"source_archive_011.bin","local_path":"inputs/soil_main_payload_v2/source_archive_011.bin","bytes":2097152,"sha256":"edf9d11ef87a7d934645c030ae72dd5e164abdeb22a3f3ee958cf13dffb2fa2f","git_blob_sha1":"f7f8b84bf8174d3fec853fde0f56ea59cc9bb9c0"},{"name":"source_archive_012.bin","local_path":"inputs/soil_main_payload_v2/source_archive_012.bin","bytes":2097152,"sha256":"250aa6a9cb287e5a406c92dc3dc73e4c8dda0e3c9691e5a6e3d60932a43ef17c","git_blob_sha1":"af494293d0da2a79c4711ce7c5b4b24af3bee528"},{"name":"source_archive_013.bin","local_path":"inputs/soil_main_payload_v2/source_archive_013.bin","bytes":2097152,"sha256":"8eefff58c0d3d98c3bf48252f88195bac9db74b2389fd70fe360d0d207f97d06","git_blob_sha1":"30b78acf8ccb39b8f8c918ac8099dee9d92461c3"},{"name":"source_archive_014.bin","local_path":"inputs/soil_main_payload_v2/source_archive_014.bin","bytes":2097152,"sha256":"ba2c21bd0be9162322a756a0300b1e431cbb37421a5b3ee1e13eb7adc635f319","git_blob_sha1":"6715fed0b3d5353ae76939db5c3167b8b4032360"},{"name":"source_archive_015.bin","local_path":"inputs/soil_main_payload_v2/source_archive_015.bin","bytes":2097152,"sha256":"0f7fa4446e563c1a849cc6271c20588b7f48315d026de585578c640733b86ccd","git_blob_sha1":"4787be969f183aca45b7ff318a140cc0437ce2a1"},{"name":"source_archive_016.bin","local_path":"inputs/soil_main_payload_v2/source_archive_016.bin","bytes":2097152,"sha256":"fb7edf714302eb19923438217d614bcd19e0ffa58da4170e16e14dd947bc45ec","git_blob_sha1":"1fb142f3a22d0d5468475ba4cb0b8334b488df15"},{"name":"source_archive_017.bin","local_path":"inputs/soil_main_payload_v2/source_archive_017.bin","bytes":2097152,"sha256":"f38741d06544436a1c4d13c4b0add8d2a6031f2b01cffec1ae83ef077985d1f1","git_blob_sha1":"482547ba9c9d3a47cd3c4bc83cbc72c8c71f6f02"},{"name":"source_archive_018.bin","local_path":"inputs/soil_main_payload_v2/source_archive_018.bin","bytes":2097152,"sha256":"9ba24dd98a279e5715fa0f3a369b80e152f8dd62a8d04ea0be5b87e301c2e326","git_blob_sha1":"74b54f265d775d46223dba3f3b119f9e3722127d"},{"name":"source_archive_019.bin","local_path":"inputs/soil_main_payload_v2/source_archive_019.bin","bytes":2097152,"sha256":"be56c27614e033da3e2de946d4c68b2a766f44dafca4e677970e272c00a74821","git_blob_sha1":"651782fad2f7e397fc334fd53d0a754bf5c7a17c"},{"name":"source_archive_020.bin","local_path":"inputs/soil_main_payload_v2/source_archive_020.bin","bytes":2097152,"sha256":"ea2441df0e2d00040c56dd767f7aaffaa599f96c2cdbd2fb0d17456a5a60b9cd","git_blob_sha1":"7fa453643816a159e6b8918c8f8c0262e697c73d"},{"name":"source_archive_021.bin","local_path":"inputs/soil_main_payload_v2/source_archive_021.bin","bytes":2097152,"sha256":"a518870c56b4f481ac3f916e5fe81b7bf3e1b9cb97051abaea355118029df559","git_blob_sha1":"f023d887ce9a04a47e18c2786750b10006eb5728"},{"name":"source_archive_022.bin","local_path":"inputs/soil_main_payload_v2/source_archive_022.bin","bytes":2097152,"sha256":"1be9b59fe2af6c080e845452743e16e11253b764f7992c18b0275a8d025b8180","git_blob_sha1":"98bf5b41180906cfb71c5333f19e2fbcc0d87710"},{"name":"source_archive_023.bin","local_path":"inputs/soil_main_payload_v2/source_archive_023.bin","bytes":2097152,"sha256":"30ed7c4bfc0ae5e7aa131e91beaeb912a011c66e07dda5dbbf7a5b1058ee9a90","git_blob_sha1":"1dd6c791b5ecdd08dc17731ea0510c2b0da67d0a"},{"name":"source_archive_024.bin","local_path":"inputs/soil_main_payload_v2/source_archive_024.bin","bytes":2097152,"sha256":"0f46d7b304ca89e078aceeb721dd204ad2b0512a82f07a4542b4462090569830","git_blob_sha1":"e621b2952a35971a74c5e991d1cfcc1dcd5915c2"},{"name":"source_archive_025.bin","local_path":"inputs/soil_main_payload_v2/source_archive_025.bin","bytes":2097152,"sha256":"730a10fcd339ea1f2b85c6104aadcc53104304378e676a7f95fd26af373250fd","git_blob_sha1":"a30a2b561a80e6da7f34df6c92788e6211d45e3a"},{"name":"source_archive_026.bin","local_path":"inputs/soil_main_payload_v2/source_archive_026.bin","bytes":2097152,"sha256":"d80cd085dd45c4e503f88f1efd30a4ed71973ee0bd1e779e96997d9f11e1f80d","git_blob_sha1":"6c4b11ce33843197dbf9e933c9f45cf52944bb3a"},{"name":"source_archive_027.bin","local_path":"inputs/soil_main_payload_v2/source_archive_027.bin","bytes":2097152,"sha256":"4d98ee39758ac3fee2d95702c14b2aaf53cfd4a97d9d7931bb9bf04981abacb6","git_blob_sha1":"ebe2efc2396b34e862847fa7be1e94fc84cea37c"},{"name":"source_archive_028.bin","local_path":"inputs/soil_main_payload_v2/source_archive_028.bin","bytes":2097152,"sha256":"32a2edb612c19e8ae4a3030ee5c3fb1a71d22f4fb57351c89ef002614d8e53dc","git_blob_sha1":"29ab62d4047ce6dd6cbb23ce8ae0e012eacc1bb7"},{"name":"source_archive_029.bin","local_path":"inputs/soil_main_payload_v2/source_archive_029.bin","bytes":2097152,"sha256":"f2832b7a3c7e609a659740292e81ad467342fb1a4faff660a52d9cc50da0c8aa","git_blob_sha1":"c6898f982e08890d308739252e3dd0f6193dd1f0"},{"name":"source_archive_030.bin","local_path":"inputs/soil_main_payload_v2/source_archive_030.bin","bytes":2097152,"sha256":"cd09d82908f8435c2dda9181741b856350266152c13269548b00e051e5d3f1da","git_blob_sha1":"654eddf96429855a69e17046f094624c97f0201a"},{"name":"source_archive_031.bin","local_path":"inputs/soil_main_payload_v2/source_archive_031.bin","bytes":2097152,"sha256":"d598f01c0e0300abf42dc3b9c05de11a228106a64b33ca9be64bf0b0c0019e91","git_blob_sha1":"cf14f5bdf2070b767035a21173c6d43e62554e14"},{"name":"source_archive_032.bin","local_path":"inputs/soil_main_payload_v2/source_archive_032.bin","bytes":2097152,"sha256":"b30f8635bc469774f9e6e100331bc3adbb666926a87cea9a7eae4ee70cf8c288","git_blob_sha1":"ab0dff7a04c6e4d87a21cb4409634bfefc1632c5"},{"name":"source_archive_033.bin","local_path":"inputs/soil_main_payload_v2/source_archive_033.bin","bytes":2097152,"sha256":"1b669ecccbd5c4d30ff48f7e062064d91046691939d064f1a7086c559a57bb8c","git_blob_sha1":"1211d026711a88a94d0ad2c6a08c7365dc284092"},{"name":"source_archive_034.bin","local_path":"inputs/soil_main_payload_v2/source_archive_034.bin","bytes":2097152,"sha256":"14a183999182ff5af5f675bb4e11394b89ae65a826a9ae56887048d9d3312911","git_blob_sha1":"55bda1b719c65023df6afd7803b6d883ce7e9b13"},{"name":"source_archive_035.bin","local_path":"inputs/soil_main_payload_v2/source_archive_035.bin","bytes":2097152,"sha256":"79772e0d2868c1a26f5f05ad7314189b483af0551218d3497fe4ec7c4740b4ec","git_blob_sha1":"86ffc7279d8652f388fe292c6bc0eeea31020339"},{"name":"source_archive_036.bin","local_path":"inputs/soil_main_payload_v2/source_archive_036.bin","bytes":2097152,"sha256":"59811fdda117783d12f808905cd415aa72be6391f360876eee02edd23c05073b","git_blob_sha1":"136e9120cde8aa013ce1198249ea3e66c149440e"},{"name":"source_archive_037.bin","local_path":"inputs/soil_main_payload_v2/source_archive_037.bin","bytes":2097152,"sha256":"5091c384bd136cc49794dee9ed15ed0dccc161e45097bdfe0517be8d32d8d4bf","git_blob_sha1":"a367797d3548cbae5ed3e4b05fa0479e20740a8e"},{"name":"source_archive_038.bin","local_path":"inputs/soil_main_payload_v2/source_archive_038.bin","bytes":2097152,"sha256":"2edac963fd475795098d4e2459e5550fadede98cac3daad3693e820681ee6fc5","git_blob_sha1":"d01acb31f2c7c5a009be6c6aff24e03216f3d028"},{"name":"source_archive_039.bin","local_path":"inputs/soil_main_payload_v2/source_archive_039.bin","bytes":2097152,"sha256":"7f295f0257f154e4239291f080c541509b66efa2b5ab172663fb48c74532d5a5","git_blob_sha1":"a7e948e52c7990e4c766667ad47c63906f9e62fb"},{"name":"source_archive_040.bin","local_path":"inputs/soil_main_payload_v2/source_archive_040.bin","bytes":2097152,"sha256":"a44aa0cf12f0771292e0bb4ce55ded4e690be69155d1ce5af865e72bfeec1b27","git_blob_sha1":"fc37e46a99ea26289f816e1d68bf127ef479a47f"},{"name":"source_archive_041.bin","local_path":"inputs/soil_main_payload_v2/source_archive_041.bin","bytes":2097152,"sha256":"26820465c680bcdd761bab2f78e1831616998544b1e2c72368222f26b1b4a8c7","git_blob_sha1":"25fa82de4cdb3a10361b430eb7b431e7355cd90e"},{"name":"source_archive_042.bin","local_path":"inputs/soil_main_payload_v2/source_archive_042.bin","bytes":1098366,"sha256":"a1e01444b3069c97299e81f4cd726735cd3c0105be6e7371bb457748693aa452","git_blob_sha1":"f6e46bae9d35a45930f71aa44716aaf1dad7d801"}]')
+archive=json.loads('{"bytes":89178750,"sha256":"031c26b6fd1191b87ec78c57f0c1d44a1d11afacdcd50d6c284bd893214f6df9"}')
+chunks=json.loads('["source_archive_000.bin","source_archive_001.bin","source_archive_002.bin","source_archive_003.bin","source_archive_004.bin","source_archive_005.bin","source_archive_006.bin","source_archive_007.bin","source_archive_008.bin","source_archive_009.bin","source_archive_010.bin","source_archive_011.bin","source_archive_012.bin","source_archive_013.bin","source_archive_014.bin","source_archive_015.bin","source_archive_016.bin","source_archive_017.bin","source_archive_018.bin","source_archive_019.bin","source_archive_020.bin","source_archive_021.bin","source_archive_022.bin","source_archive_023.bin","source_archive_024.bin","source_archive_025.bin","source_archive_026.bin","source_archive_027.bin","source_archive_028.bin","source_archive_029.bin","source_archive_030.bin","source_archive_031.bin","source_archive_032.bin","source_archive_033.bin","source_archive_034.bin","source_archive_035.bin","source_archive_036.bin","source_archive_037.bin","source_archive_038.bin","source_archive_039.bin","source_archive_040.bin","source_archive_041.bin","source_archive_042.bin"]')
+sources=json.loads('{"depth":{"path":"/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/depth_original.tif","bytes":73091828,"sha256":"9ba08f1c45ee38ed2f22316c51de9fdb218fe42256415ef3b90b4c53bf768181"},"mask":{"path":"/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/mask_original.tif","bytes":15654859,"sha256":"3fc82a6a8ba90404d7e1c2f41eb2a03f0fa6072aef2f48a6cfe1e843c4b7f5b9"},"geometry":{"path":"/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/geometry_original.geojson","bytes":97391,"sha256":"7c95350f5c283d73651b42dfce404615359a2feed09c719616541a0b07eea7e1"},"old_reference":{"path":"/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/old_soil_reference.csv","bytes":334182,"sha256":"1ce8a13e33f4fb4db89c072a5de1680b46726e595b9b162dd66ec8fdbc4ce8e2"}}')
+assert len(members)<=56 and sum(x['bytes'] for x in members)<=100663296
+contents={}
+for row in members:
+    name=row['name']
+    assert pathlib.Path(name).name==name and 0<row['bytes']<=2097152
+    p=source/name
+    assert p.is_file() and not p.is_symlink() and p.stat().st_size==row['bytes']
+    raw=p.read_bytes()
+    assert len(raw)==row['bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256']
+    contents[name]=raw
+data=b''.join(contents[n] for n in chunks)
+assert len(data)==archive['bytes'] and hashlib.sha256(data).hexdigest()==archive['sha256']
+assert set(contents)-set(chunks)=={'NUMERICAL_CONTRACT.json','numerical_main.py','soil_main.sbatch'}
+contract=json.loads(contents['NUMERICAL_CONTRACT.json'])
+assert contract['files']==sources and contract['source_metadata_sha256']==hashlib.sha256(runtime).hexdigest()
+with zipfile.ZipFile(io.BytesIO(data)) as z:
+    entries=z.infolist()
+    assert len(entries)==4 and len({x.filename for x in entries})==4
+    expected={pathlib.Path(x['path']).name:x for x in sources.values()}
+    assert {x.filename for x in entries}==set(expected) and z.testzip() is None
+    original={}
+    for item in entries:
+        assert item.compress_type==zipfile.ZIP_STORED and pathlib.Path(item.filename).name==item.filename
+        row=expected[item.filename]
+        assert item.file_size==row['bytes'] and item.file_size<=80000000
+        raw=z.read(item)
+        assert len(raw)==row['bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256']
+        original[item.filename]=raw
+root.mkdir()
+(root/'logs').mkdir()
+for name,raw in contents.items():
+    if name not in chunks:
+        with (root/name).open('xb') as f:f.write(raw)
+for name,raw in original.items():
+    with (root/name).open('xb') as f:f.write(raw)
+print('OWN_SOIL_PAYLOAD_FILES='+str(len(members)))
+print('OWN_SOIL_PAYLOAD_BYTES='+str(sum(x['bytes'] for x in members)))
+print('OWN_SOIL_ORIGINAL_FILES='+str(len(original)))
+print('OWN_SOIL_LOCAL_ARRAY_READS=0')
+print('OWN_SOIL_EXTERNAL_SOURCE_GETS=0')
+PY_COPY
+cd "$ROOT"
+test ! -e OWN_SOIL_SUBMIT_STARTED
+test ! -e OWN_SOIL_JOB_ID
+printf 'ONE_SUBMISSION_ONLY\n' > OWN_SOIL_SUBMIT_STARTED
 set +e
-timeout 12s squeue -h -j "$EXPECTED" -o '%i|%T|%N|%C|%M'
-printf 'OWN_RUNTIME_SQUEUE_EXIT=%s\n' "$?"
-timeout 12s sacct -j "$EXPECTED" --format=JobID,State,ExitCode,Elapsed,AllocCPUS,AllocTRES,MaxRSS --parsable2 --noheader
-printf 'OWN_RUNTIME_SACCT_EXIT=%s\n' "$?"
+output=$(sbatch soil_main.sbatch 2>&1)
+code=$?
 set -e
-for file in "$ROOT/logs/runtime-$EXPECTED.out" "$ROOT/logs/runtime-$EXPECTED.err"; do
-  printf 'OWN_RUNTIME_LOG_PATH=%s\n' "$file"
-  if test -f "$file"; then
-    head -c 32768 "$file"
-    printf '\nOWN_RUNTIME_LOG_BYTES=%s\n' "$(stat -c %s "$file")"
-  else
-    printf 'OWN_RUNTIME_LOG_MISSING\n'
-  fi
-done
-REPORT="$ROOT/RUNTIME_INSTALL_RESULT.json"
-if test -f "$REPORT"; then
-  test ! -L "$REPORT"
-  size=$(stat -c %s "$REPORT")
-  test "$size" -le 131072
-  printf 'OWN_RUNTIME_REPORT_BYTES=%s\n' "$size"
-  sha256sum "$REPORT"
-  printf 'OWN_RUNTIME_REPORT_BEGIN\n'
-  cat "$REPORT"
-  printf 'OWN_RUNTIME_REPORT_END\n'
-else
-  printf 'OWN_RUNTIME_REPORT_MISSING\n'
-fi
-printf 'OWN_RUNTIME_READ_DONE\n'
+printf '%s\n' "$output"
+printf 'OWN_SOIL_SUBMIT_EXIT=%s\n' "$code"
+test "$code" = 0
+job=$(printf '%s\n' "$output" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')
+test -n "$job"
+test "$(printf '%s\n' "$job" | wc -l)" = 1
+printf '%s\n' "$job" > OWN_SOIL_JOB_ID
+printf 'OWN_SOIL_JOB_ID=%s\n' "$job"
+printf 'OWN_SOIL_SUBMIT_DONE\n'
