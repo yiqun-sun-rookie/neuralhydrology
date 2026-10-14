@@ -45,8 +45,8 @@ def main():
     assert all(h.sha(Path(p)) == digest for p, digest in intent['pinned_source_files'].items())
     assert str(h.read(ROOT/'records/scheduler_jobs.json')[CASE])=='242609'
     import subprocess
-    q=subprocess.run(['squeue','-h','-j','242609','-o','%i|%T'],capture_output=True,text=True,check=True)
-    assert not q.stdout.strip(), 'failed source still active'
+    q=subprocess.run(['squeue','-h','-u','sunyiq','-o','%i|%T'],capture_output=True,text=True,check=True)
+    assert not any(line.startswith('242609|') for line in q.stdout.splitlines()), 'failed source still active'
     rows = []
     for m in prep['migrations']:
         source = Path(m['source_root'])/'runs'/m['run']
