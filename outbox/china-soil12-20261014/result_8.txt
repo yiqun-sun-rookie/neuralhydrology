@@ -1,0 +1,1081 @@
+### channel=china-soil12-20261014 seq=8
+### host=login4
+### started=2026-10-15T00:51:45+0800
+### ---------- output ----------
+OWN_SOIL_QUERY_JOB_ID=242521
+OWN_SOIL_SERVER_QUERY_UTC=2026-10-14T16:51:45Z
+slurm_load_jobs error: Invalid job id specified
+OWN_SOIL_SQUEUE_EXIT=1
+242521|COMPLETED|0:0|00:00:05|2|billing=2,cpu=2,node=1|
+242521.batch|COMPLETED|0:0|00:00:05|2|cpu=2,mem=0,node=1|3236K
+242521.extern|COMPLETED|0:0|00:00:05|2|billing=2,cpu=2,node=1|2636K
+OWN_SOIL_SACCT_EXIT=0
+OWN_SOIL_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/logs/main-242521.out
+OWN_SOIL_MAIN_COMPLETE
+
+OWN_SOIL_LOG_BYTES=23
+OWN_SOIL_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/logs/main-242521.err
+
+OWN_SOIL_LOG_BYTES=0
+OWN_SOIL_REPORT_NAME=SUMMARY.json
+OWN_SOIL_REPORT_BYTES=37146
+7e102e2689bfa8f59ded3fc18419fae412eb140159c4da8b6e4b1610d9ba6298  /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/SUMMARY.json
+OWN_SOIL_REPORT_BEGIN
+{
+  "status": "TWELVE_SOIL_NODATA_CLASSIFICATION_CANDIDATE_SAVED",
+  "job_id": "242521",
+  "source_sha256": "16ff3fb81d966416c7f4b169cd1e53aa2d74782422655c560ab1f7bb6fc2115f",
+  "contract_sha256": "6d2f2177870775ac8307a14b5263297369cf4c9f70554aa70b9d8c1c80c42087",
+  "grid": {
+    "crs": "EPSG:4326",
+    "transform": [
+      0.00833333333333331,
+      0.0,
+      -180.0,
+      0.0,
+      -0.00833333333333331,
+      90.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "shape": [
+      18000,
+      43200
+    ],
+    "depth_dtype": "int8",
+    "mask_dtype": "uint8",
+    "depth_nodata": -1.0,
+    "mask_nodata": {
+      "type": "NoneType",
+      "representation": "None"
+    }
+  },
+  "members": [
+    {
+      "basin_id": "17456",
+      "geometry_sha256": "963be85639fad12d98ff790de80f85ebee5da728ef018b953833f33aab7f1991",
+      "original_geometry_area_m2": 3119122770.3410506,
+      "grid_overlap_area_m2": 3119114276.1295815,
+      "grid_polygon_relative_area_error": 2.7232693595724555e-06,
+      "source_window": [
+        32019,
+        4836,
+        163,
+        76
+      ],
+      "window_pixels_read": 12388,
+      "positive_overlap_cells": 5865,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 2946362750.7147346,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 2946362750.7147346,
+          "valid_zero_depth_area_m2": 925803818.9641143,
+          "positive_overlap_cells": 5529
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 142128307.09474602,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 142128307.09474602,
+          "valid_zero_depth_area_m2": 3936631.191861272,
+          "positive_overlap_cells": 268
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 13475124.71919632,
+          "nodata_depth_area_m2": 13475124.71919632,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 24
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 17148093.60090478,
+          "nodata_depth_area_m2": 17148093.60090478,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 44
+        }
+      ],
+      "nodata_depth_area_m2": 30623218.3201011,
+      "valid_depth_area_m2": 3088491057.8094807,
+      "valid_depth_mean_m": 1.6223696108669148,
+      "valid_depth_area_fraction": 0.9901820787540685,
+      "valid_zero_depth_area_m2": 929740450.1559756,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 30623218.3201011,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "17456",
+        "soil_depth_pelletier": "1.6223696108668897",
+        "valid_area_fraction": "0.990182078754072",
+        "positive_overlap_cells": "5865",
+        "valid_overlap_cells": "5797",
+        "grid_polygon_area_relative_error": "2.7232693647905037e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_17456.npz",
+        "bytes": 9117,
+        "sha256": "44bd87e3368e7ce936db0d0e970c356131e9da43174f9f3922cb64b197e9754d"
+      }
+    },
+    {
+      "basin_id": "24934",
+      "geometry_sha256": "fed65efa790c7a0952daada5978758195ca7e688fbf68c536c58d99c826128fa",
+      "original_geometry_area_m2": 1480783717.14878,
+      "grid_overlap_area_m2": 1481024238.4731593,
+      "grid_polygon_relative_area_error": 0.00016242839625646432,
+      "source_window": [
+        35631,
+        4854,
+        113,
+        45
+      ],
+      "window_pixels_read": 5085,
+      "positive_overlap_cells": 2850,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1025026074.0153178,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1025026074.0153178,
+          "valid_zero_depth_area_m2": 27617452.6463452,
+          "positive_overlap_cells": 1973
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 288956993.073555,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 288956993.073555,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 563
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 167041171.38428646,
+          "nodata_depth_area_m2": 167041171.38428646,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 314
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 167041171.38428646,
+      "valid_depth_area_m2": 1313983067.0888727,
+      "valid_depth_mean_m": 8.805939253295081,
+      "valid_depth_area_fraction": 0.8872123986596632,
+      "valid_zero_depth_area_m2": 27617452.6463452,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 167041171.38428646,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "24934",
+        "soil_depth_pelletier": "8.805939253294515",
+        "valid_area_fraction": "0.8872123986596608",
+        "positive_overlap_cells": "2850",
+        "valid_overlap_cells": "2536",
+        "grid_polygon_area_relative_error": "0.00016242839634683648"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_24934.npz",
+        "bytes": 6016,
+        "sha256": "41d28fae5414158d3650ba93defc3fc9c9a27ebb2259fb107503584bc0b74760"
+      }
+    },
+    {
+      "basin_id": "26031",
+      "geometry_sha256": "855d4d773e48325ca2dcae7437768cdc67f9c65941bdb5fe2e33f565e751c54a",
+      "original_geometry_area_m2": 4921742547.490065,
+      "grid_overlap_area_m2": 4921717548.105125,
+      "grid_polygon_relative_area_error": 5.079376805716684e-06,
+      "source_window": [
+        34921,
+        6425,
+        126,
+        106
+      ],
+      "window_pixels_read": 13356,
+      "positive_overlap_cells": 7372,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1722938435.4308257,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1722938435.4308257,
+          "valid_zero_depth_area_m2": 156249778.68267334,
+          "positive_overlap_cells": 2635
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 3197392276.31875,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 3197392276.31875,
+          "valid_zero_depth_area_m2": 1508465.9293983579,
+          "positive_overlap_cells": 4735
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 1386836.3555498123,
+          "nodata_depth_area_m2": 1386836.3555498123,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 2
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 1386836.3555498123,
+      "valid_depth_area_m2": 4920330711.749576,
+      "valid_depth_mean_m": 12.371402208817347,
+      "valid_depth_area_fraction": 0.999718221059621,
+      "valid_zero_depth_area_m2": 157758244.6120717,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 1386836.3555498123,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "26031",
+        "soil_depth_pelletier": "12.371402208817246",
+        "valid_area_fraction": "0.9997182210596208",
+        "positive_overlap_cells": "7372",
+        "valid_overlap_cells": "7370",
+        "grid_polygon_area_relative_error": "5.07937679150583e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_26031.npz",
+        "bytes": 11175,
+        "sha256": "97c5ffd193c5a3ae6c14e64aae56d2037c5e10312e7d918e30b47410c3ba302f"
+      }
+    },
+    {
+      "basin_id": "26574",
+      "geometry_sha256": "466b63048a6f2554334d688fe1d11e1dc1af32f17cfa33d0dec3dc8dbac388af",
+      "original_geometry_area_m2": 1207232550.9628344,
+      "grid_overlap_area_m2": 1207240937.0308747,
+      "grid_polygon_relative_area_error": 6.946522468798122e-06,
+      "source_window": [
+        35726,
+        7364,
+        52,
+        80
+      ],
+      "window_pixels_read": 4160,
+      "positive_overlap_cells": 1784,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1125711524.05949,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1125711524.05949,
+          "valid_zero_depth_area_m2": 22944677.90504366,
+          "positive_overlap_cells": 1670
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 80021180.72662804,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 80021180.72662804,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 112
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 1508232.2447566986,
+          "nodata_depth_area_m2": 1508232.2447566986,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 2
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 1508232.2447566986,
+      "valid_depth_area_m2": 1205732704.786118,
+      "valid_depth_mean_m": 2.764927086248126,
+      "valid_depth_area_fraction": 0.998750678345562,
+      "valid_zero_depth_area_m2": 22944677.90504366,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 1508232.2447566986,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "26574",
+        "soil_depth_pelletier": "2.7649270862480835",
+        "valid_area_fraction": "0.9987506783455621",
+        "positive_overlap_cells": "1784",
+        "valid_overlap_cells": "1782",
+        "grid_polygon_area_relative_error": "6.946522516315667e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_26574.npz",
+        "bytes": 5220,
+        "sha256": "e4b5262f972daaa987105285a4d476af0fd808de3a3019b33d0f55b0772d1352"
+      }
+    },
+    {
+      "basin_id": "27111",
+      "geometry_sha256": "8a8bfdb4af2cc93620835a9004cd27317210e7c8529d6b48f8bb754f23f34095",
+      "original_geometry_area_m2": 336598027.713156,
+      "grid_overlap_area_m2": 336598107.90843475,
+      "grid_polygon_relative_area_error": 2.3825237271957178e-07,
+      "source_window": [
+        34180,
+        7227,
+        32,
+        27
+      ],
+      "window_pixels_read": 864,
+      "positive_overlap_cells": 514,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 208414922.86383247,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 208414922.86383247,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 327
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 121497703.43225622,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 121497703.43225622,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 178
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 6685481.612346038,
+          "nodata_depth_area_m2": 6685481.612346038,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 9
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 6685481.612346038,
+      "valid_depth_area_m2": 329912626.2960887,
+      "valid_depth_mean_m": 5.708081381557224,
+      "valid_depth_area_fraction": 0.9801380891476529,
+      "valid_zero_depth_area_m2": 0.0,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 6685481.612346038,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "27111",
+        "soil_depth_pelletier": "5.708081381557441",
+        "valid_area_fraction": "0.9801380891476702",
+        "positive_overlap_cells": "514",
+        "valid_overlap_cells": "505",
+        "grid_polygon_area_relative_error": "2.382524499910943e-07"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_27111.npz",
+        "bytes": 2679,
+        "sha256": "a1c54ab40eaa2175e24904583cc58c89699f4b863d7f5a94e181baf86db101b9"
+      }
+    },
+    {
+      "basin_id": "27608",
+      "geometry_sha256": "776cf82e71e2f57fcc8531b290c47db99219e8b36135a3a90b3bccf613cb1239",
+      "original_geometry_area_m2": 1022603724.3134128,
+      "grid_overlap_area_m2": 1022608619.64672,
+      "grid_polygon_relative_area_error": 4.787126421490484e-06,
+      "source_window": [
+        35305,
+        7950,
+        47,
+        55
+      ],
+      "window_pixels_read": 2585,
+      "positive_overlap_cells": 1438,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 742448933.3372781,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 742448933.3372781,
+          "valid_zero_depth_area_m2": 8131900.353148252,
+          "positive_overlap_cells": 1058
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 277802609.7336825,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 277802609.7336825,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 377
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 2357076.575759411,
+          "nodata_depth_area_m2": 2357076.575759411,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 3
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 2357076.575759411,
+      "valid_depth_area_m2": 1020251543.0709606,
+      "valid_depth_mean_m": 9.193417236935248,
+      "valid_depth_area_fraction": 0.9976950354901432,
+      "valid_zero_depth_area_m2": 8131900.353148252,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 2357076.575759411,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "27608",
+        "soil_depth_pelletier": "9.193417236934348",
+        "valid_area_fraction": "0.9976950354901435",
+        "positive_overlap_cells": "1438",
+        "valid_overlap_cells": "1435",
+        "grid_polygon_area_relative_error": "4.787126410610298e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_27608.npz",
+        "bytes": 4528,
+        "sha256": "2e72b8e01fc5040240fb9a916bac8823bc3306699d31b7a0c874aa2c8197f453"
+      }
+    },
+    {
+      "basin_id": "27982",
+      "geometry_sha256": "07e296fb07d5c102c45b4ad093cee56261c1e3615112ddf687a16a3101e46697",
+      "original_geometry_area_m2": 1961953455.643296,
+      "grid_overlap_area_m2": 1961952520.7046564,
+      "grid_polygon_relative_area_error": 4.765345665846965e-07,
+      "source_window": [
+        34801,
+        8499,
+        68,
+        80
+      ],
+      "window_pixels_read": 5440,
+      "positive_overlap_cells": 2669,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 17869631.78537345,
+          "nodata_depth_area_m2": 17869631.78537345,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 96
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1060278255.0530845,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1060278255.0530845,
+          "valid_zero_depth_area_m2": 18646658.19469452,
+          "positive_overlap_cells": 1397
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 883804633.8661985,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 883804633.8661985,
+          "valid_zero_depth_area_m2": 810885.0057780743,
+          "positive_overlap_cells": 1176
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 17869631.78537345,
+      "valid_depth_area_m2": 1944082888.919283,
+      "valid_depth_mean_m": 14.791198139560482,
+      "valid_depth_area_fraction": 0.9908919142554197,
+      "valid_zero_depth_area_m2": 19457543.200472593,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 17869631.78537345,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "27982",
+        "soil_depth_pelletier": "14.791198139559722",
+        "valid_area_fraction": "0.9908919142553885",
+        "positive_overlap_cells": "2669",
+        "valid_overlap_cells": "2573",
+        "grid_polygon_area_relative_error": "4.7653446511031206e-07"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_27982.npz",
+        "bytes": 7388,
+        "sha256": "970b798e92cf2ee15d1e1bb63250a57cb3e74398cf2625ede08e6fbc18865b71"
+      }
+    },
+    {
+      "basin_id": "30969",
+      "geometry_sha256": "d4846e6c8b60fc0fc710baf0616a6986e06897995163c53b53321b192e38ca8b",
+      "original_geometry_area_m2": 489463211.58063674,
+      "grid_overlap_area_m2": 489462891.4420415,
+      "grid_polygon_relative_area_error": 6.540605864691074e-07,
+      "source_window": [
+        31551,
+        7167,
+        51,
+        30
+      ],
+      "window_pixels_read": 1530,
+      "positive_overlap_cells": 751,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 268611164.43485713,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 268611164.43485713,
+          "valid_zero_depth_area_m2": 43998421.36135461,
+          "positive_overlap_cells": 415
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 219369027.25308922,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 219369027.25308922,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 334
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 1482699.7540950775,
+          "nodata_depth_area_m2": 1482699.7540950775,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 2
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 1482699.7540950775,
+      "valid_depth_area_m2": 487980191.68794644,
+      "valid_depth_mean_m": 19.636353577701712,
+      "valid_depth_area_fraction": 0.9969707616654517,
+      "valid_zero_depth_area_m2": 43998421.36135461,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 1482699.7540950775,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "30969",
+        "soil_depth_pelletier": "19.63635357770164",
+        "valid_area_fraction": "0.9969707616654503",
+        "positive_overlap_cells": "751",
+        "valid_overlap_cells": "749",
+        "grid_polygon_area_relative_error": "6.540604234883673e-07"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_30969.npz",
+        "bytes": 3257,
+        "sha256": "fde6b8dd82ea0f33c7a3a376fdbf714a74ddb13be452b027c6dd2599a4622789"
+      }
+    },
+    {
+      "basin_id": "35582",
+      "geometry_sha256": "fc1b5f6b31c391d77d30b33cffedc4640d57cf87d80fa2b0e69119758182e3ec",
+      "original_geometry_area_m2": 2308081769.4979835,
+      "grid_overlap_area_m2": 2308075697.7168837,
+      "grid_polygon_relative_area_error": 2.6306611750070985e-06,
+      "source_window": [
+        35140,
+        5363,
+        95,
+        88
+      ],
+      "window_pixels_read": 8360,
+      "positive_overlap_cells": 4036,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 2170964843.001876,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 2170964843.001876,
+          "valid_zero_depth_area_m2": 1830249.3383569717,
+          "positive_overlap_cells": 3786
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 134049603.95087083,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 134049603.95087083,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 245
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 3061250.764136791,
+          "nodata_depth_area_m2": 3061250.764136791,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 5
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 3061250.764136791,
+      "valid_depth_area_m2": 2305014446.9527464,
+      "valid_depth_mean_m": 3.29949151011085,
+      "valid_depth_area_fraction": 0.9986736783515526,
+      "valid_zero_depth_area_m2": 1830249.3383569717,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 3061250.764136791,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "35582",
+        "soil_depth_pelletier": "3.299491510111112",
+        "valid_area_fraction": "0.9986736783515529",
+        "positive_overlap_cells": "4036",
+        "valid_overlap_cells": "4031",
+        "grid_polygon_area_relative_error": "2.6306611231596833e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_35582.npz",
+        "bytes": 7397,
+        "sha256": "639dcf35f3071934e99d1669637bd5bcd8d0f00ff89d45210d84d83e5333ae1e"
+      }
+    },
+    {
+      "basin_id": "36621",
+      "geometry_sha256": "6f4d1cce511373f07e6225ab7cf61da56e16e6591df3e3d249ad020d8a1fc17b",
+      "original_geometry_area_m2": 1856913870.9917583,
+      "grid_overlap_area_m2": 1856916364.5739727,
+      "grid_polygon_relative_area_error": 1.3428636909118552e-06,
+      "source_window": [
+        31813,
+        6561,
+        87,
+        71
+      ],
+      "window_pixels_read": 6177,
+      "positive_overlap_cells": 2855,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 691342157.2237424,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 691342157.2237424,
+          "valid_zero_depth_area_m2": 50588747.88901419,
+          "positive_overlap_cells": 1110
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 1159943222.3911161,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1159943222.3911161,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 1737
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 5630984.959114075,
+          "nodata_depth_area_m2": 5630984.959114075,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 8
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 5630984.959114075,
+      "valid_depth_area_m2": 1851285379.6148586,
+      "valid_depth_mean_m": 14.096358208160341,
+      "valid_depth_area_fraction": 0.9969675613471122,
+      "valid_zero_depth_area_m2": 50588747.88901419,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 5630984.959114075,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "36621",
+        "soil_depth_pelletier": "14.096358208159408",
+        "valid_area_fraction": "0.9969675613471138",
+        "positive_overlap_cells": "2855",
+        "valid_overlap_cells": "2847",
+        "grid_polygon_area_relative_error": "1.3428638008239346e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_36621.npz",
+        "bytes": 6887,
+        "sha256": "65b2b97c21f4d325e0f2f3510f089df4609b2f32160560a416746694b6d0013e"
+      }
+    },
+    {
+      "basin_id": "36857",
+      "geometry_sha256": "35559818d704b4ecbacb0d96cf6cca3989478464f42fd74a14dc303b87303b25",
+      "original_geometry_area_m2": 2114230227.8134117,
+      "grid_overlap_area_m2": 2114233701.582539,
+      "grid_polygon_relative_area_error": 1.6430420308743976e-06,
+      "source_window": [
+        32391,
+        7002,
+        77,
+        57
+      ],
+      "window_pixels_read": 4389,
+      "positive_overlap_cells": 3057,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1470021566.385522,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1470021566.385522,
+          "valid_zero_depth_area_m2": 164662462.6975778,
+          "positive_overlap_cells": 2107
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 641280884.9971458,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 641280884.9971458,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 946
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 2931250.19987154,
+          "nodata_depth_area_m2": 2931250.19987154,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 4
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        }
+      ],
+      "nodata_depth_area_m2": 2931250.19987154,
+      "valid_depth_area_m2": 2111302451.3826675,
+      "valid_depth_mean_m": 5.151296562949087,
+      "valid_depth_area_fraction": 0.9986135637712721,
+      "valid_zero_depth_area_m2": 164662462.6975778,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 2931250.19987154,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "36857",
+        "soil_depth_pelletier": "5.1512965629489145",
+        "valid_area_fraction": "0.9986135637712722",
+        "positive_overlap_cells": "3057",
+        "valid_overlap_cells": "3053",
+        "grid_polygon_area_relative_error": "1.6430421339030943e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_36857.npz",
+        "bytes": 6095,
+        "sha256": "8e0fb671a58611b98c1503e289623c17247e6baaee9bc11e87b9dcbe5396c902"
+      }
+    },
+    {
+      "basin_id": "37225",
+      "geometry_sha256": "4e0d8d0cde10f6435bd1cbba4bd9c263d4b5df1ffdbfd85b25108550354bed5c",
+      "original_geometry_area_m2": 1552541935.696868,
+      "grid_overlap_area_m2": 1552547767.8749938,
+      "grid_polygon_relative_area_error": 3.7565350035073664e-06,
+      "source_window": [
+        30996,
+        6690,
+        79,
+        66
+      ],
+      "window_pixels_read": 5214,
+      "positive_overlap_cells": 2441,
+      "categories": [
+        {
+          "dominant_class": 0,
+          "area_m2": 0.0,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 0
+        },
+        {
+          "dominant_class": 1,
+          "area_m2": 1353859624.9255738,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 1353859624.9255738,
+          "valid_zero_depth_area_m2": 1023763619.5215998,
+          "positive_overlap_cells": 2021
+        },
+        {
+          "dominant_class": 2,
+          "area_m2": 102191111.31441197,
+          "nodata_depth_area_m2": 0.0,
+          "valid_depth_area_m2": 102191111.31441197,
+          "valid_zero_depth_area_m2": 6272364.353060961,
+          "positive_overlap_cells": 168
+        },
+        {
+          "dominant_class": 3,
+          "area_m2": 33162597.484126665,
+          "nodata_depth_area_m2": 33162597.484126665,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 125
+        },
+        {
+          "dominant_class": 4,
+          "area_m2": 63334434.150881425,
+          "nodata_depth_area_m2": 63334434.150881425,
+          "valid_depth_area_m2": 0.0,
+          "valid_zero_depth_area_m2": 0.0,
+          "positive_overlap_cells": 127
+        }
+      ],
+      "nodata_depth_area_m2": 96497031.6350081,
+      "valid_depth_area_m2": 1456050736.2399857,
+      "valid_depth_mean_m": 0.4205303977064769,
+      "valid_depth_area_fraction": 0.9378460143824845,
+      "valid_zero_depth_area_m2": 1030035983.8746607,
+      "land_class_nodata_area_m2": 0.0,
+      "ocean_lake_ice_class_nodata_area_m2": 96497031.6350081,
+      "unknown_class_area_m2": 0.0,
+      "invalid_depth_area_m2": 0.0,
+      "original_reference_record": {
+        "basin_id": "37225",
+        "soil_depth_pelletier": "0.4205303977067299",
+        "valid_area_fraction": "0.9378460143824747",
+        "positive_overlap_cells": "2441",
+        "valid_overlap_cells": "2189",
+        "grid_polygon_area_relative_error": "3.7565351591606344e-06"
+      },
+      "input_approved": false,
+      "dominant_class_is_not_subpixel_water_fraction": true,
+      "nodata_not_filled": true,
+      "pixel_file": {
+        "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/pixels_37225.npz",
+        "bytes": 6897,
+        "sha256": "b3ec3b68a08a9b76fbbdee05dbccd4201927b35f3c63a30488b0cc412485e9c7"
+      }
+    }
+  ],
+  "member_count": 12,
+  "total_window_pixels_read": 69548,
+  "source_files": {
+    "depth": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/depth_original.tif",
+      "bytes": 73091828,
+      "sha256": "9ba08f1c45ee38ed2f22316c51de9fdb218fe42256415ef3b90b4c53bf768181"
+    },
+    "mask": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/mask_original.tif",
+      "bytes": 15654859,
+      "sha256": "3fc82a6a8ba90404d7e1c2f41eb2a03f0fa6072aef2f48a6cfe1e843c4b7f5b9"
+    },
+    "geometry": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/geometry_original.geojson",
+      "bytes": 97391,
+      "sha256": "7c95350f5c283d73651b42dfce404615359a2feed09c719616541a0b07eea7e1"
+    },
+    "old_reference": {
+      "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/old_soil_reference.csv",
+      "bytes": 334182,
+      "sha256": "1ce8a13e33f4fb4db89c072a5de1680b46726e595b9b162dd66ec8fdbc4ce8e2"
+    }
+  },
+  "model_calls": 0,
+  "training": 0,
+  "science_data_requests": 0,
+  "observed_station_validations": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0,
+  "independent_numerical_review_complete": false,
+  "nodata_fill_operations": 0,
+  "elapsed_seconds": 4.907185088843107,
+  "peak_rss_kib": 112088
+}
+OWN_SOIL_REPORT_END
+OWN_SOIL_REPORT_NAME=MAIN_FAILURE.json
+OWN_SOIL_REPORT_MISSING
+OWN_SOIL_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T00:51:45+0800
