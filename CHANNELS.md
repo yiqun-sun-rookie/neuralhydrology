@@ -183,3 +183,5 @@ git rm inbox/seq
 | kalmannet-noise-ptrace-20261013 | Original noise origin covariance trace | 2026-10-13 | active |
 
 | china-soil12-20261014 | Soil12 source preflight; CPU only; raster values zero |
+
+| `knet-camels-020-recovery-20261014` | 02092500 read-only mailbox recovery; no submission or model compute | 2026-10-12 | Only /data1/home/sunyiq/knet_camels_hpc_20261012_001; only login metadata probe and recovery of existing receipt29, no new sbatch; preserve existing jobs, shared environments and all other channels. |
