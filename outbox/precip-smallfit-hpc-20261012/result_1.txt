@@ -1,0 +1,58 @@
+### channel=precip-smallfit-hpc-20261012 seq=1
+### host=login4
+### started=2026-10-14T21:01:28+0800
+### ---------- output ----------
+UTC=2026-10-14T13:01:28Z
+=== EXISTING_JOBS ===
+             JOBID      PARTITION                                NAME    STATE       TIME               NODELIST(REASON)
+            202229 hgpu4,hgpu8,hg                        N22-agg-eval  PENDING       0:00     (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hg                          N22-export  PENDING       0:00                   (Dependency)
+            202315 hgpu4,hgpu8,hg                            N22-gate  PENDING       0:00                   (Dependency)
+            202507 hgpu4,hgpu8,hg                    N22-mask-iso-531  PENDING       0:00     (DependencyNeverSatisfied)
+            215429          hgpu2                       id30_m01_s100  PENDING       0:00     (DependencyNeverSatisfied)
+            241345         hgpu2p      hydrol85935-temporal-preflight  PENDING       0:00                   (Dependency)
+            202293 hgpu4,hgpu8,hg                        N22-manifest  PENDING       0:00                  (JobHeldUser)
+    240076_[0-2%1]         hgpu2p                   hydrol85935-train  PENDING       0:00                  (JobHeldUser)
+  240077_[0-131%1]         hgpu2p                 hydrol85935-attacks  PENDING       0:00                  (JobHeldUser)
+            240078         hgpu2p                  hydrol85935-report  PENDING       0:00                  (JobHeldUser)
+            241337         hgpu2p           hydrol85935-v009-validate  PENDING       0:00                  (JobHeldUser)
+            241344         hgpu2p             hydrol85935-v010-export  PENDING       0:00                  (JobHeldUser)
+            241691 hgpu2p,hgpu4,h         tessera_01073000_abc_261013  PENDING       0:00                  (JobHeldUser)
+    241336_[7-129]         hgpu2p            hydrol85935-v009-attacks  PENDING       0:00                  (JobHeldUser)
+          241336_6         hgpu2p            hydrol85935-v009-attacks  RUNNING    1:33:35                         ngu010
+            242305          hgpu4                  knet020_train_snow  RUNNING    1:21:32                         ngu104
+            237928         hgpu2p   zj_lstm_small_recovery_261008_002  RUNNING 5-22:44:03                         ngu007
+            236706         hgpu2p zj_explicit_gru__small_261006_pathf  RUNNING 8-09:43:08                         ngu011
+            236707         hgpu2p zj_legacy_lstm__historical_capacity  RUNNING 8-09:43:08                         ngu001
+=== RESOURCES ===
+NODELIST            PARTITION           GRES              GRES_USED                     CPUS(A/I/O/T)       
+ngu001              hgpu2p              gpu:2             gpu:2,dcu:0                   44/52/0/96          
+ngu002              hgpu2p              gpu:2             gpu:0,dcu:0                   0/0/96/96           
+ngu004              hgpu2p              gpu:2             gpu:2,dcu:0                   20/76/0/96          
+ngu005              hgpu2p              gpu:2             gpu:2,dcu:0                   32/64/0/96          
+ngu006              hgpu2p              gpu:2             gpu:2,dcu:0                   32/64/0/96          
+ngu007              hgpu2p              gpu:2             gpu:2,dcu:0                   8/88/0/96           
+ngu008              hgpu2p              gpu:2             gpu:2,dcu:0                   20/76/0/96          
+ngu010              hgpu2p              gpu:2             gpu:1,dcu:0                   4/28/0/32           
+ngu011              hgpu2p              gpu:2             gpu:2,dcu:0                   12/20/0/32          
+ngu101              hgpu4               gpu:4             gpu:4,dcu:0                   16/80/0/96          
+ngu102              hgpu4               gpu:4             gpu:4,dcu:0                   50/46/0/96          
+ngu103              hgpu4               gpu:4             gpu:0,dcu:0                   0/0/96/96           
+ngu104              hgpu4               gpu:4             gpu:4,dcu:0                   10/86/0/96          
+ngu201              hgpu8               gpu:8             gpu:7,dcu:0                   32/32/0/64          
+ngu202              hgpu8               gpu:8             gpu:7,dcu:0                   50/14/0/64          
+ngu203              hgpu8               gpu:8             gpu:8,dcu:0                   64/0/0/64           
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  658T  297T  69% /data1
+=== OWN_TARGET ===
+TARGET_UNUSED
+=== TOOL_METADATA ===
+sbatch is /usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+{"python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "packages": {"torch": "2.4.0", "numpy": "2.3.3", "pandas": "2.3.2", "PyYAML": "6.0.2", "xarray": "2025.12.0", "scipy": "1.16.2"}}
+=== TORCH_DIST_REQUIREMENTS ===
+["filelock", "typing-extensions>=4.8.0", "sympy", "networkx", "jinja2", "fsspec", "optree>=0.11.0; extra == \"optree\"", "opt-einsum>=3.3; extra == \"opt-einsum\""]
+SMALLFIT_METADATA_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-14T21:01:30+0800
