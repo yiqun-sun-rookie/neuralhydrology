@@ -1,0 +1,117 @@
+{
+  "remote_root": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v2",
+  "ids": [
+    "17456",
+    "24934",
+    "26031",
+    "26574",
+    "27111",
+    "27608",
+    "27982",
+    "30969",
+    "35582",
+    "36621",
+    "36857",
+    "37225"
+  ],
+  "inputs": {
+    "B_MISSING_SAMPLE_GEOMETRY_BYTES.geojson": {
+      "bytes": 97391,
+      "sha256": "7c95350f5c283d73651b42dfce404615359a2feed09c719616541a0b07eea7e1"
+    }
+  },
+  "wheels": {
+    "rasterio-1.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+      "bytes": 22204391,
+      "sha256": "54eef32d20a0dfbba59a8bb9828e562c3e9e97e2355b8dfe4a5274117976059f",
+      "url": "https://files.pythonhosted.org/packages/aa/fa/723fa6a48a419b044146cd92fa6a66ead8532d96c352fbc2f2a1546cb5b6/rasterio-1.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    },
+    "shapely-2.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": {
+      "bytes": 3110842,
+      "sha256": "136ab87b17e733e22f0961504d05e77e7be8c9b5a8184f685b4a91a84efe3c26",
+      "url": "https://files.pythonhosted.org/packages/13/02/58b0b8d9c17c93ab6340edd8b7308c0c5a5b81f94ce65705819b7416dba5/shapely-2.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+    },
+    "pyproj-3.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+      "bytes": 8571478,
+      "sha256": "65ad699e0c830e2b8565afe42bd58cc972b47d829b2e0e48ad9638386d994915",
+      "url": "https://files.pythonhosted.org/packages/64/90/dfe5c00de1ca4dbb82606e79790659d4ed7f0ed8d372bccb3baca2a5abe0/pyproj-3.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    },
+    "affine-2.4.0-py3-none-any.whl": {
+      "bytes": 15662,
+      "sha256": "8a3df80e2b2378aef598a83c1392efd47967afec4242021a0b06b4c7cbc61a92",
+      "url": "https://files.pythonhosted.org/packages/0b/f7/85273299ab57117850cc0a936c64151171fac4da49bc6fba0dad984a7c5f/affine-2.4.0-py3-none-any.whl"
+    },
+    "attrs-25.3.0-py3-none-any.whl": {
+      "bytes": 63815,
+      "sha256": "427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3",
+      "url": "https://files.pythonhosted.org/packages/77/06/bb80f5f86020c4551da315d78b3ab75e8228f89f0162f2c3a819e407941a/attrs-25.3.0-py3-none-any.whl"
+    },
+    "click-8.1.8-py3-none-any.whl": {
+      "bytes": 98188,
+      "sha256": "63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2",
+      "url": "https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl"
+    },
+    "click_plugins-1.1.1.2-py2.py3-none-any.whl": {
+      "bytes": 11051,
+      "sha256": "008d65743833ffc1f5417bf0e78e8d2c23aab04d9745ba817bd3e71b0feb6aa6",
+      "url": "https://files.pythonhosted.org/packages/3d/9a/2abecb28ae875e39c8cad711eb1186d8d14eab564705325e77e4e6ab9ae5/click_plugins-1.1.1.2-py2.py3-none-any.whl"
+    },
+    "cligj-0.7.2-py3-none-any.whl": {
+      "bytes": 7069,
+      "sha256": "c1ca117dbce1fe20a5809dc96f01e1c2840f6dcc939b3ddbb1111bf330ba82df",
+      "url": "https://files.pythonhosted.org/packages/73/86/43fa9f15c5b9fb6e82620428827cd3c284aa933431405d1bcf5231ae3d3e/cligj-0.7.2-py3-none-any.whl"
+    },
+    "pyparsing-3.2.5-py3-none-any.whl": {
+      "bytes": 113890,
+      "sha256": "e38a4f02064cf41fe6593d328d0512495ad1f3d8a91c4f73fc401b3079a59a5e",
+      "url": "https://files.pythonhosted.org/packages/10/5e/1aa9a93198c6b64513c9d7752de7422c06402de6600a8767da1524f9570b/pyparsing-3.2.5-py3-none-any.whl"
+    },
+    "certifi-2025.10.5-py3-none-any.whl": {
+      "bytes": 163286,
+      "sha256": "0f212c2744a9bb6de0c56639a6f68afe01ecd92d91f14ae897c4fe7bbeeef0de",
+      "url": "https://files.pythonhosted.org/packages/e4/37/af0d2ef3967ac0d6113837b44a4f0bfe1328c2b9763bd5b1744520e5cfed/certifi-2025.10.5-py3-none-any.whl"
+    }
+  },
+  "versions": {
+    "rasterio": "1.4.3",
+    "shapely": "2.1.2",
+    "pyproj": "3.6.1",
+    "numpy": "2.3.3",
+    "affine": "2.4.0",
+    "attrs": "25.3.0",
+    "click": "8.1.8",
+    "click_plugins": "1.1.1.2",
+    "cligj": "0.7.2",
+    "pyparsing": "3.2.5",
+    "certifi": "2025.10.5"
+  },
+  "distributions": {
+    "rasterio": "rasterio",
+    "shapely": "shapely",
+    "pyproj": "pyproj",
+    "numpy": "numpy",
+    "affine": "affine",
+    "attrs": "attrs",
+    "click": "click",
+    "click_plugins": "click-plugins",
+    "cligj": "cligj",
+    "pyparsing": "pyparsing",
+    "certifi": "certifi"
+  },
+  "declared_coordinate_system": "Original GeoJSON CRS metadata must be EPSG4326/CRS84",
+  "max_individual_window_pixels": 1000000,
+  "max_total_window_pixels": 6000000,
+  "scientific_array_reads": 0,
+  "scientific_source_requests": 0,
+  "maximum_wheel_gets": 0,
+  "model_calls": 0,
+  "training": 0,
+  "production_accepted": 0,
+  "wheel_archive": {
+    "bytes": 34361330,
+    "sha256": "3a1436ba60b74410fa13a809659a7ce77a2cb1ae58b44b616f871fb85a86a4c3"
+  },
+  "wheel_origin": "Exact original PyPI bytes verified after bounded mirror byte continuation",
+  "preserve_failed_runtime_job": "242304",
+  "shared_environment_changes": 0
+}
