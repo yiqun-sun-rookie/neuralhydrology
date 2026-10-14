@@ -1,0 +1,419 @@
+### channel=china-soil12-20261014 seq=6
+### host=login4
+### started=2026-10-14T22:51:29+0800
+### ---------- output ----------
+OWN_RUNTIME_QUERY_JOB_ID=242478
+OWN_RUNTIME_SERVER_QUERY_UTC=2026-10-14T14:51:29Z
+slurm_load_jobs error: Invalid job id specified
+OWN_RUNTIME_SQUEUE_EXIT=1
+242478|COMPLETED|0:0|00:00:10|2|billing=2,cpu=2,node=1|
+242478.batch|COMPLETED|0:0|00:00:10|2|cpu=2,mem=0,node=1|3404K
+242478.extern|COMPLETED|0:0|00:00:10|2|billing=2,cpu=2,node=1|2640K
+OWN_RUNTIME_SACCT_EXIT=0
+OWN_RUNTIME_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v2/logs/runtime-242478.out
+OWN_RUNTIME_INSTALL_REPORT_SAVED
+OWN_RUNTIME_INSTALL_STATUS=PASS_PRIVATE_RUNTIME_AND_PROVISIONAL_WINDOWS
+
+OWN_RUNTIME_LOG_BYTES=105
+OWN_RUNTIME_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v2/logs/runtime-242478.err
+
+OWN_RUNTIME_LOG_BYTES=0
+OWN_RUNTIME_REPORT_BYTES=11565
+4287fa71fbc2694efeb2c76edbd5741ec75d3426e95702545a1cc166f4b993c6  /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v2/RUNTIME_INSTALL_RESULT.json
+OWN_RUNTIME_REPORT_BEGIN
+{
+  "status": "PASS_PRIVATE_RUNTIME_AND_PROVISIONAL_WINDOWS",
+  "job_id": "242478",
+  "host": "ngu011",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "architecture": "x86_64",
+  "libc": [
+    "glibc",
+    "2.34"
+  ],
+  "array_reads": 0,
+  "scientific_tiff_gets": 0,
+  "wheel_get_attempts": 0,
+  "model_calls": 0,
+  "training": 0,
+  "shared_environment_changes": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0,
+  "packages": [
+    {
+      "module": "rasterio",
+      "version": "1.4.3",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/rasterio/__init__.py"
+    },
+    {
+      "module": "shapely",
+      "version": "2.1.2",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/shapely/__init__.py"
+    },
+    {
+      "module": "pyproj",
+      "version": "3.6.1",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/pyproj/__init__.py"
+    },
+    {
+      "module": "numpy",
+      "version": "2.3.3",
+      "loaded_path": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/__init__.py"
+    },
+    {
+      "module": "affine",
+      "version": "2.4.0",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/affine/__init__.py"
+    },
+    {
+      "module": "attrs",
+      "version": "25.3.0",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/attrs/__init__.py"
+    },
+    {
+      "module": "click",
+      "version": "8.1.8",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/click/__init__.py"
+    },
+    {
+      "module": "click_plugins",
+      "version": "1.1.1.2",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/click_plugins/__init__.py"
+    },
+    {
+      "module": "cligj",
+      "version": "0.7.2",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/cligj/__init__.py"
+    },
+    {
+      "module": "pyparsing",
+      "version": "3.2.5",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/pyparsing/__init__.py"
+    },
+    {
+      "module": "certifi",
+      "version": "2025.10.5",
+      "loaded_path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2/certifi/__init__.py"
+    }
+  ],
+  "wheel_acquisition": [
+    {
+      "filename": "rasterio-1.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 22204391,
+      "actual_sha256": "54eef32d20a0dfbba59a8bb9828e562c3e9e97e2355b8dfe4a5274117976059f",
+      "network_gets": 0
+    },
+    {
+      "filename": "shapely-2.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 3110842,
+      "actual_sha256": "136ab87b17e733e22f0961504d05e77e7be8c9b5a8184f685b4a91a84efe3c26",
+      "network_gets": 0
+    },
+    {
+      "filename": "pyproj-3.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 8571478,
+      "actual_sha256": "65ad699e0c830e2b8565afe42bd58cc972b47d829b2e0e48ad9638386d994915",
+      "network_gets": 0
+    },
+    {
+      "filename": "affine-2.4.0-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 15662,
+      "actual_sha256": "8a3df80e2b2378aef598a83c1392efd47967afec4242021a0b06b4c7cbc61a92",
+      "network_gets": 0
+    },
+    {
+      "filename": "attrs-25.3.0-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 63815,
+      "actual_sha256": "427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3",
+      "network_gets": 0
+    },
+    {
+      "filename": "click-8.1.8-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 98188,
+      "actual_sha256": "63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2",
+      "network_gets": 0
+    },
+    {
+      "filename": "click_plugins-1.1.1.2-py2.py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 11051,
+      "actual_sha256": "008d65743833ffc1f5417bf0e78e8d2c23aab04d9745ba817bd3e71b0feb6aa6",
+      "network_gets": 0
+    },
+    {
+      "filename": "cligj-0.7.2-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 7069,
+      "actual_sha256": "c1ca117dbce1fe20a5809dc96f01e1c2840f6dcc939b3ddbb1111bf330ba82df",
+      "network_gets": 0
+    },
+    {
+      "filename": "pyparsing-3.2.5-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 113890,
+      "actual_sha256": "e38a4f02064cf41fe6593d328d0512495ad1f3d8a91c4f73fc401b3079a59a5e",
+      "network_gets": 0
+    },
+    {
+      "filename": "certifi-2025.10.5-py3-none-any.whl",
+      "status": "VERIFIED_ORIGINAL_WHEEL_BYTES",
+      "actual_bytes": 163286,
+      "actual_sha256": "0f212c2744a9bb6de0c56639a6f68afe01ecd92d91f14ae897c4fe7bbeeef0de",
+      "network_gets": 0
+    }
+  ],
+  "geometry_records": [
+    {
+      "basin_id": "17456",
+      "bounds": [
+        86.83107731300004,
+        49.06806615800008,
+        88.18092269500005,
+        49.693457685000055
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "963be85639fad12d98ff790de80f85ebee5da728ef018b953833f33aab7f1991",
+      "provisional_window": [
+        4836,
+        4912,
+        32019,
+        32182
+      ],
+      "provisional_window_pixels": 12388,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "24934",
+      "bounds": [
+        116.931136465,
+        49.181563106000056,
+        117.86497825600009,
+        49.54346799800004
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "fed65efa790c7a0952daada5978758195ca7e688fbf68c536c58d99c826128fa",
+      "provisional_window": [
+        4854,
+        4899,
+        35631,
+        35744
+      ],
+      "provisional_window_pixels": 5085,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "26031",
+      "bounds": [
+        111.01043798600006,
+        35.57538276300005,
+        112.05781880400002,
+        36.45377182800007
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "855d4d773e48325ca2dcae7437768cdc67f9c65941bdb5fe2e33f565e751c54a",
+      "provisional_window": [
+        6425,
+        6531,
+        34921,
+        35047
+      ],
+      "provisional_window_pixels": 13356,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "26574",
+      "bounds": [
+        117.71755606900001,
+        27.97061069600005,
+        118.14957594400005,
+        28.625442777000046
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "466b63048a6f2554334d688fe1d11e1dc1af32f17cfa33d0dec3dc8dbac388af",
+      "provisional_window": [
+        7364,
+        7444,
+        35726,
+        35778
+      ],
+      "provisional_window_pixels": 4160,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "27111",
+      "bounds": [
+        104.84002235600008,
+        29.55753961000005,
+        105.09832333200006,
+        29.77002838900006
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "8a8bfdb4af2cc93620835a9004cd27317210e7c8529d6b48f8bb754f23f34095",
+      "provisional_window": [
+        7227,
+        7254,
+        34180,
+        34212
+      ],
+      "provisional_window_pixels": 864,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "27608",
+      "bounds": [
+        114.20993579100002,
+        23.296249463000038,
+        114.59710508700005,
+        23.74804094800004
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "776cf82e71e2f57fcc8531b290c47db99219e8b36135a3a90b3bccf613cb1239",
+      "provisional_window": [
+        7950,
+        8005,
+        35305,
+        35352
+      ],
+      "provisional_window_pixels": 2585,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "27982",
+      "bounds": [
+        110.01052824400006,
+        18.508423803000028,
+        110.56886509300006,
+        19.17486675500004
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "07e296fb07d5c102c45b4ad093cee56261c1e3615112ddf687a16a3101e46697",
+      "provisional_window": [
+        8499,
+        8579,
+        34801,
+        34869
+      ],
+      "provisional_window_pixels": 5440,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "30969",
+      "bounds": [
+        82.92541174700006,
+        30.03073703000007,
+        83.34948035900004,
+        30.27207110200004
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "d4846e6c8b60fc0fc710baf0616a6986e06897995163c53b53321b192e38ca8b",
+      "provisional_window": [
+        7167,
+        7197,
+        31551,
+        31602
+      ],
+      "provisional_window_pixels": 1530,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "35582",
+      "bounds": [
+        112.835312208,
+        44.580955913000025,
+        113.62404269800004,
+        45.304840728000045
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "fc1b5f6b31c391d77d30b33cffedc4640d57cf87d80fa2b0e69119758182e3ec",
+      "provisional_window": [
+        5363,
+        5451,
+        35140,
+        35235
+      ],
+      "provisional_window_pixels": 8360,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "36621",
+      "bounds": [
+        85.11361543300006,
+        34.73562586200006,
+        85.83271306200004,
+        35.319421368000064
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "6f4d1cce511373f07e6225ab7cf61da56e16e6591df3e3d249ad020d8a1fc17b",
+      "provisional_window": [
+        6561,
+        6632,
+        31813,
+        31900
+      ],
+      "provisional_window_pixels": 6177,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "36857",
+      "bounds": [
+        89.92631543300007,
+        31.175638045000028,
+        90.56582344500004,
+        31.645634554000026
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "35559818d704b4ecbacb0d96cf6cca3989478464f42fd74a14dc303b87303b25",
+      "provisional_window": [
+        7002,
+        7059,
+        32391,
+        32468
+      ],
+      "provisional_window_pixels": 4389,
+      "raster_header_not_yet_verified": true
+    },
+    {
+      "basin_id": "37225",
+      "bounds": [
+        78.30580801500008,
+        33.70559776600004,
+        78.95588127900004,
+        34.243685225000036
+      ],
+      "geometry_valid": true,
+      "geometry_sha256": "4e0d8d0cde10f6435bd1cbba4bd9c263d4b5df1ffdbfd85b25108550354bed5c",
+      "provisional_window": [
+        6690,
+        6756,
+        30996,
+        31075
+      ],
+      "provisional_window_pixels": 5214,
+      "raster_header_not_yet_verified": true
+    }
+  ],
+  "contract_sha256": "78eab5e89c38ab9640503ca1592558ec82b149a232da767af1a8050536f66403",
+  "source_sha256": "2758ac180c2f51607c4ff0e63a04862a81fe2daf7c16ddad678d69c597eee823",
+  "original_crs_metadata": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "private_dependency_uncompressed_bytes": 105886877,
+  "private_dependency_files": 550,
+  "provisional_total_window_pixels": 69548,
+  "elapsed_seconds": 7.691803608089685,
+  "peak_rss_kib": 133792
+}
+OWN_RUNTIME_REPORT_END
+OWN_RUNTIME_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-14T22:51:29+0800
