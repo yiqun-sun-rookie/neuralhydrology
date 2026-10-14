@@ -1,0 +1,297 @@
+### channel=china-soil12-20261014 seq=2
+### host=login4
+### started=2026-10-14T11:22:01+0800
+### ---------- output ----------
+OWN_METADATA_QUERY_JOB_ID=242011
+OWN_METADATA_SERVER_QUERY_UTC=2026-10-14T03:22:01Z
+slurm_load_jobs error: Invalid job id specified
+OWN_METADATA_SQUEUE_EXIT=1
+242011|COMPLETED|0:0|00:00:02|2|billing=2,cpu=2,node=1|
+242011.batch|COMPLETED|0:0|00:00:02|2|cpu=2,mem=0,node=1|2952K
+242011.extern|COMPLETED|0:0|00:00:02|2|billing=2,cpu=2,node=1|1888K
+OWN_METADATA_SACCT_EXIT=0
+OWN_METADATA_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/preflight_v1/logs/preflight-242011.out
+OWN_METADATA_PROBE_COMPLETE
+
+OWN_METADATA_LOG_BYTES=28
+OWN_METADATA_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/preflight_v1/logs/preflight-242011.err
+
+OWN_METADATA_LOG_BYTES=0
+OWN_METADATA_REPORT_BYTES=9547
+390ba21375bf20a928dfceb43160a253b1f1ab184567ea9935225d46624cf331  /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/preflight_v1/PREFLIGHT_RESULT.json
+OWN_METADATA_REPORT_BEGIN
+{
+  "status": "SOURCE_GEOMETRY_PREFLIGHT_SAVED",
+  "job_id": "242011",
+  "hostname": "ngu010",
+  "source_sha256": "40857a219df4dbd51fbfa2b08685dda5eac648978710690e70e8ec8f37ea7c2c",
+  "contract_sha256": "867552c6fec97f0c5d9ad110fb45d509a549f6068449db998b2d626844d7afce",
+  "modules": {
+    "numpy": {
+      "actual_import_passed": true,
+      "version": "2.3.3"
+    },
+    "rasterio": {
+      "actual_import_passed": false,
+      "error_type": "ModuleNotFoundError"
+    },
+    "shapely": {
+      "actual_import_passed": false,
+      "error_type": "ModuleNotFoundError"
+    },
+    "pyproj": {
+      "actual_import_passed": false,
+      "error_type": "ModuleNotFoundError"
+    },
+    "requests": {
+      "actual_import_passed": true,
+      "version": "2.32.5"
+    }
+  },
+  "geometry_records": [],
+  "source_files": {
+    "average_soil_and_sedimentary-deposit_thickness.tif": [
+      {
+        "path": "/data1/home/sunyiq/neuralhydrology/data/average_soil_and_sedimentary-deposit_thickness.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/neuralhydrology/data/Pelletier/average_soil_and_sedimentary-deposit_thickness.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_2023_inference_20260930_001/inputs_pelletier_original/average_soil_and_sedimentary-deposit_thickness.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_input_repair_20261012_001/execution_v1/inputs_pelletier_original/average_soil_and_sedimentary-deposit_thickness.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/source_original/inputs_pelletier_original/average_soil_and_sedimentary-deposit_thickness.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      }
+    ],
+    "land_cover_mask.tif": [
+      {
+        "path": "/data1/home/sunyiq/neuralhydrology/data/land_cover_mask.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/neuralhydrology/data/Pelletier/land_cover_mask.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_2023_inference_20260930_001/inputs_pelletier_original/land_cover_mask.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_input_repair_20261012_001/execution_v1/inputs_pelletier_original/land_cover_mask.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      },
+      {
+        "path": "/data1/home/sunyiq/china_radiation_16_hpc_20261012_001/execution_v1/source_original/inputs_pelletier_original/land_cover_mask.tif",
+        "present": false,
+        "original_raster_values_read": 0
+      }
+    ]
+  },
+  "metadata_requests": [
+    {
+      "canonical_url": "https://data.ornldaac.earthdata.nasa.gov/public/global_soil/Global_Soil_Regolith_Sediment/data/average_soil_and_sedimentary-deposit_thickness.tif.sha256",
+      "method": "GET",
+      "automatic_retries": 0,
+      "science_data_get": false,
+      "authenticated": false,
+      "status": "METADATA_HELD",
+      "error_type": "URLError",
+      "response_bytes": 0,
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redirects": 0,
+      "source_name": "average_soil_and_sedimentary-deposit_thickness.tif"
+    },
+    {
+      "canonical_url": "https://data.ornldaac.earthdata.nasa.gov/public/global_soil/Global_Soil_Regolith_Sediment/data/land_cover_mask.tif.sha256",
+      "method": "GET",
+      "automatic_retries": 0,
+      "science_data_get": false,
+      "authenticated": false,
+      "status": "METADATA_HELD",
+      "error_type": "URLError",
+      "response_bytes": 0,
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redirects": 0,
+      "source_name": "land_cover_mask.tif"
+    },
+    {
+      "canonical_url": "https://data.ornldaac.earthdata.nasa.gov/protected/global_soil/Global_Soil_Regolith_Sediment/data/average_soil_and_sedimentary-deposit_thickness.tif",
+      "method": "HEAD",
+      "automatic_retries": 0,
+      "science_data_get": false,
+      "authenticated": false,
+      "status": "METADATA_HELD",
+      "error_type": "URLError",
+      "response_bytes": 0,
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redirects": 0,
+      "source_name": "average_soil_and_sedimentary-deposit_thickness.tif",
+      "anonymous_head_is_not_authenticated_get_proof": true
+    },
+    {
+      "canonical_url": "https://data.ornldaac.earthdata.nasa.gov/protected/global_soil/Global_Soil_Regolith_Sediment/data/land_cover_mask.tif",
+      "method": "HEAD",
+      "automatic_retries": 0,
+      "science_data_get": false,
+      "authenticated": false,
+      "status": "METADATA_HELD",
+      "error_type": "URLError",
+      "response_bytes": 0,
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redirects": 0,
+      "source_name": "land_cover_mask.tif",
+      "anonymous_head_is_not_authenticated_get_proof": true
+    }
+  ],
+  "credential_file_metadata": [
+    {
+      "path": "/data1/home/sunyiq/.netrc",
+      "exists": false,
+      "credential_contents_read": false
+    },
+    {
+      "path": "/data1/home/sunyiq/_netrc",
+      "exists": false,
+      "credential_contents_read": false
+    }
+  ],
+  "raster_value_reads": 0,
+  "source_weather_date_flow_reads": 0,
+  "new_scientific_gets": 0,
+  "new_scientific_posts": 0,
+  "model_calls": 0,
+  "training": 0,
+  "gpu_requested": 0,
+  "local_scientific_work": 0,
+  "production_accepted": 0,
+  "national_input_acceptance": false,
+  "geometry_status": "HELD_SHAPELY_IMPORT_UNAVAILABLE",
+  "old_reference_rows_preserved_as_strings": [
+    {
+      "basin_id": "24379",
+      "soil_depth_pelletier": "4.758641040654026",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "1675",
+      "valid_overlap_cells": "1675",
+      "grid_polygon_area_relative_error": "4.48706822375744e-06"
+    },
+    {
+      "basin_id": "26106",
+      "soil_depth_pelletier": "2.4212818909332414",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "1997",
+      "valid_overlap_cells": "1997",
+      "grid_polygon_area_relative_error": "2.828041376745638e-06"
+    },
+    {
+      "basin_id": "26524",
+      "soil_depth_pelletier": "48.47435146990188",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "105",
+      "valid_overlap_cells": "105",
+      "grid_polygon_area_relative_error": "9.721866628997766e-05"
+    },
+    {
+      "basin_id": "27052",
+      "soil_depth_pelletier": "1.2963685785532297",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "503",
+      "valid_overlap_cells": "503",
+      "grid_polygon_area_relative_error": "5.906093542673574e-06"
+    },
+    {
+      "basin_id": "27190",
+      "soil_depth_pelletier": "0.40631997527220354",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "8",
+      "valid_overlap_cells": "8",
+      "grid_polygon_area_relative_error": "1.0625047774937002e-07"
+    },
+    {
+      "basin_id": "27464",
+      "soil_depth_pelletier": "3.8231734397968307",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "1520",
+      "valid_overlap_cells": "1520",
+      "grid_polygon_area_relative_error": "2.482200972542259e-07"
+    },
+    {
+      "basin_id": "27954",
+      "soil_depth_pelletier": "14.55092609118664",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "999",
+      "valid_overlap_cells": "999",
+      "grid_polygon_area_relative_error": "7.76380479539096e-06"
+    },
+    {
+      "basin_id": "28977",
+      "soil_depth_pelletier": "0.9385745006325363",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "4105",
+      "valid_overlap_cells": "4105",
+      "grid_polygon_area_relative_error": "5.266516377444574e-07"
+    },
+    {
+      "basin_id": "35487",
+      "soil_depth_pelletier": "36.96429471835042",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "541",
+      "valid_overlap_cells": "541",
+      "grid_polygon_area_relative_error": "3.963927248884502e-06"
+    },
+    {
+      "basin_id": "36304",
+      "soil_depth_pelletier": "6.558945508996586",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "1662",
+      "valid_overlap_cells": "1662",
+      "grid_polygon_area_relative_error": "1.7755681178677207e-06"
+    },
+    {
+      "basin_id": "36398",
+      "soil_depth_pelletier": "24.68135740180306",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "244",
+      "valid_overlap_cells": "244",
+      "grid_polygon_area_relative_error": "0.0005277722310044197"
+    },
+    {
+      "basin_id": "36990",
+      "soil_depth_pelletier": "16.294401780000978",
+      "valid_area_fraction": "1.0",
+      "positive_overlap_cells": "1253",
+      "valid_overlap_cells": "1253",
+      "grid_polygon_area_relative_error": "3.4264347535950535e-05"
+    }
+  ],
+  "byte_hash_reads": 0,
+  "elapsed_seconds": 1.1727108545601368,
+  "peak_rss_kib": 52644,
+  "metadata_http_operations": 4,
+  "credential_contents_read": 0,
+  "scientific_result_accepted": false,
+  "future_pixel_entry_approved": false
+}
+OWN_METADATA_REPORT_END
+OWN_METADATA_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-14T11:22:01+0800
