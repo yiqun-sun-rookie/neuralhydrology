@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B "$PWD/inbox/knet-camels-hpc-20261012-001/payload/020_snow_training_deploy.py" "$PWD/inbox/knet-camels-hpc-20261012-001/payload/020_snow_training.tar.gz"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/020_snow_training_20261014_001/query_collect.py /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/020_snow_training_20261014_001 242305
