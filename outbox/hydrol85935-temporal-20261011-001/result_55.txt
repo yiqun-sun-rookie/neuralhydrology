@@ -1,0 +1,1427 @@
+### channel=hydrol85935-temporal-20261011-001 seq=55
+### host=login4
+### started=2026-10-14T19:46:36+0800
+### ---------- output ----------
+PRIORITY_DEPLOYMENT {"queue_priority.py": "a3de8ee97281cb5b1ff7ab745bd8b4506abf3da932d35869b08eec3d0631fe6e", "verify_source.sh": "cdc9e6cb33ea56dc40b4665847d44dee6db4ab7beee1c3a27710685a6b1265f8", "authorization.json": "7c58d81f4adcea0b658ad67c1c2f91eaa96910cf4baecad3da9afc62eb8928bc", "PLAN.md": "4ab27fda2595bc48138a5438d0e1b49503f9246dbc780eba6debb669faac8763"}
+PRIORITY_STATUS {"status": "HANDOFF_APPLIED", "handoff": {"at": "2026-10-14T11:46:41.115190+00:00", "preflight_job_id": 241345, "old_dependency": "afterany:241344", "new_dependency": "afterany:241336_6", "natural_completion_jobs": ["241336_6"], "held_parent_ids": ["241336_7", "241336_8", "241336_9", "241336_10", "241336_11", "241336_12", "241336_13", "241336_14", "241336_15", "241336_16", "241336_17", "241336_18", "241336_19", "241336_20", "241336_21", "241336_22", "241336_23", "241336_24", "241336_25", "241336_26", "241336_27", "241336_28", "241336_29", "241336_30", "241336_31", "241336_32", "241336_33", "241336_34", "241336_35", "241336_36", "241336_37", "241336_38", "241336_39", "241336_40", "241336_41", "241336_42", "241336_43", "241336_44", "241336_45", "241336_46", "241336_47", "241336_48", "241336_49", "241336_50", "241336_51", "241336_52", "241336_53", "241336_54", "241336_55", "241336_56", "241336_57", "241336_58", "241336_59", "241336_60", "241336_61", "241336_62", "241336_63", "241336_64", "241336_65", "241336_66", "241336_67", "241336_68", "241336_69", "241336_70", "241336_71", "241336_72", "241336_73", "241336_74", "241336_75", "241336_76", "241336_77", "241336_78", "241336_79", "241336_80", "241336_81", "241336_82", "241336_83", "241336_84", "241336_85", "241336_86", "241336_87", "241336_88", "241336_89", "241336_90", "241336_91", "241336_92", "241336_93", "241336_94", "241336_95", "241336_96", "241336_97", "241336_98", "241336_99", "241336_100", "241336_101", "241336_102", "241336_103", "241336_104", "241336_105", "241336_106", "241336_107", "241336_108", "241336_109", "241336_110", "241336_111", "241336_112", "241336_113", "241336_114", "241336_115", "241336_116", "241336_117", "241336_118", "241336_119", "241336_120", "241336_121", "241336_122", "241336_123", "241336_124", "241336_125", "241336_126", "241336_127", "241336_128", "241336_129", "241337", "241344"], "before": [{"job_id": "241336_7", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_8", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_9", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_10", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_11", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_12", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_13", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_14", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_15", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_16", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_17", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_18", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_19", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_20", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_21", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_22", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_23", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_24", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_25", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_26", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_27", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_28", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_29", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_30", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_31", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_32", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_33", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_34", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_35", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_36", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_37", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_38", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_39", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_40", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_41", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_42", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_43", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_44", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_45", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_46", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_47", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_48", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_49", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_50", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_51", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_52", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_53", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_54", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_55", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_56", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_57", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_58", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_59", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_60", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_61", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_62", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_63", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_64", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_65", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_66", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_67", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_68", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_69", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_70", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_71", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_72", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_73", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_74", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_75", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_76", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_77", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_78", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_79", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_80", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_81", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_82", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_83", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_84", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_85", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_86", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_87", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_88", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_89", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_90", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_91", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_92", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_93", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_94", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_95", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_96", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_97", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_98", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_99", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_100", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_101", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_102", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_103", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_104", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_105", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_106", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_107", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_108", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_109", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_110", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_111", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_112", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_113", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_114", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_115", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_116", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_117", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_118", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_119", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_120", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_121", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_122", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_123", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_124", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_125", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_126", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_127", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_128", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241336_129", "state": "PENDING", "reason": "JobArrayTaskLimit"}, {"job_id": "241337", "state": "PENDING", "reason": "Dependency"}, {"job_id": "241344", "state": "PENDING", "reason": "Dependency"}, {"job_id": "241345", "state": "PENDING", "reason": "Dependency"}, {"job_id": "241336_6", "state": "RUNNING", "reason": "None"}], "after": [{"job_id": "241345", "state": "PENDING", "reason": "None"}, {"job_id": "241337", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241344", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_7", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_8", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_9", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_10", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_11", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_12", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_13", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_14", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_15", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_16", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_17", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_18", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_19", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_20", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_21", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_22", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_23", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_24", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_25", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_26", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_27", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_28", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_29", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_30", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_31", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_32", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_33", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_34", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_35", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_36", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_37", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_38", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_39", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_40", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_41", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_42", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_43", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_44", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_45", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_46", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_47", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_48", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_49", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_50", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_51", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_52", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_53", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_54", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_55", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_56", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_57", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_58", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_59", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_60", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_61", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_62", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_63", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_64", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_65", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_66", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_67", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_68", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_69", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_70", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_71", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_72", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_73", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_74", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_75", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_76", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_77", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_78", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_79", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_80", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_81", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_82", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_83", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_84", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_85", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_86", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_87", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_88", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_89", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_90", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_91", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_92", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_93", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_94", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_95", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_96", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_97", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_98", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_99", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_100", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_101", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_102", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_103", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_104", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_105", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_106", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_107", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_108", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_109", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_110", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_111", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_112", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_113", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_114", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_115", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_116", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_117", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_118", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_119", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_120", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_121", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_122", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_123", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_124", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_125", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_126", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_127", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_128", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_129", "state": "PENDING", "reason": "JobHeldUser"}, {"job_id": "241336_6", "state": "RUNNING", "reason": "None"}], "scientific_rules_changed": false, "science_owner": "hpc", "local_science_authorized": true, "local_assigned_records": 0, "parent_results_modified": false, "running_job_cancelled": false}, "checked_utc": "2026-10-14T11:46:41.123116+00:00"}
+PRIORITY_WATCHER {"pid": 14633, "command": ["/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "-u", "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/control/queue_priority_20261014_001/queue_priority.py", "watch"], "script_sha256": "a3de8ee97281cb5b1ff7ab745bd8b4506abf3da932d35869b08eec3d0631fe6e", "proc_start_ticks": "9910500053"}
+PRIORITY_APPLIED {
+  "at": "2026-10-14T11:46:41.115190+00:00",
+  "preflight_job_id": 241345,
+  "old_dependency": "afterany:241344",
+  "new_dependency": "afterany:241336_6",
+  "natural_completion_jobs": [
+    "241336_6"
+  ],
+  "held_parent_ids": [
+    "241336_7",
+    "241336_8",
+    "241336_9",
+    "241336_10",
+    "241336_11",
+    "241336_12",
+    "241336_13",
+    "241336_14",
+    "241336_15",
+    "241336_16",
+    "241336_17",
+    "241336_18",
+    "241336_19",
+    "241336_20",
+    "241336_21",
+    "241336_22",
+    "241336_23",
+    "241336_24",
+    "241336_25",
+    "241336_26",
+    "241336_27",
+    "241336_28",
+    "241336_29",
+    "241336_30",
+    "241336_31",
+    "241336_32",
+    "241336_33",
+    "241336_34",
+    "241336_35",
+    "241336_36",
+    "241336_37",
+    "241336_38",
+    "241336_39",
+    "241336_40",
+    "241336_41",
+    "241336_42",
+    "241336_43",
+    "241336_44",
+    "241336_45",
+    "241336_46",
+    "241336_47",
+    "241336_48",
+    "241336_49",
+    "241336_50",
+    "241336_51",
+    "241336_52",
+    "241336_53",
+    "241336_54",
+    "241336_55",
+    "241336_56",
+    "241336_57",
+    "241336_58",
+    "241336_59",
+    "241336_60",
+    "241336_61",
+    "241336_62",
+    "241336_63",
+    "241336_64",
+    "241336_65",
+    "241336_66",
+    "241336_67",
+    "241336_68",
+    "241336_69",
+    "241336_70",
+    "241336_71",
+    "241336_72",
+    "241336_73",
+    "241336_74",
+    "241336_75",
+    "241336_76",
+    "241336_77",
+    "241336_78",
+    "241336_79",
+    "241336_80",
+    "241336_81",
+    "241336_82",
+    "241336_83",
+    "241336_84",
+    "241336_85",
+    "241336_86",
+    "241336_87",
+    "241336_88",
+    "241336_89",
+    "241336_90",
+    "241336_91",
+    "241336_92",
+    "241336_93",
+    "241336_94",
+    "241336_95",
+    "241336_96",
+    "241336_97",
+    "241336_98",
+    "241336_99",
+    "241336_100",
+    "241336_101",
+    "241336_102",
+    "241336_103",
+    "241336_104",
+    "241336_105",
+    "241336_106",
+    "241336_107",
+    "241336_108",
+    "241336_109",
+    "241336_110",
+    "241336_111",
+    "241336_112",
+    "241336_113",
+    "241336_114",
+    "241336_115",
+    "241336_116",
+    "241336_117",
+    "241336_118",
+    "241336_119",
+    "241336_120",
+    "241336_121",
+    "241336_122",
+    "241336_123",
+    "241336_124",
+    "241336_125",
+    "241336_126",
+    "241336_127",
+    "241336_128",
+    "241336_129",
+    "241337",
+    "241344"
+  ],
+  "before": [
+    {
+      "job_id": "241336_7",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_8",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_9",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_10",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_11",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_12",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_13",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_14",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_15",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_16",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_17",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_18",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_19",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_20",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_21",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_22",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_23",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_24",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_25",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_26",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_27",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_28",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_29",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_30",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_31",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_32",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_33",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_34",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_35",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_36",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_37",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_38",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_39",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_40",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_41",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_42",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_43",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_44",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_45",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_46",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_47",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_48",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_49",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_50",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_51",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_52",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_53",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_54",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_55",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_56",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_57",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_58",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_59",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_60",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_61",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_62",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_63",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_64",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_65",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_66",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_67",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_68",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_69",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_70",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_71",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_72",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_73",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_74",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_75",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_76",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_77",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_78",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_79",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_80",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_81",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_82",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_83",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_84",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_85",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_86",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_87",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_88",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_89",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_90",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_91",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_92",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_93",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_94",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_95",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_96",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_97",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_98",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_99",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_100",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_101",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_102",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_103",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_104",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_105",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_106",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_107",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_108",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_109",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_110",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_111",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_112",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_113",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_114",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_115",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_116",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_117",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_118",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_119",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_120",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_121",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_122",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_123",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_124",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_125",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_126",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_127",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_128",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241336_129",
+      "state": "PENDING",
+      "reason": "JobArrayTaskLimit"
+    },
+    {
+      "job_id": "241337",
+      "state": "PENDING",
+      "reason": "Dependency"
+    },
+    {
+      "job_id": "241344",
+      "state": "PENDING",
+      "reason": "Dependency"
+    },
+    {
+      "job_id": "241345",
+      "state": "PENDING",
+      "reason": "Dependency"
+    },
+    {
+      "job_id": "241336_6",
+      "state": "RUNNING",
+      "reason": "None"
+    }
+  ],
+  "after": [
+    {
+      "job_id": "241345",
+      "state": "PENDING",
+      "reason": "None"
+    },
+    {
+      "job_id": "241337",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241344",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_7",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_8",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_9",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_10",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_11",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_12",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_13",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_14",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_15",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_16",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_17",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_18",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_19",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_20",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_21",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_22",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_23",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_24",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_25",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_26",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_27",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_28",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_29",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_30",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_31",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_32",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_33",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_34",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_35",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_36",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_37",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_38",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_39",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_40",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_41",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_42",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_43",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_44",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_45",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_46",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_47",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_48",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_49",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_50",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_51",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_52",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_53",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_54",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_55",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_56",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_57",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_58",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_59",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_60",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_61",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_62",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_63",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_64",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_65",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_66",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_67",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_68",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_69",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_70",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_71",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_72",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_73",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_74",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_75",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_76",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_77",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_78",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_79",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_80",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_81",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_82",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_83",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_84",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_85",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_86",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_87",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_88",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_89",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_90",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_91",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_92",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_93",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_94",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_95",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_96",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_97",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_98",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_99",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_100",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_101",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_102",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_103",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_104",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_105",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_106",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_107",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_108",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_109",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_110",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_111",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_112",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_113",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_114",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_115",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_116",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_117",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_118",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_119",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_120",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_121",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_122",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_123",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_124",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_125",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_126",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_127",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_128",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_129",
+      "state": "PENDING",
+      "reason": "JobHeldUser"
+    },
+    {
+      "job_id": "241336_6",
+      "state": "RUNNING",
+      "reason": "None"
+    }
+  ],
+  "scientific_rules_changed": false,
+  "science_owner": "hpc",
+  "local_science_authorized": true,
+  "local_assigned_records": 0,
+  "parent_results_modified": false,
+  "running_job_cancelled": false
+}
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-14T19:46:41+0800
