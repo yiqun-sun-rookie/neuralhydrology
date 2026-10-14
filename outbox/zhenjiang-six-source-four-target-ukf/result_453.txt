@@ -1,0 +1,13 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=453
+### host=login4
+### started=2026-10-15T07:10:16+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 95, in <module>
+  File "<stdin>", line 41, in main
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['squeue', '-h', '-j', '242609', '-o', '%i|%T']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-15T07:10:20+0800
