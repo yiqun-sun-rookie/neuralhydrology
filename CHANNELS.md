@@ -181,3 +181,5 @@ git rm inbox/seq
 
 | china-input-semantics-20261013 | China input source metadata; CPU only; no scientific arrays |
 | kalmannet-noise-ptrace-20261013 | Original noise origin covariance trace | 2026-10-13 | active |
+
+| china-soil12-20261014 | Soil12 source preflight; CPU only; raster values zero |
