@@ -5,10 +5,10 @@ export PYTHONDONTWRITEBYTECODE=1
 import ast,hashlib,json
 from pathlib import Path
 p=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-v=p/'control/hybrid_v012_20261013_001'
+v=p/'control/hybrid_v013_20261014_001'
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def read(path):return json.loads(path.read_text(encoding='utf8'))
-expected={'assignment.json': '71e22779e3088b45e91df4bbd09c3becf592eaece9bd44d158ce306ef72c31c6', 'previous_assignment.json': '40bf00394e99d3785a47add4f83b937658a47ca66d41b32a8051fe7ec1f6ab0e', 'worker.py': 'b09f6d157f8ae90b4e285fe9469a89dc69258255082b53c26d799c2677309c0e', 'worker_bridge.py': '5fa931f34e573e1ef49bdd18ab7171fab20582560a3c196aef241c50e5405fb5', 'export_bridge.py': '9ec6ee894e9714470591cfa43521d3bcb3f77fbb7794e4b886c98c4859af392b', 'federated_v010.py': 'a2f0234fb9e5003522105b92975a72b9b0f4db6bbbbf5125391487213dcf2aee'}
+expected={'assignment.json': 'dacdf8b29545581d27f148aff65153458c9a063f6915635da64937cdb8503db2', 'previous_assignment.json': '71e22779e3088b45e91df4bbd09c3becf592eaece9bd44d158ce306ef72c31c6', 'worker.py': '877457ca47010ad0da8999ed156154a469808b1a8af89c99709ae82c97ec9783', 'worker_bridge.py': '3d5753bcd9fbc97ee2e37549ec6edd03b99518ea370239defc001c5bd3ce16fb', 'export_bridge.py': '91b3d0ff5fee1621be244aec18eedbaa4290ce4651d24762578aebeb733261d8', 'federated_v010.py': 'a2f0234fb9e5003522105b92975a72b9b0f4db6bbbbf5125391487213dcf2aee'}
 for name,digest in expected.items():assert sha(v/name)==digest,name
 assert sha(p/'control/hybrid_v009_20261012_001/worker.py')==expected['worker_bridge.py']
 assert sha(p/'control/workflow_v010_20261012_001/federated_v010.py')==expected['export_bridge.py']
@@ -28,7 +28,7 @@ def train_branch(path):
   if isinstance(node,ast.If) and ast.unparse(node.test)=="args.stage == 'train'":return ast.dump(ast.Module(body=node.body,type_ignores=[]),include_attributes=False)
  raise ValueError('training branch missing')
 assert train_branch(v/'worker.py')==train_branch(original)
-print('PARENT_DISTRIBUTION_REVIEW '+json.dumps({'orchestration_version':'hybrid_v012_20261013_001','assignment_sha256':expected['assignment.json'],'historical_binding_assignment_sha256':sha(old_assignment),'parent_model_execution':str(p/'execution/hpc_v009'),'parent_science_code':str(p/'versions/v004/code'),'training_branch_unchanged':True,'hpc_training_job':241335,'actual_model_assets_verified':False,'only_original_model_attack_scope_reallocated':True,'additional_gpu_limit':1,'additional_cpu_limit':4}),flush=True)
+print('PARENT_DISTRIBUTION_REVIEW '+json.dumps({'orchestration_version':'hybrid_v013_20261014_001','assignment_sha256':expected['assignment.json'],'historical_binding_assignment_sha256':sha(old_assignment),'parent_model_execution':str(p/'execution/hpc_v009'),'parent_science_code':str(p/'versions/v004/code'),'training_branch_unchanged':True,'hpc_training_job':241335,'actual_model_assets_verified':False,'only_original_model_attack_scope_reallocated':True,'additional_gpu_limit':1,'additional_cpu_limit':4}),flush=True)
 PY
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
 import hashlib, json, re, subprocess, sys
