@@ -1,0 +1,13 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=432
+### host=login4
+### started=2026-10-14T23:45:12+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 36, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/zhenjiang_covariance_saved_matrix_audit_20261014_001/records/package_deployment.json'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-14T23:45:16+0800
