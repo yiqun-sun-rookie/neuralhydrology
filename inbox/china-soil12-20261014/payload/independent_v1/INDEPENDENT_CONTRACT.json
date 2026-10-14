@@ -1,0 +1,31 @@
+{
+  "independent_root": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/independent_v1",
+  "numerical_contract": {
+    "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/NUMERICAL_CONTRACT.json",
+    "bytes": 3181,
+    "sha256": "6d2f2177870775ac8307a14b5263297369cf4c9f70554aa70b9d8c1c80c42087"
+  },
+  "main_summary": {
+    "path": "/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/numerical_v1/SUMMARY.json",
+    "bytes": 37146,
+    "sha256": "7e102e2689bfa8f59ded3fc18419fae412eb140159c4da8b6e4b1610d9ba6298"
+  },
+  "expected_main_source_sha256": "16ff3fb81d966416c7f4b169cd1e53aa2d74782422655c560ab1f7bb6fc2115f",
+  "main_job_id": "242521",
+  "area_tolerances": {
+    "cell_absolute_m2": 0.0001,
+    "cell_relative": 1e-09,
+    "unit_absolute_m2": 0.01,
+    "unit_relative": 1e-09
+  },
+  "fraction_absolute": 1e-12,
+  "fraction_relative": 1e-09,
+  "mean_depth_absolute_m": 1e-10,
+  "mean_depth_relative": 1e-09,
+  "maximum_error_evidence_bytes": 35674112,
+  "same_declared_geos_and_wgs84_method": true,
+  "model_calls": 0,
+  "training": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0
+}
