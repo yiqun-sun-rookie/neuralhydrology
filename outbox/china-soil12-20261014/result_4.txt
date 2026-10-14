@@ -1,0 +1,65 @@
+### channel=china-soil12-20261014 seq=4
+### host=login4
+### started=2026-10-14T21:08:05+0800
+### ---------- output ----------
+OWN_RUNTIME_QUERY_JOB_ID=242304
+OWN_RUNTIME_SERVER_QUERY_UTC=2026-10-14T13:08:05Z
+slurm_load_jobs error: Invalid job id specified
+OWN_RUNTIME_SQUEUE_EXIT=1
+242304|FAILED|1:0|00:02:02|2|billing=2,cpu=2,node=1|
+242304.batch|FAILED|1:0|00:02:02|2|cpu=2,mem=0,node=1|56872K
+242304.extern|COMPLETED|0:0|00:02:02|2|billing=2,cpu=2,node=1|2472K
+OWN_RUNTIME_SACCT_EXIT=0
+OWN_RUNTIME_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v1/logs/runtime-242304.out
+OWN_RUNTIME_RECOVERY_REPORT_SAVED
+OWN_RUNTIME_RECOVERY_STATUS=HELD
+
+OWN_RUNTIME_LOG_BYTES=67
+OWN_RUNTIME_LOG_PATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v1/logs/runtime-242304.err
+
+OWN_RUNTIME_LOG_BYTES=0
+OWN_RUNTIME_REPORT_BYTES=1178
+df6c3267eaa1c860c6cc5601170e1601439259fe185952e2019f898fa9561559  /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/runtime_recovery_v1/RUNTIME_RECOVERY_RESULT.json
+OWN_RUNTIME_REPORT_BEGIN
+{
+  "status": "HELD",
+  "job_id": "242304",
+  "host": "ngu011",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "architecture": "x86_64",
+  "libc": [
+    "glibc",
+    "2.34"
+  ],
+  "array_reads": 0,
+  "scientific_tiff_gets": 0,
+  "wheel_get_attempts": 1,
+  "model_calls": 0,
+  "training": 0,
+  "shared_environment_changes": 0,
+  "national_input_acceptance": false,
+  "production_accepted": 0,
+  "packages": [],
+  "wheel_acquisition": [
+    {
+      "filename": "rasterio-1.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "status": "HELD_WALL_CLOCK_LIMIT",
+      "error_type": "KilledOwnAcquisitionSubprocess",
+      "parent_wall_seconds": 120.11397269740701,
+      "wall_clock_limit_seconds": 120,
+      "preserved_candidate_bytes": 1848616
+    }
+  ],
+  "geometry_records": [],
+  "contract_sha256": "4f2a3954c8b2f6c0bf088be560324ca5c87e911bdb6f820c85a03954fe94b713",
+  "source_sha256": "6a70311ae0a33ff09909bb66e1071b8593e4dea779e070b0eed4f6170d65911a",
+  "error_type": "AssertionError",
+  "error": "PRIVATE_WHEEL_ACQUISITION_HELD",
+  "elapsed_seconds": 120.15406046062708,
+  "peak_rss_kib": 23808
+}
+OWN_RUNTIME_REPORT_END
+OWN_RUNTIME_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-14T21:08:05+0800
