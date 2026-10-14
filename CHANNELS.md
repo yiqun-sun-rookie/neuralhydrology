@@ -187,3 +187,5 @@ git rm inbox/seq
 | `knet-camels-020-recovery-20261014` | 02092500 read-only mailbox recovery; no submission or model compute | 2026-10-12 | Only /data1/home/sunyiq/knet_camels_hpc_20261012_001; only login metadata probe and recovery of existing receipt29, no new sbatch; preserve existing jobs, shared environments and all other channels. |
 
 | `hydrol85935-receipt253-20261014-001` | HYDROL85935 one-time read-only recovery of main receipt253 | 2026-10-08 | Only /data1/home/sunyiq/hydrol85935_revision_20261008_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
+
+| precip-smallfit-hpc-20261012 | Precipitation direct controls and seed1001 fitting | 2026-10-14 | Isolated precip_smallfit_hpc_20261012_v01 root; preserve all existing jobs and shared environments |
