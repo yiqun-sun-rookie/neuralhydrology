@@ -1,17 +1,13 @@
 #!/bin/bash
-set -o pipefail
-date -u '+UTC=%Y-%m-%dT%H:%M:%SZ'
-printf '=== EXISTING_JOBS ===\n'
-squeue -u "$USER" -o '%.18i %.14P %.35j %.8T %.10M %.30R'
-printf '=== RESOURCES ===\n'
-sinfo -p hgpu2p,hgpu4,hgpu8 -N -O nodelist,partition,gres:18,gresused:30,cpusstate
-printf '=== STORAGE ===\n'
-df -h "$HOME"
-printf '=== OWN_TARGET ===\n'
-if [ -e "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01" ]; then echo TARGET_EXISTS; exit 10; else echo TARGET_UNUSED; fi
-printf '=== TOOL_METADATA ===\n'
-type sbatch
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -c 'import sys,importlib.metadata,json; print(json.dumps({"python":sys.version,"executable":sys.executable,"packages":{p:importlib.metadata.version(p) for p in ["torch","numpy","pandas","PyYAML","xarray","scipy"]}}))'
-printf '=== TORCH_DIST_REQUIREMENTS ===\n'
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -c 'import importlib.metadata,json; print(json.dumps(importlib.metadata.requires("torch")))'
-echo SMALLFIT_METADATA_COMPLETE
+set -eo pipefail
+export SMALLFIT_ROOT="/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01"
+export PYTHONDONTWRITEBYTECODE=1
+base="/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01"
+mkdir -p "$base"
+mkdir "$SMALLFIT_ROOT"
+mkdir "$SMALLFIT_ROOT/records" "$SMALLFIT_ROOT/logs"
+py="/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python"
+"$py" -c 'import base64,os; from pathlib import Path; p=Path(os.environ["SMALLFIT_ROOT"])/"records/deployment_identity.json"; p.write_bytes(base64.b64decode("ew0KICAicnVuX2lkIjogIjIwMjYxMDE0VDEzMDIyMlpfYTllODJlNzdfdjAxIiwNCiAgIm5vbmNlIjogImE5ZTgyZTc3MDAxYjRhYzViNjkzNTMxYWM3N2E4ZjdlIiwNCiAgImxvY2FsX3Jvb3QiOiAiRzpcXGdpdGh1YlxccHljaGFybVxccHJvamVjdHNcXG5ldXJhbGh5ZHJvbG9neVxccmVzdWx0c1xccHJlY2lwX2lucHV0X2RhXzIwMjZfMDlcXGVmZmVjdF9maXJzdF92MDFcXGhwY19zbWFsbF9zYW1wbGVfMjAyNjEwMTRUMTMwMjIyWl9hOWU4MmU3N192MDEiLA0KICAicmVtb3RlX3Jvb3QiOiAiL2RhdGExL2hvbWUvc3VueWlxL3ByZWNpcF9zbWFsbGZpdF9ocGNfMjAyNjEwMTJfdjAxLzIwMjYxMDE0VDEzMDIyMlpfYTllODJlNzdfdjAxIiwNCiAgImNoYW5uZWwiOiAicHJlY2lwLXNtYWxsZml0LWhwYy0yMDI2MTAxMiIsDQogICJzdGF0dXMiOiAiUFJFUEFSSU5HX05PVF9TVUJNSVRURUQiDQp9DQo="))'
+"$py" -m pip install --no-input --no-compile --only-binary=:all: --retries 1 --timeout 60 --target "$SMALLFIT_ROOT/pysite" --report "$SMALLFIT_ROOT/records/pip_report.json" --extra-index-url https://download.pytorch.org/whl/cu121 'torch==2.2.2+cu121' 'numpy==1.26.4' 'sympy==1.12' 'nvidia-nvjitlink-cu12==12.1.105' > "$SMALLFIT_ROOT/logs/private_dependency_install.log" 2>&1
+"$py" -c 'import base64; exec(compile(base64.b64decode("aW1wb3J0IGhhc2hsaWIsanNvbixvcwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKcj1QYXRoKG9zLmVudmlyb25bIlNNQUxMRklUX1JPT1QiXSkKcz1yLyJweXNpdGUiCnJvd3M9W10KZm9yIHAgaW4gc29ydGVkKHMucmdsb2IoIioiKSk6CiBpZiBwLmlzX2ZpbGUoKToKICBpZiBwLmlzX3N5bWxpbmsoKTogcmFpc2UgUnVudGltZUVycm9yKCJMaW5rZWQgZGVwZW5kZW5jeSBmaWxlIikKICBoPWhhc2hsaWIuc2hhMjU2KCkKICB3aXRoIHAub3BlbigicmIiKSBhcyBmOgogICBmb3IgYiBpbiBpdGVyKGxhbWJkYTpmLnJlYWQoMTA0ODU3NiksYiIiKTpoLnVwZGF0ZShiKQogIHJvd3MuYXBwZW5kKHsicGF0aCI6cC5yZWxhdGl2ZV90byhzKS5hc19wb3NpeCgpLCJieXRlcyI6cC5zdGF0KCkuc3Rfc2l6ZSwic2hhMjU2IjpoLmhleGRpZ2VzdCgpfSkKcmVwb3J0PWpzb24ubG9hZHMoKHIvInJlY29yZHMvcGlwX3JlcG9ydC5qc29uIikucmVhZF90ZXh0KCkpCm9iaj17InNjaGVtYSI6InByZWNpcF9wcml2YXRlX2hwY19kZXBlbmRlbmNpZXNfdjAxIiwic2l0ZSI6InB5c2l0ZSIsImZpbGVzIjpyb3dzLCJwaXBfcmVwb3J0X3NoYTI1NiI6aGFzaGxpYi5zaGEyNTYoKHIvInJlY29yZHMvcGlwX3JlcG9ydC5qc29uIikucmVhZF9ieXRlcygpKS5oZXhkaWdlc3QoKSwid2hlZWxzIjpbeyJuYW1lIjp4WyJtZXRhZGF0YSJdWyJuYW1lIl0sInZlcnNpb24iOnhbIm1ldGFkYXRhIl1bInZlcnNpb24iXSwiZG93bmxvYWRfaW5mbyI6eFsiZG93bmxvYWRfaW5mbyJdfSBmb3IgeCBpbiByZXBvcnRbImluc3RhbGwiXV19CnA9ci8icmVjb3Jkcy9wcml2YXRlX2RlcGVuZGVuY2llcy5qc29uIgp3aXRoIHAub3BlbigieCIpIGFzIGY6anNvbi5kdW1wKG9iaixmLHNvcnRfa2V5cz1UcnVlLGluZGVudD0yKQpwcmludCgiREVQRU5ERU5DWV9NQU5JRkVTVF9TSEEyNTY9IitoYXNobGliLnNoYTI1NihwLnJlYWRfYnl0ZXMoKSkuaGV4ZGlnZXN0KCkpCnByaW50KCJERVBFTkRFTkNZX0ZJTEVTPSIrc3RyKGxlbihyb3dzKSkpCnByaW50KCJERVBFTkRFTkNZX0JZVEVTPSIrc3RyKHN1bSh4WyJieXRlcyJdIGZvciB4IGluIHJvd3MpKSkKcHJpbnQoIlBSSVZBVEVfUEFDS0FHRV9WRVJTSU9OUz0iK2pzb24uZHVtcHMoe3hbIm5hbWUiXTp4WyJ2ZXJzaW9uIl0gZm9yIHggaW4gb2JqWyJ3aGVlbHMiXX0sc29ydF9rZXlzPVRydWUpKQo="),"private_dependency_provenance","exec"))'
+echo SMALLFIT_PRIVATE_DEPENDENCIES_COMPLETE
