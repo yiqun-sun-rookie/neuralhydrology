@@ -88,6 +88,26 @@ if current:
                 if token not in r.stdout:raise RuntimeError('New job identity/resource mismatch: '+label)
             if label in ('train','attacks') and 'ArrayTaskThrottle=1 ' not in r.stdout:raise RuntimeError('Array concurrency changed')
 PY
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import json,subprocess
+from pathlib import Path
+root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+folder=root/'control/hybrid_v014_20261014_001';scheduler_folder=root/'control/hybrid_v009_20261012_001';execution=root/'execution/hpc_v009'
+def emit(label,value):print(label+' '+json.dumps(value),flush=True)
+for name in ['submission_attempt.json','jobs.json','ownership.json']:
+    path=folder/name;emit('HYBRID_CONTROL',dict(path=str(path),value=json.loads(path.read_text()) if path.exists() else None))
+for seed in (100,200,300):
+    files=list((execution/f'training/s{seed}').rglob('model_epoch*.pt'))
+    emit('HYBRID_TRAINING',dict(seed=seed,checkpoint_count=len(files),complete=(execution/f'training/s{seed}/complete.json').exists(),latest=[dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime) for p in sorted(files,key=lambda q:q.stat().st_mtime)[-3:]]))
+for label,pattern in [('attacks','records/attacks/*/*/complete.json'),('clean','records/clean/*/*/complete.json')]:
+    files=list(execution.glob(pattern));emit('HYBRID_OUTPUT_METADATA',dict(kind=label,marker_count=len(files),not_full_slot_validation=True))
+for p in sorted((folder/'stage_results').glob('*.json'),key=lambda q:q.stat().st_mtime)[-8:]:
+    value=json.loads(p.read_text());emit('HYBRID_STAGE',dict(path=str(p),bytes=p.stat().st_size,status=value.get('status'),stage=value.get('stage'),index=value.get('index'),exit_code=value.get('exit_code'),counts=value.get('counts'),failures_count=len(value.get('failures',[])),traceback=value.get('traceback'),global_science_complete=False))
+for p in sorted((scheduler_folder/'logs').glob('*'),key=lambda q:q.stat().st_mtime)[-6:]:
+    with p.open('rb') as f:
+        f.seek(max(0,p.stat().st_size-3500));tail=f.read().decode('utf8',errors='replace')
+    emit('HYBRID_LOG',dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime,tail=tail))
+PY
 
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
 import json,subprocess,hashlib
@@ -120,3 +140,61 @@ else:
  for p in [root/'control/hybrid_v014_20261014_001/hpc_packet_001/index.json',t/'control/parent_binding_v010.json',t/'control/new_models_verified.json',t/'control/resource_pilot.json',t/'reports/coverage_and_summary.json']:
   if p.is_file():emit('WORKFLOW_RESULT',dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),value=json.loads(p.read_text())))
 PY
+
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'DETAIL'
+"""Finite login-node metadata audit; no scientific computation or mutations."""
+import collections
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+ROOT = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+CONTROL = ROOT / 'control/hybrid_v014_20261014_001'
+EXECUTION = ROOT / 'execution/hpc_v009'
+SCHED = ROOT / 'control/hybrid_v009_20261012_001'
+
+def emit(k, v):
+    print(k + ' ' + json.dumps(v), flush=True)
+
+def query(cmd):
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=45)
+    assert r.returncode == 0, (cmd, r.stderr)
+    return r.stdout
+
+def main():
+    assignment = json.loads((CONTROL / 'assignment.json').read_text())
+    ledger = EXECUTION / 'records/ledger.jsonl'
+    rows = [json.loads(x) for x in ledger.read_text().splitlines() if x.strip()] if ledger.exists() else []
+    failures = [r for r in rows if r.get('status') in ('failed', 'uncomputable')]
+    emit('ALL_FAILURE_HISTORY', dict(rows=failures, count=len(failures), ledger_sha256=hashlib.sha256(ledger.read_bytes()).hexdigest()))
+    controls = list((ROOT / 'control').glob('hybrid_v*'))
+    candidates = []
+    for task in assignment['hpc_tasks']:
+        if task['model'] != 'original_s100' or not task['basins']:
+            continue
+        i = task['index']
+        occupied = [(r.get('combination_id'), r.get('basin_id'), r.get('status')) for r in rows
+                    if str(r.get('basin_id')) in task['basins'] and
+                    (r.get('combination_id') in task['combinations'] or r.get('model_id') == task['model'])]
+        outputs = [str(p) for b in task['basins']
+                   for p in [EXECUTION/'records/clean'/task['model']/b] +
+                   [EXECUTION/'records/attacks'/c/b for c in task['combinations']] if p.exists()]
+        stages = [str(p) for c in controls for p in (c/'stage_results').glob('attacks_'+str(i)+'_*.json')]
+        logs = [str(p) for p in (SCHED/'logs').glob('attacks-241336_'+str(i)+'.*')]
+        candidates.append(dict(index=i, start=task['basin_start'], count=task['basin_count'],
+                               basins=task['basins'], output_paths=outputs, ledger_occupancy=occupied,
+                               stage_history=stages, scheduler_logs=logs,
+                               no_occupancy=not any((outputs, occupied, stages, logs))))
+    emit('CANDIDATE_OCCUPANCY', candidates)
+    emit('RUNNING_SCHEDULER', query(['scontrol','show','job','-o','241336']))
+    emit('COMPLETE_ARRAY_HISTORY', query(['sacct','-X','-j','241336','-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList']))
+    emit('TRAIN_STAGE_PROOFS', [dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),value=json.loads(p.read_text()))
+                               for c in controls for p in (c/'stage_results').glob('train_*.json')])
+    emit('ORCHESTRATION_SOURCE_PROOF', dict(worker_sha256=hashlib.sha256((CONTROL/'worker.py').read_bytes()).hexdigest(),
+                                           assignment_sha256=hashlib.sha256((CONTROL/'assignment.json').read_bytes()).hexdigest()))
+
+if __name__ == '__main__':
+    main()
+
+DETAIL
