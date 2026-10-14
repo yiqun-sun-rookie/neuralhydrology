@@ -5,42 +5,25 @@ conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
 python -B - <<'PY'
-import datetime,hashlib,io,json,pathlib,tarfile
-inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
-sequence=int((inbox/'seq').read_text())
-assert sequence==432
-payload=inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz'
-raw=payload.read_bytes()
-assert hashlib.sha256(raw).hexdigest()=='d72bf16e2463319a87446fb29ac6f05bcf693e5e696b933a6812ba19c1135e55'
-base=pathlib.Path('/data1/home/sunyiq')
-root=base/'zhenjiang_covariance_saved_matrix_audit_20261014_001'
-assert not root.exists(),'new diagnostic root already exists: inspect original deployment, never overwrite or repeat submission'
-with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
-    members=archive.getmembers()
-    assert members and all(m.isfile() for m in members)
-    names=[m.name for m in members]
-    assert len(names)==len(set(names))
-    for member in members:
-        relative=pathlib.PurePosixPath(member.name)
-        assert not relative.is_absolute() and '..' not in relative.parts
-        assert relative.parts[0]==root.name and len(relative.parts)>1
-        assert root in (base/member.name).resolve().parents
-    root.mkdir(exist_ok=False)
-    for member in members:
-        path=base/member.name
-        path.parent.mkdir(parents=True,exist_ok=True)
-        with path.open('xb') as stream:
-            stream.write(archive.extractfile(member).read())
+import datetime,hashlib,json,pathlib,subprocess
+import mpmath,torch
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_covariance_saved_matrix_audit_20261014_001')
+assert root.is_dir() and not (root/'records').exists() and not (root/'evidence').exists()
 manifest=json.loads((root/'package_manifest.json').read_text())
+assert hashlib.sha256((root/'package_manifest.json').read_bytes()).hexdigest()=='c6ef771acde4ef4f6ae4ba7cafb85a69e22f7c184a3fada1ef666481739a4f61'
 for relative,identity in manifest['files'].items():
     path=root/relative
-    assert hashlib.sha256(path.read_bytes()).hexdigest()==identity['sha256'] and path.stat().st_size==identity['bytes']
-(root/'logs').mkdir(exist_ok=True)
-record={'status':'new_saved_matrix_audit_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
-    'root':str(root),'sequence':sequence,'payload_sha256':hashlib.sha256(raw).hexdigest(),'payload_bytes':len(raw),
-    'package_manifest_sha256':hashlib.sha256((root/'package_manifest.json').read_bytes()).hexdigest(),
-    'files_authenticated':len(manifest['files']),'source_training_files_written':False,'evaluation_values_read':False}
-with (root/'records/package_deployment.json').open('x') as f:json.dump(record,f,sort_keys=True,indent=2);f.write('\n')
+    assert path.is_file() and path.stat().st_size==identity['bytes'] and hashlib.sha256(path.read_bytes()).hexdigest()==identity['sha256']
+assert {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}==set(manifest['files'])|{'package_manifest.json'}
+queue=subprocess.run(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z'],capture_output=True,text=True,timeout=30)
+assert queue.returncode==0 and not any(line.split('|')[1].startswith('zj_gru_cov_mat_aud_') for line in queue.stdout.splitlines())
+(root/'records').mkdir(exist_ok=False)
+record={'status':'saved_matrix_deployment_directory_repaired_before_first_submission','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+    'failed_deployment_sequence':432,'failed_receipt_sha256':'794483eb73edd55e257ce40f23aad0b40c8a067db02eb8eadd3f4211c44a8e33',
+    'prior_submission_attempt_exists':False,'prior_scheduler_jobs_exists':False,'prior_evidence_exists':False,
+    'all_deployed_file_hashes_match_original_payload':True,'new_scientific_source_files_written':False,
+    'original_diagnostic_not_resubmitted':True,'queue':queue.stdout}
+with (root/'records/package_deployment_repair.json').open('x') as f:json.dump(record,f,sort_keys=True,indent=2);f.write('\n')
 print(json.dumps(record,sort_keys=True),flush=True)
 PY
 python -B /data1/home/sunyiq/zhenjiang_covariance_saved_matrix_audit_20261014_001/hpc/submit_saved_matrix_audit.py
