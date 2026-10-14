@@ -2,36 +2,34 @@
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
-import json,hashlib,subprocess,time
 from pathlib import Path
+import io,zipfile,json,hashlib,base64,subprocess
 r=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001')
-p=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-c=r/'control/queue_priority_20261014_001'
-a=p/'control/hybrid_v015_20261014_001/assignment.json'
-assert hashlib.sha256(a.read_bytes()).hexdigest()=='9b9fb20ffdc9256207d2e6c2e209bf9bb20ae3dcfba9e6b7cde1aef90ae59650'
-v=json.loads(a.read_text())
-print('SOURCE '+json.dumps({k:v.get(k) for k in ['version','hpc_training_seeds','scientific_code','output']}),flush=True)
-assert hashlib.sha256((c/'queue_priority.py').read_bytes()).hexdigest()=='a3de8ee97281cb5b1ff7ab745bd8b4506abf3da932d35869b08eec3d0631fe6e'
-reg=json.loads((c/'watcher_registration.json').read_text());proc=Path('/proc')/str(reg['pid'])
-alive=proc.exists() and proc.joinpath('stat').read_text().split()[21]==reg['proc_start_ticks'] and str(c/'queue_priority.py').encode() in proc.joinpath('cmdline').read_bytes().split(b'\0')
-print('WATCHER '+json.dumps({'alive':alive,'registration':reg,'status':json.loads((c/'status.json').read_text())}),flush=True)
-subs=[json.loads(q.read_text()) for q in sorted((r/'control/submissions').glob('*.json')) if not q.name.endswith('.attempt.json')]
+files=[]
+pilot=json.loads((r/'control/resource_pilot.json').read_text())
+assert pilot['status']=='PASS' and pilot['scheduler_job_id']=='241345'
+for i,seed in enumerate([100,200,300]):
+ d=r/'pilot'/f'single_temperature_s{seed}'/'01022500'
+ marker=(d/'complete.json').read_bytes()
+ assert hashlib.sha256(marker).hexdigest()==pilot['record_complete_sha256'][i]
+ v=json.loads(marker)
+ for filename,key in [('arrays.npz','arrays_sha256'),('metadata.json','metadata_sha256')]:
+  assert hashlib.sha256((d/filename).read_bytes()).hexdigest()==v[key]
+ files.extend([d/'complete.json',d/'arrays.npz',d/'metadata.json'])
+files.extend([r/'control/resource_pilot.json',r/'control/new_models_verified.json',r/'frozen/manifest.json',r/'control/parent_binding_v010.json'])
+index={str(p.relative_to(r)):{'size':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in files}
+stream=io.BytesIO()
+with zipfile.ZipFile(stream,'w',compression=zipfile.ZIP_DEFLATED) as z:
+ for p in files:z.writestr(str(p.relative_to(r)),p.read_bytes())
+payload=stream.getvalue()
+print('EXPORT_INDEX '+json.dumps(index),flush=True)
+print('EXPORT_ARCHIVE '+json.dumps({'bytes':len(payload),'sha256':hashlib.sha256(payload).hexdigest(),'scope':'existing saved pilot records and frozen provenance only; no prediction or scientific computation'}),flush=True)
+print('EXPORT_BASE64 '+base64.b64encode(payload).decode('ascii'),flush=True)
+subs=[json.loads(p.read_text()) for p in sorted((r/'control/submissions').glob('*.json')) if not p.name.endswith('.attempt.json')]
 print('SUBMISSIONS '+json.dumps(subs),flush=True)
-ids=['241336','241337','241344']+[str(x['job_id']) for x in subs]
-for tag,cmd in [('QUEUE',['squeue','-r','-h','-j',','.join(ids),'-o','%i|%T|%M|%r']),('ACCOUNTING',['sacct','-j',','.join(ids),'-n','-P','--format=JobID,State,ElapsedRaw,Start,End,ExitCode,NodeList'])]:
- x=subprocess.run(cmd,capture_output=True,text=True,timeout=45)
- lines=x.stdout.splitlines()
- if tag=='ACCOUNTING':lines=[z for z in lines if not z.startswith('241336_') or z.startswith(('241336_6|','241336_7|'))]
- print(tag+' '+json.dumps({'rc':x.returncode,'stdout':'\n'.join(lines),'stderr':x.stderr}),flush=True)
-for name in ['control/new_models_verified.json','control/resource_pilot.json','reports/coverage_and_summary.json','control/queue_priority_20261014_001/parent_released.json']:
- q=r/name
- if q.exists():print('RESULT '+json.dumps({'path':name,'value':json.loads(q.read_text())}),flush=True)
-for q in sorted((r/'logs').glob('preflight-241345*')):
- if q.is_file():
-  with q.open('rb') as f:f.seek(max(0,q.stat().st_size-12000));tail=f.read().decode(errors='replace')
-  print('LOG '+json.dumps({'path':str(q),'size':q.stat().st_size,'tail':tail}),flush=True)
+ids=','.join(str(s['job_id']) for s in subs)
+for tag,cmd in [('QUEUE',['squeue','-r','-h','-j',ids,'-o','%i|%T|%M|%r|%C|%b|%N']),('ACCOUNTING',['sacct','-j',ids,'-n','-P','--format=JobID,State,ElapsedRaw,Start,End,ExitCode,NodeList']),('MAIN_JOB_IDENTITY',['scontrol','show','job','242488'])]:
+ p=subprocess.run(cmd,capture_output=True,text=True,timeout=45)
+ print(tag+' '+json.dumps({'rc':p.returncode,'stdout':p.stdout,'stderr':p.stderr}),flush=True)
 print('RECORD_COUNTS '+json.dumps({'formal_pairs':sum(1 for _ in (r/'records').glob('*/*/complete.json')),'pilot_pairs':sum(1 for _ in (r/'pilot').glob('*/*/complete.json'))}),flush=True)
-for tag,cmd in [('JOB',['scontrol','show','job','241345']),('START',['squeue','--start','-j','241345']),('NODES',['sinfo','-N','-h','-p','hgpu2p','-O','NodeList:22,StateLong:16,Gres:38,GresUsed:55,CPUsState:25'])]:
- x=subprocess.run(cmd,capture_output=True,text=True,timeout=45)
- print(tag+' '+json.dumps({'rc':x.returncode,'stdout':x.stdout,'stderr':x.stderr}),flush=True)
 PY
