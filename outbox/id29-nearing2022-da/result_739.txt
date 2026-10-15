@@ -1,0 +1,26 @@
+### channel=id29-nearing2022-da seq=739
+### host=login4
+### started=2026-10-15T16:07:44+0800
+### ---------- output ----------
+2026-10-15T16:07:44+0800
+=== current job ===
+242758_0|RUNNING|02:09:32|ngu102
+242758_[1%1]|PENDING|00:00:00|None assigned
+Epoch 1 average loss: avg_loss: 0.02093, avg_total_loss: 0.02093
+# Epoch 2:  75%|#######4  | 5096/6821 [51:58<18:54,  1.52it/s, Loss: 0.0140]
+# Epoch 2:  75%|#######4  | 5097/6821 [51:58<18:16,  1.57it/s, Loss: 0.0140]=== earlier registered 30-epoch training jobs (elapsed) ===
+202227_0|N22-basin-da|COMPLETED|00:32:59|ngu104
+202227_1|N22-basin-da|COMPLETED|00:32:30|ngu104
+202227_2|N22-basin-da|COMPLETED|00:32:56|ngu104
+202227_3|N22-basin-da|COMPLETED|00:32:26|ngu104
+202227_4|N22-basin-da|COMPLETED|00:32:33|ngu104
+202227_5|N22-basin-da|COMPLETED|00:32:06|ngu104
+202227_6|N22-basin-da|COMPLETED|00:33:09|ngu101
+202227_7|N22-basin-da|COMPLETED|00:32:38|ngu104
+202227_8|N22-basin-da|COMPLETED|00:31:46|ngu104
+202227_9|N22-basin-da|COMPLETED|00:33:38|ngu101
+202510|N22-data-port-v2|COMPLETED|00:05:08|ngu104
+202554|N22-part-audit2|COMPLETED|00:02:05|ngu104
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T16:07:53+0800
