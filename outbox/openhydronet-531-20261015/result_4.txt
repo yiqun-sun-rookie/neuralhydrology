@@ -1,0 +1,24 @@
+### channel=openhydronet-531-20261015 seq=4
+### host=login4
+### started=2026-10-15T18:17:05+0800
+### ---------- output ----------
+2026-10-15T18:17:05+0800
+tar: attributes_caravan_camels.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: attributes_hydroatlas_camels.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: attributes_other_camels.csv: implausibly old time stamp 1970-01-01 08:00:00
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Oct 15 18:17 .
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Oct 15 18:17 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   84212 Jan  1  1970 attributes_caravan_camels.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 1219029 Jan  1  1970 attributes_hydroatlas_camels.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   60779 Jan  1  1970 attributes_other_camels.csv
+ad8f6454581d9a9f6438cab2a519fb6546b5bcaa2dde3875b99c66ead08c654b  /data1/home/sunyiq/openhydronet_531_20261015/src/build_data.py
+bfe7542927fdbafccaa7f6785ed383a854721032b8087ac0fe7755480fefe115  /data1/home/sunyiq/openhydronet_531_20261015/run_ohn.slurm
+552c1d59ca1dee69feba47e02e8374515ab33a8df9da5d3c9fe275c9e446841b  /data1/home/sunyiq/openhydronet_531_20261015/configs/smoke.yml
+63d61c429dbff75eeef2b45cef4e17e546f336b4d63e4c08aa7353827b9b1634  /data1/home/sunyiq/openhydronet_531_20261015/configs/native531.yml
+basins in list: 531
+camels_01022500 camels_01031500 camels_01047000 camels_01052500 camels_01054200 camels_01055000 camels_01057000 camels_01073000 
+22466 python -u /data1/home/sunyiq/openhydronet_531_20261015/src/build_data.py /data1/home/sunyiq/openhydronet_531_20261015 /data1/home/sunyiq/openhydronet_531_20261015/data/basins_531.txt /data1/home/sunyiq/openhydronet_531_20261015/attrs
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T18:17:12+0800
