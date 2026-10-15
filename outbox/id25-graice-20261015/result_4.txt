@@ -1,0 +1,20 @@
+### channel=id25-graice-20261015 seq=4
+### host=login4
+### started=2026-10-15T14:33:59+0800
+### ---------- output ----------
+JOB_ID=242767
+2026-10-15T06:27:48Z	242767	v001 initial B02 main comparison
+NOT_IN_ACTIVE_QUEUE: slurm_load_jobs error: Invalid job id specified
+242767|id25_graice_261015|FAILED|1:0|00:00:34
+242767.batch|batch|FAILED|1:0|00:00:34
+242767.extern|extern|COMPLETED|0:0|00:00:34
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x14d10c91fc90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/tensorflow-cpu/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x14d10c90e010>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/tensorflow-cpu/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x14d10c9181d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/tensorflow-cpu/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x14d10c918b90>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/tensorflow-cpu/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x14d10c919410>: Failed to establish a new connection: [Errno -2] Name or service not known')': /simple/tensorflow-cpu/
+ERROR: Could not find a version that satisfies the requirement tensorflow-cpu==2.15.1 (from versions: none)
+ERROR: No matching distribution found for tensorflow-cpu==2.15.1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:34:00+0800
