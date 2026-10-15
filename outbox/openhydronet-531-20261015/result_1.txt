@@ -1,0 +1,100 @@
+### channel=openhydronet-531-20261015 seq=1
+### host=login4
+### started=2026-10-15T17:52:37+0800
+### ---------- output ----------
+2026-10-15T17:52:37+0800
+login4
+ROOT_READY /data1/home/sunyiq/openhydronet_531_20261015
+hhjt_parastor_hhjt_parastor  954T  659T  296T  69% /data1
+=== nh_final (read-only) ===
+Python 3.11.13
+OK      torch 2.4.0
+OK      numpy 2.3.3
+OK      pandas 2.3.2
+OK      scipy 1.16.2
+OK      xarray 2025.12.0
+MISSING zarr ModuleNotFoundError
+MISSING numcodecs ModuleNotFoundError
+MISSING dask ModuleNotFoundError
+MISSING cachey ModuleNotFoundError
+MISSING toolz ModuleNotFoundError
+MISSING cloudpickle ModuleNotFoundError
+OK      fsspec 2026.1.0
+MISSING heapdict ModuleNotFoundError
+MISSING donfig ModuleNotFoundError
+OK      packaging 25.0
+MISSING pydantic ModuleNotFoundError
+MISSING pydantic_core ModuleNotFoundError
+MISSING annotated_types ModuleNotFoundError
+MISSING typing_inspection ModuleNotFoundError
+OK      ruamel.yaml 0.19.1
+OK      yaml 6.0.2
+MISSING more_itertools ModuleNotFoundError
+OK      tqdm 4.67.1
+OK      tensorboard 2.20.0
+OK      absl 2.3.1
+OK      matplotlib 3.10.6
+OK      pyarrow 20.0.0
+OK      psutil 7.0.0
+OK      dateutil 2.9.0.post0
+OK      pytz 2025.2
+OK      typing_extensions 
+MISSING partd ModuleNotFoundError
+MISSING locket ModuleNotFoundError
+OK      sympy 1.14.0
+OK      filelock 3.19.1
+OK      jinja2 3.1.6
+OK      networkx 3.5
+torch cuda build 12.1
+=== network (30s+ timeouts) ===
+gcs-bucket http=200 t=6.780s
+usgs-nwis http=200 t=9.529s
+pypi http=200 t=7.824s
+011265446e113cf849394efe6514221dc7c3f124	HEAD
+=== GPU partitions (free cards) ===
+-- hgpu8
+ngu201    mix     gpu:8     gpu:8,dcu:0           42/22/0/64      
+ngu202    mix     gpu:8     gpu:7,dcu:0           54/10/0/64      
+ngu203    alloc$  gpu:8     gpu:8,dcu:0           64/0/0/64       
+-- hgpu4
+ngu101    mix     gpu:4     gpu:4,dcu:0           24/72/0/96      
+ngu102    mix     gpu:4     gpu:4,dcu:0           14/82/0/96      
+ngu103    down*   gpu:4     gpu:0,dcu:0           0/0/96/96       
+ngu104    mix     gpu:4     gpu:4,dcu:0           14/82/0/96      
+-- hgpu2p
+ngu001    mix     gpu:2     gpu:2,dcu:0           44/52/0/96      
+ngu002    down*   gpu:2     gpu:0,dcu:0           0/0/96/96       
+ngu004    mix     gpu:2     gpu:2,dcu:0           20/76/0/96      
+ngu005    mix     gpu:2     gpu:2,dcu:0           18/78/0/96      
+ngu006    mix     gpu:2     gpu:2,dcu:0           20/76/0/96      
+ngu007    mix     gpu:2     gpu:1,dcu:0           4/92/0/96       
+ngu008    mix     gpu:2     gpu:2,dcu:0           6/90/0/96       
+ngu010    mix     gpu:2     gpu:2,dcu:0           1/31/0/32       
+ngu011    mix     gpu:2     gpu:2,dcu:0           8/24/0/32       
+-- hgpu2
+ngu003    mix     gpu:2     gpu:2,dcu:0           8/88/0/96       
+ngu009    mix     gpu:2     gpu:2,dcu:0           36/60/0/96      
+=== my queue ===
+242751_[16-5 temporal-recovery-   PENDING       0:00 (JobArrayTaskLimit)
+      202229       N22-agg-eval   PENDING       0:00 (DependencyNeverSatisfied)
+      202294         N22-export   PENDING       0:00 (Dependency)
+      202315           N22-gate   PENDING       0:00 (Dependency)
+      202507   N22-mask-iso-531   PENDING       0:00 (DependencyNeverSatisfied)
+      215429      id30_m01_s100   PENDING       0:00 (DependencyNeverSatisfied)
+242752_[0-53 temporal-recovery-   PENDING       0:00 (Dependency)
+      242753 temporal-recovery-   PENDING       0:00 (Dependency)
+      242754 temporal-recovery-   PENDING       0:00 (Dependency)
+242758_[1%1]      N22-warmpair2   PENDING       0:00 (JobArrayTaskLimit)
+242858_[0%1] knet020_state20_fi   PENDING       0:00 (Dependency)
+      202293       N22-manifest   PENDING       0:00 (JobHeldUser)
+240076_[0-2%  hydrol85935-train   PENDING       0:00 (JobHeldUser)
+240077_[0-13 hydrol85935-attack   PENDING       0:00 (JobHeldUser)
+      240078 hydrol85935-report   PENDING       0:00 (JobHeldUser)
+      241337 hydrol85935-v009-v   PENDING       0:00 (JobHeldUser)
+      241344 hydrol85935-v010-e   PENDING       0:00 (JobHeldUser)
+      241691 tessera_01073000_a   PENDING       0:00 (JobHeldUser)
+241336_[7-12 hydrol85935-v009-a   PENDING       0:00 (JobHeldUser)
+   242751_15 temporal-recovery-   RUNNING       8:31 ngu011
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T17:53:57+0800
