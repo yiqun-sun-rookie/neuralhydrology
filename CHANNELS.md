@@ -189,3 +189,5 @@ git rm inbox/seq
 | `hydrol85935-receipt253-20261014-001` | HYDROL85935 one-time read-only recovery of main receipt253 | 2026-10-08 | Only /data1/home/sunyiq/hydrol85935_revision_20261008_001; one GPU maximum; preserve all existing jobs, data, environments and results. |
 
 | precip-smallfit-hpc-20261012 | Precipitation direct controls and seed1001 fitting | 2026-10-14 | Isolated precip_smallfit_hpc_20261012_v01 root; preserve all existing jobs and shared environments |
+
+| `id25-graice-20261015` | GRAiCE LSTMnoSIF 119-region comparator | 2026-10-15 | Only /data1/home/sunyiq/id25_graice_lstmnosif_20261015_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
