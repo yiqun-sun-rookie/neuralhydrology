@@ -1,34 +1,38 @@
 #!/bin/bash
 set -o pipefail
-# READ-ONLY probe + create own landing dir (seq 1). Touches nothing outside ROOT.
+# seq 2: clone pinned source, install missing pure/manylinux2014 wheels into OWN pysite, itertools.batched shim, py3.11 compile + import test
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
-date --iso-8601=seconds; hostname
-mkdir -p "$ROOT/logs" "$ROOT/pysite" "$ROOT/data" "$ROOT/src" "$ROOT/runs" "$ROOT/configs" && echo "ROOT_READY $ROOT"
-df -h /data1 | tail -1
-echo "=== nh_final (read-only) ==="
+date --iso-8601=seconds
 source ~/miniconda3/etc/profile.d/conda.sh; conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-python -V
-python - <<'PY'
-import importlib
-mods = ["torch", "numpy", "pandas", "scipy", "xarray", "zarr", "numcodecs", "dask", "cachey", "toolz", "cloudpickle", "fsspec", "heapdict",
-        "donfig", "packaging", "pydantic", "pydantic_core", "annotated_types", "typing_inspection", "ruamel.yaml", "yaml", "more_itertools",
-        "tqdm", "tensorboard", "absl", "matplotlib", "pyarrow", "psutil", "dateutil", "pytz", "typing_extensions", "partd", "locket", "sympy", "filelock", "jinja2", "networkx"]
-for m in mods:
-    try:
-        x = importlib.import_module(m)
-        print("OK     ", m, getattr(x, "__version__", ""))
-    except Exception as e:
-        print("MISSING", m, type(e).__name__)
-import torch
-print("torch cuda build", torch.version.cuda)
+cd "$ROOT/src"
+if [ ! -d flood-forecasting/.git ]; then timeout 900 git clone -q https://github.com/google-research/flood-forecasting.git flood-forecasting || { echo CLONE_FAILED; exit 1; }; fi
+cd flood-forecasting && git checkout -q 011265446e113cf849394efe6514221dc7c3f124 && git rev-parse HEAD && git status --porcelain | wc -l
+echo "=== pip --target (own pysite only) ==="
+python -m pip install --no-input --no-deps --only-binary=:all: --target "$ROOT/pysite"   zarr==3.1.5 numcodecs==0.17.0 dask==2025.12.0 cachey==0.2.1 toolz==1.2.0 cloudpickle==3.1.2 heapdict==1.0.1   donfig==0.8.1.post1 pydantic==2.12.5 pydantic-core==2.41.5 annotated-types==0.8.0 typing-inspection==0.4.4   more-itertools==10.8.0 partd==1.4.2 locket==1.0.0 google-crc32c==1.9.0 click==8.5.0 2>&1 | tail -6
+cat > "$ROOT/pysite/sitecustomize.py" <<'PY'
+# Python 3.11 shim: itertools.batched exists only from 3.12 (googlehydrology uses it). Semantics per the 3.12 docs.
+import itertools
+if not hasattr(itertools, "batched"):
+    def batched(iterable, n):
+        if n < 1:
+            raise ValueError("n must be at least one")
+        it = iter(iterable)
+        while batch := tuple(itertools.islice(it, n)):
+            yield batch
+    itertools.batched = batched
 PY
-echo "=== network (30s+ timeouts) ==="
-curl -sS -m 45 -o /dev/null -w "gcs-bucket http=%{http_code} t=%{time_total}s\n" "https://storage.googleapis.com/storage/v1/b/caravan-multimet/o?maxResults=1" 2>&1 | tail -1
-curl -sS -m 60 -o /dev/null -w "usgs-nwis http=%{http_code} t=%{time_total}s\n" "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=01022500&parameterCd=00060&statCd=00003&startDT=2025-01-01&endDT=2025-01-31" 2>&1 | tail -1
-curl -sS -m 60 -o /dev/null -w "pypi http=%{http_code} t=%{time_total}s\n" "https://pypi.org/simple/zarr/" 2>&1 | tail -1
-timeout 90 git ls-remote https://github.com/google-research/flood-forecasting.git HEAD 2>&1 | head -2
-echo "=== GPU partitions (free cards) ==="
-for P in hgpu8 hgpu4 hgpu2p hgpu2; do echo "-- $P"; sinfo -p $P -N -h -O nodelist:10,statecompact:8,gres:10,gresused:22,cpusstate:16 2>&1 | head -12; done
-echo "=== my queue ==="
-squeue -u sunyiq -h -o '%.12i %.18j %.9T %.10M %R' | head -20
+export PYTHONPATH="$ROOT/pysite:$ROOT/src/flood-forecasting"
+echo "=== compile all under py3.11 ==="
+cd "$ROOT/src/flood-forecasting" && python -m compileall -q googlehydrology multimet 2>&1 | head -20; echo "compileall rc=$?"
+echo "=== import test ==="
+python - <<'PY'
+import itertools, importlib, sys
+print(sys.version.split()[0], "batched:", hasattr(itertools, "batched"))
+for m in ["zarr", "dask", "cachey", "pydantic", "more_itertools", "googlehydrology.run", "googlehydrology.modelzoo", "googlehydrology.datasetzoo", "googlehydrology.training.train", "googlehydrology.evaluation"]:
+    try:
+        x = importlib.import_module(m); print("OK     ", m, getattr(x, "__version__", ""))
+    except Exception as e:
+        print("FAIL   ", m, type(e).__name__, str(e)[:200])
+PY
+du -sh "$ROOT/pysite" "$ROOT/src"
 exit 0
