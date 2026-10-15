@@ -1,0 +1,28 @@
+### channel=china-input-next-20261015 seq=4
+### host=login4
+### started=2026-10-15T15:54:22+0800
+### ---------- output ----------
+OWN_SOIL_PAIR_QUERY_JOB_ID=242833
+OWN_SOIL_PAIR_SERVER_QUERY_UTC=2026-10-15T07:54:22Z
+242833|RUNNING|ngu001|4|14:30
+OWN_SOIL_PAIR_SQUEUE_EXIT=0
+242833|RUNNING|0:0|00:16:19|4|billing=4,cpu=4,node=1|
+242833.batch|RUNNING|0:0|00:16:19|4|cpu=4,mem=0,node=1|
+242833.extern|RUNNING|0:0|00:16:19|4|billing=4,cpu=4,node=1|
+OWN_SOIL_PAIR_SACCT_EXIT=0
+OWN_SOIL_PAIR_LOG=/data1/home/sunyiq/china_input_completion_hpc_20261015_001/soil_pair_v1/logs/soil-242833.out
+
+OWN_SOIL_PAIR_LOG=/data1/home/sunyiq/china_input_completion_hpc_20261015_001/soil_pair_v1/logs/soil-242833.err
+
+OWN_SOIL_PAIR_MISSING=PAIR_RESULT.json
+OWN_SOIL_PAIR_MISSING=PAIR_FAILURE.json
+OWN_SOIL_PAIR_MISSING=SOIL_REPORTS.zip
+OWN_SOIL_PAIR_PATH_EXISTS=vegetation_probe/PROBE_RESULT.json|True
+OWN_SOIL_PAIR_PATH_EXISTS=main.stdout|True
+OWN_SOIL_PAIR_PATH_EXISTS=main/SUMMARY.json|True
+OWN_SOIL_PAIR_PATH_EXISTS=independent.stdout|True
+OWN_SOIL_PAIR_PATH_EXISTS=independent/INDEPENDENT_RESULT.json|False
+OWN_SOIL_PAIR_READ_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T15:54:23+0800
