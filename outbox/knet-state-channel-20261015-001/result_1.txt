@@ -1,0 +1,8 @@
+### channel=knet-state-channel-20261015-001 seq=1
+### host=login4
+### started=2026-10-15T14:31:29+0800
+### ---------- output ----------
+SUBMISSION_JSON={"status": "SUBMITTED", "job_id": "242768", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_finetune_20261015_001", "submitted_utc": "2026-10-15T06:31:31.466895+00:00", "sbatch_reply": "Submitted batch job 242768\n", "partition_snapshot": "ngu101|mixed|16/80/0/96\nngu102|mixed|12/84/0/96\nngu103|down*|0/0/96/96\nngu104|mixed|12/84/0/96\n", "archive_sha256": "0df0a173a0d52739c24f53961f2c202359765835feb2cab63d4fd3848f453cf9", "source_files_verified": 15}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:31:31+0800
