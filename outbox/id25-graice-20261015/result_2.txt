@@ -1,0 +1,34 @@
+### channel=id25-graice-20261015 seq=2
+### host=login4
+### started=2026-10-15T14:27:48+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/id25-graice-20261015/payload/graice_lstmnosif_b02_payload_v001.tar.gz: OK
+tar: code/ADAPTATION.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/hpc/graice_lstmnosif_b02_20261015.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/id25/graice_lstmnosif.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/scripts/compare_graice_lstmnosif.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/scripts/train_graice_lstmnosif.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: comparison_reference/reference.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: config.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/array_interface_check.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/input_receipt.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/sequences.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/2026-10-15-id25-graice-author-comparator-independent-review-v1.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/2026-10-15-id25-graice-author-comparator-plan-v1.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/source_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/hyperparameters/optuna_README.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/README.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/01_input_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/02_optuna.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/03_model_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/04_apply_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/inputData_README.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/upstream/scripts/scripts_README.md: implausibly old time stamp 1970-01-01 08:00:00
+Submitted batch job 242767
+CAMPAIGN_ROOT=/data1/home/sunyiq/id25_graice_lstmnosif_20261015_001
+JOB_ID=242767
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:27:48+0800
