@@ -1,0 +1,27 @@
+### channel=openhydronet-531-20261015 seq=18
+### host=login4
+### started=2026-10-15T21:14:11+0800
+### ---------- output ----------
+local files 1069 hpc files 1069 only local 0 only hpc 0
+different content: 3
+   basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt local bytes 627964 hpc bytes 627947
+   basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt local bytes 625295 hpc bytes 625278
+   basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt local bytes 617721 hpc bytes 617704
+--- HPC head of basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt
+  34.78
+  11.00
+1550739719
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+--- HPC head of basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt
+  48.13
+ 470.00
+1509830000
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+--- HPC head of basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt
+  33.76
+2394.00
+ 128970000
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T21:14:12+0800
