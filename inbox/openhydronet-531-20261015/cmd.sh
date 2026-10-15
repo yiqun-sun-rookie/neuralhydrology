@@ -1,22 +1,17 @@
 #!/bin/bash
 set -o pipefail
-# Submit the two ID18-protocol OpenHydroNet trainings (one single-GPU job each) once the data build has finished.
+# read-only: state and log tails of this channel's jobs (job ids passed through the file next to it)
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
 date --iso-8601=seconds
-tail -n 3 "$ROOT/logs/build_id18.log" | cut -c1-200
-grep -q '^BUILD_DONE' "$ROOT/logs/build_id18.log" || { echo "BUILD_NOT_DONE"; exit 1; }
-du -sh "$ROOT/data/id18_maurer"
-submit() {  # name partition
-  local name=$1 part=$2
-  if squeue -u sunyiq -h -o '%j' | grep -qx "ohn_$name"; then echo "ohn_$name already queued/running"; return 0; fi
-  local out
-  out=$(sbatch --job-name="ohn_$name" -p "$part" -t 1-12:00:00 --export=ALL,CONFIG="$name" "$ROOT/run_ohn.slurm" 2>&1); echo "$out"
-  local jid
-  jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
-  [ -n "$jid" ] || { echo "SUBMIT_FAILED $name"; return 1; }
-  echo "jobid[$name]=$jid"
-  squeue -j "$jid" -h -o '%i %j %T %R'
-}
-submit id18_cmal hgpu8
-submit id18_nse hgpu4
+echo "=== queue (ohn_*) ==="
+squeue -u sunyiq -h -o '%.10i %.14j %.9T %.10M %R' | grep -E ' ohn_' || echo "none queued/running"
+echo "=== sacct today (ohn_*) ==="
+sacct -X -n -P -S 2026-10-15 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList 2>/dev/null | grep -E '\|ohn_' || echo none
+for J in $(sacct -X -n -P -S 2026-10-15 --format=JobID,JobName 2>/dev/null | grep -E '\|ohn_' | cut -d'|' -f1 | tail -2); do
+  N=$(sacct -X -n -P -j $J --format=JobName | head -1)
+  for E in out err; do
+    F="$ROOT/logs/$N-$J.$E"
+    if [ -f "$F" ]; then echo "--- $F ($(stat -c %s "$F") bytes)"; tail -n 14 "$F" | tr '\r' '\n' | tail -n 14 | cut -c1-230; fi
+  done
+done
 exit 0
