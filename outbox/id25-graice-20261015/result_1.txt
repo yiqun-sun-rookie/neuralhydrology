@@ -1,0 +1,19 @@
+### channel=id25-graice-20261015 seq=1
+### host=login4
+### started=2026-10-15T14:18:36+0800
+### ---------- output ----------
+ROOT_EXISTS=NO
+BASE_PYTHON=lrwxr-xr-x. 1 sunyiq g_sunyiq 10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -> python3.11
+PARTITIONS
+PARTITION|AVAIL|NODES|STATE|CPUS(A/I/O/T)
+hcpu48y|up|1|down*|0/0/48/48
+hcpu48y|up|3|mix|74/70/0/144
+hcpu48y|up|3|alloc|144/0/0/144
+hcpu48y|up|5|idle|0/240/0/240
+hgpu2p|up|1|down*|0/0/96/96
+hgpu2p|up|8|mix|147/493/0/640
+THIS_JOB_NAME
+END_PREFLIGHT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:18:36+0800
