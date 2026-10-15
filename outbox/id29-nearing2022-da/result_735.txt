@@ -1,0 +1,79 @@
+### channel=id29-nearing2022-da seq=735
+### host=login4
+### started=2026-10-15T13:48:27+0800
+### ---------- output ----------
+94:    _require_equal(data_receipt, "slurm_job_id", "202510")
+120:    _require_equal(mask_receipt, "slurm_job_id", "202511")
+=== receipts ===
+{
+  "amendment_sha256": "a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5",
+  "audit_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042",
+  "common_pre_normalization_raw_targets_bitwise_identical": true,
+  "current_audit_target_center": 1.5146349668502808,
+  "current_audit_target_scale": 3.6992526054382324,
+  "failed_audit_sha256": "3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30",
+  "frozen_basin_list_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+  "frozen_config_sha256": "729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a",
+  "inverse_scaling_is_descriptive_only": true,
+  "node": "ngu104",
+  "registered_matrix_modified": false,
+  "registered_source_config_sha256": "504d16fdf4d5c2d138790694656dfaecf089d7852be63ef3efc22f4814cd8996",
+  "registered_source_scaler_matches_current_audit": true,
+  "registered_source_scaler_sha256": "add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4",
+  "registered_target_center": 1.5146349668502808,
+  "registered_target_scale": 3.6992526054382324,
+  "schema": "nearing2022-author-v13-training-data-port-all531-receipt-v2",
+  "scientific_boundary": "This repair proves exact common pre-normalization target identity and the full-cohort warmup-mask contrast. It does not quantify the trained-checkpoint or paper-score effect without the frozen paired retraining.",
+  "slurm_job_id": "202510",
+  "slurm_script_sha256": "7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e",
+  "v1_script_sha256": "5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85",
+  "v2_script_sha256": "51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233"
+}
+
+{
+  "audit_sha256": "1277bef6b3f67dca764247c4a9903421a3cd267b4888d7845e89fe39d91acbca",
+  "gpu": "NVIDIA A40, GPU-d6513a7a-f24f-45ba-4b0a-034208e7836d, 535.104.05\nNVIDIA A40, GPU-4f94140e-b9c9-4839-4793-d5dcf4b7c136, 535.104.05\nNVIDIA A40, GPU-6a54b5c7-4653-d3fe-85c0-8e3263a3c6d5, 535.104.05\nNVIDIA A40, GPU-4865db69-8ac0-95e9-96fb-5d862ad4cb16, 535.104.05",
+  "helper_script_sha256": "5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85",
+  "isolation_script_sha256": "9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c",
+  "node": "ngu104",
+  "paired_retraining_protocol_sha256": "16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1",
+  "protocol_amendment_sha256": "a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5",
+  "registered_matrix_modified": false,
+  "runtime": {
+    "cuda": "12.1",
+    "cudnn": "90100",
+    "numpy": "2.3.3",
+    "pandas": "2.3.2",
+    "python": "3.11.13",
+    "scipy": "1.16.2",
+    "torch": "2.4.0",
+    "xarray": "2025.12.0"
+  },
+  "schema": "nearing2022-author-v13-warmup-isolation-all531-receipt-v2",
+  "scientific_boundary": "This establishes all-531 data-tensor and scaling causality for the single warmup mask after the exact-raw entry repair. It does not quantify the trained-checkpoint or paper-metric effect.",
+  "single_mask_restores_released_training_data_for_531_basins": true,
+  "slurm_job_id": "202511",
+  "slurm_script_sha256": "9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053",
+  "upstream_audit_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042",
+  "upstream_receipt_sha256": "b1bb1698fb0cd54fcf032d6db66681588ab5f33609b67e7aa120629747db02ed"
+}
+
+=== dry run ===
+author_v13_training_data_port_all531_v2 audit top keys: ['conclusion', 'created_at', 'dataset_structure', 'inputs', 'measurement_repair', 'per_basin_target_standard_deviation', 'raw_targets_after_inverse_scaling', 'raw_targets_before_normalization', 'schema', 'scope', 'source', 'target_scaler']
+   scope -> {"author_compatibility_shim": "pandas Series.iteritems = Series.items only", "basin_count": 531, "basin_selection": "first basins in the frozen 531-basin list", "configuration": "src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml", "registered_matrix_modified": false, "runtime": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:2
+   inputs -> {"basins_compared": 531, "basins_with_bitwise_identical_normalized_dynamic_inputs": 531, "basins_with_bitwise_identical_static_attributes": 531}
+   source -> {"author_archive": "results/29_nearing2022_da_ar/formal_closure/author_source_archives/zenodo-7063259-grey-nearing-neuralhydrology-public-v.1.3.0.zip", "author_archive_sha256": "91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d", "author_basedataset_sha256": "0b973d80ab2c76a939a9f85878bd7883bd1d5d42d89dde7cc3aae9cab392e79a", "author_load_or_create_xarray_dataset_ast_sha256": "c4ac67
+   raw_targets_after_inverse_scaling -> {"author_finite_current_missing": 0, "author_finite_values": 1745928, "common_finite_values": 1745928, "common_values_within_1e_5": false, "current_finite_author_missing": 193284, "current_finite_values": 1939212, "maximum_absolute_common_difference": 2.5566369004081935e-05, "shape": [531, 3652, 1]}
+   raw_targets_before_normalization -> {"author_finite_current_missing": 0, "author_finite_values": 1745928, "common_finite_values": 1745928, "common_values_bitwise_identical": true, "current_finite_author_missing": 193284, "current_finite_values": 1939212, "maximum_absolute_common_difference": 0.0, "shape": [531, 3652]}
+   target_scaler -> {"author_center": 1.5002624988555908, "author_scale": 3.6244070529937744, "current_center": 1.5146349668502808, "current_minus_author_center": 0.014372467994689941, "current_minus_author_scale": 0.07484555244445801, "current_scale": 3.6992526054382324}
+   conclusion -> {"causal_boundary": "This diagnostic establishes a concrete training-path mismatch and exact common raw-target identity. It does not quantify the learned-checkpoint or paper-score effect without paired retraining.", "common_pre_normalization_raw_targets_bitwise_identical": true, "direct_fact": "The released source masks target values before the configured training-period start, while the current p
+author_v13_warmup_isolation_all531_v2 audit top keys: ['author_vs_current_masked', 'conclusion', 'created_at', 'one_factor_contract', 'schema', 'scope', 'source_binding', 'unmasked_difference_from_prior_evidence']
+   scope -> {"basin_count": 531, "basin_selection": "first basins in the frozen 531-basin list", "configuration": "src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml", "installed_package_modified": false, "registered_matrix_modified": false, "sequence_length": 365, "training_holdout": 0.0}
+   author_vs_current_masked -> {"author_target_center": 1.5002624988555908, "author_target_scale": 3.6244070529937744, "basins_compared": 531, "bitwise_identical_normalized_dynamic_input_basins": 531, "bitwise_identical_static_attribute_basins": 531, "common_finite_target_values": 1745928, "common_raw_targets_within_1e_5": true, "dataset_length": 1745928, "finite_target_mask_identical": true, "masked_minus_author_target_center"
+   one_factor_contract -> {"inserted_statement": "df_sub.loc[df_sub.index < start_date, self.cfg.target_variables] = np.nan", "other_installed_source_files_modified": 0, "source_sha256_after": "64f985fc57977f58f66b04c441c3e3eec335425c4835b8a8e599d43e4fe3279c", "source_sha256_before": "4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d", "statement_occurrences_after": 1, "statement_occurrences_before": 0}
+   source_binding -> {"author_archive_sha256": "91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d", "current_basedataset_sha256": "4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d", "unmasked_evidence": "results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/audit.json", "unmasked_evidence_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b
+   conclusion -> {"causal_boundary": "Restoring the released training-data tensors and scaling proves data-path causality only. Its effect on learned checkpoints and paper metrics still requires an isolated paired retraining.", "direct_fact": "The temporary current path differs from the installed current path by exactly the released warmup-target mask statement. No registered output or installed package file is mo
+ENTRY_GATES_PASS {"schema": "nearing2022-warmup-target-pair-entry-gates-v1", "protocol_sha256": "16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1", "data_audit_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042", "data_receipt_sha256": "b1bb1698fb0cd54fcf032d6db66681588ab5f33609b67e7aa120629747db02ed", "mask_audit_sha256": "1277bef6b3f67dca764247c4a9903421a3cd267b4888d7845e89fe39d91acbca", "mask_receipt_sha256": "4ba365c0e1003c917213c7efb05068d96eb7898b35c57e0a53f09bf80d2d4e99", "basins": 531, "current_only_warmup_targets": 193284, "registered_source_scaler_matches_curre
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T13:48:33+0800
