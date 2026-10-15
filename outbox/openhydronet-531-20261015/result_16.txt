@@ -1,0 +1,13 @@
+### channel=openhydronet-531-20261015 seq=16
+### host=login4
+### started=2026-10-15T19:38:53+0800
+### ---------- output ----------
+2026-10-15T19:38:53+0800
+    243042  ohn_native531   RUNNING      30:11 ngu202
+log=/data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_native531-243042.out
+19:30:21.930 (basetrainer.py:train_and_validate) -- Epoch 1 average loss: avg_loss: -0.51435, avg_total_loss: -0.51435
+--- current progress
+# Validation:  39%|███▉      | 198/509 [08:31<13:24, 2.59s/it]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T19:38:53+0800
