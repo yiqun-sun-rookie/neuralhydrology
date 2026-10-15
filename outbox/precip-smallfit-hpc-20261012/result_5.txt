@@ -1,0 +1,69 @@
+### channel=precip-smallfit-hpc-20261012 seq=5
+### host=login4
+### started=2026-10-15T13:42:28+0800
+### ---------- output ----------
+OBSERVED_UTC=2026-10-15T05:42:29Z
+SUBMISSION_JSON={"archive_sha256": "3714fc1c5c58ca0e6c81ba608dc4388bce2ed3effe510a16e6272b01e23a7a7f", "job_id": 242474, "job_name": "psfit_a9e82e77", "manifest_sha256": "59dae6221ea227d0d48739c8f05b1c208f5b1727ad52e6d45569b6f18f621807", "nonce": "a9e82e77001b4ac5b693531ac77a8f7e", "payload_files": 724, "sbatch_returncode": 0, "script_sha256": "cf18dde171d70257ae653e4092e0136944a17f1c7385014b4db26aaec070f009", "stdout_sha256": "d37c6d7ac9da926b95e0384e6d6c68da64f1db3f341147ec8de981fc4e2f68e9", "utc": "2026-10-14T13:53:04Z", "work_dir": "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code"}
+SCHEDULER=slurm_load_jobs error: Invalid job id specified
+SCHEDULER=242474|FAILED|1:0|00:05:43|15:59:00|ngu007
+ACTUAL_FAMILY_FLOCK=FREE
+FILE_ID={"bytes": 146, "path": "runtime/owner.json", "sha256": "70430e19b60be435c694db816c88b39c577d155e6a87d900860dc475b1f62070"}
+RECORD={"path": "runtime/owner.json", "value": {"creation_ticks": "2291800441", "job_id": "242474", "nonce": "a9e82e77001b4ac5b693531ac77a8f7e", "pid": 180649, "status": "STOPPED"}}
+FILE_ID={"bytes": 94, "path": "runtime/numerical_worker_identity.json", "sha256": "7df13e1d7870a08b89895ac3bbc3e7f71cc11fe5a6cc090a8ae67f52a86d5a85"}
+RECORD={"path": "runtime/numerical_worker_identity.json", "value": {"creation_ticks": "2291829237", "job_id": "242474", "pgid": 180692, "pid": 180692}}
+FILE_ID={"bytes": 156, "path": "runtime/targeted_checks.json", "sha256": "aa55a4731a3bbd9612bdc7489cb7cc2b8d0190d351a059db6b42d4eb8fce5f81"}
+RECORD={"path": "runtime/targeted_checks.json", "value": {"log_sha256": "5939f85715fd591b60d4b550c1df39ceead309579de95e16fd029bb054463ffb", "original_990_reexecuted": false, "returncode": 0, "tests": 4}}
+FILE_ID={"bytes": 367, "path": "runtime/exploratory_admission.json", "sha256": "b21980c0f77bc787a7392998d5e47c129f8c9548b9f743a130d480f38557003d"}
+RECORD={"path": "runtime/exploratory_admission.json", "value": {"exploratory_fit_admitted": true, "formal_forecast_claim_allowed": false, "original_full_gradient_pass": false, "preserved_not_converged": [["encoder_parameters", 0], ["encoder_parameters", 2], ["middle_parameters", 1]], "seed_scope": [1001], "training_loss_pass_count": 9}}
+FILE_ID={"bytes": 102, "path": "runtime/supervisor_progress.json", "sha256": "a6b0d7e9e6ac55344205a5c051ea85a41ef5a41d760df5c06d902400a6045847"}
+RECORD={"path": "runtime/supervisor_progress.json", "value": {"remaining_seconds": 57313.82630781829, "utc": "2026-10-14T14:45:18Z", "worker_pid": 180692}}
+FILE_ID={"bytes": 1359, "path": "runtime/worker_failure.json", "sha256": "4fae8bf2ee5acb1e6c07c999964c295ae5e6bd8da44f0017ea9ba2a7afcaf74f"}
+RECORD={"path": "runtime/worker_failure.json", "value": {"error": "A model replay lacks its persistent cumulative receipt", "fit_or_forecast_claim": false, "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/hpc/precip_smallfit_worker_v01.py\", line 43, in main\n    result = optimize(ctx, recipe, stage)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/fit_v04.py\", line 81, in optimize\n    warmup = ctx.factory(model)\n             ^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/saved_context_v04.py\", line 364, in factory\n    self.full_forward_counter.consume(getattr(self, \"forward_label\", type(corrector).__name__))\n  File \"/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/saved_context_v04.py\", line 342, in consume\n    raise PermissionError(\"A model replay lacks its persistent cumulative receipt\")\nPermissionError: A model replay lacks its persistent cumulative receipt\n", "type": "PermissionError"}}
+FILE_ID={"bytes": 501, "path": "runtime/supervisor_failure.json", "sha256": "68f27f31ae075b2dc93d2fc72507a6c0ff73d96e7b97971c2d43260a382035a1"}
+RECORD={"path": "runtime/supervisor_failure.json", "value": {"error": "RuntimeError: Worker did not finish the complete fixed-scope fitting path", "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/hpc/run_precip_smallfit_hpc_v01.py\", line 102, in main\n    raise RuntimeError(\"Worker did not finish the complete fixed-scope fitting path\")\nRuntimeError: Worker did not finish the complete fixed-scope fitting path\n"}}
+ABSENT=runtime/direct_control/stage_result.json
+ABSENT=runtime/direct_control/independent_fit_audit.json
+ABSENT=runtime/network/stage_result.json
+ABSENT=runtime/network/independent_fit_audit.json
+ABSENT=runtime/fit_execution_complete.json
+FILE_ID={"bytes": 114098, "path": "runtime/final_supervisor_report.json", "sha256": "7029129a56f4f721b58301ece24d03a457f65c76abec98406b6838fc8574eeb1"}
+FINAL_REPORT={"budget": {"budget_sha256": "5b1cba0d8ff5d0a70b39fa1fea42c82c313ddde90c4ec78cabb2617094f37e52", "remaining_seconds": 57309, "used_seconds": 201891, "worker_exit_before_settlement": true}, "execution_complete": false, "failure": "RuntimeError: Worker did not finish the complete fixed-scope fitting path", "forecast_improvement_established": false, "numeric_process_exited": true}
+FILE_ID={"bytes": 922, "path": "runtime/counters/operation_counters_v04.json", "sha256": "6842bdedb0b20303628f97ee14ffffbf8764624421fd4f83d141f4329fe0a678"}
+COUNTERS={"event_count": 100, "head_sha256": "a0fbdca6656476872c5d480e55f8989ed8a03263cb4905063d1425e0659e9813", "initialization_evidence_sha256": "55c422ec6f44831a9c5dd527b78207db06a628ccf1bf83fb16d29f95089c7eed"}
+LOG_TAIL=logs/targeted_checks.log
+test_audit_adapts_only_seed_and_relocated_admission (__main__.TargetedChecks.test_audit_adapts_only_seed_and_relocated_admission) ... ok
+test_exact_inherited_budget_and_counter_chain (__main__.TargetedChecks.test_exact_inherited_budget_and_counter_chain) ... ok
+test_exploration_requires_actual_nine_and_preserves_three_negatives (__main__.TargetedChecks.test_exploration_requires_actual_nine_and_preserves_three_negatives) ... ok
+test_fast_checkpoint_and_boundary_tamper_stop (__main__.TargetedChecks.test_fast_checkpoint_and_boundary_tamper_stop) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.846s
+
+OK
+
+LOG_TAIL=logs/numerical_worker.log
+STAGE_BEGIN direct_control
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/hpc/precip_smallfit_worker_v01.py", line 71, in <module>
+    main()
+  File "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/hpc/precip_smallfit_worker_v01.py", line 43, in main
+    result = optimize(ctx, recipe, stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/fit_v04.py", line 81, in optimize
+    warmup = ctx.factory(model)
+             ^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/saved_context_v04.py", line 364, in factory
+    self.full_forward_counter.consume(getattr(self, "forward_label", type(corrector).__name__))
+  File "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261014T130222Z_a9e82e77_v01/payload/code/src/precip_input_assimilation/small_sample/saved_context_v04.py", line 342, in consume
+    raise PermissionError("A model replay lacks its persistent cumulative receipt")
+PermissionError: A model replay lacks its persistent cumulative receipt
+
+LOG_TAIL=logs/slurm-242474.out
+START_UTC=2026-10-14T14:39:42Z
+
+LOG_TAIL=logs/slurm-242474.err
+
+SMALLFIT_OWNED_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T13:42:29+0800
