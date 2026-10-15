@@ -1,0 +1,123 @@
+### channel=hydrol85935-temporal-20261011-001 seq=75
+### host=login4
+### started=2026-10-15T13:51:09+0800
+### ---------- output ----------
+RECOVERY_SUBMITTED {"stage": "s200", "job_id": 242751, "array_tasks": 54, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s200.sbatch", "script_sha256": "b61b90e0cb7e7b97dd970558168fc4117432870d893d3d133bcbb1f8cf15b3ec", "scope": 531, "seed": 200, "dependency": null}
+RECOVERY_SUBMITTED {"stage": "s300", "job_id": 242752, "array_tasks": 54, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s300.sbatch", "script_sha256": "2bd97b224ed6479c3714e6988936855a77bb655948d3893d0b0a6a638647edef", "scope": 531, "seed": 300, "dependency": "#SBATCH --dependency=afterok:242751"}
+RECOVERY_SUBMITTED {"stage": "s100_missing", "job_id": 242753, "array_tasks": 0, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s100_missing.sbatch", "script_sha256": "11cd2f1f1b58a1eef0224aa69424a4178c99b7efa15ad1eb90ec8db1c9c1d9cf", "scope": 6, "seed": 100, "dependency": "#SBATCH --dependency=afterok:242752"}
+RECOVERY_SUBMITTED {"stage": "report", "job_id": 242754, "array_tasks": 0, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/report.sbatch", "script_sha256": "f7b4fc99d720552439d48559d48420faefcda46d1e292b2103667cece01fe23a", "scope": 1593, "seed": null, "dependency": "#SBATCH --dependency=afterok:242753"}
+RECOVERY_REGISTERED {"jobs": [{"stage": "s200", "job_id": 242751, "array_tasks": 54, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s200.sbatch", "script_sha256": "b61b90e0cb7e7b97dd970558168fc4117432870d893d3d133bcbb1f8cf15b3ec", "scope": 531, "seed": 200, "dependency": null}, {"stage": "s300", "job_id": 242752, "array_tasks": 54, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s300.sbatch", "script_sha256": "2bd97b224ed6479c3714e6988936855a77bb655948d3893d0b0a6a638647edef", "scope": 531, "seed": 300, "dependency": "#SBATCH --dependency=afterok:242751"}, {"stage": "s100_missing", "job_id": 242753, "array_tasks": 0, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/s100_missing.sbatch", "script_sha256": "11cd2f1f1b58a1eef0224aa69424a4178c99b7efa15ad1eb90ec8db1c9c1d9cf", "scope": 6, "seed": 100, "dependency": "#SBATCH --dependency=afterok:242752"}, {"stage": "report", "job_id": 242754, "array_tasks": 0, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/report.sbatch", "script_sha256": "f7b4fc99d720552439d48559d48420faefcda46d1e292b2103667cece01fe23a", "scope": 1593, "seed": null, "dependency": "#SBATCH --dependency=afterok:242753"}], "assignment_sha256": "10b444fd1a1525236e3dba4fa9408cca86e81275eeb8a8c5ab05ead9062fa63f"}
+242751_0|PENDING|0:00|None|4|gpu:1|
+242751_1|PENDING|0:00|None|4|gpu:1|
+242751_2|PENDING|0:00|None|4|gpu:1|
+242751_3|PENDING|0:00|None|4|gpu:1|
+242751_4|PENDING|0:00|None|4|gpu:1|
+242751_5|PENDING|0:00|None|4|gpu:1|
+242751_6|PENDING|0:00|None|4|gpu:1|
+242751_7|PENDING|0:00|None|4|gpu:1|
+242751_8|PENDING|0:00|None|4|gpu:1|
+242751_9|PENDING|0:00|None|4|gpu:1|
+242751_10|PENDING|0:00|None|4|gpu:1|
+242751_11|PENDING|0:00|None|4|gpu:1|
+242751_12|PENDING|0:00|None|4|gpu:1|
+242751_13|PENDING|0:00|None|4|gpu:1|
+242751_14|PENDING|0:00|None|4|gpu:1|
+242751_15|PENDING|0:00|None|4|gpu:1|
+242751_16|PENDING|0:00|None|4|gpu:1|
+242751_17|PENDING|0:00|None|4|gpu:1|
+242751_18|PENDING|0:00|None|4|gpu:1|
+242751_19|PENDING|0:00|None|4|gpu:1|
+242751_20|PENDING|0:00|None|4|gpu:1|
+242751_21|PENDING|0:00|None|4|gpu:1|
+242751_22|PENDING|0:00|None|4|gpu:1|
+242751_23|PENDING|0:00|None|4|gpu:1|
+242751_24|PENDING|0:00|None|4|gpu:1|
+242751_25|PENDING|0:00|None|4|gpu:1|
+242751_26|PENDING|0:00|None|4|gpu:1|
+242751_27|PENDING|0:00|None|4|gpu:1|
+242751_28|PENDING|0:00|None|4|gpu:1|
+242751_29|PENDING|0:00|None|4|gpu:1|
+242751_30|PENDING|0:00|None|4|gpu:1|
+242751_31|PENDING|0:00|None|4|gpu:1|
+242751_32|PENDING|0:00|None|4|gpu:1|
+242751_33|PENDING|0:00|None|4|gpu:1|
+242751_34|PENDING|0:00|None|4|gpu:1|
+242751_35|PENDING|0:00|None|4|gpu:1|
+242751_36|PENDING|0:00|None|4|gpu:1|
+242751_37|PENDING|0:00|None|4|gpu:1|
+242751_38|PENDING|0:00|None|4|gpu:1|
+242751_39|PENDING|0:00|None|4|gpu:1|
+242751_40|PENDING|0:00|None|4|gpu:1|
+242751_41|PENDING|0:00|None|4|gpu:1|
+242751_42|PENDING|0:00|None|4|gpu:1|
+242751_43|PENDING|0:00|None|4|gpu:1|
+242751_44|PENDING|0:00|None|4|gpu:1|
+242751_45|PENDING|0:00|None|4|gpu:1|
+242751_46|PENDING|0:00|None|4|gpu:1|
+242751_47|PENDING|0:00|None|4|gpu:1|
+242751_48|PENDING|0:00|None|4|gpu:1|
+242751_49|PENDING|0:00|None|4|gpu:1|
+242751_50|PENDING|0:00|None|4|gpu:1|
+242751_51|PENDING|0:00|None|4|gpu:1|
+242751_52|PENDING|0:00|None|4|gpu:1|
+242751_53|PENDING|0:00|None|4|gpu:1|
+242752_0|PENDING|0:00|None|4|gpu:1|
+242752_1|PENDING|0:00|None|4|gpu:1|
+242752_2|PENDING|0:00|None|4|gpu:1|
+242752_3|PENDING|0:00|None|4|gpu:1|
+242752_4|PENDING|0:00|None|4|gpu:1|
+242752_5|PENDING|0:00|None|4|gpu:1|
+242752_6|PENDING|0:00|None|4|gpu:1|
+242752_7|PENDING|0:00|None|4|gpu:1|
+242752_8|PENDING|0:00|None|4|gpu:1|
+242752_9|PENDING|0:00|None|4|gpu:1|
+242752_10|PENDING|0:00|None|4|gpu:1|
+242752_11|PENDING|0:00|None|4|gpu:1|
+242752_12|PENDING|0:00|None|4|gpu:1|
+242752_13|PENDING|0:00|None|4|gpu:1|
+242752_14|PENDING|0:00|None|4|gpu:1|
+242752_15|PENDING|0:00|None|4|gpu:1|
+242752_16|PENDING|0:00|None|4|gpu:1|
+242752_17|PENDING|0:00|None|4|gpu:1|
+242752_18|PENDING|0:00|None|4|gpu:1|
+242752_19|PENDING|0:00|None|4|gpu:1|
+242752_20|PENDING|0:00|None|4|gpu:1|
+242752_21|PENDING|0:00|None|4|gpu:1|
+242752_22|PENDING|0:00|None|4|gpu:1|
+242752_23|PENDING|0:00|None|4|gpu:1|
+242752_24|PENDING|0:00|None|4|gpu:1|
+242752_25|PENDING|0:00|None|4|gpu:1|
+242752_26|PENDING|0:00|None|4|gpu:1|
+242752_27|PENDING|0:00|None|4|gpu:1|
+242752_28|PENDING|0:00|None|4|gpu:1|
+242752_29|PENDING|0:00|None|4|gpu:1|
+242752_30|PENDING|0:00|None|4|gpu:1|
+242752_31|PENDING|0:00|None|4|gpu:1|
+242752_32|PENDING|0:00|None|4|gpu:1|
+242752_33|PENDING|0:00|None|4|gpu:1|
+242752_34|PENDING|0:00|None|4|gpu:1|
+242752_35|PENDING|0:00|None|4|gpu:1|
+242752_36|PENDING|0:00|None|4|gpu:1|
+242752_37|PENDING|0:00|None|4|gpu:1|
+242752_38|PENDING|0:00|None|4|gpu:1|
+242752_39|PENDING|0:00|None|4|gpu:1|
+242752_40|PENDING|0:00|None|4|gpu:1|
+242752_41|PENDING|0:00|None|4|gpu:1|
+242752_42|PENDING|0:00|None|4|gpu:1|
+242752_43|PENDING|0:00|None|4|gpu:1|
+242752_44|PENDING|0:00|None|4|gpu:1|
+242752_45|PENDING|0:00|None|4|gpu:1|
+242752_46|PENDING|0:00|None|4|gpu:1|
+242752_47|PENDING|0:00|None|4|gpu:1|
+242752_48|PENDING|0:00|None|4|gpu:1|
+242752_49|PENDING|0:00|None|4|gpu:1|
+242752_50|PENDING|0:00|None|4|gpu:1|
+242752_51|PENDING|0:00|None|4|gpu:1|
+242752_52|PENDING|0:00|None|4|gpu:1|
+242752_53|PENDING|0:00|None|4|gpu:1|
+242753|PENDING|0:00|Dependency|4|gpu:1|
+242754|PENDING|0:00|Dependency|4|gpu:1|
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T13:51:12+0800
