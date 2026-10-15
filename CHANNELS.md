@@ -203,3 +203,5 @@ git rm inbox/seq
 | `id25-dielmelt-20261015` | RDS03 fixed-weight zero-training diel-melt contrast | 2026-10-15 | Only /data1/home/sunyiq/id25_dielmelt_20261015_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
 
 | `openhydronet-531-20261015` | OpenHydroNet (Google flood-forecasting, NeuralHydrology fork) on CAMELS-US 531: native-config baseline, then simulation / perfect-hindcast comparison against nh; GPU training | 2026-10-15 | Only /data1/home/sunyiq/openhydronet_531_20261015; nh_final, ~/neuralhydrology, ~/hpc_mailbox, other channels and existing jobs (e.g. N22-warmpair2 242758) read-only; no scancel of others' jobs; packages only via pip --target into own pysite. |
+
+| `id25-lstm-matched-20261015` | B03 daily LSTM with matched raw information | 2026-10-15 | Only /data1/home/sunyiq/id25_daily_lstm_matched_20261015_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
