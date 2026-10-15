@@ -1,0 +1,16 @@
+### channel=id29-nearing2022-da seq=737
+### host=login4
+### started=2026-10-15T13:58:07+0800
+### ---------- output ----------
+4cea5fc43b1fe72d3b0cd6ceae5f05f038fa64a00d0c4261a8b1b7b8a449c327  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py
+9e5d59be20c7f3431b6025529d0718b2e8506c52644c140c8d107a13f9e07fd1  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm
+4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d  /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+DEPLOYED_ENTRY_GATES_PASS basins 531 current_only 193284
+202510|COMPLETED|0:0
+202511|COMPLETED|0:0
+Submitted batch job 242758
+  242758_[1%1]    N22-warmpair2   PENDING (JobArrayTaskLimit)
+      242758_0    N22-warmpair2   RUNNING ngu102
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T13:58:17+0800
