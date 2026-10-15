@@ -1,0 +1,13 @@
+### channel=openhydronet-531-20261015 seq=19
+### host=login4
+### started=2026-10-15T21:24:13+0800
+### ---------- output ----------
+2026-10-15T21:24:13+0800
+531 /data1/home/sunyiq/openhydronet_531_20261015/data/id18_basins_531.txt
+2c6603b5c2f662b6  /data1/home/sunyiq/openhydronet_531_20261015/src/build_id18_data.py
+3a3836546abc056d  /data1/home/sunyiq/openhydronet_531_20261015/configs/id18_cmal.yml
+7dd4397dc01d1d68  /data1/home/sunyiq/openhydronet_531_20261015/configs/id18_nse.yml
+34895 python -u /data1/home/sunyiq/openhydronet_531_20261015/src/build_id18_data.py /data1/home/sunyiq/neuralhydrology/data/camels_us /data1/home/sunyiq/openhyd
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T21:24:21+0800
