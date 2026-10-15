@@ -1,9 +1,9 @@
 #!/bin/bash
 set -eo pipefail
 umask 077
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_BODY_READ_18'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_BODY_READ_19'
 import base64,datetime,hashlib,json,pathlib,zipfile
-root=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/vegetation_body_acquisition_v1');expected_pid=int('19539');sequence=18
+root=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/vegetation_body_acquisition_v1');expected_pid=int('19539');sequence=19
 assert root.resolve(strict=True)==root and not root.is_symlink()
 def read(path,limit):
  assert path.resolve(strict=True)==path and not path.is_symlink() and path.is_file()
@@ -61,4 +61,4 @@ print('OWN_BODY_FILE='+target.name);print('OWN_BODY_BYTES='+str(len(raw)))
 print('OWN_BODY_SHA256='+hashlib.sha256(raw).hexdigest())
 print('OWN_BODY_BASE64_BEGIN');print(base64.b64encode(raw).decode());print('OWN_BODY_BASE64_END')
 print('OWN_BODY_STATUS_DONE')
-PY_BODY_READ_18
+PY_BODY_READ_19
