@@ -1,20 +1,19 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'SOURCE_REVIEW'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'READ_SOURCE'
 from pathlib import Path
-import json,hashlib
+import json,hashlib,re
 r=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-expected={'control/hybrid_v020_20261014_001/assignment.json': 'c607337173975265e44fa3af04bf8f43add71116dc49b6802041fd35d0fe67a1', 'control/hybrid_v020_20261014_001/worker.py': '963f33dbb3a9d50e9d122e2877d9e31261a989214e6408985093b34d725e2cb3', 'control/hybrid_v009_20261012_001/worker.py': 'ffe31255bf4b8db7f97b37388564cc97c4685355200b9c2f37268fa12eb8217f'}
-for name,digest in expected.items():
- assert hashlib.sha256((r/name).read_bytes()).hexdigest()==digest,name
-a=json.loads((r/'control/hybrid_v020_20261014_001/assignment.json').read_text())
-assert a['hpc_training_seeds']==[100,200,300]
-assert a['scientific_code']==str(r/'versions/v004/code')
-assert a['output']==str(r/'execution/hpc_v009')
-assert a['science_rules_changed'] is False
-print('PARENT_SOURCE_REVIEW '+json.dumps(dict(version=a['version'],assignment_sha256=expected['control/hybrid_v020_20261014_001/assignment.json'],training_seeds=a['hpc_training_seeds'],output=a['output'],scientific_code=a['scientific_code'])),flush=True)
-SOURCE_REVIEW
+p=r/'control/hybrid_v009_20261012_001/worker.py'
+b=p.read_bytes();t=b.decode()
+print('CURRENT_PARENT_FORWARDER '+json.dumps(dict(path=str(p),sha256=hashlib.sha256(b).hexdigest(),text=t[:5000])),flush=True)
+match=re.search(r"p=Path\('([^']+)'\)",t)
+if match:
+ target=Path(match[1]);assert target.is_relative_to(r/'control')
+ data=target.read_bytes();a=target.parent/'assignment.json';v=json.loads(a.read_text())
+ print('CURRENT_PARENT_ASSIGNMENT '+json.dumps(dict(target=str(target),worker_sha256=hashlib.sha256(data).hexdigest(),assignment_sha256=hashlib.sha256(a.read_bytes()).hexdigest(),value=v)),flush=True)
+READ_SOURCE
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
