@@ -195,3 +195,5 @@ git rm inbox/seq
 | `knet-state-channel-20261015-001` | Two authorized basin-specific state-channel comparisons, 20 optimizer calls per arm | 2026-10-15 | Only state_channel_finetune_20261015_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
 
 | china-input-next-20261015 | China remaining inputs then gated prediction; manual only; isolated |
+
+| `id25-graice-diagnostic-20261015` | GRAiCE isolated startup receipt and runtime diagnostics | 2026-10-15 | Only /data1/home/sunyiq/id25_graice_lstmnosif_20261015_001; existing jobs, data, environments and other channels read-only; Read-only startup diagnostics; never submit or cancel jobs from this channel. |
