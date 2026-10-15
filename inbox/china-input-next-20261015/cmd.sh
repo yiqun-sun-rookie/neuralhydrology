@@ -1,57 +1,78 @@
 #!/bin/bash
 set -eo pipefail
 umask 077
-exec timeout --signal=TERM --kill-after=5s 85s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_GEOLOGY_DEPLOY'
-import base64,hashlib,io,json,pathlib,re,shutil,subprocess,sys,zipfile
+exec timeout --signal=TERM --kill-after=5s 85s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_GEOLOGY_READ'
+import base64,datetime,hashlib,json,pathlib,re,subprocess,zipfile
 root=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/geology_diagnostic_v1')
-assert root.parent.resolve(strict=True)==root.parent and not root.exists() and not root.is_symlink()
-assert shutil.disk_usage(root.parent).free>=256*1024**2
-packed=base64.b64decode('UEsDBBQAAAAIAEK0T10Xw7kEegEAAMYCAAAQAAAARU5UUllfVEFCTEUuanNvbn2ST2sbQQzF7/4UxudgpNFoNMotuMUESgytLz0tmn+OS7ob6iVgQr57p+TQwza9CPQQ0o+n97parzenOj1Np+tQznYap8t8zsNPO4/DC26fr5vb9Wsf6mPpOtdLb0VAbt6ly6M5Dl3bZNbYKHpITkjIQGsMAtykCkJoDnymgtKsenQxt9wsAHDWpC7FsOkL324+oDmPpT7XXsb5IyhVXkJ5cQrNC2FN0TOpUulsQj6rGbXOhwLqGhH/WWDOfNcR0arLQv+FytM4/5qehhf3TyAGFxZAFLg63w1pkqShGuSCicjMK1DhANHn6LQrDdmixaYeMZSQS0gmf4H2nw9fDvvvw6f7u/3D4dvxfjfsDg/Hr3e74/bHZRqXQN7FJZD4QtqRiJqxQ8/cWsTGFABDtyVn9v13EAt4NtWKPhcQSa31V8PSoe0l2Zwfl+cjuWVopDgKjqAl7jlQ9SmaWq4YQJmsZFdFu09BrR8OMWDMoWpy7Gvl99Cs3la/AVBLAwQUAAAACABCtE9daPxUR2cHAAC+EAAAIAAAAEdFT0xPR1lfRElBR05PU1RJQ19DT05UUkFDVC5qc29utVdZb9w4En7PryD62UlTtzR+6rWdGWODdhA7c2w2IHiqtSOJCkn5SDD/fYqU1N1OOlgsFnkRIB51fvVV8csLhFbWUTfa1U9o9frdzb+utuTyevPz9ub27vqCXGy2l9eXm7srsr25I1e/X128v7u+2ZLN27fvbn7dvFmdeQlGdtpJYrR2XsxaUEej9U53cm3H/qn5tOa7pqek6YfREa67oZWu0T3ZDZzEOM4jHGUE42hdS93q+omIhta9tq7h5D6alITL3swv8OfN5nqQ+19YGKjb/Z/qByNV29Q7B1rXQcErbu+D/qCCPTnpTUhwGWdVvF+3OxpnuVcelWnJFPxIxfOIVRmO0zzHRSSSopCsUCqqFC9wrHIus6zIaFzhOK7isqA5TctVEPnXJBkCS63u7Y/0clbxHT/TNK/KE24m4JnI0qxUmPMEHMtiwUSB86iIC6wKnnCsVCxZpDguEqqYoGlSsFiWscI0f+7mnPUf6eas4pV7dN+6WaZRVCYn3KwqmSdllhZliWXMWMYlqxSLUs7yLKKljLK0yoUUKpc8pRKzPKc4ixMRyThN8HM3qXOmYeOk84d5etByOqcRJCjB+QlvRSl4luQFzphMcsV4TpO4yNKYRmmaApBhu+RMYZFJIRhLcSmwiHEuqGCYVbO3L2aPpwolneyYNF5zWkVR2BiMZq3sSG30OByVNKeG6Z4ClShDefC1a6xt+ppoA3G4p20jPCyzI+CQQZpOUta0jXs6Pj/299I0qpGCfJZGw71ib1rQDBIdWCaDJh+Auxvyjyuyubh7v3nz5g/y7mpzSYDsfnl7sfCc1aPhkoADg7a0PWKjdjQd+Y9mIcSzeXwIvBov1k6/eP59oG1LQLvuhV/O8bIB0rm0ltw3xo209RHU5oksCYQUlQWuokVsRx+bbuyIGkFeP3bgNCcDBcfga620PkITio6MWW4Z+jAjLMgPZ/01ryhLyqKoFmcAgBAAC+E0ctDG7Q2KcFpmxYyolXwcaC++PZVGFVREuk+BkZ/GxsA52TvwrnGys6TXjjxJB3ep8HzwYZKpmh72EWAC4oHADCF9hLRBoAo1oG6Q8Okdko9wCAWRiA4QScCMx+XHQw8hVASUALqmE9JjStHWygm2U46FfuhbTcU+ZR5tnfS2ArgMtc5HakoVIG5/qtNCtoRDcg83naHgAcDSjP1h1Tdeb0WANZ1BOG3R0emO+vbHd5L/aSFIFErmuaE+x5PmGYSy51pMK6v3d69fli9vr3+eGWAFVjUdRNH43bNl9dMInduv/Hu1P6hHr4qELSItp6HPOjPKBTuhpEmoxdUU8bEHv0OxIUbBKthEFoior8+RGIe24VDWa9kN7mk91yjsa6j+WeYOMj7RxGrsm0+jRL3uw3nU007a84PcBTnnaG5eCEKi559zNFM9snz9DT8s2rw1tS8qA/VXA7hmBoCsIfegUasfpOHUSrS5vbi+RsC8EDnEdTt2oA9EItU8grN8NAbQ9hIStgM4fvgp/oj06ABmYBRoaNyuW5SCcBAriHY7iN4y6swy92D3VD17eiDv7zmy39JGW78cVj/OCsd+du8zaD3oWb3f/nN789sWgR19yMIZBBvi11ImW6S9b2272gv5s4dSABaiHsIWeLVxlgAsWo9oC/2rAZKy4+DL/Uh8ELqvtUXcXF3eMBNqawVBqqHPtRD0GmDSomkP7BB++QwNuycbNkChRIb2tTxDnu2Q5xZ0+8sm0ABETebpogeIcG47q4Cic6AGD8PGoS3drq97dY7mjoKATZqOtucze8xsY5u6X/vOEaQvHcln1zZCog/4LPp4pC3Qbiv72u1IqLTQa8uvAWfHLvTaxg4tfUK6b8E0CNQcR4AYdC1aS5+GffBQDdcXXY0fBDoAXaCMZ8CxTrQNQxe3v6KhHS26nBw7gOWYKn3wXnoOkocLUwBez77OaDo09CV3VBA2ilq6A/f8b91n7jX+mCDQinysIlwUWbYErA8MT+e+F1p1bXyHn6T6GFrgBTTJQGxUCtKNmFTayPNnPcHIHbU7RJUvYQbVF5Dpdg2AbLZ4ErPae+qbHTWNDazwZV++xFEDXtvndBiCFhop8F8rTu4uIJ+BD8UNlgHtyJOnp/FknpwIwO/rUeWbGxNmCW+nmPsroVC+En8Mw9BsJ0chCdQe9cUAt+niUb8O7Ry6wdHE5rQDn/Yt/6tef3Z86Gh+OD04DFM/rQ2FqUTasT3MDjGuiiiLjw5Cb5FwDihjfyiHeSXfm7tIAio7mrdXJx6YHfRmGJxfDc8eIIvUosDFiVmZZ1WpkjLFLC4SeODgSpZ+claFLCKcqxinHF4BhaIyBRbgiisKE17GK1bFrDz9ADq26gjA3zeuqrJTxqUFPCpVWiSRZGWaJVWVCLCxSFJeUZoosDOCCTJWSZJ5ETSmKaxHUURlzIvkvxoHM6sz0Hbu4+8YBs/eUy+MJM/gXQQBUgU8haOKYi4iliSUphVORJbjMuVlXMGKijJa0lJV8DbLRc5Fzmhx9MJ48deLvwFQSwMEFAAAAAgAQrRPXVCkLMeLAQAAQAMAAA4AAABnZW9sb2d5LnNiYXRjaLWTQU/jMBSE7/kVRghxCnaysCCkHJLGUqttm6gJ7HKyXMckhsQ2sV3Rf7/uriqliCMcPZ/fzBtLPj+DWyHhlpouOK+ytJ7NQRi+qG0o6cATJknLVa/aPWkEbSdXNB2tsELJpGu1i/UE8XfWu4YnsnUIxRMgVcNNEk0VS83rqcS0M6HmY3hAyXTcCr8RQvcRukfoxDYc+Zvjjk9E5ax2NoENtTSCnRo4NE7uxRtknZCUCOkxYWrQPT/UIJ1mJEbxzwhFNwShCE6LS2WsYGQXQS+ZIwovXq58zrT6OKrx+0N9TGC4BSFXQAvNn6noAzf4BwPo9jbg71qNFswe8pQ8LqpFtsQkx4+LGa6Sy8sjLlYlWT+sSD3f4DSvkggUJV5ny7T6IK9+LT8o/oT/lJtT9ehbPtXzYp0X6/r3ZlHj7KnGsyLHfuw/KdN6fljD9WIQvsMO3MTX8d1dwBrw1S/nd+LsM9dBSMGUbOgPyOXOQNmRZ5/T//sNem87JUGYgU9M/ZQdVU928ZXeB38BUEsDBBQAAAAIAEK0T128hK+uKwcAAKITAAAgAAAAZ2VvbG9neV9kaWFnbm9zdGljX2NvbnRyb2xfdjIucHm1WFtv47YSfvevIPIiaevVSdJNekF1AG+sTd167cB2tijSBUFLtM1dSRREKk766ztDSrLkS5oWqB4ciRzOjd/ccnZ2Ns04URtZaBLJNC81f5vJmJMvctkneiuJ4jkrmOZkKcss5jGJBVtnUmkREZHmCU95ppkWMlP+2dlZD9aQ2YapTSKW9ecXJbP6XareqpApyZlGElIt38FnTVJwJcsi4vW34gmPtCxUsyDWGUuar3KZFzLiarf/3LxqkfJebzadLkhghLiUrkTCKfV8lJM8ctfzwUiwozdfDGZIh4f8VGZSy0xErtfr9WK+IooBccZS3iePLCm592OPwFOwLZxx0Ug/LtNcuWa3T3imyoJTpiIhgg8sUbAmwIuZDi77hCWJ3NKMZXbLI98Q54/M8XyeRXAHIBWZM6U4mJHwzAU5HvkpINdXV99em82t0BviGuP+R1Axz5c5UDpPS8eDo0TpgrPUqomP/fa3hdDc8Kst02xdmwa+XBcsrYxb8jXLjrkEN2WpATOwG4tIu/xJaIqqBxOZASNEVMI1p4lcq8pIc0yJP7mqTykdA5vgvA9KxLwognPv0DajGjrIt+SOt28pLPaPkwPPQ3JY3HmlQg9otIOSf2cOPACUfP7Eo1KzZQJGOW/fO6hqUcuq3fUZDN7GAa72G87W57HIghbnYfhpcj8eG4PR9LbQ0V3YOOLIOis0zfiWKliEmAsWRVn51Eiq8Ymm0/HgfnLzs4+wBI2Nr3MRBzVLeG/uOqj+9oncZnRdyDJv03k7Ebp4/rFjnbmmJkD9IV+xMtHzasG1KKy+uieNxtUOhOJaKM0LtxZrfdNvsQ4/hZMFnYWDIVy0U+Ggjxff0u9VjMG5LzJGxPQRIkcYbzeQPHbs11zTlOWud2ibSQ08ZQLDJxWZe/nunLwl7n4kwZoJMq9Prq5PUZjMdEQdfKoUUcn6P4FQcqa/TehwNLidTOeL0Q2F47chHYKJ49EkdI6yWcmCfOXPfUIhSe0stC8uGuBD1rJSvBP24pOwJU/6VaoB04GnHzPNTh6w+VMquCsWu0iOCVouv5i/mXTBM99f/HB53Hp8xIqAs5DRabXwaYwqswYXLXmnBeATyUyLrOQniap7MNntwXjhMwTi8cx9VLuD5Pw3lKukVBv3BbKOJkGjSufAfwrRA2h2dm358Msc4MFb5aMO1S0T2kjCLFkBb7+sdDMgf4p4rsl7pnhoXiFJVul+P/0cZDKjkfK/iiTJ124nTdp+w5+Pbhfh7OOhw48qfHHeJax0u7O0Yym/lnl4qJfhB347drZVERZWSviUi4LH/8KSX0fj8SstufJeujY0gernnAf4Y789n1IsRJT2re8DrJh2C1YObjqXSeK2sLMSoGWyd0Hd0uBHiVR8D/3dJN8h2dM6YbniMRRSCOtYBacQ3yeAMrp81lwFJpyqDqZTaW+mk8VsOoYSMr8fL+qKawW2hT84OXTOJr7pngLO5yM9Vq1EuxF0a1aNE/FoQM4Jy+JGTidGnM/dmGzRvaQP5CtMB0h+KtrJT5gPrIkF12WRVZyrthIjti6Nlf6AS549igJ6ZaidrjMf388+0l+m7+loiK0ZKrdHcnM/HNBPo/no/Rhr2KfRTTgHUjDasZUMQLZhRQwerCcHPFgkIgUQN0uz8ejjaEEH81rfal29QAoNwdXFJXlDLs4v3715c2kFVUA1HSEINY1/Ilms3LopdKCjmP1OFwNQ2eLBM9XNIqlGOlZc23PHXEVYdQ1LH+4jVe2WAmclENRq9Jutyq1I0cwzEGvQ7dnUiG4yx9Gzhgq6SA0jj9IUAY37KP3BMarZe784f/f91XfX+0Kqqc5XG3Z5de1WMltW+Rv+FIs1VyBgx9iSVyg0kePchtPx9Pb3JnIMmsJhp1mFGZRCv7pDw0MXLNBwqwiadJrydMkLFbz74eKi1XrD1AWTlliJiMJ4pzjFrMoVzXlBRQYghcbtCQcxWYg15hsKtoB82/8CHbiTF488No7EyQ3PsDgVpvemLIdsg9t2sqnGNRwizDDlIPjBFmfNJUThM91NzhS36OOFnz879thydwwHRJg8cEo8cbpF0WEC+kLrfQKQtcdHk2F4F8KPaXl3+eoYPpvqjXwfnFisVhzm5MjApMk5h9uUP4rYvNR5COiFIujHY4xPedaeMu59RRp6AV7dxFyNnUyXKnBaTfIsBPr5YnZ/A1AEOrylgNmRvfJ3sGwB7BU1xKh3FKek5U0YfluwNSmIxjCJmSvEyTiFNJ/QCEqi+dQFaCayNS3KTNnJ2fwLhj6yRMTmtcPyZeT2CSu1TBlCK9rw6KuiPMM8tIdse2cv3wEA9sNoMqg9Tu/As7/NRosQplH4mUwhqd7chHfoYKgR0LfXfYJJ59RGBnVs6uu0aLaWmM9XdnnHsfBhMIIsEnbA8M97mG7j9HokvCqJmGBmQvHeX1BLAwQUAAAACABCtE9d8C6kgeAMAADlJgAAJAAAAGdlb2xvZ3lfZGlhZ25vc3RpY19pbmRlcGVuZGVudF92MS5webUaaXPbxvU7fwXqzhSADbOirGQS1YhHkSmXrUx5RMptSnN2lsBS3AgHiwV0JPV/73t7AItDspNpNTrA3Xe/t+9Y6NmzZ7MsZnsGv7LS2TyU7KUoacmc08VHh2axU9CS5xlNnCihQvAtj+SCA9/UWSRVkTpRnu4rQMnymI2fPXs24uk+L4AaFezbo9G2yFNnW9AI8YSjN8/0ggHeUbFL+MZ8/Fk0W7lQNPa0RBBD4QN8NCAFa55EXhVR/bnkKRuNLi8ulk4oUTxCtjxhhPhjhE1umeeP97QA/UeL5cklwiHSOM2zvMwzHnn+aDSK2da5K3jJvIymLHBiWlL/eOTAV0HvAMdDkcdxle6Fh5uBwzJRFYxQEXEentFEABqXhg4PA4cmSX5HMpqpLd954bifMtcfsywCQwJTpA02Z6BFwjIP2PjO69A5dJ47k4PDo+fPDyXIHS93jic1/LODwvnjHBzqufcb1wcCjigLRlMlK36pz2OlDVLV6omIZiQSt17MRKR1Q5sbw+HyysUVd92SDpdqYwJ1HpXhsqhApzBUFDCSwJoKkgsiHtKEZzdaybzg1xxjLDSkaEwwFkXfCgZW0lYSSUh3LZnoMBqLHT385tsGerxj9zG/ZqL0LEwF5a6VG1mUF7EInC1nSSxAmNU6gB+5uam2sICcaFHQBy3Xv6u8BKdGSS5YDPvayfKPBOCw+Mrh21rFMZyuohToM2/jfrpn20/3mw38bMFXDNCcA8WPAXjGs2sUpxBl4IC9GFA7CJwJfI8kFHqNpbz04PwCBBUlQTC/8bWKTcN9VZM9Box1A8XKqsicGBznKe3DhAvz7GsZyH73IOD8J5JJaOSivZ1akKDmYH+BTEQZmygHhB2vYUzaDvsiGZVpQvVnvPn2SJ8hSShm8tmV59D1fWW6ux0kAfDP63ZUNZaLdrbheGMs8Kb0+3FLKlhFDHD30XFPXNjkcL4nXW4yZBseCLJ+jIaOwjHdY7b2Xh35gyBABFLE4FaUZyXPKtbbfCSM8Qi3YDE++4JZQkW7vlC1YSYHoKp5fiVV95RVYKFtFoDrWuUPSMAfNos8GqD2pO2R/lLPAo96TWcczFl49E3+UiZqQUrjgdFa1mJJTfmoQ1mdKWMxNJ4J0KrcvvwOA7Rr3SiBrOO119vO6jHmmeNNMFe88v8v7BuvKk/+pvCeHAwckb63dEI2sspEJ4moZNiRVCs2JOxwfOj8ZWXa2qYydzmaV9fA3TNghcpAeDxyOix1LXwZSyNt31qwx3PUb3DmkDFbVFtG1TJpJNUIqufVwXrl9nO+qxwrkXdQvlkBZrRRlKi61Gry0AJ5CliFCspjPuucIFhplhSMC0meZ4THLsa42lJNRFVCFyqrtvy8lUkkRt0CLQlisKxKGTS1UBy0dJNjKPOTnlVr+cf7fO8Z+RuDWj2JLpNGZi1vDakkM5aXRVZRDpxbmlRMhHLtF77XqKYF8X0jOQGpN6wItULaS7psGyTFRzdzul1/qB0M4Q1aX+fFg244lcJSAqvSjbF/2+sDFLOScmzLlND0LrSoteaBcJ7jkTFtPgFZSL4lBc2umdzzTVhrhqHjuo3JFaOV2yaKQeW40/cflj+5vV5FYgQO0jakCzbeVkmS0jLaeYW7evFy/Ua8gRZ7dfDy+/VzV9sbjTqevZtfXE5PTxZT/yvF+OeH89npbEnmJ/PfLQ3Ptt6bY57x8sF/8z+SZzY/+7I8Mup5JIO6LxbIJE30Ah4+jZW1/Df/0Y8vfNxn07WE1Uu19LVjDQsuJFss4ngaFJDzgzM5/O7rNJtfzMn86v30cnb6VYptZLIxA6VnSfUUl7PZfLackvn03cly9nHqahWQ2GvnQPXiBujDxWLWBfqhC/Sv6eWFa4xhzlpf48EjIkWyuIPtajaT0YD+alef9ZTyzNNho9NSLmCOvOUFjKTXkELdxfnV5Xvyt4sfyeytqwtzB+T06u0J+ThbzH48n5K304+z0+nC9dVJlaRJAONVEcsYUkM2IhYJx1pSL12ez95DVJ4sTI7S6+IJ0MDxvplYc61ipLMcNm1oM+ArR+wkp7HwzMDrvptenF+8+4m8nZ3AEVosZ6fk9GK+vDw5XY4R3vVb82SrviGNMRVknwt+rwZDw23lFiyFakyKPC912SrpJmFYGH7FMfu4MzDLiqMvB+AzFpuGGM8gNUP5G8PMnYIYn1WgZDG7VxQ/10ULScj+zRURDPJwztxrlif59QM+0hLy86bCiddKFJrQCnHXDTlDssjvkKKSXwGtJut2GyPrKvo2v1u5qi65ULfrcrtuQWsDKiSMJvWETQz8aYnT7hvtnZVEWium3UHfQGorrKV3jr6fmONABd4mgaqSyDGUfamqksOSweB/Nnc15Pfi9i3palJu25ySTqBlfMqkQXdLoVi2btkZvo3sqiOT9LXN9Y62qZU37WXThKhVqztszNKFzO8U2HWRV/tOqCoU6AXyKivbAb8vcjBRShRaE/iNldTOStHAIBB5UbLY85SyLYcYtWVZlVr3NIZe6YY9hDwrB3u0Njd91EFqfbALyGSikQHbTn9cZVhPnstPt+p83yJjRWus3AYppctaJ38uT/ZK9nISWT1Z4WPO9RpaZNStbialfENTPPod22aXungXCDMY/HZ/cSV9NfcpAq1GG+JYtsuWYLKXRv5kz4qU0Q1PoClxH5OuO6lImwwB+s5LB/caVrjyaxP0wRDbejEvIBXDwmdTPSCioCOtolIOZlZvX8eGdt5x1+topt6JVgnSTrN6pwka1Xub3lwGfH0NKOOW5bBYp4hGeRWHzXFupeDa941hhgZzFS2QGPa0ULNo3cgDo3q3buXlNWt3Mte40Iihq7BV6s/bSkhzyhVGQ8h2TuCQrhgDHlw3yGVeyrtcUaWqGQNj1t1ZZyStndsaj0ywhDqTmqnD5KiwffQbexA9UGkftrVWSpIaFuQj5vWGGsH0bJgXIYjlST3G9ZqPdT3LUxCkDWGt+t27yi5PmXPCui/Gu1XbjGHL8G1SlhHk4BrqLmSwpA5E+OeeHWtK/fSv3YSdpXxdAu7sNlzvT2ZzcjldXJ3rRsvOETUiXnhjLhUlEfwXNvQCQ8JCU1glnR6vIdLv4GK+3bKCZZFKsk1ekK4PHAi3CqIQ1F9BIyX7TQgolpW8hKPnBgO9GfjCc9UwjQC/3hzfYl5GojfBbZMZ6x7ukYtp9eV1S2Cg64ZkIxsLkjLs4nELGxu5IWuOtYGhojNcL7g6/KAbjXkMkWaHW1KlmVS3ycdWp8K3tvV1esG7VmW+dtqwTN46rRIrbNk9VH8CST3ss9BOhKop5HWbKHWB1tNkVoL2TGaMdlHWZRwRwTdQbf7kdJcn614v0FHTtenXtpZ62zvW7Pak5sPkalPYuwMGeUSY9qCCUdBCauDMrVMrm5rJKcUXm6S+0PJaZbibVXGtk0hxaTCFuY+Fotut6920NcC53vKbmzuMpYzJZhsvxoaVD9o1xL7Da5Xclh16722AlxX5wFR/6hfNx+KgrleI3OrvW2dD+r7hpt4G63fvYcNXu/6PzpwBI0GLB/ni0bllRfP+nW4hapxNXu5gDOWY12BLlRvxF6fcQfHX9Z/iJxjbzf3MHmJqXBv6iVHV9Lfdt4n9l8H9N7ad2JXvrr/mhW331d8j72rVu+u6FJ2cn8P8f3Y2vZzOT6cLVY4C2131ZYQqMtJrWJkqEbrWzcHl9PRivlheXp0uZxdzKHHL07+qSx8wpF1y1M2PhWmxHzwbFrIs/7ZstqSE3WKZggeM2oSVTPZ4QyR7VS3sOzFwWpUmxDoDLUerMoXqzxCLVjUK7VoUOEN5q5PsHq9IYVOPhvgacq3jDaepShKi45jIWCcYzUxgL0qkzuFkiB42ODLqFFYcYm9630QinoT7LxyDweobc7FP6APkR6AoCIQJoZmShFxT4zy0I24AVEQTnl3XXg7dq/nf5xf/mA8GjYDzxSFNgggcOezxX1osFAeOOXSd8i3MNcuY6mYJuPeW6f8rGSKrxKNxyqGlB3hIZYgRm39SYQndY8oXaH1oD7v/DgMDnfxPmSHae0ZvSCEEueGbsHVPWAl6zazLv6vFybspWUzPzyB/VCSl94D2RJzH+V0m+8LwIMAhLAWaDyQvoIcXEHSoNaZLsC4CpHnMEgi7JJHw4FSO79JIUWW4MDRaV2WeggEjEu1YdCMIy7Ddq62C6QKtJZ2hXnoctIr0Y2ZyXjuHRwdDeWs2fzv9MIVf82Wrkw50pmqR76Sg0WgEeYkQ7PIJkde0hMgySfSLldK+flZ3xPIju4/YvnR+pIJN5aOsJ5DTiiIvGownZD07mZ1fXU6bPAvZVGKT8mHPQvylPvtjI2CgyMuxSW11ffDVUfeF+LUnTMoFG/0XUEsDBBQAAAAIAEK0T11vfeWKHgsAABseAAAdAAAAZ2VvbG9neV9kaWFnbm9zdGljX21haW5fdjEucHm1WVtz27oRfvevwPihJBOatT0+mRw3bEaxZVetLXkkOW2OosHQEiThmCQ0BOVLUv/37i4AkpJlJ3koHywSWCx2F3v5Ft7d3T1R2XJVir1cTcWeytNHNpXJPFdaaqZmbKZWBRMPUpcyn7MyuUmF/hvLFSvEMpEFUwWTOTBgyTSTWkuVR7u7uzsyW6qiZDeJFu+O3NdE3+3MCpWxqZjILEmZHT81nyHr5HdJKqe9pSiSEliFLFWTJJ2ovBQPpWOzSPQilTfuUyr39qdWuXtX2my1TEokdltdwacjKUT9pkHNSfVdykzs7PR7vSGLaYnP+UymgvMgQtr0TvhBtEwKkZc7g2GrP2yfAiUuizKVq1LlcuIHO93ry0/tPswUIpqAnYGFX3ijt3vjj/7H49H+3u/jt/DyNaLXN8HH/9rXtwHOi/aYaO3Qx69/eMHOzs5UzJhOQIQ8yUTIwGQrERzvMHiK5B5289EQ0XSVLbVPsyETuV4Vgid6ImV8lqQaxmQ+Bfnjw5AlaarueZ7kZipgb5n3NfeCSOQTcAvQBJknWgswTipyH/YJ2IeYHbI37GD/8OjNm0MiuZflgvlkuL8yFC+I1BLovYcbLwAGTJeFSDIjLD7mO7ovZCmIq9UPRqecvM2fCj2x6uFhuhPB4ZGHI954TT4cqk4J+MtJGQ8LMBGLY8MhyafgwZZSaq4fs1Tmt1ZNY0PLBaS4eSyFfsEEwNHIQUTemFhb/4z0Ijn87R0RRgvxMJVzoUu/scgQeOOXrHu0Yd3l4lFLiAd0qOQ+0stUliA4SHcrBJh5qo2iRg2QXRRAClEXmQ9fqmgABsnnnR5uEkEc4vF6q3K2935Py7kXhCwX98g09vADckEqwICeeJiI1AtZ06C0z4JYa9gohxj1zU5r1nIUaBvwNN9+BzSA+lYDYBn81qKsxgyVB4lE5lxOPfBax7C5h9k2QsF5vsqQ0wHNg1WYey9A3WKKoo6MzWeQvYD6RhQhm0mRwhywFzCECUhYZUJ2ENQe2zgns6QS24lckc5koUvIYYkuYU+U5C07CDdlrciNeEB543nRn0rmvjvwEaw9RjbjmrlRDAc3GOgoWaIz+FM4KBP/Oqb3b3LphHT6BkFol3FjiNjao2K67SHFuJOOk7s0lN2YwaHX+YEvciuFiYl4M4Zoci2MfpqjqUGx+Ylu3h3ZpOZ42iAIgjWnJfOac3Xa2PlZSWFFCUKXSbmeGmgaxrmW34TjQInNnFC5KnJGp2FPIq5OxB5fbH8hQWN+luVjTCnQZkZzPi6vz4pkgpXSJm7jplgsQUIiiTBgly61Cb1KcYoEAKliy2YCZ6TlDLQkZl2VN3hztSq5mvEiyeeC5gw3OaMsirsdN3wQtxh56xwhM8bMa19eDb94DVIyhlkRMmRsxC8ea35QZLVAT7cgwcftzP6YkpblM9Dwc7J0e10O5bnd75z8WCLQ1MiB1QLKpB/8pML/ubronHSGvNvq/uIuMp/JHIvir27V6Z791FZ4dAafRLNVmmZJOVkY4yKmQ681H39nB4fv/w82fY3RWafbGbb5H+1+z6vNgtG0zwT4eUXRbZ+3hp3P7SbVh02iq96gQ0ROdefYz7Xa6vIkE5rL38eq7LaBqrIW1E5DM2+jNUtk5S02QygNsOpOFgDR5lDovMHFdf+S/7P3iXdOPVPuNklOrk9b/HNn0Pl00ean7c+dk/bAo7rjGaV4CKiDaoeDsriwSGUmsSTbof5F5xI8pDWosoEZ16+Qhsz/7aAB88xGNlciMEeLwb4EOVOVTLXv8J933u5d9M6/8NNO67zbGww7J/yk1x32WyfDCOm9YA1hreVR5BElmi+hEXkwoMntNvIKkalS8EKp0qIn05iAHN8RdR4/w4+m1BNexm8s8zU7amAAvUUQbxkI8tQUBMGI4U5CfPf0BCAtICGQIgElNL7OhUrV/BFfkxIS7s0K4aDhcyseKYF9f6oxBwiCIvg1s+0cmsGv7lE/I8oIOYzREFQqrBHwyaD4Y6cG+8GKkWfqvwe0FYQaHyMzEgR/QQ7k/bQN4VhuFcRBwqACcm62WkmqGtlAADu9iW4NkdV8TKyPfj9wCI1MitID2THgNBIT3lHM9ZVPjRXcWudnVzV0twatTrNp1dr6xowYX02jbprMjDdNTda1SqHZHIUZg3nMKzXN6DmHcSNJvUjjIN8m+2BjMdnpNQYwb9bMC7VakknNymOmoTMWU3+EZrXmDZ1dag1cDGGeNUM4acjGIS6KZV7WcpmHzqOiriNzWSg4nYwbadzpOagFLogOZSZRrrHNE6u8rEU0n6+ydUIHNpcUkDxRd6sypoAgWuVQGPw39AWMdeC2IPUNq8goimByQ9e6TXIO5yIeHM5OrneC4LHNbsf0QbiIA9LJRHIjof17fNYQQR0Vc1VI8tbmYTV50eE06n7hjZK9b+Pvh08eyR1slaRmTbOrnBZTcmtYqurm9ih31otw5HvtdOE2bapBVUDih4GnCmtW2zVuD/AWpCoz193L1vDkH+1TqDIX15fdgSky4Qtwu+IXV28bPcUGKvauu//q9v7dpY2urqp9vNBcgfHqCoxDNBXqDlgbWN4Iw0QCMumDR8pMtItCFX7F1ulhpeeDYe/Ks1D3DnuBiVhvXcmUJoeRxz5rUjFCKqJmcm4WIRqvJQTzwy42adY+SmzGW1LfupF0XejwqdD7qF6Ae1Pzue5Sx2u23+A6ogVjm28QjpkuCOSrpqpWqL6bcA94j1kotcG9AEKPN1KQE3YtldZs6GareRvp032W/dgQ3gxGSygkIOv7/bXZUpV0hQONma9XmW+2DasGZz9o+EszOELG1zXfEj/NjK/uXafnYi6mlxAAvpzLHPpzm7RjV1rMKYfuWB65vT7YOI6tvbfRg1dLQTduL3pj0jl8RkKpOaYem2a2N/VNBeN1g0BOhrDLp1zDwQDW4C5QqmD1trLU0L1L0J86R5B0ide+jTW1AWCzHBjrGLobbK5O21dt+NMdXmCgds86/cv26fZNKh6IJ+YgKSWR8l7xVN2LYpJowVNRlpCN8BD5ZFXghTJPVuVCFRyCl5PdhYZ3DJJykf1gJ7S50FhhpF7AOqfnBJJRkUD3bq9+F1KXwBCvaOYit40zp5xlrxK27tPwG3NVYdF2I7VYF3qeYZ5+xNHgk+oOpIYrzil/kGTrmzHrA88wDdVqALKgvAUN265F8E5nBefd63fOO93WBR+2qO2qm5he9+ILXoVSq8TtLY3EMHnWUmxT2lUiA1YpwhoQYANb1RC16k628cRSzuneUk44BRP8JddBzyJpYrx6TO5Nt2VopjEmoIf6+hr3fnihOaqgzbb9CV1DsGBu0jHieYj2NZQVmx+KWTg8R0oXDaZ8bWUMAArIhOnK3aIG2qjBnx7tjwEA/oVtDh/AcI3Gtm0ygRQipxBEzdSUrjLIjHWBCpnb3jnYNlYiTZaY40BkhRfym/8TAgxk/2G0bfVSJLe80Jrfypt4rZVfaQjfRn9+PWidt/mgfXEGTfSKZ8kDLNt6MsZLp+o+p/Y83g+xxmfA85FDmikSDRbG2J8IiKt8jgSZmgrIGpCCiB5cQWIW5MUqx4Gt5/RacIYMkpoClAXeCUBrcqu5yNGrq3mMOlxHGdngrf21C4GXDck+sMMjU2PXAeFlq9Pl/fbg+mLooKAJdbxLBUzAOWYozukihXO8q+HcO35+CWlucZqXjp8gebfpFSRFICAQy72ETEmQs1bn4rrfXgOltIqXj0sR4x/zHUROsNCwjREqmKkN0/+Ct/0iRt35H1BLAQIUABQAAAAIAEK0T10Xw7kEegEAAMYCAAAQAAAAAAAAAAAAAACAAQAAAABFTlRSWV9UQUJMRS5qc29uUEsBAhQAFAAAAAgAQrRPXWj8VEdnBwAAvhAAACAAAAAAAAAAAAAAAIABqAEAAEdFT0xPR1lfRElBR05PU1RJQ19DT05UUkFDVC5qc29uUEsBAhQAFAAAAAgAQrRPXVCkLMeLAQAAQAMAAA4AAAAAAAAAAAAAAIABTQkAAGdlb2xvZ3kuc2JhdGNoUEsBAhQAFAAAAAgAQrRPXbyEr64rBwAAohMAACAAAAAAAAAAAAAAAIABBAsAAGdlb2xvZ3lfZGlhZ25vc3RpY19jb250cm9sX3YyLnB5UEsBAhQAFAAAAAgAQrRPXfAupIHgDAAA5SYAACQAAAAAAAAAAAAAAIABbRIAAGdlb2xvZ3lfZGlhZ25vc3RpY19pbmRlcGVuZGVudF92MS5weVBLAQIUABQAAAAIAEK0T11vfeWKHgsAABseAAAdAAAAAAAAAAAAAACAAY8fAABnZW9sb2d5X2RpYWdub3N0aWNfbWFpbl92MS5weVBLBQYAAAAABgAGALMBAADoKgAAAAA=',validate=True)
-assert len(packed)==11441 and hashlib.sha256(packed).hexdigest()=='31b936abb3b56386fec623647dc6206b8c3cba914bf44db7256ec93284a514d4'
-table=json.loads('{"geology_diagnostic_main_v1.py":{"bytes":7707,"sha256":"c598f3840b27373a09e86705f7e7106f204c3d17fae4128cfcfa6005c9b92b86"},"geology_diagnostic_independent_v1.py":{"bytes":9957,"sha256":"47290f4731eb8453993d73a734c9aa3f70517092f3359957a2a4aa3111ae2c73"},"geology_diagnostic_control_v2.py":{"bytes":5026,"sha256":"365e24710f7b7f19a0cd1b33aa4903d56084c82933af15a8a8f94116d6cd6ba7"},"GEOLOGY_DIAGNOSTIC_CONTRACT.json":{"bytes":4286,"sha256":"74d39e2433fa521455ff81f536016f33cc54f2008d045a99e14cd077bff40b03"},"geology.sbatch":{"bytes":832,"sha256":"c7d236230fb59b9994b8a9ace160953adc2e79f1969a14c68618c6e9b254ee56"},"ENTRY_TABLE.json":{"bytes":710,"sha256":"52cc437145922097c3ea42f3812f615ffc4409d15ef52daaf9f36c540b9594b7"}}')
-root.mkdir(mode=0o700)
-(root/'logs').mkdir(mode=0o700)
-with zipfile.ZipFile(io.BytesIO(packed)) as archive:
- assert archive.namelist()==sorted(table) and len(archive.namelist())==len(set(archive.namelist()))
- assert sum(item.file_size for item in archive.infolist())<=4194304
- for name in archive.namelist():
-  parts=pathlib.PurePosixPath(name).parts
-  assert 1<=len(parts)<=2 and all(p not in ('','.','..') for p in parts) and not name.startswith('/')
-  raw=archive.read(name)
-  assert len(raw)==table[name]['bytes'] and hashlib.sha256(raw).hexdigest()==table[name]['sha256']
-  target=root/name
-  target.parent.mkdir(exist_ok=True)
-  with target.open('xb') as stream:stream.write(raw)
-print('OWN_GEOLOGY_PAYLOAD_VERIFIED='+str(len(table)),flush=True)
-with (root/'SUBMISSION_STARTED.json').open('x') as stream:json.dump(dict(attempt=1,new_source_gets=0,
- scientific_arrays_on_login=0,model_calls=0,automatic_retries=0),stream)
-result=dict(exit_code=None,status='SUBMISSION_UNKNOWN_NO_RETRY',stdout='',stderr='')
-try:
- outcome=subprocess.run(['sbatch',str(root/'geology.sbatch')],capture_output=True,timeout=30)
- result.update(exit_code=outcome.returncode,stdout=outcome.stdout[:65536].decode('utf8','replace'),
-               stderr=outcome.stderr[:65536].decode('utf8','replace'),
-               stdout_bytes=len(outcome.stdout),stderr_bytes=len(outcome.stderr),
-               stdout_sha256=hashlib.sha256(outcome.stdout).hexdigest(),
-               stderr_sha256=hashlib.sha256(outcome.stderr).hexdigest())
+sequence=21;job_id='243305'
+assert re.fullmatch('[0-9]+',job_id) and root.resolve(strict=True)==root and not root.is_symlink()
+def read(path,limit):
+ assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
+ before=path.stat();assert 0<=before.st_size<=limit
+ value=path.read_bytes();after=path.stat()
+ assert len(value)==before.st_size==after.st_size and before.st_mtime_ns==after.st_mtime_ns
+ return value
+assert read(root/'OWN_GEOLOGY_JOB_ID',128)==(job_id+'\n').encode()
+submission=json.loads(read(root/'SUBMISSION_RESULT.json',65536))
+assert submission['status']=='UNIQUE_JOB_SUBMITTED' and submission['job_id']==job_id
+raw=read(root/'GEOLOGY_DIAGNOSTIC_CONTRACT.json',65536)
+assert hashlib.sha256(raw).hexdigest()=='74d39e2433fa521455ff81f536016f33cc54f2008d045a99e14cd077bff40b03'
+state=dict(server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),job_id=job_id,
+ scientific_array_reads=0,source_downloads=0,model_calls=0,training=0,new_slurm_jobs=0,
+ automatic_checks_enabled=False,snapshot_only=True)
+commands=[('squeue',['squeue','-j',job_id,'--noheader','--format=%i|%T|%C|%R']),
+ ('sacct',['sacct','-j',job_id,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,Elapsed,AllocCPUS,MaxRSS'])]
+entries={}
+for label,command in commands:
+ outcome=subprocess.run(command,capture_output=True,timeout=30)
  assert len(outcome.stdout)<=65536 and len(outcome.stderr)<=65536
- jobs=re.findall(r'^Submitted batch job ([0-9]+)$',result['stdout'],re.M)
- assert outcome.returncode==0 and len(jobs)==1
- with (root/'OWN_GEOLOGY_JOB_ID').open('x') as stream:stream.write(jobs[0]+'\n')
- result.update(status='UNIQUE_JOB_SUBMITTED',job_id=jobs[0])
-except Exception as error:
- result.update(error_type=type(error).__name__,error=str(error))
- if isinstance(error,subprocess.TimeoutExpired):
-  for label in ('stdout','stderr'):
-   partial=getattr(error,label,None) or b''
-   result[label]=partial[:65536].decode('utf8','replace')
-   result[label+'_bytes']=len(partial)
-   result[label+'_sha256']=hashlib.sha256(partial).hexdigest()
-with (root/'SUBMISSION_RESULT.json').open('x') as stream:json.dump(result,stream,indent=2)
-print(result['stdout'],end='')
-print(result['stderr'],end='')
-if result['status']!='UNIQUE_JOB_SUBMITTED':
- print('OWN_GEOLOGY_SUBMISSION_UNKNOWN_NO_RETRY')
- sys.exit(1)
-print('OWN_GEOLOGY_JOB_ID='+result['job_id'])
-print('OWN_GEOLOGY_SUBMIT_DONE')
-PY_GEOLOGY_DEPLOY
+ for suffix,value in (('stdout',outcome.stdout),('stderr',outcome.stderr)):
+  name=label+'_seq'+str(sequence)+'.'+suffix
+  with (root/name).open('xb') as stream:stream.write(value)
+  entries[name]=value
+ state[label+'_exit_code']=outcome.returncode
+names=['SUBMISSION_STARTED.json','SUBMISSION_RESULT.json','GEOLOGY_CONTROL_STARTED.json',
+ 'GEOLOGY_CONTROL_RESULT.json','GEOLOGY_CONTROL_FAILURE.json','GEOLOGY_MAIN_RESULT.json',
+ 'GEOLOGY_MAIN_FAILURE.json','GEOLOGY_UNMATCHED_COLUMNS.json','GEOLOGY_INDEPENDENT_RESULT.json',
+ 'main_LAUNCH.json','independent_LAUNCH.json','main_CONTROL_RESULT.json','independent_CONTROL_RESULT.json',
+ 'main.stdout','main.stderr','independent.stdout','independent.stderr',
+ 'logs/geology-'+job_id+'.out','logs/geology-'+job_id+'.err']
+missing=[];used=sum(map(len,entries.values()))
+for name in names:
+ path=root/name
+ if not path.exists():missing.append(name);continue
+ limit=2097152 if name in ('GEOLOGY_MAIN_RESULT.json','GEOLOGY_INDEPENDENT_RESULT.json') else 65536
+ value=read(path,limit);assert used+len(value)<=4194304
+ used+=len(value);entries[name]=value
+state['control_terminal']=(root/'GEOLOGY_CONTROL_RESULT.json').exists() or (root/'GEOLOGY_CONTROL_FAILURE.json').exists()
+states=[]
+if state['sacct_exit_code']==0:
+ for line in entries['sacct_seq'+str(sequence)+'.stdout'].decode('utf8').splitlines():
+  fields=line.split('|')
+  if fields and fields[0]==job_id:
+   assert len(fields)>=6;states.append(fields[1].split()[0].rstrip('+'))
+assert len(states)<=1
+state['scheduler_state']=states[0] if states else 'UNKNOWN'
+state['scheduler_terminal']=state['scheduler_state'] in ['COMPLETED','FAILED','TIMEOUT','OUT_OF_MEMORY','CANCELLED','NODE_FAIL','BOOT_FAIL','DEADLINE','PREEMPTED']
+state['nonterminal_confirmed']=(not state['control_terminal'] and state['scheduler_state'] in ['PENDING','RUNNING','CONFIGURING'])
+state.update(report_members=len(entries),missing_report_members=missing)
+status='STATUS_seq'+str(sequence)+'.json'
+entries[status]=(json.dumps(state,indent=2)+'\n').encode();assert len(entries[status])<=65536
+with (root/status).open('xb') as stream:stream.write(entries[status])
+table={name:dict(path=str(root/name),bytes=len(value),sha256=hashlib.sha256(value).hexdigest()) for name,value in entries.items()}
+index=(json.dumps(table,indent=2)+'\n').encode()
+assert len(index)<=65536 and sum(map(len,entries.values()))+len(index)<=4194304
+target=root/('DELIVERY_seq'+str(sequence)+'_GEOLOGY.zip')
+with zipfile.ZipFile(target,'x',compression=zipfile.ZIP_DEFLATED) as archive:
+ archive.writestr('REPORT_FILES.json',index)
+ for name,value in entries.items():archive.writestr(name,value)
+assert target.stat().st_size<=1048576
+raw=read(target,1048576)
+print('OWN_GEOLOGY_JOB_ID='+job_id)
+print('OWN_GEOLOGY_TERMINAL='+str(int(state['control_terminal'] or state['scheduler_terminal'])))
+print('OWN_GEOLOGY_NONTERMINAL_CONFIRMED='+str(int(state['nonterminal_confirmed'])))
+print('OWN_GEOLOGY_FILE='+target.name);print('OWN_GEOLOGY_BYTES='+str(len(raw)))
+print('OWN_GEOLOGY_SHA256='+hashlib.sha256(raw).hexdigest())
+print('OWN_GEOLOGY_BASE64_BEGIN');print(base64.b64encode(raw).decode());print('OWN_GEOLOGY_BASE64_END')
+print('OWN_GEOLOGY_STATUS_DONE')
+PY_GEOLOGY_READ
