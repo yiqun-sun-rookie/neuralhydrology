@@ -1,0 +1,14 @@
+### channel=id25-lstm-matched-20261015 seq=1
+### host=login4
+### started=2026-10-15T19:38:52+0800
+### ---------- output ----------
+HOST=login4
+ROOT_FRESH
+-rw-r--r--. 1 sunyiq g_sunyiq 9188044 Oct 12 20:46 /data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/inputs.npz
+lrwxr-xr-x. 1 sunyiq g_sunyiq      10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -> python3.11
+ngu002            down*   gpu:2                              gpu:0,dcu:0                                                      
+ngu[001,004-005,00mix     gpu:2                              gpu:2,dcu:0                                                      
+ngu006            mix     gpu:2                              gpu:1,dcu:0                                                      
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T19:38:53+0800
