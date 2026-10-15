@@ -1,10 +1,12 @@
 set -o pipefail
-# READ-ONLY (seq 738): confirm N22-warmpair2 arm 0 got past the entry gate
-sleep 180
+# READ-ONLY (seq 739): real training speed
 ROOT=/data1/home/sunyiq/nearing2022_da
 date --iso-8601=seconds
-squeue -u sunyiq -h -o '%.14i %.16j %.9T %.10M %R' | grep -E 'N22-warmpair2' || echo "not in queue"
-sacct -X -n -P -j 242758 --format=JobID,State,ExitCode,Elapsed,NodeList
-grep -hE '^#SBATCH --(output|error)' "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm"
-for F in $(ls -t "$ROOT"/closure_20260810/logs/*242758* "$ROOT"/logs/*242758* 2>/dev/null | head -4); do echo "--- $F"; tail -n 15 "$F" | cut -c1-220; done
+echo "=== current job ==="
+sacct -X -n -P -j 242758 --format=JobID,State,Elapsed,NodeList
+L="$ROOT/closure_20260810/logs/N22-warmpair2_242758_0.out"
+grep -aoE "Epoch [0-9]+ .{0,160}" "$L" | tail -4
+tail -c 400 "$L" | tr '\r' '\n' | tail -2
+echo "=== earlier registered 30-epoch training jobs (elapsed) ==="
+sacct -X -n -P -S 2026-08-01 --format=JobID,JobName,State,Elapsed,NodeList 2>/dev/null | grep -E 'N22' | grep -E 'COMPLETED' | grep -iE 'train|ar|DA|sim' | head -12
 exit 0
