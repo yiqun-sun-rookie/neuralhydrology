@@ -1,0 +1,49 @@
+### channel=openhydronet-531-20261015 seq=15
+### host=login4
+### started=2026-10-15T19:11:02+0800
+### ---------- output ----------
+2026-10-15T19:11:02+0800
+=== queue (ohn_*) ===
+    243042  ohn_native531   RUNNING       2:20 ngu202
+=== sacct today (ohn_*) ===
+243024|ohn_smoke|COMPLETED|0:0|00:02:41|ngu201
+243042|ohn_native531|RUNNING|0:0|00:04:09|ngu202
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_smoke-243024.out (36274 bytes)
+# Inference:  62%|██████▎   | 5.00/8.00 [00:05<00:02, 1.03it/s]
+# Inference: 100%|██████████| 8.00/8.00 [00:07<00:00, 1.21it/s]
+# Inference: 100%|██████████| 8.00/8.00 [00:07<00:00, 1.12it/s]
+[INFO] 19:02:22.189 (tester.py:evaluate) -- 1D NSE median=-0.052038
+[INFO] 19:02:22.192 (tester.py:evaluate) -- 1D KGE median=-0.450627
+[INFO] 19:02:22.193 (tester.py:evaluate) -- 1D Alpha-NSE median=0.017975
+[INFO] 19:02:22.193 (tester.py:evaluate) -- 1D Beta-NSE median=0.228725
+[INFO] 19:02:22.193 (tester.py:evaluate) -- 1D Beta-KGE median=1.300235
+[INFO] 19:02:22.193 (tester.py:evaluate) -- 1D Peak-Timing median=1.250000
+[INFO] 19:02:22.194 (tester.py:evaluate) -- 1D Missed-Peaks median=1.000000
+[WARNING] 19:02:22.217 (warnings.py:_showwarnmsg) -- /data1/home/sunyiq/openhydronet_531_20261015/pysite/zarr/api/asynchronous.py:247: ZarrUserWarning: Consolidated metadata is currently not part in the Zarr format 3 specification
+  warnings.warn(
+
+done=2026-10-15T19:02:23+0800
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_smoke-243024.err (207 bytes)
+/data1/home/sunyiq/openhydronet_531_20261015/pysite/dask/config.py:786: FutureWarning: Dask configuration key 'shuffle' has been deprecated; please use 'dataframe.shuffle.algorithm' instead
+  warnings.warn(
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_native531-243042.out (43290 bytes)
+# Epoch 1:   8%|▊         | 150/1.83k [01:49<17:55, 1.56it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 150/1.83k [01:49<17:55, 1.56it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 150/1.83k [01:49<17:55, 1.56it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 150/1.83k [01:49<17:55, 1.56it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 150/1.83k [01:49<17:55, 1.56it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:50<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:51<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:51<15:50, 1.76it/s, Loss: -0.0892]
+# Epoch 1:   8%|▊         | 155/1.83k [01:51<15:50, 1.76it/s, Loss: -0.0892]
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_native531-243042.err (207 bytes)
+/data1/home/sunyiq/openhydronet_531_20261015/pysite/dask/config.py:786: FutureWarning: Dask configuration key 'shuffle' has been deprecated; please use 'dataframe.shuffle.algorithm' instead
+  warnings.warn(
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T19:11:03+0800
