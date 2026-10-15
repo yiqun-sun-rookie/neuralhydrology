@@ -1,0 +1,42 @@
+### channel=openhydronet-531-20261015 seq=13
+### host=login4
+### started=2026-10-15T19:05:09+0800
+### ---------- output ----------
+torch 2.4.0 cuda True NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB, 12837 MiB, 81920 MiB
+[INFO] 19:00:44.953 (basetrainer.py:__init__) -- device: cuda:0
+[INFO] 19:00:45.930 (basetrainer.py:_set_device) -- ### Device cuda:0 will be used for training
+--- epoch lines
+[INFO] 19:00:44.952 (basetrainer.py:__init__) -- n_samples: 7500
+[INFO] 19:00:44.954 (basetrainer.py:__init__) -- allzero_samples_are_invalid: False
+[INFO] 19:00:44.955 (basetrainer.py:__init__) -- number_of_basins: 8
+[INFO] 19:01:12.993 (basetrainer.py:train_and_validate) -- Epoch 1 average loss: avg_loss: 0.81838, avg_total_loss: 0.81838
+[INFO] 19:01:15.253 (basetrainer.py:train_and_validate) -- Epoch 1 average validation loss: 0.20332 -- Median validation metrics: avg_loss: 0.20332, NSE: -0.05046, KGE: -0.44671, Alpha-NSE: 0.01953, Beta-NSE: 0.22188, Beta-KGE: 1.29177, Peak-Timing: 1.50000, M
+[INFO] 19:01:26.596 (basetrainer.py:train_and_validate) -- Epoch 2 average loss: avg_learning_rate: 0.00050, avg_loss: 0.44751, avg_total_loss: 0.44751
+[INFO] 19:01:28.405 (basetrainer.py:train_and_validate) -- Epoch 2 average validation loss: 0.13640 -- Median validation metrics: avg_loss: 0.13640, NSE: -0.05493, KGE: -0.44164, Alpha-NSE: 0.01906, Beta-NSE: 0.22738, Beta-KGE: 1.30041, Peak-Timing: 2.00000, M
+--- training progress bars (last chunks)
+# Epoch 2:  79%|███████▉  | 23.0/29.0 [00:11<00:02, 2.50it/s, Loss: 0.4962]
+# Epoch 2:  79%|███████▉  | 23.0/29.0 [00:11<00:02, 2.50it/s, Loss: 0.3989]
+# Epoch 2: 100%|██████████| 29.0/29.0 [00:11<00:00, 2.60it/s, Loss: 0.3989]
+# Epoch 2: 100%|██████████| 29.0/29.0 [00:11<00:00, 2.56it/s, Loss: 0.3989]
+--- run dir size / checkpoints
+/data1/home/sunyiq/openhydronet_531_20261015/runs/smoke_1510_190044
+366M	/data1/home/sunyiq/openhydronet_531_20261015/runs/smoke_1510_190044
+config.yml
+events.out.tfevents.1792062057.ngu201.5156.0
+img_log
+model_epoch001.pt
+model_epoch002.pt
+optimizer_state_epoch001.pt
+optimizer_state_epoch002.pt
+output.log
+scaler.zarr
+test
+train_data
+validation
+--- how many train samples / batches
+[INFO] 19:00:44.953 (basetrainer.py:__init__) -- batch_size: 512
+[INFO] 19:00:44.953 (basetrainer.py:__init__) -- max_updates_per_epoch: 40
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T19:05:11+0800
