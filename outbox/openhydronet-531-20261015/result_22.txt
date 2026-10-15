@@ -1,0 +1,17 @@
+### channel=openhydronet-531-20261015 seq=22
+### host=login4
+### started=2026-10-15T21:32:38+0800
+### ---------- output ----------
+2026-10-15T21:32:38+0800
+=== queue (ohn_*) ===
+    243186  ohn_id18_cmal   PENDING       0:00 (Priority)
+    243187   ohn_id18_nse   PENDING       0:00 (Priority)
+    243042  ohn_native531   RUNNING    2:23:57 ngu202
+=== sacct today (ohn_*) ===
+243024|ohn_smoke|COMPLETED|0:0|00:02:41|ngu201
+243042|ohn_native531|RUNNING|0:0|02:25:46|ngu202
+243186|ohn_id18_cmal|PENDING|0:0|00:00:00|None assigned
+243187|ohn_id18_nse|PENDING|0:0|00:00:00|None assigned
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T21:32:40+0800
