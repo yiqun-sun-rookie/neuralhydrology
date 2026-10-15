@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=738
+### host=login4
+### started=2026-10-15T14:00:47+0800
+### ---------- output ----------
+2026-10-15T14:03:47+0800
+  242758_[1%1]    N22-warmpair2   PENDING       0:00 (JobArrayTaskLimit)
+      242758_0    N22-warmpair2   RUNNING       3:46 ngu102
+242758_0|RUNNING|0:0|00:05:34|ngu102
+242758_[1%1]|PENDING|0:0|00:00:00|None assigned
+#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.out
+#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.err
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair2_242758_0.out
+2026-10-15 13:59:58,292: forcings: ['maurer_extended', 'nldas_extended', 'daymet']
+2026-10-15 13:59:58,292: dynamic_inputs: ['PRCP(mm/day)_nldas_extended', 'SRAD(W/m2)_nldas_extended', 'Tmax(C)_nldas_extended', 'Tmin(C)_nldas_extended', 'Vp(Pa)_nldas_extended', 'prcp(mm/day)_maurer_extended', 'srad(W/m
+2026-10-15 13:59:58,293: target_variables: ['QObs(mm/d)']
+2026-10-15 13:59:58,293: clip_targets_to_zero: ['QObs(mm/d)']
+2026-10-15 13:59:58,293: static_attributes: ['elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_con
+2026-10-15 13:59:58,293: use_basin_id_encoding: False
+2026-10-15 13:59:58,293: lagged_features: {'QObs(mm/d)': [1]}
+2026-10-15 13:59:58,293: autoregressive_inputs: ['QObs(mm/d)_shift1']
+2026-10-15 13:59:58,293: random_holdout_from_dynamic_features: {'QObs(mm/d)_shift1': {'missing_fraction': 0.0, 'mean_missing_length': 5}}
+2026-10-15 13:59:58,293: number_of_basins: 531
+2026-10-15 13:59:58,293: train_dir: /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair/.control.preparing-242758-0/training_outputs/N22-DIAG-WARMUP-CONTROL-S0-R1_2026_10
+2026-10-15 13:59:58,293: img_log_dir: /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair/.control.preparing-242758-0/training_outputs/N22-DIAG-WARMUP-CONTROL-S0-R1_2026_
+2026-10-15 13:59:58,372: ### Device cuda:0 will be used for training
+2026-10-15 13:59:58,840: Loading basin data into xarray data set.
+  0%|          | 0/531 [00:00<?, ?it/s]  0%|          | 1/531 [00:05<44:59,  5.09s/it]  0%|          | 2/531 [00:06<27:27,  3.11s/it]  1%|          | 3/531 [00:07<17:36,  2.00s/it]  1%|          | 4/531 [00:08<13:30
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair2_242758_0.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:03:47+0800
