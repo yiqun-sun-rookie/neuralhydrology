@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B "$PWD/inbox/knet-state-channel-fix020-v2-20261015-001/payload/deploy_recovery_v2.py" "$PWD/inbox/knet-state-channel-fix020-v2-20261015-001/payload/package.tar.gz"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_finetune_20261015_001_startup_fix020_v2/query_collect.py /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_finetune_20261015_001_startup_fix020_v2 243113
