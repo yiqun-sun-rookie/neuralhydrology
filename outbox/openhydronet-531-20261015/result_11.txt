@@ -1,0 +1,30 @@
+### channel=openhydronet-531-20261015 seq=11
+### host=login4
+### started=2026-10-15T18:59:11+0800
+### ---------- output ----------
+2026-10-15T18:59:11+0800
+=== queue (ohn_*) ===
+    243024      ohn_smoke   RUNNING    INVALID ngu201
+=== sacct today (ohn_*) ===
+243024|ohn_smoke|RUNNING|0:0|00:01:17|ngu201
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_smoke-243024.out (14695 bytes)
+
+[INFO] 19:00:57.671 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'HRES' with bands ['hres_surface_net_solar_radiation', 'hres_surface_net_thermal_radiation', 'hres_surface_pressure', 'hres_temperature_2m', 'hre
+[INFO] 19:00:57.677 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'GRAPHCAST' with bands ['graphcast_temperature_2m', 'graphcast_total_precipitation']
+[INFO] 19:00:57.682 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'IMERG' with bands ['imerg_precipitation']
+[INFO] 19:00:57.683 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'CPC' with bands ['cpc_precipitation']
+[INFO] 19:00:57.684 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'ERA5_LAND' with bands ['era5land_total_precipitation', 'era5land_temperature_2m', 'era5land_u_component_of_wind_10m', 'era5land_v_component_of_w
+[INFO] 19:00:57.691 (multimet.py:_load_forecast_as_zarr) -- Loading forecast product 'HRES' with bands ['hres_surface_net_solar_radiation', 'hres_surface_net_thermal_radiation', 'hres_surface_pressure', 'hres_temperature_2m', 'hre
+[INFO] 19:00:57.697 (multimet.py:_load_forecast_as_zarr) -- Loading forecast product 'GRAPHCAST' with bands ['graphcast_temperature_2m', 'graphcast_total_precipitation']
+[WARNING] 19:00:57.709 (warnings.py:_showwarnmsg) -- /data1/home/sunyiq/openhydronet_531_20261015/src/flood-forecasting/googlehydrology/datasetzoo/caravan.py:211: RuntimeWarning: Failed to open Zarr store with consolidated metadat
+1. Consolidating metadata in this existing store with zarr.consolidate_metadata().
+2. Explicitly setting consolidated=False, to avoid trying to read consolidate metadata, or
+3. Explicitly setting consolidated=True, to raise an error in this case instead of falling back to try reading non-consolidated metadata.
+  ds = xarray.open_zarr(store_path, chunks='auto')
+
+--- /data1/home/sunyiq/openhydronet_531_20261015/logs/ohn_smoke-243024.err (207 bytes)
+/data1/home/sunyiq/openhydronet_531_20261015/pysite/dask/config.py:786: FutureWarning: Dask configuration key 'shuffle' has been deprecated; please use 'dataframe.shuffle.algorithm' instead
+  warnings.warn(
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T18:59:12+0800
