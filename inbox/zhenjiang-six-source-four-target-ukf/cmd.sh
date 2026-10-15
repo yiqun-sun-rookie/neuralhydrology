@@ -1,18 +1,36 @@
 #!/usr/bin/env bash
-set -euo pipefail
-python3 - <<'PY'
-import datetime,hashlib,json,pathlib,subprocess
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261015_recovery_004')
-case='explicit_gru__historical_capacity';run=case+'__tune_branch__filter_joint__s101__lr0p003'
-def identity(p):
- b=p.read_bytes();return {'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-code_files=sorted([*root.joinpath('src').glob('*.py'),*root.joinpath('scripts').glob('*.py'),*root.joinpath('vendor/pytides').glob('*.py')]);hashes={str(p.relative_to(root)):identity(p)['sha256'] for p in code_files};code=hashlib.sha256(json.dumps(hashes,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest();auth=json.loads((root/'records/authorization.json').read_bytes());assert code==auth['code_hash']
-group=json.loads((root/'records'/case/'tune_branch_group_configs.json').read_bytes());assert len(group)==12
-members={rid:{n:identity(root/'runs'/rid/n) for n in ['config.json','continuation.pt','failure.json','metrics.json']} for rid in group}
-files={n:identity(root/n) for n in ['configs/protocol-v3.json','configs/registry-v3.json','records/authorization.json','records/data_preparation_complete.json','prepared/tuning/manifest.json','hpc/pathfix_covariance_recovery_squeue_20261015_004.slurm']}
-queries=[]
-for command in [['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z'],['sacct','-n','-X','-j','242609','--format=JobID,State,ExitCode,Start,End,NodeList','-P']]:
- p=subprocess.run(command,capture_output=True,text=True,timeout=30);assert p.returncode==0;queries.append({'command':command,'stdout':p.stdout,'stderr':p.stderr,'returncode':p.returncode})
-assert json.loads((root/'records/scheduler_jobs.json').read_bytes())[case]=='242609'
-print(json.dumps({'status':'read_only_validation_covariance_source_identity','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'source_root':str(root),'source_job':'242609','run_id':run,'code_hash':code,'source_code_file_hashes':hashes,'source_run_files':members[run],'all_member_source_files':members,'files':files,'queries':queries,'data_inputs_read':False,'checkpoints_loaded':False,'scientific_or_scheduler_mutations':False,'evaluation_values_read':False},sort_keys=True))
+set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+python -B - <<'PY'
+import datetime,hashlib,io,json,pathlib,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf');sequence=int((inbox/'seq').read_text());assert sequence==456
+raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes();assert hashlib.sha256(raw).hexdigest()=='e52fecf5c889a6db60d07fe3dd3ccda8ef6ee76d13fc783905c371953db24413'
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_validation_covariance_diagnostic_20261015_001');assert not root.exists(),'existing isolated deployment requires read-only reconciliation, never overwrite or repeat'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert members and all(m.isfile() for m in members);assert len(members)==7
+ for m in members:
+  relative=pathlib.PurePosixPath(m.name);assert not relative.is_absolute() and '..' not in relative.parts and root in (root/m.name).resolve().parents
+ content={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(content['package_manifest.json']);assert set(content)==set(manifest['files'])|{'package_manifest.json'}
+for name,item in manifest['files'].items():assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
+spec=json.loads(content['diagnostic_spec.json']);assert spec['schema']=='isolated_validation_covariance_diagnostic_spec_v1'
+assert spec['source_job']=='242609' and spec['source_code_hash']=='0a5820033841bb4274dab7be44719992e21cd31546bf45bc079becf0d8464cb7'
+assert spec['selection_years']==[2021] and spec['training_years']==[2017,2018,2019,2020] and spec['maximum_replay_epochs']==1
+assert spec['formal_checkpoint_write_allowed'] is False and spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
+source=pathlib.Path(spec['source_root'])
+for rid,files in spec['all_member_source_files'].items():
+ for name,item in files.items():
+  p=source/'runs'/rid/name;b=p.read_bytes();assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256']
+for name,expected in spec['source_code_file_hashes'].items():assert hashlib.sha256((source/name).read_bytes()).hexdigest()==expected
+root.mkdir(exist_ok=False)
+for name,b in content.items():
+ p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
+ with p.open('xb') as f:f.write(b)
+for name in ['records','logs']:(root/name).mkdir(exist_ok=True)
+print(json.dumps({'status':'isolated_validation_covariance_diagnostic_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'diagnostic_root':str(root),'source_failed_job':'242609','payload_sha256':hashlib.sha256(raw).hexdigest(),'manifest_sha256':hashlib.sha256(content['package_manifest.json']).hexdigest(),'formal_training_restarted':False,'formal_epochs_added':0,'evaluation_values_read':False},sort_keys=True))
 PY
+python -B /data1/home/sunyiq/zhenjiang_validation_covariance_diagnostic_20261015_001/hpc/submit_covariance_diagnostic.py
+python -B /data1/home/sunyiq/zhenjiang_validation_covariance_diagnostic_20261015_001/hpc/probe_covariance_diagnostic.py
