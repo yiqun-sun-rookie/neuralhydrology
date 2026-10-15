@@ -1,57 +1,36 @@
 #!/bin/bash
 set -eo pipefail
-umask 077
 ROOT=/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1
-test ! -e "$ROOT"
-test ! -L /data1/home/sunyiq/china_input_completion_hpc_20261015_001
-test -d /data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_DEPLOY'
-import hashlib,io,json,pathlib,zipfile
-manifest=json.loads('{"channel": "china-input-next-20261015", "remote_root": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1", "archive": {"bytes": 12454863, "sha256": "60fb74d96a0bc150dffd2cd02601e0d51a07207087da50288d6c01a4320d5670"}, "chunks": [{"name": "payload_v1/chunk_00.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_00.bin", "bytes": 2097152, "sha256": "5566ad23f8e7162c14c4d9ddb9d6ccf85fa391b40c4e432058c04cc5d112a3a4"}, {"name": "payload_v1/chunk_01.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_01.bin", "bytes": 2097152, "sha256": "5636dabdf85ae04d2ed7523430c392d1198558523411293664366fb9926dbd9e"}, {"name": "payload_v1/chunk_02.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_02.bin", "bytes": 2097152, "sha256": "f0766ca8adddea7fb89b9dd8c57f4cf57a0b31ee4180cde17e6f5fb27c9125b6"}, {"name": "payload_v1/chunk_03.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_03.bin", "bytes": 2097152, "sha256": "e10efec2c59f5ffdf69c21ac5c56705f028d9dc19fb20b547602ceffb7dd84e0"}, {"name": "payload_v1/chunk_04.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_04.bin", "bytes": 2097152, "sha256": "e3c15fbe024b5ad516319abc8440b64e2e5531ca4cfc87d5094132bbc7468242"}, {"name": "payload_v1/chunk_05.bin", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_COMPLETION_HPC_20261015_001\\\\inputs\\\\phase_a_v3\\\\payload_v1\\\\chunk_05.bin", "bytes": 1969103, "sha256": "4fcc20027273051bc7760e52498ecde3086969b0c632ad9a82118fb82ead9ee7"}], "payload_files": [{"name": "PREFLIGHT_CONTRACT.json", "bytes": 5392, "sha256": "fdfa6160d6ebf5bf714276e9c6eeb8a282b53c3f3cadbd09b0480d0f643edf5c"}, {"name": "attributes.csv", "bytes": 1270306, "sha256": "d8dc536705be36fbc6a327542a1444024dc58cbf0d5eddbb408d0d206dadb0b9"}, {"name": "climate.csv", "bytes": 403916, "sha256": "e35380e118285bd681464bdfdf921ba63b87bf7df47824b85633343b3cc3782b"}, {"name": "geology.txt", "bytes": 841183, "sha256": "99e638547880e2bb5ceb9fb14cb651a8e15496dedf6ec4ae0b66a0523d1e2430"}, {"name": "geometry_all.geojson", "bytes": 37284300, "sha256": "72a20e70757a7eb8308fcaa10cf980ab745546269e9c3e1414bb0977d068441c"}, {"name": "input_preflight.py", "bytes": 11037, "sha256": "9804fb258d67782ceb1e5bfc6636cdae25ce847f0e1f399fbcef87d70e3c30e2"}, {"name": "inventory.json", "bytes": 22872, "sha256": "6d16230b2269647f2e13bf2a10f6af1cae3068d42cec408fd47cb2fbfd050650"}, {"name": "member_status.csv", "bytes": 684298, "sha256": "59a5cc45511743a3465791118947fe8112cc5ac70239c7841aae3e9a31063f6c"}, {"name": "methods.md", "bytes": 11631, "sha256": "578d536a7312f0b7c6ca0ca61a8f56cff65bdde25e7835beca17ee17ec5a6ffa"}, {"name": "physical_violations.csv", "bytes": 21998, "sha256": "42d9a2345427523d4f3c55d4521d1cc9fbbfb1d27e7f40fcb5463a91df2aba59"}, {"name": "previous_repair_summary.json", "bytes": 2833, "sha256": "9f9e4157dfa564dbe986bda67891a079d13629593e2ef4ec25d6dd1d88681952"}, {"name": "radiation_candidate_index.json", "bytes": 13248, "sha256": "c399a36a1e3fc70a2e01a44b8d3a621b88319e77796f47b366f6904044691a67"}, {"name": "reasons.csv", "bytes": 344698, "sha256": "3b95d5458f0cc37eb52dbd70617270f7c3c0ff2eb1fc073afbda437b2e82f0a6"}, {"name": "scope.csv", "bytes": 3082592, "sha256": "1848bf256efc61b9502466071d377eb7ff19fc702f6ce5575a290229287a6a48"}, {"name": "soil12_final_review.json", "bytes": 89238, "sha256": "86f73e4ec015ad299ab7544a18453341cd1f381eb6d79abb53026efb191541cb"}, {"name": "soil12_main_summary.json", "bytes": 37146, "sha256": "7e102e2689bfa8f59ded3fc18419fae412eb140159c4da8b6e4b1610d9ba6298"}, {"name": "static_gate.csv", "bytes": 403014, "sha256": "b6d27a32be4540354b2f101d050b3812239f3fb8654a2f523c1bd5399c3602de"}, {"name": "topography.txt", "bytes": 1049875, "sha256": "9aa54f6cfc21ff0e2caf2c8b63e31625c28899b6f9d9612e42e1607fce349bff"}], "source_files": [{"key": "scope", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\execution_20261001T222852\\\\candidate_scope.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/scope.csv", "bytes": 3082592, "sha256": "1848bf256efc61b9502466071d377eb7ff19fc702f6ce5575a290229287a6a48"}, {"key": "static_gate", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\execution_20261001T222852\\\\national_inputs_20261001_001\\\\static_inputs_20261002T004920232757\\\\static_gate_all_4911.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/static_gate.csv", "bytes": 403014, "sha256": "b6d27a32be4540354b2f101d050b3812239f3fb8654a2f523c1bd5399c3602de"}, {"key": "attributes", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\execution_20261001T222852\\\\national_inputs_20261001_001\\\\attributes_20261001T235823250524\\\\sampled_attributes.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/attributes.csv", "bytes": 1270306, "sha256": "d8dc536705be36fbc6a327542a1444024dc58cbf0d5eddbb408d0d206dadb0b9"}, {"key": "climate", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\execution_20261001T222852\\\\national_inputs_20261001_001\\\\climate_20261002T004300120041\\\\climate_attributes.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/climate.csv", "bytes": 403916, "sha256": "e35380e118285bd681464bdfdf921ba63b87bf7df47824b85633343b3cc3782b"}, {"key": "topography", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\inputs_ccam_original\\\\2_location_topography.txt", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/topography.txt", "bytes": 1049875, "sha256": "9aa54f6cfc21ff0e2caf2c8b63e31625c28899b6f9d9612e42e1607fce349bff"}, {"key": "geology", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\inputs_ccam_original\\\\4_geological_characteristics.txt", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/geology.txt", "bytes": 841183, "sha256": "99e638547880e2bb5ceb9fb14cb651a8e15496dedf6ec4ae0b66a0523d1e2430"}, {"key": "inventory", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\boundary_inventory_20260930T220236987840\\\\inventory.json", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/inventory.json", "bytes": 22872, "sha256": "6d16230b2269647f2e13bf2a10f6af1cae3068d42cec408fd47cb2fbfd050650"}, {"key": "methods", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\execution_20261001T222852\\\\INPUT_METHODS_20261001.md", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/methods.md", "bytes": 11631, "sha256": "578d536a7312f0b7c6ca0ca61a8f56cff65bdde25e7835beca17ee17ec5a6ffa"}, {"key": "physical_violations", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_US_NEGATIVE_COMPARISON_20261007_001\\\\results\\\\china_physical_inputs_v1\\\\physical_static_violations.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/physical_violations.csv", "bytes": 21998, "sha256": "42d9a2345427523d4f3c55d4521d1cc9fbbfb1d27e7f40fcb5463a91df2aba59"}, {"key": "geometry_all", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_2023_INFERENCE_20260930_001\\\\boundary_inventory_20260930T220236987840\\\\catchments.geojson", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/geometry_all.geojson", "bytes": 37284300, "sha256": "72a20e70757a7eb8308fcaa10cf980ab745546269e9c3e1414bb0977d068441c"}, {"key": "reasons", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_REPAIR_20261012_001\\\\execution_v1\\\\original_static_reasons_long.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/reasons.csv", "bytes": 344698, "sha256": "3b95d5458f0cc37eb52dbd70617270f7c3c0ff2eb1fc073afbda437b2e82f0a6"}, {"key": "member_status", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_REPAIR_20261012_001\\\\execution_v1\\\\member_status_all_4911.csv", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/member_status.csv", "bytes": 684298, "sha256": "59a5cc45511743a3465791118947fe8112cc5ac70239c7841aae3e9a31063f6c"}, {"key": "previous_repair_summary", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_INPUT_REPAIR_20261012_001\\\\execution_v1\\\\RESULT.json", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/previous_repair_summary.json", "bytes": 2833, "sha256": "9f9e4157dfa564dbe986bda67891a079d13629593e2ef4ec25d6dd1d88681952"}, {"key": "soil12_main_summary", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_SOIL_CLASSIFICATION_12_HPC_20261014_001\\\\reports\\\\SAVED_SOIL_MAIN_seq8_collection1_SUMMARY.json", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/soil12_main_summary.json", "bytes": 37146, "sha256": "7e102e2689bfa8f59ded3fc18419fae412eb140159c4da8b6e4b1610d9ba6298"}, {"key": "soil12_final_review", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_SOIL_CLASSIFICATION_12_HPC_20261014_001\\\\review\\\\SOIL_FINAL_INDEPENDENT_ACTUAL_REVIEW.json", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/soil12_final_review.json", "bytes": 89238, "sha256": "86f73e4ec015ad299ab7544a18453341cd1f381eb6d79abb53026efb191541cb"}, {"key": "radiation_candidate_index", "local_path": "G:\\\\github\\\\pycharm\\\\projects\\\\laos_forecast\\\\docs\\\\plans\\\\CHINA_RADIATION_16_HPC_20261012_001\\\\RADIATION_16_CANDIDATE_INDEX_v1.json", "path": "/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/radiation_candidate_index.json", "bytes": 13248, "sha256": "c399a36a1e3fc70a2e01a44b8d3a621b88319e77796f47b366f6904044691a67"}], "local_scientific_value_reads": 0, "local_geometry_decoding": 0}')
-root=pathlib.Path(manifest['remote_root'])
-base=root.parent
-assert base.parent.resolve(strict=True)==base.parent and not base.exists()
-base.mkdir(mode=0o700)
-root.mkdir(mode=0o700)
-(root/'logs').mkdir(mode=0o700)
-blocks=[]
-for entry in manifest['chunks']:
- p=pathlib.Path('/data1/home/sunyiq/hpc_mailbox/inbox/china-input-next-20261015')/entry['name']
- assert not p.is_symlink() and p.is_file() and p.stat().st_size==entry['bytes']
- raw=p.read_bytes()
- assert hashlib.sha256(raw).hexdigest()==entry['sha256']
- blocks.append(raw)
-raw=b''.join(blocks)
-assert len(raw)==manifest['archive']['bytes'] and hashlib.sha256(raw).hexdigest()==manifest['archive']['sha256']
-expected={e['name']:e for e in manifest['payload_files']}
-with zipfile.ZipFile(io.BytesIO(raw)) as z:
- assert z.namelist()==sorted(expected) and len(z.namelist())==len(set(z.namelist()))
- assert sum(i.file_size for i in z.infolist())<=67108864
- for name in z.namelist():
-  assert pathlib.PurePosixPath(name).name==name and not name.startswith('.')
-  part=z.read(name)
-  assert len(part)==expected[name]['bytes'] and hashlib.sha256(part).hexdigest()==expected[name]['sha256']
-  with (root/name).open('xb') as f:f.write(part)
-job="#!/bin/bash\n#SBATCH --job-name=cn_input_inventory\n#SBATCH --partition=hgpu2p\n#SBATCH --exclude=ngu002\n#SBATCH --nodes=1\n#SBATCH --ntasks=1\n#SBATCH --cpus-per-task=2\n#SBATCH --time=00:15:00\n#SBATCH --no-requeue\n#SBATCH --output=/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/logs/preflight-%j.out\n#SBATCH --error=/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1/logs/preflight-%j.err\nset -eo pipefail\numask 077\nexport CUDA_VISIBLE_DEVICES=''\nexport OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1\nexport GDAL_CACHEMAX=64 PROJ_NETWORK=OFF PYTHONDONTWRITEBYTECODE=1\nexport PYTHONPATH=/data1/home/sunyiq/china_soil_classification_12_hpc_20261014_001/deps_v2\nulimit -v 2097152\ncd /data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1\nexec /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B input_preflight.py\n"
-with (root/'preflight.sbatch').open('xb') as f:f.write(job.encode())
-print('OWN_INPUT_PAYLOAD_VERIFIED=1')
-print('OWN_INPUT_PAYLOAD_FILES='+str(len(expected)))
-PY_DEPLOY
-cd "$ROOT"
-test ! -e SUBMISSION_STARTED
-test ! -e OWN_INPUT_JOB_ID
-set -o noclobber
-printf 'ONE_SUBMISSION_ONLY\n' > SUBMISSION_STARTED
+EXPECTED=242773
+test ! -L "$ROOT"
+test "$(cat "$ROOT/OWN_INPUT_JOB_ID")" = "$EXPECTED"
+printf 'OWN_INPUT_QUERY_JOB_ID=%s\n' "$EXPECTED"
+date -u '+OWN_INPUT_SERVER_QUERY_UTC=%Y-%m-%dT%H:%M:%SZ'
 set +e
-output=$(sbatch preflight.sbatch 2>&1)
-code=$?
+timeout 12s squeue -h -j "$EXPECTED" -o '%i|%T|%N|%C|%M'
+printf 'OWN_INPUT_SQUEUE_EXIT=%s\n' "$?"
+timeout 12s sacct -j "$EXPECTED" --format=JobID,State,ExitCode,Elapsed,AllocCPUS,AllocTRES,MaxRSS --parsable2 --noheader
+printf 'OWN_INPUT_SACCT_EXIT=%s\n' "$?"
 set -e
-printf '%s\n' "$output"
-printf 'OWN_INPUT_SUBMIT_EXIT=%s\n' "$code"
-test "$code" = 0
-job=$(printf '%s\n' "$output" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')
-test -n "$job"
-test "$(printf '%s\n' "$job" | wc -l)" = 1
-printf '%s\n' "$job" > OWN_INPUT_JOB_ID
-printf 'OWN_INPUT_JOB_ID=%s\n' "$job"
-printf 'OWN_INPUT_SUBMIT_DONE\n'
+for file in "$ROOT/logs/preflight-$EXPECTED.out" "$ROOT/logs/preflight-$EXPECTED.err"; do
+ printf 'OWN_INPUT_LOG=%s\n' "$file"
+ if test -f "$file"; then head -c 16384 "$file"; printf '\n'; fi
+done
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_READ'
+import base64,hashlib,pathlib
+root=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/preflight_v1')
+for name in ['RESULT.json','FAILURE.json','REPORTS.zip']:
+ p=root/name
+ if not p.exists():
+  print('OWN_INPUT_MISSING='+name)
+  continue
+ assert p.is_file() and not p.is_symlink() and p.stat().st_size<=1048576
+ raw=p.read_bytes()
+ print('OWN_INPUT_FILE='+name)
+ print('OWN_INPUT_BYTES='+str(len(raw)))
+ print('OWN_INPUT_SHA256='+hashlib.sha256(raw).hexdigest())
+ print('OWN_INPUT_BASE64_BEGIN')
+ print(base64.b64encode(raw).decode())
+ print('OWN_INPUT_BASE64_END')
+PY_READ
+printf 'OWN_INPUT_READ_DONE\n'
