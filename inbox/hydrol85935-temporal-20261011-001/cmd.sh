@@ -6,12 +6,16 @@ from pathlib import Path
 import json,hashlib,subprocess,collections
 r=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001')
 p=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-a=p/'control/hybrid_v016_20261014_001/assignment.json'
-assert hashlib.sha256(a.read_bytes()).hexdigest()=='45f14903b0ecc33f7013ab1bcf5bb3abd2e27849934ef2a9bb818cb1e208eb58'
+a=p/'control/hybrid_v017_20261014_001/assignment.json'
+assert hashlib.sha256(a.read_bytes()).hexdigest()=='061ba84cd934d0e42eac068f693582bd3c797fdd4bfb1169c12072e6286b71fe'
 v=json.loads(a.read_text())
 assert v['hpc_training_seeds']==[100,200,300]
 assert v['scientific_code']==str(p/'versions/v004/code') and v['output']==str(p/'execution/hpc_v009')
 print('SOURCE '+json.dumps({k:v.get(k) for k in ['version','hpc_training_seeds','scientific_code','output']}),flush=True)
+old=json.loads((p/'control/hybrid_v016_20261014_001/assignment.json').read_text())
+assert [t for t in old['hpc_tasks'] if t['model']!='original_s100']==[t for t in v['hpc_tasks'] if t['model']!='original_s100']
+assert hashlib.sha256(Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v009_20261012_001/worker.py').read_bytes()).hexdigest()=='e94281b73ea8538a25ad80c128a9cfc854c7295a5740001d96ee8b61bb532601'
+assert hashlib.sha256(Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/federated_v010.py').read_bytes()).hexdigest()=='7e75b3d623b130c580ed94e58d26ee483b088d421f7b7c939cfdd5f9258014ea'
 c=r/'control/queue_priority_20261014_001'
 assert hashlib.sha256((c/'queue_priority.py').read_bytes()).hexdigest()=='a3de8ee97281cb5b1ff7ab745bd8b4506abf3da932d35869b08eec3d0631fe6e'
 reg=json.loads((c/'watcher_registration.json').read_text()); proc=Path('/proc')/str(reg['pid'])
