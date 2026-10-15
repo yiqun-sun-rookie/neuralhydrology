@@ -1,36 +1,51 @@
 #!/usr/bin/env bash
-set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'PY'
-import datetime,hashlib,io,json,pathlib,tarfile
-inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf');sequence=int((inbox/'seq').read_text());assert sequence==469
-raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes();assert hashlib.sha256(raw).hexdigest()=='e3e11793478e5eeeb0aeaee3e05decf4dda2f5832b5d8f0ffba81bcc11554172'
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_validation_posterior_diagnostic_20261015_001');assert not root.exists(),'existing isolated deployment requires read-only reconciliation, never overwrite or repeat'
-with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
- members=archive.getmembers();assert members and all(m.isfile() for m in members);assert len(members)==7
- for m in members:
-  relative=pathlib.PurePosixPath(m.name);assert not relative.is_absolute() and '..' not in relative.parts and root in (root/m.name).resolve().parents
- content={m.name:archive.extractfile(m).read() for m in members}
-manifest=json.loads(content['package_manifest.json']);assert set(content)==set(manifest['files'])|{'package_manifest.json'}
-for name,item in manifest['files'].items():assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
-spec=json.loads(content['diagnostic_spec.json']);assert spec['schema']=='isolated_original_posterior_covariance_diagnostic_v1'
-assert spec['source_job']=='242609' and spec['source_code_hash']=='0a5820033841bb4274dab7be44719992e21cd31546bf45bc079becf0d8464cb7'
-assert spec['selection_years']==[2021] and spec['training_years']==[2017,2018,2019,2020] and spec['maximum_replay_epochs']==0
-assert spec['formal_checkpoint_write_allowed'] is False and spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
-source=pathlib.Path(spec['source_root'])
-for rid,files in spec['all_member_source_files'].items():
- for name,item in files.items():
-  p=source/'runs'/rid/name;b=p.read_bytes();assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256']
-for name,expected in spec['source_code_file_hashes'].items():assert hashlib.sha256((source/name).read_bytes()).hexdigest()==expected
-root.mkdir(exist_ok=False)
-for name,b in content.items():
- p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
- with p.open('xb') as f:f.write(b)
-for name in ['records','logs']:(root/name).mkdir(exist_ok=True)
-print(json.dumps({'status':'posterior_covariance_diagnostic_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'diagnostic_root':str(root),'source_failed_job':'242609','payload_sha256':hashlib.sha256(raw).hexdigest(),'manifest_sha256':hashlib.sha256(content['package_manifest.json']).hexdigest(),'formal_training_restarted':False,'formal_epochs_added':0,'evaluation_values_read':False},sort_keys=True))
+set -euo pipefail
+python3 - <<'PY'
+"""Lightweight allocation/checkpoint watch; no source changes or GPU jobs."""
+import datetime,hashlib,json,pathlib,re,subprocess
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261015_recovery_004')
+case='explicit_gru__historical_capacity'
+job=str(json.loads((root/'records/scheduler_jobs.json').read_text())[case])
+def query(c):
+    p=subprocess.run(c,capture_output=True,text=True,timeout=30)
+    return {'command':c,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+members={}
+for folder in sorted(root.joinpath('runs').glob('*__tune_branch__*')):
+    metric=folder/'metrics.json';point=folder/'continuation.pt'
+    prefix=metric.open('rb').read(131072).decode('utf-8')
+    m=re.search(r'"validation_mae_cm"\s*:\s*',prefix)
+    values=json.JSONDecoder().raw_decode(prefix[m.end():])[0]
+    stat=point.stat()
+    members[folder.name]={'completed_epochs':len(values),'history_sha256':hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest(),'continuation_bytes':stat.st_size,'continuation_mtime_ns':stat.st_mtime_ns,'failure_exists':folder.joinpath('failure.json').exists()}
+queries=[query(['squeue','-h','-u','sunyiq','-o','%i|%T|%Z|%e|%l|%P|%C|%b|%N']),query(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
+record={'status':'read_only_recovery_queue_light_probe','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'root':str(root),'case':case,'job_id':job,'queries':queries,'members':members,'formal_complete_exists':root.joinpath('records',case,'training_complete.json').exists(),'scientific_configuration_changed':False,'evaluation_values_read':False,'checkpoints_loaded':False}
+for n in ('recovery_backfill_adjustment_20261012.response.json','gpu_binding_'+job+'.json','gpu_acceptance_'+job+'.json'):
+    p=root/'records'/n
+    if p.exists():record[n]=json.loads(p.read_text())
+for p in root.joinpath('logs').glob('*_'+job+'.out'):
+    with p.open('rb') as f:f.seek(max(0,p.stat().st_size-12000));record['log_tail']=f.read().decode('utf-8',errors='replace')
+columns=['JobID','State','ExitCode','Start','End','Elapsed','Timelimit','NodeList','AllocTRES']
+terminal=query(['sacct','-n','-X','-j',job,'--format='+','.join(columns),'-P'])
+record['queries'].append(terminal)
+if terminal['returncode']==0:
+    line=next((line for line in terminal['stdout'].splitlines() if line.startswith(job+'|')),None)
+    if line:
+        fields=dict(zip(columns,line.split('|')))
+        if fields['State'].split()[0] in ('FAILED','COMPLETED','TIMEOUT','CANCELLED'):
+            record['terminal_accounting_fields']=fields
+record['failure_records']={}
+for rid in record['members']:
+    p=root/'runs'/rid/'failure.json'
+    if p.exists():record['failure_records'][rid]=json.loads(p.read_text())
+critical=root/'runs'/('explicit_gru__historical_capacity__tune_branch__filter_joint__s101__lr0p003')
+record['failure_artifact_inventory']=[{'name':p.name,'bytes':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns} for p in sorted(critical.iterdir()) if p.is_file()]
+print(json.dumps(record,sort_keys=True))
 PY
-python -B /data1/home/sunyiq/zhenjiang_validation_posterior_diagnostic_20261015_001/hpc/submit_covariance_diagnostic.py
-python -B /data1/home/sunyiq/zhenjiang_validation_posterior_diagnostic_20261015_001/hpc/probe_covariance_diagnostic.py
+
+python3 -B /data1/home/sunyiq/zhenjiang_validation_covariance_diagnostic_20261015_001/hpc/probe_covariance_diagnostic.py
+
+python3 -B /data1/home/sunyiq/zhenjiang_validation_sigma_gpu_audit_20261015_001/hpc/probe_covariance_diagnostic.py
+
+python3 -B /data1/home/sunyiq/zhenjiang_validation_cholesky_guard_diagnostic_20261015_001/hpc/probe_covariance_diagnostic.py
+
+python3 -B /data1/home/sunyiq/zhenjiang_validation_posterior_diagnostic_20261015_001/hpc/probe_covariance_diagnostic.py
