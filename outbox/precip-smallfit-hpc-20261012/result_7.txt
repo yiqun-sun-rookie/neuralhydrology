@@ -1,0 +1,11 @@
+### channel=precip-smallfit-hpc-20261012 seq=7
+### host=login4
+### started=2026-10-15T14:34:00+0800
+### ---------- output ----------
+Submitted batch job 242770
+
+SUBMISSION_JSON={"archive_sha256": "39da7f0e9b6e7be94c15fb208b99abe3ee0e267ee30a780a66de13bbd4cdfc85", "job_id": 242770, "job_name": "psfit_26ac3faf", "job_script_sha256": "f047fd5148b7e1d29f6658cb374bf0d865f08d4e5b77fd24be5d8c1c9a724a40", "manifest_sha256": "717d3bbf33db47adee4274bddaec0e1cb084b711fdb775ce5f4a76441f6ee5b7", "nonce": "26ac3faff4e34c7ba4eea6e485377376", "observed_utc": "2026-10-15T06:34:46Z", "predecessor_job_id": 242474, "remote_root": "/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261015T062534Z_26ac3faf_v03", "sbatch_returncode": 0, "stdout_sha256": "5c75ccdfc424c82b0c4c0b8a46425484e8ad7c69e6566f9c7cd50b0bdfcb8f7c"}
+SMALLFIT_CONTINUATION_SUBMISSION_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T14:34:46+0800
