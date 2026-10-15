@@ -1,0 +1,235 @@
+### channel=id25-graice-20261015 seq=6
+### host=login4
+### started=2026-10-15T16:15:33+0800
+### ---------- output ----------
+JOB_ID=242796
+2026-10-15T06:27:48Z	242767	v001 initial B02 main comparison
+2026-10-15T07:09:03Z	242796	v002 private-runtime install on login; same scientific code and configuration
+NOT_IN_ACTIVE_QUEUE: slurm_load_jobs error: Invalid job id specified
+242796|id25_graice_261015|COMPLETED|0:0|00:10:38
+242796.batch|batch|COMPLETED|0:0|00:10:38
+242796.extern|extern|COMPLETED|0:0|00:10:38
+
+FILE=status.json
+{
+  "state": "COMPLETED",
+  "exp_id": "B02_GRAICE_LSTMnoSIF",
+  "region_count": 119,
+  "attempts_per_region": 1,
+  "seed": 20261015,
+  "max_epochs_per_region": 1000,
+  "job_id": "242796",
+  "fingerprint": "046a546fa6e2d4998b8d7a82b7b0960eb70eb6b15d225862dbddb11997c4788d:274164fe4458465771a39310417e7856115952c283fda149a3154c2439f09bc1",
+  "tensorflow_version": "2.15.1",
+  "comparison": {
+    "period": "2009-2010",
+    "fixed_comparator": "RDS01_best_epoch078",
+    "rds01": {
+      "pooled_rmse_cm": 4.511688886776995,
+      "regional_median_rmse_cm": 3.8983958988832614,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "graice_lstmnosif": {
+      "pooled_rmse_cm": 4.637153004396911,
+      "regional_median_rmse_cm": 3.2805785008394106,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "rds01_lower_rmse_regions": 41,
+    "lstmnosif_lower_rmse_regions": 78,
+    "tie_or_unavailable_regions": 0,
+    "cold_regions": [
+      {
+        "region_id": "lat+038_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.9878634330429663,
+        "lstmnosif_rmse_cm": 1.1114555712765555,
+        "lstm_minus_rds_rmse_cm": -2.8764078617664106,
+        "rds01_anomaly_correlation": 0.057920867691304584,
+        "lstmnosif_anomaly_correlation": 0.7223574976309993,
+        "2009_rds01_sd_ratio": 2.016140178452284,
+        "2009_rds01_abs_log_sd_ratio": 0.7011848807542603,
+        "2009_rds01_bias_cm": 2.576000242097154,
+        "2009_lstmnosif_sd_ratio": 0.9110281039919711,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.09318153259102455,
+        "2009_lstmnosif_bias_cm": -0.1604874273157393,
+        "2010_rds01_sd_ratio": 1.4287319345477063,
+        "2010_rds01_abs_log_sd_ratio": 0.35678729181086827,
+        "2010_rds01_bias_cm": -0.6958800022634052,
+        "2010_lstmnosif_sd_ratio": 0.8618502818288291,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.1486737103772893,
+        "2010_lstmnosif_bias_cm": -0.8335230168057312
+      },
+      {
+        "region_id": "lat+040_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.928966526805543,
+        "lstmnosif_rmse_cm": 1.4131570430839888,
+        "lstm_minus_rds_rmse_cm": -2.5158094837215543,
+        "rds01_anomaly_correlation": 0.522168676883218,
+        "lstmnosif_anomaly_correlation": 0.8067889806634934,
+        "2009_rds01_sd_ratio": 2.079876491788145,
+        "2009_rds01_abs_log_sd_ratio": 0.7323085130022198,
+        "2009_rds01_bias_cm": 2.491149166490436,
+        "2009_lstmnosif_sd_ratio": 0.8304339865427514,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.18580683949046575,
+        "2009_lstmnosif_bias_cm": -0.356627735397043,
+        "2010_rds01_sd_ratio": 1.5531903898308996,
+        "2010_rds01_abs_log_sd_ratio": 0.44031113152098994,
+        "2010_rds01_bias_cm": 0.016290390608618106,
+        "2010_lstmnosif_sd_ratio": 0.7581983511692969,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.27681025056687164,
+        "2010_lstmnosif_bias_cm": -0.8008384204814515
+      }
+    ],
+    "interpretation": "Developmental whole-model storage comparison; inputs differ in external SWE and radiation/RH approximations",
+    "rds01_anomaly_correlation": {
+      "median": 0.6894741043281342,
+      "valid_regions": 119
+    },
+    "lstmnosif_anomaly_correlation": {
+      "median": 0.6755834743591516,
+      "valid_regions": 119
+    }
+  },
+  "finished_at": "2026-10-15T07:21:39.013763+00:00",
+  "model_root": "runs",
+  "prediction_file": "predictions.npz"
+}
+
+FILE=interface_check.json
+{
+  "state": "PASS",
+  "array_check": {
+    "state": "PASS",
+    "training_started": false,
+    "regions": 119,
+    "history_shape": [
+      78,
+      119,
+      12,
+      5
+    ],
+    "application_shape": [
+      24,
+      119,
+      12,
+      5
+    ],
+    "checks": [
+      "five_feature_units",
+      "irregular_window_weighting_and_cutoff",
+      "chronological_split",
+      "identity_and_finiteness",
+      "fit_scaler_roundtrip"
+    ],
+    "network_check_location": "HPC compute node before the first fit"
+  },
+  "network": "unidirectional_LSTM_32_Dense16_Dense1",
+  "network_output_shape": [
+    2,
+    1
+  ],
+  "parameter_count": 5409,
+  "save_load_inference": "PASS",
+  "optimizer_steps": 0,
+  "training_started": false,
+  "tensorflow_version": "2.15.1",
+  "job_id": "242796",
+  "finished_at": "2026-10-15T07:12:06.250479+00:00"
+}
+
+FILE=report.json
+{
+  "state": "COMPLETED",
+  "exp_id": "B02_GRAICE_LSTMnoSIF",
+  "region_count": 119,
+  "attempts_per_region": 1,
+  "seed": 20261015,
+  "max_epochs_per_region": 1000,
+  "job_id": "242796",
+  "fingerprint": "046a546fa6e2d4998b8d7a82b7b0960eb70eb6b15d225862dbddb11997c4788d:274164fe4458465771a39310417e7856115952c283fda149a3154c2439f09bc1",
+  "tensorflow_version": "2.15.1",
+  "comparison": {
+    "period": "2009-2010",
+    "fixed_comparator": "RDS01_best_epoch078",
+    "rds01": {
+      "pooled_rmse_cm": 4.511688886776995,
+      "regional_median_rmse_cm": 3.8983958988832614,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "graice_lstmnosif": {
+      "pooled_rmse_cm": 4.637153004396911,
+      "regional_median_rmse_cm": 3.2805785008394106,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "rds01_lower_rmse_regions": 41,
+    "lstmnosif_lower_rmse_regions": 78,
+    "tie_or_unavailable_regions": 0,
+    "cold_regions": [
+      {
+        "region_id": "lat+038_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.9878634330429663,
+        "lstmnosif_rmse_cm": 1.1114555712765555,
+        "lstm_minus_rds_rmse_cm": -2.8764078617664106,
+        "rds01_anomaly_correlation": 0.057920867691304584,
+        "lstmnosif_anomaly_correlation": 0.7223574976309993,
+        "2009_rds01_sd_ratio": 2.016140178452284,
+        "2009_rds01_abs_log_sd_ratio": 0.7011848807542603,
+        "2009_rds01_bias_cm": 2.576000242097154,
+        "2009_lstmnosif_sd_ratio": 0.9110281039919711,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.09318153259102455,
+        "2009_lstmnosif_bias_cm": -0.1604874273157393,
+        "2010_rds01_sd_ratio": 1.4287319345477063,
+        "2010_rds01_abs_log_sd_ratio": 0.35678729181086827,
+        "2010_rds01_bias_cm": -0.6958800022634052,
+        "2010_lstmnosif_sd_ratio": 0.8618502818288291,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.1486737103772893,
+        "2010_lstmnosif_bias_cm": -0.8335230168057312
+      },
+      {
+        "region_id": "lat+040_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.928966526805543,
+        "lstmnosif_rmse_cm": 1.4131570430839888,
+        "lstm_minus_rds_rmse_cm": -2.5158094837215543,
+        "rds01_anomaly_correlation": 0.522168676883218,
+        "lstmnosif_anomaly_correlation": 0.8067889806634934,
+        "2009_rds01_sd_ratio": 2.079876491788145,
+        "2009_rds01_abs_log_sd_ratio": 0.7323085130022198,
+        "2009_rds01_bias_cm": 2.491149166490436,
+        "2009_lstmnosif_sd_ratio": 0.8304339865427514,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.18580683949046575,
+        "2009_lstmnosif_bias_cm": -0.356627735397043,
+        "2010_rds01_sd_ratio": 1.5531903898308996,
+        "2010_rds01_abs_log_sd_ratio": 0.44031113152098994,
+        "2010_rds01_bias_cm": 0.016290390608618106,
+        "2010_lstmnosif_sd_ratio": 0.7581983511692969,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.27681025056687164,
+        "2010_lstmnosif_bias_cm": -0.8008384204814515
+      }
+    ],
+    "interpretation": "Developmental whole-model storage comparison; inputs differ in external SWE and radiation/RH approximations",
+    "rds01_anomaly_correlation": {
+      "median": 0.6894741043281342,
+      "valid_regions": 119
+    },
+    "lstmnosif_anomaly_correlation": {
+      "median": 0.6755834743591516,
+      "valid_regions": 119
+    }
+  },
+  "finished_at": "2026-10-15T07:21:39.013763+00:00",
+  "model_root": "runs",
+  "prediction_file": "predictions.npz"
+}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 1, "train_scaled_mse": 0.1842111972245303, "val_ref_mse_cm2": 84.08327935090918, "best_val_ref_mse_cm2": 84.08327935090918, "best_epoch": 1, "wait": 0, "epoch_seconds": 1.222304780036211, "updated_at": "2026-10-15T07:21:29.446107+00:00"}
+{"event": "REGION_COMPLETED", "state": "COMPLETED", "region_id": "lat+048_lon-124", "fingerprint": "046a546fa6e2d4998b8d7a82b7b0960eb70eb6b15d225862dbddb11997c4788d:274164fe4458465771a39310417e7856115952c283fda149a3154c2439f09bc1", "epochs_completed": 42, "best_epoch": 12, "best_val_rmse_cm": 3.391117195951874, "prediction_reference_cm": 0.15608111889332604, "observation_reference_cm": -1.2599828748991995, "fit_windows": 66, "validation_windows": 12, "stop_reason": "PATIENCE", "wait": 30, "seed": 20261015, "attempt_count": 1, "job_id": "242796", "finished_at": "2026-10-15T07:21:31.236135+00:00"}
+{"state": "COMPLETED", "exp_id": "B02_GRAICE_LSTMnoSIF", "region_count": 119, "attempts_per_region": 1, "seed": 20261015, "max_epochs_per_region": 1000, "job_id": "242796", "fingerprint": "046a546fa6e2d4998b8d7a82b7b0960eb70eb6b15d225862dbddb11997c4788d:274164fe4458465771a39310417e7856115952c283fda149a3154c2439f09bc1", "tensorflow_version": "2.15.1", "comparison": {"period": "2009-2010", "fixed_comparator": "RDS01_best_epoch078", "rds01": {"pooled_rmse_cm": 4.511688886776995, "regional_median_rmse_cm": 3.8983958988832614, "residual_count": 2856, "valid_regions": 119}, "graice_lstmnosif": {"pooled_rmse_cm": 4.637153004396911, "regional_median_rmse_cm": 3.2805785008394106, "residual_count": 2856, "valid_regions": 119}, "rds01_lower_rmse_regions": 41, "lstmnosif_lower_rmse_regions": 78, "tie_or_unavailable_regions": 0, "cold_regions": [{"region_id": "lat+038_lon-108", "common_windows": 24, "rds01_rmse_cm": 3.9878634330429663, "lstmnosif_rmse_cm": 1.1114555712765555, "lstm_minus_rds_rmse_cm": -2.8764078617664106, "rds01_anomaly_correlation": 0.057920867691304584, "lstmnosif_anomaly_correlation": 0.7223574976309993, "2009_rds01_sd_ratio": 2.016140178452284, "2009_rds01_abs_log_sd_ratio": 0.7011848807542603, "2009_rds01_bias_cm": 2.576000242097154, "2009_lstmnosif_sd_ratio": 0.9110281039919711, "2009_lstmnosif_abs_log_sd_ratio": 0.09318153259102455, "2009_lstmnosif_bias_cm": -0.1604874273157393, "2010_rds01_sd_ratio": 1.4287319345477063, "2010_rds01_abs_log_sd_ratio": 0.35678729181086827, "2010_rds01_bias_cm": -0.6958800022634052, "2010_lstmnosif_sd_ratio": 0.8618502818288291, "2010_lstmnosif_abs_log_sd_ratio": 0.1486737103772893, "2010_lstmnosif_bias_cm": -0.8335230168057312}, {"region_id": "lat+040_lon-108", "common_windows": 24, "rds01_rmse_cm": 3.928966526805543, "lstmnosif_rmse_cm": 1.4131570430839888, "lstm_minus_rds_rmse_cm": -2.5158094837215543, "rds01_anomaly_correlation": 0.522168676883218, "lstmnosif_anomaly_correlation": 0.8067889806634934, "2009_rds01_sd_ratio": 2.079876491788145, "2009_rds01_abs_log_sd_ratio": 0.7323085130022198, "2009_rds01_bias_cm": 2.491149166490436, "2009_lstmnosif_sd_ratio": 0.8304339865427514, "2009_lstmnosif_abs_log_sd_ratio": 0.18580683949046575, "2009_lstmnosif_bias_cm": -0.356627735397043, "2010_rds01_sd_ratio": 1.5531903898308996, "2010_rds01_abs_log_sd_ratio": 0.44031113152098994, "2010_rds01_bias_cm": 0.016290390608618106, "2010_lstmnosif_sd_ratio": 0.7581983511692969, "2010_lstmnosif_abs_log_sd_ratio": 0.27681025056687164, "2010_lstmnosif_bias_cm": -0.8008384204814515}], "interpretation": "Developmental whole-model storage comparison; inputs differ in external SWE and radiation/RH approximations", "rds01_anomaly_correlation": {"median": 0.6894741043281342, "valid_regions": 119}, "lstmnosif_anomaly_correlation": {"median": 0.6755834743591516, "valid_regions": 119}}, "finished_at": "2026-10-15T07:21:39.013763+00:00", "model_root": "runs", "prediction_file": "predictions.npz"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T16:15:33+0800
