@@ -1,0 +1,60 @@
+### channel=id29-nearing2022-da seq=734
+### host=login4
+### started=2026-10-15T13:45:46+0800
+### ---------- output ----------
+2026-10-15T13:45:46+0800
+=== sacct replacement + failed jobs ===
+202506|N22-data-port-531|FAILED|1:0|00:06:04|2026-08-11T06:23:15
+202507|N22-mask-iso-531|PENDING|0:0|00:00:00|Unknown
+202510|N22-data-port-v2|COMPLETED|0:0|00:05:08|2026-08-13T06:46:43
+202511|N22-mask-iso-v2|COMPLETED|0:0|00:05:22|2026-08-13T06:52:05
+219423_0|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+=== squeue N22 ===
+      202229       N22-agg-eval   PENDING (DependencyNeverSatisfied)
+      202294         N22-export   PENDING (Dependency)
+      202315           N22-gate   PENDING (Dependency)
+      202507   N22-mask-iso-531   PENDING (DependencyNeverSatisfied)
+      202293       N22-manifest   PENDING (JobHeldUser)
+=== v2 output dirs ===
+PRESENT author_v13_training_data_port_all531_v2
+audit.json
+audit_stdout.json
+audit_training_data_port.py
+audit_training_data_port_v2.py
+diagnostic_receipt.json
+run_author_v13_training_data_port_all531_v2.slurm
+warmup_target_paired_retraining_protocol_amendment_01.json
+PRESENT author_v13_warmup_isolation_all531_v2
+audit.json
+audit_stdout.json
+audit_training_data_port.py
+audit_warmup_target_isolation.py
+diagnostic_receipt.json
+run_author_v13_warmup_isolation_all531_v2.slurm
+warmup_target_paired_retraining_protocol_amendment_01.json
+warmup_target_paired_retraining_protocol.json
+=== receipts (key fields) ===
+--- author_v13_training_data_port_all531_v2
+b1bb1698fb0cd54fcf032d6db66681588ab5f33609b67e7aa120629747db02ed  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/diagnostic_receipt.json
+"registered_matrix_modified": false
+"schema": "nearing2022-author-v13-training-data-port-all531-receipt-v2"
+"slurm_job_id": "202510"
+--- author_v13_warmup_isolation_all531_v2
+4ba365c0e1003c917213c7efb05068d96eb7898b35c57e0a53f09bf80d2d4e99  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2/diagnostic_receipt.json
+"registered_matrix_modified": false
+"schema": "nearing2022-author-v13-warmup-isolation-all531-receipt-v2"
+"single_mask_restores_released_training_data_for_531_basins": true
+"slurm_job_id": "202511"
+=== submission receipt / verifier outputs ===
+18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+=== server preparer/runner hashes ===
+31f856df60b0daacea873386880581f975480c842fae0d605a5abe4b40a1b664  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py
+fa47f0318bd2d38e337177a70ccfbef7c536ea62a71c5773a9ec29aabe46e44e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm
+0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+=== server repo head ===
+fatal: Not a git repository (or any parent up to mount point /data1)
+0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-15T13:45:46+0800
