@@ -1,127 +1,79 @@
 #!/usr/bin/env bash
-set -euo pipefail
-python3 - <<'PY'
-"""Adjust only the existing pending replay's reservation; never submit jobs."""
-import datetime,hashlib,json,os,pathlib,re,shutil,subprocess
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001')
-job='244010';source_job='243692'
-def now():return datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()
-def read(p):return json.loads(p.read_bytes())
-def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def run(c):
- p=subprocess.run(c,capture_output=True,text=True,timeout=30)
- return {'command':c,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
-def fields(q):
- assert q['returncode']==0,q
- return dict(re.findall(r'(\w+)=([^\s]+)',q['stdout']))
-def seconds(v):
- days,_,tail=v.rpartition('-');bits=[int(x) for x in tail.split(':')]
- assert len(bits) in (2,3)
- return (int(days)*86400 if days else 0)+sum(x*y for x,y in zip(reversed(bits),(1,60,3600)))
-def save(p,value):
- with p.open('x',encoding='utf-8') as f:
-  json.dump(value,f,sort_keys=True,indent=2,allow_nan=False);f.write('\n');f.flush();os.fsync(f.fileno())
-record={'status':'existing_replay_partition_route_preflight','checked_at_beijing':now(),'job_id':job,
- 'source_failed_job':source_job,'diagnostic_root':str(root),'new_time_limit_minutes':30,'minimum_backfill_minutes':15,
- 'new_jobs_submitted':0,'maximum_gpu_count':1,'formal_training_restarted':False,'formal_epochs_added':0,
- 'scientific_rules_changed':False,'evaluation_values_read':False,'other_jobs_modified':False,
- 'priority_or_qos_change_requested':False,
- 'evidence_basis':{'preceding_member47_checkpoint':'2026-10-16T17:26:28+08:00',
-  'broadcast_failure_written':'2026-10-16T17:28:52+08:00','critical_training_segment_upper_bound_seconds':144,
-  'prior_same_dimension_cpu_reference_seconds':41,'duration_is_evidence_not_a_completion_guarantee':True},
- 'user_instruction':'Resolve the existing244010 queue delay, run its original failure replay and resume authorized formal training.'}
-attempt=root/'records/existing244010_allocate_guarded_hgpu2_20261016.attempt.json'
-response=root/'records/existing244010_allocate_guarded_hgpu2_20261016.response.json'
-try:
- assert read(root/'records/scheduler_jobs.json')=={'covariance_diagnostic':job}
- spec=read(root/'diagnostic_spec.json');manifest=read(root/'package_manifest.json')
- assert spec['source_job']==source_job and spec['expected_saved_epoch']==46 and spec['replayed_epoch']==47
- assert spec['formal_checkpoint_write_allowed'] is False and not spec['scientific_rules_changed']
- assert sha(root/'package_manifest.json')=='b51ee5585f9d8d208e943a6e6c4b8824c7ff453a77cdaff7a0ad0ca6ef4f32c6'
- for name,identity in manifest['files'].items():assert sha(root/name)==identity['sha256']
- source=pathlib.Path(spec['source_root']);assert read(source/'records/scheduler_jobs.json')[spec['case']]==source_job
- assert sha(source/'runs'/spec['run_id']/'continuation.pt')=='5eb115db35cd71a3d2cb8dc64d262935875c0c0aa593e2acc2c809173d4c79d3'
- for name,digest in spec['source_code_file_hashes'].items():assert sha(source/name)==digest
- control=shutil.which('scontrol')
- candidates=[pathlib.Path('/usr/local/globle/softs/slurm/19.05.4.1/bin/scontrol')]
- if shutil.which('squeue'):candidates.insert(0,pathlib.Path(shutil.which('squeue')).resolve().with_name('scontrol'))
- if not control:control=next((str(p) for p in candidates if p.is_file() and os.access(p,os.X_OK)),None)
- assert control,'actual login-node scontrol executable unavailable; no mutation attempted'
- record['controller_executable']={'path':control,'sha256':sha(pathlib.Path(control).resolve())}
- record['before']=run([control,'show','job','-o',job]);b=fields(record['before'])
- expected={'JobId':job,'JobName':spec['job_name'],'UserId':'sunyiq(2272)','Partition':'hgpu2p',
-  'NumCPUs':'4','NumTasks':'1','TresPerNode':'gpu:1','ExcNodeList':'ngu[002,011]',
-  'WorkDir':str(root),'Command':str(root/'hpc/covariance_diagnostic.slurm')}
- assert all(b.get(k)==v for k,v in expected.items()),b
- record['source_accounting']=run(['sacct','-n','-X','-j',source_job,'--format=JobID,State,ExitCode,Start,End','-P'])
- assert record['source_accounting']['returncode']==0
- assert record['source_accounting']['stdout'].strip().split('|')[:5]==[source_job,'FAILED','1:0','2026-10-16T15:56:08','2026-10-16T17:30:44']
- record['duplicate_guard']=run(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z'])
- assert record['duplicate_guard']['returncode']==0
- rows=[line.split('|') for line in record['duplicate_guard']['stdout'].splitlines() if line.strip()]
- assert sum(row[0]==job for row in rows)==sum(row[1]==spec['job_name'] for row in rows)==1
- assert not any(row[0]==source_job or row[3]==str(source) for row in rows)
- record['other_three_before']=run(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
-
-
-
- record['partition_query']=run([control,'show','partition','-o'])
- record['association_query']=run(['sacctmgr','-n','-P','show','association','where','user=sunyiq','format=Cluster,Account,User,Partition,QOS,DefaultQOS'])
- assert record['association_query']['returncode']==0 and 'hhuhpc_jt|g_sunyiq|sunyiq||qos_sunyiq|' in record['association_query']['stdout'].splitlines()
- part=next(dict(re.findall(r'(\w+)=([^\s]+)',line)) for line in record['partition_query']['stdout'].splitlines() if line.startswith('PartitionName=hgpu2 '))
- assert part['State']=='UP' and part['AllowAccounts']==part['AllowGroups']==part['AllowQos']=='ALL' and part['PriorityTier']=='1' and part['Nodes']=='ngu[003,009]'
- record.update(desired_partition_list=['hgpu2p','hgpu2'],candidate_node_list=['ngu003','ngu009'],
-  allocation_candidate_only_not_scientific_hardware_admission=True,current_package_device_guard_unchanged=True,
-  actual_hardware_compatibility_not_claimed_before_allocation=True,
-  reason='PAM denies unallocated node metadata; original replay checks exact GPU name and25296044032 memory before loading training stage.')
- entry=root/'hpc/replay_validation_covariance_diagnostic.py'
- assert "require(device == spec['expected_device_identity'] == config['effective_config']['device_identity'], 'GPU identity differs')" in entry.read_text()
- if attempt.exists():
-  record.update(status='prior_exclusive_partition_attempt_preserved_no_retry',prior_attempt=read(attempt))
-  if response.exists():record['prior_response']=read(response)
- elif b['JobState']!='PENDING':record.update(status='replay_already_started_no_partition_change',actual_state=b['JobState'])
- else:
-  assert b['RunTime']=='00:00:00' and b['NodeList']=='(null)' and b['Reason']=='Priority'
-  assert seconds(b['TimeLimit'])==1800 and seconds(b['TimeMin'])==900
-  record['before_fields']=b;save(attempt,record)
-  record['update']=run([control,'update','JobId='+job,'Partition=hgpu2p,hgpu2'])
-  record['after']=run([control,'show','job','-o',job]);a=fields(record['after']);record['after_fields']=a
-  assert all(a.get(k)==v for k,v in expected.items() if k!='Partition'),a
-  assert all(a[k]==b[k] for k in ['SubmitTime','EligibleTime','Account','QOS','Nice'])
-  assert all(sha(root/name)==identity['sha256'] for name,identity in manifest['files'].items())
-  assert sha(source/'runs'/spec['run_id']/'continuation.pt')==spec['source_run_files']['continuation.pt']['sha256']
-  verified=record['update']['returncode']==0 and set(a['Partition'].split(','))=={'hgpu2p','hgpu2'}
-  record.update(status='existing_replay_candidate_partition_route_verified' if verified else 'partition_update_unconfirmed_read_only_reconciliation_required',job_id_and_queue_age_retained=True,script_package_and_complete_source_unchanged=True,actual_state=a['JobState'])
-  record['other_three_after']=run(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
-  record['finished_at_beijing']=now();save(response,record)
- # Bounded observation after the one real update. Never mutate again.
- if record.get('status')=='existing_replay_candidate_partition_route_verified':
-  import time
-  observations=[]
-  for tick in range(30):
-   query=run([control,'show','job','-o',job]);f=fields(query)
-   observations.append({'at':now(),'state':f['JobState'],'node':f.get('NodeList'),'reason':f.get('Reason'),'actual_start_if_running':f.get('StartTime') if f['JobState']=='RUNNING' else None})
-   if f['JobState'] not in ['PENDING','RUNNING','CONFIGURING','COMPLETING']:break
-   if f['JobState']=='PENDING' and tick>=5:break
-   if f['JobState']=='RUNNING' and 'allocated_node_identity' not in record:
-    node=f['NodeList'];assert re.fullmatch(r'ngu\d{3}',node)
-    keyfile=root/('records/node_'+node+'_first_connection_554_known_hosts')
-    if keyfile.exists():
-     record['allocated_node_identity']=run(['ssh','-T','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(keyfile),'-o','ConnectTimeout=5','-o','ConnectionAttempts=1',node,'nvidia-smi','--query-gpu=name,memory.total,driver_version','--format=csv,noheader,nounits'])
-   if (root/'evidence/failed006_stored_matrix_reference.json').exists():break
-   time.sleep(10)
-  record['bounded_post_update_observations']=observations
-  record['actual_state']=observations[-1]['state'];record['post_observation_finished']=now()
-except Exception as error:
- import traceback
- record.update(status='partition_action_error_preserved_no_retry',error_type=type(error).__name__,error=str(error),traceback=traceback.format_exc(),mutation_may_have_executed=attempt.exists())
- if attempt.exists() and not response.exists():save(response,record)
-record['finished_at_beijing']=now()
-print(json.dumps(record,sort_keys=True,allow_nan=False),flush=True)
-PY
-set +u
+set -eo pipefail
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
-python -B /data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001/hpc/probe_covariance_diagnostic.py
+python -B - <<'PY'
+import datetime,hashlib,io,json,pathlib,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf');sequence=int((inbox/'seq').read_text());assert sequence==556
+raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes();assert hashlib.sha256(raw).hexdigest()=='b549ea9a1eaad557e3ec807535e314dbf08a3d98575f5ee5d9ed9e1ff5c26079'
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_A40_20261016_002');assert not root.exists(),'existing isolated deployment requires read-only reconciliation, never overwrite or repeat'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert members and all(m.isfile() for m in members);assert len(members)==17
+ for m in members:
+  relative=pathlib.PurePosixPath(m.name);assert not relative.is_absolute() and '..' not in relative.parts and root in (root/m.name).resolve().parents
+ content={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(content['package_manifest.json']);assert set(content)==set(manifest['files'])|{'package_manifest.json'}
+for name,item in manifest['files'].items():assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
+spec=json.loads(content['diagnostic_spec.json']);assert spec['schema']=='isolated_failed006_original_training_epoch47_v1'
+assert spec['source_job']=='243692' and spec['source_code_hash']=='4232fbb467341b6332f91e9289cdb975613babb5d29e2079b66d55f7822c3757'
+assert spec['expected_saved_epoch']==46 and spec['replayed_epoch']==47 and spec['old_diagnostic_half_epoch_state_used'] is False
+assert spec['selection_years']==[2021] and spec['training_years']==[2017,2018,2019,2020] and spec['maximum_replay_epochs']==1
+assert spec['formal_checkpoint_write_allowed'] is False and spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
+assert spec['hardware_binding_changed_by_explicit_human_authority'] is True
+assert spec['hardware_authority']['answer']=='允许转用A40，保持原数值与训练规则'
+source=pathlib.Path(spec['source_root'])
+for rid,files in spec['all_member_source_files'].items():
+ for name,item in files.items():
+  p=source/'runs'/rid/name;b=p.read_bytes();assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256']
+for name,expected in spec['source_code_file_hashes'].items():assert hashlib.sha256((source/name).read_bytes()).hexdigest()==expected
+root.mkdir(exist_ok=False)
+for name,b in content.items():
+ p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
+ with p.open('xb') as f:f.write(b)
+for name in ['records','logs']:(root/name).mkdir(exist_ok=True)
+print(json.dumps({'status':'joseph_failure_replay_diagnostic_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'diagnostic_root':str(root),'source_failed_job':'243692','payload_sha256':hashlib.sha256(raw).hexdigest(),'manifest_sha256':hashlib.sha256(content['package_manifest.json']).hexdigest(),'formal_training_restarted':False,'formal_epochs_added':0,'evaluation_values_read':False},sort_keys=True))
+PY
+python -B - <<'PY'
+
+import datetime,json,pathlib,re,subprocess,sys,time
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_A40_20261016_002');old=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001');job='244010'
+control='/usr/local/globle/softs/slurm/19.05.4.1/bin/scontrol';cancel='/usr/local/globle/softs/slurm/19.05.4.1/bin/scancel'
+def q(c):
+ p=subprocess.run(c,capture_output=True,text=True,timeout=30);return {'command':c,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+def save(name,v):
+ with (root/'records'/name).open('x',encoding='utf-8') as f:json.dump(v,f,sort_keys=True,indent=2);f.write('\n')
+a={'status':'authorized_A40_pending_replacement_preflight','at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'old_job':job,'old_root':str(old),'new_root':str(root),'new_submissions_maximum':1,'old_pending_cancellations_maximum':1,'other_jobs_modified':False,'formal_epochs_added':0}
+assert json.loads((root/'hardware_authority.json').read_bytes())['answer']=='允许转用A40，保持原数值与训练规则'
+assert json.loads((old/'records/scheduler_jobs.json').read_bytes())=={'covariance_diagnostic':job}
+a['other_three_before']=q(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
+a['queue_before']=q(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z']);assert a['queue_before']['returncode']==0
+rows=[x.split('|') for x in a['queue_before']['stdout'].splitlines() if x.startswith(job+'|')];assert len(rows)<=1
+if rows and rows[0][2]!='PENDING':
+ a.update(status='A40_prepared_original_replay_active_no_cancel_no_submission',actual_old_state=rows[0][2]);save('old_pending_replacement_deferred.json',a);print(json.dumps(a,sort_keys=True),flush=True)
+ subprocess.run([sys.executable,'-B',str(old/'hpc/probe_covariance_diagnostic.py')],check=True)
+else:
+ assert not (root/'records/old_pending_cancel_attempt.json').exists()
+ if rows:
+  a['native_before']=q([control,'show','job','-o',job]);assert a['native_before']['returncode']==0
+  f=dict(re.findall(r'(\w+)=([^\s]+)',a['native_before']['stdout']))
+  assert f['JobId']==job and f['JobState']=='PENDING' and f['UserId']=='sunyiq(2272)' and f['WorkDir']==str(old) and f['Command']==str(old/'hpc/covariance_diagnostic.slurm')
+  assert f['NodeList']=='(null)' and f['RunTime']=='00:00:00'
+  save('old_pending_cancel_attempt.json',a)
+  a['cancel_response']=q([cancel,'--state=PENDING',job]);save('old_pending_cancel_response.json',a)
+  assert a['cancel_response']['returncode']==0,'cancel uncertain; never blindly repeat'
+  for _ in range(20):
+   check=q(['squeue','-h','-u','sunyiq','-o','%i|%T|%Z']);assert check['returncode']==0
+   if not any(line.startswith(job+'|') for line in check['stdout'].splitlines()):break
+   time.sleep(1)
+  else:raise RuntimeError('old job still active; no new submission')
+ a['old_final_accounting']=q(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,NodeList','-P'])
+ assert a['old_final_accounting']['returncode']==0
+ a.update(status='authorized_A40_old_pending_replaced_no_original_training_cancelled',old_job_was_pending=bool(rows),new_submission_not_yet_called=True)
+ save('old_pending_replacement_audit.json',a);print(json.dumps(a,sort_keys=True),flush=True)
+ p=subprocess.run([sys.executable,'-B',str(root/'hpc/submit_covariance_diagnostic.py')]);assert p.returncode==0
+ a['other_three_after']=q(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
+ save('other_three_after_authorized_replacement.json',a)
+ subprocess.run([sys.executable,'-B',str(root/'hpc/probe_covariance_diagnostic.py')],check=True)
+PY
