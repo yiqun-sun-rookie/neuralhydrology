@@ -219,3 +219,5 @@ git rm inbox/seq
 | `knet-state-diag-monitor-20261016-001` | Authorized SC-DIAG-01 two-basin zero-optimizer-update mechanism diagnostic | 2026-10-16 | Only state_channel_diag_20261016_001_scopefix001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
 
 | china-input-livecheck-20261016 | Isolated manual read-only live evidence; no compute or resubmission |
+
+| `cross-experiment-status-20261016T125552Z` | User-authorized cross-project live scheduler inspection; read only, no sbatch/requeue/cancel | 2026-10-16 | Isolated channel; existing experiments unchanged |
