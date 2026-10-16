@@ -5,75 +5,60 @@ conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
 python -B - <<'PY'
-import datetime,hashlib,io,json,pathlib,tarfile
-inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf');sequence=int((inbox/'seq').read_text());assert sequence==559
-raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes();assert hashlib.sha256(raw).hexdigest()=='299d761edaf4b762d2c254b82445a7643217df9bddc0f3309881d15bf30811b2'
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_3090_A40_20261016_003');assert not root.exists(),'existing isolated deployment requires read-only reconciliation, never overwrite or repeat'
-with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
- members=archive.getmembers();assert members and all(m.isfile() for m in members);assert len(members)==17
- for m in members:
-  relative=pathlib.PurePosixPath(m.name);assert not relative.is_absolute() and '..' not in relative.parts and root in (root/m.name).resolve().parents
- content={m.name:archive.extractfile(m).read() for m in members}
-manifest=json.loads(content['package_manifest.json']);assert set(content)==set(manifest['files'])|{'package_manifest.json'}
-for name,item in manifest['files'].items():assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
-spec=json.loads(content['diagnostic_spec.json']);assert spec['schema']=='isolated_failed006_original_training_epoch47_v1'
-assert spec['source_job']=='243692' and spec['source_code_hash']=='4232fbb467341b6332f91e9289cdb975613babb5d29e2079b66d55f7822c3757'
-assert spec['expected_saved_epoch']==46 and spec['replayed_epoch']==47 and spec['old_diagnostic_half_epoch_state_used'] is False
-assert spec['selection_years']==[2021] and spec['training_years']==[2017,2018,2019,2020] and spec['maximum_replay_epochs']==1
-assert spec['formal_checkpoint_write_allowed'] is False and spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
-assert spec['hardware_binding_changed_by_explicit_human_authority'] is True
-assert spec['hardware_authority']['answer']=='允许转用A40，保持原数值与训练规则'
-source=pathlib.Path(spec['source_root'])
-for rid,files in spec['all_member_source_files'].items():
- for name,item in files.items():
-  p=source/'runs'/rid/name;b=p.read_bytes();assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256']
-for name,expected in spec['source_code_file_hashes'].items():assert hashlib.sha256((source/name).read_bytes()).hexdigest()==expected
-root.mkdir(exist_ok=False)
-for name,b in content.items():
- p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
- with p.open('xb') as f:f.write(b)
-for name in ['records','logs']:(root/name).mkdir(exist_ok=True)
-print(json.dumps({'status':'joseph_failure_replay_diagnostic_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'diagnostic_root':str(root),'source_failed_job':'243692','payload_sha256':hashlib.sha256(raw).hexdigest(),'manifest_sha256':hashlib.sha256(content['package_manifest.json']).hexdigest(),'formal_training_restarted':False,'formal_epochs_added':0,'evaluation_values_read':False},sort_keys=True))
-PY
-python -B - <<'PY'
-
-import datetime,json,pathlib,re,subprocess,sys,time
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_3090_A40_20261016_003');old=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_A40_20261016_002');job='244098'
-control='/usr/local/globle/softs/slurm/19.05.4.1/bin/scontrol';cancel='/usr/local/globle/softs/slurm/19.05.4.1/bin/scancel'
+import ast,contextlib,datetime,hashlib,io,json,pathlib,re,runpy,subprocess
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_3090_A40_20261016_003')
+job=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())['covariance_diagnostic'])
+ctl='/usr/local/globle/softs/slurm/19.05.4.1/bin/scontrol'
+def sha(b):return hashlib.sha256(b).hexdigest()
 def q(c):
- p=subprocess.run(c,capture_output=True,text=True,timeout=30);return {'command':c,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
-def save(name,v):
- with (root/'records'/name).open('x',encoding='utf-8') as f:json.dump(v,f,sort_keys=True,indent=2);f.write('\n')
-a={'status':'authorized_A40_pending_replacement_preflight','at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'old_job':job,'old_root':str(old),'new_root':str(root),'new_submissions_maximum':1,'old_pending_cancellations_maximum':1,'other_jobs_modified':False,'formal_epochs_added':0}
-assert json.loads((root/'hardware_authority.json').read_bytes())['answer']=='允许转用A40，保持原数值与训练规则'
-assert json.loads((old/'records/scheduler_jobs.json').read_bytes())=={'covariance_diagnostic':job}
-a['other_three_before']=q(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
-a['queue_before']=q(['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z']);assert a['queue_before']['returncode']==0
-rows=[x.split('|') for x in a['queue_before']['stdout'].splitlines() if x.startswith(job+'|')];assert len(rows)<=1
-if rows and rows[0][2]!='PENDING':
- a.update(status='A40_prepared_original_replay_active_no_cancel_no_submission',actual_old_state=rows[0][2]);save('old_pending_replacement_deferred.json',a);print(json.dumps(a,sort_keys=True),flush=True)
- subprocess.run([sys.executable,'-B',str(old/'hpc/probe_covariance_diagnostic.py')],check=True)
+ p=subprocess.run(c,capture_output=True,text=True,timeout=30);return dict(command=c,returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)
+def save(p,v):
+ with p.open('x',encoding='utf-8') as f:json.dump(v,f,sort_keys=True,indent=2);f.write('\n')
+entry=root/'hpc/replay_validation_covariance_diagnostic.py';original=entry.read_bytes()
+assert sha(original)=='6c69f7b7dca69a0233624d3c9cb2a3e831b27c67007a58f65dd2d1ce7de81a53'
+assert sha((root/'package_manifest.json').read_bytes())=='883731fec6a2ac513e8967f4aadcdd6bded89faa761f05257add2b32b5e65bd6'
+old="require({k for k in config['effective_config'] if config['effective_config'][k]!=runtime_config['effective_config'][k]}=={'device_identity'}, 'non-hardware config changed')"
+new="require({k for k in config['effective_config'] if config['effective_config'][k]!=runtime_config['effective_config'][k]}<={'device_identity'}, 'non-hardware config changed')"
+text=original.decode();assert text.count(old)==1;repaired=text.replace(old,new).encode()
+a,b=ast.parse(original),ast.parse(repaired)
+old_nodes={n.name:ast.dump(n,include_attributes=False) for n in a.body if isinstance(n,(ast.ClassDef,ast.FunctionDef)) and n.name!='execute'}
+new_nodes={n.name:ast.dump(n,include_attributes=False) for n in b.body if isinstance(n,(ast.ClassDef,ast.FunctionDef)) and n.name!='execute'}
+assert old_nodes==new_nodes
+record=dict(status='dual_entry_metadata_preflight',job_id=job,root=str(root),source_job='243692',
+ before_entry_sha256=sha(original),after_entry_sha256=sha(repaired),scientific_source_files_changed=False,
+ numerical_assertions_changed=False,training_or_optimizer_operations=False,submissions=0,cancellations=0,
+ reason='Allow zero hardware metadata differences for an original3090; reject every nonhardware effective_config change.',
+ checked_at_beijing=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat())
+record['queue_before']=q(['squeue','-h','-j',job,'-o','%i|%T|%Z']);assert record['queue_before']['returncode']==0
+rows=[x.split('|') for x in record['queue_before']['stdout'].splitlines() if x.strip()]
+if rows and rows==[[job,'PENDING',str(root)]] and not (root/'evidence').exists():
+ record['native_before']=q([ctl,'show','job','-o',job]);assert record['native_before']['returncode']==0
+ f=dict(re.findall(r'(\w+)=([^\s]+)',record['native_before']['stdout']))
+ assert f['JobState']=='PENDING' and f['UserId']=='sunyiq(2272)' and f['WorkDir']==str(root) and f['RunTime']=='00:00:00'
+ attempt=root/'records/queued_entry_repair_attempt.json';save(attempt,record)
+ print(json.dumps(record,sort_keys=True),flush=True)
+ record['hold_response']=q([ctl,'hold',job]);assert record['hold_response']['returncode']==0,record
+ record['held_state']=q([ctl,'show','job','-o',job]);f=dict(re.findall(r'(\w+)=([^\s]+)',record['held_state']['stdout']))
+ assert f['JobState']=='PENDING' and f['Reason']=='JobHeldUser' and f['RunTime']=='00:00:00'
+ assert not (root/'evidence').exists() and entry.read_bytes()==original
+ archive=root/'records/queued_entry_repair';archive.mkdir(exist_ok=False)
+ (archive/'original_observer.py').open('xb').write(original)
+ manifest=root/'package_manifest.json';manifest_bytes=manifest.read_bytes();(archive/'original_package_manifest.json').open('xb').write(manifest_bytes)
+ v2=root/'hpc/replay_validation_covariance_diagnostic_v2.py';v2.open('xb').write(repaired)
+ tmp=entry.with_name(entry.name+'.metadata_v2.tmp');tmp.open('xb').write(repaired);tmp.replace(entry)
+ values=json.loads(manifest_bytes);values['files'][entry.relative_to(root).as_posix()]={'sha256':sha(repaired),'bytes':len(repaired)}
+ values['files'][v2.relative_to(root).as_posix()]={'sha256':sha(repaired),'bytes':len(repaired)}
+ values['operational_entry_revision']={'old_manifest_sha256':sha(manifest_bytes),'original_entry_sha256':sha(original),'reason':record['reason'],'numerical_source_files_changed':False}
+ tmp=manifest.with_name(manifest.name+'.metadata_v2.tmp');save(tmp,values);tmp.replace(manifest)
+ record['current_runtime_package_manifest_sha256']=sha(manifest.read_bytes())
+ record['release_response']=q([ctl,'release',job]);assert record['release_response']['returncode']==0,record
+ record['native_after']=q([ctl,'show','job','-o',job]);record['status']='queued_dual_metadata_entry_repaired_same_job_released'
+ record['priority_may_be_recalculated_by_native_hold_release']=True
 else:
- assert not (root/'records/old_pending_cancel_attempt.json').exists()
- if rows:
-  a['native_before']=q([control,'show','job','-o',job]);assert a['native_before']['returncode']==0
-  f=dict(re.findall(r'(\w+)=([^\s]+)',a['native_before']['stdout']))
-  assert f['JobId']==job and f['JobState']=='PENDING' and f['UserId']=='sunyiq(2272)' and f['WorkDir']==str(old) and f['Command']==str(old/'hpc/covariance_diagnostic.slurm')
-  assert f['NodeList']=='(null)' and f['RunTime']=='00:00:00'
-  save('old_pending_cancel_attempt.json',a)
-  a['cancel_response']=q([cancel,'--state=PENDING',job]);save('old_pending_cancel_response.json',a)
-  assert a['cancel_response']['returncode']==0,'cancel uncertain; never blindly repeat'
-  for _ in range(20):
-   check=q(['squeue','-h','-u','sunyiq','-o','%i|%T|%Z']);assert check['returncode']==0
-   if not any(line.startswith(job+'|') for line in check['stdout'].splitlines()):break
-   time.sleep(1)
-  else:raise RuntimeError('old job still active; no new submission')
- a['old_final_accounting']=q(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,NodeList','-P'])
- assert a['old_final_accounting']['returncode']==0
- a.update(status='authorized_A40_old_pending_replaced_no_original_training_cancelled',old_job_was_pending=bool(rows),new_submission_not_yet_called=True)
- save('old_pending_replacement_audit.json',a);print(json.dumps(a,sort_keys=True),flush=True)
- p=subprocess.run([sys.executable,'-B',str(root/'hpc/submit_covariance_diagnostic.py')]);assert p.returncode==0
- a['other_three_after']=q(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
- save('other_three_after_authorized_replacement.json',a)
- subprocess.run([sys.executable,'-B',str(root/'hpc/probe_covariance_diagnostic.py')],check=True)
+ record['status']='entry_metadata_repair_not_applied_job_already_active_or_terminal'
+save(root/'records/queued_entry_metadata_repair.json',record)
+stream=io.StringIO()
+with contextlib.redirect_stdout(stream):runpy.run_path(str(root/'hpc/probe_covariance_diagnostic.py'),run_name='__main__')
+probe=json.loads(stream.getvalue());probe['queued_entry_metadata_repair']=record
+print(json.dumps(probe,sort_keys=True),flush=True)
 PY
