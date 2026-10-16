@@ -1,29 +1,12 @@
 #!/bin/bash
 set -eo pipefail
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-if [ -f "$root/job_id.txt" ]; then
-  jid=$(cat "$root/job_id.txt")
-  printf 'JOB_ID=%s\n' "$jid"
-  cat "$root/submissions.tsv"
-  squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i|%j|%T|%M|%R'
-  sacct -j "$jid" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -n -P
-  for file in "$root/logs/b04-$jid.out" "$root/logs/b04-$jid.err"; do
-    if [ -f "$file" ]; then printf '\nLOG=%s\n' "$file"; tail -n 16 "$file"; fi
-  done
-fi
-for file in "$root/status.json" "$root/interface_check.json" "$root/runtime.json" "$root/report.json"; do
-  if [ -f "$file" ]; then printf '\nFILE=%s\n' "$file"; cat "$file"; fi
-done
-if [ -f "$root/logs/env_install_v001.log" ]; then tail -n 8 "$root/logs/env_install_v001.log"; fi
-if [ -f "$root/env_status_v001.txt" ]; then cat "$root/env_status_v001.txt"; fi
-if [ -f "$root/env_pid_v001.txt" ]; then
-  pid=$(cat "$root/env_pid_v001.txt")
-  if ps -p "$pid" -o pid,etimes,stat,args; then :; else echo ENV_HELPER_NOT_RUNNING; fi
-fi
-if [ -f "$root/status.json" ]; then
-  rid=$("$root/venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("region_id", ""))' "$root/status.json")
-  if [[ "$rid" =~ ^lat[+-][0-9]{3}_lon[+-][0-9]{3}$ ]]; then
-    if [ -f "$root/runs/$rid/last.npz" ]; then stat -c '%n|%s|%y' "$root/runs/$rid/last.npz"; fi
-    if [ -f "$root/runs/$rid/metrics.jsonl" ]; then tail -n 2 "$root/runs/$rid/metrics.jsonl"; fi
-  fi
-fi
+if [ -e "$root/env_pid_v002.txt" ] || [ -e "$root/env_status_v002.txt" ]; then echo ENV_V002_ALREADY_REQUESTED; exit 1; fi
+if [ -e "$root/job_id.txt" ]; then echo JOB_EXISTS_NO_ENV_CHANGE; exit 1; fi
+printf '%s' 'IiIiU3RvcCBvbmx5IHRoZSBzY29wZWQgQjA0IGluc3RhbGxlciB0cmVlIHdoZW4gaXQgc2VsZWN0ZWQgYSBzb3VyY2UgYnVpbGQuIiIiCmltcG9ydCBqc29uCmltcG9ydCBvcwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IHNpZ25hbAppbXBvcnQgc3VicHJvY2VzcwppbXBvcnQgdGltZQoKcm9vdCA9IFBhdGgoJy9kYXRhMS9ob21lL3N1bnlpcS9pZDI1X2dyYWljZV9hdXRob3JfbWF0Y2hlZF8yMDI2MTAxNl8wMDEnKQppZiAocm9vdCAvICd2ZW52L3J1bnRpbWVfcmVhZHknKS5leGlzdHMoKToKICAgIHJhaXNlIFN5c3RlbUV4aXQoJ0luc3RhbGxlciBhbHJlYWR5IHN1Y2NlZWRlZDsgZG8gbm90IHJlcGFpciBvciByZWxhdW5jaCcpCnBpZCA9IGludCgocm9vdCAvICdlbnZfcGlkX3YwMDEudHh0JykucmVhZF90ZXh0KCkpCgoKZGVmIHByb2Nlc3NlcygpOgogICAgdGV4dCA9IHN1YnByb2Nlc3MuY2hlY2tfb3V0cHV0KFsncHMnLCAnLWVvJywgJ3BpZD0scHBpZD0sc3RhdD0sYXJncz0nXSwgdGV4dD1UcnVlKQogICAgcmVzdWx0ID0ge30KICAgIGZvciBsaW5lIGluIHRleHQuc3BsaXRsaW5lcygpOgogICAgICAgIHBhcnRzID0gbGluZS5zdHJpcCgpLnNwbGl0KE5vbmUsIDMpCiAgICAgICAgaWYgbGVuKHBhcnRzKSA9PSA0OgogICAgICAgICAgICByZXN1bHRbaW50KHBhcnRzWzBdKV0gPSBkaWN0KHBwaWQ9aW50KHBhcnRzWzFdKSwgc3RhdD1wYXJ0c1syXSwgYXJncz1wYXJ0c1szXSkKICAgIHJldHVybiByZXN1bHQKCgp0YWJsZSA9IHByb2Nlc3NlcygpCmlmIHBpZCBpbiB0YWJsZSBhbmQgbm90IHRhYmxlW3BpZF1bJ3N0YXQnXS5zdGFydHN3aXRoKCdaJyk6CiAgICBpZiBzdHIocm9vdCAvICdzZXR1cF9lbnZfdjAwMS5zaCcpIG5vdCBpbiB0YWJsZVtwaWRdWydhcmdzJ106CiAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCdQSUQgbm8gbG9uZ2VyIGlkZW50aWZpZXMgdGhpcyBleHBlcmltZW50IGluc3RhbGxlcicpCiAgICBkZXNjZW5kYW50cyA9IFtwaWRdCiAgICBmb3IgcGFyZW50IGluIGRlc2NlbmRhbnRzOgogICAgICAgIGRlc2NlbmRhbnRzLmV4dGVuZChwIGZvciBwLCByZWMgaW4gdGFibGUuaXRlbXMoKSBpZiByZWNbJ3BwaWQnXSA9PSBwYXJlbnQgYW5kIHAgbm90IGluIGRlc2NlbmRhbnRzKQogICAgKHJvb3QgLyAnbG9ncy9lbnZfdjAwMV9zdG9wX3JlY29yZC5qc29uJykud3JpdGVfdGV4dChqc29uLmR1bXBzKGRpY3QoCiAgICAgICAgcmVhc29uPSdoNXB5IDMuMTYgc2VsZWN0ZWQgYSBzb3VyY2UgYnVpbGQ7IHVzZSBjb21wYXRpYmxlIGJpbmFyeSB3aGVlbHMnLAogICAgICAgIHByb2Nlc3Nlcz17cDogdGFibGVbcF0gZm9yIHAgaW4gZGVzY2VuZGFudHN9KSwgaW5kZW50PTIpKQogICAgZm9yIGNoaWxkIGluIHJldmVyc2VkKGRlc2NlbmRhbnRzKToKICAgICAgICBjdXJyZW50ID0gcHJvY2Vzc2VzKCkKICAgICAgICBpZiBjaGlsZCBpbiBjdXJyZW50IGFuZCBjdXJyZW50W2NoaWxkXVsnYXJncyddICE9IHRhYmxlW2NoaWxkXVsnYXJncyddOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoJ1Byb2Nlc3MgaWRlbnRpdHkgY2hhbmdlZDsgZG8gbm90IHNpZ25hbCBpdCcpCiAgICAgICAgdHJ5OgogICAgICAgICAgICBvcy5raWxsKGNoaWxkLCBzaWduYWwuU0lHVEVSTSkKICAgICAgICBleGNlcHQgUHJvY2Vzc0xvb2t1cEVycm9yOgogICAgICAgICAgICBwYXNzCiAgICBmb3IgYXR0ZW1wdCBpbiByYW5nZSgxNSk6CiAgICAgICAgY3VycmVudCA9IHByb2Nlc3NlcygpCiAgICAgICAgYWxpdmUgPSBbcCBmb3IgcCBpbiBkZXNjZW5kYW50cyBpZiBwIGluIGN1cnJlbnQgYW5kIG5vdCBjdXJyZW50W3BdWydzdGF0J10uc3RhcnRzd2l0aCgnWicpXQogICAgICAgIGlmIG5vdCBhbGl2ZToKICAgICAgICAgICAgYnJlYWsKICAgICAgICB0aW1lLnNsZWVwKDEpCiAgICBpZiBhbGl2ZToKICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoJ1Njb3BlZCBpbnN0YWxsZXIgaXMgc3RpbGwgc3RvcHBpbmc6ICcgKyBzdHIoYWxpdmUpKQplbGlmIG5vdCAocm9vdCAvICdlbnZfc3RhdHVzX3YwMDEudHh0JykuZXhpc3RzKCk6CiAgICByYWlzZSBSdW50aW1lRXJyb3IoJ0luc3RhbGxlciBhYnNlbnQgd2l0aG91dCB0ZXJtaW5hbCBldmlkZW5jZTsgaW5zcGVjdCBiZWZvcmUgcmV0cnlpbmcnKQpwcmludCgnQjA0X1YwMDFfSU5TVEFMTEVSX1NUT1BQRURfTk9fVFJBSU5JTkdfSk9CJykK' | base64 -d > "$root/stop_own_env_v001.py"
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python "$root/stop_own_env_v001.py"
+printf '%s' 'IyEvYmluL2Jhc2gKc2V0IC1lbyBwaXBlZmFpbApyb290PS9kYXRhMS9ob21lL3N1bnlpcS9pZDI1X2dyYWljZV9hdXRob3JfbWF0Y2hlZF8yMDI2MTAxNl8wMDEKdHJhcCAncmM9JD87IHByaW50ZiAiZXhpdF9jb2RlPSVzXG4iICIkcmMiID4gIiRyb290L2Vudl9zdGF0dXNfdjAwMi50eHQiJyBFWElUCmV4cG9ydCBQWVRIT05OT1VTRVJTSVRFPTEKZXhwb3J0IFBZVEhPTkRPTlRXUklURUJZVEVDT0RFPTEKZXhwb3J0IFBJUF9DQUNIRV9ESVI9IiRyb290L3BpcF9jYWNoZSIKZXhwb3J0IFhER19DQUNIRV9IT01FPSIkcm9vdC9jYWNoZSIKdW5zZXQgUFlUSE9OUEFUSAp0ZXN0IC14ICIkcm9vdC92ZW52L2Jpbi9weXRob24iCnRlc3QgISAtZSAiJHJvb3QvdmVudi9ydW50aW1lX3JlYWR5IgoiJHJvb3QvdmVudi9iaW4vcHl0aG9uIiAtbSBwaXAgaW5zdGFsbCAtLWRpc2FibGUtcGlwLXZlcnNpb24tY2hlY2sgLS1vbmx5LWJpbmFyeT06YWxsOiAtLXRpbWVvdXQgOTAgLS1yZXRyaWVzIDIgJ3RlbnNvcmZsb3dbYW5kLWN1ZGFdPT0yLjE1LjEnICdudW1weT09MS4yNi40JyAnaDVweT09My4xNC4wJyAnc2Npa2l0LWxlYXJuPT0xLjQuMicgJ21hdHBsb3RsaWI9PTMuOC40JwoiJHJvb3QvdmVudi9iaW4vcHl0aG9uIiAtbSBwaXAgZnJlZXplID4gIiRyb290L3JlcXVpcmVtZW50c19pbnN0YWxsZWRfdjAwMi50eHQiCmNwICIkcm9vdC9yZXF1aXJlbWVudHNfaW5zdGFsbGVkX3YwMDIudHh0IiAiJHJvb3QvcmVxdWlyZW1lbnRzX2luc3RhbGxlZC50eHQiCnRvdWNoICIkcm9vdC92ZW52L3J1bnRpbWVfcmVhZHkiCmVjaG8gQjA0X1BSSVZBVEVfR1BVX1JVTlRJTUVfSU5TVEFMTEVECg==' | base64 -d > "$root/setup_env_v002.sh"
+nohup /bin/bash "$root/setup_env_v002.sh" > "$root/logs/env_install_v002.log" 2>&1 < /dev/null &
+pid=$!
+printf '%s\n' "$pid" > "$root/env_pid_v002.txt"
+printf 'ENV_V002_INSTALL_PID=%s\n' "$pid"
