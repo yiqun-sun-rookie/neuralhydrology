@@ -1,0 +1,17 @@
+### channel=id25-graice-matched-20261016 seq=4
+### host=login4
+### started=2026-10-16T16:00:19+0800
+### ---------- output ----------
+Collecting gast!=0.5.0,!=0.5.1,!=0.5.2,>=0.2.1 (from tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading gast-0.7.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting google-pasta>=0.1.1 (from tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading google_pasta-0.2.0-py3-none-any.whl.metadata (814 bytes)
+Collecting h5py>=2.9.0 (from tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading h5py-3.16.0.tar.gz (446 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 446.5/446.5 kB 631.7 kB/s eta 0:00:00
+  Installing build dependencies: started
+  PID ELAPSED STAT COMMAND
+36117     139 S    /bin/bash /data1/home/sunyiq/id25_graice_author_matched_20261016_001/setup_env_v001.sh
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T16:00:19+0800
