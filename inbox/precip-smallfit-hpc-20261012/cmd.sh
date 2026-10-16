@@ -7,16 +7,6 @@ timeout 30 squeue --start -j 244110 2>&1 || true
 timeout 30 scontrol show job 244110 -o 2>&1 || true
 printf 'OPERATIONAL_QUEUE_ESTIMATE_END\n'
 printf 'OWNED_QUEUE_RESOURCE_DIAGNOSIS_BEGIN\n'
-printf 'READ_ONLY: scontrol show partition hgpu2p -o
-'
-timeout 30 scontrol show partition hgpu2p -o 2>&1 || true
-printf 'READ_ONLY: sinfo -N -p hgpu2p -O nodelist:20,statelong:15,gres:30,gresused:60
-'
-timeout 30 sinfo -N -p hgpu2p -O nodelist:20,statelong:15,gres:30,gresused:60 2>&1 || true
-printf 'READ_ONLY: sprio -j 244110 -l
-'
-timeout 30 sprio -j 244110 -l 2>&1 || true
-printf 'READ_ONLY: squeue -p hgpu2p -t R,PD -h -o '"'"'%i|%j|%T|%l|%L|%R|%S|%p'"'"'
-'
+printf '%s\n' 'READ_ONLY: squeue -p hgpu2p -t R,PD -h -o '"'"'%i|%j|%T|%l|%L|%R|%S|%p'"'"''
 timeout 30 squeue -p hgpu2p -t R,PD -h -o '%i|%j|%T|%l|%L|%R|%S|%p' 2>&1 || true
 printf 'OWNED_QUEUE_RESOURCE_DIAGNOSIS_END\n'
