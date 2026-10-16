@@ -46,7 +46,7 @@ begin=text.index("    path = ROOT/'records'/('covariance_checkpoint_audit_")
 end=text.index('    print(json.dumps(audit',begin)
 extra="""    def identity(p):
         b=p.read_bytes();return {'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-    assert all(h.sha(pathlib.Path(p))==digest for p,digest in source_before.items())
+    assert all(h.sha(Path(p))==digest for p,digest in source_before.items())
     code_files=sorted([*ROOT.joinpath('src').glob('*.py'),*ROOT.joinpath('scripts').glob('*.py'),*ROOT.joinpath('vendor/pytides').glob('*.py')])
     code_hashes={p.relative_to(ROOT).as_posix():h.sha(p) for p in code_files}
     assert hashlib.sha256(json.dumps(code_hashes,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()==auth['code_hash']
