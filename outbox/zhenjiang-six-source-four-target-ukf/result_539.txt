@@ -1,0 +1,12 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=539
+### host=login4
+### started=2026-10-16T18:02:58+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 57, in <module>
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006/hpc/audit_compensated_continuation_20261016_v2.py:diagnostic_failed_source_copy", line 85, in main
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006/hpc/audit_compensated_continuation_20261016_v2.py:diagnostic_failed_source_copy", line 85, in <genexpr>
+NameError: name 'pathlib' is not defined. Did you mean: 'hashlib'?
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-16T18:04:10+0800
