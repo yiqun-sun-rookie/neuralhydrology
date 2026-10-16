@@ -1,19 +1,29 @@
 #!/bin/bash
 set -eo pipefail
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-test -f "$root/venv/runtime_ready"
-grep -qx 'exit_code=0' "$root/env_status_v002.txt"
-if [ -e "$root/submit_intent_v001.txt" ] || [ -e "$root/job_id.txt" ] || [ -e "$root/report.json" ]; then echo PREVIOUS_SUBMISSION_REQUIRES_RECEIPT_INSPECTION; exit 1; fi
-if [ -n "$(squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i')" ]; then echo ACTIVE_OWN_JOB_NO_DUPLICATE; exit 1; fi
-date -u +%FT%TZ > "$root/submit_intent_v001.txt"
-if sbatch "$root/code/hpc/graice_author_matched_b04_20261016.slurm" > "$root/submission_v001.txt" 2>&1; then
-  cat "$root/submission_v001.txt"
-else
-  cat "$root/submission_v001.txt"
-  exit 1
+if [ -f "$root/job_id.txt" ]; then
+  jid=$(cat "$root/job_id.txt")
+  printf 'JOB_ID=%s\n' "$jid"
+  cat "$root/submissions.tsv"
+  squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i|%j|%T|%M|%R'
+  sacct -j "$jid" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -n -P
+  for file in "$root/logs/b04-$jid.out" "$root/logs/b04-$jid.err"; do
+    if [ -f "$file" ]; then printf '\nLOG=%s\n' "$file"; tail -n 16 "$file"; fi
+  done
 fi
-jid=$(awk '/^Submitted batch job [0-9]+$/ {print $4}' "$root/submission_v001.txt")
-test -n "$jid"
-printf '%s\n' "$jid" > "$root/job_id.txt"
-printf '%s\t%s\t%s\n' "$(date -u +%FT%TZ)" "$jid" 'v001 reviewed B04, one fit per region, interface gate then train' >> "$root/submissions.tsv"
-printf 'JOB_ID=%s\n' "$jid"
+for file in "$root/status.json" "$root/interface_check.json" "$root/runtime.json" "$root/report.json"; do
+  if [ -f "$file" ]; then printf '\nFILE=%s\n' "$file"; cat "$file"; fi
+done
+if [ -f "$root/logs/env_install_v002.log" ]; then tail -n 8 "$root/logs/env_install_v002.log"; fi
+if [ -f "$root/env_status_v002.txt" ]; then cat "$root/env_status_v002.txt"; fi
+if [ -f "$root/env_pid_v002.txt" ]; then
+  pid=$(cat "$root/env_pid_v002.txt")
+  if ps -p "$pid" -o pid,etimes,stat,args; then :; else echo ENV_HELPER_NOT_RUNNING; fi
+fi
+if [ -f "$root/status.json" ]; then
+  rid=$("$root/venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("region_id", ""))' "$root/status.json")
+  if [[ "$rid" =~ ^lat[+-][0-9]{3}_lon[+-][0-9]{3}$ ]]; then
+    if [ -f "$root/runs/$rid/last.npz" ]; then stat -c '%n|%s|%y' "$root/runs/$rid/last.npz"; fi
+    if [ -f "$root/runs/$rid/metrics.jsonl" ]; then tail -n 2 "$root/runs/$rid/metrics.jsonl"; fi
+  fi
+fi
