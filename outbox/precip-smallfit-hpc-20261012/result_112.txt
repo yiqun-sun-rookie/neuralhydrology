@@ -1,0 +1,13 @@
+### channel=precip-smallfit-hpc-20261012 seq=112
+### host=login4
+### started=2026-10-17T00:50:06+0800
+### ---------- output ----------
+SMALLFIT_RETURN_V01=eJyVUV1rwjAU/SsSEDZoIamtSl+nDMcoog7G3Chpmmo0Jls+pmL970uyze1hL4Nwwz03955zbk4AE2MxLxu8Y/xYckm2ZaMoBXnHKEujDtjIqmS1y5M0RQg6ZMuEz4E22FgNHMLlqjSYce3g09kBQgriZwDcZA3qwQYNE5KS3hBXMIFZAknWG6QQpr5bVpqqd1qX1hDfk8CkHyMYo/4C9fMM5nDw5N8pSqSqLxyarGltOVUOWJ4AVitfWgL9ZqmlviHe+PipO+TrEKWPXdZ2F213Bl7CZGOVILL2mr1FQw8mSAm97XRcjCbFbXs1VUwqZo7XzwI4Db9ZMSEmjJ8H0m8PwWH8+KccEeL0R9SdrCajGd5Hc7daGo0PzNw4UdHcVjtmPKpMNBZ1NOb4VdM6Klz1nmnzLxduoe2vHSe9HCU5ytoHsRVyLy43dA/9aQspaAdrzVaC1t65Z/O/H774aywIhGrHBOYObjDX9PwBI0uvKQ==
+OPERATIONAL_QUEUE_ESTIMATE_BEGIN
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            244110    hgpu2p psfit_af   sunyiq PD 2027-10-06T11:18:20      1 (null)               (Priority)
+JobId=244110 JobName=psfit_af5f130f UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=209478 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=12:17:00 TimeMin=N/A SubmitTime=2026-10-16T23:12:15 EligibleTime=2026-10-16T23:12:15 AccrueTime=2026-10-16T23:12:15 StartTime=2027-10-06T11:18:20 EndTime=2027-10-06T23:35:20 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-17T00:51:57 Partition=hgpu2p AllocNode:Sid=login04:3169 ReqNodeList=(null) ExcNodeList=(null) NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/job.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/logs/slurm-244110.err StdIn=/dev/null StdOut=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/logs/slurm-244110.out Power= TresPerNode=gpu:1
+OPERATIONAL_QUEUE_ESTIMATE_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T00:50:07+0800
