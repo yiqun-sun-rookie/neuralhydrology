@@ -14,6 +14,10 @@ out['accounting']=run(['sacct','-n','-X','-j',job+',244038','--format=JobID,Stat
 out['scheduler']=run(['scontrol','-o','show','job',job])
 out['documents']={}
 old=root.parent/'state_channel_repaircheck_20261016_001'
+out['original_failure_tails']={}
+for b in ('02092500','04105700'):
+ p=old/'runs'/b/'attempt_001/stdout.log'
+ if p.is_file():out['original_failure_tails'][b]=p.read_bytes()[-3500:].decode(errors='replace')
 for p in [root/'controller_started.json',root/'terminal.json']+[old/'runs'/b/'attempt_002_io_resume'/name for b in ('02092500','04105700') for name in ('resume_binding.json','scientific_started.json','receipt.json')]:
  if p.is_file() and p.stat().st_size<100000:out['documents'][str(p)]=json.loads(p.read_text())
 logs=sorted(root.glob('resume-*.out'))
