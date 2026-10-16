@@ -211,3 +211,5 @@ git rm inbox/seq
 | `openhydronet-531-20261015-ops` | Ops/probe channel for the OpenHydroNet task (read-only checks and killing only this task's own stuck processes) | 2026-10-16 | Only /data1/home/sunyiq/openhydronet_531_20261015 processes owned by this task; no other users' or channels' processes; no scancel of other jobs. |
 
 | `knet-state-diag-20261016-001` | Authorized SC-DIAG-01 two-basin zero-optimizer-update mechanism diagnostic | 2026-10-16 | Only state_channel_diag_20261016_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `id25-graice-matched-20261016` | B04 GRAiCE author code with matched daily inputs | 2026-10-16 | Only /data1/home/sunyiq/id25_graice_author_matched_20261016_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
