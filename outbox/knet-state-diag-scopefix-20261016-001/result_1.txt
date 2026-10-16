@@ -1,0 +1,10 @@
+### channel=knet-state-diag-scopefix-20261016-001 seq=1
+### host=login4
+### started=2026-10-16T16:01:42+0800
+### ---------- output ----------
+STARTUP_REGISTRY_PREFLIGHT={"status": "PASS", "actual_worker_block": true, "model_imports": false, "verified": [{"path": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/template/recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz", "sha256": "453d57eab87b0d774d5895f143d51c40644f9b92fd8702ce646a6f4841378eb6", "bytes": 70808}, {"path": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/template/recipe/workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02092500.json", "sha256": "1d888ac7e396def5d6d435574ad4af91a8adb89bf17845c87f15c5a2f2f4b0a3", "bytes": 9598}]}
+
+SUBMISSION_JSON={"status": "SUBMITTED", "job_id": "243725", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001", "submitted_utc": "2026-10-16T08:01:43.883780+00:00", "sbatch_reply": "Submitted batch job 243725\n", "partition_snapshot": "ngu101|mixed|20/76/0/96\nngu102|mixed|14/82/0/96\nngu103|down*|0/0/96/96\nngu104|mixed|16/80/0/96\n", "archive_sha256": "616c4afb25f3a5dc1400c3aadde89a080fa0fe2c367234adfe79c1554446ef49", "source_files_verified": 25}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T16:01:43+0800
