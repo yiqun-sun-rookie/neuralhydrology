@@ -140,3 +140,78 @@ else:
  for p in [root/'control/hybrid_v022_20261014_001/hpc_packet_001/index.json',t/'control/parent_binding_v010.json',t/'control/new_models_verified.json',t/'control/resource_pilot.json',t/'reports/coverage_and_summary.json']:
   if p.is_file():emit('WORKFLOW_RESULT',dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),value=json.loads(p.read_text())))
 PY
+
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'DETAIL'
+"""Finite login-node metadata audit; no scientific computation or mutations."""
+import collections
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+ROOT = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+CONTROL = ROOT / 'control/hybrid_v022_20261014_001'
+EXECUTION = ROOT / 'execution/hpc_v009'
+SCHED = ROOT / 'control/hybrid_v009_20261012_001'
+
+def emit(k, v):
+    print(k + ' ' + json.dumps(v), flush=True)
+
+def query(cmd):
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=45)
+    assert r.returncode == 0, (cmd, r.stderr)
+    return r.stdout
+
+def main():
+    assignment = json.loads((CONTROL / 'assignment.json').read_text())
+    ledger = EXECUTION / 'records/ledger.jsonl'
+    rows = [json.loads(x) for x in ledger.read_text().splitlines() if x.strip()] if ledger.exists() else []
+    failures = [r for r in rows if r.get('status') in ('failed', 'uncomputable')]
+    emit('ALL_FAILURE_HISTORY', dict(rows=failures, count=len(failures), ledger_sha256=hashlib.sha256(ledger.read_bytes()).hexdigest()))
+    controls = list((ROOT / 'control').glob('hybrid_v*'))
+    candidates = []
+    for task in assignment['hpc_tasks']:
+        if task['model'] != 'original_s100' or not task['basins']:
+            continue
+        i = task['index']
+        occupied = [(r.get('combination_id'), r.get('basin_id'), r.get('status')) for r in rows
+                    if str(r.get('basin_id')) in task['basins'] and
+                    (r.get('combination_id') in task['combinations'] or r.get('model_id') == task['model'])]
+        outputs = [str(p) for b in task['basins']
+                   for p in [EXECUTION/'records/clean'/task['model']/b] +
+                   [EXECUTION/'records/attacks'/c/b for c in task['combinations']] if p.exists()]
+        stages = [str(p) for c in controls for p in (c/'stage_results').glob('attacks_'+str(i)+'_*.json')]
+        logs = [str(p) for p in (SCHED/'logs').glob('attacks-241336_'+str(i)+'.*')]
+        candidates.append(dict(index=i, start=task['basin_start'], count=task['basin_count'],
+                               basins=task['basins'], output_paths=outputs, ledger_occupancy=occupied,
+                               stage_history=stages, scheduler_logs=logs,
+                               no_occupancy=not any((outputs, occupied, stages, logs))))
+    emit('CANDIDATE_OCCUPANCY', candidates)
+    emit('RUNNING_SCHEDULER', query(['scontrol','show','job','-o','241336']))
+    emit('COMPLETE_ARRAY_HISTORY', query(['sacct','-X','-j','241336','-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList']))
+    emit('TRAIN_STAGE_PROOFS', [dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),value=json.loads(p.read_text()))
+                               for c in controls for p in (c/'stage_results').glob('train_*.json')])
+    emit('ORCHESTRATION_SOURCE_PROOF', dict(worker_sha256=hashlib.sha256((CONTROL/'worker.py').read_bytes()).hexdigest(),
+                                           assignment_sha256=hashlib.sha256((CONTROL/'assignment.json').read_bytes()).hexdigest()))
+
+if __name__ == '__main__':
+    main()
+
+DETAIL
+
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'RECOVERY'
+import json,hashlib,subprocess
+from pathlib import Path
+r=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001')
+def emit(k,v):print(k+' '+json.dumps(v),flush=True)
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+reg=json.loads((r/'registered.json').read_text())
+emit('SUPPLEMENTARY_RECOVERY_REGISTRATION',dict(path=str(r/'registered.json'),sha256=sha(r/'registered.json'),value=reg))
+for j in reg['jobs']:
+ script=Path(j['script']);assert sha(script)==j['script_sha256']
+ result=subprocess.run(['scontrol','show','job','-o',str(j['job_id'])],capture_output=True,text=True,timeout=45)
+ hist=subprocess.run(['sacct','-X','-j',str(j['job_id']),'-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList'],capture_output=True,text=True,timeout=45,check=True)
+ emit('SUPPLEMENTARY_RECOVERY_JOB',dict(registration=j,workdir=str(r),script_sha256=sha(script),returncode=result.returncode,stdout=result.stdout,stderr=result.stderr,accounting=hist.stdout))
+a=subprocess.run(['sacct','-X','-j','242597','-n','-P','-o','JobID,State,ExitCode,Elapsed,Start,End,NodeList'],capture_output=True,text=True,timeout=45,check=True)
+emit('SUPPLEMENTARY_DIAGNOSTIC_ACCOUNTING',a.stdout)
+RECOVERY
