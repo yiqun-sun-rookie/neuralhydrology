@@ -1,39 +1,39 @@
 #!/usr/bin/env bash
 set -eo pipefail
-export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
-import base64,datetime,hashlib,json,re,subprocess
+import base64, datetime, hashlib, json, re, subprocess
 from pathlib import Path
-root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-assert root.resolve()==root and (root/'OWNER').read_text().strip()=='hydrol85935_revision_20261008_001'
-d=root/'control/receipt253_diagnostic_20261014_001'
-assert not d.exists(),'Existing one-time diagnostic evidence; never replay'
-d.mkdir()
-channel='hydrol85935-revision-20261008-001'
-staged=Path.home()/'.hpc_mailbox_staging'/channel/'result_253.txt'
-body=staged.read_bytes() if staged.is_file() else None
-complete=bool(body and body.startswith(('### channel='+channel+' seq=253\n').encode())
-              and re.search(rb'\n### exit_code=-?\d+\n### finished=[^\n]+\n?$',body))
-proof=dict(remote_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-           main_channel=channel,main_sequence=253,staging_path=str(staged),staging_exists=body is not None,
-           staging_complete=complete,main_command_reexecuted=False,scientific_jobs_modified=False,
-           shared_runner_modified=False,new_scientific_job_submission=False)
-if body is not None:
-    (d/'result_253_preserved.txt').write_bytes(body)
-    proof.update(staging_bytes=len(body),staging_sha256=hashlib.sha256(body).hexdigest(),
-                 receipt_base64=base64.b64encode(body).decode() if complete else None,
-                 partial_tail=body[-2400:].decode('utf-8',errors='replace') if not complete else None)
-processes=subprocess.run(['ps','-eo','pid,ppid,etimes,stat,args'],capture_output=True,text=True,timeout=20)
-proof['own_transport_processes']=[line for line in processes.stdout.splitlines()
-    if 'hpc_runner_active' in line or '/cmd_253.sh' in line]
-runner_log=Path('/data1/home/sunyiq/hpc_mailbox/runner2.log')
-if runner_log.is_file():
-    with runner_log.open('rb') as f:
-        f.seek(max(0,runner_log.stat().st_size-16000));tail=f.read().decode('utf-8',errors='replace')
-    proof['runner_own_channel_tail']=[line for line in tail.splitlines() if channel in line][-12:]
-    proof['runner_log_bytes']=runner_log.stat().st_size
-    proof['runner_log_mtime']=runner_log.stat().st_mtime
-with (d/'diagnostic.json').open('x') as f:json.dump(proof,f,indent=2)
-print('RECEIPT253_DIAGNOSTIC '+json.dumps(proof),flush=True)
-
+home = Path.home()
+root = home / 'hydrol85935_revision_20261008_001'
+assert (root / 'OWNER').read_text().strip() == 'hydrol85935_revision_20261008_001'
+channel = 'hydrol85935-revision-20261008-001'
+stage = home / '.hpc_mailbox_staging' / channel
+def emit(label, value):
+    print(label + ' ' + json.dumps(value), flush=True)
+def query(command):
+    r = subprocess.run(command, capture_output=True, text=True, timeout=30)
+    return dict(returncode=r.returncode, stdout=r.stdout, stderr=r.stderr)
+emit('DIAGNOSTIC_TIME', datetime.datetime.now().astimezone().isoformat())
+emit('DIAGNOSTIC_HOST', query(['hostname']))
+emit('MAIN_INBOX_SEQUENCE', (home / 'hpc_mailbox/inbox' / channel / 'seq').read_text())
+emit('MAIN_INBOX_COMMAND_SHA256', hashlib.sha256((home / 'hpc_mailbox/inbox' / channel / 'cmd.sh').read_bytes()).hexdigest())
+for name in ['cmd_326.sh', 'result_326.txt']:
+    path = stage / name
+    value = dict(path=str(path), exists=path.exists())
+    if path.exists():
+        body = path.read_bytes()
+        value.update(size=len(body), sha256=hashlib.sha256(body).hexdigest(), modified=path.stat().st_mtime)
+        if name.startswith('result'):
+            complete = body.startswith(('### channel=' + channel + ' seq=326\n').encode()) and bool(re.search(rb'\n### exit_code=-?\d+\n### finished=[^\n]+\n?$', body))
+            value.update(complete=complete, tail=body[-2000:].decode('utf8', errors='replace'))
+            if complete and len(body) <= 2000000:
+                value['original_bytes_base64'] = base64.b64encode(body).decode()
+    emit('EXACT_MAIN_STAGING', value)
+for job in [241335, 241336, 241337, 241344, 242752, 242753, 242754]:
+    emit('LIVE_JOB', dict(job_id=job, **query(['scontrol', 'show', 'job', '-o', str(job)])))
+emit('LIVE_ACCOUNTING', query(['sacct', '-X', '-j', '241335,241336,241337,241344,242752,242753,242754', '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList']))
+processes = query(['ps', '-eo', 'pid,ppid,etime,args'])
+processes['stdout'] = '\n'.join(line for line in processes['stdout'].splitlines() if any(s in line for s in ['runner2.sh', channel, 'git fetch', 'git push', 'pack-objects']))[-12000:]
+emit('RECEIVER_PROCESS_OBSERVATION', processes)
+emit('DIAGNOSTIC_END', dict(scientific_job_modified=False, main_command_reexecuted=False, shared_runner_modified=False))
 PY
