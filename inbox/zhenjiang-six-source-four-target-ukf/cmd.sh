@@ -4,63 +4,34 @@ source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
-export CUDA_VISIBLE_DEVICES=""
-python -B - <<'FAILED_SOURCE'
-import hashlib,json,pathlib,subprocess,sys
-root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006')
-job='243692';case='explicit_gru__historical_capacity'
-assert json.loads((root/'records/scheduler_jobs.json').read_text())[case]==job
-queries=[]
-for command in (['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%Z'],
-                ['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,NodeList','-P']):
-    p=subprocess.run(command,capture_output=True,text=True,timeout=30)
-    assert p.returncode==0,p.stderr
-    queries.append({'command':command,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
-rows=[line.split('|') for line in queries[0]['stdout'].splitlines() if line.strip()]
-assert not any(row[0]==job or row[3]==str(root) or row[1].startswith(('zj_gru_cov_','zj_gru_covariance_','zj_gru_val_','zj_gru_comp_','zj_gru_fail006_')) for row in rows)
-accounting=[line.split('|') for line in queries[1]['stdout'].splitlines() if line.startswith(job+'|')]
-assert len(accounting)==1 and accounting[0][1:3]==['FAILED','1:0']
-assert accounting[0][3:5]==['2026-10-16T15:56:08','2026-10-16T17:30:44']
-def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-manifest_path=root/'release_manifest.json'
-assert sha(manifest_path)=='2f1e9dfaa051f29228699a7111acf50ce41464586a992650258fa1c16286dd87'
-manifest=json.loads(manifest_path.read_bytes());path=root/'hpc/audit_compensated_continuation_20261016_v2.py'
-assert sha(path)=='79e58ffa45d7a8f4f5e244beecb177cfa863b7ed38d86260b3e84f46370e9cf5'
-text=path.read_text()
-text=text.replace("    rows = []","    rows = []\n    source_before = {str(ROOT/'runs'/m['run']/name):h.sha(ROOT/'runs'/m['run']/name) for m in prep['migrations'] for name in ['config.json','continuation.pt','failure.json','metrics.json']}")
-old="        assert not (target/'failure.json').exists(), 'new fit failure requires diagnosis'"
-assert text.count(old)==1
-# This is a diagnostic-only copy of the audit; failure presence never admits continuation.
-text=text.replace(old,"""        failure=h.read(target/'failure.json')
-        assert failure['status']=='failed' and failure['epochs_completed']==count
-        assert failure['reason']=='covariance not positive definite after permitted jitter'
-        metric=h.read(target/'metrics.json')
-        assert all(metric[k]==new[v] for k,v in [('validation_mae_cm','values'),('train_metrics','train_metrics'),('shuffle_hashes','shuffle_hashes')])
-        expected_steps=sum(len(batch_metrics) for batch_metrics in new['train_metrics'])
-        assert all(step==expected_steps for step in after)""")
-needle="'checkpoint_bytes':len(raw),";assert text.count(needle)==1
-text=text.replace(needle,needle+" 'failure':failure,'failure_sha256':h.sha(target/'failure.json'),'metrics_equal_saved_checkpoint':True,'current_optimizer_steps':sorted(set(after)),'expected_optimizer_steps':expected_steps,'current_parameters_semantic_sha256':h.state_hash(new['current']),'best_state_semantic_sha256':h.state_hash(new['best']),'optimizer_semantic_sha256':h.state_hash(new['optimizer']),'validation_history':new['values'],'best_epoch':new['values'].index(min(new['values']))+1,")
-text=text.replace("'status':'covariance_recovery_continuation_checkpoint_audit_passed'", "'status':'read_only_compensated_failed_checkpoint_source_audit'")
-text=text.replace("'any_new_failure_file':False", "'any_new_failure_file':True, 'continuation_admitted':False, 'data_inputs_read':False")
-begin=text.index("    path = ROOT/'records'/('covariance_checkpoint_audit_")
-end=text.index('    print(json.dumps(audit',begin)
-extra="""    def identity(p):
-        b=p.read_bytes();return {'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-    assert all(h.sha(Path(p))==digest for p,digest in source_before.items())
-    code_files=sorted([*ROOT.joinpath('src').glob('*.py'),*ROOT.joinpath('scripts').glob('*.py'),*ROOT.joinpath('vendor/pytides').glob('*.py')])
-    code_hashes={p.relative_to(ROOT).as_posix():h.sha(p) for p in code_files}
-    assert hashlib.sha256(json.dumps(code_hashes,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()==auth['code_hash']
-    group=h.read(ROOT/'records'/CASE/'tune_branch_group_configs.json');assert len(group)==12
-    audit.update(source_code_file_hashes=code_hashes,
-        all_member_source_files={rid:{name:identity(ROOT/'runs'/rid/name) for name in ['config.json','continuation.pt','failure.json','metrics.json']} for rid in group},
-        files={name:identity(ROOT/name) for name in ['configs/protocol-v3.json','configs/registry-v3.json','records/authorization.json','records/data_preparation_complete.json','prepared/tuning/manifest.json','records/'+CASE+'/tune_branch_group_configs.json','records/'+CASE+'/tune_foundation_group_outcome.json']},
-        queries=EXACT_QUERIES,source_root=str(ROOT),source_job=EXACT_JOB,
-        checkpoints_loaded_on_cpu_only=True,scientific_or_scheduler_mutations=False,
-        formal_training_restarted=False,formal_epochs_added=0)
-"""
-text=text[:begin]+extra+text[end:]
-sys.path.insert(0,str(root/'hpc'))
-namespace={'__name__':'read_only_failed_source_copy','__file__':str(path),'EXACT_QUERIES':queries,'EXACT_JOB':job}
-exec(compile(text,str(path)+':diagnostic_failed_source_copy','exec'),namespace)
-namespace['main']()
-FAILED_SOURCE
+python -B - <<'PY'
+import datetime,hashlib,io,json,pathlib,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf');sequence=int((inbox/'seq').read_text());assert sequence==541
+raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes();assert hashlib.sha256(raw).hexdigest()=='13e0e7eb7284767c762320e3759520fffee03dea12f723b4e76ddcc90c7cce41'
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001');assert not root.exists(),'existing isolated deployment requires read-only reconciliation, never overwrite or repeat'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert members and all(m.isfile() for m in members);assert len(members)==8
+ for m in members:
+  relative=pathlib.PurePosixPath(m.name);assert not relative.is_absolute() and '..' not in relative.parts and root in (root/m.name).resolve().parents
+ content={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(content['package_manifest.json']);assert set(content)==set(manifest['files'])|{'package_manifest.json'}
+for name,item in manifest['files'].items():assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
+spec=json.loads(content['diagnostic_spec.json']);assert spec['schema']=='isolated_failed006_original_training_epoch47_v1'
+assert spec['source_job']=='243692' and spec['source_code_hash']=='4232fbb467341b6332f91e9289cdb975613babb5d29e2079b66d55f7822c3757'
+assert spec['expected_saved_epoch']==46 and spec['replayed_epoch']==47 and spec['old_diagnostic_half_epoch_state_used'] is False
+assert spec['selection_years']==[2021] and spec['training_years']==[2017,2018,2019,2020] and spec['maximum_replay_epochs']==1
+assert spec['formal_checkpoint_write_allowed'] is False and spec['evaluation_values_read'] is False and spec['scientific_rules_changed'] is False
+source=pathlib.Path(spec['source_root'])
+for rid,files in spec['all_member_source_files'].items():
+ for name,item in files.items():
+  p=source/'runs'/rid/name;b=p.read_bytes();assert len(b)==item['bytes'] and hashlib.sha256(b).hexdigest()==item['sha256']
+for name,expected in spec['source_code_file_hashes'].items():assert hashlib.sha256((source/name).read_bytes()).hexdigest()==expected
+root.mkdir(exist_ok=False)
+for name,b in content.items():
+ p=root/name;p.parent.mkdir(parents=True,exist_ok=True)
+ with p.open('xb') as f:f.write(b)
+for name in ['records','logs']:(root/name).mkdir(exist_ok=True)
+print(json.dumps({'status':'joseph_failure_replay_diagnostic_deployed','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'diagnostic_root':str(root),'source_failed_job':'243692','payload_sha256':hashlib.sha256(raw).hexdigest(),'manifest_sha256':hashlib.sha256(content['package_manifest.json']).hexdigest(),'formal_training_restarted':False,'formal_epochs_added':0,'evaluation_values_read':False},sort_keys=True))
+PY
+python -B /data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001/hpc/submit_covariance_diagnostic.py
+python -B /data1/home/sunyiq/zhenjiang_training_covariance_failure_006_20261016_001/hpc/probe_covariance_diagnostic.py
