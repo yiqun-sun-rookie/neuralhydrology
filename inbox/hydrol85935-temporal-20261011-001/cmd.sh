@@ -1,6 +1,37 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'RESOURCE_SURVEY'
+import subprocess,json,datetime,re
+
+def emit(tag,obj):print(tag+' '+json.dumps(obj),flush=True)
+def call(label,args,mode=None):
+ try:
+  p=subprocess.run(args,capture_output=True,text=True,timeout=25)
+  out=p.stdout
+  if mode=='nodes':
+   rows=[]
+   for ln in out.splitlines():
+    val=dict(re.findall(r'(\w+)=([^ ]*)',ln))
+    if 'gpu' in val.get('Gres','').lower() or 'gres/gpu' in val.get('CfgTRES',''):
+     rows.append({k:val.get(k) for k in ['NodeName','State','Partitions','Gres','CfgTRES','AllocTRES','CPUTot','CPUAlloc','RealMemory','AllocMem','FreeMem','AvailableFeatures','ActiveFeatures','Reason','Version','OS']})
+   emit(label,dict(args=args,exit_code=p.returncode,gpu_nodes=rows,stderr=p.stderr));return
+  if mode=='sinfo':out='\n'.join(x for x in out.splitlines() if 'gpu' in x.lower())
+  emit(label,dict(args=args,exit_code=p.returncode,stdout=out[:50000],stderr=p.stderr))
+ except Exception as ex:emit(label,dict(args=args,error=type(ex).__name__+': '+str(ex)))
+emit('RESOURCE_SURVEY_TIME',dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
+call('RESOURCE_START_ESTIMATE',['squeue','--start','-j','242752','-o','%.22i|%.12T|%.24S|%.30r|%.24N'])
+call('RESOURCE_PRIORITY',['sprio','-j','242752','-l'])
+call('RESOURCE_SINFO',['sinfo','-N','-h','-o','%N|%P|%t|%G|%C|%f'],'sinfo')
+call('RESOURCE_NODES',['scontrol','show','node','-o'],'nodes')
+call('RESOURCE_PARTITIONS',['scontrol','show','partition','-o'])
+call('RESOURCE_RESERVATIONS',['scontrol','show','reservation','-o'])
+call('RESOURCE_ACCOUNT_ACCESS',['sacctmgr','-n','-P','show','assoc','where','user=sunyiq','format=Cluster,Account,Partition,QOS,DefaultQOS'])
+call('RESOURCE_GPU_OCCUPANCY',['squeue','-h','-t','RUNNING,COMPLETING','-o','%i|%P|%T|%b|%N|%S|%e'])
+RESOURCE_SURVEY
+#!/bin/bash
+set -eo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'READ_SOURCE'
 from pathlib import Path
 import json,hashlib,re
