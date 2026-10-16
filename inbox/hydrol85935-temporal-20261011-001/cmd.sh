@@ -1,41 +1,6 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'HANDOFF'
-import json,hashlib,subprocess,base64,datetime
-from pathlib import Path
-R=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001');T=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001');H=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/control/local_s100_backfill_20261017_001')
-A=base64.b64decode('ew0KICAiaWQiOiAibG9jYWxfczEwMF9iYWNrZmlsbF8yMDI2MTAxN18wMDEiLA0KICAic2VlZCI6IDEwMCwNCiAgImJhc2lucyI6IFsNCiAgICAiMDQyMTY0MTgiLA0KICAgICIwNDIyMTAwMCIsDQogICAgIjA0MjI0Nzc1IiwNCiAgICAiMDQyMzMwMDAiLA0KICAgICIwNDI1NjAwMCINCiAgXSwNCiAgIm93bmVyIjogIkxPQ0FMIiwNCiAgInNlYXJjaF9yZWNvcmRzIjogMTAsDQogICJoZWxkX2pvYiI6IDI0Mjc1MywNCiAgIm9sZF9hc3NpZ25tZW50X3NoYTI1NiI6ICIxMGI0NDRmZDFhMTUyNTIzNmUzZGJhNGZhOTQwOGNjYTg2ZTgxMjc1ZWViOGE4YzVhYjA1ZWFkOTA2MmZhNjNmIiwNCiAgImxvY2FsX291dHB1dCI6ICJHOlxcaHlkcm9sODU5MzVfdGVtcG9yYWxfbG9jYWxfMjAyNjEwMTRfMDAxXFxoeWRyb2w4NTkzNV9yZXZpc2lvbl8yMDI2MTAwOF8wMDFfYnJpZGdlXFxoeWRyb2w4NTkzNV90ZW1wb3JhbF9wZXJzaXN0ZW5jZV8yMDI2MTAxMV8wMDFcXGF0dGVtcHRzXFxsb2NhbF9zMTAwX2JhY2tmaWxsXzIwMjYxMDE3XzAwMSIsDQogICJsb2NhbF9jb25maWdfc2hhMjU2IjogIjVkZWJkZDk5Nzg3MzRjOWRmOTliZTFhYTg5ODNmMGNkZWIzNWEzMDc2ZTdmMjFmMDNlNmFmMWMzOThkYTkwYzQiLA0KICAibG9jYWxfd29ya2VyX3NoYTI1NiI6ICIyODdhNzE2YmJlZTdmMGUyOWM5YTk1MmMwNDVmOTYzMjBmNzc1MDU1NzgzNThkNTVmZjE4ZjRiNjVlYjA2ZWYyIiwNCiAgInNjaWVudGlmaWNfbWFuaWZlc3Rfc2hhMjU2IjogIjVjOWQ1M2NiYWM5ZDllZTViNjIyZGYyYTAwZWNhMTM4ZTBlYThlZGZkYjk5YTEwNDcwMTVkMjMyZGEwNTVhODkiLA0KICAia25vd25fdW5jb21wdXRhYmxlX3JldGFpbmVkX29uX2hwYyI6IFsNCiAgICAiMDQyMTMwNzUiDQogIF0sDQogICJzY29wZV91bmNoYW5nZWQiOiAzMTg2LA0KICAicmVsZWFzZV9jb25kaXRpb24iOiAiQWxsIGZpdmUgY29tcGxldGUgcGFpcnMgdmFsaWRhdGVkLCBpbXBvcnRlZCBieXRlLWZvci1ieXRlIGludG8gb3JpZ2luYWwgcmVjb3ZlcnkgdGFyZ2V0LCB2YWxpZGF0ZWQgdGhlcmUsIG5vIG1pc3Npbmcgb3IgZmFpbGVkIHBhaXI7IG9ubHkgdGhlbiByZWxlYXNlIDI0Mjc1MyB0byByZXVzZSBvdXRwdXRzIGFuZCBjbGFzc2lmeSAwNDIxMzA3NS4gTmV2ZXIgcmVsZWFzZSBiYXNlZCBvbmx5IG9uIGxvY2FsIHByb2Nlc3MgZXhpdC4iDQp9');a=json.loads(A)
-def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def new(p,v):
- with p.open('x') as f:json.dump(v,f,indent=2)
-def detail():return subprocess.check_output(['scontrol','show','job','242753','-o'],text=True)
-def check(d):
- assert 'JobState=PENDING' in d and 'RunTime=00:00:00' in d,d
- assert 'Command='+str(T/'submissions/s100_missing.sbatch') in d,d
- assert 'WorkDir='+str(T) in d and 'afterok:242752' in d,d
- assert 'StartTime=Unknown' in d or 'Reason=Dependency' in d or 'Reason=JobHeldUser' in d,d
- for basin in a['basins']:
-  for root in [R,T]:
-   assert not (root/'records/single_temperature_s100'/basin).exists(),basin
-   assert not (root/'failures/records/single_temperature_s100'/(basin+'.json')).exists(),basin
-assert not H.exists(),'Handoff exists; reconcile, never replay'
-assert sha(T/'assignment.json')==a['old_assignment_sha256']
-assert sha(T/'submissions/s100_missing.sbatch')=='11cd2f1f1b58a1eef0224aa69424a4178c99b7efa15ad1eb90ec8db1c9c1d9cf'
-before=detail();check(before)
-H.mkdir();(H/'assignment.json').write_bytes(A)
-new(H/'hold_intent.json',dict(job=242753,before=before,utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
-p=subprocess.run(['scontrol','hold','242753'],capture_output=True,text=True)
-new(H/'hold_response.json',dict(exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr));assert p.returncode==0,p.stderr
-after=detail();check(after);assert 'Reason=JobHeldUser' in after,after
-confirmation=dict(state='HPC_WITHDRAWN_LOCAL_OWNS_FIVE',basins=a['basins'],held_job=242753,seed=100,assignment_sha256=sha(H/'assignment.json'),before=before,after=after,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),local_output=a['local_output'],local_worker_sha256=a['local_worker_sha256'],local_config_sha256=a['local_config_sha256'])
-new(H/'confirmation.json',confirmation)
-print('LOCAL_HANDOFF '+json.dumps(confirmation),flush=True)
-
-HANDOFF
-#!/bin/bash
-set -eo pipefail
-export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'GPU_AVAILABILITY'
 import subprocess,json,datetime
 for label,args in [
@@ -109,3 +74,10 @@ if report.exists():emit('RECOVERY_REPORT',dict(sha256=hashlib.sha256(report.read
 restored=r/'control/queue_priority_20261014_001/parent_released.json'
 emit('PARENT_RELEASE',dict(exists=restored.exists(),value=read(restored) if restored.exists() else None))
 PY
+
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'LOCAL_HANDOFF_READ'
+import json
+from pathlib import Path
+p=Path('/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/control/local_s100_backfill_20261017_001')
+print('LOCAL_HANDOFF '+(p/'confirmation.json').read_text().replace('\n',' '))
+LOCAL_HANDOFF_READ
