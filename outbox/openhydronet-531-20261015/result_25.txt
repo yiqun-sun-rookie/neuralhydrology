@@ -1,0 +1,27 @@
+### channel=openhydronet-531-20261015 seq=25
+### host=login4
+### started=2026-10-16T21:09:30+0800
+### ---------- output ----------
+2026-10-16T21:09:30+0800
+2:experiment_name: id18_nse
+28:head: regression
+29:loss: NSE
+2:experiment_name: id18_nse_s101 76:seed: 101 
+Submitted batch job 244040
+jobid[id18_nse_s101]=244040
+244040 ohn_id18_nse_s101 PENDING (None)
+2:experiment_name: id18_nse_s102 76:seed: 102 
+Submitted batch job 244041
+jobid[id18_nse_s102]=244041
+244041 ohn_id18_nse_s102 PENDING (None)
+2:experiment_name: id18_nse_s103 76:seed: 103 
+Submitted batch job 244042
+jobid[id18_nse_s103]=244042
+244042 ohn_id18_nse_s103 PENDING (None)
+2:experiment_name: id18_nse_s104 76:seed: 104 
+Submitted batch job 244043
+jobid[id18_nse_s104]=244043
+244043 ohn_id18_nse_s104 PENDING (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T21:09:31+0800
