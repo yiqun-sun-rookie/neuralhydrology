@@ -1,0 +1,8 @@
+### channel=cross-experiment-status-20261016T125552Z seq=4
+### host=login4
+### started=2026-10-16T21:29:51+0800
+### ---------- output ----------
+IO_RESUME_SUBMISSION_JSON={"job_id": "244047", "root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_repaircheck_20261016_001_io_resume_001", "original_array_job_id": "244038", "submitted_utc": "2026-10-16T13:29:52.266158+00:00", "sbatch_reply": "Submitted batch job 244047\n", "initial_queue": "244047_0|knet_io_resume|PENDING|None|\n", "payload_sha256": "76adb76b9b402bf5ca909d28921515286983494c9043d5c8f50480d0761ab4d3", "original_budget_preserved": true, "optimizer_updates_authorized": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T21:29:52+0800
