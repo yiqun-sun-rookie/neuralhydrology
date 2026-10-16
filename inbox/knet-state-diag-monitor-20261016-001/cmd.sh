@@ -64,10 +64,4 @@ print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-
-transport={}
-for label,path in [('"'"'own_stage'"'"',Path.home()/'"'"'.hpc_mailbox_staging/knet-state-diag-scopefix-20261016-001/result_6.txt'"'"'),('"'"'shared_pushlock'"'"',Path.home()/'"'"'.hpc_mailbox_pushlock'"'"'),('"'"'git_index_lock'"'"',Path.home()/'"'"'hpc_mailbox/.git/index.lock'"'"')]:
-    transport[label]=dict(exists=path.exists(),bytes=path.stat().st_size if path.exists() else None,age_seconds=time.time()-path.stat().st_mtime if path.exists() else None)
-transport['"'"'original_receiver'"'"']=command(['"'"'pgrep'"'"','"'"'-u'"'"','"'"'sunyiq'"'"','"'"'-af'"'"','"'"'[.]hpc_runner_active[.]sh'"'"'])
-print('"'"'TRANSPORT_DIAG_JSON='"'"'+json.dumps(transport),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 transport-check-20261016-001
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 682d9a4cfada46a7b468e90d4ebc90a3
