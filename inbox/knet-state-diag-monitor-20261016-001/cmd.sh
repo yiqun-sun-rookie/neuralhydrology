@@ -64,4 +64,18 @@ print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 682d9a4cfada46a7b468e90d4ebc90a3
+
+archive_diag={}
+stage=Path.home()/'"'"'.hpc_mailbox_staging/knet-state-diag-scopefix-20261016-001/result_8.txt'"'"'
+archive_diag['"'"'stage_exists'"'"']=stage.exists()
+if stage.exists():
+    archive_diag['"'"'stage_bytes'"'"']=stage.stat().st_size
+    archive_diag['"'"'stage_age_seconds'"'"']=time.time()-stage.stat().st_mtime
+    with stage.open('"'"'rb'"'"') as file:
+        head=file.read(131072);file.seek(max(0,stage.stat().st_size-2048));foot=file.read()
+    archive_diag['"'"'finished_marker'"'"']=b'"'"'### exit_code='"'"' in foot
+    for line in head.decode('"'"'utf-8'"'"',errors='"'"'replace'"'"').splitlines():
+        if line.startswith('"'"'ARTIFACT_ARCHIVE_METADATA='"'"'):archive_diag['"'"'archive_metadata'"'"']=json.loads(line.split('"'"'='"'"',1)[1])
+archive_diag['"'"'receiver'"'"']=command(['"'"'pgrep'"'"','"'"'-u'"'"','"'"'sunyiq'"'"','"'"'-af'"'"','"'"'[.]hpc_runner_active[.]sh'"'"'])
+print('"'"'ARCHIVE_TRANSPORT_DIAG_JSON='"'"'+json.dumps(archive_diag),flush=True)
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 archive-probe-20261016T091422
