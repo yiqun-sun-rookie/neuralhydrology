@@ -1,12 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-payload=/data1/home/sunyiq/hpc_mailbox/inbox/id25-graice-matched-20261016/payload/graice_author_matched_b04_payload_v001.tar.gz
-if [ -e "$root" ]; then echo EXISTING_ROOT_NO_OVERWRITE; exit 1; fi
-if [ -n "$(squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i')" ]; then echo ACTIVE_OWN_JOB_NO_DUPLICATE; exit 1; fi
-printf '%s  %s\n' '844e948c2fa1752c7a37b32d622c4d44c55d40c0ff1174116a2dc0344562ef15' "$payload" | sha256sum -c -
-mkdir -p "$root/logs" "$root/artifacts" "$root/inputs"
-tar -xzf "$payload" -C "$root"
-cp /data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/inputs.npz "$root/inputs/inputs.npz"
-printf '%s  %s\n' 'b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566' "$root/inputs/inputs.npz" | sha256sum -c -
-echo B04_DEPLOYED_NO_JOB_SUBMITTED
+test -d "$root"
+if [ -e "$root/env_pid_v001.txt" ] || [ -e "$root/env_status_v001.txt" ]; then echo ENV_ALREADY_REQUESTED_DO_NOT_REPEAT; exit 1; fi
+printf '%s' 'IyEvYmluL2Jhc2gKc2V0IC1lbyBwaXBlZmFpbApyb290PS9kYXRhMS9ob21lL3N1bnlpcS9pZDI1X2dyYWljZV9hdXRob3JfbWF0Y2hlZF8yMDI2MTAxNl8wMDEKdHJhcCAncmM9JD87IHByaW50ZiAiZXhpdF9jb2RlPSVzXG4iICIkcmMiID4gIiRyb290L2Vudl9zdGF0dXNfdjAwMS50eHQiJyBFWElUCmV4cG9ydCBQWVRIT05OT1VTRVJTSVRFPTEKZXhwb3J0IFBZVEhPTkRPTlRXUklURUJZVEVDT0RFPTEKZXhwb3J0IFBJUF9DQUNIRV9ESVI9IiRyb290L3BpcF9jYWNoZSIKZXhwb3J0IFhER19DQUNIRV9IT01FPSIkcm9vdC9jYWNoZSIKdW5zZXQgUFlUSE9OUEFUSAppZiBbIC1lICIkcm9vdC92ZW52IiBdOyB0aGVuIGVjaG8gRVhJU1RJTkdfVkVOVl9OT19PVkVSV1JJVEU7IGV4aXQgMTsgZmkKL2RhdGExL2hvbWUvc3VueWlxL21pbmljb25kYTMvZW52cy9uaF9maW5hbC9iaW4vcHl0aG9uIC1tIHZlbnYgIiRyb290L3ZlbnYiCiIkcm9vdC92ZW52L2Jpbi9weXRob24iIC1tIHBpcCBpbnN0YWxsIC0tZGlzYWJsZS1waXAtdmVyc2lvbi1jaGVjayAtLXRpbWVvdXQgOTAgLS1yZXRyaWVzIDIgJ3RlbnNvcmZsb3dbYW5kLWN1ZGFdPT0yLjE1LjEnICdudW1weT09MS4yNi40JyAnc2Npa2l0LWxlYXJuPT0xLjQuMicgJ21hdHBsb3RsaWI9PTMuOC40JwoiJHJvb3QvdmVudi9iaW4vcHl0aG9uIiAtbSBwaXAgZnJlZXplID4gIiRyb290L3JlcXVpcmVtZW50c19pbnN0YWxsZWRfdjAwMS50eHQiCnRvdWNoICIkcm9vdC92ZW52L3J1bnRpbWVfcmVhZHkiCmVjaG8gQjA0X1BSSVZBVEVfR1BVX1JVTlRJTUVfSU5TVEFMTEVECg==' | base64 -d > "$root/setup_env_v001.sh"
+nohup /bin/bash "$root/setup_env_v001.sh" > "$root/logs/env_install_v001.log" 2>&1 < /dev/null &
+pid=$!
+printf '%s\n' "$pid" > "$root/env_pid_v001.txt"
+printf 'ENV_INSTALL_PID=%s\n' "$pid"
