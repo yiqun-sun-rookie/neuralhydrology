@@ -1,0 +1,17 @@
+### channel=id25-graice-matched-20261016 seq=7
+### host=login4
+### started=2026-10-16T16:14:57+0800
+### ---------- output ----------
+  Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading pyasn1-0.6.4-py3-none-any.whl.metadata (8.4 kB)
+Collecting oauthlib>=3.0.0 (from requests-oauthlib>=0.7.0->google-auth-oauthlib<2,>=0.5->tensorboard<2.16,>=2.15->tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading oauthlib-4.0.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3,>=1.6.3->tensorboard<2.16,>=2.15->tensorflow==2.15.1->tensorflow[and-cuda]==2.15.1)
+  Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+Downloading tensorflow-2.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (475.3 MB)
+  PID ELAPSED STAT COMMAND
+16720     404 S    /bin/bash /data1/home/sunyiq/id25_graice_author_matched_20261016_001/setup_env_v002.sh
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T16:14:57+0800
