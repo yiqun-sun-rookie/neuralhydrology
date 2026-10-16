@@ -6,7 +6,8 @@ root=pathlib.Path('/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/stat
 eng=root.with_name(root.name+'_io_resume_001')
 terminal=json.loads((eng/'terminal.json').read_bytes())
 assert terminal['job_id']=='244047' and all(x['status']=='COMPLETED' for x in terminal['results'])
-queue=subprocess.run(['squeue','-h','-j','244047','-o','%i|%T|%R'],capture_output=True,text=True,check=True).stdout
+queue_result=subprocess.run(['squeue','-h','-j','244047','-o','%i|%T|%R'],capture_output=True,text=True)
+queue=queue_result.stdout
 assert not queue.strip()
 accounting=subprocess.run(['sacct','-n','-X','-j','244047','-P','--format=JobID,State,ExitCode,Elapsed,Start,End'],capture_output=True,text=True,check=True).stdout
 assert 'COMPLETED|0:0' in accounting
@@ -27,7 +28,7 @@ with tarfile.open(fileobj=stream,mode='w:gz') as tar:
   assert (before.st_size,before.st_mtime_ns)==(after.st_size,after.st_mtime_ns)
   meta=dict(path=name,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest());manifest.append(meta)
   info=tarfile.TarInfo(name);info.size=len(raw);info.mtime=0;tar.addfile(info,io.BytesIO(raw))
- doc=dict(job_id='244047',original_job_id='244038',queried_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),accounting=accounting,queue=queue,files=manifest,no_model_calls=True)
+ doc=dict(job_id='244047',original_job_id='244038',queried_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),accounting=accounting,queue=queue,queue_returncode=queue_result.returncode,queue_stderr=queue_result.stderr,files=manifest,no_model_calls=True)
  raw=json.dumps(doc,indent=2).encode();info=tarfile.TarInfo('collection_manifest.json');info.size=len(raw);info.mtime=0;tar.addfile(info,io.BytesIO(raw))
 payload=stream.getvalue()
 print('ARCHIVE_METADATA='+json.dumps(dict(bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest(),files=len(manifest),job_id='244047')))
