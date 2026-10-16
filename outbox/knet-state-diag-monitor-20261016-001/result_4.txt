@@ -1,0 +1,8 @@
+### channel=knet-state-diag-monitor-20261016-001 seq=4
+### host=login4
+### started=2026-10-16T21:02:04+0800
+### ---------- output ----------
+REPAIR_TRANSPORT_PROBE={"utc": "2026-10-16T13:02:06.081298+00:00", "token": "repaircheck_20261016_before_submission", "receiver": "3169 bash /data1/home/sunyiq/.hpc_runner_active.sh\n19830 bash /data1/home/sunyiq/.hpc_runner_active.sh\n19854 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B -c import datetime,subprocess,json;print('REPAIR_TRANSPORT_PROBE='+json.dumps(dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),token='repaircheck_20261016_before_submission',receiver=subprocess.run(['pgrep','-afu','sunyiq','hpc_runner_active'],capture_output=True,text=True).stdout,partition=subprocess.run(['sinfo','-p','hgpu4','-N','-h','-o','%N|%T|%C'],capture_output=True,text=True).stdout)))\n19978 bash /data1/home/sunyiq/.hpc_runner_active.sh\n", "partition": "ngu101|mixed|16/80/0/96\nngu102|mixed|14/82/0/96\nngu103|down*|0/0/96/96\nngu104|mixed|8/88/0/96\n"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T21:02:06+0800
