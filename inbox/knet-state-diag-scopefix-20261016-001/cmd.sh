@@ -45,7 +45,8 @@ for i,basin in enumerate(['"'"'02092500'"'"','"'"'04105700'"'"']):
     arows=[x for x in rows if includes(x[0],i)]
     details=command(['"'"'scontrol'"'"','"'"'-o'"'"','"'"'show'"'"','"'"'job'"'"',exact])
     fields=dict(re.findall(r'"'"'(\w+)=([^\s]+)'"'"',details['"'"'stdout'"'"']))
-    stat=command(['"'"'sstat'"'"','"'"'-j'"'"',exact+'"'"'.batch'"'"','"'"'--noheader'"'"','"'"'--parsable2'"'"','"'"'--format=JobID,AveCPU,MaxRSS'"'"']) if any(x[2]=='"'"'RUNNING'"'"' for x in qrows) else None
+    physical_job=fields.get('"'"'JobId'"'"','"'"''"'"')
+    stat=command(['"'"'sstat'"'"','"'"'-j'"'"',physical_job+'"'"'.batch'"'"','"'"'--noheader'"'"','"'"'--parsable2'"'"','"'"'--format=JobID,AveCPU,MaxRSS'"'"']) if physical_job.isdigit() and any(x[2]=='"'"'RUNNING'"'"' for x in qrows) else None
     elements.append(dict(index=i,basin=basin,queue=qrows,accounting=arows,
         terminal=any(x[2].split()[0].rstrip('"'"'+'"'"') in terminal_states for x in arows),
         scheduler=details,scheduler_fields=fields,resource_usage=stat,
@@ -56,4 +57,4 @@ print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 8b68d55aebd54d849c931d12c4cf9b43
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 106c2374b627415dba120ad255fa9e5a
