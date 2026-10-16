@@ -1,0 +1,13 @@
+### channel=china-input-next-20261015 seq=38
+### host=login4
+### started=2026-10-16T18:38:13+0800
+### ---------- output ----------
+Submitted batch job 244015
+OWN_EXTRACT_JOB_ID=244015
+OWN_EXTRACT_STATE_JSON_BEGIN
+{"job_id":"244015","server_utc":"2026-10-16T10:38:14.672208+00:00","queries":{"squeue":{"exit_code":0,"stdout":"244015|PENDING||(Priority)|/data1/home/sunyiq/china_input_completion_hpc_20261015_001/hydroatlas_extract_headers_v1\n","stderr":""},"sacct":{"exit_code":0,"stdout":"","stderr":""}},"new_submissions":1,"source_gets":0,"model_calls":0}
+OWN_EXTRACT_STATE_JSON_END
+OWN_EXTRACT_SUBMIT_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T18:38:14+0800
