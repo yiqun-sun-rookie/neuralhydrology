@@ -1,0 +1,8 @@
+### channel=knet-state-diag-20261016-001 seq=3
+### host=login4
+### started=2026-10-16T15:35:36+0800
+### ---------- output ----------
+TECHNICAL_STOP_JSON={"status": "OWNED_TECHNICAL_STOP", "utc": "2026-10-16T07:35:37.490912+00:00", "job_id": "243676", "reason": "diagnostic scope dictionary omitted global os/hashlib; no scientific algorithm change", "optimizer_calls": 0, "actions": [{"action": "cancel_owned_unstarted_element1", "returncode": 0, "stdout": "", "stderr": ""}], "prior_queue": "243676_[1%1]|PENDING\n243676_0|RUNNING\n"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T15:35:37+0800
