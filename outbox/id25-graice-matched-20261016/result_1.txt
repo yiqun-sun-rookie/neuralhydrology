@@ -1,0 +1,36 @@
+### channel=id25-graice-matched-20261016 seq=1
+### host=login4
+### started=2026-10-16T15:48:47+0800
+### ---------- output ----------
+login4
+2026-10-16T07:48:47Z
+B04_ROOT_UNUSED
+NODELIST            GRES              GRES_USED                   CPUS(A/I/O/T)       
+ngu001              gpu:2             gpu:2,dcu:0                 44/52/0/96          
+ngu002              gpu:2             gpu:0,dcu:0                 0/0/96/96           
+ngu004              gpu:2             gpu:2,dcu:0                 20/76/0/96          
+ngu005              gpu:2             gpu:2,dcu:0                 20/76/0/96          
+ngu006              gpu:2             gpu:2,dcu:0                 32/64/0/96          
+ngu007              gpu:2             gpu:2,dcu:0                 8/88/0/96           
+ngu008              gpu:2             gpu:2,dcu:0                 20/76/0/96          
+ngu010              gpu:2             gpu:2,dcu:0                 8/24/0/32           
+ngu011              gpu:2             gpu:2,dcu:0                 8/24/0/32           
+/data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/inputs.npz|9188044|2026-10-12 20:46:07.000000000 +0800
+/data1/home/sunyiq/id25_graice_lstmnosif_20261015_001/venv/bin/python|54|2026-10-15 14:28:00.000000000 +0800
+/data1/home/sunyiq/id25_graice_lstmnosif_20261015_001/venv/runtime_ready|0|2026-10-15 15:09:03.000000000 +0800
+
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: /data1/home/sunyiq/id25_graice_lstmnosif_20261015_001/venv/bin/python -m pip install --upgrade pip
+h5py==3.14.0
+keras==2.15.0
+matplotlib==3.8.4
+ml-dtypes==0.3.2
+numpy==1.26.4
+scikit-learn==1.4.2
+tensorflow-cpu==2.15.1
+tensorflow-estimator==2.15.0
+tensorflow-io-gcs-filesystem==0.37.1
+B04_PREFLIGHT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T15:49:04+0800
