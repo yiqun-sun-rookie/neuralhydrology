@@ -30,8 +30,8 @@ record={'status':'existing_replay_partition_route_preflight','checked_at_beijing
   'broadcast_failure_written':'2026-10-16T17:28:52+08:00','critical_training_segment_upper_bound_seconds':144,
   'prior_same_dimension_cpu_reference_seconds':41,'duration_is_evidence_not_a_completion_guarantee':True},
  'user_instruction':'Resolve the existing244010 queue delay, run its original failure replay and resume authorized formal training.'}
-attempt=root/'records/existing244010_partition_route_20261016.attempt.json'
-response=root/'records/existing244010_partition_route_20261016.response.json'
+attempt=root/'records/existing244010_exact_device_route_20261016.attempt.json'
+response=root/'records/existing244010_exact_device_route_20261016.response.json'
 try:
  assert read(root/'records/scheduler_jobs.json')=={'covariance_diagnostic':job}
  spec=read(root/'diagnostic_spec.json');manifest=read(root/'package_manifest.json')
@@ -63,60 +63,61 @@ try:
  assert not any(row[0]==source_job or row[3]==str(source) for row in rows)
  record['other_three_before']=run(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
 
- # Read device identity only. No CUDA computation, no allocation bypass and no
- # credentials or host-key changes are permitted on these metadata SSH calls.
+
+ # Only original RTX3090 nodes of hgpu2 are candidates. DeviceTotalMem is
+ # queried through the CUDA driver without creating a CUDA context or kernels.
  record['partition_query']=run([control,'show','partition','-o'])
  record['association_query']=run(['sacctmgr','-n','-P','show','association','where','user=sunyiq','format=Cluster,Account,User,Partition,QOS,DefaultQOS'])
- assert record['association_query']['returncode']==0
- assert 'hhuhpc_jt|g_sunyiq|sunyiq||qos_sunyiq|' in record['association_query']['stdout'].splitlines()
- partition_rows={f['PartitionName']:f for line in record['partition_query']['stdout'].splitlines() for f in [dict(re.findall(r'(\w+)=([^\s]+)',line))]}
- assert record['partition_query']['returncode']==0
- record['inventory']=[];matched={};excluded=['ngu002','ngu011']
- for part,nodes in [('hgpu2',['ngu003','ngu009']),('hgpu4',['ngu101','ngu102','ngu103','ngu104']),('hgpu8',['ngu201','ngu202','ngu203'])]:
-  f=partition_rows[part]
-  assert f['State']=='UP' and f['AllowAccounts']=='ALL' and f['AllowQos']=='ALL' and f['AllowGroups']=='ALL'
-  assert f['PriorityTier']=='1' and f['ReqResv']=='NO'
-  valid=[]
-  for node in nodes:
-   node_q=run([control,'show','node','-o',node]);nf=fields(node_q)
-   assert nf['NodeName']==node and nf['Partitions']==part
-   item={'node':node,'partition':part,'scheduler_node':node_q,'same_frozen_gpu':False}
-   if any(x in nf['State'] for x in ['DOWN','DRAIN','FAIL']):item['inventory_skipped']='scheduler_unavailable'
-   else:
-    inv=run(['ssh','-T','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=5','-o','ConnectionAttempts=1',node,'nvidia-smi','--query-gpu=name,memory.total,driver_version','--format=csv,noheader,nounits'])
-    item['device_identity_read']=inv
-    rows=[x.strip().split(',') for x in inv['stdout'].splitlines() if x.strip()]
-    item['same_frozen_gpu']=inv['returncode']==0 and bool(rows) and all(len(x)==3 and x[0].strip()=='NVIDIA GeForce RTX 3090' and x[1].strip()=='24576' for x in rows)
-   record['inventory'].append(item)
-   if item['same_frozen_gpu']:valid.append(node)
-   else:excluded.append(node)
-  if valid:matched[part]=valid
- record['admitted_matching_nodes']=matched
- target_partitions=['hgpu2p']+sorted(matched)
- record['desired_partition_list']=target_partitions
+ assert record['association_query']['returncode']==0 and 'hhuhpc_jt|g_sunyiq|sunyiq||qos_sunyiq|' in record['association_query']['stdout'].splitlines()
+ part=next(dict(re.findall(r'(\w+)=([^\s]+)',line)) for line in record['partition_query']['stdout'].splitlines() if line.startswith('PartitionName=hgpu2 '))
+ assert part['State']=='UP' and part['AllowAccounts']==part['AllowGroups']==part['AllowQos']=='ALL' and part['PriorityTier']=='1'
+ assert part['Nodes']=='ngu[003,009]'
+ record['inventory']=[];matched={};excluded=['ngu002','ngu011'];valid=[]
+ metadata_code="import ctypes,json; c=ctypes.CDLL('libcuda.so.1'); assert c.cuInit(0)==0; n=ctypes.c_int(); assert c.cuDeviceGetCount(ctypes.byref(n))==0; out=[]\nfor i in range(n.value):\n d=ctypes.c_int(); assert c.cuDeviceGet(ctypes.byref(d),i)==0; name=ctypes.create_string_buffer(256); assert c.cuDeviceGetName(name,256,d)==0; mem=ctypes.c_size_t(); assert c.cuDeviceTotalMem_v2(ctypes.byref(mem),d)==0; major=ctypes.c_int();minor=ctypes.c_int(); assert c.cuDeviceComputeCapability(ctypes.byref(major),ctypes.byref(minor),d)==0; out.append(dict(name=name.value.decode(),total_memory_bytes=mem.value,capability=[major.value,minor.value]))\nprint(json.dumps(dict(devices=out,contexts_created=0,gpu_kernels_launched=0)))"
+ import base64
+ remote='python3 -c "import base64;exec(base64.b64decode(\''+base64.b64encode(metadata_code.encode()).decode()+'\'))"'
+ for node in ['ngu003','ngu009']:
+  nq=run([control,'show','node','-o',node]);nf=fields(nq);assert nf['NodeName']==node and nf['Partitions']=='hgpu2'
+  item={'node':node,'partition':'hgpu2','scheduler_node':nq,'same_frozen_gpu':False,'exact_source_memory_matched':False}
+  if any(x in nf['State'] for x in ['DOWN','DRAIN','FAIL']):item['inventory_skipped']='scheduler_unavailable'
+  else:
+   keyfile=root/('records/node_'+node+'_first_connection_554_known_hosts')
+   if not keyfile.exists():
+    scan=run(['ssh-keyscan','-T','5','-t','ecdsa',node]);assert scan['returncode']==0 and scan['stdout'].strip()
+    keys=[line for line in scan['stdout'].splitlines() if line.startswith(node+' ')]
+    assert len(keys)==1
+    keyfile.open('x').write(keys[0]+'\n')
+   item['project_scoped_host_key_file']={'path':str(keyfile),'sha256':sha(keyfile),'global_ssh_configuration_changed':False}
+   inv=run(['ssh','-T','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(keyfile),'-o','ConnectTimeout=5','-o','ConnectionAttempts=1',node,remote])
+   item['device_identity_read']=inv
+   if inv['returncode']==0:
+    data=json.loads(inv['stdout']);item['actual_device_metadata']=data
+    assert data['contexts_created']==data['gpu_kernels_launched']==0
+    item['same_frozen_gpu']=bool(data['devices']) and all(d['name']=='NVIDIA GeForce RTX 3090' and d['capability']==[8,6] for d in data['devices'])
+    item['exact_source_memory_matched']=item['same_frozen_gpu'] and all(d['total_memory_bytes']==25296044032 for d in data['devices'])
+  record['inventory'].append(item)
+  if item['exact_source_memory_matched']:valid.append(node)
+  else:excluded.append(node)
+ if valid:matched['hgpu2']=valid
+ record['admitted_matching_nodes']=matched;record['desired_partition_list']=['hgpu2p']+sorted(matched)
  record['no_priority_or_qos_change']=True
  if attempt.exists():
   record.update(status='prior_exclusive_partition_attempt_preserved_no_retry',prior_attempt=read(attempt))
   if response.exists():record['prior_response']=read(response)
- elif b['JobState']!='PENDING':
-  record.update(status='replay_already_started_no_partition_change',actual_state=b['JobState'])
- elif not matched:
-  record.update(status='no_matching_alternate_gpu_route_proven',actual_state=b['JobState'])
+ elif b['JobState']!='PENDING':record.update(status='replay_already_started_no_partition_change',actual_state=b['JobState'])
+ elif not matched:record.update(status='no_matching_alternate_gpu_route_proven',actual_state=b['JobState'])
  else:
   assert b['RunTime']=='00:00:00' and b['NodeList']=='(null)' and b['Reason']=='Priority'
   assert seconds(b['TimeLimit'])==1800 and seconds(b['TimeMin'])==900
   record['before_fields']=b;save(attempt,record)
-  record['update']=run([control,'update','JobId='+job,'Partition='+','.join(target_partitions),'ExcNodeList='+','.join(sorted(set(excluded)))])
+  record['update']=run([control,'update','JobId='+job,'Partition='+','.join(record['desired_partition_list']),'ExcNodeList='+','.join(sorted(set(excluded)))])
   record['after']=run([control,'show','job','-o',job]);a=fields(record['after']);record['after_fields']=a
-  invariant={k:v for k,v in expected.items() if k not in ['Partition','ExcNodeList']}
-  assert all(a.get(k)==v for k,v in invariant.items()),a
-  assert a['SubmitTime']==b['SubmitTime'] and a['EligibleTime']==b['EligibleTime']
-  assert a['Account']==b['Account'] and a['QOS']==b['QOS'] and a['Nice']==b['Nice']
+  assert all(a.get(k)==v for k,v in expected.items() if k not in ['Partition','ExcNodeList']),a
+  assert all(a[k]==b[k] for k in ['SubmitTime','EligibleTime','Account','QOS','Nice'])
   assert all(sha(root/name)==identity['sha256'] for name,identity in manifest['files'].items())
   assert sha(source/'runs'/spec['run_id']/'continuation.pt')==spec['source_run_files']['continuation.pt']['sha256']
-  verified=record['update']['returncode']==0 and set(a['Partition'].split(','))==set(target_partitions)
-  record.update(status='existing_replay_matching_partition_route_verified' if verified else 'partition_update_unconfirmed_read_only_reconciliation_required',
-   job_id_and_queue_age_retained=True,script_package_and_complete_source_unchanged=True,actual_state=a['JobState'])
+  verified=record['update']['returncode']==0 and set(a['Partition'].split(','))==set(record['desired_partition_list'])
+  record.update(status='existing_replay_matching_partition_route_verified' if verified else 'partition_update_unconfirmed_read_only_reconciliation_required',job_id_and_queue_age_retained=True,script_package_and_complete_source_unchanged=True,actual_state=a['JobState'])
   record['other_three_after']=run(['squeue','-h','-j','236706,236707,237928','-o','%i|%T|%Z|%l|%C|%b'])
   record['finished_at_beijing']=now();save(response,record)
 except Exception as error:
