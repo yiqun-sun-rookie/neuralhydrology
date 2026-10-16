@@ -1,0 +1,11 @@
+### channel=china-input-next-20261015 seq=32
+### host=login4
+### started=2026-10-16T16:01:41+0800
+### ---------- output ----------
+OWN_ATLAS_DIRECTORY_PAYLOAD_VERIFIED=13
+Traceback (most recent call last):
+  File "<stdin>", line 54, in <module>
+RuntimeError: OWN_SUBMISSION_NOT_CONFIRMED_NEVER_REPLAY
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-16T16:02:01+0800
