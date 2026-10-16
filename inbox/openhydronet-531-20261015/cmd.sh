@@ -1,26 +1,24 @@
 #!/bin/bash
 set -o pipefail
-# seq 24: per-basin NSE by time_step for the two ID18-protocol runs (reads the runs' test_results.zarr; writes only into own ROOT/results)
+# seq 25: four more seeds of the ID18-protocol OpenHydroNet NSE-loss run (one single-GPU job each, own root only)
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
-P3="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v3"
 date --iso-8601=seconds
-mkdir -p "$ROOT/results"
-source ~/miniconda3/etc/profile.d/conda.sh; conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-export PYTHONPATH="$ROOT/pysite"
-for CFG in id18_cmal id18_nse; do
-  RUN=$(ls -td "$ROOT"/runs/${CFG}_* 2>/dev/null | head -1)
-  echo "=============== $CFG : $RUN"
-  ls "$RUN" | head -20 | tr '\n' ' '; echo
-  Z=$(ls -d "$RUN"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1)
-  echo "zarr=$Z"
-  [ -n "$Z" ] || { echo "NO_TEST_RESULTS"; continue; }
-  nice -n 10 python - "$Z" <<'PY'
-import sys, xarray as xr
-ds = xr.open_zarr(sys.argv[1], consolidated=False)
-print({k: int(v) for k, v in ds.sizes.items()}, list(ds.data_vars))
-PY
-  nice -n 10 python "$P3/ohn_eval.py" "$Z" 1989-10-01 1999-09-30 "$ROOT/results/${CFG}_nse_by_step.csv" 2>&1 | grep -v -i warn
-done
-echo "=== CSV_BEGIN id18_cmal"; cut -d, -f1,3,5,7,9,11,13,15,17 "$ROOT/results/id18_cmal_nse_by_step.csv"; echo "=== CSV_END"
-echo "=== CSV_BEGIN id18_nse"; cut -d, -f1,3,5,7,9,11,13,15,17 "$ROOT/results/id18_nse_nse_by_step.csv"; echo "=== CSV_END"
+grep -nE '^(seed|experiment_name|loss|head):' "$ROOT/configs/id18_nse.yml"
+submit() {  # seed partition
+  local seed=$1 part=$2 name="id18_nse_s$1"
+  sed -e "s/^experiment_name: .*/experiment_name: $name/" -e '/^seed:/d' "$ROOT/configs/id18_nse.yml" > "$ROOT/configs/$name.yml"
+  echo "seed: $seed" >> "$ROOT/configs/$name.yml"
+  grep -nE '^(seed|experiment_name):' "$ROOT/configs/$name.yml" | tr '\n' ' '; echo
+  if squeue -u sunyiq -h -o '%j' | grep -qx "ohn_$name"; then echo "ohn_$name already queued/running"; return 0; fi
+  local out jid
+  out=$(sbatch --job-name="ohn_$name" -p "$part" -t 1-12:00:00 --export=ALL,CONFIG="$name" "$ROOT/run_ohn.slurm" 2>&1); echo "$out"
+  jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+  [ -n "$jid" ] || { echo "SUBMIT_FAILED $name"; return 1; }
+  echo "jobid[$name]=$jid"
+  squeue -j "$jid" -h -o '%i %j %T %R'
+}
+submit 101 hgpu8
+submit 102 hgpu8
+submit 103 hgpu4
+submit 104 hgpu4
 exit 0
