@@ -1,0 +1,28 @@
+### channel=openhydronet-531-20261015-ops seq=1
+### host=login4
+### started=2026-10-16T14:41:09+0800
+### ---------- output ----------
+2026-10-16T14:41:09+0800
+ 3169  155017  0.2  1424   0 bash /data1/home/sunyiq/.hpc_runner_active.sh
+13399      38  0.0  1056   0 bash /data1/home/sunyiq/.hpc_runner_active.sh
+14011       1  0.0  1168   0 bash /data1/home/sunyiq/.hpc_runner_active.sh
+14037       1  0.0   672   0 timeout 7200 bash /data1/home/sunyiq/.hpc_mailbox_staging/china-input-next-20261015/cmd_31.sh
+14642       0  0.0  1168   0 bash /data1/home/sunyiq/.hpc_runner_active.sh
+14662       0  0.0   672   0 timeout 7200 bash /data1/home/sunyiq/.hpc_mailbox_staging/openhydronet-531-20261015-ops/cmd_1.sh
+14665       0  0.0  1412   0 bash /data1/home/sunyiq/.hpc_mailbox_staging/openhydronet-531-20261015-ops/cmd_1.sh
+14676       0  0.0  1168   0 bash /data1/home/sunyiq/.hpc_runner_active.sh
+--- load / mem
+ 14:41:10 up 1148 days, 20:04, 43 users,  load average: 0.59, 1.01, 1.62
+              total        used        free      shared  buff/cache   available
+Mem:            125          14         105           0           4         107
+total 217
+drwxr-xr-x.  2 sunyiq g_sunyiq   4096 Oct 16 13:54 .
+drwxr-xr-x. 11 sunyiq g_sunyiq   4096 Oct 16 13:30 ..
+-rw-r--r--.  1 sunyiq g_sunyiq 106688 Oct 16 13:53 id18_cmal_nse_by_step.csv
+-rw-r--r--.  1 sunyiq g_sunyiq 106510 Oct 16 13:54 id18_nse_nse_by_step.csv
+-rw-r--r--.   1 sunyiq g_sunyiq    621 Oct 15 18:31 result_7.txt
+-rw-r--r--.   1 sunyiq g_sunyiq    651 Oct 15 18:37 result_8.txt
+-rw-r--r--.   1 sunyiq g_sunyiq    741 Oct 15 18:49 result_9.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T14:41:11+0800
