@@ -1,0 +1,31 @@
+### channel=precip-smallfit-hpc-20261012 seq=109
+### host=login4
+### started=2026-10-16T23:20:19+0800
+### ---------- output ----------
+SMALLFIT_RETURN_V01=eJyVUV1rwjAU/SsSEDaokMTWSV+nDMcQUQdjbpQ0TTUaky0fU7H+9yXZ5nzYyyDccM/9OOckR0CodUQUNdlycSiEopui1oyBvGW1Y0kLrFVZ8MrnOE0Rgh7ZcBlyYCyxzgCPCLUsLOHCePh48oBUkoYdgNRZjbqwRn1MU9rtkxJimGFIs+5NCmEaplVpmP5gVeEsDTMY4l4HwQ7qzVGWY+jPc+jTjCpdnTkMXbHKCaY9sDgCopehtADm3THHwkBnHeKX7pivYlQhtnnTnjftKXiNm63TkqoqaA4WLdvbKCXONpPheDAa3zVXE82V5vZw/SKB13DJSii1cf0skv54iA47T3/KkTFOfkXdq3I0mJJdMvNPy5LhnttbLyqZuXLLbUC1TYaySoaCvBlWJWNffeDG/ssFzGFz8ca4myOco6x5lBupdvJ8Q98YTjNWkrWIMXwpWRWcB7bw+/GLv9eCSKi3XBLh4ZoIw06fE7qvIA==
+OPERATIONAL_QUEUE_ESTIMATE_BEGIN
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            244110    hgpu2p psfit_af   sunyiq PD 2027-10-06T11:18:20      1 (null)               (Priority)
+JobId=244110 JobName=psfit_af5f130f UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200549 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=12:17:00 TimeMin=N/A SubmitTime=2026-10-16T23:12:15 EligibleTime=2026-10-16T23:12:15 AccrueTime=2026-10-16T23:12:15 StartTime=2027-10-06T11:18:20 EndTime=2027-10-06T23:35:20 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-16T23:21:49 Partition=hgpu2p AllocNode:Sid=login04:3169 ReqNodeList=(null) ExcNodeList=(null) NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/job.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/logs/slurm-244110.err StdIn=/dev/null StdOut=/data1/home/sunyiq/precip_smallfit_hpc_20261012_v01/20261016T145315Z_af5f130f_v04/logs/slurm-244110.out Power= TresPerNode=gpu:1
+OPERATIONAL_QUEUE_ESTIMATE_END
+OWNED_QUEUE_RESOURCE_DIAGNOSIS_BEGIN
+READ_ONLY: scontrol show partition hgpu2p -o
+PartitionName=hgpu2p AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=ngu[001-002,004-008,010-011] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+READ_ONLY: sinfo -N -p hgpu2p -O nodelist:20,statelong:15,gres:30,gresused:60
+NODELIST            STATE          GRES                          GRES_USED                                                   
+ngu001              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu002              down*          gpu:2                         gpu:0,dcu:0                                                 
+ngu004              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu005              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu006              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu007              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu008              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu010              mixed          gpu:2                         gpu:2,dcu:0                                                 
+ngu011              mixed          gpu:2                         gpu:2,dcu:0                                                 
+READ_ONLY: sprio -j 244110 -l
+          JOBID PARTITION     USER   PRIORITY       SITE        AGE      ASSOC  FAIRSHARE    JOBSIZE  PARTITION        QOS        NICE                 TRES
+         244110 hgpu2p      sunyiq     200549          0        544          0          0          6          0     200000           0                     
+/data1/home/sunyiq/.hpc_mailbox_staging/precip-smallfit-hpc-20261012/cmd_109.sh: line 20: printf: `|': invalid format character
+READ_ONLY: squeue -p hgpu2p -t R,PD -h -o '0|### ---------- end ----------
+### exit_code=1
+### finished=2026-10-16T23:20:20+0800
