@@ -1,6 +1,32 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'ABI_READONLY'
+import json,subprocess,re,hashlib,datetime
+from pathlib import Path
+p=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+r=p/'runtime_torch271cu118/site'
+libs=[r/'torch/lib/libc10.so',r/'torch/lib/libtorch_cpu.so']
+libs+=sorted((r/'torch').glob('_C*.so'))[:1]
+b=Path('/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages')
+libs+=sorted((b/'numpy/_core').glob('_multiarray_umath*.so'))[:1]
+libs+=sorted((b/'scipy/linalg').glob('_fblas*.so'))[:1]
+rows=[]
+for f in libs:
+ out=subprocess.run(['readelf','--version-info',str(f)],capture_output=True,text=True,timeout=40)
+ versions=sorted(set(re.findall(r'Name: GLIBC_([0-9.]+)',out.stdout)),key=lambda x:tuple(map(int,x.split('.'))))
+ rows.append(dict(path=str(f),exists=f.exists(),exit_code=out.returncode,required_glibc_versions=versions,maximum_required_glibc=versions[-1] if versions else None,stderr=out.stderr))
+print('ELF_RUNTIME_REQUIREMENTS '+json.dumps(dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),libraries=rows)),flush=True)
+f=p/'execution/hpc_v009/frozen/manifest.json'
+if f.exists():
+ raw=f.read_bytes();v=json.loads(raw);print('TRAINING_FROZEN_RUNTIME '+json.dumps(dict(path=str(f),sha256=hashlib.sha256(raw).hexdigest(),runtime=v.get('runtime'))),flush=True)
+for f in [p/'control/full_v004/verify_isolated_runtime.py',p/'versions/v004/code/src/adversarial/scripts/revision_20261008/run.py']:
+ raw=f.read_bytes();lines=raw.decode().splitlines();matches=[dict(line=i+1,text=t) for i,t in enumerate(lines) if 'runtime' in t or 'platform' in t or 'diagnostic_runtime.get' in t]
+ print('RUNTIME_GUARD_SOURCE '+json.dumps(dict(path=str(f),sha256=hashlib.sha256(raw).hexdigest(),matched_lines=matches)),flush=True)
+ABI_READONLY
+#!/bin/bash
+set -eo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'GPU_AVAILABILITY'
 import subprocess,json,datetime
 for label,args in [
