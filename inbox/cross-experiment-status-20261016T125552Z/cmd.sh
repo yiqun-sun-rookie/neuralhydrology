@@ -1,31 +1,36 @@
 #!/usr/bin/env bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B - <<'PYREMOTE'
-import subprocess,json,datetime,time,re,pathlib
-job='244047';root=pathlib.Path('/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_repaircheck_20261016_001_io_resume_001')
-def run(args):
- try:
-  p=subprocess.run(args,capture_output=True,text=True,timeout=20);return dict(returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)
- except Exception as e:return dict(error_type=type(e).__name__)
-now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
-out=dict(job_id=job,root=str(root),queried_utc=now(),no_job_mutations=True)
-out['queue']=run(['squeue','-r','-h','-j',job+',244038','-o','%i|%j|%T|%r|%N'])
-out['accounting']=run(['sacct','-n','-X','-j',job+',244038','--format=JobID,State,ExitCode,Elapsed,NodeList','-P'])
-out['scheduler']=run(['scontrol','-o','show','job',job])
-out['documents']={}
-old=root.parent/'state_channel_repaircheck_20261016_001'
-out['original_failure_tails']={}
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PYREMOTE'
+import pathlib,subprocess,json,hashlib,tarfile,io,base64,datetime
+root=pathlib.Path('/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_repaircheck_20261016_001')
+eng=root.with_name(root.name+'_io_resume_001')
+terminal=json.loads((eng/'terminal.json').read_bytes())
+assert terminal['job_id']=='244047' and all(x['status']=='COMPLETED' for x in terminal['results'])
+queue=subprocess.run(['squeue','-h','-j','244047','-o','%i|%T|%R'],capture_output=True,text=True,check=True).stdout
+assert not queue.strip()
+accounting=subprocess.run(['sacct','-n','-X','-j','244047','-P','--format=JobID,State,ExitCode,Elapsed,Start,End'],capture_output=True,text=True,check=True).stdout
+assert 'COMPLETED|0:0' in accounting
+files={}
+for p in root.iterdir():
+ if p.is_file() and p.suffix in ('.json','.py','.slurm'):files['science/'+p.name]=p
 for b in ('02092500','04105700'):
- p=old/'runs'/b/'attempt_001/stdout.log'
- if p.is_file():out['original_failure_tails'][b]=p.read_bytes()[-3500:].decode(errors='replace')
-for p in [root/'controller_started.json',root/'terminal.json']+[old/'runs'/b/'attempt_002_io_resume'/name for b in ('02092500','04105700') for name in ('resume_binding.json','scientific_started.json','receipt.json')]:
- if p.is_file() and p.stat().st_size<100000:out['documents'][str(p)]=json.loads(p.read_text())
-logs=sorted(root.glob('resume-*.out'))
-out['current_job_log_tail']=logs[-1].read_bytes()[-12000:].decode(errors='replace') if logs else ''
-physical=re.search(r'JobId=(\d+).*?JobState=RUNNING',out['scheduler'].get('stdout',''))
-if physical:
- args=['sstat','-n','-j',physical.group(1)+'.batch','--format=JobID,AveCPU,AveRSS','-P']
- out['cpu_first']=run(args);time.sleep(7);out['cpu_second']=run(args)
-out['finished_utc']=now();print('RECOVERY_STATUS_JSON='+json.dumps(out))
+ for attempt in ('attempt_001','attempt_002_io_resume'):
+  folder=root/'runs'/b/attempt
+  for p in folder.rglob('*'):
+   if p.is_file():files['science/'+p.relative_to(root).as_posix()]=p
+for p in eng.rglob('*'):
+ if p.is_file() and p.suffix in ('.json','.py','.sbatch','.out','.err'):files['engineering/'+p.relative_to(eng).as_posix()]=p
+stream=io.BytesIO();manifest=[]
+with tarfile.open(fileobj=stream,mode='w:gz') as tar:
+ for name,p in sorted(files.items()):
+  before=p.stat();raw=p.read_bytes();after=p.stat()
+  assert (before.st_size,before.st_mtime_ns)==(after.st_size,after.st_mtime_ns)
+  meta=dict(path=name,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest());manifest.append(meta)
+  info=tarfile.TarInfo(name);info.size=len(raw);info.mtime=0;tar.addfile(info,io.BytesIO(raw))
+ doc=dict(job_id='244047',original_job_id='244038',queried_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),accounting=accounting,queue=queue,files=manifest,no_model_calls=True)
+ raw=json.dumps(doc,indent=2).encode();info=tarfile.TarInfo('collection_manifest.json');info.size=len(raw);info.mtime=0;tar.addfile(info,io.BytesIO(raw))
+payload=stream.getvalue()
+print('ARCHIVE_METADATA='+json.dumps(dict(bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest(),files=len(manifest),job_id='244047')))
+print('ARCHIVE_BASE64='+base64.b64encode(payload).decode())
 
 PYREMOTE
