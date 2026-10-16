@@ -1,0 +1,16 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=529
+### host=login4
+### started=2026-10-16T15:17:58+0800
+### ---------- output ----------
+{"checked_at_beijing": "2026-10-16T15:18:05.762029+08:00", "code_hash": "4232fbb467341b6332f91e9289cdb975613babb5d29e2079b66d55f7822c3757", "evaluation_values_read": false, "files_authenticated": 75, "formal_training_submitted": false, "payload_sha256": "ff8ac85963defc70180d4fdec6be2338febbcda3fe980d0e2eff4805c5afabcf", "release_manifest_sha256": "2f1e9dfaa051f29228699a7111acf50ce41464586a992650258fa1c16286dd87", "root": "/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006", "status": "covariance_recovery_release_deployed"}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006/hpc/prepare_compensated_recovery_20261016.py", line 164, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_complete_comparison_20261016_recovery_006/hpc/prepare_compensated_recovery_20261016.py", line 47, in main
+    assert candidate['successful_in_memory_batches']==154 and candidate['final_in_memory_optimizer_steps']==7060
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-16T15:18:25+0800
