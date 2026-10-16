@@ -1,10 +1,29 @@
 #!/bin/bash
 set -eo pipefail
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-test -d "$root"
-if [ -e "$root/env_pid_v001.txt" ] || [ -e "$root/env_status_v001.txt" ]; then echo ENV_ALREADY_REQUESTED_DO_NOT_REPEAT; exit 1; fi
-printf '%s' 'IyEvYmluL2Jhc2gKc2V0IC1lbyBwaXBlZmFpbApyb290PS9kYXRhMS9ob21lL3N1bnlpcS9pZDI1X2dyYWljZV9hdXRob3JfbWF0Y2hlZF8yMDI2MTAxNl8wMDEKdHJhcCAncmM9JD87IHByaW50ZiAiZXhpdF9jb2RlPSVzXG4iICIkcmMiID4gIiRyb290L2Vudl9zdGF0dXNfdjAwMS50eHQiJyBFWElUCmV4cG9ydCBQWVRIT05OT1VTRVJTSVRFPTEKZXhwb3J0IFBZVEhPTkRPTlRXUklURUJZVEVDT0RFPTEKZXhwb3J0IFBJUF9DQUNIRV9ESVI9IiRyb290L3BpcF9jYWNoZSIKZXhwb3J0IFhER19DQUNIRV9IT01FPSIkcm9vdC9jYWNoZSIKdW5zZXQgUFlUSE9OUEFUSAppZiBbIC1lICIkcm9vdC92ZW52IiBdOyB0aGVuIGVjaG8gRVhJU1RJTkdfVkVOVl9OT19PVkVSV1JJVEU7IGV4aXQgMTsgZmkKL2RhdGExL2hvbWUvc3VueWlxL21pbmljb25kYTMvZW52cy9uaF9maW5hbC9iaW4vcHl0aG9uIC1tIHZlbnYgIiRyb290L3ZlbnYiCiIkcm9vdC92ZW52L2Jpbi9weXRob24iIC1tIHBpcCBpbnN0YWxsIC0tZGlzYWJsZS1waXAtdmVyc2lvbi1jaGVjayAtLXRpbWVvdXQgOTAgLS1yZXRyaWVzIDIgJ3RlbnNvcmZsb3dbYW5kLWN1ZGFdPT0yLjE1LjEnICdudW1weT09MS4yNi40JyAnc2Npa2l0LWxlYXJuPT0xLjQuMicgJ21hdHBsb3RsaWI9PTMuOC40JwoiJHJvb3QvdmVudi9iaW4vcHl0aG9uIiAtbSBwaXAgZnJlZXplID4gIiRyb290L3JlcXVpcmVtZW50c19pbnN0YWxsZWRfdjAwMS50eHQiCnRvdWNoICIkcm9vdC92ZW52L3J1bnRpbWVfcmVhZHkiCmVjaG8gQjA0X1BSSVZBVEVfR1BVX1JVTlRJTUVfSU5TVEFMTEVECg==' | base64 -d > "$root/setup_env_v001.sh"
-nohup /bin/bash "$root/setup_env_v001.sh" > "$root/logs/env_install_v001.log" 2>&1 < /dev/null &
-pid=$!
-printf '%s\n' "$pid" > "$root/env_pid_v001.txt"
-printf 'ENV_INSTALL_PID=%s\n' "$pid"
+if [ -f "$root/job_id.txt" ]; then
+  jid=$(cat "$root/job_id.txt")
+  printf 'JOB_ID=%s\n' "$jid"
+  cat "$root/submissions.tsv"
+  squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i|%j|%T|%M|%R'
+  sacct -j "$jid" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -n -P
+  for file in "$root/logs/b04-$jid.out" "$root/logs/b04-$jid.err"; do
+    if [ -f "$file" ]; then printf '\nLOG=%s\n' "$file"; tail -n 16 "$file"; fi
+  done
+fi
+for file in "$root/status.json" "$root/interface_check.json" "$root/runtime.json" "$root/report.json"; do
+  if [ -f "$file" ]; then printf '\nFILE=%s\n' "$file"; cat "$file"; fi
+done
+if [ -f "$root/logs/env_install_v001.log" ]; then tail -n 8 "$root/logs/env_install_v001.log"; fi
+if [ -f "$root/env_status_v001.txt" ]; then cat "$root/env_status_v001.txt"; fi
+if [ -f "$root/env_pid_v001.txt" ]; then
+  pid=$(cat "$root/env_pid_v001.txt")
+  if ps -p "$pid" -o pid,etimes,stat,args; then :; else echo ENV_HELPER_NOT_RUNNING; fi
+fi
+if [ -f "$root/status.json" ]; then
+  rid=$("$root/venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("region_id", ""))' "$root/status.json")
+  if [[ "$rid" =~ ^lat[+-][0-9]{3}_lon[+-][0-9]{3}$ ]]; then
+    if [ -f "$root/runs/$rid/last.npz" ]; then stat -c '%n|%s|%y' "$root/runs/$rid/last.npz"; fi
+    if [ -f "$root/runs/$rid/metrics.jsonl" ]; then tail -n 2 "$root/runs/$rid/metrics.jsonl"; fi
+  fi
+fi
