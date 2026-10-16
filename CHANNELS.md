@@ -207,3 +207,5 @@ git rm inbox/seq
 | `id25-lstm-matched-20261015` | B03 daily LSTM with matched raw information | 2026-10-15 | Only /data1/home/sunyiq/id25_daily_lstm_matched_20261015_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
 
 | `knet-state-channel-fix020-v2-20261015-001` | Authorized zero-update 02092500 startup registry repair; two unspent 20-call arms only | 2026-10-15 | Only state_channel_finetune_20261015_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `openhydronet-531-20261015-ops` | Ops/probe channel for the OpenHydroNet task (read-only checks and killing only this task's own stuck processes) | 2026-10-16 | Only /data1/home/sunyiq/openhydronet_531_20261015 processes owned by this task; no other users' or channels' processes; no scancel of other jobs. |
