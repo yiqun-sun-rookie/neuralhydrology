@@ -1,0 +1,30 @@
+### channel=openhydronet-531-20261015 seq=23
+### host=login4
+### started=2026-10-16T13:28:39+0800
+### ---------- output ----------
+2026-10-16T13:28:39+0800
+=== queue ===
+    243042    ohn_native531   RUNNING   18:19:58 ngu202
+=== sacct since 10-14 ===
+243024|ohn_smoke|COMPLETED|0:0|00:02:41|ngu201
+243042|ohn_native531|RUNNING|0:0|18:21:49|ngu202
+243186|ohn_id18_cmal|COMPLETED|0:0|10:37:14|ngu202
+243187|ohn_id18_nse|COMPLETED|0:0|12:00:07|ngu104
+=== ohn_native531 : ohn_native531-243042.out
+12:57:06.781 Epoch 38 average validation loss: -0.10716 -- Median validation metrics: avg_loss: -0.10716, NSE: 0.51035, KGE: 0.56372, Alpha-NSE: 0.74634, Beta-NSE: -0.02970, Beta-KGE: 0.94010, Peak-Timing: 0.42857, Missed-Peaks: 0.52632
+13:10:22.641 Epoch 39 average loss: avg_learning_rate: 0.00050, avg_loss: -2.75285, avg_total_loss: -2.75285
+13:23:21.475 Epoch 39 average validation loss: 0.31254 -- Median validation metrics: avg_loss: 0.31254, NSE: 0.50441, KGE: 0.55714, Alpha-NSE: 0.74194, Beta-NSE: -0.02373, Beta-KGE: 0.94869, Peak-Timing: 0.42857, Missed-Peaks: 0.53333
+  progress: # Epoch 40:  42%|████▏     | 763/1.83k [05:20<07:29, 2.38it/s, Loss: -2.7266]
+=== ohn_id18_cmal : ohn_id18_cmal-243186.out
+08:47:52.390 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: -2.49246, avg_total_loss: -2.49246
+08:58:57.143 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: -2.48778, avg_total_loss: -2.48778
+09:10:24.567 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: -2.55674, avg_total_loss: -2.55674
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [11:26<00:00, 2.91it/s, Loss: -2.5751]
+=== ohn_id18_nse : ohn_id18_nse-243187.out
+10:01:06.830 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: 0.06780, avg_total_loss: 0.06780
+10:14:59.828 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: 0.05883, avg_total_loss: 0.05883
+10:28:45.420 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.05713, avg_total_loss: 0.05713
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [13:45<00:00, 2.42it/s, Loss: 0.0513]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-16T13:28:43+0800
