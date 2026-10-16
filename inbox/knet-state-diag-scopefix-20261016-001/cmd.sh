@@ -2,7 +2,7 @@
 set -eo pipefail
 cd /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B -c '"""Small read-only live-status query, separate from large artifact collection."""
-import sys,json,datetime,subprocess,re,time,socket
+import sys,json,datetime,subprocess,re,time,socket,hashlib
 from pathlib import Path
 import safe_io as s
 base=Path(sys.argv[1]);job=sys.argv[2];token=sys.argv[3]
@@ -15,6 +15,13 @@ def command(args):
     except subprocess.TimeoutExpired:
         return dict(returncode=124,stdout='"'"''"'"',stderr='"'"'read-only scheduler query timed out'"'"')
 def load(path):return json.loads(s.read_checked(path)) if path.is_file() else None
+def result_summary(path):
+    if not path.is_file():return None
+    raw=s.read_checked(path);result=json.loads(raw)
+    return dict(status=result.get('"'"'status'"'"'),total_optimizer_calls=result.get('"'"'total_optimizer_calls'"'"'),
+        final_network_equals_initial=result.get('"'"'final_network_equals_initial'"'"'),optimizer_states_empty=result.get('"'"'optimizer_states_empty'"'"'),
+        counts=result.get('"'"'counts'"'"'),evaluations=len(result.get('"'"'evaluations'"'"',[])),candidates=len(result.get('"'"'candidates'"'"',[])),
+        bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
 def tail(path):
     s.checked_path(path,False)
     if not path.is_file():return dict(exists=False,events=[],tail=[])
@@ -50,11 +57,11 @@ for i,basin in enumerate(['"'"'02092500'"'"','"'"'04105700'"'"']):
     elements.append(dict(index=i,basin=basin,queue=qrows,accounting=arows,
         terminal=any(x[2].split()[0].rstrip('"'"'+'"'"') in terminal_states for x in arows),
         scheduler=details,scheduler_fields=fields,resource_usage=stat,
-        controller=load(folder/'"'"'controller_started.json'"'"'),scientific=load(folder/'"'"'scientific_started.json'"'"'),receipt=load(folder/'"'"'receipt.json'"'"'),
+        controller=load(folder/'"'"'controller_started.json'"'"'),scientific=load(folder/'"'"'scientific_started.json'"'"'),receipt=load(folder/'"'"'receipt.json'"'"'),scientific_result=result_summary(folder/'"'"'result.json'"'"'),
         stdout=tail(base/'"'"'logs'"'"'/('"'"'diagnostic-'"'"'+exact+'"'"'.out'"'"')),stderr=tail(base/'"'"'logs'"'"'/('"'"'diagnostic-'"'"'+exact+'"'"'.err'"'"'))))
 print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"'"',monitor_round_id=token,job_id=job,identity=identity,
     queried_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),query_host=socket.gethostname(),
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 106c2374b627415dba120ad255fa9e5a
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_diag_20261016_001_scopefix001 243725 65411c8d0a264627b89209033721269a
