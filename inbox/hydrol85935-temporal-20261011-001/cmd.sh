@@ -1,18 +1,6 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'OS_METADATA'
-import subprocess,json,datetime
-for node in ['ngu003','ngu009','ngu101','ngu202']:
- try:
-  cmd=['ssh','-o','BatchMode=yes','-o','ConnectTimeout=5',node,'getconf GNU_LIBC_VERSION']
-  r=subprocess.run(cmd,capture_output=True,text=True,timeout=10)
-  print('NODE_GLIBC_METADATA '+json.dumps(dict(node=node,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),exit_code=r.returncode,stdout=r.stdout,stderr=r.stderr)),flush=True)
- except Exception as ex:print('NODE_GLIBC_METADATA '+json.dumps(dict(node=node,error=str(ex))),flush=True)
-OS_METADATA
-#!/bin/bash
-set -eo pipefail
-export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'GPU_AVAILABILITY'
 import subprocess,json,datetime
 for label,args in [
