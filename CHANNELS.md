@@ -215,3 +215,5 @@ git rm inbox/seq
 | `id25-graice-matched-20261016` | B04 GRAiCE author code with matched daily inputs | 2026-10-16 | Only /data1/home/sunyiq/id25_graice_author_matched_20261016_001; existing jobs, data, environments and other channels read-only; scoped repair/resume authorized. |
 
 | `knet-state-diag-scopefix-20261016-001` | Authorized SC-DIAG-01 two-basin zero-optimizer-update mechanism diagnostic | 2026-10-16 | Only state_channel_diag_20261016_001_scopefix001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-diag-monitor-20261016-001` | Authorized SC-DIAG-01 two-basin zero-optimizer-update mechanism diagnostic | 2026-10-16 | Only state_channel_diag_20261016_001_scopefix001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
