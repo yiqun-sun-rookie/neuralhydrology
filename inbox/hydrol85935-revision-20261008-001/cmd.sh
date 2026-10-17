@@ -1,31 +1,33 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'FS'
-"""Read-only: filesystem type of the shared outputs, element states, ledger integrity. No mutation."""
-import json, subprocess, datetime, hashlib
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'APPLY'
+"""Raise the ArrayTaskThrottle of parent main array 241336 from 1 to 2 (scheduler setting only)."""
+import json, subprocess, datetime, hashlib, os
 from pathlib import Path
+R = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+D = R / 'control/two_gpu_20261017_001'
 def emit(k, v): print(k + ' ' + json.dumps(v), flush=True)
-def q(label, args):
-    try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=40)
-        emit(label, dict(args=args, returncode=r.returncode, stdout=r.stdout[:20000], stderr=r.stderr[:1500]))
-    except Exception as ex:
-        emit(label, dict(args=args, error=repr(ex)))
-root = '/data1/home/sunyiq/hydrol85935_revision_20261008_001'
-emit('FS_TIME', dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
-q('FS_STAT', ['stat', '-f', '-c', '%T %n', root, root + '/execution/hpc_v009/records'])
-q('FS_DF', ['df', '-T', root])
-q('FS_MOUNT', ['bash', '-c', 'mount | grep -E " /data1 | /data1/" | head -5'])
-q('FS_ELEMENTS', ['sacct', '-X', '-j', '241336', '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES', '--starttime', '2026-10-17T20:00:00'])
-q('FS_SQUEUE_MAIN', ['squeue', '-h', '-r', '-j', '241336', '-O', 'jobid:16,state:10,reason:26,nodelist:10,timeused:12', ])
-led = Path(root + '/execution/hpc_v009/records/ledger.jsonl')
-rows = led.read_text().splitlines()
-bad = 0
-for l in rows:
-    try: json.loads(l)
-    except Exception: bad += 1
-emit('FS_LEDGER', dict(lines=len(rows), unparsable=bad, bytes=led.stat().st_size, sha256=hashlib.sha256(led.read_bytes()).hexdigest()))
-stage = sorted((Path(root) / 'control/hybrid_v028_20261014_001/stage_results').glob('attacks_*.json'), key=lambda p: p.stat().st_mtime)[-6:]
-emit('FS_STAGES', [dict(name=p.name, value=json.loads(p.read_text())) for p in stage])
-FS
+def run(a): return subprocess.run(a, capture_output=True, text=True, timeout=60)
+def now(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def write(p, v):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open('x') as f: json.dump(v, f, indent=2); f.write('\n'); f.flush(); os.fsync(f.fileno())
+assert not (D / 'apply.intent.json').exists(), 'already attempted; reconcile, never repeat'
+before = run(['scontrol', 'show', 'job', '-o', '241336']).stdout
+assert 'ArrayTaskThrottle=1 ' in before or before.rstrip().endswith('ArrayTaskThrottle=1') or 'ArrayTaskThrottle=1' in before.split(), before[:300]
+cmd = str(R / 'control/hybrid_v009_20261012_001/attacks.sbatch')
+assert 'Command=' + cmd in before and 'NumCPUs=4' in before and 'gpu:1' in before and 'Partition=hgpu2p' in before, before[:600]
+ledger = R / 'execution/hpc_v009/records/ledger.jsonl'
+rows = ledger.read_text().splitlines(); bad = sum(1 for l in rows if not l.strip().startswith('{') or not l.strip().endswith('}'))
+write(D / 'baseline.json', dict(utc=now(), ledger_lines=len(rows), ledger_nonjson_lines=bad, ledger_sha256=hashlib.sha256(ledger.read_bytes()).hexdigest(), job_line=before))
+write(D / 'apply.intent.json', dict(utc=now(), command=['scontrol', 'update', 'JobId=241336', 'ArrayTaskThrottle=2']))
+r = run(['scontrol', 'update', 'JobId=241336', 'ArrayTaskThrottle=2'])
+write(D / 'apply.result.json', dict(utc=now(), returncode=r.returncode, stdout=r.stdout, stderr=r.stderr))
+assert r.returncode == 0, r.stderr
+after = run(['scontrol', 'show', 'job', '-o', '241336']).stdout
+emit('THROTTLE_APPLIED', dict(throttle_before=1, throttle_after=2 if 'ArrayTaskThrottle=2' in after else None, returncode=r.returncode, stderr=r.stderr,
+     command_unchanged=('Command=' + cmd) in after, baseline=json.loads((D / 'baseline.json').read_text())['ledger_lines']))
+emit('THROTTLE_QUEUE', run(['squeue', '-h', '-r', '-j', '241336', '-o', '%i|%T|%r']).stdout.splitlines()[:6])
+assert 'ArrayTaskThrottle=2' in after
+APPLY
