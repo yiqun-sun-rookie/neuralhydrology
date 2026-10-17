@@ -1,0 +1,43 @@
+### channel=openhydronet-531-20261015 seq=26
+### host=login4
+### started=2026-10-17T12:29:58+0800
+### ---------- output ----------
+2026-10-17T12:29:58+0800
+=== queue ===
+none queued/running
+=== sacct since 10-14 ===
+243042|ohn_native531|COMPLETED|0:0|1-13:02:40|ngu202
+243186|ohn_id18_cmal|COMPLETED|0:0|10:37:14|ngu202
+243187|ohn_id18_nse|COMPLETED|0:0|12:00:07|ngu104
+244040|ohn_id18_nse_s101|COMPLETED|0:0|10:11:36|ngu202
+244041|ohn_id18_nse_s102|COMPLETED|0:0|10:11:30|ngu202
+244042|ohn_id18_nse_s103|COMPLETED|0:0|12:36:49|ngu101
+244043|ohn_id18_nse_s104|COMPLETED|0:0|12:08:27|ngu104
+=== ohn_native531 : ohn_native531-243042.out
+07:11:20.551 Epoch 79 average validation loss: 2.18863 -- Median validation metrics: avg_loss: 2.18863, NSE: 0.41976, KGE: 0.46968, Alpha-NSE: 0.63852, Beta-NSE: -0.05678, Beta-KGE: 0.88207, Peak-Timing: 0.50000, Missed-Peaks: 0.60000
+07:24:24.103 Epoch 80 average loss: avg_learning_rate: 0.00013, avg_loss: -3.31465, avg_total_loss: -3.31465
+07:37:32.421 Epoch 80 average validation loss: 2.14975 -- Median validation metrics: avg_loss: 2.14975, NSE: 0.41471, KGE: 0.46066, Alpha-NSE: 0.64675, Beta-NSE: -0.05785, Beta-KGE: 0.88066, Peak-Timing: 0.50000, Missed-Peaks: 0.60000
+  progress: # Validation:  96%|█████████▌| 487/509 [13:08<00:35, 1.62s/it]
+=== ohn_id18_nse_s101 : ohn_id18_nse_s101-244040.out
+08:12:50.916 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: 0.00946, avg_total_loss: 0.00946
+08:24:00.695 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: 0.00917, avg_total_loss: 0.00917
+08:35:14.828 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.00952, avg_total_loss: 0.00952
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [11:13<00:00, 2.97it/s, Loss: 0.0100]
+=== ohn_id18_nse_s102 : ohn_id18_nse_s102-244041.out
+08:13:17.969 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01054, avg_total_loss: 0.01054
+08:24:40.251 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01061, avg_total_loss: 0.01061
+08:36:17.476 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.00990, avg_total_loss: 0.00990
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [11:37<00:00, 2.87it/s, Loss: 0.0091]
+=== ohn_id18_nse_s103 : ohn_id18_nse_s103-244042.out
+08:48:48.638 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01402, avg_total_loss: 0.01402
+09:02:55.888 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01302, avg_total_loss: 0.01302
+09:17:05.734 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01415, avg_total_loss: 0.01415
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [14:09<00:00, 2.35it/s, Loss: 0.0103]
+=== ohn_id18_nse_s104 : ohn_id18_nse_s104-244043.out
+08:21:03.401 Epoch 48 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01600, avg_total_loss: 0.01600
+08:35:02.824 Epoch 49 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01654, avg_total_loss: 0.01654
+08:49:02.192 Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.01602, avg_total_loss: 0.01602
+  progress: # Epoch 50: 100%|██████████| 2.00k/2.00k [13:59<00:00, 2.38it/s, Loss: 0.0142]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T12:30:02+0800
