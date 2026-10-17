@@ -1,0 +1,11 @@
+### channel=hydrol85935-revision-20261008-001 seq=400
+### host=login4
+### started=2026-10-18T02:34:56+0800
+### ---------- output ----------
+R_THROTTLE {"returncode": 0, "stderr": "", "throttle_after_1": true}
+R_EVIDENCE {"bytes": 952690, "sha256": "09417474b0b838e9614de5977dadccc98795cf0b9787093bcc608b582f59f771", "copy_equal": true}
+R_BAD [{"offset": 858859, "line": "\"}"}]
+R_DONE {"offset": 858859, "replaced": "\"}", "with_": "{}", "length_unchanged": true, "parsed_rows": 3289, "empty_marker_rows": 1, "status": {"complete": 3066, "failed": 222}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-18T02:34:58+0800
