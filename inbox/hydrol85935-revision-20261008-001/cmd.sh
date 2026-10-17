@@ -88,6 +88,26 @@ if current:
                 if token not in r.stdout:raise RuntimeError('New job identity/resource mismatch: '+label)
             if label in ('train','attacks') and 'ArrayTaskThrottle=1 ' not in r.stdout:raise RuntimeError('Array concurrency changed')
 PY
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
+import json,subprocess
+from pathlib import Path
+root=Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
+folder=root/'control/hybrid_v027_20261014_001';scheduler_folder=root/'control/hybrid_v009_20261012_001';execution=root/'execution/hpc_v009'
+def emit(label,value):print(label+' '+json.dumps(value),flush=True)
+for name in ['submission_attempt.json','jobs.json','ownership.json']:
+    path=folder/name;emit('HYBRID_CONTROL',dict(path=str(path),value=json.loads(path.read_text()) if path.exists() else None))
+for seed in (100,200,300):
+    files=list((execution/f'training/s{seed}').rglob('model_epoch*.pt'))
+    emit('HYBRID_TRAINING',dict(seed=seed,checkpoint_count=len(files),complete=(execution/f'training/s{seed}/complete.json').exists(),latest=[dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime) for p in sorted(files,key=lambda q:q.stat().st_mtime)[-3:]]))
+for label,pattern in [('attacks','records/attacks/*/*/complete.json'),('clean','records/clean/*/*/complete.json')]:
+    files=list(execution.glob(pattern));emit('HYBRID_OUTPUT_METADATA',dict(kind=label,marker_count=len(files),not_full_slot_validation=True))
+for p in sorted((folder/'stage_results').glob('*.json'),key=lambda q:q.stat().st_mtime)[-8:]:
+    value=json.loads(p.read_text());emit('HYBRID_STAGE',dict(path=str(p),bytes=p.stat().st_size,status=value.get('status'),stage=value.get('stage'),index=value.get('index'),exit_code=value.get('exit_code'),counts=value.get('counts'),failures_count=len(value.get('failures',[])),traceback=value.get('traceback'),global_science_complete=False))
+for p in sorted((scheduler_folder/'logs').glob('*'),key=lambda q:q.stat().st_mtime)[-6:]:
+    with p.open('rb') as f:
+        f.seek(max(0,p.stat().st_size-3500));tail=f.read().decode('utf8',errors='replace')
+    emit('HYBRID_LOG',dict(path=str(p),bytes=p.stat().st_size,mtime=p.stat().st_mtime,tail=tail))
+PY
 
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY'
 import json,subprocess,hashlib
