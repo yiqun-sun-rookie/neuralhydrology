@@ -1,0 +1,129 @@
+### channel=hydrol85935-prepeak-20261017-001 seq=2
+### host=login4
+### started=2026-10-17T16:59:39+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/inbox/hydrol85935-prepeak-20261017-001/payload/prepeak_bundle_v1.tar.gz: OK
+tar: bundle/repo/src/adversarial/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/adversarial/model_wrapper.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/adversarial/data_loader.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/adversarial/scripts/coherent_attack.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/adversarial/scripts/prepeak_small_bounds_20261017/run_prepeak_small_bounds.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/adversarial/data/531_basins.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/__about__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/basedataset.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsaus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsbr.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelscl.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsde.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsgb.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsind.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/camelsus_track0_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/caravan.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/datasetregistry.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/genericdataset.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/hourlycamelsh.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/hourlycamelsus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/lamah.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datasetzoo/template.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datautils/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datautils/climateindices.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datautils/pet.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/datautils/utils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/assimilation.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/evaluate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/metrics.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/plots.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/signatures.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/tester.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/evaluation/utils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/hydroagent/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/arlstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/baseconceptualmodel.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/basemodel.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/cudalstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/customlstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/ealstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/embcudalstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/factor_hypernet_lstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/fc.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/filmlstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/gru.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/handoff_forecast_lstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/hybridmodel.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/inputlayer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/mamba.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/mclstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/modern_causal_transformer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/mtslstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/mtsmamba.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/multihead_forecast_lstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/odelstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/positional_encoding.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/recency_biased_transformer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/recipe_fixed_transformer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/sequential_forecast_lstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/shm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/stacked_forecast_lstm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/template.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/modelzoo/transformer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/nh_run.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/nh_run_scheduler.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/basetrainer.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/earlystopper.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/logger.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/loss.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/regularization.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/training/train.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/assimilationconfig.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/config.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/configutils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/era5l_export.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/era5l_hourly_processing.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/errors.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/logging_utils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/nh_results_ensemble.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/ratingcurve.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/neuralhydrology/utils/samplingutils.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/train_data/train_data_scaler.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/repo/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/config.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/prepeak.sbatch: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle/MANIFEST.json: implausibly old time stamp 1970-01-01 08:00:00
+=== MANIFEST ===
+files 96 bad []
+=== DATA IDENTITY ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/01/01022500_lump_maurer_forcing_leap.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/01/01022500_streamflow_qc.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/07/05495000_lump_maurer_forcing_leap.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/07/05495000_streamflow_qc.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/17/14400000_lump_maurer_forcing_leap.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/17/14400000_streamflow_qc.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_clim.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_geol.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_hydro.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_name.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_soil.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_topo.txt: OK
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_vege.txt: OK
+=== MODEL VS PARENT COPY (info) ===
+f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654  /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001/bundle/repo/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt
+f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654  /data1/home/sunyiq/hydrol85935_revision_20261008_001/original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt
+=== SUBMIT SMOKE ===
+Submitted batch job 244261
+smoke_jobid=244261
+244261 hgpu4 RUNNING ngu101 2026-10-17T17:01:31
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T16:59:44+0800
