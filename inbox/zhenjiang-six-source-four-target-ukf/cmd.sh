@@ -5,34 +5,26 @@ conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
 export CUDA_VISIBLE_DEVICES=""
-export OMP_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export OPENBLAS_NUM_THREADS=1
-python -B - <<'DEPLOY_SQRT_CPU'
-import hashlib,json,os,pathlib,tarfile,subprocess,sys
+python -B - <<'DEPLOY_SQRT_GPU'
+import hashlib,json,pathlib,subprocess,sys,tarfile
 root=pathlib.Path('/data1/home/sunyiq/zhenjiang_sqrt_covariance_repair_20261017_001')
+assert root.is_dir()
+assert hashlib.sha256((root/'package_manifest.json').read_bytes()).hexdigest()=='374631c1299907073f3a398c9d166c1e01dd5936c5209b9851d63b28d9b0a332'
+assert hashlib.sha256((root/'records/stored_operand_cpu_admission.json').read_bytes()).hexdigest()=='725d0a4c867a9e2811389d9183c980258d8eccc495a68be1f6f9a564b613236b'
 inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
-sequence=int((inbox/'seq').read_text())
-assert sequence==575
-payload=inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz'
-assert hashlib.sha256(payload.read_bytes()).hexdigest()=='fcd39b5a971ed5467be714757e702318616ce66aa55c00276851842def6b7f00'
-assert not root.exists(), 'existing candidate must be reconciled, never overwritten'
+assert int((inbox/'seq').read_text())==576
+payload=inbox/'payload_complete_comparison_20261006_576.tar.gz'
+assert hashlib.sha256(payload.read_bytes()).hexdigest()=='ff6793d2ef38115d6aa05c033db73623e7e96748fc198d4b65c37020893899b7'
 with tarfile.open(payload,'r:gz') as archive:
  members=archive.getmembers()
- assert len(members)==45
+ assert len(members)==10
  assert all(m.isfile() and not pathlib.PurePosixPath(m.name).is_absolute() and '..' not in pathlib.PurePosixPath(m.name).parts for m in members)
- root.mkdir(exist_ok=False)
+ assert all(not (root/m.name).exists() for m in members), 'reconcile additive deployment; never overwrite'
  for member in members:
-  target=root/member.name;target.parent.mkdir(parents=True,exist_ok=True)
-  with target.open('xb') as stream:stream.write(archive.extractfile(member).read())
-manifest=json.loads((root/'package_manifest.json').read_bytes())
-assert all(hashlib.sha256((root/name).read_bytes()).hexdigest()==entry['sha256'] for name,entry in manifest['files'].items())
-print(json.dumps({'status':'sqrt_isolated_candidate_deployed','root':str(root),'package_manifest_sha256':hashlib.sha256((root/'package_manifest.json').read_bytes()).hexdigest(),'gpu_submissions':0,'formal_epochs_added':0}),flush=True)
-(root/'records').mkdir()
-p=subprocess.run([sys.executable,'-B',str(root/'hpc/check_stored_operands.py')],cwd=root,capture_output=True,text=True,timeout=1500)
-with (root/'records/stored_operand_cpu_process.json').open('x') as stream:json.dump({'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr},stream,sort_keys=True)
-if p.stdout:print(p.stdout,flush=True)
-if p.returncode:
- print(json.dumps({'status':'sqrt_CPU_error_preserved','root':str(root),'returncode':p.returncode,'stderr':p.stderr,'formal_epochs_added':0}),flush=True)
- raise SystemExit(p.returncode)
-DEPLOY_SQRT_CPU
+  path=root/member.name;path.parent.mkdir(parents=True,exist_ok=True)
+  with path.open('xb') as stream:stream.write(archive.extractfile(member).read())
+(root/'logs').mkdir(exist_ok=True)
+print(json.dumps({'status':'sqrt_gpu_additive_package_deployed','root':str(root),'manifest_sha256':hashlib.sha256((root/'gpu_package_manifest.json').read_bytes()).hexdigest(),'formal_epochs_added':0}),flush=True)
+subprocess.run([sys.executable,'-B',str(root/'hpc/gpu_workflow.py'),'submit'],cwd=root,check=True)
+subprocess.run([sys.executable,'-B',str(root/'hpc/gpu_workflow.py'),'probe'],cwd=root,check=True)
+DEPLOY_SQRT_GPU
