@@ -1,0 +1,33 @@
+### channel=knet-state-diag-monitor-20261016-001 seq=6
+### host=login4
+### started=2026-10-17T13:56:55+0800
+### ---------- output ----------
+login4
+2026-10-17T05:56:55Z
+3169 bash /data1/home/sunyiq/.hpc_runner_active.sh
+9167 bash /data1/home/sunyiq/.hpc_runner_active.sh
+244024|id25_graice_m_261016|PENDING|0:00|(Priority)
+244110|psfit_af5f130f|PENDING|0:00|(Priority)
+242753|temporal-recovery-s100_missing|PENDING|0:00|(Priority)
+202229|N22-agg-eval|PENDING|0:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|0:00|(Dependency)
+202315|N22-gate|PENDING|0:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|0:00|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|0:00|(DependencyNeverSatisfied)
+242754|temporal-recovery-report|PENDING|0:00|(Dependency)
+202293|N22-manifest|PENDING|0:00|(JobHeldUser)
+240076_[0-2%1]|hydrol85935-train|PENDING|0:00|(JobHeldUser)
+240077_[0-131%1]|hydrol85935-attacks|PENDING|0:00|(JobHeldUser)
+240078|hydrol85935-report|PENDING|0:00|(JobHeldUser)
+241337|hydrol85935-v009-validate|PENDING|0:00|(JobHeldUser)
+241344|hydrol85935-v010-export|PENDING|0:00|(JobHeldUser)
+241691|tessera_01073000_abc_261013|PENDING|0:00|(JobHeldUser)
+241336_[7-129]|hydrol85935-v009-attacks|PENDING|0:00|(JobHeldUser)
+244227|zj_gru_covariance_recovery_sqrt_261017_001|RUNNING|INVALID|ngu104
+242758_1|N22-warmpair2|RUNNING|11:46:09|ngu102
+237928|zj_lstm_small_recovery_261008_002|RUNNING|8-15:39:30|ngu007
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|11-02:38:35|ngu011
+236707|zj_legacy_lstm__historical_capacity_261006_pathfix|RUNNING|11-02:38:35|ngu001
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T13:56:55+0800
