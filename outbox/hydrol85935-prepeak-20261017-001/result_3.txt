@@ -1,0 +1,19 @@
+### channel=hydrol85935-prepeak-20261017-001 seq=3
+### host=login4
+### started=2026-10-17T17:04:14+0800
+### ---------- output ----------
+=== SMOKE ACCT ===
+244261          RUNNING      0:0          ngu101   00:04:36 
+=== SMOKE LOG ===
+--- /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001/logs/prepeak-244261_4294967294.out
+host=ngu101 job=244261 array=_ start=2026-10-17T16:59:44+0800
+NVIDIA A40, 535.104.05, 46068 MiB
+torch 2.4.0 cuda True NVIDIA A40
+shard offset=0 stride=1: 1 basins, 1 todo, eps=[0.01, 0.05, 0.1], window=14, device=cuda:0, threads=4
+--- /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001/logs/prepeak-244261_4294967294.err
+=== SMOKE RECORD ===
+NO_RECORD_YET
+SMOKE_NOT_READY state=RUNNING -> nothing submitted
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T17:04:15+0800
