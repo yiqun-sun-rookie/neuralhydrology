@@ -223,3 +223,5 @@ git rm inbox/seq
 | `cross-experiment-status-20261016T125552Z` | User-authorized cross-project live scheduler inspection; read only, no sbatch/requeue/cancel | 2026-10-16 | Isolated channel; existing experiments unchanged |
 
 | `knet-state-repaircheck-20261016-001` | Authorized SC-DIAG-01 two-basin zero-optimizer-update mechanism diagnostic | 2026-10-16 | Only state_channel_repaircheck_20261016_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-scratch-20261017-001` | Authorized SC-SCRATCH-01 paired from-scratch constraint training | 2026-10-17 | Only state_channel_scratch_20261017_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
