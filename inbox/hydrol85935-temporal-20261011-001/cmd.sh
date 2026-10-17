@@ -56,12 +56,15 @@ def main():
     assert err.rstrip().endswith('ValueError: Clean metrics do not reconstruct'), err[-400:]
     detail = call(['scontrol', 'show', 'job', '-o', '242754']).stdout
     assert 'Reason=DependencyNeverSatisfied' in detail and 'Dependency=afterok:242753' in detail, detail[:400]
-    # 2. nothing of ours is running, only the 125 held parent tasks and 242754 are queued
+    # 2. none of this experiment's jobs is running or queued except 242754; the 125 parent tasks stay held.
+    #    Other experiments' jobs under the same account are neither inspected for state nor touched.
     rows = [l.split('|') for l in call(['squeue', '-r', '-h', '-u', 'sunyiq', '-o', '%i|%T|%r']).stdout.splitlines()]
     held = set(read(ROOT / 'control/queue_priority_20261014_001/applied.json')['held_parent_ids'])
-    others = [r for r in rows if r[0] not in held and r[0] != '242754']
-    assert not others, others
-    assert all(r[1:] == ['PENDING', 'JobHeldUser'] for r in rows if r[0] in held) and len([r for r in rows if r[0] in held]) == 125
+    ours = {'242488', '242597', '242751', '242752', '242753', '242754'}
+    mine = [r for r in rows if r[0].split('_')[0] in ours]
+    assert [r[0] for r in mine] == ['242754'], mine
+    parent_rows = [r for r in rows if r[0] in held]
+    assert len(parent_rows) == 125 and all(r[1:] == ['PENDING', 'JobHeldUser'] for r in parent_rows), len(parent_rows)
     # 3. saved results are exactly what the reviewed continuation expects, with no partial pair
     count = lambda root, s: sorted(p.parent.name for p in (root / f'records/single_temperature_s{s}').glob('*/complete.json'))
     assert [len(count(ROOT, s)) for s in (100, 200, 300)] == [525, 0, 0]
