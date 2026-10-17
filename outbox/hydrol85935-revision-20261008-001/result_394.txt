@@ -1,0 +1,9 @@
+### channel=hydrol85935-revision-20261008-001 seq=394
+### host=login4
+### started=2026-10-17T22:05:31+0800
+### ---------- output ----------
+THROTTLE_APPLIED {"throttle_before": 1, "throttle_after": 2, "returncode": 0, "stderr": "", "command_unchanged": true, "baseline": 1723}
+THROTTLE_QUEUE ["241336_129|PENDING|JobArrayTaskLimit", "241336_128|PENDING|JobArrayTaskLimit", "241336_127|PENDING|JobArrayTaskLimit", "241336_126|PENDING|JobArrayTaskLimit", "241336_125|PENDING|JobArrayTaskLimit", "241336_124|PENDING|JobArrayTaskLimit"]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T22:05:32+0800
