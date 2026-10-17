@@ -1,0 +1,92 @@
+### channel=hydrol85935-prepeak-20261017-001 seq=1
+### host=login4
+### started=2026-10-17T16:54:16+0800
+### ---------- output ----------
+=== HOST ===
+login4
+2026-10-17T16:54:16+0800
+=== REPO ===
+migration/reorg-v1
+96703cee48718aa789e72a8148c827601857dd44 2026-03-12 16:11:14 +0800 fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+MISSING src/adversarial/scripts/coherent_attack.py
+ddb273e5753e0f0cce63245d81945795fa61da5e8e07a9d05ca5b33ccc11eca7  src/adversarial/model_wrapper.py
+4a388639db55d916224bf61b6722a053cdf7fa333aef8d3fe7d5949ef63f094b  src/adversarial/data_loader.py
+51e2e02b382ec10314972ca68e1c337c46c0fbdff786b99877d2fd5dfb2055ef  neuralhydrology/datasetzoo/camelsus.py
+c8871ff1217d02fa2a78c0426510436ae9f56d512991079b309357950cb76b32  neuralhydrology/datautils/utils.py
+=== DATA ===
+DIR /data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+=== MODEL CANDIDATES ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_*: No such file or directory
+ASSETS.sha256
+code
+control
+diagnostics
+execution
+inputs_v001
+logs
+original_models
+OWNER
+preflight
+runtime_torch271cu118
+tmp
+versions
+/data1/home/sunyiq/hydrol85935_revision_20261008_001/original_models/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30
+=== ENV ===
+torch 2.4.0 numpy 2.3.3 pandas 2.3.2 xarray 2025.12.0
+=== GPU FREE ===
+ngu001    mix     gpu:2         gpu:2,dcu:0             
+ngu002    down*   gpu:2         gpu:0,dcu:0             
+ngu004    mix     gpu:2         gpu:2,dcu:0             
+ngu005    mix     gpu:2         gpu:2,dcu:0             
+ngu006    mix     gpu:2         gpu:2,dcu:0             
+ngu007    mix     gpu:2         gpu:2,dcu:0             
+ngu008    mix     gpu:2         gpu:2,dcu:0             
+ngu010    mix     gpu:2         gpu:2,dcu:0             
+ngu011    mix     gpu:2         gpu:2,dcu:0             
+ngu003    mix     gpu:2         gpu:2,dcu:0             
+ngu009    mix     gpu:2         gpu:2,dcu:0             
+ngu101    mix     gpu:4         gpu:1,dcu:0             
+ngu102    mix     gpu:4         gpu:1,dcu:0             
+ngu103    down*   gpu:4         gpu:0,dcu:0             
+ngu104    mix     gpu:4         gpu:3,dcu:0             
+ngu201    mix     gpu:8         gpu:8,dcu:0             
+ngu202    mix     gpu:8         gpu:7,dcu:0             
+ngu203    alloc$  gpu:8         gpu:8,dcu:0             
+=== MY QUEUE ===
+244024 hgpu2p PENDING (Priority)
+244110 hgpu2p PENDING (Priority)
+242753 hgpu2p PENDING (Priority)
+202229 hgpu4,hgpu8,hgpu2 PENDING (DependencyNeverSatisfied)
+202294 hgpu4,hgpu8,hgpu2 PENDING (Dependency)
+202315 hgpu4,hgpu8,hgpu2 PENDING (Dependency)
+202507 hgpu4,hgpu8,hgpu2 PENDING (DependencyNeverSatisfied)
+215429 hgpu2 PENDING (DependencyNeverSatisfied)
+242754 hgpu2p PENDING (Dependency)
+244228_[1%1] hgpu4 PENDING (JobArrayTaskLimit)
+202293 hgpu4,hgpu8,hgpu2 PENDING (JobHeldUser)
+240076_[0-2%1] hgpu2p PENDING (JobHeldUser)
+240077_[0-131%1] hgpu2p PENDING (JobHeldUser)
+240078 hgpu2p PENDING (JobHeldUser)
+241337 hgpu2p PENDING (JobHeldUser)
+241344 hgpu2p PENDING (JobHeldUser)
+241691 hgpu2p,hgpu4,hgpu8 PENDING (JobHeldUser)
+241336_[7-129] hgpu2p PENDING (JobHeldUser)
+244228_0 hgpu4 RUNNING ngu104
+244227 hgpu4 RUNNING ngu104
+242758_1 hgpu4 RUNNING ngu102
+237928 hgpu2p RUNNING ngu007
+236706 hgpu2p RUNNING ngu011
+236707 hgpu2p RUNNING ngu001
+=== FAIRSHARE ===
+Account|User|RawShares|NormShares|RawUsage|EffectvUsage|FairShare
+g_sunyiq|sunyiq|1|0.500000|12442086|1.000000|0.343373
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T16:54:53+0800
