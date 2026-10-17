@@ -1,34 +1,35 @@
 #!/bin/bash
-set -u
+set -euo pipefail
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-test "$(cat "$root/job_id.txt")" = 244024 || exit 2
-export PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1
-unset PYTHONPATH
-probe() { printf '\nQUERY: %s\n' "$*"; timeout 40 "$@"; result=$?; printf 'QUERY_EXIT_CODE=%s\n' "$result"; }
-probe date -Iseconds
-probe cat "$root/job_id.txt" "$root/submissions.tsv"
-probe scontrol -d show job 244024
-probe sacct -j 244024 --format=JobIDRaw,JobName,Partition,State,ExitCode,Start,End,Elapsed,NodeList -n -P
-probe squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i|%j|%T|%P|%S|%R'
-for name in logs/b04-244024.out logs/b04-244024.err; do
-  if [ -f "$root/$name" ]; then printf '\nFILE=%s\n' "$root/$name"; tail -n 50 "$root/$name"; fi
-done
-for name in status.json interface_check.json runtime.json report.json failure_244024.json; do
-  if [ -f "$root/$name" ]; then probe cat "$root/$name"; fi
-done
-probe sinfo -p hgpu2p,hgpu2 -N -O 'partition:12,nodelist:16,gres:16,gresused:28,cpusstate:22'
-probe sinfo -p hgpu2p,hgpu2 -N -o '%P|%N|%t|%E'
-for node in ngu003 ngu009; do probe scontrol -o show node "$node"; done
-"$root/venv/bin/python" - <<'PY'
-import importlib.metadata as md, json, os, sys
-names=['tensorflow','numpy','h5py','scipy','scikit-learn','nvidia-cuda-runtime-cu12','nvidia-cuda-nvrtc-cu12','nvidia-cudnn-cu12','nvidia-cublas-cu12']
-records=[]
-for name in names:
-    dist=md.distribution(name)
-    wheel=dist.read_text('WHEEL') or ''
-    records.append(dict(name=name,version=dist.version,wheel_tags=[x for x in wheel.splitlines() if x.startswith('Tag:')]))
-print(json.dumps(dict(python=sys.version,metadata_host_glibc=os.confstr('CS_GNU_LIBC_VERSION'),packages=records,numerical_execution=False)))
+jid=$(cat "$root/job_id.txt")
+test "$jid" = 244024
+state=$(timeout 30 sacct -j "$jid" --format=JobIDRaw,State,ExitCode -n -P | awk -F '|' -v j="$jid" '$1==j {print $1 "|" $2 "|" $3}')
+test "$state" = '244024|COMPLETED|0:0'
+export PYTHONDONTWRITEBYTECODE=1
+"$root/venv/bin/python" - "$root" <<'PY'
+import json,sys
+from pathlib import Path
+r=Path(sys.argv[1]); report=json.loads((r/'report.json').read_text()); selection=json.loads((r/'selection.json').read_text())
+assert report['state']=='COMPLETED' and report['job_id']=='244024'
+assert selection['state']=='FROZEN' and len(selection['regions'])==119
+assert all(x['state']=='SELECTED' and x['optimizer_steps']>0 for x in selection['regions'])
+print('B04_COMPLETION_AND_FROZEN_119_REGIONS_CONFIRMED')
 PY
-printf 'METADATA_EXIT_CODE=%s\n' "$?"
-probe "$root/venv/bin/python" -m pip check
-exit 0
+mkdir -p "$root/artifacts"
+archive="$root/artifacts/graice_author_matched_results_v001.tar.gz"
+if [ ! -f "$archive" ]; then
+  files=(runs config.json source_manifest.json code provenance logs job_id.txt submissions.tsv interface_check.json runtime.json status.json report.json selection.json predictions.npz comparison regional_completion.json requirements_installed_v002.txt)
+  for name in "${files[@]}"; do test -e "$root/$name"; done
+  for name in setup_env_v001.sh setup_env_v002.sh env_status_v001.txt env_status_v002.txt; do
+    if [ -e "$root/$name" ]; then files+=("$name"); fi
+  done
+  test ! -e "$archive.partial"
+  tar -czf "$archive.partial" -C "$root" "${files[@]}"
+  mv "$archive.partial" "$archive"
+fi
+printf 'SLURM_COMPLETION=%s\n' "$state"
+printf 'ARCHIVE_SHA256='
+sha256sum "$archive" | cut -d ' ' -f 1
+printf 'ARTIFACT_BASE64_BEGIN\n'
+base64 "$archive"
+printf 'ARTIFACT_BASE64_END\n'
