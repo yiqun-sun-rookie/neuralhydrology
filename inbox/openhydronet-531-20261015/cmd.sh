@@ -1,18 +1,29 @@
 #!/bin/bash
 set -o pipefail
-# read-only: state + epoch progress of every ohn_* job of this channel
+# seq 27: (a) ensemble of the five NSE-loss ID18 runs, (b) the native CAMELS-531 run with real HRES/GraphCast forecasts
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
+P4="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v4"
 date --iso-8601=seconds
-echo "=== queue ==="
-squeue -u sunyiq -h -o '%.10i %.16j %.9T %.10M %R' | grep -E ' ohn_' || echo "none queued/running"
-echo "=== sacct since 10-14 ==="
-sacct -X -n -P -S 2026-10-16 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList 2>/dev/null | grep -E '\|ohn_' || echo none
-for N in ohn_native531 ohn_id18_nse_s101 ohn_id18_nse_s102 ohn_id18_nse_s103 ohn_id18_nse_s104; do
-  F=$(ls -t "$ROOT"/logs/$N-*.out 2>/dev/null | head -1)
-  [ -n "$F" ] || continue
-  echo "=== $N : $(basename "$F")"
-  grep -aE "Epoch [0-9]+ average" "$F" | sed -E 's/^\[INFO\] //; s/\(basetrainer.py:train_and_validate\) -- //' | cut -c1-300 | tail -3
-  echo "  progress: $(tr '\r' '\n' < "$F" | grep -aE '^# (Epoch|Validation)' | tail -1 | cut -c1-110)"
-  grep -aE "Traceback|Error|OutOfMemory|CUDA out|Killed" "$F" "${F%.out}.err" 2>/dev/null | head -3 | cut -c1-200
+[ -f "$P4/ohn_ens_eval.py" ] || { echo "MISSING payload ohn_ens_eval.py"; exit 1; }
+source ~/miniconda3/etc/profile.d/conda.sh; conda activate nh_final || { echo CONDA_FAILED; exit 1; }
+export PYTHONPATH="$ROOT/pysite"
+mkdir -p "$ROOT/results"
+
+echo "=============== (a) ID18-protocol NSE-loss ensemble"
+ZS=""
+for D in "$ROOT"/runs/id18_nse_[0-9]* "$ROOT"/runs/id18_nse_s101_* "$ROOT"/runs/id18_nse_s102_* "$ROOT"/runs/id18_nse_s103_* "$ROOT"/runs/id18_nse_s104_*; do
+  Z=$(ls -d "$D"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1)
+  echo "member: $(basename "$D")  ->  ${Z:+found}${Z:-MISSING}"
+  [ -n "$Z" ] && ZS="$ZS $Z"
 done
+nice -n 10 python "$P4/ohn_ens_eval.py" 1989-10-01 1999-09-30 "$ROOT/results/id18_nse_ens5" $ZS 2>&1 | grep -v -i warn
+
+echo "=============== (b) native CAMELS-531 run (2021-2025, real HRES + GraphCast forecasts)"
+D=$(ls -td "$ROOT"/runs/native531_* | head -1); echo "run: $D"
+Z=$(ls -d "$D"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1); echo "zarr: $Z"
+if [ -n "$Z" ]; then nice -n 10 python "$P4/ohn_ens_eval.py" 2021-01-01 2025-12-31 "$ROOT/results/native531" "$Z" 2>&1 | grep -v -i warn; else echo NO_TEST_RESULTS; fi
+
+echo "=== CSV_BEGIN id18_nse_ens5 (basin, ens, members at time_step 0)"
+cut -d, -f1-7 "$ROOT/results/id18_nse_ens5_per_basin.csv"
+echo "=== CSV_END"
 exit 0
