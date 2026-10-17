@@ -1,0 +1,73 @@
+### channel=hydrol85935-prepeak-20261017-001 seq=4
+### host=login4
+### started=2026-10-17T17:14:13+0800
+### ---------- output ----------
+=== SMOKE ACCT ===
+244261        COMPLETED      0:0          ngu101   00:08:05 
+=== SMOKE LOG ===
+--- /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001/logs/prepeak-244261_4294967294.out
+host=ngu101 job=244261 array=_ start=2026-10-17T16:59:44+0800
+NVIDIA A40, 535.104.05, 46068 MiB
+torch 2.4.0 cuda True NVIDIA A40
+shard offset=0 stride=1: 1 basins, 1 todo, eps=[0.01, 0.05, 0.1], window=14, device=cuda:0, threads=4
+[1/1] 01022500 ok 404.5s (avg 405s)
+DONE
+end=2026-10-17T17:07:44+0800
+--- /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001/logs/prepeak-244261_4294967294.err
+=== SMOKE RECORD ===
+{
+ "basin": "01022500",
+ "window": 14,
+ "n_iter": 50,
+ "env": {
+  "torch": "2.4.0",
+  "python": "3.11.13",
+  "device": "cuda:0",
+  "threads": 4,
+  "host": "ngu101",
+  "chunk": 256,
+  "code_sha256": {
+   "src/adversarial/scripts/coherent_attack.py": "7b338485dc6a2ea6e8fc88c5fce1a8e6e43ac6898eb4e257ab23cd6aa04f1d76",
+   "src/adversarial/model_wrapper.py": "60fe138c9e8c411e0d1c605e93ef0cb37e536db1a2cce7cc73284cb2551dda64",
+   "src/adversarial/data_loader.py": "1777af8300bafb051d16e2561a308749b9f2249a296e4d97d2e95935f7af0dbe"
+  }
+ },
+ "results": {
+  "0.01": {
+   "D_peak": 0.0704871416091919,
+   "D_overall": 0.0073125362396240234,
+   "n_peaks": 38,
+   "D_peak_rand": 0.011545181274414062,
+   "D_overall_rand": 0.0015790462493896484,
+   "n_days_pre": 532,
+   "n_days_rand": 532
+  },
+  "0.05": {
+   "D_peak": 0.37779438495635986,
+   "D_overall": 0.04135704040527344,
+   "n_peaks": 38,
+   "D_peak_rand": 0.059630393981933594,
+   "D_overall_rand": 0.008975625038146973,
+   "n_days_pre": 532,
+   "n_days_rand": 532
+  },
+  "0.1": {
+   "D_peak": 0.8103770017623901,
+   "D_overall": 0.09510880708694458,
+   "n_peaks": 38,
+   "D_peak_rand": 0.12494945526123047,
+   "D_overall_rand": 0.020501017570495605,
+   "n_days_pre": 532,
+   "n_days_rand": 532
+  }
+ },
+ "nse_clean": 0.7718266248703003,
+ "status": "ok",
+ "elapsed_s": 404.5
+}=== SUBMIT ARRAY ===
+Submitted batch job 244280
+array_jobid=244280
+244280_[0-5%6] hgpu4 PENDING (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T17:14:19+0800
