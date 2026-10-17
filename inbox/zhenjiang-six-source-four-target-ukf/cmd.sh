@@ -1,4 +1,35 @@
 #!/usr/bin/env bash
+set -eo pipefail
+python3 - <<'WAIT_FORMAL47'
+import datetime,json,pathlib,re,subprocess,time
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261017_sqrt_recovery_001')
+case='explicit_gru__historical_capacity'
+job=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
+assert job=='244227'
+run=root/'runs'/(case+'__tune_branch__filter_joint__s101__lr0p003')
+deadline=time.monotonic()+600
+samples=[]
+while True:
+    prefix=(run/'metrics.json').open('rb').read(131072).decode('utf8')
+    match=re.search(r'"validation_mae_cm"\s*:\s*',prefix)
+    assert match is not None
+    values=json.JSONDecoder().raw_decode(prefix[match.end():])[0]
+    point=(run/'continuation.pt').stat()
+    command=['/usr/local/globle/softs/slurm/19.05.4.1/bin/squeue','-h','-u','sunyiq','-o','%i|%T|%Z']
+    p=subprocess.run(command,capture_output=True,text=True,timeout=30)
+    assert p.returncode==0,{'command':command,'stderr':p.stderr}
+    rows=[line.split('|') for line in p.stdout.splitlines() if line.startswith(job+'|')]
+    assert len(rows)<=1 and (not rows or rows[0][2]==str(root))
+    samples.append({'at':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
+                    'metric_epochs':len(values),'checkpoint_bytes':point.st_size,'checkpoint_mtime_ns':point.st_mtime_ns,
+                    'actual_job_queue':rows})
+    if len(values)>=47 or (run/'failure.json').exists() or not rows or time.monotonic()>=deadline:break
+    time.sleep(min(60,max(0,deadline-time.monotonic())))
+print(json.dumps({'status':'read_only_wait_for_first_formal_complete47_finished','job_id':job,
+                  'root':str(root),'samples':samples,'formal_recovery_admitted_by_this_wait':False,
+                  'GPU_submissions':0}),flush=True)
+WAIT_FORMAL47
+#!/usr/bin/env bash
 set -euo pipefail
 python3 - <<'PY'
 import contextlib,datetime,io,json,os,pathlib,subprocess
