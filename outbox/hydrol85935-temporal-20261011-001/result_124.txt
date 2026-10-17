@@ -1,0 +1,10 @@
+### channel=hydrol85935-temporal-20261011-001 seq=124
+### host=login4
+### started=2026-10-17T20:57:23+0800
+### ---------- output ----------
+RECOVERY_AMENDMENT_REGISTERED {"job": {"stage": "report_v003", "job_id": 244315, "array_tasks": 0, "script": "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/submissions/report_v003.sbatch", "script_sha256": "250de823a8f058a6dc2876e641b3c13de3705d7371e4ab75409c3855fb9dd506", "scope": 1593, "seed": null, "dependency": null, "supersedes": 242754}, "cancel": {"returncode": 0, "stdout": "", "stderr": ""}, "amendment_sha256": "1cedad209ce88e6c578ea42046295292317f011786c5d70dbf641145dffd88fe"}
+AMENDMENT_QUEUE "244315|PENDING|Priority|4|gpu:1\n"
+AMENDMENT_ACCOUNTING "242753|FAILED|1:0\n242754|CANCELLED by 2272|0:0\n"
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T20:57:26+0800
