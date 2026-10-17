@@ -1,5 +1,5 @@
 #!/bin/bash
-# seq3: report smoke job 244261; ONLY if it COMPLETED with an ok record, submit the full array (6 shards).
+# seq4 (repeat of seq3): report smoke job 244261; ONLY if it COMPLETED with an ok record, submit the full array (6 shards).
 set -o pipefail
 ROOT=/data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001
 SJ=244261
