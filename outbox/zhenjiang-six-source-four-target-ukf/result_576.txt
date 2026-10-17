@@ -1,0 +1,10 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=576
+### host=login4
+### started=2026-10-17T13:06:43+0800
+### ---------- output ----------
+{"status": "sqrt_gpu_additive_package_deployed", "root": "/data1/home/sunyiq/zhenjiang_sqrt_covariance_repair_20261017_001", "manifest_sha256": "ab6823e438feb865070fb76b4c6635ad66487a49147951d8650b902bc1431856", "formal_epochs_added": 0}
+{"status": "sqrt_gpu_admission_submitted", "root": "/data1/home/sunyiq/zhenjiang_sqrt_covariance_repair_20261017_001", "job_id": "244223", "spec_sha256": "74533563fdba6a1d20ce5068eba8b2e9a1a63a5b96af3866ff326db9bfd407d1", "manifest_sha256": "ab6823e438feb865070fb76b4c6635ad66487a49147951d8650b902bc1431856", "formal_epochs_added": 0, "at": "2026-10-17T13:06:52.972882+08:00"}
+{"accounting": {"command": ["/usr/local/globle/softs/slurm/19.05.4.1/bin/sacct", "-n", "-X", "-j", "244223", "--format=JobID,State,ExitCode,Start,End,NodeList", "-P"], "returncode": 0, "stderr": "", "stdout": ""}, "checked_at": "2026-10-17T13:06:53.119239+08:00", "documents": {}, "formal_epochs_added": 0, "job_id": "244223", "logs": {}, "queue": {"command": ["/usr/local/globle/softs/slurm/19.05.4.1/bin/squeue", "-h", "-j", "244223", "-o", "%i|%T|%N|%Z|%S|%e|%l|%r"], "returncode": 0, "stderr": "", "stdout": "244223|PENDING||/data1/home/sunyiq/zhenjiang_sqrt_covariance_repair_20261017_001|N/A|N/A|30:00|Priority\n"}, "root": "/data1/home/sunyiq/zhenjiang_sqrt_covariance_repair_20261017_001", "scheduler_jobs": {"sqrt_gpu_admission": "244223"}, "status": "sqrt_gpu_workflow_status"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T13:06:53+0800
