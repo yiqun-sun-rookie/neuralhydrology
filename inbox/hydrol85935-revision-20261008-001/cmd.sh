@@ -1,33 +1,31 @@
 #!/bin/bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'APPLY'
-"""Raise the ArrayTaskThrottle of parent main array 241336 from 1 to 2 (scheduler setting only)."""
-import json, subprocess, datetime, hashlib, os
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'CHECK'
+"""Read-only: concurrency integrity of the shared ledger plus element/GPU state. No mutation."""
+import json, subprocess, datetime, hashlib, collections
 from pathlib import Path
-R = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001')
-D = R / 'control/two_gpu_20261017_001'
+R = Path('/data1/home/sunyiq/hydrol85935_revision_20261008_001'); E = R / 'execution/hpc_v009/records'
 def emit(k, v): print(k + ' ' + json.dumps(v), flush=True)
-def run(a): return subprocess.run(a, capture_output=True, text=True, timeout=60)
-def now(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
-def write(p, v):
-    p.parent.mkdir(parents=True, exist_ok=True)
-    with p.open('x') as f: json.dump(v, f, indent=2); f.write('\n'); f.flush(); os.fsync(f.fileno())
-assert not (D / 'apply.intent.json').exists(), 'already attempted; reconcile, never repeat'
-before = run(['scontrol', 'show', 'job', '-o', '241336']).stdout
-assert 'ArrayTaskThrottle=1 ' in before or before.rstrip().endswith('ArrayTaskThrottle=1') or 'ArrayTaskThrottle=1' in before.split(), before[:300]
-cmd = str(R / 'control/hybrid_v009_20261012_001/attacks.sbatch')
-assert 'Command=' + cmd in before and 'NumCPUs=4' in before and 'gpu:1' in before and 'Partition=hgpu2p' in before, before[:600]
-ledger = R / 'execution/hpc_v009/records/ledger.jsonl'
-rows = ledger.read_text().splitlines(); bad = sum(1 for l in rows if not l.strip().startswith('{') or not l.strip().endswith('}'))
-write(D / 'baseline.json', dict(utc=now(), ledger_lines=len(rows), ledger_nonjson_lines=bad, ledger_sha256=hashlib.sha256(ledger.read_bytes()).hexdigest(), job_line=before))
-write(D / 'apply.intent.json', dict(utc=now(), command=['scontrol', 'update', 'JobId=241336', 'ArrayTaskThrottle=2']))
-r = run(['scontrol', 'update', 'JobId=241336', 'ArrayTaskThrottle=2'])
-write(D / 'apply.result.json', dict(utc=now(), returncode=r.returncode, stdout=r.stdout, stderr=r.stderr))
-assert r.returncode == 0, r.stderr
-after = run(['scontrol', 'show', 'job', '-o', '241336']).stdout
-emit('THROTTLE_APPLIED', dict(throttle_before=1, throttle_after=2 if 'ArrayTaskThrottle=2' in after else None, returncode=r.returncode, stderr=r.stderr,
-     command_unchanged=('Command=' + cmd) in after, baseline=json.loads((D / 'baseline.json').read_text())['ledger_lines']))
-emit('THROTTLE_QUEUE', run(['squeue', '-h', '-r', '-j', '241336', '-o', '%i|%T|%r']).stdout.splitlines()[:6])
-assert 'ArrayTaskThrottle=2' in after
-APPLY
+def run(a):
+    r = subprocess.run(a, capture_output=True, text=True, timeout=45); return dict(returncode=r.returncode, stdout=r.stdout[:12000], stderr=r.stderr[:800])
+emit('LC_TIME', dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
+led = E / 'ledger.jsonl'; raw = led.read_bytes(); lines = raw.decode('utf8', 'replace').split('\n')
+parsed, bad = [], []
+for i, l in enumerate(lines):
+    if not l.strip(): continue
+    try:
+        v = json.loads(l); assert isinstance(v, dict) and {'basin_id', 'combination_id', 'status'} <= set(v); parsed.append(v)
+    except Exception: bad.append(i + 1)
+status = collections.Counter(v['status'] for v in parsed)
+slot_lines = collections.Counter((v['combination_id'], v['basin_id']) for v in parsed if v['status'] in ('complete', 'reused'))
+markers = {(p.parent.parent.name, p.parent.name) for p in (E / 'attacks').glob('*/*/complete.json')}
+missing = sorted(markers - set(slot_lines))
+emit('LC_LEDGER', dict(lines=len(parsed), unparsable_line_numbers=bad[:20], unparsable=len(bad), bytes=len(raw), ends_with_newline=raw.endswith(b'\n'), status=dict(status),
+     markers=len(markers), markers_without_ledger_line=len(missing), missing_head=missing[:10],
+     slots_with_more_than_one_complete_line=sum(1 for v in slot_lines.values() if v > 1)))
+emit('LC_ELEMENTS', run(['sacct', '-X', '-j', '241336', '-n', '-P', '-o', 'JobID,State,ExitCode,Elapsed,Start,End,NodeList', '--starttime', '2026-10-17T21:11:00']))
+emit('LC_RUNNING', run(['squeue', '-h', '-r', '-u', 'sunyiq', '-t', 'RUNNING', '-O', 'jobid:16,partition:10,reason:12,tres-per-node:14,nodelist:10,timeused:12']))
+emit('LC_PENDING_MAIN', run(['squeue', '-h', '-r', '-j', '241336', '-t', 'PENDING', '-O', 'jobid:16,reason:24,starttime:22']))
+emit('LC_HGPU2P', run(['sinfo', '-N', '-h', '-p', 'hgpu2p', '-O', 'nodelist:12,statelong:12,gresused:26']))
+CHECK
