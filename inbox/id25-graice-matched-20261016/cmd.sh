@@ -1,29 +1,26 @@
 #!/bin/bash
-set -eo pipefail
+set -u
 root=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-if [ -f "$root/job_id.txt" ]; then
-  jid=$(cat "$root/job_id.txt")
-  printf 'JOB_ID=%s\n' "$jid"
-  cat "$root/submissions.tsv"
-  squeue -h -u sunyiq -n id25_graice_m_261016 -o '%i|%j|%T|%M|%R'
-  sacct -j "$jid" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -n -P
-  for file in "$root/logs/b04-$jid.out" "$root/logs/b04-$jid.err"; do
-    if [ -f "$file" ]; then printf '\nLOG=%s\n' "$file"; tail -n 16 "$file"; fi
-  done
-fi
-for file in "$root/status.json" "$root/interface_check.json" "$root/runtime.json" "$root/report.json"; do
-  if [ -f "$file" ]; then printf '\nFILE=%s\n' "$file"; cat "$file"; fi
+test "$(cat "$root/job_id.txt")" = 244024 || exit 2
+probe() {
+  printf '\nQUERY: %s\n' "$*"
+  "$@"
+  result=$?
+  printf 'QUERY_EXIT_CODE=%s\n' "$result"
+}
+probe date -Iseconds
+probe cat "$root/job_id.txt" "$root/submissions.tsv"
+probe scontrol -d show job 244024
+probe squeue -j 244024 --start -o '%i|%T|%r|%S|%V|%Q|%l|%P|%R'
+probe sprio -l -j 244024
+probe sshare -l -u sunyiq
+for partition in hgpu2p hgpu2 hgpu4 hgpu8; do
+  probe scontrol show partition "$partition"
 done
-if [ -f "$root/logs/env_install_v002.log" ]; then tail -n 8 "$root/logs/env_install_v002.log"; fi
-if [ -f "$root/env_status_v002.txt" ]; then cat "$root/env_status_v002.txt"; fi
-if [ -f "$root/env_pid_v002.txt" ]; then
-  pid=$(cat "$root/env_pid_v002.txt")
-  if ps -p "$pid" -o pid,etimes,stat,args; then :; else echo ENV_HELPER_NOT_RUNNING; fi
-fi
-if [ -f "$root/status.json" ]; then
-  rid=$("$root/venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("region_id", ""))' "$root/status.json")
-  if [[ "$rid" =~ ^lat[+-][0-9]{3}_lon[+-][0-9]{3}$ ]]; then
-    if [ -f "$root/runs/$rid/last.npz" ]; then stat -c '%n|%s|%y' "$root/runs/$rid/last.npz"; fi
-    if [ -f "$root/runs/$rid/metrics.jsonl" ]; then tail -n 2 "$root/runs/$rid/metrics.jsonl"; fi
-  fi
-fi
+probe sinfo -p hgpu2p,hgpu2,hgpu4,hgpu8 -N -O 'partition:12,nodelist:16,gres:16,gresused:28,cpusstate:22'
+probe sinfo -p hgpu2p,hgpu2,hgpu4,hgpu8 -N -o '%P|%N|%t|%E'
+probe squeue -u sunyiq -p hgpu2p,hgpu2,hgpu4,hgpu8 -o '%i|%j|%T|%Q|%S|%l|%D|%R'
+for name in status.json interface_check.json runtime.json; do
+  if [ -f "$root/$name" ]; then probe cat "$root/$name"; fi
+done
+exit 0
