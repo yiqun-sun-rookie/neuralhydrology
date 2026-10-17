@@ -19,6 +19,8 @@ for folder in sorted(root.joinpath('runs').glob('*__tune_branch__*')):
     members[folder.name]={'completed_epochs':len(values),'history_sha256':hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest(),'continuation_bytes':stat.st_size,'continuation_mtime_ns':stat.st_mtime_ns,'failure_exists':folder.joinpath('failure.json').exists()}
 queries=[query(['squeue','-h','-u','sunyiq','-o','%i|%T|%Z|%e|%l|%P|%C|%b|%N']),query(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
 record={'status':'read_only_recovery_queue_light_probe','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'root':str(root),'case':case,'job_id':job,'queries':queries,'members':members,'formal_complete_exists':root.joinpath('records',case,'training_complete.json').exists(),'scientific_configuration_changed':False,'evaluation_values_read':False,'checkpoints_loaded':False}
+progress_path=root/'records'/case/'progress.json'
+record['progress']=json.loads(progress_path.read_bytes()) if progress_path.exists() else None
 for n in ('recovery_backfill_adjustment_20261012.response.json','gpu_binding_'+job+'.json','sqrt_hardware_'+job+'.json','bootstrap_original39_'+job+'.json','sqrt_bootstrap_'+job+'.json'):
     p=root/'records'/n
     if p.exists():record[n]=json.loads(p.read_text())
