@@ -1,0 +1,365 @@
+### channel=id25-graice-matched-20261016 seq=19
+### host=login4
+### started=2026-10-17T22:36:09+0800
+### ---------- output ----------
+
+QUERY: date -Iseconds
+2026-10-17T22:36:09+0800
+QUERY_EXIT_CODE=0
+
+QUERY: cat /data1/home/sunyiq/id25_graice_author_matched_20261016_001/job_id.txt /data1/home/sunyiq/id25_graice_author_matched_20261016_001/submissions.tsv
+244024
+2026-10-16T11:02:55Z	244024	v001 reviewed B04, one fit per region, interface gate then train
+QUERY_EXIT_CODE=0
+
+QUERY: scontrol -d show job 244024
+slurm_load_jobs error: Invalid job id specified
+QUERY_EXIT_CODE=1
+
+QUERY: sacct -j 244024 --format=JobIDRaw,JobName,Partition,State,ExitCode,Start,End,Elapsed,NodeList -n -P
+244024|id25_graice_m_261016|hgpu2p|COMPLETED|0:0|2026-10-17T20:21:44|2026-10-17T21:44:28|01:22:44|ngu001
+244024.batch|batch||COMPLETED|0:0|2026-10-17T20:21:44|2026-10-17T21:44:28|01:22:44|ngu001
+244024.extern|extern||COMPLETED|0:0|2026-10-17T20:21:44|2026-10-17T21:44:29|01:22:45|ngu001
+QUERY_EXIT_CODE=0
+
+QUERY: squeue -h -u sunyiq -n id25_graice_m_261016 -o %i|%j|%T|%P|%S|%R
+QUERY_EXIT_CODE=0
+
+FILE=/data1/home/sunyiq/id25_graice_author_matched_20261016_001/logs/b04-244024.out
+=================================================================
+Total params: 6177 (24.13 KB)
+Trainable params: 6177 (24.13 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+{"event": "FIRST_OPTIMIZER_UPDATE", "state": "RUNNING", "phase": "FIRST_OPTIMIZER_UPDATE", "region_id": "lat+048_lon-122", "region_number": 118, "regions_completed": 117, "region_count": 119, "train_scaled_mse": 0.7098865509033203, "gradient_norm": 7.890340328216553, "optimizer_steps": 1, "job_id": "244024", "updated_at": "2026-10-17T13:40:39.580017+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 1, "train_scaled_mse": 0.5345081705035586, "val_ref_mse_cm2": 118.6761985353342, "best_val_ref_mse_cm2": 118.6761985353342, "best_epoch": 1, "wait": 0, "optimizer_steps": 3, "last_gradient_norm": 1.970892310142517, "epoch_seconds": 2.866540651768446, "updated_at": "2026-10-17T13:40:39.937780+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 10, "train_scaled_mse": 0.14929744827024866, "val_ref_mse_cm2": 76.99815308722545, "best_val_ref_mse_cm2": 76.99815308722545, "best_epoch": 10, "wait": 0, "optimizer_steps": 30, "last_gradient_norm": 3.0043697357177734, "epoch_seconds": 0.39976586401462555, "updated_at": "2026-10-17T13:40:43.752865+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 20, "train_scaled_mse": 0.04781070938616088, "val_ref_mse_cm2": 21.015422505194, "best_val_ref_mse_cm2": 21.015422505194, "best_epoch": 20, "wait": 0, "optimizer_steps": 60, "last_gradient_norm": 11.604065895080566, "epoch_seconds": 0.3673680014908314, "updated_at": "2026-10-17T13:40:47.950059+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 30, "train_scaled_mse": 0.03772263488534725, "val_ref_mse_cm2": 22.85389963698093, "best_val_ref_mse_cm2": 14.38593001019327, "best_epoch": 21, "wait": 9, "optimizer_steps": 90, "last_gradient_norm": 1.8864601850509644, "epoch_seconds": 0.3945274390280247, "updated_at": "2026-10-17T13:40:52.199128+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 40, "train_scaled_mse": 0.023150540549646725, "val_ref_mse_cm2": 10.292755948024933, "best_val_ref_mse_cm2": 8.584234829432111, "best_epoch": 39, "wait": 1, "optimizer_steps": 120, "last_gradient_norm": 6.703734874725342, "epoch_seconds": 0.39579740166664124, "updated_at": "2026-10-17T13:40:56.354569+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 50, "train_scaled_mse": 0.028738183618494957, "val_ref_mse_cm2": 19.881178643684667, "best_val_ref_mse_cm2": 8.584234829432111, "best_epoch": 39, "wait": 11, "optimizer_steps": 150, "last_gradient_norm": 1.2763599157333374, "epoch_seconds": 0.3763299994170666, "updated_at": "2026-10-17T13:41:00.519151+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-122", "epoch": 60, "train_scaled_mse": 0.03029922791051142, "val_ref_mse_cm2": 16.207404001636615, "best_val_ref_mse_cm2": 8.584234829432111, "best_epoch": 39, "wait": 21, "optimizer_steps": 180, "last_gradient_norm": 2.029860019683838, "epoch_seconds": 0.3936595693230629, "updated_at": "2026-10-17T13:41:04.724892+00:00"}
+{"event": "REGION_SELECTED", "state": "SELECTED", "region_id": "lat+048_lon-122", "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566", "epochs_completed": 69, "optimizer_steps": 207, "best_epoch": 39, "best_val_rmse_cm": 2.929886487465361, "prediction_reference_cm": 0.3057922998176066, "observation_reference_cm": -0.9608714878559113, "wait": 30, "stop_reason": "PATIENCE", "seed": 20261015, "attempt_count": 1, "job_id": "244024", "selected_at": "2026-10-17T13:41:08.652612+00:00"}
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_padding (Masking)     (None, None, 11)          0         
+                                                                 
+ author_lstm (LSTM)          (None, 32)                5632      
+                                                                 
+ dense (Dense)               (None, 16)                528       
+                                                                 
+ dense_1 (Dense)             (None, 1)                 17        
+                                                                 
+=================================================================
+Total params: 6177 (24.13 KB)
+Trainable params: 6177 (24.13 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+{"event": "FIRST_OPTIMIZER_UPDATE", "state": "RUNNING", "phase": "FIRST_OPTIMIZER_UPDATE", "region_id": "lat+048_lon-124", "region_number": 119, "regions_completed": 118, "region_count": 119, "train_scaled_mse": 1.190268635749817, "gradient_norm": 7.924408435821533, "optimizer_steps": 1, "job_id": "244024", "updated_at": "2026-10-17T13:41:11.975626+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 1, "train_scaled_mse": 0.9462006032805551, "val_ref_mse_cm2": 137.6097358654021, "best_val_ref_mse_cm2": 137.6097358654021, "best_epoch": 1, "wait": 0, "optimizer_steps": 3, "last_gradient_norm": 1.0110044479370117, "epoch_seconds": 2.952835079282522, "updated_at": "2026-10-17T13:41:12.344784+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 10, "train_scaled_mse": 0.1995855922048742, "val_ref_mse_cm2": 111.40782808581889, "best_val_ref_mse_cm2": 111.40782808581889, "best_epoch": 10, "wait": 0, "optimizer_steps": 30, "last_gradient_norm": 1.1147842407226562, "epoch_seconds": 0.4043971784412861, "updated_at": "2026-10-17T13:41:16.308283+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 20, "train_scaled_mse": 0.1671363368178859, "val_ref_mse_cm2": 81.84556968005991, "best_val_ref_mse_cm2": 81.84556968005991, "best_epoch": 20, "wait": 0, "optimizer_steps": 60, "last_gradient_norm": 8.216919898986816, "epoch_seconds": 0.39113379269838333, "updated_at": "2026-10-17T13:41:20.642370+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 30, "train_scaled_mse": 0.06540249434835983, "val_ref_mse_cm2": 49.278141263673206, "best_val_ref_mse_cm2": 48.171856693437206, "best_epoch": 28, "wait": 2, "optimizer_steps": 90, "last_gradient_norm": 2.7460131645202637, "epoch_seconds": 0.40680552646517754, "updated_at": "2026-10-17T13:41:25.014845+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 40, "train_scaled_mse": 0.04946037743127707, "val_ref_mse_cm2": 45.06569864607158, "best_val_ref_mse_cm2": 39.870892025353776, "best_epoch": 35, "wait": 5, "optimizer_steps": 120, "last_gradient_norm": 4.008610248565674, "epoch_seconds": 0.4100815951824188, "updated_at": "2026-10-17T13:41:29.427427+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 50, "train_scaled_mse": 0.038064254871146244, "val_ref_mse_cm2": 40.04709335951387, "best_val_ref_mse_cm2": 39.870892025353776, "best_epoch": 35, "wait": 15, "optimizer_steps": 150, "last_gradient_norm": 1.7141348123550415, "epoch_seconds": 0.3909158557653427, "updated_at": "2026-10-17T13:41:33.743727+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 60, "train_scaled_mse": 0.039384289334217705, "val_ref_mse_cm2": 37.3174882067951, "best_val_ref_mse_cm2": 35.93080000537059, "best_epoch": 58, "wait": 2, "optimizer_steps": 180, "last_gradient_norm": 3.2977101802825928, "epoch_seconds": 0.4062219373881817, "updated_at": "2026-10-17T13:41:38.128247+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 70, "train_scaled_mse": 0.02967786376900745, "val_ref_mse_cm2": 37.14206074545216, "best_val_ref_mse_cm2": 35.93080000537059, "best_epoch": 58, "wait": 12, "optimizer_steps": 210, "last_gradient_norm": 0.9429576396942139, "epoch_seconds": 0.391784630715847, "updated_at": "2026-10-17T13:41:42.545922+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 80, "train_scaled_mse": 0.027934091871209217, "val_ref_mse_cm2": 39.22909460758259, "best_val_ref_mse_cm2": 28.003260204972786, "best_epoch": 76, "wait": 4, "optimizer_steps": 240, "last_gradient_norm": 1.8857992887496948, "epoch_seconds": 0.38405800610780716, "updated_at": "2026-10-17T13:41:46.870141+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 90, "train_scaled_mse": 0.02192784377345533, "val_ref_mse_cm2": 35.13205201893391, "best_val_ref_mse_cm2": 27.912188165089734, "best_epoch": 86, "wait": 4, "optimizer_steps": 270, "last_gradient_norm": 1.3685134649276733, "epoch_seconds": 0.388939768075943, "updated_at": "2026-10-17T13:41:51.229658+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 100, "train_scaled_mse": 0.02372035869594776, "val_ref_mse_cm2": 29.33877486713699, "best_val_ref_mse_cm2": 27.371765855058253, "best_epoch": 96, "wait": 4, "optimizer_steps": 300, "last_gradient_norm": 1.2272534370422363, "epoch_seconds": 0.3953700438141823, "updated_at": "2026-10-17T13:41:55.590817+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 110, "train_scaled_mse": 0.018884386077071682, "val_ref_mse_cm2": 25.121072858207857, "best_val_ref_mse_cm2": 23.749113443877686, "best_epoch": 108, "wait": 2, "optimizer_steps": 330, "last_gradient_norm": 1.6725355386734009, "epoch_seconds": 0.4011485278606415, "updated_at": "2026-10-17T13:42:00.058618+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 120, "train_scaled_mse": 0.02406354054806853, "val_ref_mse_cm2": 18.804973245480817, "best_val_ref_mse_cm2": 18.473916117866032, "best_epoch": 119, "wait": 1, "optimizer_steps": 360, "last_gradient_norm": 0.030597159639000893, "epoch_seconds": 0.3946026973426342, "updated_at": "2026-10-17T13:42:04.475676+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 130, "train_scaled_mse": 0.030827599775158997, "val_ref_mse_cm2": 32.5207495346588, "best_val_ref_mse_cm2": 16.633860393966568, "best_epoch": 122, "wait": 8, "optimizer_steps": 390, "last_gradient_norm": 1.2466204166412354, "epoch_seconds": 0.4002924859523773, "updated_at": "2026-10-17T13:42:08.841521+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 140, "train_scaled_mse": 0.015166522201263544, "val_ref_mse_cm2": 26.944097914721254, "best_val_ref_mse_cm2": 16.633860393966568, "best_epoch": 122, "wait": 18, "optimizer_steps": 420, "last_gradient_norm": 1.232503056526184, "epoch_seconds": 0.4021700471639633, "updated_at": "2026-10-17T13:42:13.203814+00:00"}
+{"event": "REGION_EPOCH", "region_id": "lat+048_lon-124", "epoch": 150, "train_scaled_mse": 0.016267212107777596, "val_ref_mse_cm2": 20.5500975124823, "best_val_ref_mse_cm2": 16.633860393966568, "best_epoch": 122, "wait": 28, "optimizer_steps": 450, "last_gradient_norm": 0.5421070456504822, "epoch_seconds": 0.3922509700059891, "updated_at": "2026-10-17T13:42:17.559169+00:00"}
+{"event": "REGION_SELECTED", "state": "SELECTED", "region_id": "lat+048_lon-124", "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566", "epochs_completed": 152, "optimizer_steps": 456, "best_epoch": 122, "best_val_rmse_cm": 4.078462994066094, "prediction_reference_cm": -0.31258195366120933, "observation_reference_cm": -1.2599828748991995, "wait": 30, "stop_reason": "PATIENCE", "seed": 20261015, "attempt_count": 1, "job_id": "244024", "selected_at": "2026-10-17T13:42:18.641839+00:00"}
+{"state": "COMPLETED", "exp_id": "B04_GRAICE_LSTMnoSIF_MATCHED_INPUT", "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566", "region_count": 119, "attempts_per_region": 1, "seed": 20261015, "job_id": "244024", "comparison": {"period": "2009-2010", "fixed_comparator": "RDS01_best_epoch078", "rds01": {"pooled_rmse_cm": 4.511688886776995, "regional_median_rmse_cm": 3.8983958988832614, "residual_count": 2856, "valid_regions": 119}, "graice_lstmnosif": {"pooled_rmse_cm": 5.758889582325348, "regional_median_rmse_cm": 3.8729437087831613, "residual_count": 2856, "valid_regions": 119}, "rds01_lower_rmse_regions": 70, "lstmnosif_lower_rmse_regions": 49, "tie_or_unavailable_regions": 0, "cold_regions": [{"region_id": "lat+038_lon-108", "common_windows": 24, "rds01_rmse_cm": 3.9878634330429663, "lstmnosif_rmse_cm": 1.2961063235359247, "lstm_minus_rds_rmse_cm": -2.6917571095070416, "rds01_anomaly_correlation": 0.057920867691304584, "lstmnosif_anomaly_correlation": -0.20492857160670408, "2009_rds01_sd_ratio": 2.016140178452284, "2009_rds01_abs_log_sd_ratio": 0.7011848807542603, "2009_rds01_bias_cm": 2.576000242097154, "2009_lstmnosif_sd_ratio": 1.0488610326392098, "2009_lstmnosif_abs_log_sd_ratio": 0.04770484460336347, "2009_lstmnosif_bias_cm": -0.18665924949483384, "2010_rds01_sd_ratio": 1.4287319345477063, "2010_rds01_abs_log_sd_ratio": 0.35678729181086827, "2010_rds01_bias_cm": -0.6958800022634052, "2010_lstmnosif_sd_ratio": 0.8799215501454382, "2010_lstmnosif_abs_log_sd_ratio": 0.12792252304576707, "2010_lstmnosif_bias_cm": -1.005435200342629}, {"region_id": "lat+040_lon-108", "common_windows": 24, "rds01_rmse_cm": 3.928966526805543, "lstmnosif_rmse_cm": 1.829056583939288, "lstm_minus_rds_rmse_cm": -2.099909942866255, "rds01_anomaly_correlation": 0.522168676883218, "lstmnosif_anomaly_correlation": 0.3129938343908216, "2009_rds01_sd_ratio": 2.079876491788145, "2009_rds01_abs_log_sd_ratio": 0.7323085130022198, "2009_rds01_bias_cm": 2.491149166490436, "2009_lstmnosif_sd_ratio": 0.9492096198308317, "2009_lstmnosif_abs_log_sd_ratio": 0.05212561979970559, "2009_lstmnosif_bias_cm": -1.170941932613445, "2010_rds01_sd_ratio": 1.5531903898308996, "2010_rds01_abs_log_sd_ratio": 0.44031113152098994, "2010_rds01_bias_cm": 0.016290390608618106, "2010_lstmnosif_sd_ratio": 0.9020443693373, "2010_lstmnosif_abs_log_sd_ratio": 0.10309157017663866, "2010_lstmnosif_bias_cm": -1.541222605760326}], "interpretation": "Developmental whole-model storage comparison; same raw daily inputs and history; author per-region sequence-to-one adaptation", "rds01_anomaly_correlation": {"median": 0.6894741043281342, "valid_regions": 119}, "lstmnosif_anomaly_correlation": {"median": 0.2180268156198168, "valid_regions": 119}}, "finished_at": "2026-10-17T13:44:01.104524+00:00"}
+
+FILE=/data1/home/sunyiq/id25_graice_author_matched_20261016_001/logs/b04-244024.err
+2026-10-17 20:21:53.313870: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-17 20:21:53.313942: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-17 20:21:53.557640: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792239768.686345 2766835 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+
+QUERY: cat /data1/home/sunyiq/id25_graice_author_matched_20261016_001/status.json
+{
+  "state": "COMPLETED",
+  "exp_id": "B04_GRAICE_LSTMnoSIF_MATCHED_INPUT",
+  "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+  "region_count": 119,
+  "attempts_per_region": 1,
+  "seed": 20261015,
+  "job_id": "244024",
+  "comparison": {
+    "period": "2009-2010",
+    "fixed_comparator": "RDS01_best_epoch078",
+    "rds01": {
+      "pooled_rmse_cm": 4.511688886776995,
+      "regional_median_rmse_cm": 3.8983958988832614,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "graice_lstmnosif": {
+      "pooled_rmse_cm": 5.758889582325348,
+      "regional_median_rmse_cm": 3.8729437087831613,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "rds01_lower_rmse_regions": 70,
+    "lstmnosif_lower_rmse_regions": 49,
+    "tie_or_unavailable_regions": 0,
+    "cold_regions": [
+      {
+        "region_id": "lat+038_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.9878634330429663,
+        "lstmnosif_rmse_cm": 1.2961063235359247,
+        "lstm_minus_rds_rmse_cm": -2.6917571095070416,
+        "rds01_anomaly_correlation": 0.057920867691304584,
+        "lstmnosif_anomaly_correlation": -0.20492857160670408,
+        "2009_rds01_sd_ratio": 2.016140178452284,
+        "2009_rds01_abs_log_sd_ratio": 0.7011848807542603,
+        "2009_rds01_bias_cm": 2.576000242097154,
+        "2009_lstmnosif_sd_ratio": 1.0488610326392098,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.04770484460336347,
+        "2009_lstmnosif_bias_cm": -0.18665924949483384,
+        "2010_rds01_sd_ratio": 1.4287319345477063,
+        "2010_rds01_abs_log_sd_ratio": 0.35678729181086827,
+        "2010_rds01_bias_cm": -0.6958800022634052,
+        "2010_lstmnosif_sd_ratio": 0.8799215501454382,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.12792252304576707,
+        "2010_lstmnosif_bias_cm": -1.005435200342629
+      },
+      {
+        "region_id": "lat+040_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.928966526805543,
+        "lstmnosif_rmse_cm": 1.829056583939288,
+        "lstm_minus_rds_rmse_cm": -2.099909942866255,
+        "rds01_anomaly_correlation": 0.522168676883218,
+        "lstmnosif_anomaly_correlation": 0.3129938343908216,
+        "2009_rds01_sd_ratio": 2.079876491788145,
+        "2009_rds01_abs_log_sd_ratio": 0.7323085130022198,
+        "2009_rds01_bias_cm": 2.491149166490436,
+        "2009_lstmnosif_sd_ratio": 0.9492096198308317,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.05212561979970559,
+        "2009_lstmnosif_bias_cm": -1.170941932613445,
+        "2010_rds01_sd_ratio": 1.5531903898308996,
+        "2010_rds01_abs_log_sd_ratio": 0.44031113152098994,
+        "2010_rds01_bias_cm": 0.016290390608618106,
+        "2010_lstmnosif_sd_ratio": 0.9020443693373,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.10309157017663866,
+        "2010_lstmnosif_bias_cm": -1.541222605760326
+      }
+    ],
+    "interpretation": "Developmental whole-model storage comparison; same raw daily inputs and history; author per-region sequence-to-one adaptation",
+    "rds01_anomaly_correlation": {
+      "median": 0.6894741043281342,
+      "valid_regions": 119
+    },
+    "lstmnosif_anomaly_correlation": {
+      "median": 0.2180268156198168,
+      "valid_regions": 119
+    }
+  },
+  "finished_at": "2026-10-17T13:44:01.104524+00:00"
+}
+QUERY_EXIT_CODE=0
+
+QUERY: cat /data1/home/sunyiq/id25_graice_author_matched_20261016_001/interface_check.json
+{
+  "state": "PASS",
+  "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+  "training_started": false,
+  "optimizer_steps": 0,
+  "regions": 119,
+  "dynamic_shape": [
+    3806,
+    119,
+    4
+  ],
+  "static_shape": [
+    119,
+    7
+  ],
+  "author_model": "unidirectional_LSTM32_Dense16_Dense1_sequence_to_one",
+  "parameters": 6177,
+  "checks": [
+    "allowed_4_daily_plus_7_static",
+    "window_cutoffs_and_split",
+    "actual_mask_equals_length_mask",
+    "padding_prediction_invariance",
+    "author_layer_structure",
+    "save_load",
+    "cm_scaler_roundtrip"
+  ],
+  "tensorflow_version": "2.15.1",
+  "job_id": "244024",
+  "finished_at": "2026-10-17T12:22:45.021819+00:00"
+}
+QUERY_EXIT_CODE=0
+
+QUERY: cat /data1/home/sunyiq/id25_graice_author_matched_20261016_001/runtime.json
+{
+  "tensorflow": "2.15.1",
+  "build": {
+    "cpu_compiler": "/usr/lib/llvm-17/bin/clang",
+    "cuda_compute_capabilities": [
+      "sm_50",
+      "sm_60",
+      "sm_70",
+      "sm_75",
+      "compute_80"
+    ],
+    "cuda_version": "12.2",
+    "cudnn_version": "8",
+    "is_cuda_build": true,
+    "is_rocm_build": false,
+    "is_tensorrt_build": true
+  },
+  "gpu": "PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')",
+  "details": {
+    "compute_capability": [
+      8,
+      6
+    ],
+    "device_name": "NVIDIA GeForce RTX 3090"
+  },
+  "job_id": "244024"
+}
+QUERY_EXIT_CODE=0
+
+QUERY: cat /data1/home/sunyiq/id25_graice_author_matched_20261016_001/report.json
+{
+  "state": "COMPLETED",
+  "exp_id": "B04_GRAICE_LSTMnoSIF_MATCHED_INPUT",
+  "fingerprint": "8255b77c9c72e2e5112e4277c54266eafe7e806a0f788f142f2c298f2c8c37fb:b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+  "region_count": 119,
+  "attempts_per_region": 1,
+  "seed": 20261015,
+  "job_id": "244024",
+  "comparison": {
+    "period": "2009-2010",
+    "fixed_comparator": "RDS01_best_epoch078",
+    "rds01": {
+      "pooled_rmse_cm": 4.511688886776995,
+      "regional_median_rmse_cm": 3.8983958988832614,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "graice_lstmnosif": {
+      "pooled_rmse_cm": 5.758889582325348,
+      "regional_median_rmse_cm": 3.8729437087831613,
+      "residual_count": 2856,
+      "valid_regions": 119
+    },
+    "rds01_lower_rmse_regions": 70,
+    "lstmnosif_lower_rmse_regions": 49,
+    "tie_or_unavailable_regions": 0,
+    "cold_regions": [
+      {
+        "region_id": "lat+038_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.9878634330429663,
+        "lstmnosif_rmse_cm": 1.2961063235359247,
+        "lstm_minus_rds_rmse_cm": -2.6917571095070416,
+        "rds01_anomaly_correlation": 0.057920867691304584,
+        "lstmnosif_anomaly_correlation": -0.20492857160670408,
+        "2009_rds01_sd_ratio": 2.016140178452284,
+        "2009_rds01_abs_log_sd_ratio": 0.7011848807542603,
+        "2009_rds01_bias_cm": 2.576000242097154,
+        "2009_lstmnosif_sd_ratio": 1.0488610326392098,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.04770484460336347,
+        "2009_lstmnosif_bias_cm": -0.18665924949483384,
+        "2010_rds01_sd_ratio": 1.4287319345477063,
+        "2010_rds01_abs_log_sd_ratio": 0.35678729181086827,
+        "2010_rds01_bias_cm": -0.6958800022634052,
+        "2010_lstmnosif_sd_ratio": 0.8799215501454382,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.12792252304576707,
+        "2010_lstmnosif_bias_cm": -1.005435200342629
+      },
+      {
+        "region_id": "lat+040_lon-108",
+        "common_windows": 24,
+        "rds01_rmse_cm": 3.928966526805543,
+        "lstmnosif_rmse_cm": 1.829056583939288,
+        "lstm_minus_rds_rmse_cm": -2.099909942866255,
+        "rds01_anomaly_correlation": 0.522168676883218,
+        "lstmnosif_anomaly_correlation": 0.3129938343908216,
+        "2009_rds01_sd_ratio": 2.079876491788145,
+        "2009_rds01_abs_log_sd_ratio": 0.7323085130022198,
+        "2009_rds01_bias_cm": 2.491149166490436,
+        "2009_lstmnosif_sd_ratio": 0.9492096198308317,
+        "2009_lstmnosif_abs_log_sd_ratio": 0.05212561979970559,
+        "2009_lstmnosif_bias_cm": -1.170941932613445,
+        "2010_rds01_sd_ratio": 1.5531903898308996,
+        "2010_rds01_abs_log_sd_ratio": 0.44031113152098994,
+        "2010_rds01_bias_cm": 0.016290390608618106,
+        "2010_lstmnosif_sd_ratio": 0.9020443693373,
+        "2010_lstmnosif_abs_log_sd_ratio": 0.10309157017663866,
+        "2010_lstmnosif_bias_cm": -1.541222605760326
+      }
+    ],
+    "interpretation": "Developmental whole-model storage comparison; same raw daily inputs and history; author per-region sequence-to-one adaptation",
+    "rds01_anomaly_correlation": {
+      "median": 0.6894741043281342,
+      "valid_regions": 119
+    },
+    "lstmnosif_anomaly_correlation": {
+      "median": 0.2180268156198168,
+      "valid_regions": 119
+    }
+  },
+  "finished_at": "2026-10-17T13:44:01.104524+00:00"
+}
+QUERY_EXIT_CODE=0
+
+QUERY: sinfo -p hgpu2p,hgpu2 -N -O partition:12,nodelist:16,gres:16,gresused:28,cpusstate:22
+PARTITION   NODELIST        GRES            GRES_USED                   CPUS(A/I/O/T)         
+hgpu2p      ngu001          gpu:2           gpu:2,dcu:0                 44/52/0/96            
+hgpu2p      ngu002          gpu:2           gpu:0,dcu:0                 0/0/96/96             
+hgpu2       ngu003          gpu:2           gpu:2,dcu:0                 8/88/0/96             
+hgpu2p      ngu004          gpu:2           gpu:2,dcu:0                 36/60/0/96            
+hgpu2p      ngu005          gpu:2           gpu:2,dcu:0                 18/78/0/96            
+hgpu2p      ngu006          gpu:2           gpu:2,dcu:0                 18/78/0/96            
+hgpu2p      ngu007          gpu:2           gpu:2,dcu:0                 12/84/0/96            
+hgpu2p      ngu008          gpu:2           gpu:2,dcu:0                 6/90/0/96             
+hgpu2       ngu009          gpu:2           gpu:2,dcu:0                 8/88/0/96             
+hgpu2p      ngu010          gpu:2           gpu:2,dcu:0                 8/24/0/32             
+hgpu2p      ngu011          gpu:2           gpu:2,dcu:0                 8/24/0/32             
+QUERY_EXIT_CODE=0
+
+QUERY: sinfo -p hgpu2p,hgpu2 -N -o %P|%N|%t|%E
+PARTITION|NODELIST|STATE|REASON
+hgpu2p|ngu001|mix|none
+hgpu2p|ngu002|down*|Not responding
+hgpu2|ngu003|mix|none
+hgpu2p|ngu004|mix|none
+hgpu2p|ngu005|mix|none
+hgpu2p|ngu006|mix|none
+hgpu2p|ngu007|mix|none
+hgpu2p|ngu008|mix|none
+hgpu2|ngu009|mix|none
+hgpu2p|ngu010|mix|none
+hgpu2p|ngu011|mix|none
+QUERY_EXIT_CODE=0
+
+QUERY: scontrol -o show node ngu003
+NodeName=ngu003 Arch=x86_64 CoresPerSocket=24  CPUAlloc=8 CPUTot=96 CPULoad=1.48 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu003 NodeHostName=ngu003 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=1401 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2  BootTime=2025-05-14T10:52:27 SlurmdStartTime=2025-05-14T13:40:04 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=8 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT_CODE=0
+
+QUERY: scontrol -o show node ngu009
+NodeName=ngu009 Arch=x86_64 CoresPerSocket=24  CPUAlloc=8 CPUTot=96 CPULoad=1.68 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu009 NodeHostName=ngu009 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=3309 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2  BootTime=2025-05-09T20:39:00 SlurmdStartTime=2025-08-28T14:44:59 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=8 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT_CODE=0
+{"python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "metadata_host_glibc": "glibc 2.17", "packages": [{"name": "tensorflow", "version": "2.15.1", "wheel_tags": ["Tag: cp311-cp311-manylinux_2_17_x86_64", "Tag: cp311-cp311-manylinux2014_x86_64"]}, {"name": "numpy", "version": "1.26.4", "wheel_tags": ["Tag: cp311-cp311-manylinux_2_17_x86_64", "Tag: cp311-cp311-manylinux2014_x86_64"]}, {"name": "h5py", "version": "3.14.0", "wheel_tags": ["Tag: cp311-cp311-manylinux_2_17_x86_64", "Tag: cp311-cp311-manylinux2014_x86_64"]}, {"name": "scipy", "version": "1.16.3", "wheel_tags": ["Tag: cp311-cp311-manylinux_2_17_x86_64", "Tag: cp311-cp311-manylinux2014_x86_64"]}, {"name": "scikit-learn", "version": "1.4.2", "wheel_tags": ["Tag: cp311-cp311-manylinux_2_17_x86_64", "Tag: cp311-cp311-manylinux2014_x86_64"]}, {"name": "nvidia-cuda-runtime-cu12", "version": "12.2.140", "wheel_tags": ["Tag: py3-none-manylinux1_x86_64"]}, {"name": "nvidia-cuda-nvrtc-cu12", "version": "12.2.140", "wheel_tags": ["Tag: py3-none-manylinux1_x86_64"]}, {"name": "nvidia-cudnn-cu12", "version": "8.9.4.25", "wheel_tags": ["Tag: py3-none-manylinux1_x86_64"]}, {"name": "nvidia-cublas-cu12", "version": "12.2.5.6", "wheel_tags": ["Tag: py3-none-manylinux1_x86_64"]}], "numerical_execution": false}
+METADATA_EXIT_CODE=0
+
+QUERY: /data1/home/sunyiq/id25_graice_author_matched_20261016_001/venv/bin/python -m pip check
+No broken requirements found.
+QUERY_EXIT_CODE=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-17T22:36:19+0800
