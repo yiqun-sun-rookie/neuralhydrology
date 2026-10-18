@@ -41,5 +41,7 @@ for rid in record['members']:
     if p.exists():record['failure_records'][rid]=json.loads(p.read_text())
 critical=root/'runs'/('explicit_gru__historical_capacity__tune_branch__filter_joint__s101__lr0p003')
 record['failure_artifact_inventory']=[{'name':p.name,'bytes':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns} for p in sorted(critical.iterdir()) if p.is_file()]
+record['compute_usage']=query(['sstat','-j',job+'.batch','--format=JobID,AveCPU,MaxRSS','-P','-n'])
+record['scheduler_details']=query(['scontrol','show','job',job,'-o'])
 print(json.dumps(record,sort_keys=True))
 PY
