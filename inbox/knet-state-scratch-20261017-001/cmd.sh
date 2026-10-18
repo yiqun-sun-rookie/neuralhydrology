@@ -72,4 +72,4 @@ print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_scratch_20261017_001 244228 d8b0c032c9d04ee7bcf9cdb0b3e41c62
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_scratch_20261017_001 244228 a05233e41bf2488a94e1af2fae27a553
