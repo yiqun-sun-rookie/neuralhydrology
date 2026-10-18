@@ -1,61 +1,180 @@
 #!/bin/bash
 set -eo pipefail
 umask 077
-export CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1
-exec timeout --signal=TERM --kill-after=5s 90s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_EXTRACT'
-import base64,datetime,hashlib,io,json,os,pathlib,re,shutil,signal,subprocess,time,zipfile
-assert not os.environ.get('SLURM_JOB_ID') and os.environ.get('CUDA_VISIBLE_DEVICES')==''
-root=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/hydroatlas_extract_headers_v1');source=pathlib.Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/hydroatlas_archive_resume_v1')
-assert root.parent.resolve(strict=True)==root.parent and not root.exists()
-def source_read(name,desc):
- p=source/name;assert p.resolve(strict=True)==p and p.is_file() and not p.is_symlink()
- before=p.stat();assert before.st_size==desc['bytes']<=65536
- raw=p.read_bytes();after=p.stat();assert len(raw)==before.st_size==after.st_size and before.st_mtime_ns==after.st_mtime_ns
- assert hashlib.sha256(raw).hexdigest()==desc['sha256'];return json.loads(raw)
-identity=source_read('ARCHIVE_RESULT.json',{'bytes': 926, 'sha256': '0d7314dcf99fd7326422555f43734715abede765f02f2ed3db572b917c7b778e'})
-source_read('HYDROATLAS_ACQUISITION_CONTRACT.json',{'bytes': 3732, 'sha256': '4c4b3c58dd5a16c38dfe2514c0b0da28ab3528b605b9aba70aaf61728bfaa2c0'})
-assert identity['bytes']==4276492333 and identity['manufacturer_md5_matched'] is True
-assert identity['sha256']=='fb41ddde334708c2240e4e2d57d108990239ea134634093045ffc61e710ffeee'
-assert identity['md5']=='ce5013294bdcb6f884ff6cdf1a1acae0'
-for name in ['LOGIN_CONTROL_FAILURE.json','ARCHIVE_BODY_FAILURE.json']:assert not (source/name).exists()
-p=source/'BasinATLAS_Data_v10_shp.zip';assert p.resolve(strict=True)==p and p.is_file() and p.stat().st_size==4276492333
-assert shutil.disk_usage(root.parent).free>=2579273275
-root.mkdir(mode=0o700);(root/'logs').mkdir(mode=0o700)
-def save(name,value):
- raw=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode();assert len(raw)<=131072
- with (root/name).open('xb') as stream:stream.write(raw)
-save('DEPLOYMENT_STARTED.json',dict(source_gets=0,model_calls=0,automatic_retries=0))
-packed=base64.b64decode('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',validate=True);assert len(packed)==10925 and hashlib.sha256(packed).hexdigest()=='0fbdc0037674ee7e8d13787473def077312be0b4558c5df6966cc1cc88fce2e1'
-expected={'ENTRY_TABLE.json': {'bytes': 875, 'sha256': '881cdfa21a321852c59c7c4e6d768798390cae9f16e102cd1c5f43cfcdbd46e2'}, 'extract_hydroatlas_archive_compute_v1.py': {'bytes': 9082, 'sha256': '86e25291dbc4733d1ae7451ec731a85ff20342fd8ed48ea58cf49fb6bf4babec'}, 'HYDROATLAS_EXTRACT_CONTRACT.json': {'bytes': 1961, 'sha256': '3d4d3ab998468dc878ef04bc8e2d92ca443423a903dd1c53bdbda6ecea4075f5'}, 'hydroatlas_extract_headers_control_v1.py': {'bytes': 3297, 'sha256': '4978a2447d1d9e2d9e1767f1465b95aaf275145de41b0c0d7b9842979b49f9f2'}, 'inspect_hydroatlas_level10_headers_v1.py': {'bytes': 5989, 'sha256': '9e1f9310d8f7ee16016817755006ec0122a6e68656d2bda889b6e683042aaedb'}, 'source_stage.sbatch': {'bytes': 888, 'sha256': 'b5c69ef589c4effd46818c92032f65031d05c8093f21280d853287f083b2a0af'}, 'source_stage_owned_v1.py': {'bytes': 6081, 'sha256': '8ecd47346f032db4a20eac78b35cba13d1f705b9aacf59125fb1ebada10ee6bb'}}
-with zipfile.ZipFile(io.BytesIO(packed)) as archive:
- names=archive.namelist();assert len(names)==len(set(names))==7 and set(names)==set(expected)
- assert sum(x.file_size for x in archive.infolist())<=2097152
- for name in names:
-  desc=expected[name];info=archive.getinfo(name);assert pathlib.Path(name).name==name and not info.is_dir() and not info.flag_bits&1
-  raw=archive.read(name);assert len(raw)==info.file_size==desc['bytes'] and hashlib.sha256(raw).hexdigest()==desc['sha256']
-  with (root/name).open('xb') as stream:stream.write(raw)
-save('SUBMISSION_STARTED.json',dict(command=['sbatch','source_stage.sbatch'],automatic_retries=0,new_job_max=1))
-try:result=subprocess.run(['sbatch','source_stage.sbatch'],cwd=root,capture_output=True,timeout=25)
-except BaseException as error:
- save('SUBMISSION_RESULT.json',dict(status='SUBMISSION_UNCONFIRMED',job_id=None,error_type=type(error).__name__,error=str(error)));raise
-assert len(result.stdout)<=65536 and len(result.stderr)<=65536
-match=re.fullmatch(rb'Submitted batch job ([0-9]+)\n',result.stdout)
-if result.returncode!=0 or match is None:
- save('SUBMISSION_RESULT.json',dict(status='SUBMISSION_UNCONFIRMED',job_id=None,exit_code=result.returncode,stdout=result.stdout.decode(errors='replace'),stderr=result.stderr.decode(errors='replace')))
- raise RuntimeError('OWN_EXTRACT_SUBMISSION_UNCONFIRMED_NEVER_REPLAY')
-job=match[1].decode()
-with (root/'OWN_EXTRACT_JOB_ID').open('xb') as stream:stream.write((job+'\n').encode())
-save('SUBMISSION_RESULT.json',dict(status='UNIQUE_JOB_SUBMITTED',job_id=job,exit_code=0,stdout=result.stdout.decode(),stderr=result.stderr.decode(errors='replace')))
-print(result.stdout.decode(),end='',flush=True);print('OWN_EXTRACT_JOB_ID='+job,flush=True)
-evidence={}
-for label,cmd in [('squeue',['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),('sacct',['sacct','-j',job,'--format=JobIDRaw,State,ExitCode,NodeList,WorkDir','--parsable2','--noheader'])]:
- try:
-  answer=subprocess.run(cmd,capture_output=True,timeout=10)
-  assert len(answer.stdout)<=65536 and len(answer.stderr)<=8192
-  evidence[label]=dict(exit_code=answer.returncode,stdout=answer.stdout.decode(errors='replace'),stderr=answer.stderr.decode(errors='replace'))
- except Exception as error:evidence[label]=dict(error_type=type(error).__name__,error=str(error))
-value=dict(job_id=job,server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),queries=evidence,new_submissions=1,source_gets=0,model_calls=0)
-save('IMMEDIATE_JOB_STATE.json',value)
-print('OWN_EXTRACT_STATE_JSON_BEGIN');print(json.dumps(value,separators=(',',':')));print('OWN_EXTRACT_STATE_JSON_END')
-print('OWN_EXTRACT_SUBMIT_DONE',flush=True)
-PY_EXTRACT
+export PYTHONDONTWRITEBYTECODE=1
+exec timeout --signal=TERM --kill-after=5s 45s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_EXISTING_244015'
+"""One bounded read-only inspection of the existing job, never a submission."""
+import base64
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import stat
+import subprocess
+import time
+import zlib
+
+ROOT = Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/hydroatlas_extract_headers_v1')
+JOB = '244015'
+START = time.monotonic()
+READ_LIMIT = 2 * 1024**2
+used = 0
+
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def deadline(signum, frame):
+    raise TimeoutError('READ_ONLY_STATUS_DEADLINE')
+
+
+def small_file(name, maximum=65536, tail=False):
+    global used
+    path = ROOT / name
+    answer = dict(path=str(path), present=False)
+    try:
+        assert path.resolve(strict=True) == path
+        fd = os.open(str(path), os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    except FileNotFoundError:
+        return answer
+    except Exception as error:
+        return dict(answer, error=type(error).__name__ + ':' + str(error))
+    try:
+        before = os.fstat(fd)
+        assert stat.S_ISREG(before.st_mode)
+        answer.update(present=True, file_bytes=before.st_size)
+        count = min(before.st_size, maximum)
+        if before.st_size > maximum and not tail:
+            return dict(answer, error='SMALL_RECORD_TOO_LARGE', complete=False)
+        assert used + count <= READ_LIMIT
+        offset = max(0, before.st_size - count) if tail else 0
+        os.lseek(fd, offset, os.SEEK_SET)
+        blocks, remaining = [], count
+        while remaining:
+            block = os.read(fd, min(8192, remaining))
+            if not block:
+                break
+            blocks.append(block)
+            used += len(block)
+            remaining -= len(block)
+            assert used <= READ_LIMIT
+        raw = b''.join(blocks)
+        after = os.fstat(fd)
+        stable = (before.st_ino, before.st_size, before.st_mtime_ns) == (
+            after.st_ino, after.st_size, after.st_mtime_ns)
+        complete = stable and offset == 0 and len(raw) == before.st_size
+        answer.update(read_bytes=len(raw), offset=offset, stable=stable, complete=complete,
+                      snapshot_sha256=hashlib.sha256(raw).hexdigest(),
+                      snapshot_base64=base64.b64encode(raw).decode())
+        return answer
+    finally:
+        os.close(fd)
+
+
+def query(command):
+    import selectors
+    began = time.monotonic()
+    result = dict(command=command, server_started_utc=utc(), exit_code=None,
+                  within_deadline=False, complete_output=False)
+    buffers = {'stdout': bytearray(), 'stderr': bytearray()}
+    process = None
+    try:
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                   stdin=subprocess.DEVNULL, start_new_session=True)
+        with selectors.DefaultSelector() as selector:
+            selector.register(process.stdout, selectors.EVENT_READ, 'stdout')
+            selector.register(process.stderr, selectors.EVENT_READ, 'stderr')
+            while selector.get_map():
+                assert time.monotonic() - began < 9 and time.monotonic() - START < 35
+                for key, _ in selector.select(.1):
+                    block = os.read(key.fileobj.fileno(), 4096)
+                    if not block:
+                        selector.unregister(key.fileobj)
+                    else:
+                        maximum = 65536 if key.data == 'stdout' else 8192
+                        assert len(buffers[key.data]) + len(block) <= maximum
+                        buffers[key.data].extend(block)
+            remaining = 9 - (time.monotonic() - began)
+            assert remaining > 0
+            result['exit_code'] = process.wait(timeout=remaining)
+            result['exit_observed_elapsed_seconds'] = time.monotonic() - began
+            result['within_deadline'] = result['exit_observed_elapsed_seconds'] <= 9
+            result['complete_output'] = True
+    except BaseException as error:
+        if process is not None:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.wait(timeout=2)
+            result['process_returncode_after_cleanup'] = process.returncode
+        result.update(error=type(error).__name__ + ':' + str(error))
+        if not isinstance(error, Exception):
+            raise
+    finally:
+        if process is not None:
+            for stream in (process.stdout, process.stderr):
+                if stream is not None:
+                    stream.close()
+    result.update(server_finished_utc=utc(), elapsed_seconds=time.monotonic() - began,
+                  **{k: bytes(v).decode(errors='replace') for k, v in buffers.items()})
+    return result
+
+
+def main():
+    signal.signal(signal.SIGALRM, deadline)
+    signal.alarm(40)
+    assert ROOT.resolve(strict=True) == ROOT and ROOT.is_dir()
+    proof = small_file('OWN_EXTRACT_JOB_ID', 32)
+    assert proof.get('complete') and base64.b64decode(proof['snapshot_base64']) == b'244015\n'
+    commands = {
+        'squeue': ['squeue', '-h', '-j', JOB, '-o', '%i|%T|%N|%R|%Z'],
+        'sacct': ['sacct', '-X', '-S', '2026-10-16', '-j', JOB, '--noheader', '--parsable2',
+                  '--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS'],
+        'scontrol': ['scontrol', 'show', 'job', JOB, '-o'],
+    }
+    queries = {name: query(command) for name, command in commands.items()}
+    names = ['SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'IMMEDIATE_JOB_STATE.json',
+             'DEPLOYMENT_STARTED.json', 'CONTROL_STARTED.json', 'CONTROL_RESULT.json', 'CONTROL_FAILURE.json',
+             'HYDROATLAS_ACQUISITION_RESULT.json', 'HYDROATLAS_ACQUISITION_FAILURE.json',
+             'EXTRACT_PARTIAL_IDENTITIES.json', 'HYDROATLAS_LEVEL10_HEADERS.json']
+    names += [stage + suffix for stage in ('extract', 'headers')
+              for suffix in ('_LAUNCH.json', '_STAGE_RESULT.json', '_STAGE_POSTWRITE.json')]
+    records = {name: small_file(name, 131072 if name == 'HYDROATLAS_LEVEL10_HEADERS.json' else 65536)
+               for name in names}
+    records['OWN_EXTRACT_JOB_ID'] = proof
+    for name in ['extract.stdout', 'extract.stderr', 'headers.stdout', 'headers.stderr',
+                 'logs/source-244015.out', 'logs/source-244015.err']:
+        records[name] = small_file(name, 16384, tail=True)
+    members = {}
+    for suffix in ('dbf', 'prj', 'shp', 'shx'):
+        path = ROOT / 'level10' / ('BasinATLAS_v10_lev10.' + suffix)
+        try:
+            assert path.resolve(strict=True) == path
+            info = path.stat()
+            assert stat.S_ISREG(info.st_mode)
+            members[str(path)] = dict(bytes=info.st_size, mtime_ns=info.st_mtime_ns, body_read_bytes=0)
+        except FileNotFoundError:
+            members[str(path)] = dict(present=False, body_read_bytes=0)
+    result = dict(job_id=JOB, remote_root=str(ROOT), server_finished_utc=utc(), hostname=os.uname().nodename,
+                  queries=queries, records=records, extracted_member_stats=members,
+                  metadata_bytes_read=used, elapsed_seconds=time.monotonic() - START,
+                  new_submissions=0, cancellations=0, source_gets=0, scientific_feature_value_reads=0,
+                  scientific_array_reads=0, model_calls=0, automatic_checks_enabled=False,
+                  input_admission_approved=False, prediction_approved=False)
+    raw = json.dumps(result, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
+    assert len(raw) <= 3 * 1024**2 and time.monotonic() - START < 40
+    packed = zlib.compress(raw)
+    print('OWN_244015_STATUS_BYTES=' + str(len(raw)))
+    print('OWN_244015_STATUS_SHA256=' + hashlib.sha256(raw).hexdigest())
+    print('OWN_244015_STATUS_ZLIB_BASE64=' + base64.b64encode(packed).decode())
+    print('OWN_244015_STATUS_DONE', flush=True)
+
+
+if __name__ == '__main__':
+    main()
+
+PY_EXISTING_244015
