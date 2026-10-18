@@ -10,17 +10,15 @@ source=root/'payload/code/src/precip_input_assimilation/hpc/precip_smallfit_retu
 assert not source.is_symlink() and hashlib.sha256(source.read_bytes()).hexdigest()=='2388e9301c6b28eb7f2609ba13e9cde2a9629b1528267671f88eafb449436dea'
 marker=json.loads((root/'records/submission.json').read_bytes())
 assert marker['job_id']==244110 and marker['nonce']==nonce
-owner=json.loads((root/'runtime/owner.json').read_bytes())
-final=json.loads((root/'runtime/final_supervisor_report.json').read_bytes())
-assert owner['status']=='STOPPED' and owner['nonce']==nonce and str(owner['job_id'])=='244110'
-assert final['numeric_process_exited'] is True and final['budget']['worker_exit_before_settlement'] is True
-q=subprocess.run(['sacct','-S','2026-10-16','-X','-j','244110','-n','-P','-o','JobIDRaw,State,ExitCode,ElapsedRaw,NodeList'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=20)
-assert q.returncode==0
-rows=[l.split('|') for l in q.stdout.decode().splitlines() if l.startswith('244110|')]
-assert len(rows)==1 and rows[0][1].split()[0].rstrip('+') in {'FAILED','COMPLETED','TIMEOUT','CANCELLED','OUT_OF_MEMORY','NODE_FAIL','BOOT_FAIL','PREEMPTED','DEADLINE','REVOKED'}
+indices=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+archive='a9461329738783f119309a223eeb1e5f4f9e945225e517b915b841b604c053cc'
+index=json.loads((root/'delivery/terminal_index_v01.json').read_bytes())
+assert index['sha256']==archive and index['chunk_bytes']==262144
+assert 1<=len(indices)<=24 and indices==list(range(indices[0],indices[0]+len(indices))) and 0<=indices[0]<=indices[-1]<len(index['chunks'])
 module=runpy.run_path(str(source))
-result=module['collect'](root,nonce)
-assert result['job_id']==244110 and result['terminal'] is True and result['actual_family_lock_free'] is True and result.get('delivery')
+chunks=[module['collect'](root,nonce,k,archive) for k in indices]
+assert all(x['job_id']==244110 and x['index']==k for x,k in zip(chunks,indices))
+result=dict(kind='owned_chunk_batch_v01',job_id=244110,nonce=nonce,archive_sha256=archive,indices=indices,chunks=chunks)
 raw=json.dumps(result,sort_keys=True,allow_nan=False).encode()
 print('SMALLFIT_RETURN_V01='+base64.b64encode(zlib.compress(raw)).decode(),flush=True)
 PY
