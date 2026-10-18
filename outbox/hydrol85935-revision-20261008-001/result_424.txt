@@ -1,0 +1,11 @@
+### channel=hydrol85935-revision-20261008-001 seq=424
+### host=login4
+### started=2026-10-18T17:09:22+0800
+### ---------- output ----------
+PP_TIME {"utc": "2026-10-18T09:09:22.836805+00:00"}
+PP_SACCT {"returncode": 0, "stdout": "244280_0|COMPLETED|0:0|09:20:10|2026-10-18T04:37:09|2026-10-18T13:57:19|ngu101\n244280_1|COMPLETED|0:0|09:31:49|2026-10-18T04:40:29|2026-10-18T14:12:18|ngu101\n244280_2|RUNNING|0:0|07:40:28|2026-10-18T09:30:48|Unknown|ngu104\n244280_3|RUNNING|0:0|07:39:52|2026-10-18T09:31:24|Unknown|ngu104\n244280_4|RUNNING|0:0|06:38:37|2026-10-18T10:32:39|Unknown|ngu104\n244280_5|RUNNING|0:0|06:37:51|2026-10-18T10:33:25|Unknown|ngu102\n", "stderr": ""}
+PP_SQUEUE {"returncode": 0, "stdout": "244280_5|RUNNING|None|6:35:57|ngu102\n244280_4|RUNNING|None|6:36:43|ngu104\n244280_3|RUNNING|None|7:37:58|ngu104\n244280_2|RUNNING|None|7:38:34|ngu104\n", "stderr": ""}
+PP_FILES {"root": "/data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001", "json_files": 440, "newest": ["out/records/09312600.json", "out/records/08070200.json", "out/records/10234500.json"]}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-18T17:09:23+0800
