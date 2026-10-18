@@ -103,3 +103,287 @@ else:
     jobs=json.loads((root/'records/scheduler_jobs.json').read_text())
     print(json.dumps({'status':'covariance_checkpoint_audit_failed_preserved','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'root':str(root),'job_id':jobs['explicit_gru__historical_capacity'],'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr,'continuation_admitted':False,'formal_recovery_confirmed':False,'evaluation_values_read':False},sort_keys=True))
 JOSEPH_CPU
+
+python -B - <<'SAVED_MINIMUM_EVIDENCE'
+"""Read saved evidence only; no model, data arrays, or optimizer execution."""
+import datetime
+import hashlib
+import io
+import json
+import math
+import os
+from pathlib import Path
+import re
+import statistics
+
+BASE = Path('/data1/home/sunyiq')
+ROOT = BASE / 'zhenjiang_complete_comparison_20261017_sqrt_recovery_001'
+EARLY = BASE / 'zhenjiang_complete_comparison_20261006_recovery_001'
+RUNS = {m: 'explicit_gru__historical_capacity__tune_branch__' + m + '__s101__lr0p003'
+        for m in ('encoder_joint', 'filter_joint')}
+EXPECTED = {'encoder_joint': '6ce7c639d80ce5c5ca7b5e6c46da2943b8cac2d800b6b285557f78822f323108',
+            'filter_joint': '707e2a3c547b5d01fb7ab0ab87316750335c32247aa14c5fa46b0e3237504efe'}
+
+
+def semantic_hash(value, torch):
+    # Exact preserved 540/582/embedded238 algorithm.
+    h = hashlib.sha256()
+    def visit(x):
+        if isinstance(x, torch.Tensor):
+            assert x.device.type == 'cpu'
+            x = x.detach().contiguous()
+            h.update(str((str(x.dtype), tuple(x.shape))).encode())
+            h.update(x.reshape(-1).view(torch.uint8).numpy().tobytes())
+        elif isinstance(x, dict):
+            for key in sorted(x, key=repr):
+                h.update(repr(key).encode())
+                visit(x[key])
+        elif isinstance(x, (list, tuple)):
+            h.update(str(len(x)).encode())
+            for item in x:
+                visit(item)
+        else:
+            h.update(json.dumps(x, sort_keys=True, allow_nan=False).encode())
+    visit(value)
+    return h.hexdigest()
+
+
+def stats(values):
+    finite = [v for v in values if math.isfinite(v)]
+    return {'count': len(values), 'nonfinite_count': len(values)-len(finite),
+            'min': min(finite, default=None),
+            'median': statistics.median(finite) if finite else None,
+            'max': max(finite, default=None)}
+
+
+def batch_row(epoch, index, row):
+    ledger = row.get('stability', {})
+    return {'epoch': epoch, 'effective_batch_index_1based': index+1,
+            **{k: row.get(k) for k in ('actual_batch_size', 'loss_cm', 'gradient_norm_before_clip')},
+            'stability': {k: ledger.get(k) for k in
+                          ('analysis_steps', 'max_jitter', 'large_jitter_fraction')}}
+
+
+def summarize_epochs(metrics, epochs):
+    out = []
+    for epoch in epochs:
+        if epoch > len(metrics.get('train_metrics', [])):
+            out.append({'epoch': epoch, 'status': 'missing_saved_formal_batches'})
+            continue
+        rows = metrics['train_metrics'][epoch-1]
+        losses = [r['loss_cm'] for r in rows]
+        norms = [r['gradient_norm_before_clip'] for r in rows]
+        n = sum(r['actual_batch_size'] for r in rows)
+        jitters = [j for r in rows for j in r.get('stability', {}).get('step_jitters', [])]
+        windows, hits = set(), []
+        for threshold in (100, 1e6):
+            first = next((i for i, r in enumerate(rows) if r['loss_cm'] > threshold), None)
+            hits.append({'descriptive_loss_threshold_cm': threshold,
+                         'first_batch_1based': None if first is None else first+1})
+            if first is not None:
+                windows.update(range(max(0, first-2), min(len(rows), first+3)))
+        out.append({'epoch': epoch, 'saved_effective_batch_count': len(rows),
+                    'training_window_count': n, 'loss_cm': stats(losses),
+                    'gradient_norm_before_clip': stats(norms),
+                    'batch_size_weighted_mean_of_batch_losses_cm':
+                        math.fsum(r['loss_cm']*r['actual_batch_size'] for r in rows)/n
+                        if n and all(math.isfinite(v) for v in losses) else None,
+                    'mean_interpretation': 'batch-local loss summary, not recomputed global training MAE',
+                    'stability': {'analysis_steps_from_saved_jitters': len(jitters),
+                                  'max_jitter': max(jitters, default=None),
+                                  'large_jitter_steps_gt1e_6': sum(j > 1e-6 for j in jitters)},
+                    'actual_shuffle_sha256': metrics.get('shuffle_hashes', [])[epoch-1]
+                        if epoch <= len(metrics.get('shuffle_hashes', [])) else None,
+                    'first_anomaly_thresholds': hits,
+                    'near_first_anomaly_batches': [batch_row(epoch, i, rows[i]) for i in sorted(windows)]})
+    return out
+
+
+def load_saved_checkpoint(path, torch):
+    raw = path.read_bytes()
+    state = torch.load(io.BytesIO(raw), map_location='cpu', weights_only=True)
+    return state, hashlib.sha256(raw).hexdigest()
+
+
+def finite_state(value, torch):
+    if isinstance(value, torch.Tensor):
+        return bool(torch.isfinite(value).all())
+    if isinstance(value, dict):
+        return all(finite_state(v, torch) for v in value.values())
+    if isinstance(value, (list, tuple)):
+        return all(finite_state(v, torch) for v in value)
+    return True
+
+
+def original_epoch_inventory(torch):
+    prefixes = ('zhenjiang_complete_comparison_', 'zhenjiang_sqrt_covariance_repair_',
+                'zhenjiang_training_covariance_failure_006_guarded_')
+    folders, hits, errors = [], [], []
+    for root in sorted(p for p in BASE.iterdir() if p.is_dir() and p.name.startswith(prefixes)):
+        for method, run in RUNS.items():
+            target = 31 if method == 'encoder_joint' else 33
+            for folder in (root/'runs'/run, root/'source/runs'/run):
+                if not folder.is_dir():
+                    continue
+                files = sorted(p for p in folder.iterdir() if p.is_file())
+                info = {'run': run, 'folder': str(folder),
+                        'state_and_identity_file_names': [p.name for p in files if p.suffix in ('.pt','.pth','.ckpt')
+                            or any(w in p.name.lower() for w in ('hash','sha256','sha1','identity','manifest','provenance'))],
+                        'saved_complete_epochs': None}
+                metrics = folder/'metrics.json'
+                if metrics.exists():
+                    try:
+                        with metrics.open('rb') as stream:
+                            prefix = stream.read(131072).decode('utf-8')
+                        match = re.search(r'"validation_mae_cm"\s*:\s*', prefix)
+                        values, _ = json.JSONDecoder().raw_decode(prefix[match.end():])
+                        info['saved_complete_epochs'] = len(values)
+                    except Exception as exc:
+                        errors.append({'path': str(metrics), 'error': type(exc).__name__})
+                folders.append(info)
+                for p in files:
+                    # Only epoch-labelled copies or identity metadata qualify for inspection.
+                    explicit_epoch = bool(re.search(r'(?:epoch|ep)[_-]?0*'+str(target)+r'(?:\D|$)', p.name, re.I))
+                    exact_continuation = p.name == 'continuation.pt' and info['saved_complete_epochs'] == target
+                    hash_metadata = p.suffix == '.json' and any(w in p.name.lower() for w in ('hash', 'sha256', 'sha1', 'identity', 'manifest', 'provenance'))
+                    if not (explicit_epoch or exact_continuation or hash_metadata):
+                        continue
+                    row = {'path': str(p), 'run': run, 'target_epoch': target,
+                           'bytes': p.stat().st_size, 'explicit_epoch_name': explicit_epoch,
+                           'exact_epoch_continuation': exact_continuation}
+                    if p.suffix in ('.pt', '.pth', '.ckpt') and p.stat().st_size <= 128*1024*1024:
+                        try:
+                            state, digest = load_saved_checkpoint(p, torch)
+                            row['file_sha256'] = digest
+                            row['semantic_sha256'] = semantic_hash(state.get('current', state), torch)
+                            row['embedded_complete_epochs'] = len(state['values']) if 'values' in state else None
+                            row['independence_requires_source_time_and_run_binding'] = True
+                        except Exception as exc:
+                            row['error'] = type(exc).__name__
+                    elif hash_metadata and p.stat().st_size <= 1024*1024:
+                        raw = p.read_bytes(); row['file_sha256'] = hashlib.sha256(raw).hexdigest()
+                        row['text_epoch_and_hash_label_match'] = bool(re.search(
+                            r'(?:epoch|ep)["\s_:-]*0*'+str(target)+r'\b', raw.decode('utf-8', errors='replace'), re.I))
+                        candidates = []
+                        def find_hashes(obj, pointer=''):
+                            if len(candidates) >= 12:
+                                return
+                            if isinstance(obj, dict):
+                                epoch_fields = {k:v for k,v in obj.items() if k in
+                                                ('epoch','best_epoch','complete_epochs','completed_epochs')}
+                                if target in epoch_fields.values():
+                                    hashes = {k:v for k,v in obj.items() if ('hash' in k.lower() or 'sha' in k.lower())
+                                              and isinstance(v,str) and re.fullmatch(r'[a-fA-F0-9]{40,64}',v)}
+                                    if hashes:
+                                        candidates.append({'pointer':pointer,'epoch_fields':epoch_fields,'hashes':hashes})
+                                for key,value in obj.items():
+                                    find_hashes(value,pointer+'/'+str(key))
+                            elif isinstance(obj,list):
+                                for i,value in enumerate(obj):
+                                    find_hashes(value,pointer+'/'+str(i))
+                        try:
+                            find_hashes(json.loads(raw))
+                            row['target_epoch_labelled_hash_records'] = candidates
+                        except ValueError:
+                            row['json_valid'] = False
+                    elif explicit_epoch and p.suffix in ('.sha256','.sha1','.sha','.txt') and p.stat().st_size <= 4096:
+                        raw=p.read_bytes();row['file_sha256']=hashlib.sha256(raw).hexdigest()
+                        row['existing_text_hash_tokens']=re.findall(r'\b[a-fA-F0-9]{40,64}\b',raw.decode('utf-8',errors='replace'))[:12]
+                    hits.append(row)
+    return {'scope': 'registered related project roots; exact runs and source/runs directories; direct saved files only',
+            'folders': folders, 'candidate_epoch_copies_or_hash_metadata': hits, 'read_errors': errors,
+            'strict_independent_epoch_identity_confirmed': False,
+            'limit': 'No proof of global absence; archive interiors and unrelated projects not searched. A later embedded best is not an independent original-epoch copy.'}
+
+
+def safe_json(x):
+    if isinstance(x, float) and not math.isfinite(x):
+        return str(x)
+    if isinstance(x, dict):
+        return {k: safe_json(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [safe_json(v) for v in x]
+    return x
+
+
+def main():
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''
+    import torch
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+    report = {'status': 'saved_branch_minimum_evidence_readonly',
+              'checked_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'model_constructed': False, 'forward_backward_or_optimizer_step': False,
+              'training_input_arrays_read': False, 'filter_epochs38_40_rerequested': False,
+              'checkpoint_load_mode': 'cpu weights_only=True', 'branches': {}, 'errors': []}
+    for method, run in RUNS.items():
+        folder = ROOT/'runs'/run
+        row = {'run': run, 'path': str(folder/'continuation.pt')}
+        try:
+            state, digest = load_saved_checkpoint(folder/'continuation.pt', torch)
+            raw_config = (folder/'config.json').read_bytes(); config = json.loads(raw_config)
+            values = state['values']; best_hash = semantic_hash(state['best'], torch)
+            row.update(checkpoint_sha256=digest, complete_saved_epochs=len(values),
+                       config_sha256=hashlib.sha256(raw_config).hexdigest(),
+                       protocol_sha256=config.get('protocol_sha256'),
+                       registration_run_id=config.get('registration',{}).get('exp_id'),
+                       registration_seed=config.get('registration',{}).get('seed'),
+                       learning_rate=config.get('effective_config',{}).get('learning_rate'),
+                       best_state_semantic_sha256=best_hash,
+                       current_state_semantic_sha256=semantic_hash(state['current'], torch),
+                       best_equals_independent540_source=best_hash == EXPECTED[method],
+                       independent540_source_best_hash=EXPECTED[method],
+                       earliest_validation_argmin_epoch=values.index(min(values))+1,
+                       checkpoint_config_binding=state['config_sha256']==hashlib.sha256(raw_config).hexdigest(),
+                       code_hash=config.get('effective_config',{}).get('code_hash'),
+                       code_hash_matches_current_registered_root=config.get('effective_config',{}).get('code_hash')=='00ed010da5b881c4a49e649c3c8ccf5017dd684ed94dfd22fb242c0a3a975c4e',
+                       all_current_and_best_tensors_finite=finite_state(state['current'],torch) and finite_state(state['best'],torch))
+            if method == 'encoder_joint':
+                metrics_raw = (folder/'metrics.json').read_bytes(); metrics = json.loads(metrics_raw)
+                row['formal_metrics_sha256'] = hashlib.sha256(metrics_raw).hexdigest()
+                row['encoder_formal_epochs40_42'] = summarize_epochs(metrics, (40,41,42))
+                row['selected_metrics_equal_checkpoint'] = all(
+                    metrics['train_metrics'][e-1] == state['train_metrics'][e-1]
+                    and metrics['shuffle_hashes'][e-1] == state['shuffle_hashes'][e-1]
+                    for e in (40,41,42))
+                frozen_path = BASE/'zhenjiang_complete_comparison_20261016_recovery_006/runs'/run/'metrics.json'
+                if frozen_path.exists():
+                    frozen_raw=frozen_path.read_bytes();frozen=json.loads(frozen_raw)
+                    row['frozen_source006_metrics_identity'] = {'path':str(frozen_path),
+                        'sha256':hashlib.sha256(frozen_raw).hexdigest(),
+                        'epochs40_42_batches_and_shuffle_match_current':all(
+                            frozen['train_metrics'][e-1]==metrics['train_metrics'][e-1]
+                            and frozen['shuffle_hashes'][e-1]==metrics['shuffle_hashes'][e-1] for e in (40,41,42))}
+                early_path = EARLY/'runs'/run/'metrics.json'
+                if early_path.exists():
+                    early_raw=early_path.read_bytes();early=json.loads(early_raw)
+                    row['frozen_early_metrics_identity'] = {'path': str(early_path),
+                        'sha256':hashlib.sha256(early_raw).hexdigest(),
+                        'equals_recorded217_sha256':hashlib.sha256(early_raw).hexdigest()=='2f73cc3ada6a36bdedd4b4caf53edf51e93f83c5dd2ec109e92d0f8bc6a445fd',
+                        'epochs40_41_batches_and_shuffle_match_current':all(
+                            early['train_metrics'][e-1]==metrics['train_metrics'][e-1]
+                            and early['shuffle_hashes'][e-1]==metrics['shuffle_hashes'][e-1] for e in (40,41))}
+        except Exception as exc:
+            row['error'] = type(exc).__name__+': '+str(exc)[:400]
+            report['errors'].append({'run':run, 'error':row['error']})
+        report['branches'][method] = row
+    try:
+        report['original_epoch31_33_inventory'] = original_epoch_inventory(torch)
+    except Exception as exc:
+        report['original_epoch31_33_inventory'] = {'status':'inventory_incomplete',
+            'error':type(exc).__name__+': '+str(exc)[:400],
+            'strict_independent_epoch_identity_confirmed':False}
+    report['finished_at_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    print(json.dumps(safe_json(report),sort_keys=True,allow_nan=False))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as exc:
+        print(json.dumps({'status':'saved_branch_minimum_evidence_unavailable',
+            'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'error':type(exc).__name__+': '+str(exc)[:400],
+            'model_constructed':False,'forward_backward_or_optimizer_step':False}))
+
+SAVED_MINIMUM_EVIDENCE
