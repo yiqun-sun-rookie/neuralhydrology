@@ -10,16 +10,18 @@ def emit(k, v): print(k + ' ' + json.dumps(v), flush=True)
 def run(a):
     r = subprocess.run(a, capture_output=True, text=True, timeout=45); return dict(returncode=r.returncode, stdout=r.stdout[:12000], stderr=r.stderr[:800])
 emit('LC_TIME', dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
+markers = {(p.parent.parent.name, p.parent.name) for p in (E / 'attacks').glob('*/*/complete.json')}  # markers first, ledger second: a record being written cannot look like a lost line
 led = E / 'ledger.jsonl'; raw = led.read_bytes(); lines = raw.decode('utf8', 'replace').split('\n')
 parsed, bad = [], []
 for i, l in enumerate(lines):
     if not l.strip(): continue
     try:
-        v = json.loads(l); assert isinstance(v, dict) and {'basin_id', 'combination_id', 'status'} <= set(v); parsed.append(v)
+        v = json.loads(l)
+        if v == {}: continue  # repaired torn fragment (ledger_repair_20261018_001)
+        assert isinstance(v, dict) and {'basin_id', 'combination_id', 'status'} <= set(v); parsed.append(v)
     except Exception: bad.append(i + 1)
 status = collections.Counter(v['status'] for v in parsed)
 slot_lines = collections.Counter((v['combination_id'], v['basin_id']) for v in parsed if v['status'] in ('complete', 'reused'))
-markers = {(p.parent.parent.name, p.parent.name) for p in (E / 'attacks').glob('*/*/complete.json')}
 missing = sorted(markers - set(slot_lines))
 emit('LC_LEDGER', dict(lines=len(parsed), unparsable_line_numbers=bad[:20], unparsable=len(bad), bytes=len(raw), ends_with_newline=raw.endswith(b'\n'), status=dict(status),
      markers=len(markers), markers_without_ledger_line=len(missing), missing_head=missing[:10],
