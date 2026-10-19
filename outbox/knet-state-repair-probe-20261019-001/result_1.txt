@@ -1,0 +1,13 @@
+### channel=knet-state-repair-probe-20261019-001 seq=1
+### host=login4
+### started=2026-10-19T23:13:37+0800
+### ---------- output ----------
+REMOTE_PREFLIGHT={"status": "PASS", "template_manifest_sha256": "34afa64ad7f77df8dd365a16030c770e96b281da5ff2f0d8e48890a927b637d7", "model_imports": false, "utc": "2026-10-19T15:13:38.681382+00:00"}
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/hpc_mailbox/inbox/knet-state-repair-probe-20261019-001/payload/deploy.py", line 71, in <module>
+    assert reply.returncode == 0 and len(matches) == 1, 'submission outcome needs inspection; do not retry blindly'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: submission outcome needs inspection; do not retry blindly
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-19T23:13:39+0800
