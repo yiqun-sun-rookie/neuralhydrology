@@ -1,0 +1,27 @@
+### channel=hpc-gpu-recheck-20261019 seq=2
+### host=login4
+### started=2026-10-19T22:16:16+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hpc-gpu-recheck-20261019/payload/gpu_recheck_payload_v002.tar.gz: OK
+NODE=ngu001 STATE=mix
+245331
+NODE_JOB=ngu001|245331
+NODE=ngu002 STATE=down*
+NODE_NOT_SCHEDULABLE_NO_SUBMISSION
+NODE=ngu101 STATE=mix
+245332
+NODE_JOB=ngu101|245332
+NODE=ngu103 STATE=down*
+NODE_NOT_SCHEDULABLE_NO_SUBMISSION
+NODE=ngu201 STATE=mix
+245333
+NODE_JOB=ngu201|245333
+NODE=ngu202 STATE=mix
+245334
+NODE_JOB=ngu202|245334
+NODE=ngu203 STATE=maint
+NODE_NOT_SCHEDULABLE_NO_SUBMISSION
+AUDIT_SUBMISSION_PASS_FINISHED_EXISTING_EXPERIMENTS_UNTOUCHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T22:16:18+0800
