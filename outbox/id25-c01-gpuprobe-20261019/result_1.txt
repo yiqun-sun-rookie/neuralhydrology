@@ -1,0 +1,58 @@
+### channel=id25-c01-gpuprobe-20261019 seq=1
+### host=login4
+### started=2026-10-19T11:36:37+0800
+### ---------- output ----------
+
+QUERY: date -Iseconds
+2026-10-19T11:36:37+0800
+QUERY_EXIT_CODE=0
+
+QUERY: id -un
+sunyiq
+QUERY_EXIT_CODE=0
+NEW_ROOT_UNUSED
+
+QUERY: squeue -h -u sunyiq -n id25_c01_probe_261019 -o %i|%j|%T|%P|%R
+QUERY_EXIT_CODE=0
+
+QUERY: sacct -X -S 2026-10-18 -u sunyiq --name=id25_c01_probe_261019 --format=JobIDRaw,JobName,Account,Partition,State,ExitCode -n -P
+QUERY_EXIT_CODE=0
+
+QUERY: sacctmgr -n -P show assoc user=sunyiq account=g_sunyiq format=Cluster,Account,User,Partition,QOS
+hhuhpc_jt|g_sunyiq|sunyiq||qos_sunyiq
+QUERY_EXIT_CODE=0
+
+QUERY: scontrol show partition hgpu2p
+PartitionName=hgpu2p
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[001-002,004-008,010-011]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+QUERY_EXIT_CODE=0
+
+QUERY: sinfo -p hgpu2p -N -O nodelist:16,gres:16,gresused:28,cpusstate:22
+NODELIST        GRES            GRES_USED                   CPUS(A/I/O/T)         
+ngu001          gpu:2           gpu:2,dcu:0                 44/52/0/96            
+ngu002          gpu:2           gpu:0,dcu:0                 0/0/96/96             
+ngu004          gpu:2           gpu:2,dcu:0                 24/72/0/96            
+ngu005          gpu:2           gpu:2,dcu:0                 20/76/0/96            
+ngu006          gpu:2           gpu:2,dcu:0                 20/76/0/96            
+ngu007          gpu:2           gpu:2,dcu:0                 12/84/0/96            
+ngu008          gpu:2           gpu:2,dcu:0                 8/88/0/96             
+ngu010          gpu:2           gpu:2,dcu:0                 8/24/0/32             
+ngu011          gpu:2           gpu:2,dcu:0                 8/24/0/32             
+QUERY_EXIT_CODE=0
+EXISTING_B04_RUNTIME_FILES_PRESENT
+READABLE=/data1/home/sunyiq/id25_graice_author_matched_20261016_001/inputs/inputs.npz
+READABLE=/data1/home/sunyiq/id25_graice_author_matched_20261016_001/runs/lat+026_lon-082/scalers.json
+NO_SCIENTIFIC_COMPUTE_NO_SUBMISSION_NO_PAYMENT_ACTION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T11:36:38+0800
