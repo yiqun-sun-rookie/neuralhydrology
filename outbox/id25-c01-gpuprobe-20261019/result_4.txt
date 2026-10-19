@@ -1,0 +1,223 @@
+### channel=id25-c01-gpuprobe-20261019 seq=4
+### host=login4
+### started=2026-10-19T13:31:40+0800
+### ---------- output ----------
+2026-10-19T13:31:40+0800
+EXPERIMENT_JOB_ID=245137
+JOBID|NAME|STATE|NODELIST(REASON)|START_TIME
+SQUEUE_EXIT=0
+SACCT_EXIT=0
+
+FILE=/data1/home/sunyiq/id25_graice_shared_probe_20261019_001/logs/probe_245137.out
+{"recorded_at_utc": "2026-10-19T05:32:16.796608+00:00", "slurm_job_id": "245137", "slurm_job_gpus": "1", "gpu_uuid": "GPU-34ba85c8-1eb6-c169-be45-6f0558cb4370", "gpu_name": "NVIDIA GeForce RTX 3090", "gpu_memory_MiB": 24576.0, "driver": "580.76.05", "python": "/data1/home/sunyiq/id25_graice_author_matched_20261016_001/venv/bin/python", "environment_reused_read_only": "/data1/home/sunyiq/id25_graice_author_matched_20261016_001/venv", "cpu_preflight_repeated": false, "full_training_authorized": false}
+
+FILE=/data1/home/sunyiq/id25_graice_shared_probe_20261019_001/logs/probe_245137.err
+
+FILE=submissions.tsv
+2026-10-19T05:30:13Z	245137	id25_c01_probe_261019
+
+FILE=sbatch_reply.txt
+245137
+
+FILE=sbatch_error.txt
+
+FILE=allocation.json
+{
+  "recorded_at_utc": "2026-10-19T05:32:16.796608+00:00",
+  "slurm_job_id": "245137",
+  "slurm_job_gpus": "1",
+  "gpu_uuid": "GPU-34ba85c8-1eb6-c169-be45-6f0558cb4370",
+  "gpu_name": "NVIDIA GeForce RTX 3090",
+  "gpu_memory_MiB": 24576.0,
+  "driver": "580.76.05",
+  "python": "/data1/home/sunyiq/id25_graice_author_matched_20261016_001/venv/bin/python",
+  "environment_reused_read_only": "/data1/home/sunyiq/id25_graice_author_matched_20261016_001/venv",
+  "cpu_preflight_repeated": false,
+  "full_training_authorized": false
+}
+
+FILE=probe_output/supervisor.json
+{
+  "exit_code": 0,
+  "wall_limit_seconds": 180,
+  "elapsed_seconds": 71.12382252514362,
+  "state": "EXITED",
+  "failure": null,
+  "cleanup_error": null,
+  "child_pid": 843715,
+  "child_exit_confirmed": true,
+  "lock_released": true,
+  "automatic_retry": false,
+  "full_training_authorized_by_preflight": false
+}
+
+FILE=probe_output/gpu_preflight.json
+{
+  "state": "GPU_PREFLIGHT_PASS",
+  "fingerprint": "1622a60017558c111defebde26a62007a61bb9db320a7dc12c1df12dc7d5e612",
+  "gpu_uuid": "GPU-34ba85c8-1eb6-c169-be45-6f0558cb4370",
+  "generated_at_unix": 1792388006.7218757,
+  "initialization_seconds": 56.674289245158434,
+  "preflight_elapsed_seconds": 65.93411722779274,
+  "fixed_region_id": "lat+026_lon-082",
+  "region_selection": "lexicographic index 0, no performance selection",
+  "shapes": {
+    "train32": [
+      32,
+      3440,
+      11
+    ],
+    "train2": [
+      2,
+      3440,
+      11
+    ],
+    "infer32": [
+      32,
+      3806,
+      11
+    ],
+    "infer2": [
+      2,
+      3806,
+      11
+    ],
+    "infer12": [
+      12,
+      3806,
+      11
+    ],
+    "infer_application_stress32": [
+      32,
+      4536,
+      11
+    ]
+  },
+  "timings": {
+    "train32": {
+      "seconds": [
+        0.0822175107896328,
+        0.07791969925165176,
+        0.0776984840631485
+      ],
+      "median": 0.07791969925165176,
+      "max": 0.0822175107896328
+    },
+    "train2": {
+      "seconds": [
+        0.0707661435008049,
+        0.07076158374547958,
+        0.07057660073041916
+      ],
+      "median": 0.07076158374547958,
+      "max": 0.0707661435008049
+    },
+    "infer32": {
+      "seconds": [
+        0.0469815693795681,
+        0.04549660161137581,
+        0.04505889490246773
+      ],
+      "median": 0.04549660161137581,
+      "max": 0.0469815693795681
+    },
+    "infer2": {
+      "seconds": [
+        0.04051816090941429,
+        0.0427204966545105,
+        0.04292595013976097
+      ],
+      "median": 0.0427204966545105,
+      "max": 0.04292595013976097
+    },
+    "infer12": {
+      "seconds": [
+        0.04389393329620361,
+        0.04419592022895813,
+        0.043817270547151566
+      ],
+      "median": 0.04389393329620361,
+      "max": 0.04419592022895813
+    },
+    "infer_application_stress32": {
+      "seconds": [
+        0.053592681884765625,
+        0.054318707436323166,
+        0.054550651460886
+      ],
+      "median": 0.054318707436323166,
+      "max": 0.054550651460886
+    }
+  },
+  "checkpoint_write_seconds": 0.01535814255475998,
+  "tf_memory": {
+    "current": 1515520,
+    "peak": 221683456
+  },
+  "cpu_padding_seconds": [
+    0.0017668567597866058,
+    0.0007802881300449371,
+    0.0005743317306041718
+  ],
+  "host_peak_RSS_KiB": 1365884,
+  "estimated_epoch_seconds": 55.05547380819917,
+  "conservative_epoch_seconds": 84.73905495554209,
+  "finalization_seconds_bound": 28.040643610060215,
+  "estimates_hours": {
+    "31": {
+      "central": 0.49762072803038687,
+      "conservative": 0.7571238773005704
+    },
+    "86": {
+      "central": 1.3387460223223187,
+      "conservative": 2.051748328010241
+    },
+    "300": {
+      "central": 4.61148807647638,
+      "conservative": 7.089014372589688
+    },
+    "1000": {
+      "central": 15.31671909473733,
+      "conservative": 23.566052836167316
+    }
+  },
+  "parameter_count": 6177,
+  "mask_and_padding_invariance": "PASS",
+  "real_optimizer_resume": "PASS",
+  "application_data_opened": false,
+  "application_stress_synthetic": true,
+  "scientific_scores_computed": false,
+  "probe_weights_forbidden_for_training": true,
+  "finite_updates": true,
+  "caveat": "Upper-length synthetic timing estimate, not measured full-run time; memory excludes some driver/display allocation"
+}
+
+FILE=probe_output/stdout.log
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_padding (Masking)     (None, None, 11)          0         
+                                                                 
+ author_lstm (LSTM)          (None, 32)                5632      
+                                                                 
+ dense (Dense)               (None, 16)                528       
+                                                                 
+ dense_1 (Dense)             (None, 1)                 17        
+                                                                 
+=================================================================
+Total params: 6177 (24.13 KB)
+Trainable params: 6177 (24.13 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+
+FILE=probe_output/stderr.log
+2026-10-19 13:32:33.324596: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-19 13:32:33.324683: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-19 13:32:33.571142: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792388003.460552  843745 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+QUERY_ONLY_NO_SUBMISSION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T13:31:40+0800
