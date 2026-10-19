@@ -72,7 +72,7 @@ print('"'"'JOB_STATUS_JSON='"'"'+json.dumps(dict(schema='"'"'strict_monitor_v1'"
     queue_returncode=queue['"'"'returncode'"'"'],queue=queue['"'"'stdout'"'"'].splitlines(),queue_stderr=queue['"'"'stderr'"'"'],
     accounting_returncode=accounting['"'"'returncode'"'"'],accounting=accounting['"'"'stdout'"'"'].splitlines(),
     all_array_elements_terminal=all(x['"'"'terminal'"'"'] for x in elements),elements=elements)),flush=True)
-' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_scratch_20261017_001 244228 3bf8fb46144c41b5b62f3aa50417d087
+' /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_scratch_20261017_001 244228 8a93f1b3d60640e5bb72cab8a34249b2
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B -c 'import subprocess,sys,json,datetime
 root=sys.argv[1].rstrip('"'"'/'"'"')
 q=subprocess.run(['"'"'squeue'"'"','"'"'-h'"'"','"'"'-r'"'"','"'"'-u'"'"','"'"'sunyiq'"'"','"'"'-n'"'"','"'"'knet_scratch_pair'"'"','"'"'-o'"'"','"'"'%i|%T|%N|%j'"'"'],capture_output=True,text=True,timeout=30)
