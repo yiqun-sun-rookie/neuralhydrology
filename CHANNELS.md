@@ -227,3 +227,5 @@ git rm inbox/seq
 | `knet-state-scratch-20261017-001` | Authorized SC-SCRATCH-01 paired from-scratch constraint training | 2026-10-17 | Only state_channel_scratch_20261017_001, one serial array, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `hydrol85935-prepeak-20261017-001` | HYDROL85935 pre-peak timing at smaller limits (original model, 14-day window); no new training | 2026-10-17 | Only /data1/home/sunyiq/hydrol85935_prepeak_small_bounds_20261017_001; GPU jobs, non-hgpu2p partitions preferred; preserve all existing jobs, data, environments and results. |
+
+| `id25-c01-gpuprobe-20261019` | C01 GPU short preflight only | 2026-10-19 | Only /data1/home/sunyiq/id25_graice_shared_probe_20261019_001 writable; reuse B04 environment/data read-only; no CPU recheck, full training, other-job changes or periodic monitoring. |
