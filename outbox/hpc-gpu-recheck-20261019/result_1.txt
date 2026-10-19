@@ -1,0 +1,66 @@
+### channel=hpc-gpu-recheck-20261019 seq=1
+### host=login4
+### started=2026-10-19T22:08:02+0800
+### ---------- output ----------
+
+QUERY=date -Iseconds
+2026-10-19T22:08:02+0800
+QUERY_EXIT=0
+
+QUERY=sinfo -N -n ngu001,ngu002,ngu101,ngu103,ngu201,ngu202,ngu203 -O partition:12,nodelist:16,gres:18,gresused:30,cpusstate:24
+PARTITION   NODELIST        GRES              GRES_USED                     CPUS(A/I/O/T)           
+hgpu2p      ngu001          gpu:2             gpu:2,dcu:0                   8/88/0/96               
+hgpu2p      ngu002          gpu:2             gpu:0,dcu:0                   0/0/96/96               
+hgpu4       ngu101          gpu:4             gpu:4,dcu:0                   50/46/0/96              
+hgpu4       ngu103          gpu:4             gpu:0,dcu:0                   0/0/96/96               
+hgpu8       ngu201          gpu:8             gpu:8,dcu:0                   56/8/0/64               
+hgpu8       ngu202          gpu:8             gpu:8,dcu:0                   52/12/0/64              
+hgpu8       ngu203          gpu:8             gpu:0,dcu:0                   0/64/0/64               
+QUERY_EXIT=0
+
+QUERY=sinfo -N -n ngu001,ngu002,ngu101,ngu103,ngu201,ngu202,ngu203 -o %N|%P|%t|%G|%C|%E
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|REASON
+ngu001|hgpu2p|mix|gpu:2|8/88/0/96|none
+ngu002|hgpu2p|down*|gpu:2|0/0/96/96|Not responding
+ngu101|hgpu4|mix|gpu:4|50/46/0/96|none
+ngu103|hgpu4|down*|gpu:4|0/0/96/96|Not responding
+ngu201|hgpu8|mix|gpu:8|56/8/0/64|none
+ngu202|hgpu8|mix|gpu:8|52/12/0/64|none
+ngu203|hgpu8|maint|gpu:8|0/64/0/64|none
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu001
+NodeName=ngu001 Arch=x86_64 CoresPerSocket=24  CPUAlloc=8 CPUTot=96 CPULoad=2.00 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu001 NodeHostName=ngu001 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=150435 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T15:59:06 SlurmdStartTime=2026-01-22T16:05:49 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=8 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu002
+NodeName=ngu002 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=2.64 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu002 NodeHostName=ngu002 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=252249 Sockets=2 Boards=1 State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-10-12T01:50:53 SlurmdStartTime=2026-10-12T15:00:23 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s Reason=Not responding [root@2026-10-12T16:38:01]
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu101
+NodeName=ngu101 Arch=x86_64 CoresPerSocket=24  CPUAlloc=50 CPUTot=96 CPULoad=149.07 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu101 NodeHostName=ngu101 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=162935 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2024-03-12T17:18:32 SlurmdStartTime=2024-10-31T20:39:21 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=50 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu103
+NodeName=ngu103 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=0.03 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu103 NodeHostName=ngu103  OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=N/A Sockets=2 Boards=1 State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2024-03-12T17:14:44 SlurmdStartTime=2025-08-26T16:31:22 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s Reason=Not responding [root@2026-01-13T10:39:13]
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu201
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16  CPUAlloc=56 CPUTot=64 CPULoad=8.52 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=8930 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-04-28T14:15:26 SlurmdStartTime=2026-04-28T14:14:06 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=56 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu202
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16  CPUAlloc=52 CPUTot=64 CPULoad=13.52 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=643483 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-01-22T14:57:45 SlurmdStartTime=2026-01-22T15:10:38 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=52 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT=0
+
+QUERY=scontrol -o show node ngu203
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16  CPUAlloc=0 CPUTot=64 CPULoad=0.12 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=667534 Sockets=2 Boards=1 State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2025-07-23T15:14:39 SlurmdStartTime=2025-07-23T15:41:12 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+QUERY_EXIT=0
+
+QUERY=squeue -h -u sunyiq -o %i|%j|%T|%N --name=ghr_001_261019,ghr_002_261019,ghr_101_261019,ghr_103_261019,ghr_201_261019,ghr_202_261019,ghr_203_261019
+QUERY_EXIT=0
+AUDIT_ROOT_UNUSED
+METADATA_ONLY_NO_SUBMISSIONS_NO_NODE_CHANGES
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T22:08:03+0800
