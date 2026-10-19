@@ -1,0 +1,22 @@
+### channel=id25-c01-gpuprobe-20261019 seq=2
+### host=login4
+### started=2026-10-19T13:27:31+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/id25-c01-gpuprobe-20261019/payload/shared_probe_payload_v002.tar.gz: OK
+tar: package/config.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/scaler_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/author_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/shared_endpoint.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/run_control.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/score_saved.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/requirements-linux.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: package/authorization.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/cpu_contract.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/independent_review_followup_v002.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/probe_v002.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: authorization_policy.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: provenance/deployment_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+C01_PROBE_DEPLOYED_NO_JOB_SUBMITTED_NO_CPU_RECHECK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T13:27:31+0800
