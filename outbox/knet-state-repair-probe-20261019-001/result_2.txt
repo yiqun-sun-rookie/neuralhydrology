@@ -1,0 +1,19 @@
+### channel=knet-state-repair-probe-20261019-001 seq=2
+### host=login4
+### started=2026-10-19T23:32:18+0800
+### ---------- output ----------
+login4
+Mon Oct 19 15:32:18 UTC 2026
+SUBMISSION_STDOUT
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+
+SUBMISSION_JSON
+
+OWN_QUEUE
+
+OWN_ACCOUNTING
+245347|knet_init_probe|FAILED|1:0|0|None assigned|2026-10-19T15:15:34|2026-10-19T15:15:34
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-19T23:32:18+0800
