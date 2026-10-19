@@ -1,28 +1,34 @@
 #!/bin/bash
-set -u
+set -euo pipefail
 root=/data1/home/sunyiq/id25_graice_shared_probe_20261019_001
-date -Iseconds
-if test -s "$root/job_id.txt"; then
-    job_id=$(tr -d '\r\n' < "$root/job_id.txt")
-    case "$job_id" in ''|*[!0-9]*) echo INVALID_JOB_ID; exit 1;; esac
-    printf 'EXPERIMENT_JOB_ID=%s\n' "$job_id"
-    timeout 30 squeue -j "$job_id" --start -o '%i|%j|%T|%R|%S'
-    printf 'SQUEUE_EXIT=%s\n' "$?"
-    timeout 30 sacct -X -j "$job_id" --format=JobIDRaw,JobName%32,Account,Partition,State,ExitCode,Elapsed,Start,End,NodeList -n -P
-    printf 'SACCT_EXIT=%s\n' "$?"
-    for file in "$root/logs/probe_${job_id}.out" "$root/logs/probe_${job_id}.err"; do
-        if test -f "$file"; then printf '\nFILE=%s\n' "$file"; tail -n 55 "$file"; fi
-    done
-else
-    echo NO_JOB_ID_YET
-    timeout 30 squeue -h -u sunyiq -n id25_c01_probe_261019 -o '%i|%j|%T|%R'
-    timeout 30 sacct -X -u sunyiq --name=id25_c01_probe_261019 -S 2026-10-18 --format=JobIDRaw,JobName%32,State,ExitCode -n -P
-fi
-for file in submissions.tsv sbatch_reply.txt sbatch_error.txt allocation.json probe_output/supervisor.json probe_output/gpu_preflight.json; do
-    if test -f "$root/$file"; then printf '\nFILE=%s\n' "$file"; cat "$root/$file"; fi
-done
-for file in stdout.log stderr.log; do
-    if test -f "$root/probe_output/$file"; then printf '\nFILE=probe_output/%s\n' "$file"; tail -n 55 "$root/probe_output/$file"; fi
-done
-echo QUERY_ONLY_NO_SUBMISSION
-exit 0
+job_id=$(tr -d '\r\n' < "$root/job_id.txt")
+test "$job_id" = 245137
+test -f "$root/probe_output/gpu_preflight.json"
+test -f "$root/probe_output/supervisor.json"
+mkdir -p "$root/artifacts"
+test ! -e "$root/artifacts/gpu_probe_receipts_v001.tar.gz"
+set +e
+timeout 30 sacct -S 2026-10-18 -j "$job_id" --format=JobIDRaw,JobName%32,Account,Partition,State,ExitCode,Elapsed,Start,End,NodeList -n -P > "$root/artifacts/sacct_245137_v001.txt" 2>&1
+sacct_exit=$?
+timeout 30 scontrol -o show job "$job_id" > "$root/artifacts/scontrol_245137_v001.txt" 2>&1
+scontrol_exit=$?
+set -e
+printf 'SACCT_EXIT=%s\n' "$sacct_exit"
+cat "$root/artifacts/sacct_245137_v001.txt"
+printf 'SCONTROL_EXIT=%s\n' "$scontrol_exit"
+cat "$root/artifacts/scontrol_245137_v001.txt"
+tar -czf "$root/artifacts/gpu_probe_receipts_v001.tar.gz" -C "$root" \
+    hpc/probe_v002.slurm authorization_policy.json probe_authorization.json \
+    allocation.json job_id.txt submissions.tsv sbatch_reply.txt sbatch_error.txt \
+    provenance/deployment_manifest.json provenance/cpu_contract.json \
+    provenance/independent_review_followup_v002.md \
+    logs/probe_245137.out logs/probe_245137.err probe_output \
+    artifacts/sacct_245137_v001.txt artifacts/scontrol_245137_v001.txt
+printf 'ARCHIVE_SHA256='
+sha256sum "$root/artifacts/gpu_probe_receipts_v001.tar.gz" | cut -d' ' -f1
+printf 'ARCHIVE_BYTES='
+wc -c < "$root/artifacts/gpu_probe_receipts_v001.tar.gz"
+printf 'BEGIN_ARCHIVE_BASE64\n'
+base64 "$root/artifacts/gpu_probe_receipts_v001.tar.gz"
+printf 'END_ARCHIVE_BASE64\n'
+echo RECEIPTS_COLLECTED_NO_NUMERICAL_RERUN
