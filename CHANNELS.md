@@ -231,3 +231,5 @@ git rm inbox/seq
 | `id25-c01-gpuprobe-20261019` | C01 GPU short preflight only | 2026-10-19 | Only /data1/home/sunyiq/id25_graice_shared_probe_20261019_001 writable; reuse B04 environment/data read-only; no CPU recheck, full training, other-job changes or periodic monitoring. |
 
 | `id25-c01-shared-20261019` | C01 shared author LSTM full training | 2026-10-19 | Only /data1/home/sunyiq/id25_graice_shared_c01_20261019_001 writable; reuse accepted GPU/CPU receipts; fixed RDS01 and B04 read-only; 119-region shared author LSTM; no repeated preflight or other-job changes; 3-hour monitor. |
+
+| `hpc-gpu-recheck-20261019` | Historical GPU node health recheck | 2026-10-19 | Only /data1/home/sunyiq/hpc_gpu_recheck_20261019_001 writable; Audit historical GPU flags on seven nodes; short Slurm diagnostics only; other experiments read-only; no node resets, state changes, SSH or borrowed GPUs. |
