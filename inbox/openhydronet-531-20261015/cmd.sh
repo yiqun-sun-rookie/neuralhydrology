@@ -1,29 +1,24 @@
 #!/bin/bash
 set -o pipefail
-# seq 27: (a) ensemble of the five NSE-loss ID18 runs, (b) the native CAMELS-531 run with real HRES/GraphCast forecasts
+# seq 28: hyperparameter screening (4 single-GPU jobs, own root only). Held-out window = 2006-10..2008-09 inside the ID18 training period.
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
-P4="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v4"
+P5="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v5"
 date --iso-8601=seconds
-[ -f "$P4/ohn_ens_eval.py" ] || { echo "MISSING payload ohn_ens_eval.py"; exit 1; }
-source ~/miniconda3/etc/profile.d/conda.sh; conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-export PYTHONPATH="$ROOT/pysite"
-mkdir -p "$ROOT/results"
-
-echo "=============== (a) ID18-protocol NSE-loss ensemble"
-ZS=""
-for D in "$ROOT"/runs/id18_nse_[0-9]* "$ROOT"/runs/id18_nse_s101_* "$ROOT"/runs/id18_nse_s102_* "$ROOT"/runs/id18_nse_s103_* "$ROOT"/runs/id18_nse_s104_*; do
-  Z=$(ls -d "$D"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1)
-  echo "member: $(basename "$D")  ->  ${Z:+found}${Z:-MISSING}"
-  [ -n "$Z" ] && ZS="$ZS $Z"
-done
-nice -n 10 python "$P4/ohn_ens_eval.py" 1989-10-01 1999-09-30 "$ROOT/results/id18_nse_ens5" $ZS 2>&1 | grep -v -i warn
-
-echo "=============== (b) native CAMELS-531 run (2021-2025, real HRES + GraphCast forecasts)"
-D=$(ls -td "$ROOT"/runs/native531_* | head -1); echo "run: $D"
-Z=$(ls -d "$D"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1); echo "zarr: $Z"
-if [ -n "$Z" ]; then nice -n 10 python "$P4/ohn_ens_eval.py" 2021-01-01 2025-12-31 "$ROOT/results/native531" "$Z" 2>&1 | grep -v -i warn; else echo NO_TEST_RESULTS; fi
-
-echo "=== CSV_BEGIN id18_nse_ens5 (basin, ens, members at time_step 0)"
-cut -d, -f1-7 "$ROOT/results/id18_nse_ens5_per_basin.csv"
-echo "=== CSV_END"
+for V in v0 v1 v2 v3; do [ -f "$P5/tune_$V.yml" ] || { echo "MISSING tune_$V.yml"; exit 1; }; cp "$P5/tune_$V.yml" "$ROOT/configs/"; sed -i 's/\r$//' "$ROOT/configs/tune_$V.yml"; done
+grep -hE '^(experiment_name|hidden_size|seq_length|forecast_overlap|initial_forget_bias|learning_rate_drop_factor|target_noise_std|train_end_date|test_start_date|test_end_date|seed):' "$ROOT"/configs/tune_v3.yml
+echo "=== free GPUs ==="
+for P in hgpu8 hgpu4 hgpu2p; do sinfo -p $P -N -h -O nodelist:10,gres:10,gresused:22 2>/dev/null | tr '\n' ';'; echo; done
+submit() {  # name partition
+  local name=$1 part=$2 out jid
+  if squeue -u sunyiq -h -o '%j' | grep -qx "ohn_$name"; then echo "ohn_$name already queued/running"; return 0; fi
+  out=$(sbatch --job-name="ohn_$name" -p "$part" -t 1-12:00:00 --export=ALL,CONFIG="$name" "$ROOT/run_ohn.slurm" 2>&1); echo "$out"
+  jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+  [ -n "$jid" ] || { echo "SUBMIT_FAILED $name"; return 1; }
+  echo "jobid[$name]=$jid"
+}
+submit tune_v0 hgpu8
+submit tune_v1 hgpu8
+submit tune_v2 hgpu4
+submit tune_v3 hgpu4
+squeue -u sunyiq -h -o '%.10i %.16j %.9T %R' | grep -E ' ohn_tune' || true
 exit 0
