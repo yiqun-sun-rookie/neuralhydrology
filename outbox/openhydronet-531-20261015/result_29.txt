@@ -1,0 +1,16 @@
+### channel=openhydronet-531-20261015 seq=29
+### host=login4
+### started=2026-10-20T17:28:30+0800
+### ---------- output ----------
+2026-10-20T17:28:30+0800
+before: 245671 ohn_tune_v0 RUNNING
+skip 245671 (not my pending tune job)
+before: 245672 ohn_tune_v1 RUNNING
+skip 245672 (not my pending tune job)
+    245671      ohn_tune_v0   RUNNING    hgpu8 ngu202
+    245672      ohn_tune_v1   RUNNING    hgpu8 ngu201
+    245674      ohn_tune_v3   RUNNING    hgpu4 ngu101
+    245673      ohn_tune_v2   RUNNING    hgpu4 ngu102
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T17:28:50+0800
