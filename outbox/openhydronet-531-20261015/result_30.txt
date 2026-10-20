@@ -1,0 +1,38 @@
+### channel=openhydronet-531-20261015 seq=30
+### host=login4
+### started=2026-10-20T19:47:47+0800
+### ---------- output ----------
+2026-10-20T19:47:47+0800
+=== queue ===
+    245671      ohn_tune_v0   RUNNING    2:20:22 ngu202
+    245672      ohn_tune_v1   RUNNING    2:20:22 ngu201
+    245674      ohn_tune_v3   RUNNING    2:20:22 ngu101
+    245673      ohn_tune_v2   RUNNING    2:20:37 ngu102
+=== sacct since 10-14 ===
+245671|ohn_tune_v0|RUNNING|0:0|02:22:19|ngu202
+245672|ohn_tune_v1|RUNNING|0:0|02:22:19|ngu201
+245673|ohn_tune_v2|RUNNING|0:0|02:22:34|ngu102
+245674|ohn_tune_v3|RUNNING|0:0|02:22:19|ngu101
+=== ohn_tune_v0 : ohn_tune_v0-245671.out
+19:17:14.169 Epoch 8 average loss: avg_learning_rate: 0.00100, avg_loss: 0.11083, avg_total_loss: 0.11083
+19:31:02.908 Epoch 9 average loss: avg_learning_rate: 0.00100, avg_loss: 0.10438, avg_total_loss: 0.10438
+19:45:05.591 Epoch 10 average loss: avg_learning_rate: 0.00100, avg_loss: 0.08844, avg_total_loss: 0.08844
+  progress: # Epoch 11:  19%|█▊        | 372/2.00k [02:41<11:00, 2.47it/s, Loss: 0.0725]
+=== ohn_tune_v1 : ohn_tune_v1-245672.out
+19:24:09.628 Epoch 11 average loss: avg_learning_rate: 0.00100, avg_loss: 0.12086, avg_total_loss: 0.12086
+19:34:38.947 Epoch 12 average loss: avg_learning_rate: 0.00100, avg_loss: 0.11284, avg_total_loss: 0.11284
+19:45:06.746 Epoch 13 average loss: avg_learning_rate: 0.00100, avg_loss: 0.10614, avg_total_loss: 0.10614
+  progress: # Epoch 14:  42%|████▏     | 846/2.00k [04:32<06:09, 3.12it/s, Loss: 0.0725]
+=== ohn_tune_v2 : ohn_tune_v2-245673.out
+19:12:13.280 Epoch 9 average loss: avg_learning_rate: 0.00100, avg_loss: 0.10120, avg_total_loss: 0.10120
+19:24:09.430 Epoch 10 average loss: avg_learning_rate: 0.00100, avg_loss: 0.09977, avg_total_loss: 0.09977
+19:35:54.604 Epoch 11 average loss: avg_learning_rate: 0.00100, avg_loss: 0.08775, avg_total_loss: 0.08775
+  progress: # Epoch 12:  99%|█████████▉| 1.98k/2.00k [11:34<00:06, 3.01it/s, Loss: 0.0652]
+=== ohn_tune_v3 : ohn_tune_v3-245674.out
+19:12:26.120 Epoch 9 average loss: avg_learning_rate: 0.00100, avg_loss: 0.13264, avg_total_loss: 0.13264
+19:24:14.162 Epoch 10 average loss: avg_learning_rate: 0.00100, avg_loss: 0.11656, avg_total_loss: 0.11656
+19:36:10.553 Epoch 11 average loss: avg_learning_rate: 0.00100, avg_loss: 0.10157, avg_total_loss: 0.10157
+  progress: # Epoch 12:  95%|█████████▌| 1.91k/2.00k [11:16<00:33, 2.78it/s, Loss: 0.0873]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T19:47:48+0800
