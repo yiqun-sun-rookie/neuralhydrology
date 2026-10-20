@@ -1,0 +1,106 @@
+### channel=regge-pqx03-20261020 seq=24
+### host=login4
+### started=2026-10-21T00:37:24+0800
+### ---------- output ----------
+PQX03_QUERY_UTC 2026-10-20T16:37:26.150531+00:00
+             JOBID                     NAME        STATE         TIME                              NODELIST(REASON)
+            245712              regge_pqx03      RUNNING      3:40:24                                        ngu010
+ 
+JobId=245712 JobName=regge_pqx03
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=03:40:25 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-10-20T20:56:40 EligibleTime=2026-10-20T20:56:40
+   AccrueTime=2026-10-20T20:56:40
+   StartTime=2026-10-20T20:57:02 EndTime=2026-10-21T02:57:02 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:57:02
+   Partition=hgpu2p AllocNode:Sid=login04:3169
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu010
+   BatchHost=ngu010
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/job.slurm
+   WorkDir=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01
+   StdErr=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.out
+   Power=
+
+ 
+JobID|JobName|State|ExitCode|ElapsedRaw|NodeList
+245712|regge_pqx03|RUNNING|0:0|13343|ngu010
+245712.batch|batch|RUNNING|0:0|13343|ngu010
+245712.extern|extern|RUNNING|0:0|13343|ngu010
+ 
+PQX03_COUNTS {"trained": 29, "reused_trained": 12}
+PQX03_PROGRESS [{"phase": "training", "arm": "FS", "window": "2004-month-01", "epoch": 0, "updates": 0, "hour": 168, "total_hours": 2184, "partial_loss": 0.00017856000976301133, "pid": 2811939, "job_id": "245712", "utc": "2026-10-20T16:39:12.712925+00:00"}, {"phase": "training", "arm": "NS", "window": "2003-month-07", "epoch": 54, "updates": 54, "hour": 168, "total_hours": 2208, "partial_loss": 0.006500550427589433, "pid": 2811755, "job_id": "245712", "utc": "2026-10-20T16:39:12.945083+00:00"}]
+PQX03_pipeline_status.json {
+  "phase": "train.py",
+  "pid": 2809014,
+  "child_pid": 2809015,
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-B",
+    "-u",
+    "/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/src/train.py",
+    "--root",
+    "/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01",
+    "--mode",
+    "train",
+    "--workers",
+    "2"
+  ],
+  "utc": "2026-10-20T12:57:19.079173+00:00",
+  "job_id": "245712"
+}
+PQX03_controller_status.json {
+  "phase": "training",
+  "pid": 2809015,
+  "job_id": "245712",
+  "active": [
+    {
+      "pid": 2811755,
+      "window": "2003-month-07",
+      "arm": "NS"
+    },
+    {
+      "pid": 2811939,
+      "window": "2004-month-01",
+      "arm": "FS"
+    }
+  ],
+  "pending": 5,
+  "engineering_failures": [],
+  "utc": "2026-10-20T16:39:04.860337+00:00"
+}
+PQX03_platform_gate.json {
+  "status": "passed",
+  "zero_optimizer_updates": true,
+  "local_torch": "2.2.2",
+  "hpc_torch": "2.4.0",
+  "cross_platform_loss_errors": {
+    "FS": 2.3852447794681098e-18,
+    "FM": 2.168404344971009e-18,
+    "NS": 2.0816681711721685e-17,
+    "NM": 2.168404344971009e-18
+  },
+  "utc": "2026-10-20T12:57:18.362440+00:00"
+}
+PQX03_LOG_out Tue Oct 20 12:56:49 PM UTC 2026
+ngu010
+CHECK FS {"loss": 0.001144165844385763, "manual_loss_error": 0.0, "reference_forecast_error": 1.3877787807814457e-17, "fixed_Q_forecast_error": 1.6653345369377348e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 84, "gradient": {"norm": 0.0010926125902144825, "analytic": 6.1512496458133745e-06, "numerical": 6.151249496745558e-06, "error": 1.4906781643347347e-13, "tolerance": 1.0615124949674555e-06}}
+CHECK FM {"loss": 0.0008420598223909024, "manual_loss_error": 1.0842021724855044e-19, "reference_forecast_error": 6.938893903907228e-18, "fixed_Q_forecast_error": 1.8041124150158794e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 420, "gradient": {"norm": 0.0011038253250094138, "analytic": 3.229865249691602e-06, "numerical": 3.2298663201445195e-06, "error": 1.070452917692271e-12, "tolerance": 1.0322986632014452e-06}}
+CHECK NS {"loss": 0.006087100999334612, "manual_loss_error": 8.673617379884035e-19, "reference_forecast_error": 2.7755575615628914e-17, "fixed_Q_forecast_error": 1.3183898417423734e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 84, "gradient": {"norm": 0.02986532718183388, "analytic": 0.019332196123630515, "numerical": 0.019332196180043074, "error": 5.641255865218575e-11, "tolerance": 0.00019432196180043073}}
+CHECK NM {"loss": 0.0007960213426247975, "manual_loss_error": 0.0, "reference_forecast_error": 6.938893903907228e-18, "fixed_Q_forecast_error": 6.938893903907228e-17, "filter_member_hours": 840, "forecast_trajectory_hours": 420}
+{"status": "passed", "zero_optimizer_updates": true, "local_torch": "2.2.2", "hpc_torch": "2.4.0", "cross_platform_loss_errors": {"FS": 2.3852447794681098e-18, "FM": 2.168404344971009e-18, "NS": 2.0816681711721685e-17, "NM": 2.168404344971009e-18}, "utc": "2026-10-20T12:57:18.362440+00:00"}
+PQX03_LOG_err 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T00:37:28+0800
