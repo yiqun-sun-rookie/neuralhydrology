@@ -1,0 +1,55 @@
+### channel=regge-pqx03-20261020 seq=37
+### host=login4
+### started=2026-10-21T02:37:11+0800
+### ---------- output ----------
+PQX03_QUERY_UTC 2026-10-20T18:37:11.185495+00:00
+ slurm_load_jobs error: Invalid job id specified
+
+ slurm_load_jobs error: Invalid job id specified
+
+JobID|JobName|State|ExitCode|ElapsedRaw|NodeList
+245712|regge_pqx03|COMPLETED|0:0|20160|ngu010
+245712.batch|batch|COMPLETED|0:0|20160|ngu010
+245712.extern|extern|COMPLETED|0:0|20160|ngu010
+ 
+PQX03_COUNTS {"trained": 36, "reused_trained": 12}
+PQX03_PROGRESS []
+PQX03_pipeline_status.json {
+  "phase": "training_complete",
+  "pid": 2809014,
+  "utc": "2026-10-20T18:32:45.139662+00:00",
+  "job_id": "245712"
+}
+PQX03_controller_status.json {
+  "phase": "training_terminal",
+  "pid": 2809015,
+  "job_id": "245712",
+  "utc": "2026-10-20T18:32:44.791486+00:00",
+  "terminal": 48,
+  "failed_training": 0
+}
+PQX03_platform_gate.json {
+  "status": "passed",
+  "zero_optimizer_updates": true,
+  "local_torch": "2.2.2",
+  "hpc_torch": "2.4.0",
+  "cross_platform_loss_errors": {
+    "FS": 2.3852447794681098e-18,
+    "FM": 2.168404344971009e-18,
+    "NS": 2.0816681711721685e-17,
+    "NM": 2.168404344971009e-18
+  },
+  "utc": "2026-10-20T12:57:18.362440+00:00"
+}
+PQX03_LOG_out Tue Oct 20 12:56:49 PM UTC 2026
+ngu010
+CHECK FS {"loss": 0.001144165844385763, "manual_loss_error": 0.0, "reference_forecast_error": 1.3877787807814457e-17, "fixed_Q_forecast_error": 1.6653345369377348e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 84, "gradient": {"norm": 0.0010926125902144825, "analytic": 6.1512496458133745e-06, "numerical": 6.151249496745558e-06, "error": 1.4906781643347347e-13, "tolerance": 1.0615124949674555e-06}}
+CHECK FM {"loss": 0.0008420598223909024, "manual_loss_error": 1.0842021724855044e-19, "reference_forecast_error": 6.938893903907228e-18, "fixed_Q_forecast_error": 1.8041124150158794e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 420, "gradient": {"norm": 0.0011038253250094138, "analytic": 3.229865249691602e-06, "numerical": 3.2298663201445195e-06, "error": 1.070452917692271e-12, "tolerance": 1.0322986632014452e-06}}
+CHECK NS {"loss": 0.006087100999334612, "manual_loss_error": 8.673617379884035e-19, "reference_forecast_error": 2.7755575615628914e-17, "fixed_Q_forecast_error": 1.3183898417423734e-16, "filter_member_hours": 840, "forecast_trajectory_hours": 84, "gradient": {"norm": 0.02986532718183388, "analytic": 0.019332196123630515, "numerical": 0.019332196180043074, "error": 5.641255865218575e-11, "tolerance": 0.00019432196180043073}}
+CHECK NM {"loss": 0.0007960213426247975, "manual_loss_error": 0.0, "reference_forecast_error": 6.938893903907228e-18, "fixed_Q_forecast_error": 6.938893903907228e-17, "filter_member_hours": 840, "forecast_trajectory_hours": 420}
+{"status": "passed", "zero_optimizer_updates": true, "local_torch": "2.2.2", "hpc_torch": "2.4.0", "cross_platform_loss_errors": {"FS": 2.3852447794681098e-18, "FM": 2.168404344971009e-18, "NS": 2.0816681711721685e-17, "NM": 2.168404344971009e-18}, "utc": "2026-10-20T12:57:18.362440+00:00"}
+{"file": "training_245712.sealed", "bytes": 1271770, "sha256": "309ae0a40ec5f1cd555615bed7ae7a9e9969d46f2f544c372058846fdd1eebf6", "plain_sha256": "f6c6bcad205a8e948b38f0881e3fe622ec977315808cbba8c5c0b99d11af6c99", "files": 290, "job_id": "245712"}
+PQX03_LOG_err 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T02:37:11+0800
