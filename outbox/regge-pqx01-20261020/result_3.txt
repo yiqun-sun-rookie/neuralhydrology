@@ -1,0 +1,42 @@
+### channel=regge-pqx01-20261020 seq=3
+### host=login4
+### started=2026-10-20T15:52:38+0800
+### ---------- output ----------
+Tue Oct 20 07:52:38 UTC 2026
+Submitted batch job 245625
+
+             JOBID                     NAME      STATE         TIME                         NODELIST(REASON)
+            245625              regge_pqx01    PENDING         0:00                              (Resources)
+ 
+JobId=245625 JobName=regge_pqx01
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200009 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Resources Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-10-20T15:54:37 EligibleTime=2026-10-20T15:54:37
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T15:54:37
+   Partition=hcpu48 AllocNode:Sid=login04:3169
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=48 NumTasks=1 CPUs/Task=48 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=48,node=1,billing=48
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=48 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01/job.slurm
+   WorkDir=/data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01
+   StdErr=/data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01/logs/slurm-245625.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01/logs/slurm-245625.out
+   Power=
+
+ 
+JobID|JobName|State|ExitCode|ElapsedRaw|NodeList
+ 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T15:52:40+0800
