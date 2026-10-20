@@ -239,3 +239,5 @@ git rm inbox/seq
 | `knet-state-init-probe-20261020-001` | Authorized SC-INIT-PROBE-02 initialization-only zero-call probe | 2026-10-20 | Only state_channel_init_probe_20261020_001, one 041 zero-call job, 30 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `knet-state-init-probe-20261020-002` | Authorized SC-INIT-PROBE-03 initialization-only zero-call probe | 2026-10-20 | Only state_channel_init_probe_20261020_002, one 041 zero-call job, 30 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-step3-20261020-001` | Authorized SC-STEP3-REPLAY-01 fixed-call3 mechanism replay | 2026-10-20 | Only state_channel_step3_replay_20261020_001, one 020 zero-Adam replay job, 60 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
