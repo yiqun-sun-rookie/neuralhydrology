@@ -1,0 +1,38 @@
+### channel=knet-state-step3-20261020-001 seq=1
+### host=login4
+### started=2026-10-20T15:26:56+0800
+### ---------- output ----------
+login4
+2026-10-20T07:26:56Z
+241336_[81-129]|hydrol85935-v009-attacks|PENDING|0:00|(JobArrayTaskLimit)
+245242|id25_c01_shared_261019|PENDING|0:00|(Priority)
+245333|ghr_201_261019|PENDING|0:00|(Resources)
+245332|ghr_101_261019|PENDING|0:00|(Resources)
+245331|ghr_001_261019|PENDING|0:00|(Priority)
+245334|ghr_202_261019|PENDING|0:00|(Resources)
+245556|zj003_legacy_lstm__historical_capacity|PENDING|0:00|(Priority)
+202229|N22-agg-eval|PENDING|0:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|0:00|(Dependency)
+202315|N22-gate|PENDING|0:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|0:00|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|0:00|(DependencyNeverSatisfied)
+241337|hydrol85935-v009-validate|PENDING|0:00|(Dependency)
+241344|hydrol85935-v010-export|PENDING|0:00|(Dependency)
+202293|N22-manifest|PENDING|0:00|(JobHeldUser)
+240076_[0-2%1]|hydrol85935-train|PENDING|0:00|(JobHeldUser)
+240077_[0-131%1]|hydrol85935-attacks|PENDING|0:00|(JobHeldUser)
+240078|hydrol85935-report|PENDING|0:00|(JobHeldUser)
+241691|tessera_01073000_abc_261013|PENDING|0:00|(JobHeldUser)
+241336_80|hydrol85935-v009-attacks|RUNNING|56:23|ngu001
+245560|zj003_explicit_gru__historical_capacity|RUNNING|2:53:48|ngu102
+237928|zj_lstm_small_recovery_261008_002|RUNNING|11-17:09:31|ngu007
+236706|zj_explicit_gru__small_261006_pathfix|RUNNING|14-04:08:36|ngu011
+ngu101|mixed|1|2/94/0/96
+ngu102|mixed|1|42/54/0/96
+ngu103|down*|1|0/0/96/96
+ngu104|mixed|1|16/80/0/96
+34afa64ad7f77df8dd365a16030c770e96b281da5ff2f0d8e48890a927b637d7  /data1/home/sunyiq/knet_camels_hpc_20261012_001/template/bundle_manifest.json
+OWN_TARGET_ABSENT_AND_ARCHIVED_INPUT_PRESENT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T15:26:56+0800
