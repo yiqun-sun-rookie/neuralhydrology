@@ -235,3 +235,5 @@ git rm inbox/seq
 | `hpc-gpu-recheck-20261019` | Historical GPU node health recheck | 2026-10-19 | Only /data1/home/sunyiq/hpc_gpu_recheck_20261019_001 writable; Audit historical GPU flags on seven nodes; short Slurm diagnostics only; other experiments read-only; no node resets, state changes, SSH or borrowed GPUs. |
 
 | `knet-state-repair-probe-20261019-001` | Authorized SC-REPAIR-PROBE-01 initialization-only zero-call probe | 2026-10-19 | Only state_channel_repair_probe_20261019_001, one 041 zero-call job, 30 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-init-probe-20261020-001` | Authorized SC-INIT-PROBE-02 initialization-only zero-call probe | 2026-10-20 | Only state_channel_init_probe_20261020_001, one 041 zero-call job, 30 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
