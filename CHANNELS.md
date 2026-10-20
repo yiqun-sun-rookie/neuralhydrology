@@ -253,3 +253,5 @@ git rm inbox/seq
 | `knet-state-step3-20261020-003` | Authorized SC-STEP3-REPLAY-01 fixed-call3 mechanism replay | 2026-10-20 | Only state_channel_step3_replay_20261020_003, one 020 zero-Adam replay job, 60 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `knet-state-step3-mix-20261020-001` | Authorized SC-STEP3-MIX-CANDIDATE-01 fixed-call3 mechanism replay | 2026-10-20 | Only state_channel_step3_mix_20261020_001, one 020 fixed 99:1 candidate, 5 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-step3-mix-status-20261020-001` | Read-only receipt/staging diagnosis for completed job245675 | 2026-10-20 | Only state_channel_step3_mix_20261020_001, read-only transport diagnosis, zero scientific jobs, no repeat submission; preserve shared receiver and all other tasks. |
