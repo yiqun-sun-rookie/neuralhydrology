@@ -1,0 +1,8 @@
+### channel=knet-state-cont5-20261020-001 seq=1
+### host=login4
+### started=2026-10-20T20:40:30+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "245709", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_continuous5_20261020_001", "channel": "knet-state-cont5-20261020-001", "deployment_sequence": 1, "archive_sha256": "7e163554eadb654becd9f1b2de99f6a0f7bbe104a17b190a5388c53bde720f5b", "script_sha256": "5eb1b3429d66d3941d071dc890b87a50daac69a5f2ee9015d57d224730954328", "contract_sha256": "b7c0c856cc2ccf264fbaaa5d9cc2926596ad617c096c1479a576aad789066fed", "submitted_utc": "2026-10-20T12:40:31.843144+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 245709\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T20:40:31+0800
