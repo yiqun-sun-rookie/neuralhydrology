@@ -1,24 +1,20 @@
 #!/usr/bin/env bash
 set -eo pipefail
-python3 - <<'REPAIR_AND_READ_FIXED200_003'
-"""Repair an initial Slurm working-directory mismatch without changing runtime.
-
-Used only after the activation receipt proves the initial jobs. Reuses exactly
-the same authorization, script and checkpoints, submitting from the runtime
-directory. Requires an authenticated allocation mismatch, no new epoch and no
-fit failure. Existing healthy allocations are retained.
-"""
+python3 - <<'FIX_GRU_CONTEXT_AND_READ_003'
+"""Resume the unchanged GRU candidate after its pre-training WorkDir rejection."""
 import datetime
 import hashlib
 import json
 from pathlib import Path
 import re
 import subprocess
-import time
 
 ROOT = Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
+RUNTIME = ROOT / 'sqrt_gru_recovery'
+CASE = 'explicit_gru__historical_capacity'
+RECORD = RUNTIME / 'records' / CASE
 SLURM = Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-CASES = {'legacy_lstm__historical_capacity': 'base', 'explicit_gru__historical_capacity': 'sqrt_gru_recovery'}
+PREVIOUS = '245557'
 
 
 def read(path):
@@ -31,106 +27,63 @@ def write(path, value):
         handle.write('\n')
 
 
-def query(command, cwd=None):
-    result = subprocess.run(list(map(str, command)), cwd=str(cwd) if cwd else None,
-                            capture_output=True, text=True, timeout=45)
-    return {'command': list(map(str, command)), 'returncode': result.returncode,
-            'stdout': result.stdout, 'stderr': result.stderr}
-
-
-def get_queue():
-    value = query([SLURM / 'squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%Z|%o'])
-    assert value['returncode'] == 0
+def query(command):
+    result = subprocess.run(list(map(str, command)), cwd=str(RUNTIME), capture_output=True, text=True, timeout=60)
+    value = {'command': list(map(str, command)), 'returncode': result.returncode,
+             'stdout': result.stdout, 'stderr': result.stderr}
+    assert result.returncode == 0, json.dumps(value)
     return value
 
 
+jobs_path = RUNTIME / 'records/scheduler_jobs.json'
+jobs = read(jobs_path)
+assert str(jobs[CASE]) == PREVIOUS
 activation = read(ROOT / 'records/activation_report.json')
-assert not activation['errors'] and len(activation['jobs_submitted']) == 2
-report = {'schema': 'fixed200-submission-context-repair-v1', 'cases': {},
-          'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'scientific_files_changed': False}
-for case, variant in CASES.items():
-    root = ROOT / variant
-    records = root / 'records' / case
-    jobs_path = root / 'records/scheduler_jobs.json'
-    jobs = read(jobs_path)
-    previous = str(jobs[case])
-    queue = get_queue()
-    rows = [line.split('|') for line in queue['stdout'].splitlines() if line.startswith(previous + '|')]
-    if (records / ('runtime_binding_' + previous + '.json')).exists():
-        report['cases'][case] = {'status': 'existing_runtime_binding_retained', 'job_id': previous}
-        continue
-    detail = query([SLURM / 'scontrol', 'show', 'job', previous])
-    logs = ''.join(path.read_text(errors='replace') for path in (root / 'logs').glob('*_' + previous + '.out'))
-    workdir = re.search(r'\bWorkDir=(\S+)', detail['stdout'])
-    actual_root = rows[0][3] if rows else workdir.group(1) if workdir else None
-    if actual_root is None or actual_root == str(root):
-        report['cases'][case] = {'status': 'no_proven_submission_context_mismatch', 'job_id': previous,
-                               'job_detail': detail, 'log_tail': logs[-3000:]}
-        continue
-    assert ('allocation identity differs' in logs or rows), 'allocation mismatch proof required'
-    assert not list((root / 'runs').glob('*/failure.json'))
-    initial = read(records / 'activation_starting_members.json')
-    for member, start in initial.items():
-        head = read(root / 'runs' / member / 'checkpoint_head.json')
-        assert head['completed_epochs'] == start['completed_epochs']
-        assert head['checkpoint_sha256'] == start['checkpoint_sha256']
-    assert not any(case in line and not line.startswith(previous + '|') for line in queue['stdout'].splitlines())
-    # Pending allocations can retain their IDs and queue positions.
-    if rows and rows[0][2] == 'PENDING':
-        pending_record = {'case': case, 'job_id': previous, 'previous_workdir': actual_root,
-                          'corrected_workdir': str(root), 'queue': queue, 'job_detail': detail,
-                          'checkpoint_epochs_unchanged': True, 'new_optimizer_steps_before_repair': 0}
-        write(records / 'submission_context_pending_update.attempt.json', pending_record)
-        updated = query([SLURM / 'scontrol', 'update', 'JobId=' + previous, 'WorkDir=' + str(root)])
-        write(records / 'submission_context_pending_update.response.json', updated)
-        if updated['returncode'] == 0:
-            checked = query([SLURM / 'scontrol', 'show', 'job', previous])
-            expected = re.search(r'\bWorkDir=(\S+)', checked['stdout'])
-            assert checked['returncode'] == 0 and expected and expected.group(1) == str(root)
-            pending_record.update(status='pending_job_workdir_repaired_in_place', verified_job_detail=checked)
-            write(records / 'submission_context_repair.confirmed.json', pending_record)
-            report['cases'][case] = pending_record
-            continue
-        queue = get_queue()
-        rows = [line.split('|') for line in queue['stdout'].splitlines() if line.startswith(previous + '|')]
-    if rows:
-        assert len(rows) == 1 and rows[0][2] in ('PENDING', 'RUNNING', 'CONFIGURING', 'COMPLETING')
-        cancelled = query([SLURM / 'scancel', previous])
-        assert cancelled['returncode'] == 0
-        for _ in range(5):
-            queue = get_queue()
-            if not any(line.startswith(previous + '|') for line in queue['stdout'].splitlines()):
-                break
-            time.sleep(2)
-        assert not any(case in line for line in queue['stdout'].splitlines()), 'old allocation still present'
-    auth_path = root / 'records/authorization.json'
-    auth_sha = hashlib.sha256(auth_path.read_bytes()).hexdigest()
-    assert auth_sha == activation['cases'][case]['authorization_sha256']
-    script = root / 'hpc/fixed200_case.slurm'
-    assert hashlib.sha256(script.read_bytes()).hexdigest() == read(auth_path)['scheduler']['script_sha256']
-    record = {'case': case, 'previous_job': previous, 'previous_workdir': actual_root,
-              'corrected_workdir': str(root), 'queue': queue, 'job_detail': detail,
-              'previous_log_tail': logs[-3000:], 'authorization_sha256_unchanged': auth_sha,
-              'checkpoint_epochs_unchanged': True, 'new_optimizer_steps_before_repair': 0}
-    write(records / 'submission_context_repair.attempt.json', record)
-    try:
-        submitted = query([SLURM / 'xbatch', script], cwd=root)
-    except Exception as error:
-        write(records / 'submission_context_repair.response.json', {'uncertain': True, 'error': str(error)})
-        raise
-    write(records / 'submission_context_repair.response.json', submitted)
-    match = re.fullmatch(r'Submitted batch job ([0-9]+)\s*', submitted['stdout'])
-    assert submitted['returncode'] == 0 and match, 'uncertain submission: reconcile without retry'
-    jobs[case] = match.group(1)
-    temporary = jobs_path.with_suffix('.json.tmp')
-    write(temporary, jobs)
-    temporary.replace(jobs_path)
-    record.update(status='submission_workdir_repaired', job_id=match.group(1))
-    write(records / 'submission_context_repair.confirmed.json', record)
-    report['cases'][case] = record
-write(ROOT / 'records/submission_context_repair_report.json', report)
-print(json.dumps(report, sort_keys=True), flush=True)
+old_queue = [line.split('|') for line in activation['queue_after']['stdout'].splitlines() if line.startswith(PREVIOUS + '|')]
+assert len(old_queue) == 1 and old_queue[0][3] == '/data1/home/sunyiq/hpc_mailbox'
+assert old_queue[0][4] == str(RUNTIME / 'hpc/fixed200_case.slurm')
+queue = query([SLURM / 'squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%Z|%o'])
+assert not any(CASE in line or str(RUNTIME) in line for line in queue['stdout'].splitlines())
+accounting = query([SLURM / 'sacct', '-n', '-X', '-j', PREVIOUS,
+                    '--format=JobID,State,ExitCode,Start,End,NodeList', '-P'])
+rows = [line.split('|') for line in accounting['stdout'].splitlines() if line.startswith(PREVIOUS + '|')]
+assert len(rows) == 1 and rows[0][1:3] == ['FAILED', '1:0']
+logs = [p.read_text(errors='replace') for p in (RUNTIME / 'logs').glob('*_' + PREVIOUS + '.out')]
+assert len(logs) == 1 and "raise ValueError('allocation identity differs')" in logs[0]
+assert not (RECORD / ('runtime_binding_' + PREVIOUS + '.json')).exists()
+assert not list((RUNTIME / 'runs').glob('*/failure.json'))
+for member, initial in read(RECORD / 'activation_starting_members.json').items():
+    head = read(RUNTIME / 'runs' / member / 'checkpoint_head.json')
+    assert head['completed_epochs'] == initial['completed_epochs']
+    assert head['checkpoint_sha256'] == initial['checkpoint_sha256']
+authority_path = RUNTIME / 'records/authorization.json'
+authority = read(authority_path)
+assert hashlib.sha256(authority_path.read_bytes()).hexdigest() == activation['cases'][CASE]['authorization_sha256']
+script = RUNTIME / 'hpc/fixed200_case.slurm'
+assert hashlib.sha256(script.read_bytes()).hexdigest() == authority['scheduler']['script_sha256']
+record = {'schema': 'fixed200-submission-context-repair-v1', 'case': CASE, 'previous_job': PREVIOUS,
+          'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'queue': queue,
+          'accounting': accounting, 'previous_log': logs[0],
+          'previous_workdir': old_queue[0][3], 'corrected_workdir': str(RUNTIME),
+          'authorization_and_script_unchanged': True, 'checkpoint_epochs_unchanged': True,
+          'new_optimizer_steps_before_repair': 0}
+write(RECORD / 'submission_context_repair.attempt.json', record)
+try:
+    submitted = query([SLURM / 'xbatch', script])
+except Exception as error:
+    write(RECORD / 'submission_context_repair.response.json', {'status': 'uncertain_reconcile_readonly', 'error': str(error)})
+    raise
+write(RECORD / 'submission_context_repair.response.json', submitted)
+match = re.fullmatch(r'Submitted batch job ([0-9]+)\s*', submitted['stdout'])
+assert match, 'uncertain submission: reconcile without replay'
+write(RUNTIME / 'records/scheduler_jobs_before_context_repair.json', jobs)
+jobs[CASE] = match.group(1)
+temporary = jobs_path.with_suffix('.json.tmp')
+write(temporary, jobs)
+temporary.replace(jobs_path)
+record.update(status='submission_workdir_repaired_same_frozen_script', job_id=match.group(1))
+write(RECORD / 'submission_context_repair.confirmed.json', record)
+print(json.dumps(record, sort_keys=True), flush=True)
 
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
@@ -246,4 +199,4 @@ report['summary'] = {'cases': len(report['cases']),
     'failure_files': sum(len(v['failure_records']) for v in report['cases'].values())}
 print(json.dumps(report, sort_keys=True), flush=True)
 
-REPAIR_AND_READ_FIXED200_003
+FIX_GRU_CONTEXT_AND_READ_003
