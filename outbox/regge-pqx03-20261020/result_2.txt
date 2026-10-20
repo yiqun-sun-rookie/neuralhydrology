@@ -1,0 +1,46 @@
+### channel=regge-pqx03-20261020 seq=2
+### host=login4
+### started=2026-10-20T20:54:41+0800
+### ---------- output ----------
+Tue Oct 20 12:54:41 UTC 2026
+Submitted batch job 245712
+
+PQX03_SUBMISSION {"utc": "2026-10-20T12:54:42.985721+00:00", "command": ["sbatch", "/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/job.slurm"], "script_sha256": "eb7ae70ac00e18f1298ba7271b3515d212a07c5772d915a6414f544fbfef869d", "payload_sha256": "13488cc1e416026397667771d080f21eb53e7cf105987c4e28aa9811179e925b", "encrypted_payload_sha256": "0a36a68edd8a7f3d77ec3a5cfde043c0fcd76c76a5c8fb0d03f5309dcf261323", "root": "/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01", "status": "submitted", "job_id": 245712, "returncode": 0}
+PQX03_QUERY_UTC 2026-10-20T12:54:43.181031+00:00
+             JOBID                     NAME        STATE         TIME                              NODELIST(REASON)
+            245712              regge_pqx03      PENDING         0:00                                    (Priority)
+ 
+JobId=245712 JobName=regge_pqx03
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-10-20T20:56:40 EligibleTime=2026-10-20T20:56:40
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:56:40
+   Partition=hgpu2p AllocNode:Sid=login04:3169
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/job.slurm
+   WorkDir=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01
+   StdErr=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.out
+   Power=
+
+ 
+JobID|JobName|State|ExitCode|ElapsedRaw|NodeList
+ 
+PQX03_COUNTS {"trained": 5, "reused_trained": 12}
+PQX03_PROGRESS []
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T20:54:43+0800
