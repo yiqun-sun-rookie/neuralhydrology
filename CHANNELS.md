@@ -259,3 +259,5 @@ git rm inbox/seq
 | `regge-pqx03-20261020` | Regge forecast-objective Q factorial; user authorized 2026-10-20 | Only own channel and /data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01; other experiments read-only |
 
 | `china-tws-haihe-recovery01-20261020` | Haihe recovery two fixed climate models | isolated 20261020 root; no other jobs modified |
+
+| `knet-state-cont5-20261020-001` | Authorized SC-CONTINUOUS5-01 paired five-call training diagnostic | 2026-10-20 | Only state_channel_continuous5_20261020_001, one 020 paired five-call job, 3 hour cap, no repeat submission; preserve shared receiver and all other tasks. |
