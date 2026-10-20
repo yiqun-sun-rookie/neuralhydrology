@@ -247,3 +247,5 @@ git rm inbox/seq
 | `regge-pqx01-status-20261020` | Regge frozen P/Q crossbank; user authorized 2026-10-20 | Only own channel and /data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01; other experiments read-only |
 
 | `knet-state-step3-status-20261020-001` | Read-only transport diagnosis for SC-STEP3-REPLAY-01; no submission or cancellation | 2026-10-20 | Only state_channel_step3_replay_20261020_001, one 020 zero-Adam replay job, 60 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-step3-20261020-002` | Authorized SC-STEP3-REPLAY-01 fixed-call3 mechanism replay | 2026-10-20 | Only state_channel_step3_replay_20261020_002, one 020 zero-Adam replay job, 60 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
