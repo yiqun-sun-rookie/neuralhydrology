@@ -1,0 +1,82 @@
+### channel=regge-pqx01-status-20261020 seq=1
+### host=login4
+### started=2026-10-20T15:52:38+0800
+### ---------- output ----------
+Tue Oct 20 07:52:38 UTC 2026
+login4
+ 15:52:38 up 1152 days, 21:15, 40 users,  load average: 1.99, 1.66, 1.85
+  PID  PPID ELAPSED STAT COMMAND
+ 3169     1  504906 Ss   bash
+42490  3169     174 S    bash
+44549 42490      14 S    timeout
+44550 44549      14 S    git
+44551 44550      14 S    ssh
+44612  3169       1 S    bash
+44626 44612       1 S    timeout
+44627 44626       1 S    timeout
+44633 44627       1 S    python
+44665  3169       1 S    bash
+44669 44665       1 S    sleep
+45012  3169       0 S    bash
+45027 45012       0 S    timeout
+45030 45027       0 S    bash
+45032 45030       0 S    python
+45073  3169       0 S    bash
+45082  3169       0 S    bash
+45086 45073       0 S    timeout
+45088 45086       0 S    bash
+45094 45088       0 R    python
+45101 45082       0 S    timeout
+45102 45101       0 S    bash
+45114 45102       0 R    ps
+45171  3169       0 S    sleep
+OWN_RESULT /data1/home/sunyiq/.hpc_mailbox_staging/regge-pqx01-20261020/result_2.txt
+### channel=regge-pqx01-20261020 seq=2
+### host=login4
+### started=2026-10-20T15:42:00+0800
+### ---------- output ----------
+writing RSA key
+PUBLIC_KEY_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0U+ogcH0/37kG2r8CXXc
+yeOR4XCDpHSQbjGc+Zu4Jt1O3hnzs0ttqv4j4LpG8aDxxWetD47ETiG7ZcaequQh
+IxfHHTB567jVcHn1GGNSCS8w1gdRVaT/7WRAb5MJzWFC+6GiEH54m9COully0Ro6
+X8k64O/km1WzIPob736JEIyM3uDs76+nD9uUdoWOC2MBf61c/pucVC/f5/hhM/O7
+f8vXP/W5ySRXSqjEBiahRjgMsZ7jHCwvnfSqoHzFZJTwPtX+Npcl4JPp7/EgHFc5
+BqaaW+01PbT3evsM8J45W5QHOGsIFB7fJpFDpVsXYx+wSFNXKMs0o3DmimME++z6
+4QIDAQAB
+-----END PUBLIC KEY-----
+PUBLIC_KEY_END
+OpenSSL 3.0.12 24 Oct 2023 (Library: OpenSSL 3.0.12 24 Oct 2023)
+EXPERIMENT_ROOT_STILL_ABSENT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T15:42:01+0800
+OWN_RESULT /data1/home/sunyiq/hpc_mailbox/outbox/regge-pqx01-20261020/result_2.txt
+### channel=regge-pqx01-20261020 seq=2
+### host=login4
+### started=2026-10-20T15:42:00+0800
+### ---------- output ----------
+writing RSA key
+PUBLIC_KEY_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0U+ogcH0/37kG2r8CXXc
+yeOR4XCDpHSQbjGc+Zu4Jt1O3hnzs0ttqv4j4LpG8aDxxWetD47ETiG7ZcaequQh
+IxfHHTB567jVcHn1GGNSCS8w1gdRVaT/7WRAb5MJzWFC+6GiEH54m9COully0Ro6
+X8k64O/km1WzIPob736JEIyM3uDs76+nD9uUdoWOC2MBf61c/pucVC/f5/hhM/O7
+f8vXP/W5ySRXSqjEBiahRjgMsZ7jHCwvnfSqoHzFZJTwPtX+Npcl4JPp7/EgHFc5
+BqaaW+01PbT3evsM8J45W5QHOGsIFB7fJpFDpVsXYx+wSFNXKMs0o3DmimME++z6
+4QIDAQAB
+-----END PUBLIC KEY-----
+PUBLIC_KEY_END
+OpenSSL 3.0.12 24 Oct 2023 (Library: OpenSSL 3.0.12 24 Oct 2023)
+EXPERIMENT_ROOT_STILL_ABSENT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T15:42:01+0800
+-rw-------. 1 sunyiq g_sunyiq 451 Oct 20 15:42 /data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01-transfer/transfer_public.pem
+-rw-------. 1 sunyiq g_sunyiq 1704 Oct 20 15:42 /data1/home/sunyiq/regge_experiments/REGGE-PQX01-FROZEN-QE-CROSSBANK/20261020-v01-transfer/transfer_private.pem
+aaa8200bcfe8688ab1eb75c9831708eefe7c6a97
+3### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T15:52:39+0800
