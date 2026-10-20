@@ -1,90 +1,6 @@
 #!/usr/bin/env bash
 set -eo pipefail
-python3 - <<'FIX_GRU_CONTEXT_AND_READ_003'
-"""Resume the unchanged GRU candidate after its pre-training WorkDir rejection."""
-import datetime
-import hashlib
-import json
-from pathlib import Path
-import re
-import subprocess
-
-ROOT = Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
-RUNTIME = ROOT / 'sqrt_gru_recovery'
-CASE = 'explicit_gru__historical_capacity'
-RECORD = RUNTIME / 'records' / CASE
-SLURM = Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-PREVIOUS = '245557'
-
-
-def read(path):
-    return json.loads(path.read_bytes())
-
-
-def write(path, value):
-    with path.open('x') as handle:
-        json.dump(value, handle, sort_keys=True, indent=2)
-        handle.write('\n')
-
-
-def query(command):
-    result = subprocess.run(list(map(str, command)), cwd=str(RUNTIME), capture_output=True, text=True, timeout=60)
-    value = {'command': list(map(str, command)), 'returncode': result.returncode,
-             'stdout': result.stdout, 'stderr': result.stderr}
-    assert result.returncode == 0, json.dumps(value)
-    return value
-
-
-jobs_path = RUNTIME / 'records/scheduler_jobs.json'
-jobs = read(jobs_path)
-assert str(jobs[CASE]) == PREVIOUS
-activation = read(ROOT / 'records/activation_report.json')
-old_queue = [line.split('|') for line in activation['queue_after']['stdout'].splitlines() if line.startswith(PREVIOUS + '|')]
-assert len(old_queue) == 1 and old_queue[0][3] == '/data1/home/sunyiq/hpc_mailbox'
-assert old_queue[0][4] == str(RUNTIME / 'hpc/fixed200_case.slurm')
-queue = query([SLURM / 'squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%Z|%o'])
-assert not any(CASE in line or str(RUNTIME) in line for line in queue['stdout'].splitlines())
-accounting = query([SLURM / 'sacct', '-n', '-X', '-j', PREVIOUS,
-                    '--format=JobID,State,ExitCode,Start,End,NodeList', '-P'])
-rows = [line.split('|') for line in accounting['stdout'].splitlines() if line.startswith(PREVIOUS + '|')]
-assert len(rows) == 1 and rows[0][1:3] == ['FAILED', '1:0']
-logs = [p.read_text(errors='replace') for p in (RUNTIME / 'logs').glob('*_' + PREVIOUS + '.out')]
-assert len(logs) == 1 and "raise ValueError('allocation identity differs')" in logs[0]
-assert not (RECORD / ('runtime_binding_' + PREVIOUS + '.json')).exists()
-assert not list((RUNTIME / 'runs').glob('*/failure.json'))
-for member, initial in read(RECORD / 'activation_starting_members.json').items():
-    head = read(RUNTIME / 'runs' / member / 'checkpoint_head.json')
-    assert head['completed_epochs'] == initial['completed_epochs']
-    assert head['checkpoint_sha256'] == initial['checkpoint_sha256']
-authority_path = RUNTIME / 'records/authorization.json'
-authority = read(authority_path)
-assert hashlib.sha256(authority_path.read_bytes()).hexdigest() == activation['cases'][CASE]['authorization_sha256']
-script = RUNTIME / 'hpc/fixed200_case.slurm'
-assert hashlib.sha256(script.read_bytes()).hexdigest() == authority['scheduler']['script_sha256']
-record = {'schema': 'fixed200-submission-context-repair-v1', 'case': CASE, 'previous_job': PREVIOUS,
-          'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'queue': queue,
-          'accounting': accounting, 'previous_log': logs[0],
-          'previous_workdir': old_queue[0][3], 'corrected_workdir': str(RUNTIME),
-          'authorization_and_script_unchanged': True, 'checkpoint_epochs_unchanged': True,
-          'new_optimizer_steps_before_repair': 0}
-write(RECORD / 'submission_context_repair.attempt.json', record)
-try:
-    submitted = query([SLURM / 'xbatch', script])
-except Exception as error:
-    write(RECORD / 'submission_context_repair.response.json', {'status': 'uncertain_reconcile_readonly', 'error': str(error)})
-    raise
-write(RECORD / 'submission_context_repair.response.json', submitted)
-match = re.fullmatch(r'Submitted batch job ([0-9]+)\s*', submitted['stdout'])
-assert match, 'uncertain submission: reconcile without replay'
-write(RUNTIME / 'records/scheduler_jobs_before_context_repair.json', jobs)
-jobs[CASE] = match.group(1)
-temporary = jobs_path.with_suffix('.json.tmp')
-write(temporary, jobs)
-temporary.replace(jobs_path)
-record.update(status='submission_workdir_repaired_same_frozen_script', job_id=match.group(1))
-write(RECORD / 'submission_context_repair.confirmed.json', record)
-print(json.dumps(record, sort_keys=True), flush=True)
-
+python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
 Example on HPC: python -B read_status.py
@@ -199,4 +115,4 @@ report['summary'] = {'cases': len(report['cases']),
     'failure_files': sum(len(v['failure_records']) for v in report['cases'].values())}
 print(json.dumps(report, sort_keys=True), flush=True)
 
-FIX_GRU_CONTEXT_AND_READ_003
+READ_FIXED200_003
