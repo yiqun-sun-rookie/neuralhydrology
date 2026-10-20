@@ -176,6 +176,88 @@ report['known_terminal_accounting'] = query([SLURM/'sacct','-n','-X','-j',','.jo
     '--format=JobID,State,ExitCode,Start,End,NodeList','-P'])
 report['scope_finished_at_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
+
+# Metadata-only follow-up for the one checkpoint gap recorded in receipt706.
+# Standard library only: no torch, tensor deserialization, model or source writes.
+import os
+import pickletools
+import zipfile
+
+target_member = 'explicit_gru__small__tune_branch__filter_fixed__s101__lr0p0003'
+target_root = Path(legacy_baseline['explicit_gru__small']['root'])
+target_folder = target_root / 'runs' / target_member
+target_path = target_folder / 'continuation.pt'
+probe = {'member': target_member, 'path': str(target_path),
+         'method': 'ZIP directory and streamed primitive values-list metadata only',
+         'tensor_storage_bytes_read': 0, 'tensor_deserialization': False,
+         'checkpoint_tensor_crc_verified': False, 'checkpoint_full_hash_computed': False}
+try:
+    with target_path.open('rb') as checkpoint_stream:
+        before = os.fstat(checkpoint_stream.fileno())
+        probe['open_file_stat'] = {'bytes': before.st_size, 'mtime_ns': before.st_mtime_ns,
+            'mtime_utc': datetime.datetime.fromtimestamp(before.st_mtime,datetime.timezone.utc).isoformat(),
+            'inode': before.st_ino}
+        with zipfile.ZipFile(checkpoint_stream) as archive:
+            entries = archive.infolist()
+            assert len(entries) == len({x.filename for x in entries})
+            assert all(not x.flag_bits & 1 and 0 <= x.header_offset < before.st_size
+                       and x.header_offset + 30 + x.compress_size <= before.st_size for x in entries)
+            pickles = [x for x in entries if x.filename.endswith('/data.pkl') or x.filename == 'data.pkl']
+            assert len(pickles) == 1
+            storages = [x for x in entries if '/data/' in x.filename and not x.is_dir()]
+            assert storages and all(x.file_size > 0 for x in storages)
+            probe['zip_directory_readable'] = True
+            probe['zip_entries'] = len(entries)
+            probe['tensor_storage_entries'] = len(storages)
+            probe['tensor_storage_declared_bytes'] = sum(x.file_size for x in storages)
+            probe['data_pickle_declared_bytes'] = pickles[0].file_size
+            saved_values = []
+            phase = 'find_values_key'
+            with archive.open(pickles[0]) as metadata:
+                for count, (opcode, argument, position) in enumerate(pickletools.genops(metadata)):
+                    assert count < 200000 and position < 4*1024*1024, 'metadata prefix exceeds lightweight bound'
+                    if phase == 'find_values_key':
+                        if opcode.name in ('BINUNICODE','SHORT_BINUNICODE','UNICODE') and argument == 'values':
+                            phase = 'expect_list'
+                    elif phase == 'expect_list':
+                        if opcode.name in ('BINPUT','LONG_BINPUT','MEMOIZE'):
+                            continue
+                        assert opcode.name == 'EMPTY_LIST', 'saved values uses unsupported encoding'
+                        phase = 'read_values'
+                    else:
+                        if opcode.name in ('BINPUT','LONG_BINPUT','MEMOIZE','MARK','APPEND','APPENDS'):
+                            continue
+                        if opcode.name in ('BINFLOAT','FLOAT','BININT','BININT1','BININT2','INT','LONG','LONG1','LONG4'):
+                            assert isinstance(argument,(int,float)) and not isinstance(argument,bool)
+                            saved_values.append(argument)
+                            continue
+                        assert opcode.name in ('BINUNICODE','SHORT_BINUNICODE','UNICODE') and argument == 'train_metrics', 'unsupported saved values boundary'
+                        phase = 'done'
+                        probe['data_pickle_prefix_bytes_read'] = metadata.tell()
+                        break
+            assert phase == 'done' and saved_values
+            probe['checkpoint_saved_value_count'] = len(saved_values)
+            probe['checkpoint_saved_value_prefix_sha256'] = hashlib.sha256(json.dumps(saved_values,separators=(',',':')).encode()).hexdigest()
+        after = os.fstat(checkpoint_stream.fileno())
+        assert (before.st_ino,before.st_size,before.st_mtime_ns) == (after.st_ino,after.st_size,after.st_mtime_ns)
+        probe['open_file_stable_during_metadata_read'] = True
+    current = target_path.stat()
+    probe['path_still_same_opened_file'] = (current.st_ino,current.st_size,current.st_mtime_ns) == (before.st_ino,before.st_size,before.st_mtime_ns)
+    with (target_folder/'metrics.json').open('rb') as metrics_stream:
+        prefix = metrics_stream.read(131072).decode('utf-8')
+    match = re.search(r'"validation_mae_cm"\s*:\s*',prefix)
+    assert match is not None
+    metric_values = json.JSONDecoder().raw_decode(prefix[match.end():])[0]
+    probe['metric_history_count_at_checkpoint_probe'] = len(metric_values)
+    probe['saved_values_match_metric_prefix'] = saved_values == metric_values[:len(saved_values)]
+    probe['saved_values_match_complete_metric_history'] = saved_values == metric_values
+    probe['structural_metadata_status'] = 'CHECKPOINT_METADATA_READ_AND_HISTORY_BOUND'
+except Exception as error:
+    probe['structural_metadata_status'] = 'CHECKPOINT_METADATA_NOT_CONFIRMED'
+    probe['error'] = {'type': type(error).__name__, 'message': str(error)}
+probe['checked_at_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+report['focused_checkpoint_followup_706_gap'] = probe
+
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
