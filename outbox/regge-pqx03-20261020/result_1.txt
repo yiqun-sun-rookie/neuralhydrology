@@ -1,0 +1,62 @@
+### channel=regge-pqx03-20261020 seq=1
+### host=login4
+### started=2026-10-20T20:40:30+0800
+### ---------- output ----------
+Tue Oct 20 12:40:30 UTC 2026
+login4
+sunyiq
+             JOBID                         NAME      STATE         TIME                         NODELIST(REASON)
+   241336_[86-129]     hydrol85935-v009-attacks    PENDING         0:00                      (JobArrayTaskLimit)
+            245242       id25_c01_shared_261019    PENDING         0:00                               (Priority)
+            245333               ghr_201_261019    PENDING         0:00                              (Resources)
+            245332               ghr_101_261019    PENDING         0:00                              (Resources)
+            245331               ghr_001_261019    PENDING         0:00                               (Priority)
+            245334               ghr_202_261019    PENDING         0:00                              (Resources)
+            245556 zj003_legacy_lstm__historica    PENDING         0:00                               (Priority)
+    245706_[0,4%2]                hamid_weights    PENDING         0:00                               (Priority)
+      245707_[1-8]               wrr-ln-aligned    PENDING         0:00                               (Priority)
+            202229                 N22-agg-eval    PENDING         0:00               (DependencyNeverSatisfied)
+            202294                   N22-export    PENDING         0:00                             (Dependency)
+            202315                     N22-gate    PENDING         0:00                             (Dependency)
+            202507             N22-mask-iso-531    PENDING         0:00               (DependencyNeverSatisfied)
+            215429                id30_m01_s100    PENDING         0:00               (DependencyNeverSatisfied)
+            241337    hydrol85935-v009-validate    PENDING         0:00                             (Dependency)
+            241344      hydrol85935-v010-export    PENDING         0:00                             (Dependency)
+            202293                 N22-manifest    PENDING         0:00                            (JobHeldUser)
+    240076_[0-2%1]            hydrol85935-train    PENDING         0:00                            (JobHeldUser)
+  240077_[0-131%1]          hydrol85935-attacks    PENDING         0:00                            (JobHeldUser)
+            240078           hydrol85935-report    PENDING         0:00                            (JobHeldUser)
+            241691  tessera_01073000_abc_261013    PENDING         0:00                            (JobHeldUser)
+         241336_85     hydrol85935-v009-attacks    RUNNING         4:55                                   ngu001
+            245671                  ohn_tune_v0    RUNNING      3:13:05                                   ngu202
+            245672                  ohn_tune_v1    RUNNING      3:13:05                                   ngu201
+            245674                  ohn_tune_v3    RUNNING      3:13:05                                   ngu101
+            245673                  ohn_tune_v2    RUNNING      3:13:20                                   ngu102
+            245560 zj003_explicit_gru__historic    RUNNING      8:07:22                                   ngu102
+            237928 zj_lstm_small_recovery_26100    RUNNING  11-22:23:05                                   ngu007
+            236706 zj_explicit_gru__small_26100    RUNNING  14-09:22:10                                   ngu011
+hcpu48*|up|infinite|12|allocated$|576/0/0/576
+hcpu48*|up|infinite|3|maint|0/144/0/144
+hcpu48*|up|infinite|17|down*|0/0/816/816
+hcpu48*|up|infinite|32|allocated|1536/0/0/1536
+hcpu48y|up|infinite|1|down*|0/0/48/48
+hcpu48y|up|infinite|7|mixed|230/106/0/336
+hcpu48y|up|infinite|4|allocated|192/0/0/192
+hgpu2p|up|infinite|1|down*|0/0/96/96
+hgpu2p|up|infinite|8|mixed|76/564/0/640
+writing RSA key
+PQX03_PUBLIC_KEY_BEGIN
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2ZBqxmKGo6c4/Y81XnAO
+YomjYRMkgTAQyVSwV7pHzwdEfx9a1jYRjw7PoAiB66YvtNRtZZZOjABsVPcefLbg
+fZv67vqg79N5cDAf+l9iRcSGQzcWT4wgHc0MHUZ3QGk9UCThviDvJG006aHng8mh
+wKW7UUE+3z70jdVsvpSuPidAZMxHCRfctG0cePzBIjRzArbC1GPIrcOVwke2ssqi
+2dhQAYtOgDZxE/9AlwCLAa24GSWRUrH7RDgYyE2KSC7OGZum52GoKo9YIDFVd01e
+GGakk3l5tgDFVnWkq2QEp175JDa5ZCRRhMR5Fmg/quc9QnOz03M7wA1NYec30jmJ
+zQIDAQAB
+-----END PUBLIC KEY-----
+PQX03_PUBLIC_KEY_END
+PQX03_ROOT_ABSENT_AND_ENV_PRESENT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T20:40:31+0800
