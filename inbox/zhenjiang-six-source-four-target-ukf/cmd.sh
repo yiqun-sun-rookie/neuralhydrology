@@ -6,8 +6,8 @@ set -u
 export CUDA_VISIBLE_DEVICES=""
 export PYTHONDONTWRITEBYTECODE=1
 export OMP_NUM_THREADS=2
-python -B - <<'BOUNDARY_003'
-"""Read-only source/configuration preflight; stage data receipts without training.
+python -B - <<'GRU_METADATA_003'
+"""Recover omitted GRU data metadata by exact manifest identity; no tide refit.
 
 Usage on HPC: python -B check_boundary.py
 Reads the two complete historical-capacity cases and already admitted 2017--2022
@@ -28,12 +28,11 @@ import sys
 import torch
 
 BASE = Path('/data1/home/sunyiq')
-DEST = BASE / 'zhenjiang_fixed200_003_boundary_20261020_001'
+DEST = BASE / 'zhenjiang_fixed200_003_boundary_20261020_002'
 OLD = BASE / 'zhenjiang_fixed200_003_candidates_20261019_002'
 ARCHIVE = BASE / 'zhenjiang_fixed200_003_sources_20261019_001'
 CASES = {
     'explicit_gru__historical_capacity': ('sqrt_gru_recovery', BASE / 'zhenjiang_complete_comparison_20261017_sqrt_recovery_001', '244445'),
-    'legacy_lstm__historical_capacity': ('base', BASE / 'zhenjiang_complete_comparison_20261006_002', '236707'),
 }
 
 
@@ -96,25 +95,14 @@ previous = read(OLD / 'candidate_report.json')
 preserved = read(ARCHIVE / 'preservation_report.json')
 catalogue = read(OLD / 'release/stage_source_admission.json')
 
-# Check the original complete-400 identity, rather than regenerating its seal.
-for group, source in catalogue['sources'].items():
-    row = {'group': group, 'members': []}
-    report['foundation_sources'].append(row)
-    try:
-        original = Path(source['outcome_sample_root']) / source['original_outcome_path']
-        raw = stable(original)
-        assert sha(raw) == source['original_outcome_sha256']
-        assert json.loads(raw)['seal'] == source['seal']
-        row['original_outcome_sha256'] = sha(raw)
-        for rid, member in source['seal']['member_evidence'].items():
-            raw = stable(Path(member['checkpoint_path']))
-            assert sha(raw) == member['checkpoint_sha256']
-            assert member['epochs'] == len(member['validation_mae']) == 400
-            row['members'].append({'run_id': rid, 'epochs': 400, 'sha256': sha(raw)})
-        row['verified_original400'] = True
-    except Exception as error:
-        row['error'] = type(error).__name__ + ': ' + str(error)
-        report['errors'].append({'group': group, 'error': row['error']})
+# Reuse the completed request-687 verification without repeating its 12 source reads.
+prior_path = BASE / 'zhenjiang_fixed200_003_boundary_20261020_001/boundary_report.json'
+prior_raw = stable(prior_path)
+assert sha(prior_raw) == '25f94549e0856403a48ddf46bb0c4b0897fc9eec5e693d7417c8bef717f858ec'
+prior = json.loads(prior_raw)
+assert prior['summary']['verified_original400_members'] == 12
+report['foundation_sources'] = copy.deepcopy(prior['foundation_sources'])
+report['foundation_verification_reused_from'] = {'receipt': 687, 'report_sha256': sha(prior_raw)}
 
 for case, (variant, original_root, job) in CASES.items():
     row = {'variant': variant, 'source_root': str(original_root), 'job_id': job,
@@ -163,12 +151,34 @@ for case, (variant, original_root, job) in CASES.items():
             out = runtime_root / 'prepared' / split
             out.mkdir(parents=True, exist_ok=False)
             (out / 'manifest.json').write_bytes(raw)
-            tide_raw = stable(source_dir / 'tide_fit.json')
-            assert sched.digest_json(json.loads(tide_raw)) == manifest['tide_source_hash']
+            # The recovery has manifests/NPZ references but omitted metadata.
+            # Use only the same admitted manifest's original prepared directory.
+            candidates = [source_dir] + [Path(p) for p in manifest['approved_roots']]
+            allowed = {original_root / 'prepared' / split,
+                       BASE / 'zhenjiang_complete_comparison_20261006_002/prepared' / split,
+                       BASE / 'zhenjiang_complete_comparison_20261006_recovery_001/prepared' / split}
+            donor = None
+            searched = []
+            for folder in dict.fromkeys(candidates):
+                assert folder in allowed, 'unregistered prepared metadata directory'
+                path = folder / 'tide_fit.json'
+                searched.append({'directory': str(folder), 'tide_metadata_exists': path.is_file()})
+                if not path.is_file():
+                    continue
+                donor_manifest = read(folder / 'manifest.json')
+                assert sched.digest_json(donor_manifest) == sched.digest_json(manifest), 'metadata donor manifest differs'
+                tide_raw = stable(path)
+                assert sched.digest_json(json.loads(tide_raw)) == manifest['tide_source_hash'], 'original tide identity differs'
+                donor_admission = read(folder / 'admission.json')
+                assert donor_admission['manifest_sha256'] == sched.digest_json(manifest)
+                donor = folder
+                break
+            row.setdefault('metadata_recovery', {})[split] = {'searched': searched, 'donor': str(donor) if donor else None}
+            assert donor is not None, 'authentic original tide metadata not located; refitting forbidden'
             (out / 'tide_fit.json').write_bytes(tide_raw)
             phases = {phase: runtime.load_stage(manifest, phase) for phase in (split + '_train', split + '_select')}
             stats = runtime.stats_record(runtime.fit_stage_stats(phases[split + '_train'], manifest))
-            previous_admission = read(source_dir / 'admission.json')
+            previous_admission = read(donor / 'admission.json')
             assert stats == previous_admission['statistics']
             assert sched.digest_json(manifest) == previous_admission['manifest_sha256']
             assert original_prep['reports'][split]['statistics'] == stats
@@ -178,6 +188,8 @@ for case, (variant, original_root, job) in CASES.items():
                       'tide_source_hash': manifest['tide_source_hash'], 'files_verified': len(file_ledger),
                       'eligible_windows': {p: len(s['eligible']) for p, s in phases.items()},
                       'external_original_paths_preserved': True, 'file_ledger': file_ledger,
+                      'metadata_donor': str(donor), 'original_tide_file_sha256': sha(tide_raw),
+                      'original_donor_admission_sha256': sha(stable(donor / 'admission.json')),
                       'evaluation_values_read': False}
             data_reports[split] = detail
             row['data'][split] = {k: v for k, v in detail.items() if k not in ('statistics', 'file_ledger')}
@@ -288,4 +300,4 @@ print(json.dumps({'boundary_report_sha256': sha(stable(DEST / 'boundary_report.j
 if report['errors']:
     sys.exit(2)
 
-BOUNDARY_003
+GRU_METADATA_003
