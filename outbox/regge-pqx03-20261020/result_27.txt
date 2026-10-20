@@ -1,0 +1,52 @@
+### channel=regge-pqx03-20261020 seq=27
+### host=login4
+### started=2026-10-21T01:07:00+0800
+### ---------- output ----------
+PQX03_QUERY_UTC 2026-10-20T17:07:01.904078+00:00
+             JOBID                     NAME        STATE         TIME                              NODELIST(REASON)
+            245712              regge_pqx03      RUNNING      4:09:59                                        ngu010
+ 
+JobId=245712 JobName=regge_pqx03
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=04:09:59 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-10-20T20:56:40 EligibleTime=2026-10-20T20:56:40
+   AccrueTime=2026-10-20T20:56:40
+   StartTime=2026-10-20T20:57:02 EndTime=2026-10-21T02:57:02 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:57:02
+   Partition=hgpu2p AllocNode:Sid=login04:3169
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu010
+   BatchHost=ngu010
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/job.slurm
+   WorkDir=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01
+   StdErr=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/logs/slurm-245712.out
+   Power=
+
+ 
+JobID|JobName|State|ExitCode|ElapsedRaw|NodeList
+245712|regge_pqx03|RUNNING|0:0|15117|ngu010
+245712.batch|batch|RUNNING|0:0|15117|ngu010
+245712.extern|extern|RUNNING|0:0|15117|ngu010
+ 
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01/status.py", line 22, in <module>
+    elif (d/'status.json').exists():progress.append(json.loads((d/'status.json').read_text()))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1059, in read_text
+    return f.read()
+           ^^^^^^^^
+OSError: [Errno 5] Input/output error
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-21T01:07:02+0800
