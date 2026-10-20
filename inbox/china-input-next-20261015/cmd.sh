@@ -2,95 +2,69 @@
 set -eo pipefail
 umask 077
 export CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1
-exec timeout --signal=TERM --kill-after=3s 120s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'C3_FULL_END'
-"""One exact deployment or existing-job metadata snapshot; no scientific calculations on login node."""
+exec timeout --signal=TERM --kill-after=3s 120s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'C3_SOURCE55'
+"""Exact finite metadata presence and private Git read-access check; no source content reads."""
 import base64
 import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
-import re
-import shutil
+import stat
 import subprocess
 import time
 import zlib
-ROOT = Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/china_full_spatial_20261020_v1')
-MODE = 'status'
-PACKET_B64 = ''
+
+META_B64 = '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'
 START = time.monotonic()
 
-def utc():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
-
-def query(command, timeout=9):
-    began = time.monotonic()
-    p = subprocess.run(command, stdin=subprocess.DEVNULL, capture_output=True, timeout=timeout)
-    assert len(p.stdout) <= 65536 and len(p.stderr) <= 16384
-    return dict(command=command, exit_code=p.returncode, stdout=p.stdout.decode(errors='replace'), stderr=p.stderr.decode(errors='replace'), server_utc=utc(), seconds=time.monotonic() - began)
-
-def save(name, value):
-    with (ROOT / name).open('x', encoding='utf-8') as f:
-        json.dump(value, f, ensure_ascii=False, indent=2)
-        f.write('\n')
 
 def main():
-    assert MODE == 'status' and ROOT.resolve(strict=True) == ROOT
-    job = (ROOT / 'OWN_JOB_ID').read_text().strip()
-    assert re.fullmatch('[0-9]+', job)
-    assert job == '245398', 'EXACT_EXISTING_JOB_ONLY'
-    queries = dict(squeue=query(['squeue', '-h', '-j', job, '-o', '%i|%T|%N|%R|%Z']), sacct=query(['sacct', '-X', '-S', '2026-10-19', '-j', job, '--noheader', '--parsable2', '--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']), scontrol=query(['scontrol', 'show', 'job', job, '-o']))
-    names = ['DEPLOYMENT.json', 'SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'OWN_JOB_ID', 'CONTROL_STARTED.json', 'CONTROL_RESULT.json', 'CONTROL_FAILURE.json', 'DIFFERENCES.json', 'main_EXIT.json', 'independent_EXIT.json', 'main.stdout', 'main.stderr', 'independent.stdout', 'independent.stderr', 'logs/full-' + job + '.out', 'logs/full-' + job + '.err']
-    evidence_indices = {}
-    for tag in ('main', 'independent'):
-        names += [tag + '/' + name for name in ('STARTED.json', 'GLOBAL.json', 'FAILURE.json')]
-        folder = ROOT / tag
-        if folder.is_dir():
-            progress = sorted(folder.glob('PROGRESS_[0-9][0-9][0-9][0-9].json'))
-            if progress:
-                names.append(str(progress[-1].relative_to(ROOT)))
-            ixprogress = sorted(folder.glob('INDEX_PROGRESS_*.json'))
-            if ixprogress:
-                names.append(str(ixprogress[-1].relative_to(ROOT)))
-            index = folder / 'INDEX.json'
-            if index.exists():
-                before = index.stat()
-                assert before.st_size <= 8 * 1024 ** 2
-                raw = index.read_bytes()
-                after = index.stat()
-                assert (before.st_size, before.st_mtime_ns) == (after.st_size, after.st_mtime_ns)
-                value = json.loads(raw)
-                workload = value.get('workload', value)
-                keys = ('candidate_occurrences', 'candidate_vertices_total', 'index_bytes', 'index_entries', 'seconds', 'peak_rss_kib')
-                evidence_indices[tag] = dict(path=str(index), bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(), workload={k: workload[k] for k in keys if k in workload})
-    if (ROOT / 'main/AREA_LOG.json').exists():
-        names.append('main/AREA_LOG.json')
-    if (ROOT / 'CONTROL_RESULT.json').exists():
-        result = json.loads((ROOT / 'CONTROL_RESULT.json').read_bytes())
-        names += [x['path'] for x in result['result_indices']]
-    assert len(names) == len(set(names))
-    records, total = ({}, 0)
-    for name in names:
-        path = ROOT / name
-        if not path.exists():
-            records[name] = dict(present=False)
-            continue
-        assert path.resolve(strict=True) == path and path.is_file() and (not path.is_symlink())
-        before = path.stat()
-        assert before.st_size <= 1048576
-        raw = path.read_bytes()
-        after = path.stat()
-        assert (before.st_size, before.st_mtime_ns) == (after.st_size, after.st_mtime_ns) and len(raw) == before.st_size
-        total += len(raw)
-        assert total <= 16 * 1024 ** 2
-        records[name] = dict(present=True, bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(), base64=base64.b64encode(raw).decode())
-    value = dict(root=str(ROOT), job_id=job, mode=MODE, server_utc=utc(), queries=queries, records=records, evidence_indices=evidence_indices, seconds=time.monotonic() - START, model_calls=0, automatic_checks_enabled=False)
+    data = json.loads(zlib.decompress(base64.b64decode(META_B64, validate=True)))
+    assert len(data['paths']) <= 1450 and len({x['path'] for x in data['paths']}) == len(data['paths'])
+    rows = []
+    for expected in data['paths']:
+        assert time.monotonic() - START < 90
+        path = Path(expected['path'])
+        assert path.is_absolute() and '..' not in path.parts and str(path).startswith('/data1/home/sunyiq/')
+        row = dict(expected)
+        try:
+            # lstat does not open scientific contents; refuse parent links too.
+            parents_safe = all(not parent.is_symlink() for parent in path.parents)
+            assert parents_safe, 'PARENT_SYMLINK'
+            value = path.lstat()
+            row.update(present=True, size=value.st_size, regular=stat.S_ISREG(value.st_mode),
+                directory=stat.S_ISDIR(value.st_mode), symlink=stat.S_ISLNK(value.st_mode),
+                mtime_ns=value.st_mtime_ns, identity_verified=False)
+        except FileNotFoundError:
+            row.update(present=False, identity_verified=False)
+        except (AssertionError, OSError) as error:
+            row.update(present=None, error_type=type(error).__name__, error=str(error)[:1024], identity_verified=False)
+        rows.append(row)
+    env = dict(os.environ, GIT_TERMINAL_PROMPT='0', GIT_ASKPASS='/bin/false', SSH_ASKPASS='/bin/false')
+    command = ['timeout', '--signal=TERM', '--kill-after=2s', '20s', 'git', 'ls-remote',
+        'git@github.com:yiqun-sun-rookie/forecast_system_lite.git', 'refs/heads/master', 'refs/heads/main']
+    # GNU timeout controls the command process group, including a stalled SSH child.
+    result = subprocess.run(command, stdin=subprocess.DEVNULL, capture_output=True, timeout=25,
+        env=env, start_new_session=True)
+    assert len(result.stdout) <= 65536 and len(result.stderr) <= 16384
+    git = dict(command=command, exit_code=result.returncode, stdout_bytes=len(result.stdout),
+        stdout_sha256=hashlib.sha256(result.stdout).hexdigest(), stderr_bytes=len(result.stderr),
+        stderr=result.stderr.decode(errors='replace')[:4096], remote_mutations=0)
+    value = dict(stage='C3_SOURCE_PRESENCE_20261020_V1', server_utc=datetime.datetime.now(
+        datetime.timezone.utc).isoformat(), rows=rows, checked_paths=len(rows), git_private_access=git,
+        seconds=time.monotonic()-START, source_content_bytes_read=0, source_copies=0,
+        source_decodes=0, slurm_submissions=0, model_calls=0, automatic_checks_enabled=False,
+        input_admission_approved=False, prediction_approved=False)
     raw = json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode()
-    assert len(raw) < 24 * 1024 ** 2
-    print('FULL_STATUS_BYTES=' + str(len(raw)))
-    print('FULL_STATUS_SHA256=' + hashlib.sha256(raw).hexdigest())
-    print('FULL_STATUS_ZLIB_BASE64=' + base64.b64encode(zlib.compress(raw)).decode())
-    print('FULL_STATUS_DONE', flush=True)
+    assert len(raw) <= 2*1024**2 and time.monotonic()-START < 118
+    print('C3_SOURCE_META_BYTES='+str(len(raw)))
+    print('C3_SOURCE_META_SHA256='+hashlib.sha256(raw).hexdigest())
+    print('C3_SOURCE_META_ZLIB_BASE64='+base64.b64encode(zlib.compress(raw)).decode())
+    print('C3_SOURCE_META_DONE', flush=True)
+
+
 if __name__ == '__main__':
     main()
 
-C3_FULL_END
+C3_SOURCE55
