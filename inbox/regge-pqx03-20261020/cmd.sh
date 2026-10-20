@@ -1,26 +1,4 @@
 #!/bin/bash
 set -eo pipefail
 date -u
-hostname
-id -un
-squeue -u sunyiq -o '%.18i %.28j %.10T %.12M %.40R'
-sinfo -h -p hcpu48,hcpu48y,hgpu2p -o '%P|%a|%l|%D|%T|%C'
-test -x /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
-TASK_BASE=/data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL
-TASK_ROOT="$TASK_BASE/20261020-v01"
-KEY_ROOT="$TASK_BASE/20261020-v01-transfer"
-test ! -e "$TASK_ROOT"
-umask 077
-if [ -e "$KEY_ROOT" ]; then
-    test -s "$KEY_ROOT/transfer_private.pem"
-    test -s "$KEY_ROOT/transfer_public.pem"
-else
-    mkdir -p "$TASK_BASE"
-    mkdir "$KEY_ROOT"
-    openssl genrsa -out "$KEY_ROOT/transfer_private.pem" 2048
-    openssl rsa -in "$KEY_ROOT/transfer_private.pem" -pubout -out "$KEY_ROOT/transfer_public.pem"
-fi
-printf 'PQX03_PUBLIC_KEY_BEGIN\n'
-cat "$KEY_ROOT/transfer_public.pem"
-printf 'PQX03_PUBLIC_KEY_END\n'
-printf 'PQX03_ROOT_ABSENT_AND_ENV_PRESENT\n'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B "$HOME/hpc_mailbox/inbox/regge-pqx03-20261020/payload/submit.py" --archive "$HOME/hpc_mailbox/inbox/regge-pqx03-20261020/payload/training-v01.sealed" --sha256 0a36a68edd8a7f3d77ec3a5cfde043c0fcd76c76a5c8fb0d03f5309dcf261323 --plain-sha256 13488cc1e416026397667771d080f21eb53e7cf105987c4e28aa9811179e925b
