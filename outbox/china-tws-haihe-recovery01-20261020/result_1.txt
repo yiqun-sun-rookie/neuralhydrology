@@ -1,0 +1,16 @@
+### channel=china-tws-haihe-recovery01-20261020 seq=1
+### host=login4
+### started=2026-10-20T20:40:29+0800
+### ---------- output ----------
+Tue Oct 20 12:40:29 UTC 2026
+login4
+sunyiq
+PARTITION AVAIL TIMELIMIT NODES STATE
+hcpu48* up infinite 12 alloc$
+hcpu48* up infinite 3 maint
+hcpu48* up infinite 17 down*
+hcpu48* up infinite 32 alloc
+Partition hcore40 not found
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-20T20:40:29+0800
