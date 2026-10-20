@@ -1,303 +1,105 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -euo pipefail
+python3 - <<'PY'
+import contextlib,datetime,io,json,os,pathlib,subprocess
+ORIGINAL=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_002')
+ROOTS={'legacy_lstm__small':pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261008_recovery_002'),'explicit_gru__historical_capacity':pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261017_sqrt_recovery_001'),'explicit_gru__small':ORIGINAL,'legacy_lstm__historical_capacity':ORIGINAL}
+SOURCE='import datetime\nimport hashlib\nimport json\nimport pathlib\nimport re\nimport subprocess\n\nROOT = pathlib.Path.cwd()\nUTC = datetime.timezone.utc\nBEIJING = datetime.timezone(datetime.timedelta(hours=8))\nERRORS = []\n\n\ndef relative(path):\n    return path.relative_to(ROOT).as_posix()\n\n\ndef error(path, exc):\n    record = {\'path\': relative(path), \'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n    ERRORS.append(record)\n    return record\n\n\ndef metadata(path):\n    try:\n        stat = path.stat()\n        moment = datetime.datetime.fromtimestamp(stat.st_mtime, UTC)\n        return {\'exists\': True, \'bytes\': stat.st_size, \'mtime_ns\': stat.st_mtime_ns,\n                \'mtime_utc\': moment.isoformat(), \'mtime_beijing\': moment.astimezone(BEIJING).isoformat()}\n    except FileNotFoundError:\n        return {\'exists\': False}\n    except Exception as exc:\n        return {\'exists\': None, \'error\': error(path, exc)}\n\n\ndef read_json(path):\n    info = metadata(path)\n    record = {\'path\': relative(path), \'stat\': info}\n    if not info.get(\'exists\'):\n        return record, None\n    try:\n        raw = path.read_bytes()\n        record[\'sha256\'] = hashlib.sha256(raw).hexdigest()\n        value = json.loads(raw)\n        record[\'json_valid\'] = True\n        return record, value\n    except Exception as exc:\n        record[\'json_valid\'] = False\n        record[\'error\'] = error(path, exc)\n        return record, None\n\n\ndef json_record(path):\n    record, value = read_json(path)\n    if value is not None:\n        record[\'value\'] = value\n    return record\n\n\ndef run_command(command):\n    try:\n        result = subprocess.run(command, capture_output=True, text=True, timeout=30)\n        return {\'command\': command, \'returncode\': result.returncode,\n                \'stdout\': result.stdout[:60000], \'stderr\': result.stderr[:10000],\n                \'stdout_truncated\': len(result.stdout) > 60000}\n    except Exception as exc:\n        return {\'command\': command, \'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n\n\nnow = datetime.datetime.now(UTC)\nreport = {\'status\': \'read_only_training_snapshot\', \'root\': str(ROOT),\n          \'checked_at_utc\': now.isoformat(), \'checked_at_beijing\': now.astimezone(BEIJING).isoformat(),\n          \'evaluation_values_read\': False, \'data_inputs_read\': False,\n          \'checkpoints_loaded\': False, \'checkpoint_stat_only\': True}\n\njob_record, job_mapping = read_json(ROOT / \'records/scheduler_jobs.json\')\nreport[\'scheduler_jobs_file\'] = job_record\nreport[\'scheduler_jobs\'] = job_mapping\njob_ids = []\nif isinstance(job_mapping, dict):\n    for key, value in job_mapping.items():\n        if re.fullmatch(r\'[0-9]+\', str(value)):\n            job_ids.append(str(value))\n        else:\n            ERRORS.append({\'path\': \'records/scheduler_jobs.json\', \'error\': \'invalid job id\', \'key\': str(key)})\njob_ids = sorted(set(job_ids), key=int)\nreport[\'own_job_ids\'] = job_ids\nreport[\'scheduler_queries\'] = []\nif job_ids:\n    own_ids = \',\'.join(job_ids)\n    report[\'scheduler_queries\'] = [\n        run_command([\'squeue\', \'-h\', \'-j\', own_ids, \'-o\', \'%i|%j|%T|%R|%M|%N|%b\']),\n        run_command([\'sacct\', \'-n\', \'-X\', \'-j\', own_ids,\n                     \'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason\', \'-P\'])]\n\nreport[\'identities\'] = {}\nfor name in [\'records/authorization.json\', \'records/data_preparation_complete.json\',\n             \'configs/protocol-v3.json\', \'configs/registry-v3.json\']:\n    record, value = read_json(ROOT / name)\n    if isinstance(value, dict):\n        record[\'binding_fields\'] = {key: value[key] for key in\n            (\'status\', \'protocol_sha256\', \'code_hash\', \'scientific_factors_sha256\',\n             \'execution_policy\', \'evaluation_values_read\', \'evaluation_year_reads\',\n             \'source_files\', \'training_authority\', \'version\') if key in value}\n        if name.endswith(\'registry-v3.json\'):\n            record[\'logical_runs\'] = len(value.get(\'runs\', []))\n            record[\'gates\'] = len(value.get(\'gates\', []))\n    report[\'identities\'][name] = record\ntry:\n    source_files = sorted([*ROOT.joinpath(\'src\').glob(\'*.py\'),\n                           *ROOT.joinpath(\'scripts\').glob(\'*.py\'),\n                           *ROOT.joinpath(\'vendor/pytides\').glob(\'*.py\')])\n    hashes = {relative(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in source_files}\n    canonical = json.dumps(hashes, sort_keys=True, separators=(\',\', \':\'), allow_nan=False).encode()\n    report[\'actual_code_identity\'] = {\'code_hash\': hashlib.sha256(canonical).hexdigest(),\n                                      \'source_file_count\': len(hashes)}\n    authorization_record, authorization = read_json(ROOT / \'records/authorization.json\')\n    authorized_hash = authorization.get(\'code_hash\') if isinstance(authorization, dict) else None\n    report[\'actual_code_identity\'][\'authorized_code_hash\'] = authorized_hash\n    report[\'actual_code_identity\'][\'matches_authorized_code\'] = (\n        report[\'actual_code_identity\'][\'code_hash\'] == authorized_hash) if authorized_hash else None\nexcept Exception as exc:\n    report[\'actual_code_identity\'] = {\'error_type\': type(exc).__name__, \'error\': str(exc)[:1200]}\n\nreport[\'cases\'] = {}\ncase_names = [key for key in (job_mapping or {}) if key != \'preparation\'] if isinstance(job_mapping, dict) else []\ncase_names = sorted(set(case_names) | {path.parent.name for path in ROOT.joinpath(\'records\').glob(\'*/progress.json\')})\nfor case in case_names:\n    if not re.fullmatch(r\'[A-Za-z0-9_]+\', case):\n        ERRORS.append({\'case\': case, \'error\': \'unsafe case name ignored\'})\n        continue\n    folder = ROOT / \'records\' / case\n    detail = {\'progress\': json_record(folder / \'progress.json\'),\n              \'training_complete\': json_record(folder / \'training_complete.json\'),\n              \'selected_rates\': json_record(folder / \'selected_rates_2021.json\'),\n              \'allocations\': [json_record(path) for path in sorted(folder.glob(\'allocation_*.json\'))],\n              \'outcomes\': []}\n    for path in sorted(folder.glob(\'*_outcome.json\')):\n        record, value = read_json(path)\n        if isinstance(value, dict):\n            members = value.get(\'members\', {})\n            seal = value.get(\'seal\', {})\n            if not isinstance(members, dict):\n                record[\'error\'] = error(path, ValueError(\'outcome members are not an object\'))\n                detail[\'outcomes\'].append(record)\n                continue\n            record.update(status=value.get(\'status\'), member_count=len(members), seal=seal)\n            record[\'members\'] = {}\n            for member, result in members.items():\n                if not isinstance(result, dict):\n                    record[\'members\'][member] = {\'error\': \'member result is not an object\'}\n                    continue\n                values = result.get(\'validation_mae\', [])\n                record[\'members\'][member] = {key: result.get(key) for key in\n                    (\'status\', \'epochs\', \'budget_final\', \'best_epoch\', \'method\',\n                     \'learning_rate\', \'checkpoint_sha256\', \'checkpoint_path\')}\n                record[\'members\'][member][\'validation_history_length\'] = len(values) if isinstance(values, list) else None\n        detail[\'outcomes\'].append(record)\n    report[\'cases\'][case] = detail\n\nreport[\'runs\'] = {}\nfor folder in sorted(ROOT.joinpath(\'runs\').glob(\'*\')):\n    if not folder.is_dir():\n        continue\n    detail = {\'continuation_checkpoint_stat\': metadata(folder / \'continuation.pt\'),\n              \'temporary_continuation_stat\': metadata(folder / \'continuation.pt.tmp\'),\n              \'best_checkpoint_stat\': metadata(folder / \'best.pt\'),\n              \'epoch_checkpoint_stats\': {path.name: metadata(path) for path in sorted(folder.glob(\'epoch_*.pt\'))},\n              \'first_optimizer_step\': json_record(folder / \'first_optimizer_step.json\'),\n              \'failure\': json_record(folder / \'failure.json\')}\n    config_record, config = read_json(folder / \'config.json\')\n    if isinstance(config, dict):\n        effective = config.get(\'effective_config\', {})\n        config_record[\'binding_fields\'] = {key: effective.get(key) for key in\n            (\'code_hash\', \'training_data_hash\', \'normalization_hash\', \'parent_hash\',\n             \'parent_run_id\', \'device_identity\', \'scheduler_continuation\', \'learning_rate\')}\n        config_record[\'registration\'] = config.get(\'registration\')\n        config_record[\'protocol_sha256\'] = config.get(\'protocol_sha256\')\n    detail[\'config\'] = config_record\n    path = folder / \'metrics.json\'\n    metrics = {\'path\': relative(path), \'stat\': metadata(path)}\n    if metrics[\'stat\'].get(\'exists\'):\n        try:\n            # Histories precede bulky per-batch training metrics. Read just this prefix.\n            with path.open(\'rb\') as stream:\n                prefix = stream.read(131072).decode(\'utf-8\')\n            match = re.search(r\'"validation_mae_cm"\\s*:\\s*\', prefix)\n            if match is None:\n                raise ValueError(\'validation history missing from metrics prefix\')\n            values, end = json.JSONDecoder().raw_decode(prefix[match.end():])\n            if not isinstance(values, list):\n                raise ValueError(\'validation history is not a list\')\n            metrics.update(completed_epochs=len(values), validation_history_length=len(values), full_validation_mae_cm=values,\n                           recent_validation_mae_cm=values[-5:],\n                           validation_history_sha256=hashlib.sha256(json.dumps(values, separators=(\',\', \':\')).encode()).hexdigest(),\n                           validation_prefix_parsed=True, full_json_validity_checked=False)\n        except Exception as exc:\n            metrics[\'error\'] = error(path, exc)\n    detail[\'metrics\'] = metrics\n    report[\'runs\'][folder.name] = detail\n\nreport[\'logs\'] = []\nfor path in sorted(ROOT.joinpath(\'logs\').glob(\'*.out\')):\n    item = {\'path\': relative(path), \'stat\': metadata(path)}\n    try:\n        with path.open(\'rb\') as stream:\n            stream.seek(max(0, path.stat().st_size - 20000))\n            tail = stream.read().decode(\'utf-8\', errors=\'replace\')\n        item[\'tail\'] = tail\n        item[\'error_lines_in_tail\'] = [line[:1800] for line in tail.splitlines() if\n            re.search(r\'Traceback|Error|Exception|CUDA|out of memory|training_stopped|slurmstepd|Killed\', line, re.I)][-15:]\n    except Exception as exc:\n        item[\'error\'] = error(path, exc)\n    report[\'logs\'].append(item)\n\nreport[\'summary\'] = {\'case_count\': len(report[\'cases\']), \'run_directories\': len(report[\'runs\']),\n    \'runs_with_completed_epoch_history\': sum(bool(v[\'metrics\'].get(\'completed_epochs\')) for v in report[\'runs\'].values()),\n    \'completed_member_epochs\': sum(v[\'metrics\'].get(\'completed_epochs\', 0) for v in report[\'runs\'].values()),\n    \'runs_with_failure_file\': sum(v[\'failure\'][\'stat\'].get(\'exists\') is True for v in report[\'runs\'].values()),\n    \'complete_case_records\': sum(v[\'training_complete\'][\'stat\'].get(\'exists\') is True for v in report[\'cases\'].values())}\nreport[\'read_errors\'] = ERRORS\nreport[\'finished_at_utc\'] = datetime.datetime.now(UTC).isoformat()\nprint(json.dumps(report, ensure_ascii=True, sort_keys=True))'
+REUSED_PARENT=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261006_recovery_001')
+snapshots={}
+for folder in sorted(set(ROOTS.values()) | {REUSED_PARENT},key=str):
+ if not (folder/'records/scheduler_jobs.json').exists():raise ValueError('registered continuation job mapping unavailable: '+str(folder))
+ os.chdir(folder);stream=io.StringIO()
+ with contextlib.redirect_stdout(stream):exec(compile(SOURCE,'registered_read_only_training_snapshot','exec'),{})
+ snapshots[str(folder)]=json.loads(stream.getvalue())
+original=snapshots[str(ORIGINAL)];result=dict(original);result['cases']={};result['runs']={};result['logs']=[];result['scheduler_jobs']={'preparation':original['scheduler_jobs']['preparation']};result['case_roots']={k:str(v) for k,v in ROOTS.items()};result['read_errors']=[]
+for case,folder in ROOTS.items():
+ snap=snapshots[str(folder)];result['cases'][case]=snap['cases'][case];result['runs'].update({k:v for k,v in snap['runs'].items() if k.startswith(case+'__')});job=str(snap['scheduler_jobs'][case]);result['scheduler_jobs'][case]=job
+ result['logs'] += [v for v in snap['logs'] if v['path'].endswith('_'+job+'.out')]
+result['reused_completed_group_run_roots']={}
+for rid,run in snapshots[str(REUSED_PARENT)]['runs'].items():
+ if rid.startswith('explicit_gru__historical_capacity__tune_foundation__'):
+  assert rid not in result['runs'] and run['metrics']['completed_epochs']==400
+  result['runs'][rid]=run;result['reused_completed_group_run_roots'][rid]=str(REUSED_PARENT)
+assert len(result['reused_completed_group_run_roots'])==3
+result['preserved_failed_group']={'root':str(REUSED_PARENT),'source_job':snapshots[str(REUSED_PARENT)]['scheduler_jobs']['explicit_gru__historical_capacity'],'runs':{k:v for k,v in snapshots[str(REUSED_PARENT)]['runs'].items() if k.startswith('explicit_gru__historical_capacity__tune_branch__')}}
+for snap in snapshots.values():result['read_errors']+=snap['read_errors']
+result['root_snapshots_identity']={r:{'actual_code_identity':v['actual_code_identity'],'identities':v['identities'],'checked_at_beijing':v['checked_at_beijing']} for r,v in snapshots.items()}
+result['historical_source_cases']={case:{'root':str(ORIGINAL),'source_job':original['scheduler_jobs'][case],'progress':original['cases'][case]['progress'],'runs':{k:{'failure':v['failure'],'metrics':v['metrics'],'continuation_checkpoint_stat':v['continuation_checkpoint_stat']} for k,v in original['runs'].items() if k.startswith(case+'__')}} for case in ('legacy_lstm__small','explicit_gru__historical_capacity')}
+result['recovery_records']={}
+for case,folder in ROOTS.items():
+ if folder==ORIGINAL:continue
+ rows={}
+ for n in ('recovery_preparation_complete.json','source_stop_confirmed.json','recovery_submission_response.json','gpu_compatibility_admission.json','completed_group_reuse.json','gradient_recovery_intent.json','covariance_recovery_intent_20261015.json','covariance_recovery_cpu_admitted_20261015.json'):
+  p=folder/'records'/n
+  if p.exists():rows[n]=json.loads(p.read_text())
+ for p in sorted((folder/'records').glob('gpu_*.json')):
+  rows[p.name]=json.loads(p.read_text())
+ result['recovery_records'][case]=rows
+ids=','.join(sorted(set(result['scheduler_jobs'].values()),key=int));result['own_job_ids']=ids.split(',');result['scheduler_queries']=[]
+for command in (['squeue','-h','-u','sunyiq','-o','%i|%j|%T|%R|%M|%N|%b'],['sacct','-n','-X','-j',ids,'--format=JobID,JobName,State,ExitCode,Elapsed,NodeList,Reason','-P']):
+ r=subprocess.run(command,capture_output=True,text=True,timeout=30);result['scheduler_queries'].append({'command':command,'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr})
+result['summary']={'case_count':len(result['cases']),'run_directories':len(result['runs']),'runs_with_completed_epoch_history':sum(bool(v['metrics'].get('completed_epochs')) for v in result['runs'].values()),'completed_member_epochs':sum(v['metrics'].get('completed_epochs',0) for v in result['runs'].values()),'runs_with_failure_file':sum(v['failure']['stat'].get('exists') is True for v in result['runs'].values()),'complete_case_records':sum(v['training_complete']['stat'].get('exists') is True for v in result['cases'].values())}
+now=datetime.datetime.now(datetime.timezone.utc);result['checked_at_utc']=now.isoformat();result['checked_at_beijing']=now.astimezone(datetime.timezone(datetime.timedelta(hours=8))).isoformat();result['scope']='current_registered_four_cases_across_original_and_three_authenticated_recovery_roots_with_completed_parent_reuse'
+print(json.dumps(result,ensure_ascii=True,sort_keys=True))
+PY
+python3 - <<'PY'
+"""Lightweight allocation/checkpoint watch; no source changes or GPU jobs."""
+import datetime,hashlib,json,pathlib,re,subprocess
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261017_sqrt_recovery_001')
+case='explicit_gru__historical_capacity'
+job=str(json.loads((root/'records/scheduler_jobs.json').read_text())[case])
+def query(c):
+    p=subprocess.run(c,capture_output=True,text=True,timeout=30)
+    return {'command':c,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+members={}
+for folder in sorted(root.joinpath('runs').glob('*__tune_branch__*')):
+    metric=folder/'metrics.json';point=folder/'continuation.pt'
+    prefix=metric.open('rb').read(131072).decode('utf-8')
+    m=re.search(r'"validation_mae_cm"\s*:\s*',prefix)
+    values=json.JSONDecoder().raw_decode(prefix[m.end():])[0]
+    stat=point.stat()
+    members[folder.name]={'completed_epochs':len(values),'history_sha256':hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest(),'continuation_bytes':stat.st_size,'continuation_mtime_ns':stat.st_mtime_ns,'failure_exists':folder.joinpath('failure.json').exists()}
+queries=[query(['squeue','-h','-u','sunyiq','-o','%i|%T|%Z|%e|%l|%P|%C|%b|%N']),query(['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Elapsed,NodeList,Reason','-P'])]
+record={'status':'registered_covariance_formal_recovery_queue_detail','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'root':str(root),'case':case,'job_id':job,'queries':queries,'members':members,'formal_complete_exists':root.joinpath('records',case,'training_complete.json').exists(),'scientific_configuration_changed':False,'evaluation_values_read':False,'checkpoints_loaded':False}
+for n in ('recovery_backfill_adjustment_20261012.response.json','gpu_binding_'+job+'.json','sqrt_hardware_'+job+'.json','bootstrap_original39_'+job+'.json','sqrt_bootstrap_'+job+'.json'):
+    p=root/'records'/n
+    if p.exists():record[n]=json.loads(p.read_text())
+for p in root.joinpath('logs').glob('*_'+job+'.out'):
+    with p.open('rb') as f:f.seek(max(0,p.stat().st_size-12000));record['log_tail']=f.read().decode('utf-8',errors='replace')
+columns=['JobID','State','ExitCode','Start','End','Elapsed','Timelimit','NodeList','AllocTRES']
+terminal=query(['sacct','-n','-X','-j',job,'--format='+','.join(columns),'-P'])
+record['queries'].append(terminal)
+if terminal['returncode']==0:
+    line=next((line for line in terminal['stdout'].splitlines() if line.startswith(job+'|')),None)
+    if line:
+        fields=dict(zip(columns,line.split('|')))
+        if fields['State'].split()[0] in ('FAILED','COMPLETED','TIMEOUT','CANCELLED'):
+            record['terminal_accounting_fields']=fields
+record['failure_records']={}
+for rid in record['members']:
+    p=root/'runs'/rid/'failure.json'
+    if p.exists():record['failure_records'][rid]=json.loads(p.read_text())
+critical=root/'runs'/('explicit_gru__historical_capacity__tune_branch__filter_joint__s101__lr0p003')
+record['failure_artifact_inventory']=[{'name':p.name,'bytes':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns} for p in sorted(critical.iterdir()) if p.is_file()]
+print(json.dumps(record,sort_keys=True))
+PY
+
+set +u
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 set -u
-export CUDA_VISIBLE_DEVICES=""
 export PYTHONDONTWRITEBYTECODE=1
-export OMP_NUM_THREADS=2
-python -B - <<'GRU_METADATA_003'
-"""Recover omitted GRU data metadata by exact manifest identity; no tide refit.
-
-Usage on HPC: python -B check_boundary.py
-Reads the two complete historical-capacity cases and already admitted 2017--2022
-NPZ files. Writes only a new boundary evidence directory. No trainer, optimizer
-step, tide refit, scheduler mutation, source write, or activation is performed.
-"""
-import copy
-import datetime
-import gc
-import hashlib
-import importlib
-import json
-from pathlib import Path
-import shutil
-import subprocess
-import sys
-
-import torch
-
-BASE = Path('/data1/home/sunyiq')
-DEST = BASE / 'zhenjiang_fixed200_003_boundary_20261020_002'
-OLD = BASE / 'zhenjiang_fixed200_003_candidates_20261019_002'
-ARCHIVE = BASE / 'zhenjiang_fixed200_003_sources_20261019_001'
-CASES = {
-    'explicit_gru__historical_capacity': ('sqrt_gru_recovery', BASE / 'zhenjiang_complete_comparison_20261017_sqrt_recovery_001', '244445'),
-}
-
-
-def sha(raw):
-    return hashlib.sha256(raw).hexdigest()
-
-
-def stable(path):
-    for _ in range(3):
-        before = path.stat()
-        raw = path.read_bytes()
-        after = path.stat()
-        if (before.st_size, before.st_mtime_ns) == (after.st_size, after.st_mtime_ns) and len(raw) == after.st_size:
-            return raw
-    raise ValueError('source replaced during read: ' + str(path))
-
-
-def read(path):
-    return json.loads(stable(path))
-
-
-def write(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open('x') as handle:
-        json.dump(value, handle, sort_keys=True, indent=2, allow_nan=False)
-        handle.write('\n')
-
-
-def query(command):
-    result = subprocess.run(command, text=True, capture_output=True, timeout=30)
-    return {'command': command, 'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
-
-
-def scheduler():
-    return [query(['squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%R|%M|%N|%Z|%o']),
-            query(['sacct', '-n', '-X', '-j', '236706,236707,237928,244445', '--format=JobID,State,ExitCode,Elapsed,NodeList', '-P']),
-            query(['scontrol', 'show', 'job', '236707']), query(['scontrol', 'show', 'job', '244445'])]
-
-
-def differences(left, right, prefix=''):
-    if isinstance(left, dict) and isinstance(right, dict):
-        result = []
-        for key in sorted(set(left) | set(right)):
-            path = prefix + '.' + key if prefix else key
-            result.extend([path] if key not in left or key not in right else differences(left[key], right[key], path))
-        return result
-    return [] if left == right else [prefix]
-
-
-assert not DEST.exists(), 'existing boundary evidence must be reconciled, never replayed'
-DEST.mkdir()
-torch.set_num_threads(2)
-report = {'schema': 'fixed200-inactive-boundary-check-v1',
-          'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'activated': False, 'training_steps': 0, 'tide_fits': 0,
-          'old_jobs_modified': False, 'source_writes': False, 'evaluation_values_read': False,
-          'candidate_root': str(OLD), 'evidence_root': str(DEST),
-          'scheduler_before': scheduler(), 'cases': {}, 'foundation_sources': [], 'errors': []}
-previous = read(OLD / 'candidate_report.json')
-preserved = read(ARCHIVE / 'preservation_report.json')
-catalogue = read(OLD / 'release/stage_source_admission.json')
-
-# Reuse the completed request-687 verification without repeating its 12 source reads.
-prior_path = BASE / 'zhenjiang_fixed200_003_boundary_20261020_001/boundary_report.json'
-prior_raw = stable(prior_path)
-assert sha(prior_raw) == '25f94549e0856403a48ddf46bb0c4b0897fc9eec5e693d7417c8bef717f858ec'
-prior = json.loads(prior_raw)
-assert prior['summary']['verified_original400_members'] == 12
-report['foundation_sources'] = copy.deepcopy(prior['foundation_sources'])
-report['foundation_verification_reused_from'] = {'receipt': 687, 'report_sha256': sha(prior_raw)}
-
-for case, (variant, original_root, job) in CASES.items():
-    row = {'variant': variant, 'source_root': str(original_root), 'job_id': job,
-           'members': [], 'data': {}, 'configuration_regeneration': 'not_checked',
-           'hardware_check': 'frozen identity used for CPU regeneration; actual next GPU must match',
-           'single_writer_transfer': 'not_performed'}
-    report['cases'][case] = row
-    try:
-        runtime_root = DEST / 'runtimes' / variant
-        shutil.copytree(OLD / 'release/runtimes' / variant, runtime_root)
-        for key in list(sys.modules):
-            if key == 'src' or key.startswith('src.'):
-                del sys.modules[key]
-        sys.path.insert(0, str(runtime_root))
-        sched = importlib.import_module('src.scheduler')
-        runtime = importlib.import_module('src.runtime')
-        models = importlib.import_module('src.models')
-        estimators = importlib.import_module('src.state_estimators')
-        cp = importlib.import_module('src.continuation')
-        contracts = importlib.import_module('src.contracts')
-        protocol_raw = stable(runtime_root / 'configs/protocol-v3.json')
-        protocol = json.loads(protocol_raw)
-        registry = read(runtime_root / 'configs/registry-v3.json')
-        sched.validate_registry(registry, protocol)
-        assert not protocol['authority']['formal_training']
-        row['staged_runtime'] = str(runtime_root)
-        row['code_hash'] = sched.code_identity(runtime_root)
-        source_code_hash = sched.code_identity(original_root)
-        assert source_code_hash == previous['cases'][case]['source_code_hash']
-        row['original_code_hash'] = source_code_hash
-        original_prep = read(original_root / 'records/data_preparation_complete.json')
-        assert original_prep['status'] == 'admitted' and not original_prep['evaluation_values_read']
-        manifests, statistics, data_reports = {}, {}, {}
-        for split in ('tuning', 'final'):
-            source_dir = original_root / 'prepared' / split
-            raw = stable(source_dir / 'manifest.json')
-            manifest = json.loads(raw)
-            assert manifest['status'] == 'admitted' and not manifest['evaluation_year_reads']
-            file_ledger = []
-            for entry in manifest['files']:
-                assert set(entry['years']).issubset({2017, 2018, 2019, 2020, 2021, 2022})
-                path = Path(entry['path'])
-                assert sha(stable(path)) == entry['sha256']
-                file_ledger.append({'path': str(path), 'sha256': entry['sha256'], 'years': entry['years']})
-            # Keep the original absolute paths and manifest bytes. No new tide fit.
-            out = runtime_root / 'prepared' / split
-            out.mkdir(parents=True, exist_ok=False)
-            (out / 'manifest.json').write_bytes(raw)
-            # The recovery has manifests/NPZ references but omitted metadata.
-            # Use only the same admitted manifest's original prepared directory.
-            candidates = [source_dir] + [Path(p) for p in manifest['approved_roots']]
-            allowed = {original_root / 'prepared' / split,
-                       BASE / 'zhenjiang_complete_comparison_20261006_002/prepared' / split,
-                       BASE / 'zhenjiang_complete_comparison_20261006_recovery_001/prepared' / split}
-            donor = None
-            searched = []
-            for folder in dict.fromkeys(candidates):
-                assert folder in allowed, 'unregistered prepared metadata directory'
-                path = folder / 'tide_fit.json'
-                searched.append({'directory': str(folder), 'tide_metadata_exists': path.is_file()})
-                if not path.is_file():
-                    continue
-                donor_manifest = read(folder / 'manifest.json')
-                assert sched.digest_json(donor_manifest) == sched.digest_json(manifest), 'metadata donor manifest differs'
-                tide_raw = stable(path)
-                assert sched.digest_json(json.loads(tide_raw)) == manifest['tide_source_hash'], 'original tide identity differs'
-                donor_admission = read(folder / 'admission.json')
-                assert donor_admission['manifest_sha256'] == sched.digest_json(manifest)
-                donor = folder
-                break
-            row.setdefault('metadata_recovery', {})[split] = {'searched': searched, 'donor': str(donor) if donor else None}
-            assert donor is not None, 'authentic original tide metadata not located; refitting forbidden'
-            (out / 'tide_fit.json').write_bytes(tide_raw)
-            phases = {phase: runtime.load_stage(manifest, phase) for phase in (split + '_train', split + '_select')}
-            stats = runtime.stats_record(runtime.fit_stage_stats(phases[split + '_train'], manifest))
-            previous_admission = read(donor / 'admission.json')
-            assert stats == previous_admission['statistics']
-            assert sched.digest_json(manifest) == previous_admission['manifest_sha256']
-            assert original_prep['reports'][split]['statistics'] == stats
-            assert original_prep['reports'][split]['manifest_sha256'] == sched.digest_json(manifest)
-            detail = {'manifest_sha256': sched.digest_json(manifest), 'manifest_file_sha256': sha(raw),
-                      'normalization_hash': sched.digest_json(stats), 'statistics': stats,
-                      'tide_source_hash': manifest['tide_source_hash'], 'files_verified': len(file_ledger),
-                      'eligible_windows': {p: len(s['eligible']) for p, s in phases.items()},
-                      'external_original_paths_preserved': True, 'file_ledger': file_ledger,
-                      'metadata_donor': str(donor), 'original_tide_file_sha256': sha(tide_raw),
-                      'original_donor_admission_sha256': sha(stable(donor / 'admission.json')),
-                      'evaluation_values_read': False}
-            data_reports[split] = detail
-            row['data'][split] = {k: v for k, v in detail.items() if k not in ('statistics', 'file_ledger')}
-            manifests[split], statistics[split] = manifest, stats
-            write(out / 'read_only_revalidation.json', detail)
-            del phases
-            gc.collect()
-        data_receipt = {'status': 'admitted', 'code_hash': row['code_hash'],
-                        'schema': 'existing-prepared-data-read-only-revalidation-v1',
-                        'source_preparation_receipt_sha256': sha(stable(original_root / 'records/data_preparation_complete.json')),
-                        'source_preparation_root': str(original_root), 'reports': data_reports,
-                        'fresh_tide_fits_this_operation': 0, 'evaluation_values_read': False,
-                        'formal_training_authorized': False}
-        write(runtime_root / 'records/data_preparation_complete.json', data_receipt)
-        row['data_reuse_receipt_sha256'] = sha(stable(runtime_root / 'records/data_preparation_complete.json'))
-
-        foundation = sched.load_tuning_foundation_source(case + '__tune_foundation_group__seal')
-        parent_id = min(foundation['members'], key=lambda k: (min(foundation['members'][k]['validation_mae']), foundation['members'][k]['learning_rate']))
-        parent = foundation['members'][parent_id]
-        seals = {case + '__tune_foundation_group__seal': contracts.GroupSeal(**foundation['seal'])}
-        configs = {}
-        old_rows = {r['run_id']: r for r in preserved['cases'][case]}
-        for run in [r for r in registry['runs'] if r['case'] == case and r['type'] == 'tune_branch' and r['status'] != 'alias']:
-            rid = run['exp_id']
-            folder = original_root / 'runs' / rid
-            state, source, inspected, cfg_raw, state_raw = cp.load_continuation(folder)
-            assert inspected['config_sha256'] == old_rows[rid]['files']['config.json']['sha256']
-            assert source['effective_config']['code_hash'] == source_code_hash
-            archived = torch.load(ARCHIVE / case / rid / 'continuation.pt', map_location='cpu', weights_only=True)
-            n0 = old_rows[rid]['completed_epochs']
-            assert state['values'][:n0] == archived['values']
-            assert state['train_metrics'][:n0] == archived['train_metrics']
-            assert state['shuffle_hashes'][:n0] == archived['shuffle_hashes']
-            assert not (folder / 'failure.json').exists()
-            batch_count = sum(map(len, state['train_metrics']))
-            steps = [float(v['step']) for v in state['optimizer']['state'].values()]
-            assert min(steps) == max(steps) == batch_count
-            baseline_receipt = read(OLD / 'candidates' / variant / 'runs' / rid / 'migration_source.json')
-            assert baseline_receipt['source_checkpoint_sha256'] == old_rows[rid]['files']['continuation.pt']['sha256']
-            item = {'run_id': rid, 'snapshot672_epochs': n0, 'current_completed_epochs': inspected['completed_epochs'],
-                    'source_checkpoint_sha256': sha(state_raw), 'source_config_sha256': sha(cfg_raw),
-                    'snapshot672_histories_preserved': True, 'completed_batch_count': batch_count,
-                    'optimizer_step_min': min(steps), 'optimizer_step_max': max(steps),
-                    'candidate675_source_checkpoint_sha256': baseline_receipt['source_checkpoint_sha256'],
-                    'candidate675_source_is_current': sha(state_raw) == baseline_receipt['source_checkpoint_sha256'],
-                    'device_identity': source['effective_config']['device_identity']}
-            row['members'].append(item)
-            manifest = manifests['tuning']
-            identities = {'parent_hash': None, 'parent_run_id': None, 'parent_checkpoint': None, 'parent_best_epoch': None,
-                          'initializer_hash': None, 'analysis_initialization_hash': None, 'whitening_hash': None, 'whitening': None,
-                          'training_data_hash': sched.digest_json(manifest), 'normalization_hash': sched.digest_json(statistics['tuning']),
-                          'tide_source_hash': manifest['tide_source_hash'], 'code_hash': row['code_hash'],
-                          'shuffle_hash': sched.digest_json({'seed': run['seed'], 'offset': 200000, 'stride': 12, 'phases': 'epoch_modulo_12'})}
-            assert parent['normalization_hash'] == identities['normalization_hash']
-            identities.update(parent_run_id=parent_id, parent_hash=parent['checkpoint_sha256'],
-                              parent_checkpoint=parent['checkpoint_path'], parent_best_epoch=parent['best_epoch'],
-                              initializer_hash=parent['initializer_hash'])
-            if run['method'].startswith('encoder'):
-                family, capacity = case.split('__')
-                branches = estimators.make_branches(models.make_parts(family, capacity, run['seed']), run['seed'] + 100000)
-                identities['analysis_initialization_hash'] = estimators.hash_module(branches[run['method']].encoder)
-                del branches
-            else:
-                whitening = read(Path(parent['checkpoint_path']).parent / 'whitening.json')
-                identities.update(whitening=whitening, whitening_hash=parent['whitening_hash'])
-            effective = sched.resolve_effective_config(run, protocol, run['learning_rate'], identities)
-            identity = source['effective_config']['device_identity']
-            effective.update(device=identity['device'], device_identity=identity, group_wall_seconds_limit=None,
-                             scheduler_continuation=True)
-            sched.verify_parent_binding(run, effective, seals)
-            configs[rid] = {'status': 'frozen_authorized', 'registration': run,
-                            'protocol_sha256': sha(protocol_raw), 'effective_config': effective}
-            del state, archived, state_raw
-            gc.collect()
-        bindings = cp.migration_bindings(runtime_root, case, OLD / 'candidates' / variant / 'runs')
-        assert bindings == read(Path(previous['cases'][case]['migration_manifest']))
-        write(DEST / 'regenerated_configs' / (case + '_before_binding.json'), configs)
-        row['configuration_differences'] = {}
-        for rid, expected in configs.items():
-            compared = copy.deepcopy(expected)
-            compared['effective_config']['continuation_required'] = True
-            changed = differences(read(OLD / 'candidates' / variant / 'runs' / rid / 'config.json'), compared)
-            if changed:
-                row['configuration_differences'][rid] = changed
-        bound = cp.bind_migration_configs(configs, bindings, OLD / 'candidates' / variant / 'runs')
-        write(DEST / 'regenerated_configs' / (case + '.json'), bound)
-        row['configuration_regeneration'] = 'exact_12_of_12_match_with_frozen_GPU_identity'
-        row['migration_manifest_digest'] = sched.digest_json(bindings)
-        row['device_identities'] = list({json.dumps(x['device_identity'], sort_keys=True) for x in row['members']})
-        assert len(row['device_identities']) == 1
-        row['stale_candidate_members'] = sum(not x['candidate675_source_is_current'] for x in row['members'])
-        row['data_and_config_ready'] = True
-        sys.path.remove(str(runtime_root))
-    except Exception as error:
-        row['error'] = type(error).__name__ + ': ' + str(error)
-        report['errors'].append({'case': case, 'error': row['error']})
-
-report['scheduler_after'] = scheduler()
-report['finished_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
-report['summary'] = {'verified_original400_members': sum(len(s['members']) for s in report['foundation_sources'] if s.get('verified_original400')),
-                     'data_and_config_ready_cases': [case for case, row in report['cases'].items() if row.get('data_and_config_ready')],
-                     'source_members_checked': sum(len(row['members']) for row in report['cases'].values()),
-                     'stale_candidate_members': sum(row.get('stale_candidate_members', 0) for row in report['cases'].values()),
-                     'errors': len(report['errors']), 'formal_activation_performed': False}
-write(DEST / 'boundary_report.json', report)
-print(json.dumps(report, sort_keys=True, allow_nan=False), flush=True)
-print(json.dumps({'boundary_report_sha256': sha(stable(DEST / 'boundary_report.json')), 'root': str(DEST)}), flush=True)
-if report['errors']:
-    sys.exit(2)
-
-GRU_METADATA_003
+export CUDA_VISIBLE_DEVICES=""
+python -B - <<'JOSEPH_CPU'
+import datetime,json,pathlib,subprocess,sys
+root=pathlib.Path('/data1/home/sunyiq/zhenjiang_complete_comparison_20261017_sqrt_recovery_001')
+p=subprocess.run([sys.executable,'-B',str(root/'hpc/audit_sqrt_formal_20261017.py')],capture_output=True,text=True)
+if p.returncode==0:
+    docs=[json.loads(line) for line in p.stdout.splitlines() if line.startswith('{')]
+    assert len(docs)==1 and docs[0]['status']=='covariance_recovery_continuation_checkpoint_audit_passed'
+    print(json.dumps(docs[0],sort_keys=True))
+else:
+    jobs=json.loads((root/'records/scheduler_jobs.json').read_text())
+    print(json.dumps({'status':'covariance_checkpoint_audit_failed_preserved','checked_at_beijing':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'root':str(root),'job_id':jobs['explicit_gru__historical_capacity'],'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr,'continuation_admitted':False,'formal_recovery_confirmed':False,'evaluation_values_read':False},sort_keys=True))
+JOSEPH_CPU
