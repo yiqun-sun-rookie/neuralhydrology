@@ -2,121 +2,46 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=3s 120s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'G42_NUMERIC'
-"""Private original-byte fetch and one isolated Slurm submission, or exact own-job status."""
-import base64
-import datetime
-import hashlib
-import json
-import os
+exec timeout --signal=TERM --kill-after=3s 120s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'G42_DETAILS'
+"""Read already saved terminal JSONs and current own-job accounting, without writes."""
+import base64,datetime,hashlib,json,os
 from pathlib import Path
-import re
-import shutil
-import subprocess
-import time
-import zlib
-
+import resource,subprocess,time,zlib
 ROOT=Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/geology_42_numeric_20261020_v2')
-MODE='status'
-PAYLOAD_B64=''
-START=time.monotonic()
-
-
-def utc():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
-
-
-def save(name,value):
-    raw=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode()
-    assert len(raw)<=1048576
-    with (ROOT/name).open('xb') as stream:stream.write(raw)
-
-
-def query(command,seconds=9):
+JOB='245637'
+EXPECTED={'independent/member_25878.json': {'bytes': 3069, 'sha256': '7d2813d763452eb5a54c9d6a970b367fcb16295f6cc8cfb8ba22a1d396b532fa'}, 'independent/member_27481.json': {'bytes': 3192, 'sha256': '42b82326b38ebad4833285237d8775f0ba8d16ebe039844806f4b8637baa8f1f'}, 'independent/member_27550.json': {'bytes': 3537, 'sha256': '0a4e6119ed9000b87715a3052864425f2562225aa039db953b21d60192210342'}, 'independent/member_27552.json': {'bytes': 3565, 'sha256': 'd93dd0d68be386b5b8c44ac99a73a35f78a7bc7359ce00eadc72e4bbd269a4f0'}, 'independent/member_27556.json': {'bytes': 3480, 'sha256': '2886b3990ecb72f73cfdd58dfd0f82d66b7dad72c3caa6ddfe22bfec4e5f346b'}, 'independent/member_27557.json': {'bytes': 3621, 'sha256': '639e59cea0236400c0f9dabfcbb63490f8102ad98db30bb9724f77ceb39a9422'}, 'independent/member_27558.json': {'bytes': 3444, 'sha256': '613ee2e573376969c2fe3f3e00e1ec15e89457b38e9f66765d2c0af64237b0e8'}, 'independent/member_27570.json': {'bytes': 3607, 'sha256': 'eccd957b5e1804e7049ca893f0aebe319fea430d29d4c6608514abd36d0a070c'}, 'independent/member_27571.json': {'bytes': 3727, 'sha256': '919c7ff90604d17cd93deffb55de026dc4083d7d01e356784fa6fec3036adcb7'}, 'independent/member_27573.json': {'bytes': 3595, 'sha256': '6ec84814cb8a50d24d855fbb6cc63ee19e38c33ec780ffceeb0d309c874a2c7b'}, 'independent/member_27575.json': {'bytes': 3363, 'sha256': '8f3c05c5d54924477dbfde1687695ab6a8516a13766ada6e8c372d1ac0fc4f2d'}, 'independent/member_27577.json': {'bytes': 3525, 'sha256': 'ffc4f36dd449f7ce17db632d8d0ffa535f6da43be610051c25e62a212246b5df'}, 'independent/member_27870.json': {'bytes': 3621, 'sha256': '4a0ab9e5dc80d6d5ccf1e6477fca39ac641b5fc9b4b6dfdca956a7fc1d8767d6'}, 'independent/member_27871.json': {'bytes': 3665, 'sha256': 'ea014dfa42e7517158ee5be8463cbca28aa7fdc041baea416f2ebfdc976eac36'}, 'independent/member_27872.json': {'bytes': 3787, 'sha256': 'e7f830fca26e6165cbc1c15e70b4ed922832792b05d414d68f45c79c2305aad1'}, 'independent/member_27873.json': {'bytes': 3535, 'sha256': 'e1fcac129abcfea3dcffd486a7147635cc3960ac9167af1536a906e7af3df658'}, 'independent/member_27874.json': {'bytes': 3656, 'sha256': 'aa34054351ba8f9e0e757c14fbc2da79c95a85642fb66229ed14feb5ca71f757'}, 'independent/member_27875.json': {'bytes': 3416, 'sha256': 'b5083a6093cb3d1de0ca953d0696eecfbbe55eab3ff455899731b83b22781ed6'}, 'independent/member_27876.json': {'bytes': 3540, 'sha256': '636525e90762988fb5d5d37682e749017a55089b7471930652985b09b16479bd'}, 'independent/member_27877.json': {'bytes': 3794, 'sha256': 'ecf1b17ff076afa5eefe29c558655c8b821ad99cc45f999f7669af883eaffe8b'}, 'independent/member_27878.json': {'bytes': 3483, 'sha256': 'bd6f5cd391399edf2876848a28e1cff3b9381723c3325cbcb8bc173c91f40172'}, 'independent/member_27879.json': {'bytes': 3642, 'sha256': '5150c75eceb2f57cf24e7d3ee0ae4d69b244da05eaca79f56242d6059d9ebf84'}, 'independent/member_27888.json': {'bytes': 3215, 'sha256': '129feeaf8cd93293c9e9b9ebc71b547fa3b373f4bc8b1f5062e3182a19f3dce6'}, 'independent/member_27969.json': {'bytes': 3519, 'sha256': '13c3cc8a93eae6158ec35af2464c104a14dcdb084b30bd3d34e438330b2a294e'}, 'independent/member_27970.json': {'bytes': 3678, 'sha256': 'ced2ac93eb1a2149b64f57f4fee003bb27bb7f09834647ecd59c41a46922cf23'}, 'independent/member_27971.json': {'bytes': 3396, 'sha256': '06efdcb9da9d40ac31698cf7384fe8065a4487c6eade7ce970707fbc341e230d'}, 'independent/member_27972.json': {'bytes': 3511, 'sha256': 'b4b6379924d84247f6ab0ecbb1cd569de50ef3c687f0aad6d7c1074b9e50f6e5'}, 'independent/member_27974.json': {'bytes': 3470, 'sha256': '785eadc455302518b1d999dd068a0ef8cf6111fd8f1c46097142cbfda6a775d4'}, 'independent/member_27975.json': {'bytes': 3559, 'sha256': '33f8db015adf577ed8f4e232b191bfa2acc0c17212059befc39b76c7e1264ed2'}, 'independent/member_27977.json': {'bytes': 3269, 'sha256': '739615be21e5a223f08c70a7ecea2f35a00584a84afd699f96366ab826cddb2f'}, 'independent/member_27978.json': {'bytes': 3260, 'sha256': '2765c3b692131cab0c61bb5f183bdee0ab8cb0d904343a771fdc0a890a7cce18'}, 'independent/member_27979.json': {'bytes': 3509, 'sha256': '768f279a1cced55573976a2c8fb4737b25b5feaa51815370e1f9af6cf8721546'}, 'independent/member_27980.json': {'bytes': 3854, 'sha256': '43828ba623b7df4105b2a9cbbed892e93d762508cc7d3181b6131ca025afec4f'}, 'independent/member_27981.json': {'bytes': 3784, 'sha256': 'c5b31dd78d1893e8cbbe0e46a3af4d592a32d574b8ebffec77b5d8e70bad93fd'}, 'independent/member_27982.json': {'bytes': 3737, 'sha256': '49dc504fe508d334b03f32cbfac4da3e9d786ab51bbc718d540e713bed349f36'}, 'independent/member_27983.json': {'bytes': 3670, 'sha256': 'a15c1e06a7bb27bd316eb03a76cd40281131391b450903ebba267276d45824a0'}, 'independent/member_27984.json': {'bytes': 3704, 'sha256': 'b2482e6e5ae4a6868ab973b5ac5f0c41114413ab74a7b48e506a320d3ff944cd'}, 'independent/member_27985.json': {'bytes': 3427, 'sha256': '0224c67868cbb277f79acadc5a26db86797073d012a01692dd065daea5521887'}, 'independent/member_35076.json': {'bytes': 3127, 'sha256': '7163cdcc12498c8b21a8f5fb36c797027af1f91d4625c52a6b6ca396a96ef7b6'}, 'independent/member_35992.json': {'bytes': 3070, 'sha256': 'd9261d242af7b845ca1d5e5965e78de3e2e3cd3e5a4092690d4462b2865f2c7e'}, 'independent/member_37028.json': {'bytes': 3078, 'sha256': 'e28dc0d24de66e082ef07cf429aff2846d68fee9e7b5b4593cfc84c1bf70f91b'}, 'independent/member_37153.json': {'bytes': 3123, 'sha256': 'a3159b82f3b6323fac6ec227d011042347a191d5a29bedecefa375e5ce284321'}, 'main/member_25878.json': {'bytes': 3359, 'sha256': '20def52e13ebebe7209038f1cf2ce554b6efbf57853aa4676a1d4fd1054b9073'}, 'main/member_27481.json': {'bytes': 3482, 'sha256': 'c98acf22f9f9d72e3465513ee4463d3e9567df247a6d86ba7869ee5e0962b83c'}, 'main/member_27550.json': {'bytes': 3861, 'sha256': '17ae0a37a0ccc6d8fb6dfea56dc062272636f7daf873e52227c4e6195833d8b1'}, 'main/member_27552.json': {'bytes': 3887, 'sha256': 'acf7c5eb7021ef6ef4541977d4a4105c943924abd92e8d3d9ed0732d3b1143e4'}, 'main/member_27556.json': {'bytes': 3802, 'sha256': 'f3f6d3595c16b0b4c13933f5b1ea06945c9ff1a2dfa2cd8bd26b7d97fc441fa5'}, 'main/member_27557.json': {'bytes': 3943, 'sha256': '82af25b78f4cf5cac9eab6dbf3078cef58b43b888af3dfaaa80bc1950422c8d2'}, 'main/member_27558.json': {'bytes': 3765, 'sha256': 'd45ebaa5f49f2c43a61a6ae79cddd7dd1834664df60f9413f711234b9b9c4b21'}, 'main/member_27570.json': {'bytes': 3931, 'sha256': '53977be3df44834c149a37faa34665aa1d3da6d2ae439bf2af9a6ffb49b39b06'}, 'main/member_27571.json': {'bytes': 4049, 'sha256': 'b0a7e011aaa9cbe6319a33b3619cbd751a6b8b6aebdff9bfcc229d381a257288'}, 'main/member_27573.json': {'bytes': 3917, 'sha256': 'f86234f4aef5e226c92e6419838b470ea8d922a8d6e6da6c6d630b6b2cc6af33'}, 'main/member_27575.json': {'bytes': 3684, 'sha256': '1478f22e87ba40c7ce4902a3cfc69a03e0b3185e24425ef3a7fe618fd8d5c50a'}, 'main/member_27577.json': {'bytes': 3849, 'sha256': '84cbf771e43e5935bbf3b40faca2a14a4fb7f878451b2442ef5ecfc169559f3b'}, 'main/member_27870.json': {'bytes': 3942, 'sha256': '1e8bd2cede461c52986b72d0904f4cfc8c5feb631df887ca1a24e41b0de6f36a'}, 'main/member_27871.json': {'bytes': 3987, 'sha256': 'b21d1b6642c67c4b4a7f33eee9a770fd4ba38c34388898ce9681cdcf325659e6'}, 'main/member_27872.json': {'bytes': 4111, 'sha256': 'a06d1c31ee6818349f30fbb36c316de6c98ffcd5809bab94f31e58de236cd8f0'}, 'main/member_27873.json': {'bytes': 3856, 'sha256': '40f8109a4a8d8dd965c9677426421b4d39dd693fcd1c81451ca6fc5f3a6cf773'}, 'main/member_27874.json': {'bytes': 3977, 'sha256': '28009f0767af3ee3f5c2c87af9cb5b8b1bcaa828c106924d8b5cf55ed5f1f11d'}, 'main/member_27875.json': {'bytes': 3738, 'sha256': 'b592e4a3148da6688033aa6217f2fe38569e3f49f33576afd1852a51338cdfef'}, 'main/member_27876.json': {'bytes': 3861, 'sha256': '793152dc15c229fc01bc7e584df3a24cbf6aa26d4266eb42792aa6311399a441'}, 'main/member_27877.json': {'bytes': 4117, 'sha256': '89751513d55b3c3163324e5a4d888f25c1a809939c6c5406dec2941adb8245cd'}, 'main/member_27878.json': {'bytes': 3806, 'sha256': '79c3888ff136490e2b98bab14877062f23f1d137060f9411958cc8d07083f864'}, 'main/member_27879.json': {'bytes': 3964, 'sha256': 'dfb3231e91ef6bf566b807aa53cfa88e8b6a480acb5284d52d80dd64da9bf221'}, 'main/member_27888.json': {'bytes': 3505, 'sha256': '9ebdbccc80fd5d6e334d7ce91eb44b04748448b52711a6cf00a0affe14abdd1c'}, 'main/member_27969.json': {'bytes': 3841, 'sha256': 'da02afd0980c087c2ff28842d5cb20b978f4b8240051b09a47e3c4657a192315'}, 'main/member_27970.json': {'bytes': 4000, 'sha256': '750c930aef0b06576e844d554e0ed70a6700758e4bc2cac7f02d647f44c34b11'}, 'main/member_27971.json': {'bytes': 3716, 'sha256': '13eff45b30fb627f13feb81c2d9ab513ef202bb0c66965528be3e042a2e50a38'}, 'main/member_27972.json': {'bytes': 3832, 'sha256': '2bce9d4851c89a8bc429d42f636ef498ce9d3c68db1d609b631797289d3c303d'}, 'main/member_27974.json': {'bytes': 3791, 'sha256': '9e6c0b2e54ac685f9072b485883cf59ef64356f0563a9eed99c997d3a613d450'}, 'main/member_27975.json': {'bytes': 3882, 'sha256': 'c2eb1054669c14f1a33d0b57efaba005553a3121547e3ea0e5b50305a563173d'}, 'main/member_27977.json': {'bytes': 3577, 'sha256': '3af37ad5c1e0d001921bce549206458bf1b3768a9df137e8dbb6720de3f357fc'}, 'main/member_27978.json': {'bytes': 3579, 'sha256': '4d56df28e1e4663f77bd4d253b8936a85cc2cdc7bf1c1a10f4db0cac591d28c1'}, 'main/member_27979.json': {'bytes': 3832, 'sha256': '342933281561c0704ad34c9a7c233e04fd8e6975e15fd291f7bcf0fbdbe0f982'}, 'main/member_27980.json': {'bytes': 4177, 'sha256': '1bb9241c7db9e33c30a76d696f9deb46b7ab48095001833bd648d68afd132a17'}, 'main/member_27981.json': {'bytes': 4107, 'sha256': 'a0ad2ab70789488611f6546e51aac494717ba49b959fbe385bc70398289ec251'}, 'main/member_27982.json': {'bytes': 4059, 'sha256': '2ee7d2436b5d3edc2f71d0585d881b644da2d14713891ab3b04506934b1e91b1'}, 'main/member_27983.json': {'bytes': 3992, 'sha256': 'eaf233b276d7ad5488e36ab912d92bec7a30c199b1ecaf2ec3ca75efe8f36d45'}, 'main/member_27984.json': {'bytes': 4028, 'sha256': '897fa3f301c0524cde29d6aa055356a39126624c6a8e40e51feda0278b601caf'}, 'main/member_27985.json': {'bytes': 3749, 'sha256': '7be17f9e2e37f919cd8190d871e8448ff1b7743e9a80681a451c1caa72781672'}, 'main/member_35076.json': {'bytes': 3417, 'sha256': '03f73c19538b0d7580d3149703b308220f4000a4e44e61fc760249cfb8920ca8'}, 'main/member_35992.json': {'bytes': 3360, 'sha256': '3b652d6ba6cb24e33ca879b0b0ad078e7669339852fd83be05bccb3fecbe809b'}, 'main/member_37028.json': {'bytes': 3368, 'sha256': 'a2ecc19fba042ed86f9f01487d9f733bfdcaf30817d914d1a71c1c575d7f0c34'}, 'main/member_37153.json': {'bytes': 3413, 'sha256': 'b5aba1f0f6337dce193b1c37d3e1c96ffb6c39e7f2b46abb9741de42e8992c13'}, 'DEPLOYMENT.json': {'bytes': 978, 'sha256': 'b1ea1161e4551350bf7c005d62015ea378fc767d8f021e2b54e41998d5a59f57'}, 'SUBMISSION_STARTED.json': {'bytes': 102, 'sha256': '62e350ce59a10108ef149441c14b2c3448c6c7bf290d854d58e7d293a779d2a4'}, 'SUBMISSION_RESULT.json': {'bytes': 301, 'sha256': '3aadc7c31f3af69d759ebee95bb295f44b4a76f2652e142e72338d9b946376bf'}, 'OWN_JOB_ID': {'bytes': 7, 'sha256': 'a465cfa5c5375548939720e01544823e30feed0e79067a7825aa7ef352abca40'}, 'NUMERIC_STARTED.json': {'bytes': 228, 'sha256': 'ad6d906acae8d7aef8cc7ba87955e4dced476f0b79289362c3326c64a3be74c9'}, 'main_PROCESS.json': {'bytes': 108, 'sha256': 'b59c0ddd5230d1c118be52f5c1880f826abe3cd04d8b86b5221424f9ad315a9c'}, 'independent_PROCESS.json': {'bytes': 108, 'sha256': '6817f2bf7a705d8dfed7a8595b2c93720f142863f589fc541a21d6974b75c6e7'}, 'NUMERIC_RESULT.json': {'bytes': 567, 'sha256': '1216e2ab8927c8e732cb5471dfcbf36e72266e7a16f150dae47eeb999a9158eb'}, 'ALL_DIFFERENCES.json': {'bytes': 3, 'sha256': '37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570'}, 'DETAIL_FILE_IDENTITIES.json': {'bytes': 11637, 'sha256': '82e95b140914d64599469dd1238a82cd8dc79fe45fefc5be309bc002af6b9a17'}, 'MEMBER_SUMMARY.json': {'bytes': 85720, 'sha256': '89f863fd96ac5dd0e4e45df026bc0cede366a00c198dc47b216948f0201ad063'}, 'main/RESULT.json': {'bytes': 115, 'sha256': 'c830f8b2713cab878bfb8c39cde65808f123db2700ea82a0f9df59720b1daaf1'}, 'main/MAPPING_DIAGNOSTIC.json': {'bytes': 40, 'sha256': '332f7cab9436181aa45be98836cc9e98231da8d3dcb922fadb9bdcd3105d2ea0'}, 'independent/RESULT.json': {'bytes': 123, 'sha256': '3c9934df3ed329d1fb0e8f92a923aeddf49adfb0beae46ad8703b1f9305cd574'}, 'independent/MAPPING_DIAGNOSTIC.json': {'bytes': 40, 'sha256': '332f7cab9436181aa45be98836cc9e98231da8d3dcb922fadb9bdcd3105d2ea0'}, 'logs/numeric-245637.out': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'logs/numeric-245637.err': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'main.stdout': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'main.stderr': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'independent.stdout': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'independent.stderr': {'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'main/PROGRESS_42.json': {'bytes': 36, 'sha256': '0c8338d87f2340d327920954b7b687a2ae58336c5a2e3ac65ffc1b5784170c94'}, 'independent/PROGRESS_42.json': {'bytes': 36, 'sha256': '0c8338d87f2340d327920954b7b687a2ae58336c5a2e3ac65ffc1b5784170c94'}}
+started=time.monotonic()
+resource.setrlimit(resource.RLIMIT_AS,(256*1024**2,resource.getrlimit(resource.RLIMIT_AS)[1]))
+assert ROOT.resolve(strict=True)==ROOT and (ROOT/'OWN_JOB_ID').read_text().strip()==JOB
+records={};total=0
+for name,row in EXPECTED.items():
+    relative=Path(name);assert not relative.is_absolute() and '..' not in relative.parts and len(relative.parts)<=2
+    path=ROOT/relative;assert path.resolve(strict=True)==path and not path.is_symlink()
+    before=path.stat();assert before.st_size==row['bytes']<=2*1024**2
+    data=path.read_bytes();after=path.stat()
+    assert (before.st_size,before.st_mtime_ns)==(after.st_size,after.st_mtime_ns)
+    assert len(data)==row['bytes'] and hashlib.sha256(data).hexdigest()==row['sha256']
+    total+=len(data);assert total<=2*1024**2
+    records[name]=dict(present=True,bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),base64=base64.b64encode(data).decode())
+def query(command):
     try:
-        result=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=seconds)
-    except subprocess.TimeoutExpired as error:
-        return dict(command=command,exit_code=None,stdout=(error.stdout or b'').decode(errors='replace')[:131072],
-            stderr=(error.stderr or b'').decode(errors='replace')[:131072],error='QUERY_TIMEOUT_UNKNOWN',server_utc=utc())
-    assert len(result.stdout)<=131072 and len(result.stderr)<=131072
-    return dict(command=command,exit_code=result.returncode,stdout=result.stdout.decode(errors='replace'),
-        stderr=result.stderr.decode(errors='replace'),server_utc=utc())
+        result=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=9)
+        assert len(result.stdout)<=131072 and len(result.stderr)<=131072
+        return dict(command=command,exit_code=result.returncode,stdout=result.stdout.decode(errors='replace'),stderr=result.stderr.decode(errors='replace'))
+    except subprocess.TimeoutExpired:
+        return dict(command=command,exit_code=None,stdout='',stderr='QUERY_TIMEOUT_UNKNOWN')
+queries=dict(squeue=query(['squeue','-h','-j',JOB,'-o','%i|%T|%N|%R|%Z']),
+    sacct=query(['sacct','-X','-S','2026-10-20','-j',JOB,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
+    scontrol=query(['scontrol','show','job',JOB,'-o']))
+value=dict(root=str(ROOT),job_id=JOB,job_status='CONFIRMED_SUBMISSION_ID',bridge_error=None,
+    server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),queries=queries,records=records,
+    saved_member_records=84,saved_records=len(records),saved_bytes=total,seconds=time.monotonic()-started,
+    model_calls=0,training_calls=0,scientific_raw_reads=0,new_jobs=0,automatic_checks_enabled=False)
+data=json.dumps(value,ensure_ascii=False,separators=(',',':')).encode()
+assert len(data)<=4*1024**2 and time.monotonic()-started<90
+print('G42_NUMERIC_BYTES='+str(len(data)))
+print('G42_NUMERIC_SHA256='+hashlib.sha256(data).hexdigest())
+print('G42_NUMERIC_ZLIB_BASE64='+base64.b64encode(zlib.compress(data)).decode())
+print('G42_NUMERIC_DONE',flush=True)
 
-
-def deploy():
-    assert not ROOT.exists(),'NEW_ROOT_ALREADY_EXISTS_NO_REPLAY'
-    assert ROOT.parent.resolve(strict=True)==ROOT.parent and shutil.disk_usage(ROOT.parent).free>=2*1024**3
-    payload=json.loads(zlib.decompress(base64.b64decode(PAYLOAD_B64,validate=True)))
-    assert set(payload)=={'SCOPE.json', 'geology_42_numeric_control_20261020_v2.py', 'geology_42_numeric_main_20261020_v2.py', 'geology_42_numeric_20261020_v2.sbatch', 'GEOMETRY_METADATA.json', 'CONTRACT.json', 'geology_42_numeric_io_20261020_v1.py', 'geology_42_numeric_independent_20261020_v1.py'}
-    ROOT.mkdir(mode=0o700);(ROOT/'logs').mkdir()
-    deployed={}
-    for name,item in payload.items():
-        raw=base64.b64decode(item['base64'],validate=True)
-        assert len(raw)==item['bytes']<=131072 and hashlib.sha256(raw).hexdigest()==item['sha256']
-        with (ROOT/name).open('xb') as stream:stream.write(raw)
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==item['sha256']
-        deployed[name]=item['sha256']
-    save('DEPLOYMENT.json',dict(files=deployed,source_gets=0,credential_content_read=False,server_utc=utc()))
-    save('SUBMISSION_STARTED.json',dict(max_new_jobs=1,automatic_retries=0,server_utc=utc()))
-    result=query(['sbatch',str(ROOT/'geology_42_numeric_20261020_v2.sbatch')],15)
-    save('SUBMISSION_RESULT.json',result)
-    found=re.findall(r'^Submitted batch job ([0-9]+)\s*$',result['stdout'],re.M)
-    assert result['exit_code']==0 and len(found)==1,'UNKNOWN_SUBMISSION_NEVER_REPLAY'
-    job=found[0]
-    with (ROOT/'OWN_JOB_ID').open('x') as stream:stream.write(job+'\n')
-    return job
-
-
-def main():
-    job=None;bridge_error=None
-    try:
-        if MODE=='deploy':
-            job=deploy()
-        else:
-            assert MODE=='status' and ROOT.resolve(strict=True)==ROOT
-            job=(ROOT/'OWN_JOB_ID').read_text().strip()
-        assert re.fullmatch('[0-9]+',job)
-    except BaseException as error:
-        job=None
-        bridge_error=dict(error_type=type(error).__name__,error=str(error),server_utc=utc())
-        if MODE=='deploy' and ROOT.is_dir() and not (ROOT/'BRIDGE_FAILURE.json').exists():
-            save('BRIDGE_FAILURE.json',bridge_error)
-    queries={}
-    if job is not None:
-        queries=dict(squeue=query(['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),
-            sacct=query(['sacct','-X','-S','2026-10-20','-j',job,'--noheader','--parsable2',
-                '--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
-            scontrol=query(['scontrol','show','job',job,'-o']))
-    names=['BRIDGE_FAILURE.json','DEPLOYMENT.json','SUBMISSION_STARTED.json','SUBMISSION_RESULT.json','OWN_JOB_ID',
-        'NUMERIC_STARTED.json','main_PROCESS.json','independent_PROCESS.json','NUMERIC_RESULT.json','NUMERIC_FAILURE.json',
-        'ALL_DIFFERENCES.json','DETAIL_FILE_IDENTITIES.json','MEMBER_SUMMARY.json','main/RESULT.json','main/FAILURE.json',
-        'main/MAPPING_DIAGNOSTIC.json','independent/RESULT.json','independent/FAILURE.json','independent/MAPPING_DIAGNOSTIC.json']
-    if job is not None:names+=['logs/numeric-'+job+'.out','logs/numeric-'+job+'.err','main.stdout','main.stderr','independent.stdout','independent.stderr']
-    for stage in ('main','independent'):
-        progresses=sorted((ROOT/stage).glob('PROGRESS_[0-9][0-9].json')) if (ROOT/stage).is_dir() else []
-        if progresses:names.append(stage+'/'+progresses[-1].name)
-    records={};total=0
-    for name in names:
-        path=ROOT/name
-        if not path.exists():records[name]=dict(present=False);continue
-        assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
-        before=path.stat();assert before.st_size<=4*1048576
-        raw=path.read_bytes();after=path.stat()
-        assert (before.st_size,before.st_mtime_ns)==(after.st_size,after.st_mtime_ns) and len(raw)==before.st_size
-        total+=len(raw);assert total<=5*1024**2
-        records[name]=dict(present=True,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),
-            base64=base64.b64encode(raw).decode())
-    value=dict(root=str(ROOT),job_id=job,mode=MODE,server_utc=utc(),
-        queries=queries,records=records,seconds=time.monotonic()-START,model_calls=0,automatic_checks_enabled=False,
-        bridge_error=bridge_error,job_status='CONFIRMED_SUBMISSION_ID' if job is not None else 'NO_CONFIRMED_JOB')
-    raw=json.dumps(value,ensure_ascii=False,separators=(',',':')).encode();assert len(raw)<=6*1024**2
-    print('G42_NUMERIC_BYTES='+str(len(raw)))
-    print('G42_NUMERIC_SHA256='+hashlib.sha256(raw).hexdigest())
-    print('G42_NUMERIC_ZLIB_BASE64='+base64.b64encode(zlib.compress(raw)).decode())
-    print('G42_NUMERIC_DONE',flush=True)
-
-
-if __name__=='__main__':
-    main()
-
-G42_NUMERIC
+G42_DETAILS
