@@ -255,3 +255,5 @@ git rm inbox/seq
 | `knet-state-step3-mix-20261020-001` | Authorized SC-STEP3-MIX-CANDIDATE-01 fixed-call3 mechanism replay | 2026-10-20 | Only state_channel_step3_mix_20261020_001, one 020 fixed 99:1 candidate, 5 minute cap, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `knet-state-step3-mix-status-20261020-001` | Read-only receipt/staging diagnosis for completed job245675 | 2026-10-20 | Only state_channel_step3_mix_20261020_001, read-only transport diagnosis, zero scientific jobs, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `regge-pqx03-20261020` | Regge forecast-objective Q factorial; user authorized 2026-10-20 | Only own channel and /data1/home/sunyiq/regge_experiments/REGGE-PQX03-FORECAST-OBJECTIVE-FACTORIAL/20261020-v01; other experiments read-only |
