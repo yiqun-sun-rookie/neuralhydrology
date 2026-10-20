@@ -1,3 +1,4 @@
 #!/bin/bash
 set -eo pipefail
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B "$PWD/inbox/knet-state-step3-mix-20261020-001/payload/deploy.py" "$PWD/inbox/knet-state-step3-mix-20261020-001/payload/package.tar.gz" 8145e3c24d68a80f1696dad51841e71a08ec45f88bc44f5113c6d89dde3c4519
+export TZ=UTC
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -u -B /data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_step3_mix_20261020_001/query_replay.py 245675
