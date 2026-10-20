@@ -1,0 +1,35 @@
+### channel=openhydronet-531-20261015 seq=28
+### host=login4
+### started=2026-10-20T17:25:09+0800
+### ---------- output ----------
+2026-10-20T17:25:09+0800
+experiment_name: tune_v3
+train_end_date: 30/09/2006
+test_start_date: 01/10/2006
+test_end_date: 30/09/2008
+hidden_size: 256
+seq_length: 270
+forecast_overlap: 270
+initial_forget_bias: 5
+learning_rate_drop_factor: 0.316
+target_noise_std: 0.0
+seed: 11
+=== free GPUs ===
+ngu201    gpu:8     gpu:6,dcu:0           ;ngu202    gpu:8     gpu:7,dcu:0           ;ngu203    gpu:8     gpu:0,dcu:0           ;
+ngu101    gpu:4     gpu:1,dcu:0           ;ngu102    gpu:4     gpu:3,dcu:0           ;ngu103    gpu:4     gpu:0,dcu:0           ;ngu104    gpu:4     gpu:4,dcu:0           ;
+ngu001    gpu:2     gpu:2,dcu:0           ;ngu002    gpu:2     gpu:0,dcu:0           ;ngu004    gpu:2     gpu:2,dcu:0           ;ngu005    gpu:2     gpu:2,dcu:0           ;ngu006    gpu:2     gpu:2,dcu:0           ;ngu007    gpu:2     gpu:2,dcu:0           ;ngu008    gpu:2     gpu:2,dcu:0           ;ngu010    gpu:2     gpu:2,dcu:0           ;ngu011    gpu:2     gpu:2,dcu:0           ;
+Submitted batch job 245671
+jobid[tune_v0]=245671
+Submitted batch job 245672
+jobid[tune_v1]=245672
+Submitted batch job 245673
+jobid[tune_v2]=245673
+Submitted batch job 245674
+jobid[tune_v3]=245674
+    245671      ohn_tune_v0   PENDING (ReqNodeNotAvail, UnavailableNodes:ngu[201-202])
+    245672      ohn_tune_v1   PENDING (ReqNodeNotAvail, UnavailableNodes:ngu[201-202])
+    245673      ohn_tune_v2   PENDING (Priority)
+    245674      ohn_tune_v3   PENDING (Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-20T17:25:10+0800
