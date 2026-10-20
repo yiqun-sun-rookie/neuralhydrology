@@ -1,0 +1,21 @@
+### channel=id25-c01-shared-20261019 seq=17
+### host=login4
+### started=2026-10-21T00:34:01+0800
+### ---------- output ----------
+2026-10-21T00:34:01+0800
+EXPERIMENT_JOB_ID=245242
+JOBID|NAME|STATE|NODELIST(REASON)|START_TIME
+245242|id25_c01_shared_261019|PENDING|(Priority)|2027-10-19T14:23:11
+SQUEUE_EXIT=0
+245242|id25_c01_shared_261019|g_sunyiq|hgpu2p|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+SACCT_EXIT=0
+2026-10-19T10:15:31Z	245242	initial
+
+BEGIN_TRAINING_STATE_JSON
+{}
+STATE_READ_EXIT=0
+END_TRAINING_STATE_JSON
+QUERY_ONLY_NO_PREFLIGHT_NO_SUBMISSION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T00:34:02+0800
