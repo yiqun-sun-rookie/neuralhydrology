@@ -1,0 +1,8 @@
+### channel=knet-state-hold5-20261021-001 seq=1
+### host=login4
+### started=2026-10-21T14:13:47+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "245905", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_holdout5_20261021_001", "channel": "knet-state-hold5-20261021-001", "deployment_sequence": 1, "archive_sha256": "8f5768f661dc48bfe3b4f121b03d0778545a20efef635befb25b51be578134f1", "script_sha256": "c61158812e6e47bc09f28bf11867c76efb93e2a596011d3ac8777ec65bfd4dab", "contract_sha256": "71ebc0b38dead386c1e263920ba6c6a6bf29befc909047900ba51d51c79b7da1", "submitted_utc": "2026-10-21T06:13:48.557596+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 245905\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T14:13:48+0800
