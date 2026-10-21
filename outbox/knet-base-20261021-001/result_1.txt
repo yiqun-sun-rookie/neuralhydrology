@@ -1,0 +1,8 @@
+### channel=knet-base-20261021-001 seq=1
+### host=login4
+### started=2026-10-21T15:31:26+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "245934", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/knet_baseline_20261021_001", "channel": "knet-base-20261021-001", "deployment_sequence": 1, "archive_sha256": "e738ec4c122ef62c5c608570f7dc683334d84de2e0efe0dddc59aeb6776ccf33", "script_sha256": "e855fd9fb0e1fb875049005eabbafedb86cf2da761f344f4acab3b522daa9d3f", "contract_sha256": "f2d650146ed7311e24394437d298272b1d813555fcc2659107db10cd637c6c25", "submitted_utc": "2026-10-21T07:31:27.757443+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 245934\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T15:31:27+0800
