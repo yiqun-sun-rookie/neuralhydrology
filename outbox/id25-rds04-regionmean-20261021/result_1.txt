@@ -1,0 +1,12 @@
+### channel=id25-rds04-regionmean-20261021 seq=1
+### host=login4
+### started=2026-10-21T20:24:02+0800
+### ---------- output ----------
+RDS04_/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001_EXISTS=no
+-rw-r--r--. 1 sunyiq g_sunyiq 9188044 Oct 12 20:46 /data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/inputs.npz
+-rw-r--r--. 1 sunyiq g_sunyiq 943 Oct 12 20:46 /data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/transforms.json
+lrwxr-xr-x. 1 sunyiq g_sunyiq 10 Jan 22  2026 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -> python3.11
+READ_ONLY_PATH_CHECK_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T20:24:03+0800
