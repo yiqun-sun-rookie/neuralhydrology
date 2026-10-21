@@ -1,0 +1,51 @@
+### channel=haihe-gangnan-bprime-20261021 seq=3
+### host=login4
+### started=2026-10-21T17:32:33+0800
+### ---------- output ----------
+2026-10-21T17:32:33+0800
+=== SACCT ===
+245970|COMPLETED|0:0|ngu201|00:02:28
+245971_0|FAILED|1:0|ngu201|00:00:52
+245971_1|FAILED|1:0|ngu201|00:00:53
+245971_2|RUNNING|0:0|ngu202|00:01:26
+245971_3|RUNNING|0:0|ngu202|00:01:26
+245971_4|RUNNING|0:0|ngu202|00:01:26
+245971_5|FAILED|1:0|ngu201|00:00:47
+245971_6|RUNNING|0:0|ngu201|00:00:26
+245971_7|RUNNING|0:0|ngu201|00:00:26
+245971_[8-23%6]|PENDING|0:0|None assigned|00:00:00
+245974|PENDING|0:0|None assigned|00:00:00
+=== SQUEUE ===
+245974|PENDING|(Dependency)
+245971_[8-23%6]|PENDING|(ReqNodeNotAvail, UnavailableNodes:ngu[201-202])
+245971_6|RUNNING|ngu201
+245971_7|RUNNING|ngu201
+245971_2|RUNNING|ngu202
+245971_3|RUNNING|ngu202
+245971_4|RUNNING|ngu202
+=== DONE ===
+0
+=== SMOKE ===
+SMOKE_OK var=INQ_3h steps=26304 first=2023-01-01T00:00:00.000000000 last=2025-12-31T23:00:00.000000000 valid=25925 nse_ep1=0.481
+SMOKE_DONE end=2026-10-21T17:33:04+0800
+=== AGG ===
+=== FAILED TASK ERR TAILS ===
+--- /data1/home/sunyiq/haihe_gangnan_bprime/logs/train_245971_0.err
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/neuralhydrology/neuralhydrology/utils/config.py", line 266, in _read_and_parse_config
+    raise FileNotFoundError(yml_path)
+FileNotFoundError: /data1/home/sunyiq/haihe_gangnan_bprime/configs/bp_3h_base_s42.yml
+--- /data1/home/sunyiq/haihe_gangnan_bprime/logs/train_245971_1.err
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/neuralhydrology/neuralhydrology/utils/config.py", line 266, in _read_and_parse_config
+    raise FileNotFoundError(yml_path)
+FileNotFoundError: /data1/home/sunyiq/haihe_gangnan_bprime/configs/bp_3h_base_s01.yml
+--- /data1/home/sunyiq/haihe_gangnan_bprime/logs/train_245971_5.err
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/neuralhydrology/neuralhydrology/utils/config.py", line 266, in _read_and_parse_config
+    raise FileNotFoundError(yml_path)
+FileNotFoundError: /data1/home/sunyiq/haihe_gangnan_bprime/configs/bp_3h_base_s05.yml
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T17:32:34+0800
