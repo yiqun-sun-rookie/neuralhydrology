@@ -1,0 +1,112 @@
+### channel=haihe-gangnan-bprime-20261021 seq=1
+### host=login4
+### started=2026-10-21T17:28:29+0800
+### ---------- output ----------
+=== HOST ===
+login4
+2026-10-21T17:28:29+0800
+=== NH REPO (read-only) ===
+96703cee48718aa789e72a8148c827601857dd44
+migration/reorg-v1
+320:    def custom_normalization(self) -> dict:
+312:    def clip_targets_to_zero(self) -> List[str]:
+=== GPU PARTITIONS ===
+--- hgpu2p
+ngu001    mix       gpu:2         gpu:1,dcu:0             
+ngu002    down*     gpu:2         gpu:0,dcu:0             
+ngu004    mix       gpu:2         gpu:2,dcu:0             
+ngu005    mix       gpu:2         gpu:2,dcu:0             
+ngu006    mix       gpu:2         gpu:2,dcu:0             
+ngu007    mix       gpu:2         gpu:2,dcu:0             
+ngu008    mix       gpu:2         gpu:2,dcu:0             
+ngu010    mix       gpu:2         gpu:2,dcu:0             
+ngu011    mix       gpu:2         gpu:2,dcu:0             
+free_gpus=1
+--- hgpu2
+ngu003    mix       gpu:2         gpu:2,dcu:0             
+ngu009    mix       gpu:2         gpu:2,dcu:0             
+free_gpus=0
+--- hgpu4
+ngu101    mix       gpu:4         gpu:4,dcu:0             
+ngu102    mix       gpu:4         gpu:4,dcu:0             
+ngu103    down*     gpu:4         gpu:0,dcu:0             
+ngu104    mix       gpu:4         gpu:4,dcu:0             
+free_gpus=0
+--- hgpu8
+ngu201    mix       gpu:8         gpu:6,dcu:0             
+ngu202    mix       gpu:8         gpu:5,dcu:0             
+ngu203    alloc$    gpu:8         gpu:8,dcu:0             
+free_gpus=5
+CHOSEN_PARTITION=hgpu8 (free_gpus=5)
+=== MY QUEUE BEFORE ===
+n_my_jobs=31
+=== DEPLOY ===
+tar: code/aggregate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/collect_run.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/forecast_metrics.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: code/smoke_config.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s01.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s02.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s03.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s04.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s05.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_base_s42.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s01.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s02.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s03.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s04.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s05.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_3h_bp_s42.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s01.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s02.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s03.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s04.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s05.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_base_s42.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s01.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s02.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s03.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s04.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s05.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/bp_6h_bp_s42.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tasks.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: data/gangnan_inflow_reported/basins.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: data/gangnan_inflow_reported/time_series/NZ_GN.nc: implausibly old time stamp 1970-01-01 08:00:00
+tar: MANIFEST.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: MANIFEST.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: slurm/aggregate.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: slurm/smoke.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: slurm/train_eval.slurm: implausibly old time stamp 1970-01-01 08:00:00
+manifest OK: 34 files
+2:data_dir: /data1/home/sunyiq/haihe_gangnan_bprime/data/gangnan_inflow_reported
+11:test_end_date: 31/12/2025
+94:run_dir: /data1/home/sunyiq/haihe_gangnan_bprime/runs
+=== PREPARE SLURM COPIES (partition + dependencies) ===
+slurm/run_smoke.slurm:3:#SBATCH -p hgpu8
+slurm/run_train_eval.slurm:3:#SBATCH -p hgpu8
+slurm/run_aggregate.slurm:3:#SBATCH -p hgpu8
+=== SUBMIT SMOKE ===
+Submitted batch job 245970
+smoke_job=245970
+=== SUBMIT ARRAY (afterok smoke) ===
+#!/usr/bin/env bash
+#SBATCH --dependency=afterok:245970
+#SBATCH -J gn_bprime
+#SBATCH -p hgpu8
+Submitted batch job 245971
+array_job=245971
+=== SUBMIT AGGREGATE (afterany array) ===
+Submitted batch job 245972
+aggregate_job=245972
+=== QUEUE AFTER ===
+245970 hgpu8 PENDING gn_bp_smoke (Priority)
+245971_[0-23%6] hgpu8 PENDING gn_bprime (None)
+245972 hgpu8 PENDING gn_bp_agg (Dependency)
+245970 N/A
+run_smoke 245970 2026-10-21T17:28:29+0800
+run_train_eval 245971 2026-10-21T17:28:29+0800
+run_aggregate 245972 2026-10-21T17:28:30+0800
+ALL_SUBMITTED smoke=245970 array=245971 aggregate=245972
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T17:28:30+0800
