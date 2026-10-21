@@ -1,0 +1,8 @@
+### channel=knet-state-mix5-20261021-001 seq=1
+### host=login4
+### started=2026-10-21T11:05:42+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "245850", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/state_channel_mixfirst5_20261021_001", "channel": "knet-state-mix5-20261021-001", "deployment_sequence": 1, "archive_sha256": "20fefb69fef9b386543a818a34cff9246346d4fd92a150bf1aa8cdfca2ba0bf2", "script_sha256": "60dd15faead6c7e7fbe0a6144aa41a020f086c09ece027648bd8d5a26b1824b3", "contract_sha256": "cf5e2f95052082825a66242d6b78463f00846bd0b4d0a47fa6766eb889504c99", "submitted_utc": "2026-10-21T03:05:43.800720+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 245850\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T11:05:43+0800
