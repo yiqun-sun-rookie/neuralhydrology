@@ -1,0 +1,19 @@
+### channel=openhydronet-531-20261015 seq=49
+### host=login4
+### started=2026-10-21T12:53:42+0800
+### ---------- output ----------
+2026-10-21T12:53:42+0800
+245855|ohn_shared_smoke|COMPLETED|0:0|00:03:49|ngu202
+host=ngu202 start=2026-10-21T12:41:25+0800 job=245855 config=/data1/home/sunyiq/openhydronet_531_20261015/configs/smoke.yml
+torch 2.4.0 cuda True
+run_dir=/data1/home/sunyiq/openhydronet_531_20261015/runs/smoke_2110_124240
+done=2026-10-21T12:45:09+0800
+[INFO] 12:45:04.219 (tester.py:evaluate) -- 1D KGE median=-0.400982
+[INFO] 12:45:04.220 (tester.py:evaluate) -- 1D Alpha-NSE median=0.023635
+[INFO] 12:45:04.220 (tester.py:evaluate) -- 1D Beta-NSE median=0.259052
+[INFO] 12:45:04.221 (tester.py:evaluate) -- 1D Beta-KGE median=1.336856
+[INFO] 12:45:04.221 (tester.py:evaluate) -- 1D Peak-Timing median=1.000000
+[INFO] 12:45:04.221 (tester.py:evaluate) -- 1D Missed-Peaks median=1.000000
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T12:53:42+0800
