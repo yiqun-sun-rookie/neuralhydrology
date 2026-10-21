@@ -1,35 +1,33 @@
 #!/bin/bash
-set -u
+set -euo pipefail
 root=/data1/home/sunyiq/id25_graice_shared_c01_20261019_001
-old=/data1/home/sunyiq/id25_graice_author_matched_20261016_001
-date -Iseconds
-if test -s "$root/job_id.txt"; then
-    job_id=$(tr -d '\r\n' < "$root/job_id.txt")
-    case "$job_id" in ''|*[!0-9]*) echo INVALID_JOB_ID; exit 1;; esac
-    printf 'EXPERIMENT_JOB_ID=%s\n' "$job_id"
-    timeout 30 squeue -j "$job_id" --start -o '%i|%j|%T|%R|%S'
-    printf 'SQUEUE_EXIT=%s\n' "$?"
-    timeout 30 sacct -S 2026-10-18 -j "$job_id" --format=JobIDRaw,JobName%32,Account,Partition,State,ExitCode,Elapsed,Start,End,NodeList -n -P
-    printf 'SACCT_EXIT=%s\n' "$?"
-    for file in "$root/logs/train_${job_id}.out" "$root/logs/train_${job_id}.err"; do
-        if test -f "$file"; then printf '\nFILE=%s\n' "$file"; tail -n 45 "$file"; fi
-    done
+job_id=$(tr -d '\r\n' < "$root/job_id.txt")
+case "$job_id" in ''|*[!0-9]*) echo INVALID_JOB_ID; exit 1;; esac
+test -f "$root/report.json"
+test -f "$root/output/selection.json"
+test -f "$root/output/best.keras"
+test -f "$root/output/predictions.npz"
+test -f "$root/comparison/acceptance_metrics.json"
+mkdir -p "$root/artifacts"
+archive="$root/artifacts/c01_completed_${job_id}_v002.tar.gz"
+accounting=$(timeout 30 sacct -X -S 2026-10-18 -j "$job_id" --format=JobIDRaw,State,ExitCode -n -P)
+printf '%s\n' "$accounting"
+if ! printf '%s\n' "$accounting" | grep -Eq "^${job_id}[|]COMPLETED[|]0:0([|]|$)"; then
+    echo EXACT_COMPLETED_ACCOUNTING_REQUIRED; exit 1
 fi
-if test -f "$root/submissions.tsv"; then cat "$root/submissions.tsv"; fi
-if test -f "$root/ops/id25_shared_train_runtime.py"; then
-    printf '\nBEGIN_TRAINING_STATE_JSON\n'
-    PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 "$old/venv/bin/python" "$root/ops/id25_shared_train_runtime.py" inspect "$root"
-    printf 'STATE_READ_EXIT=%s\nEND_TRAINING_STATE_JSON\n' "$?"
+printf '%s\n' "$accounting" > "$root/artifacts/final_sacct_${job_id}.txt"
+if test ! -e "$archive"; then
+    tar -czf "$archive" -C "$root" \
+        package hpc ops provenance resource_adaptation_v002 scalers inputs/reference.npz \
+        source_manifest.json authorization_policy.json runtime.json attempts \
+        output comparison report.json logs job_id.txt submissions.tsv \
+        "artifacts/final_sacct_${job_id}.txt"
 fi
-for file in stdout.log stderr.log; do
-    if test -f "$root/output/$file"; then printf '\nFILE=output/%s\n' "$file"; tail -n 35 "$root/output/$file"; fi
-done
-echo QUERY_ONLY_NO_PREFLIGHT_NO_SUBMISSION
-printf '\nRESOURCE_POLICY_AND_SCHEDULER\n'
-timeout 30 scontrol -o show job 245242
-timeout 30 sprio -l -j 245242
-timeout 30 scontrol -o show node ngu001
-timeout 30 scontrol show config | awk '/SelectType|SelectTypeParameters|SchedulerType|SchedulerParameters/ {print}'
-if test -f "$root/resource_adaptation_v002/apply_result.json"; then printf '\nRESOURCE_ADAPTATION_RESULT_JSON\n'; cat "$root/resource_adaptation_v002/apply_result.json"; fi
-echo QUERY_ONLY_NO_PREFLIGHT_NO_SUBMISSION_NO_JOB_CHANGE
-exit 0
+printf 'ARCHIVE_SHA256='
+sha256sum "$archive" | cut -d' ' -f1
+printf 'ARCHIVE_BYTES='
+wc -c < "$archive"
+printf 'BEGIN_ARCHIVE_BASE64\n'
+base64 "$archive"
+printf 'END_ARCHIVE_BASE64\n'
+echo C01_RESULTS_COLLECTED_NO_NEW_FIT
