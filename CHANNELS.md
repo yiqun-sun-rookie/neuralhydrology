@@ -272,3 +272,5 @@ git rm inbox/seq
 | `haihe-gangnan-bprime-20261021` | haihe 岗南入库 B-prime 实验: reported-only 数据上 3h/6h 基线 vs +INQ_rep, 6 种子, 冒烟+24 任务数组+汇总 | 2026-10-21 | 独立落点 `/data1/home/sunyiq/haihe_gangnan_bprime`; 只读 `~/neuralhydrology`, 不改其 git 状态; 不碰其他通道/作业; 不写 --mem |
 
 | `knet-epochscan-20261021-001` | Authorized KNET-EPOCHSCAN-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_epochscan_20261021_001, one 020 six-arm two-history checkpoint evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `id25-rds04-regionmean-20261021` | RDS04 regional mean RMSE single CPU candidate | 2026-10-21 | Only /data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001 writable; fixed RDS01 and C01 read-only; 119-region original conservative model; one seed 80 epochs; no repeated preflight or other-job changes; 3-hour monitor. |
