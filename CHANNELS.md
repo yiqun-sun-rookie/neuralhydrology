@@ -269,3 +269,4 @@ git rm inbox/seq
 | `knet-base-20261021-001` | Authorized KNET-BASELINE-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_baseline_20261021_001, one 020 four-arm frozen-model evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `knet-xperiod-20261021-001` | Authorized KNET-XPERIOD-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_xperiod_20261021_001, one 020 four-arm frozen-model evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
+| `haihe-gangnan-bprime-20261021` | haihe 岗南入库 B-prime 实验: reported-only 数据上 3h/6h 基线 vs +INQ_rep, 6 种子, 冒烟+24 任务数组+汇总 | 2026-10-21 | 独立落点 `/data1/home/sunyiq/haihe_gangnan_bprime`; 只读 `~/neuralhydrology`, 不改其 git 状态; 不碰其他通道/作业; 不写 --mem |
