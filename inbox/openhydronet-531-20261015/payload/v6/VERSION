@@ -1,0 +1,6 @@
+openhydronet_shared
+created: 2026-10-21
+source: https://github.com/google-research/flood-forecasting  commit 011265446e113cf849394efe6514221dc7c3f124  (googlehydrology 1.13.0, Apache-2.0)
+python: nh_final 3.11.13, torch 2.4.0 (CUDA 12.1); extra packages in pysite: zarr 3.1.5, numcodecs 0.16.5, dask 2025.12.0, cachey, toolz, cloudpickle, heapdict, donfig, pydantic 2.12.5 (+core), annotated-types, typing-inspection, more-itertools, partd, locket, google-crc32c, click
+patch: pysite/sitecustomize.py adds itertools.batched (Python 3.12 only); googlehydrology source is unmodified
+docs: see the README in the NeuralHydrology repo at src/openhydronet_eval/README.md
