@@ -1,0 +1,32 @@
+### channel=id25-rds04-regionmean-20261021 seq=2
+### host=login4
+### started=2026-10-21T20:28:57+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/id25-rds04-regionmean-20261021/payload/rds04_regionmean_payload_v001.tar.gz: OK
+tar: code/id25/__init__.py: time stamp 2026-10-21 20:29:35.5973847 is 37.750923092 s in the future
+tar: code/id25/regional_daily_storage.py: time stamp 2026-10-21 20:29:35.5557728 is 37.705824511 s in the future
+tar: code/id25/regional_regionmean.py: time stamp 2026-10-21 20:29:35.560612 is 37.709095993 s in the future
+tar: code/id25/regional_storage_observation.py: time stamp 2026-10-21 20:29:35.5596118 is 37.706761168 s in the future
+tar: code/id25/regional_storage_runtime.py: time stamp 2026-10-21 20:29:35.5596118 is 37.705273723 s in the future
+tar: code/scripts/example_regional_daily_storage.py: time stamp 2026-10-21 20:29:35.5695474 is 37.709925576 s in the future
+tar: code/scripts/run_regional_regionmean.py: time stamp 2026-10-21 20:29:35.5616114 is 37.700765972 s in the future
+tar: code/scripts/train_regional_regionmean.py: time stamp 2026-10-21 20:29:35.5616114 is 37.699461639 s in the future
+tar: config.json: time stamp 2026-10-21 20:29:35.5695474 is 37.706131357 s in the future
+tar: evaluation/c01_predictions.npz: time stamp 2026-10-21 20:29:35.5953784 is 37.725664939 s in the future
+tar: evaluation/reference.npz: time stamp 2026-10-21 20:29:35.5938618 is 37.721099046 s in the future
+tar: hpc/train.slurm: time stamp 2026-10-21 20:29:35.5705473 is 37.692295191 s in the future
+tar: inputs/application_inputs.npz: time stamp 2026-10-21 20:29:35.5938618 is 37.680454395 s in the future
+tar: inputs/input_receipt.json: time stamp 2026-10-21 20:29:35.584127 is 37.666688646 s in the future
+tar: inputs/rds01_history.npz: time stamp 2026-10-21 20:29:35.5903423 is 37.670926431 s in the future
+tar: inputs/transforms.json: time stamp 2026-10-21 20:29:35.5759244 is 37.655111693 s in the future
+tar: ops/submit.sh: time stamp 2026-10-21 20:29:35.723276 is 37.796604675 s in the future
+tar: provenance/2026-10-21-id25-rds04-regional-rmse-independent-review-v1.md: time stamp 2026-10-21 20:29:35.5953784 is 37.663120332 s in the future
+tar: provenance/2026-10-21-id25-rds04-regional-rmse-plan-v2.md: time stamp 2026-10-21 20:29:35.5953784 is 37.661403027 s in the future
+tar: provenance/minimal_check.json: time stamp 2026-10-21 20:29:35.723276 is 37.786599705 s in the future
+tar: provenance/test_id25_regionmean_objective.py: time stamp 2026-10-21 20:29:35.5953784 is 37.65743086 s in the future
+tar: source_manifest.json: time stamp 2026-10-21 20:29:35.723276 is 37.783587831 s in the future
+DEPLOYED_NO_REPEATED_PREFLIGHT
+SUBMITTED_JOB=246090
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T20:28:59+0800
