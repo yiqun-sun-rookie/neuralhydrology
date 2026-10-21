@@ -2,123 +2,202 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=5s 90s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'GLHYMPS2_SAVED_COMPUTE'
-"""Unpublished preparation: own-root byte fetch, one compute job, fixed read-only results."""
+exec timeout --signal=TERM --kill-after=5s 200s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'OTHER_SOURCES_METADATA'
+"""One finite HPC public-directory session; no GIS, source archives or Slurm."""
 import base64
 import datetime
 import hashlib
 import json
-import os
-from pathlib import Path
 import re
-import shutil
-import subprocess
+import resource
+import signal
 import time
+from html.parser import HTMLParser
+from urllib.error import HTTPError
+from urllib.parse import urljoin, urlparse
+from urllib.request import build_opener, HTTPRedirectHandler, ProxyHandler, Request
 import zlib
 
-ROOT=Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/glhymps2_saved_archive_27888_20261021_v1')
-MODE='status'
-PAYLOAD_B64=''
-START=time.monotonic()
-OWNED=False
-NAMES=['BRIDGE_FAILURE.json', 'DEPLOYMENT.json', 'SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'OWN_JOB_ID', 'COMPUTE_STARTED.json', 'FETCH_STARTED.json', 'FETCH_RECORDS.json', 'ARCHIVE_IDENTITY.json', 'ZIP_MEMBERS.json', 'ZIP_DIRECTORY.json', 'NATIVE_SCHEMA.json', 'FIELD_MAPPING.json', 'RAW_SUPPORT.json', 'SOURCE_UNCHANGED.json', 'AUDIT_RESULT.json', 'COMPUTE_FAILURE.json', 'BYTE_SOURCE_VERIFICATION.json']
+START = time.monotonic()
+REUSED_CGS_METADATA_B64 = 'eyJkYXRhIjp7ImlkIjoiMTAuMzUwODAvZGF0YS5jLjIwMjEucDIzIiwidHlwZSI6ImRvaXMiLCJhdHRyaWJ1dGVzIjp7ImRvaSI6IjEwLjM1MDgwL2RhdGEuYy4yMDIxLnAyMyIsInByZWZpeCI6IjEwLjM1MDgwIiwic3VmZml4IjoiZGF0YS5jLjIwMjEucDIzIiwiaWRlbnRpZmllcnMiOltdLCJhbHRlcm5hdGVJZGVudGlmaWVycyI6W10sImNyZWF0b3JzIjpbeyJuYW1lIjoi5q+N5rW35LicO+mZiOi+iTvlvKDlv5fpo5475byg5paMIiwibmFtZVR5cGUiOiJQZXJzb25hbCIsImdpdmVuTmFtZSI6bnVsbCwiZmFtaWx5TmFtZSI6Iuavjea1t+S4nDvpmYjovok75byg5b+X6aOeO+W8oOaWjCIsImFmZmlsaWF0aW9uIjpbXSwibmFtZUlkZW50aWZpZXJzIjpbXX1dLCJ0aXRsZXMiOlt7ImxhbmciOiJ6aCIsInRpdGxlIjoi5Lit5Zu95Zyw6LSo6LCD5p+l5bGAOiDlhajlm70x4oi2MjAwIDAwMOWMuuWfn+awtOaWh+WcsOi0qOWbvuepuumXtOaVsOaNruW6kyIsInRpdGxlVHlwZSI6IkFsdGVybmF0aXZlVGl0bGUifSx7ImxhbmciOiJlbiIsInRpdGxlIjoiTmF0aW9uYWwgMToyMDAsMDAwIFJlZ2lvbmFsIEh5ZHJvbG9naWNhbCBHZW9sb2dpY2FsIE1hcCBTcGF0aWFsIERhdGFiYXNlIiwidGl0bGVUeXBlIjoiQWx0ZXJuYXRpdmVUaXRsZSJ9XSwicHVibGlzaGVyIjoiR2Vvc2NpZW50aWZpYyBEYXRhIFx1MDAyNiBEaXNjb3ZlcnkgUHVibGlzaGluZyBTeXN0ZW0iLCJjb250YWluZXIiOnt9LCJwdWJsaWNhdGlvblllYXIiOjIwMjEsInN1YmplY3RzIjpbXSwiY29udHJpYnV0b3JzIjpbeyJuYW1lIjoi5q+N5rW35LicO+mZiOi+iTvlvKDlv5fpo5475byg5paMIiwibmFtZVR5cGUiOiJQZXJzb25hbCIsImdpdmVuTmFtZSI6bnVsbCwiZmFtaWx5TmFtZSI6bnVsbCwiYWZmaWxpYXRpb24iOltdLCJjb250cmlidXRvclR5cGUiOiJDb250YWN0UGVyc29uIiwibmFtZUlkZW50aWZpZXJzIjpbXX1dLCJkYXRlcyI6W3siZGF0ZSI6bnVsbCwiZGF0ZVR5cGUiOiJJc3N1ZWQiLCJkYXRlSW5mb3JtYXRpb24iOm51bGx9XSwibGFuZ3VhZ2UiOiJ6aCIsInR5cGVzIjp7InJpcyI6IkRBVEEiLCJiaWJ0ZXgiOiJtaXNjIiwiY2l0ZXByb2MiOiJkYXRhc2V0Iiwic2NoZW1hT3JnIjoiRGF0YXNldCIsInJlc291cmNlVHlwZUdlbmVyYWwiOiJEYXRhc2V0In0sInJlbGF0ZWRJZGVudGlmaWVycyI6W10sInJlbGF0ZWRJdGVtcyI6W10sInNpemVzIjpbXSwiZm9ybWF0cyI6W10sInZlcnNpb24iOiIxLjAuMCIsInJpZ2h0c0xpc3QiOltdLCJkZXNjcmlwdGlvbnMiOlt7ImxhbmciOiJ6aCIsImRlc2NyaXB0aW9uIjoi5YWo5Zu9MeKItjIwMCAwMDDljLrln5/msLTmloflnLDotKjlm77nqbrpl7TmlbDmja7lupPku6Xlu7rlm73lkI7lnKjlhajlm73ojIPlm7TlhoUo5pys5qyh5pyq5Zyo6aaZ5riv54m55Yir6KGM5pS/5Yy644CB5r6z6Zeo54m55Yir6KGM5pS/5Yy65ZKM5Y+w5rm+55yB5byA5bGV5bel5L2cKSAzMOS4quecgeW8gOWxleeahDHiiLYyMDAgMDAw5Yy65Z+f5rC05paH5Zyw6LSo5pmu5p+l5bel5L2c5omA5Y+W5b6X55qE5Yy65Z+f5rC05paH5Zyw6LSo5pmu5p+l5oql5ZGK44CB57u85ZCI5rC05paH5Zyw6LSo5Zu+562J5Zyw6LSo6LWE5paZ5Li65pWw5o2u5rqQ77yM5Zyo5Yi25a6a55qE4oCcMeKItjIwMCAwMDDljLrln5/msLTmloflnLDotKjlm77nqbrpl7TmlbDmja7lupPlm77lsYLlj4rlsZ7mgKfmlofku7bmoLzlvI/moIflh4bigJ3nmoTln7rnoYDkuIrvvIzlu7rmiJDkuobkuIDkuKrlhajlm73mgKfnmoTjgIHlpKflnovnmoTljLrln5/msLTmloflnLDotKjlrabnqbrpl7TmlbDmja7lupPjgILor6XmlbDmja7lupPmgLvlhbHph4fpm4bjgIHlpITnkIbkuoblhajlm73ojIPlm7TlhoUx4oi2MjAwIDAwMOWbvuW5heeahFx1MDAzY251bWJlclx1MDAzZTEgMDE3XHUwMDNjL251bWJlclx1MDAzZeW5heWFqOimgee0oOe7vOWQiOawtOaWh+WcsOi0qOWbvuS/oeaBr++8jOWFqOmDqOaVsOaNrumHj+e6pjUwIEdC44CC5pWw5o2u5bqT5ra155uW5LqG5LulMeKItjIwMCAwMDDlm73pmYXmoIflh4blm77luYXkuLrnrqHnkIbljZXkvY3nmoTmsLTmloflnLDotKjopoHntKDnqbrpl7TmlbDmja7lm77lsYLvvIzlhoXlrrnljIXmi6zvvJrlnLDnkIbopoHntKAo5Lqk6YCa5bGC44CB5rC057O75bGC44CB6KGM5pS/5Yy65YiS5bGC562JKe+8jOWfuuehgOWcsOi0qOimgee0oCjlnLDlsYLliIbljLrlsYLjgIHmlq3oo4LmnoTpgKDlsYIp77yM5rC05paH5Zyw6LSo6KaB57SgKOWcsOS4i+awtOexu+Wei+WxguOAgeWcsOS4i+awtOWvjOawtOaAp+WxguOAgeWcsOS4i+awtOi/s+a1geaooeaVsOWxgu+8jOWcsOS4i+awtOawtOi0qOWxguOAgeawtOaWh+WcsOi0qOeJueW+geWxguOAgeWcsOS4i+awtOWIqeeUqOinhOWIkuWxginvvIzkuJPpopjopoHntKAo57u85ZCI5rC05paH5Zyw6LSo5p+x54q25Zu+77yM5rC05paH5Zyw6LSo5YmW6Z2i5Zu+KSDlm5vlpKfnsbvov5EzMOS4quimgee0oOWbvuWxguOAguepuumXtOaVsOaNruW6k+S4u+imgemHh+eUqE1hcEdJU+WcsOeQhuS/oeaBr+ezu+e7n+agvOW8j+WtmOWCqO+8jOW9ouaIkOS6huebruWJjeWbveWGheimhuebluiMg+WbtOacgOW5v+OAgeWMheWQq+S/oeaBr+acgOWujOaVtOeahOWMuuWfn+awtOaWh+WcsOi0qOWbvuepuumXtOaVsOaNruW6k+aIkOaenO+8jOaYr+WcsOi0qOmihuWfn+WFqOWbveaAp+acgOmHjeimgeeahOWfuuehgOS/oeaBr+i1hOa6kOS5i+S4gOOAgiIsImRlc2NyaXB0aW9uVHlwZSI6IkFic3RyYWN0In1dLCJnZW9Mb2NhdGlvbnMiOltdLCJmdW5kaW5nUmVmZXJlbmNlcyI6W10sInhtbCI6IlBEOTRiV3dnZG1WeWMybHZiajBpTVM0d0lpQmxibU52WkdsdVp6MGlWVlJHTFRnaVB6NEtQSEpsYzI5MWNtTmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1elBTSm9kSFJ3T2k4dlpHRjBZV05wZEdVdWIzSm5MM05qYUdWdFlTOXJaWEp1Wld3dE5DSWdlSE5wT25OamFHVnRZVXh2WTJGMGFXOXVQU0pvZEhSd09pOHZaR0YwWVdOcGRHVXViM0puTDNOamFHVnRZUzlyWlhKdVpXd3ROQ0JvZEhSd09pOHZjMk5vWlcxaExtUmhkR0ZqYVhSbExtOXlaeTl0WlhSaEwydGxjbTVsYkMwMEwyMWxkR0ZrWVhSaExuaHpaQ0krQ2lBZ1BHbGtaVzUwYVdacFpYSWdhV1JsYm5ScFptbGxjbFI1Y0dVOUlrUlBTU0krTVRBdU16VXdPREF2UkVGVVFTNURMakl3TWpFdVVESXpQQzlwWkdWdWRHbG1hV1Z5UGdvZ0lEeGpjbVZoZEc5eWN6NEtJQ0FnSUR4amNtVmhkRzl5UGdvZ0lDQWdJQ0E4WTNKbFlYUnZjazVoYldVZ2JtRnRaVlI1Y0dVOUlsQmxjbk52Ym1Gc0lqN21yNDNtdGJma3VKdzc2Wm1JNkw2Sk8rVzhvT1cvbCttam5qdmx2S0RtbG93OEwyTnlaV0YwYjNKT1lXMWxQZ29nSUNBZ0lDQThabUZ0YVd4NVRtRnRaVDdtcjQzbXRiZmt1Snc3NlptSTZMNkpPK1c4b09XL2wrbWpuanZsdktEbWxvdzhMMlpoYldsc2VVNWhiV1UrQ2lBZ0lDQThMMk55WldGMGIzSStDaUFnUEM5amNtVmhkRzl5Y3o0S0lDQThkR2wwYkdWelBnb2dJQ0FnUEhScGRHeGxJSFJwZEd4bFZIbHdaVDBpUVd4MFpYSnVZWFJwZG1WVWFYUnNaU0lnZUcxc09teGhibWM5SW5wb0lqN2t1SzNsbTczbG5MRG90S2pvc0lQbW42WGxzWUE2SU9XRnFPV2J2VEhpaUxZeU1EQWdNREF3NVl5NjVaK2Y1ckMwNXBhSDVaeXc2TFNvNVp1KzU2bTY2WmUwNXBXdzVvMnU1YnFUUEM5MGFYUnNaVDRLSUNBZ0lEeDBhWFJzWlNCMGFYUnNaVlI1Y0dVOUlrRnNkR1Z5Ym1GMGFYWmxWR2wwYkdVaUlIaHRiRHBzWVc1blBTSmxiaUkrVG1GMGFXOXVZV3dnTVRveU1EQXNNREF3SUZKbFoybHZibUZzSUVoNVpISnZiRzluYVdOaGJDQkhaVzlzYjJkcFkyRnNJRTFoY0NCVGNHRjBhV0ZzSUVSaGRHRmlZWE5sUEM5MGFYUnNaVDRLSUNBOEwzUnBkR3hsY3o0S0lDQThjSFZpYkdsemFHVnlQa2RsYjNOamFXVnVkR2xtYVdNZ1JHRjBZU0FtWVcxd095QkVhWE5qYjNabGNua2dVSFZpYkdsemFHbHVaeUJUZVhOMFpXMDhMM0IxWW14cGMyaGxjajRLSUNBOGNIVmliR2xqWVhScGIyNVpaV0Z5UGpJd01qRThMM0IxWW14cFkyRjBhVzl1V1dWaGNqNEtJQ0E4Y21WemIzVnlZMlZVZVhCbElISmxjMjkxY21ObFZIbHdaVWRsYm1WeVlXdzlJa1JoZEdGelpYUWlMejRLSUNBOFkyOXVkSEpwWW5WMGIzSnpQZ29nSUNBZ1BHTnZiblJ5YVdKMWRHOXlJR052Ym5SeWFXSjFkRzl5Vkhsd1pUMGlRMjl1ZEdGamRGQmxjbk52YmlJK0NpQWdJQ0FnSUR4amIyNTBjbWxpZFhSdmNrNWhiV1VnYm1GdFpWUjVjR1U5SWxCbGNuTnZibUZzSWo3bXI0M210YmZrdUp3NzZabUk2TDZKTytXOG9PVy9sK21qbmp2bHZLRG1sb3c4TDJOdmJuUnlhV0oxZEc5eVRtRnRaVDRLSUNBZ0lEd3ZZMjl1ZEhKcFluVjBiM0krQ2lBZ1BDOWpiMjUwY21saWRYUnZjbk0rQ2lBZ1BHUmhkR1Z6UGdvZ0lDQWdQR1JoZEdVZ1pHRjBaVlI1Y0dVOUlrbHpjM1ZsWkNJdlBnb2dJRHd2WkdGMFpYTStDaUFnUEd4aGJtZDFZV2RsUG5wb1BDOXNZVzVuZFdGblpUNEtJQ0E4YzJsNlpYTXZQZ29nSUR4bWIzSnRZWFJ6THo0S0lDQThkbVZ5YzJsdmJqNHhMakF1TUR3dmRtVnljMmx2Ymo0S0lDQThaR1Z6WTNKcGNIUnBiMjV6UGdvZ0lDQWdQR1JsYzJOeWFYQjBhVzl1SUhodGJEcHNZVzVuUFNKNmFDSWdaR1Z6WTNKcGNIUnBiMjVVZVhCbFBTSkJZbk4wY21GamRDSSs1WVdvNVp1OU1lS0l0akl3TUNBd01ERGxqTHJsbjUvbXNMVG1sb2ZsbkxEb3RLamxtNzducWJycGw3VG1sYkRtamE3bHVwUGt1NlhsdTdybG03M2xrSTdsbktqbGhhamxtNzNvaklQbG03VGxob1VvNXB5czVxeWg1cHlxNVp5bzZhYVo1cml2NTRtNTVZaXI2S0dNNXBTLzVZeTY0NENCNXI2ejZaZW81NG01NVlpcjZLR001cFMvNVl5NjVaS001WSt3NXJtKzU1eUI1YnlBNWJHVjViZWw1TDJjS1NBek1PUzRxdWVjZ2VXOGdPV3hsZWVhaERIaWlMWXlNREFnTURBdzVZeTY1WitmNXJDMDVwYUg1Wnl3NkxTbzVwbXU1cCtsNWJlbDVMMmM1b21BNVkrVzViNlg1NXFFNVl5NjVaK2Y1ckMwNXBhSDVaeXc2TFNvNXBtdTVwK2w1b3FsNVpHSzQ0Q0I1N3U4NVpDSTVyQzA1cGFINVp5dzZMU281WnUrNTYySjVaeXc2TFNvNkxXRTVwYVo1TGk2NXBXdzVvMnU1cnFRNzd5TTVaeW81WWkyNWE2YTU1cUU0b0NjTWVLSXRqSXdNQ0F3TUREbGpMcmxuNS9tc0xUbWxvZmxuTERvdEtqbG03N25xYnJwbDdUbWxiRG1qYTdsdXBQbG03N2xzWUxsajRybHNaN21nS2ZtbG9ma3U3Ym1vTHpsdkkvbW9JZmxoNGJpZ0ozbm1vVGxuN3Jub1lEa3VJcnZ2SXpsdTdybWlKRGt1b2JrdUlEa3VLcmxoYWpsbTczbWdLZm5tb1RqZ0lIbHBLZmxub3ZubW9UbGpMcmxuNS9tc0xUbWxvZmxuTERvdEtqbHJhYm5xYnJwbDdUbWxiRG1qYTdsdXBQamdJTG9yNlhtbGJEbWphN2x1cFBtZ0x2bGhiSHBoNGZwbTRiamdJSGxwSVRua0lia3VvYmxoYWpsbTczb2pJUGxtN1RsaG9VeDRvaTJNakF3SURBd01PV2J2dVc1aGVlYWhDWnNkRHR1ZFcxaVpYSW1aM1E3TVNBd01UY21iSFE3TDI1MWJXSmxjaVpuZER2bHVZWGxoYWpvcG9IbnRLRG51N3psa0lqbXNMVG1sb2ZsbkxEb3RLamxtNzdrdjZIbWdhL3Z2SXpsaGFqcGc2am1sYkRtamE3cGg0L251cVkxTUNCSFF1T0FndWFWc09hTnJ1VzZrK2EydGVlYmx1UzZodVM3cFRIaWlMWXlNREFnTURBdzVadTk2Wm1GNXFDSDVZZUc1WnUrNWJtRjVMaTY1NjZoNTVDRzVZMlY1TDJONTVxRTVyQzA1cGFINVp5dzZMU282S2FCNTdTZzU2bTY2WmUwNXBXdzVvMnU1WnUrNWJHQzc3eU01WWFGNWE2NTVZeUY1b3VzNzd5YTVaeXc1NUNHNkthQjU3U2dLT1M2cE9tQW11V3hndU9BZ2Vhd3RPZXp1K1d4Z3VPQWdlaWhqT2FVditXTXV1V0lrdVd4Z3VldGlTbnZ2SXpsbjdybm9ZRGxuTERvdEtqb3BvSG50S0FvNVp5dzViR0M1WWlHNVl5NjViR0M0NENCNXBhdDZLT0M1cDZFNllDZzViR0NLZSs4ak9hd3RPYVdoK1djc09pMHFPaW1nZWUwb0NqbG5MRGt1SXZtc0xUbnNidmxub3Zsc1lMamdJSGxuTERrdUl2bXNMVGxyNHptc0xUbWdLZmxzWUxqZ0lIbG5MRGt1SXZtc0xUb3Y3UG10WUhtcUtIbWxiRGxzWUx2dkl6bG5MRGt1SXZtc0xUbXNMVG90S2psc1lMamdJSG1zTFRtbG9mbG5MRG90S2puaWJubHZvSGxzWUxqZ0lIbG5MRGt1SXZtc0xUbGlLbm5sS2pvcDRUbGlKTGxzWUlwNzd5TTVMaVQ2YUtZNkthQjU3U2dLT2U3dk9XUWlPYXd0T2FXaCtXY3NPaTBxT2Fmc2VlS3R1V2J2dSs4ak9hd3RPYVdoK1djc09pMHFPV0psdW1kb3VXYnZpa2c1WnViNWFTbjU3Rzc2TCtSTXpEa3VLcm9wb0hudEtEbG03N2xzWUxqZ0lMbnFicnBsN1RtbGJEbWphN2x1cFBrdUx2b3BvSHBoNGZubEtoTllYQkhTVlBsbkxEbmtJYmt2NkhtZ2EvbnM3dm51NS9tb0x6bHZJL2xyWmpsZ3FqdnZJemx2YUxtaUpEa3VvYm5tNjdsaVkzbG03M2xob1hvcG9ibm01Ym9qSVBsbTdUbW5JRGx1Yi9qZ0lIbGpJWGxrS3ZrdjZIbWdhL21uSURscm96bWxiVG5tb1RsakxybG41L21zTFRtbG9mbG5MRG90S2psbTc3bnFicnBsN1RtbGJEbWphN2x1cFBtaUpEbW5wenZ2SXptbUsvbG5MRG90S2pwb29ibG41L2xoYWpsbTczbWdLZm1uSURwaDQzb3BvSG5tb1Rsbjdybm9ZRGt2NkhtZ2Evb3RZVG11cERrdVl2a3VJRGpnSUk4TDJSbGMyTnlhWEIwYVc5dVBnb2dJRHd2WkdWelkzSnBjSFJwYjI1elBnbzhMM0psYzI5MWNtTmxQZ289IiwidXJsIjoiaHR0cDovL2RjYy5jZ3MuZ292LmNuL2NuL2dlb2xvZ2ljYWxEYXRhL2RldGFpbHMvZG9pLzEwLjM1MDgwL2RhdGEuQy4yMDIxLlAyMyIsImNvbnRlbnRVcmwiOm51bGwsIm1ldGFkYXRhVmVyc2lvbiI6MSwic2NoZW1hVmVyc2lvbiI6Imh0dHA6Ly9kYXRhY2l0ZS5vcmcvc2NoZW1hL2tlcm5lbC00Iiwic291cmNlIjoiZmFicmljYUZvcm0iLCJpc0FjdGl2ZSI6dHJ1ZSwic3RhdGUiOiJmaW5kYWJsZSIsInJlYXNvbiI6bnVsbCwidmlld0NvdW50IjowLCJ2aWV3c092ZXJUaW1lIjpbXSwiZG93bmxvYWRDb3VudCI6MCwiZG93bmxvYWRzT3ZlclRpbWUiOltdLCJyZWZlcmVuY2VDb3VudCI6MCwiY2l0YXRpb25Db3VudCI6MCwiY2l0YXRpb25zT3ZlclRpbWUiOltdLCJwYXJ0Q291bnQiOjAsInBhcnRPZkNvdW50IjowLCJ2ZXJzaW9uQ291bnQiOjAsInZlcnNpb25PZkNvdW50IjowLCJjcmVhdGVkIjoiMjAyMi0xMC0xOFQwNTo1OTowNS4wMDBaIiwicmVnaXN0ZXJlZCI6IjIwMjItMTAtMThUMDU6NTk6MDUuMDAwWiIsInB1Ymxpc2hlZCI6IjIwMjEiLCJ1cGRhdGVkIjoiMjAyNS0wMy0wN1QwMjo0NTo0Mi4wMDBaIn0sInJlbGF0aW9uc2hpcHMiOnsiY2xpZW50Ijp7ImRhdGEiOnsiaWQiOiJjZ3MuZ2RkIiwidHlwZSI6ImNsaWVudHMifX0sInByb3ZpZGVyIjp7ImRhdGEiOnsiaWQiOiJjZ3MiLCJ0eXBlIjoicHJvdmlkZXJzIn19LCJtZWRpYSI6eyJkYXRhIjp7ImlkIjoiMTAuMzUwODAvZGF0YS5jLjIwMjEucDIzIiwidHlwZSI6Im1lZGlhIn19LCJyZWZlcmVuY2VzIjp7ImRhdGEiOltdfSwiY2l0YXRpb25zIjp7ImRhdGEiOltdfSwicGFydHMiOnsiZGF0YSI6W119LCJwYXJ0T2YiOnsiZGF0YSI6W119LCJ2ZXJzaW9ucyI6eyJkYXRhIjpbXX0sInZlcnNpb25PZiI6eyJkYXRhIjpbXX19fX0='
+CGS_SHA = '8e11830ddf7eaefc75394de08476bd29d59590a1da32c851a36f9201460782df'
+ENDPOINTS = [
+    ('CGS_REGISTERED', 'http://dcc.cgs.gov.cn/cn/geologicalData/details/doi/10.35080/data.C.2021.P23'),
+    ('CGS_NGAC', 'http://dcc.ngac.org.cn/cn/geologicalData/details/doi/10.35080/data.C.2021.P23'),
+    ('GLEESON2011_README', 'https://agupubs.onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1029%2F2010GL045565&file=grl27631-sup-0001-readme.txt'),
+    ('JGCRI_METADATA', 'https://zenodo.org/api/records/10631421'),
+]
 
-def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-def sha(raw):return hashlib.sha256(raw).hexdigest()
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, *_args, **_kwargs):
+        return None
 
-def save(name,value):
-    raw=(json.dumps(value,ensure_ascii=False,indent=2,allow_nan=False)+'\n').encode()
-    assert len(raw)<=2*1024**2
-    with (ROOT/name).open('xb') as f:f.write(raw)
 
-def query(command,seconds=9,env=None):
-    try:
-        p=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=seconds,env=env)
-        assert len(p.stdout)<=131072 and len(p.stderr)<=131072
-        return dict(command=command,exit_code=p.returncode,stdout=p.stdout.decode(errors='replace'),stderr=p.stderr.decode(errors='replace'),server_utc=utc())
-    except subprocess.TimeoutExpired as e:
-        return dict(command=command,exit_code=None,error='TIMEOUT_UNKNOWN',stdout=(e.stdout or b'').decode(errors='replace')[:131072],stderr=(e.stderr or b'').decode(errors='replace')[:131072],server_utc=utc())
+class Links(HTMLParser):
+    def __init__(self):
+        super().__init__(); self.links = []; self.titles = []; self.in_title = False
 
-def deploy():
-    global OWNED
-    assert not ROOT.exists(),'OWN_ROOT_EXISTS_NEVER_REPLAY'
-    assert ROOT.parent.resolve(strict=True)==ROOT.parent and shutil.disk_usage(ROOT.parent).free>=32*1024**3
-    raw=zlib.decompress(base64.b64decode(PAYLOAD_B64,validate=True));assert len(raw)<512*1024
-    payload=json.loads(raw)
-    assert set(payload)=={'CONTRACT.json', 'glhymps2_saved_archive_27888_20261021_v1.sbatch', 'glhymps2_saved_archive_27888_20261021_v1.py'}
-    c=json.loads(base64.b64decode(payload['CONTRACT.json']['base64'],validate=True))
-    assert c['root']==str(ROOT) and c['source_acquisition_attempts']==0
-    source=Path(c['byte_source']['root'])
-    assert str(source)=='/data1/home/sunyiq/china_input_completion_hpc_20261015_001/glhymps2_hpc_byte_stage_20261021_v2'
-    assert source.resolve(strict=True)==source
-    assert set(c['byte_source']['records'])=={'ARCHIVE_IDENTITY.json','BYTE_RESULT.json','CONTROL_RESULT.json','CONTROL_FINAL.json'}
-    source_records={}
-    for name,desc in c['byte_source']['records'].items():
-        path=source/name;assert path.resolve(strict=True)==path and not path.is_symlink()
-        body=path.read_bytes();assert len(body)==desc['bytes']<=2*1024**2 and sha(body)==desc['sha256']
-        source_records[name]=json.loads(body)
-    assert not any((source/n).exists() for n in ('BYTE_FAILURE.json','CONTROL_FAILURE.json','BRIDGE_FAILURE.json'))
-    assert source_records['CONTROL_RESULT.json']['exit_code']==0 and source_records['CONTROL_RESULT.json']['complete_logs'] is True
-    assert source_records['CONTROL_RESULT.json']['body_bytes_complete_accepted'] is True
-    assert source_records['CONTROL_FINAL.json']['control_sha256']==c['byte_source']['records']['CONTROL_RESULT.json']['sha256']
-    assert source_records['CONTROL_FINAL.json']['body_bytes_complete_accepted'] is True
-    archive=Path(c['archive']['path']);assert archive==source/'GLHYMPS2_original.zip'
-    assert archive.resolve(strict=True)==archive and not archive.is_symlink() and archive.stat().st_size==2595563951
-    ROOT.mkdir(mode=0o700);OWNED=True;(ROOT/'logs').mkdir()
-    save('BYTE_SOURCE_VERIFICATION.json',dict(source_root=str(source),records=c['byte_source']['records'],archive_stat_bytes=archive.stat().st_size,source_gets=0))
-    deployed={}
-    for name,row in payload.items():
-        body=base64.b64decode(row['base64'],validate=True)
-        assert len(body)==row['bytes']<=131072 and sha(body)==row['sha256']
-        with (ROOT/name).open('xb') as f:f.write(body)
-        deployed[name]=dict(bytes=len(body),sha256=sha(body))
-    c=json.loads((ROOT/'CONTRACT.json').read_bytes());assert c['root']==str(ROOT)
-    save('DEPLOYMENT.json',dict(files=deployed,original_downloads=0,private_fetches=0,scientific_values_parsed=0,server_utc=utc()))
-    save('SUBMISSION_STARTED.json',dict(max_new_jobs=1,automatic_retries=0,server_utc=utc()))
-    sub=query(['sbatch',str(ROOT/'glhymps2_saved_archive_27888_20261021_v1.sbatch')],15);save('SUBMISSION_RESULT.json',sub)
-    found=re.findall(r'^Submitted batch job ([0-9]+)\s*$',sub['stdout'],re.M)
-    assert sub['exit_code']==0 and len(found)==1,'UNKNOWN_SUBMISSION_NEVER_REPLAY'
-    with (ROOT/'OWN_JOB_ID').open('x') as f:f.write(found[0]+'\n')
-    return found[0]
+    def handle_starttag(self, tag, attrs):
+        self.in_title = self.in_title or tag.lower() == 'title'
+        if tag.lower() == 'a' and len(self.links) < 100:
+            href = dict(attrs).get('href')
+            if href is not None and len(href) <= 2048:
+                self.links.append(href)
+
+    def handle_endtag(self, tag):
+        if tag.lower() == 'title': self.in_title = False
+
+    def handle_data(self, value):
+        if self.in_title and len(self.titles) < 20: self.titles.append(value[:1000])
+
+
+def expired(*_):
+    raise TimeoutError('Frozen public metadata deadline')
+
+
+def allowed(url, name):
+    p = urlparse(url); host = (p.hostname or '').lower()
+    assert p.scheme in ('http', 'https') and p.port in (None, 80, 443)
+    assert p.username is None and p.password is None and not p.fragment
+    if name.startswith('CGS_'):
+        assert host.endswith('.cgs.gov.cn') or host.endswith('.ngac.org.cn')
+    elif name == 'GLEESON2011_README':
+        assert p.scheme == 'https' and host in ('agupubs.onlinelibrary.wiley.com', 'onlinelibrary.wiley.com')
+    else:
+        assert name == 'JGCRI_METADATA' and p.scheme == 'https' and host in ('zenodo.org', 'www.zenodo.org')
+    assert not re.search(r'\.(zip|7z|gz|tif|tiff|nc|shp|dbf|csv)(?:$|[?#])', url, re.I)
+    assert '/api/access/datafile/' not in p.path
+
 
 def main():
-    job=None;error=None
-    try:
-        if MODE=='deploy':job=deploy()
-        else:
-            assert MODE=='status' and ROOT.resolve(strict=True)==ROOT
-            job=(ROOT/'OWN_JOB_ID').read_text().strip()
-        assert re.fullmatch('[0-9]+',job)
-    except BaseException as e:
-        job=None;error=dict(error_type=type(e).__name__,message=str(e)[:1200],server_utc=utc())
-        if MODE=='deploy' and OWNED and not (ROOT/'BRIDGE_FAILURE.json').exists():save('BRIDGE_FAILURE.json',error)
-    queries={}
-    if job is not None:
-        queries=dict(squeue=query(['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),
-            sacct=query(['sacct','-X','-S','2026-10-21','-j',job,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
-            scontrol=query(['scontrol','show','job',job,'-o']))
-    names=NAMES+(['logs/recovery-'+job+'.out','logs/recovery-'+job+'.err'] if job is not None else [])
-    records={};total=0
-    for name in names:
-        path=ROOT/name
-        if not path.exists():records[name]=dict(present=False);continue
-        assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
-        a=path.stat();assert a.st_size<=2*1024**2
-        raw=path.read_bytes();b=path.stat()
-        assert (a.st_size,a.st_mtime_ns)==(b.st_size,b.st_mtime_ns) and len(raw)==a.st_size
-        total+=len(raw);assert total<=6*1024**2
-        records[name]=dict(present=True,bytes=len(raw),sha256=sha(raw),base64=base64.b64encode(raw).decode())
-    body=json.dumps(dict(root=str(ROOT),job_id=job,queries=queries,records=records,bridge_error=error,
-        server_utc=utc(),seconds=time.monotonic()-START,candidate_only=True,
-        scientific_input_accepted=False,prediction_approved=False,
-        model_calls=0,automatic_checks_enabled=False),ensure_ascii=False,separators=(',',':')).encode()
-    assert len(body)<=8*1024**2
-    print('GEOLOGY_RECOVERY_BYTES='+str(len(body)))
-    print('GEOLOGY_RECOVERY_SHA256='+sha(body))
-    print('GEOLOGY_RECOVERY_ZLIB_BASE64='+base64.b64encode(zlib.compress(body)).decode())
-    print('GEOLOGY_RECOVERY_DONE',flush=True)
+    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024**2, resource.getrlimit(resource.RLIMIT_AS)[1]))
+    signal.signal(signal.SIGALRM, expired)
+    original = base64.b64decode(REUSED_CGS_METADATA_B64, validate=True)
+    assert len(original) == 7559 and hashlib.sha256(original).hexdigest() == CGS_SHA
+    a = json.loads(original)['data']['attributes']
+    assert a['doi'].lower() == '10.35080/data.c.2021.p23' and a['version'] == '1.0.0'
+    result = dict(kind='GAP27888_OTHER_SOURCES_METADATA', member='27888',
+        complete=False, metadata_session_finished=False, responses=[], documents=[],
+        reused_registry=dict(bytes=len(original), sha256=CGS_SHA, base64=REUSED_CGS_METADATA_B64,
+            version=a['version'], publication_year=a['publicationYear'], url=a['url'],
+            survey_epoch='UNKNOWN', original_data_license='UNKNOWN'),
+        new_jobs=0, source_content_reads=0, source_decoding=0, source_writes=0,
+        scientific_archives_downloaded=0, model_calls=0, automatic_checks_enabled=False,
+        scientific_input_accepted=False, prediction_approved=False,
+        permeability_units_verified=False, porosity_units_verified=False,
+        member_coverage='UNKNOWN_NOT_SPATIALLY_COMPUTED')
+    opener = build_opener(ProxyHandler({}), NoRedirect())
+    total = 0; requests = 0
+    for name, initial in ENDPOINTS:
+        url = initial; doc = dict(name=name, initial_url=initial, acquired=False)
+        result['documents'].append(doc)
+        for hop in range(2):
+            assert requests < 8 and total <= 2 * 1024**2
+            remaining = 190 - (time.monotonic() - START)
+            if remaining <= 1 or total == 2 * 1024**2:
+                doc['error'] = 'FROZEN_SESSION_LIMIT'; break
+            allowed(url, name); requests += 1
+            limit = min(20, remaining - 1); began = time.monotonic()
+            row = dict(name=name, hop=hop, url=url, status=None, complete=False)
+            result['responses'].append(row); response = None; raw = b''
+            signal.setitimer(signal.ITIMER_REAL, limit)
+            try:
+                req = Request(url, headers={'User-Agent':'china-gap27888-public-directory/1',
+                                            'Accept-Encoding':'identity'})
+                try: response = opener.open(req, timeout=limit)
+                except HTTPError as error: response = error
+                row.update(status=response.code, content_type=response.headers.get('Content-Type'),
+                    declared_length=response.headers.get('Content-Length'),
+                    content_encoding=response.headers.get('Content-Encoding', 'identity'),
+                    location=response.headers.get('Location'))
+                assert row['content_encoding'] == 'identity', 'Compressed metadata not accepted'
+                typ = (row['content_type'] or '').split(';')[0].strip().lower()
+                assert typ.startswith('text/') or typ in ('application/json','application/vnd.api+json',
+                    'application/xml','application/xhtml+xml'), 'Metadata text only'
+                cap = min(512 * 1024, 2 * 1024**2 - total)
+                declared = row['declared_length']
+                assert declared is not None and 0 <= int(declared) <= cap, 'Exact Content-Length and metadata body budget'
+                raw = response.read(cap); total += len(raw)
+                row.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(),
+                           base64=base64.b64encode(raw).decode())
+                assert len(raw) < cap or (declared is not None and int(declared) == len(raw)), 'Possible truncated body'
+                assert int(declared) == len(raw), 'Metadata length mismatch'
+                response.close(); response = None
+                assert time.monotonic() - began < limit, 'Request time limit after close'
+                row['complete'] = True
+            except MemoryError:
+                raise
+            except Exception as error:
+                row['error'] = dict(type=type(error).__name__, message=str(error)[:700])
+            finally:
+                try:
+                    if response is not None: response.close()
+                except Exception as error:
+                    row['complete'] = False
+                    row['close_error'] = repr(error)[:700]
+                finally:
+                    signal.setitimer(signal.ITIMER_REAL, 0)
+                row['seconds'] = time.monotonic() - began
+                if row['seconds'] >= limit:
+                    row['complete'] = False; row['time_gate_failed'] = True
+            if not row['complete']: break
+            if row['status'] in (301,302,303,307,308) and row['location']:
+                try:
+                    target = urljoin(url, row['location']); allowed(target, name)
+                    if urlparse(url).scheme == 'https': assert urlparse(target).scheme == 'https', 'No TLS downgrade'
+                    row['redirect_target'] = target
+                except MemoryError:
+                    raise
+                except Exception as error:
+                    row['redirect_validation_error'] = repr(error)[:700]
+                    doc['error'] = 'REDIRECT_NOT_FOLLOWED'
+                    break
+                if hop == 1: doc['error'] = 'MAXIMUM_ONE_REDIRECT'; break
+                url = target; continue
+            if row['status'] != 200:
+                doc['error'] = 'HTTP_STATUS_' + str(row['status']); break
+            try:
+                text = raw.decode('utf8', errors='replace')
+                parser = Links(); parser.feed(text)
+            except MemoryError:
+                raise
+            except Exception as error:
+                doc['error'] = 'SOURCE_DOCUMENT_PARSE_ERROR'
+                doc['parse_error'] = repr(error)[:700]
+                break
+            doc.update(acquired=True, final_url=url, response_index=len(result['responses'])-1,
+                title=' '.join(parser.titles), links=parser.links,
+                excerpt=text[:5000], semantic_admission='UNKNOWN_MANUAL_ORIGINAL_REVIEW_REQUIRED')
+            if name == 'JGCRI_METADATA':
+                try:
+                    j = json.loads(raw); assert j['id'] == 10631421
+                    m = j['metadata']; doc.update(title=m['title'], version=m.get('version'),
+                        publication_date=m.get('publication_date'), description=m.get('description'),
+                        files=[dict(key=f['key'], size=f['size'], checksum=f.get('checksum'),
+                                    links=f.get('links')) for f in j.get('files',[])])
+                except MemoryError:
+                    raise
+                except Exception as error:
+                    doc['catalogue_parse_error'] = repr(error)[:700]
+            break
+    result.update(metadata_session_finished=True, requests=requests, received_body_bytes=total,
+        server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), seconds=time.monotonic()-START)
+    assert result['seconds'] < 190 and requests <= 8 and total <= 2*1024**2
+    result['complete'] = all(d['acquired'] for d in result['documents'])
+    return result
 
-if __name__=='__main__':main()
 
-GLHYMPS2_SAVED_COMPUTE
+if __name__ == '__main__':
+    value = main()
+    raw = (json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(',',':'))+'\n').encode()
+    assert len(raw) <= 4*1024**2 and time.monotonic()-START < 190
+    encoded = base64.b64encode(zlib.compress(raw)).decode()
+    assert time.monotonic()-START < 190
+    print('GEOLOGY_RECOVERY_BYTES='+str(len(raw)))
+    print('GEOLOGY_RECOVERY_SHA256='+hashlib.sha256(raw).hexdigest())
+    print('GEOLOGY_RECOVERY_ZLIB_BASE64='+encoded)
+    print('GEOLOGY_RECOVERY_DONE', flush=True)
+    assert time.monotonic()-START < 190, 'Final output/flush deadline exceeded; nonzero exit'
+
+OTHER_SOURCES_METADATA
