@@ -261,3 +261,5 @@ git rm inbox/seq
 | `china-tws-haihe-recovery01-20261020` | Haihe recovery two fixed climate models | isolated 20261020 root; no other jobs modified |
 
 | `knet-state-cont5-20261020-001` | Authorized SC-CONTINUOUS5-01 paired five-call training diagnostic | 2026-10-20 | Only state_channel_continuous5_20261020_001, one 020 paired five-call job, 3 hour cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-mix5-20261021-001` | Authorized SC-MIXFIRST5-01 paired five-call training diagnostic | 2026-10-21 | Only state_channel_mixfirst5_20261021_001, one 020 paired five-call job, 3 hour cap, no repeat submission; preserve shared receiver and all other tasks. |
