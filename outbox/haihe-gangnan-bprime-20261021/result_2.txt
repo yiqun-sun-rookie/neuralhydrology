@@ -1,0 +1,23 @@
+### channel=haihe-gangnan-bprime-20261021 seq=2
+### host=login4
+### started=2026-10-21T17:30:25+0800
+### ---------- output ----------
+=== STATUS ===
+2026-10-21T17:30:25+0800
+245971_[0-23%6] hgpu8 PENDING (Dependency) N/A
+245972 hgpu8 PENDING (Dependency) N/A
+245970 hgpu8 RUNNING ngu201 2026-10-21T17:30:36
+=== FIX AGGREGATE ===
+old aggregate state: PENDING
+2:#SBATCH --dependency=afterany:245971
+4:#SBATCH -p hgpu8
+18:conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
+19:export MKL_THREADING_LAYER=GNU
+20:export MKL_SERVICE_FORCE_INTEL=1
+cancelled own pending 245972
+Submitted batch job 245974
+245974 PENDING (Dependency)
+AGG_RESUBMITTED new=245974
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T17:30:26+0800
