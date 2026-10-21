@@ -1,20 +1,36 @@
 #!/bin/bash
 set -o pipefail
-# screening evaluation: per-basin NSE of the four tune_v* runs on the held-out window 2006-10-01..2008-09-30 (read-only on runs)
+# Create the read-only shared install /data1/home/sunyiq/openhydronet_shared from this task's own landing dir, verify it, and run one GPU smoke job through the template.
 ROOT=/data1/home/sunyiq/openhydronet_531_20261015
-P3="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v3"
+SH=/data1/home/sunyiq/openhydronet_shared
+P6="$HOME/hpc_mailbox/inbox/openhydronet-531-20261015/payload/v6"
 date --iso-8601=seconds
-source ~/miniconda3/etc/profile.d/conda.sh; conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-export PYTHONPATH="$ROOT/pysite"
-mkdir -p "$ROOT/results"
-for V in v0 v1 v2 v3; do
-  D=$(ls -td "$ROOT"/runs/tune_${V}_* 2>/dev/null | head -1)
-  Z=$(ls -d "$D"/test/model_epoch0*/test_results.zarr 2>/dev/null | tail -1)
-  echo "=============== tune_$V : $(basename "$D")  zarr=${Z:+ok}${Z:-MISSING}"
-  [ -n "$Z" ] || continue
-  nice -n 10 python "$P3/ohn_eval.py" "$Z" 2006-10-01 2008-09-30 "$ROOT/results/tune_${V}_nse_by_step.csv" 2>&1 | grep -v -i warn | head -4
-done
-echo "=== CSV_BEGIN (basin, nse_0 of v0 v1 v2 v3)"
-paste -d, <(cut -d, -f1,3 "$ROOT/results/tune_v0_nse_by_step.csv") <(cut -d, -f3 "$ROOT/results/tune_v1_nse_by_step.csv") <(cut -d, -f3 "$ROOT/results/tune_v2_nse_by_step.csv") <(cut -d, -f3 "$ROOT/results/tune_v3_nse_by_step.csv")
-echo "=== CSV_END"
+for f in env.sh run_template.slurm VERSION README.md; do [ -f "$P6/$f" ] || { echo "MISSING payload $f"; exit 1; }; done
+if [ -e "$SH" ]; then echo "EXISTS $SH - not overwriting"; ls -la "$SH" | head; exit 0; fi
+mkdir -p "$SH" || exit 1
+cp -a "$ROOT/pysite" "$SH/pysite" && cp -a "$ROOT/src/flood-forecasting" "$SH/flood-forecasting" || { echo "COPY_FAILED"; exit 1; }
+cp "$P6/env.sh" "$P6/run_template.slurm" "$P6/VERSION" "$P6/README.md" "$SH/"
+sed -i 's/\r$//' "$SH/env.sh" "$SH/run_template.slurm" "$SH/VERSION" "$SH/README.md"
+find "$SH/pysite" "$SH/flood-forecasting" -name '__pycache__' -type d -prune -exec rm -rf {} + 2>/dev/null
+chmod -R a-w "$SH"
+du -sh "$SH"; ls -la "$SH"
+echo "=== identical to the verified install? ==="
+( cd "$ROOT/src/flood-forecasting" && git rev-parse HEAD && git status --porcelain | wc -l )
+diff -rq "$ROOT/pysite" "$SH/pysite" -x __pycache__ | head -3; echo "pysite diff rc=$?"
+echo "=== import test in a fresh shell from the shared location ==="
+bash -c 'source /data1/home/sunyiq/openhydronet_shared/env.sh && cd /tmp && python -c "
+import itertools, googlehydrology, zarr
+from googlehydrology.modelzoo import get_model
+print(\"googlehydrology\", googlehydrology.__file__, \"| batched\", hasattr(itertools, \"batched\"), \"| zarr\", zarr.__version__)
+" && type ohn | head -2'
+echo "=== smoke job through the template ==="
+T="$ROOT/shared_smoke.slurm"
+sed -e "s#^\#SBATCH --job-name=.*#\#SBATCH --job-name=ohn_shared_smoke#" -e "s#^\#SBATCH -p .*#\#SBATCH -p hgpu8#" -e "s#^\#SBATCH -t .*#\#SBATCH -t 00:30:00#" \
+    -e "s#PROJECT_ROOT_CHANGEME#$ROOT#g" -e "s#CONFIG_FILE_CHANGEME#$ROOT/configs/smoke.yml#" -e "s#EXPERIMENT_NAME_CHANGEME#smoke#" -e "s#RUN_PARENT_CHANGEME#$ROOT/runs#" "$SH/run_template.slurm" > "$T"
+grep -nE 'CHANGEME' "$T" | head -3
+grep -nE '^#SBATCH|^PROJECT_ROOT|^CONFIG|^EXPERIMENT|^RUN_PARENT' "$T" | cut -c1-140
+if squeue -u sunyiq -h -o '%j' | grep -qx ohn_shared_smoke; then echo "already queued"; exit 0; fi
+out=$(sbatch "$T" 2>&1); echo "$out"
+JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+[ -n "$JID" ] && echo "jobid=$JID" || echo "SUBMIT_FAILED"
 exit 0
