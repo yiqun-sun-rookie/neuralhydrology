@@ -12,6 +12,8 @@ echo "=== SMOKE ==="
 grep -hE 'SMOKE_OK|SMOKE_DONE|Error|error|Traceback' "$ROOT"/logs/smoke_245970.out "$ROOT"/logs/smoke_245970.err 2>/dev/null | tail -5
 echo "=== AGG ==="
 [ -f "$ROOT/results/bprime_peryear.csv" ] && cat "$ROOT/results/bprime_peryear.csv"
+echo "=== EPOCHS ==="
+for f in "$ROOT"/logs/train_245997_*.out; do [ -f "$f" ] && echo "$(basename $f .out) $(grep -c 'average loss' $f)"; done
 echo "=== FAILED TASK ERR TAILS ==="
 for f in $(grep -l -E 'Traceback|Error|STALE_RUN|AMBIGUOUS|NO_TASK' "$ROOT"/logs/train_245997_*.err 2>/dev/null | head -3); do echo "--- $f"; tail -4 "$f"; done
 echo END_STATUS
