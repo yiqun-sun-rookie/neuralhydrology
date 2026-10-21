@@ -2,114 +2,104 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=5s 110s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'ALTERNATIVE_DOCUMENT'
-"""HPC-only retrieval of one exact public data dictionary, never the science ZIP."""
+exec timeout --signal=TERM --kill-after=5s 90s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'GLHYMPS2_CANDIDATE'
+"""Unpublished preparation: own-root byte fetch, one compute job, fixed read-only results."""
 import base64
 import datetime
 import hashlib
 import json
-import resource
-import signal
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
 import time
-from urllib.error import HTTPError
-from urllib.parse import urljoin, urlparse
-from urllib.request import build_opener, HTTPRedirectHandler, ProxyHandler, Request
+import zlib
 
-START = time.monotonic()
+ROOT=Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/glhymps2_candidate_27888_20261021_v2')
+MODE='deploy'
+PAYLOAD_B64='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'
+START=time.monotonic()
+OWNED=False
+NAMES=['BRIDGE_FAILURE.json', 'DEPLOYMENT.json', 'SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'OWN_JOB_ID', 'COMPUTE_STARTED.json', 'FETCH_STARTED.json', 'FETCH_RECORDS.json', 'ARCHIVE_IDENTITY.json', 'ZIP_MEMBERS.json', 'ZIP_DIRECTORY.json', 'NATIVE_SCHEMA.json', 'FIELD_MAPPING.json', 'RAW_SUPPORT.json', 'SOURCE_UNCHANGED.json', 'AUDIT_RESULT.json', 'COMPUTE_FAILURE.json']
 
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-class NoRedirect(HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
+def sha(raw):return hashlib.sha256(raw).hexdigest()
 
+def save(name,value):
+    raw=(json.dumps(value,ensure_ascii=False,indent=2,allow_nan=False)+'\n').encode()
+    assert len(raw)<=2*1024**2
+    with (ROOT/name).open('xb') as f:f.write(raw)
 
-def expired(*_):
-    raise TimeoutError('Bounded original documentation deadline')
+def query(command,seconds=9,env=None):
+    try:
+        p=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=seconds,env=env)
+        assert len(p.stdout)<=131072 and len(p.stderr)<=131072
+        return dict(command=command,exit_code=p.returncode,stdout=p.stdout.decode(errors='replace'),stderr=p.stderr.decode(errors='replace'),server_utc=utc())
+    except subprocess.TimeoutExpired as e:
+        return dict(command=command,exit_code=None,error='TIMEOUT_UNKNOWN',stdout=(e.stdout or b'').decode(errors='replace')[:131072],stderr=(e.stderr or b'').decode(errors='replace')[:131072],server_utc=utc())
 
-
-def allowed(url):
-    u = urlparse(url)
-    host = u.hostname or ''
-    assert u.scheme == 'https' and u.port in (None, 443) and u.username is None and u.password is None and not u.fragment
-    assert host == 'borealisdata.ca' or host.endswith('.scholarsportal.info') or host.endswith('.amazonaws.com')
-
+def deploy():
+    global OWNED
+    assert not ROOT.exists(),'OWN_ROOT_EXISTS_NEVER_REPLAY'
+    assert ROOT.parent.resolve(strict=True)==ROOT.parent and shutil.disk_usage(ROOT.parent).free>=32*1024**3
+    raw=zlib.decompress(base64.b64decode(PAYLOAD_B64,validate=True));assert len(raw)<512*1024
+    payload=json.loads(raw)
+    assert set(payload)=={'glhymps2_candidate_27888_20261021_v2.sbatch', 'CONTRACT.json', 'glhymps2_candidate_27888_20261021_v2.py'}
+    ROOT.mkdir(mode=0o700);OWNED=True;(ROOT/'logs').mkdir()
+    deployed={}
+    for name,row in payload.items():
+        body=base64.b64decode(row['base64'],validate=True)
+        assert len(body)==row['bytes']<=131072 and sha(body)==row['sha256']
+        with (ROOT/name).open('xb') as f:f.write(body)
+        deployed[name]=dict(bytes=len(body),sha256=sha(body))
+    c=json.loads((ROOT/'CONTRACT.json').read_bytes());assert c['root']==str(ROOT)
+    save('DEPLOYMENT.json',dict(files=deployed,original_downloads=0,private_fetches=0,scientific_values_parsed=0,server_utc=utc()))
+    save('SUBMISSION_STARTED.json',dict(max_new_jobs=1,automatic_retries=0,server_utc=utc()))
+    sub=query(['sbatch',str(ROOT/'glhymps2_candidate_27888_20261021_v2.sbatch')],15);save('SUBMISSION_RESULT.json',sub)
+    found=re.findall(r'^Submitted batch job ([0-9]+)\s*$',sub['stdout'],re.M)
+    assert sub['exit_code']==0 and len(found)==1,'UNKNOWN_SUBMISSION_NEVER_REPLAY'
+    with (ROOT/'OWN_JOB_ID').open('x') as f:f.write(found[0]+'\n')
+    return found[0]
 
 def main():
-    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024**2, resource.getrlimit(resource.RLIMIT_AS)[1]))
-    signal.signal(signal.SIGALRM, expired)
-    opener = build_opener(ProxyHandler({}), NoRedirect())
-    result = dict(kind='GAP27888_ALTERNATIVE_DOCUMENT', complete=False, doi='doi:10.5683/SP2/TTJNIU',
-                  file_id=71773, filename='Readme_GLHYMPS2_0.txt', expected_bytes=4375,
-                  expected_md5='848d528b91485faa74f4b03566338cae', responses=[], document=None,
-                  new_jobs=0, source_content_reads=0, source_decoding=0, source_writes=0,
-                  scientific_archives_downloaded=0, model_calls=0, automatic_checks_enabled=False,
-                  scientific_input_accepted=False, prediction_approved=False)
-    url = 'https://borealisdata.ca/api/access/datafile/71773'
-    for hop in range(3):
-        allowed(url)
-        remaining = 100 - (time.monotonic() - START)
-        assert remaining > 0
-        signal.setitimer(signal.ITIMER_REAL, min(30, remaining))
-        began = time.monotonic()
-        row = dict(host=urlparse(url).hostname, path=urlparse(url).path,
-                   url_sha256=hashlib.sha256(url.encode()).hexdigest(), status=None)
-        result['responses'].append(row)
-        response = None
-        redirect = None
-        try:
-            request = Request(url, headers={'User-Agent': 'china-gap27888-document/1', 'Accept-Encoding': 'identity'})
-            try:
-                response = opener.open(request, timeout=min(30, remaining))
-            except HTTPError as error:
-                response = error
-            row.update(status=response.code, declared_length=response.headers.get('Content-Length'),
-                       content_type=response.headers.get('Content-Type'))
-            assert response.headers.get('Content-Encoding', 'identity') == 'identity'
-            raw = response.read(65537)
-            row.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(), base64=base64.b64encode(raw).decode())
-            assert len(raw) <= 65536
-            assert row['declared_length'] is None or int(row['declared_length']) == len(raw)
-            if response.code in (301, 302, 303, 307, 308):
-                redirect = urljoin(url, response.headers['Location'])
-                allowed(redirect)
-                row['redirect_host'] = urlparse(redirect).hostname
-                row['redirect_url_sha256'] = hashlib.sha256(redirect.encode()).hexdigest()
-            else:
-                assert response.code == 200 and len(raw) == 4375
-                assert hashlib.md5(raw).hexdigest() == result['expected_md5']
-                result['document'] = dict(bytes=len(raw), md5=hashlib.md5(raw).hexdigest(),
-                                          sha256=hashlib.sha256(raw).hexdigest(), base64=base64.b64encode(raw).decode())
-                result['complete'] = True
-        except MemoryError:
-            raise
-        except Exception as error:
-            row['error'] = dict(type=type(error).__name__, message=str(error)[:500])
-            redirect = None
-        finally:
-            signal.setitimer(signal.ITIMER_REAL, 0)
-            if response is not None:
-                response.close()
-            row['seconds'] = time.monotonic() - began
-            if row['seconds'] >= 30:
-                result['complete'] = False
-                result['document'] = None
-                redirect = None
-                row['time_gate_failed'] = True
-        if redirect is None:
-            break
-        url = redirect
-    result.update(server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), seconds=time.monotonic() - START)
-    assert result['seconds'] < 100
-    return result
+    job=None;error=None
+    try:
+        if MODE=='deploy':job=deploy()
+        else:
+            assert MODE=='status' and ROOT.resolve(strict=True)==ROOT
+            job=(ROOT/'OWN_JOB_ID').read_text().strip()
+        assert re.fullmatch('[0-9]+',job)
+    except BaseException as e:
+        job=None;error=dict(error_type=type(e).__name__,message=str(e)[:1200],server_utc=utc())
+        if MODE=='deploy' and OWNED and not (ROOT/'BRIDGE_FAILURE.json').exists():save('BRIDGE_FAILURE.json',error)
+    queries={}
+    if job is not None:
+        queries=dict(squeue=query(['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),
+            sacct=query(['sacct','-X','-S','2026-10-21','-j',job,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
+            scontrol=query(['scontrol','show','job',job,'-o']))
+    names=NAMES+(['logs/recovery-'+job+'.out','logs/recovery-'+job+'.err'] if job is not None else [])
+    records={};total=0
+    for name in names:
+        path=ROOT/name
+        if not path.exists():records[name]=dict(present=False);continue
+        assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
+        a=path.stat();assert a.st_size<=2*1024**2
+        raw=path.read_bytes();b=path.stat()
+        assert (a.st_size,a.st_mtime_ns)==(b.st_size,b.st_mtime_ns) and len(raw)==a.st_size
+        total+=len(raw);assert total<=6*1024**2
+        records[name]=dict(present=True,bytes=len(raw),sha256=sha(raw),base64=base64.b64encode(raw).decode())
+    body=json.dumps(dict(root=str(ROOT),job_id=job,queries=queries,records=records,bridge_error=error,
+        server_utc=utc(),seconds=time.monotonic()-START,candidate_only=True,
+        scientific_input_accepted=False,prediction_approved=False,
+        model_calls=0,automatic_checks_enabled=False),ensure_ascii=False,separators=(',',':')).encode()
+    assert len(body)<=8*1024**2
+    print('GEOLOGY_RECOVERY_BYTES='+str(len(body)))
+    print('GEOLOGY_RECOVERY_SHA256='+sha(body))
+    print('GEOLOGY_RECOVERY_ZLIB_BASE64='+base64.b64encode(zlib.compress(body)).decode())
+    print('GEOLOGY_RECOVERY_DONE',flush=True)
 
+if __name__=='__main__':main()
 
-if __name__ == '__main__':
-    import zlib
-    raw = (json.dumps(main(), ensure_ascii=False, allow_nan=False, separators=(',', ':')) + '\n').encode()
-    assert len(raw) <= 2097152
-    print('GEOLOGY_RECOVERY_BYTES=' + str(len(raw)))
-    print('GEOLOGY_RECOVERY_SHA256=' + hashlib.sha256(raw).hexdigest())
-    print('GEOLOGY_RECOVERY_ZLIB_BASE64=' + base64.b64encode(zlib.compress(raw)).decode())
-    print('GEOLOGY_RECOVERY_DONE')
-
-ALTERNATIVE_DOCUMENT
+GLHYMPS2_CANDIDATE
