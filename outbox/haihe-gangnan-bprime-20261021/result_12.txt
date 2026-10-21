@@ -1,0 +1,25 @@
+### channel=haihe-gangnan-bprime-20261021 seq=12
+### host=login4
+### started=2026-10-21T18:29:31+0800
+### ---------- output ----------
+2026-10-21T18:29:31+0800
+=== PRECHECK ===
+v1 done markers: 24
+=== DEPLOY (tar -k) ===
+manifest v2 OK: 20 files
+2:data_dir: /data1/home/sunyiq/haihe_gangnan_bprime/data/gangnan_inflow_reported_rs
+58:- dINQ_3h
+=== HGPU8 ===
+ngu201    mix       gpu:8         gpu:6,dcu:0             
+ngu202    mix       gpu:8         gpu:5,dcu:0             
+ngu203    alloc$    gpu:8         gpu:8,dcu:0             
+=== SUBMIT ARRAY rs ===
+Submitted batch job 246042
+=== SUBMIT AGGREGATE rs (afterany 246042) ===
+Submitted batch job 246043
+246042_[0-11%6] hgpu8 PENDING (None)
+246043 hgpu8 PENDING (Dependency)
+RS_SUBMITTED array=246042 aggregate=246043
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T18:29:32+0800
