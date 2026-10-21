@@ -1,0 +1,47 @@
+### channel=openhydronet-531-20261015 seq=41
+### host=login4
+### started=2026-10-21T11:28:31+0800
+### ---------- output ----------
+2026-10-21T11:28:31+0800
+248M	/data1/home/sunyiq/openhydronet_shared
+total 25
+dr-xr-xr-x.   4 sunyiq g_sunyiq 4096 Oct 21 11:29 .
+drwx------. 356 sunyiq g_sunyiq 4096 Oct 21 11:28 ..
+-r--r--r--.   1 sunyiq g_sunyiq 1043 Oct 21 11:29 env.sh
+dr-xr-xr-x.  15 sunyiq g_sunyiq 4096 Oct 15 17:58 flood-forecasting
+dr-xr-xr-x.  38 sunyiq g_sunyiq 4096 Oct 21 11:29 pysite
+-r--r--r--.   1 sunyiq g_sunyiq 4910 Oct 21 11:29 README.md
+-r--r--r--.   1 sunyiq g_sunyiq 1444 Oct 21 11:29 run_template.slurm
+-r--r--r--.   1 sunyiq g_sunyiq  665 Oct 21 11:29 VERSION
+=== identical to the verified install? ===
+011265446e113cf849394efe6514221dc7c3f124
+0
+pysite diff rc=0
+=== import test in a fresh shell from the shared location ===
+googlehydrology /data1/home/sunyiq/openhydronet_shared/flood-forecasting/googlehydrology/__init__.py | batched True | zarr 3.1.5
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+ohn is a function
+ohn () 
+=== smoke job through the template ===
+2:# Copy this file into YOUR project directory and edit every line marked CHANGEME. Do not edit the shared copy.
+15:PROJECT_ROOT=/data1/home/sunyiq/openhydronet_531_20261015            # CHANGEME: your own directory (holds configs, data, runs, logs)
+16:CONFIG=/data1/home/sunyiq/openhydronet_531_20261015/configs/smoke.yml                   # CHANGEME: absolute path of your yml (must set compile: False, run_dir inside PROJECT_ROOT)
+3:#SBATCH --job-name=ohn_shared_smoke
+4:#SBATCH -p hgpu8
+5:#SBATCH -N 1
+6:#SBATCH -n 1
+7:#SBATCH --cpus-per-task=4
+8:#SBATCH --gres=gpu:1
+9:#SBATCH -t 00:30:00
+10:#SBATCH -o /data1/home/sunyiq/openhydronet_531_20261015/logs/%x-%j.out
+11:#SBATCH -e /data1/home/sunyiq/openhydronet_531_20261015/logs/%x-%j.err
+15:PROJECT_ROOT=/data1/home/sunyiq/openhydronet_531_20261015            # CHANGEME: your own directory (holds configs, data, runs, logs)
+16:CONFIG=/data1/home/sunyiq/openhydronet_531_20261015/configs/smoke.yml                   # CHANGEME: absolute path of your yml (must set c
+17:EXPERIMENT=smoke           # CHANGEME: the experiment_name in that yml (run directories are <name>_<stamp>)
+18:RUN_PARENT=/data1/home/sunyiq/openhydronet_531_20261015/runs                # CHANGEME: the run_dir of that yml
+Submitted batch job 245855
+jobid=245855
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T11:30:16+0800
