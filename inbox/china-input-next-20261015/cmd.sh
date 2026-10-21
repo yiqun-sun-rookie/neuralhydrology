@@ -2,104 +2,126 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=5s 90s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'GLHYMPS2_CANDIDATE'
-"""Unpublished preparation: own-root byte fetch, one compute job, fixed read-only results."""
+exec timeout --signal=TERM --kill-after=5s 110s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'GLHYMPS2_DNS_ROUTE'
+"""HPC login metadata only: finite HEAD route, no scientific response body."""
 import base64
 import datetime
 import hashlib
+import http.client
+import ipaddress
 import json
-import os
-from pathlib import Path
-import re
-import shutil
-import subprocess
+import signal
+import socket
+import ssl
 import time
+from urllib.parse import urljoin, urlparse
 import zlib
 
-ROOT=Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/glhymps2_candidate_27888_20261021_v2')
-MODE='status'
-PAYLOAD_B64=''
-START=time.monotonic()
-OWNED=False
-NAMES=['BRIDGE_FAILURE.json', 'DEPLOYMENT.json', 'SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'OWN_JOB_ID', 'COMPUTE_STARTED.json', 'FETCH_STARTED.json', 'FETCH_RECORDS.json', 'ARCHIVE_IDENTITY.json', 'ZIP_MEMBERS.json', 'ZIP_DIRECTORY.json', 'NATIVE_SCHEMA.json', 'FIELD_MAPPING.json', 'RAW_SUPPORT.json', 'SOURCE_UNCHANGED.json', 'AUDIT_RESULT.json', 'COMPUTE_FAILURE.json']
+START = time.monotonic()
+http.client._MAXHEADERS = 64
+http.client._MAXLINE = 8192
+RESULT = dict(kind='GLHYMPS2_DNS_ROUTE', complete=False, requests=[], dns=[],
+              official_file_id=71909, expected_bytes=2595563951,
+              scientific_HTTP_body_bytes=0, scientific_archives_downloaded=0,
+              source_content_reads=0, source_decoding=0, source_writes=0,
+              new_jobs=0, model_calls=0, automatic_checks_enabled=False,
+              scientific_input_accepted=False, prediction_approved=False,
+              operational_DNS_changed=False, TTL='UNKNOWN', DNSSEC_proof_claimed=False)
 
-def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-def sha(raw):return hashlib.sha256(raw).hexdigest()
+def expired(*_):
+    raise TimeoutError('Finite HEAD and DNS metadata deadline')
 
-def save(name,value):
-    raw=(json.dumps(value,ensure_ascii=False,indent=2,allow_nan=False)+'\n').encode()
-    assert len(raw)<=2*1024**2
-    with (ROOT/name).open('xb') as f:f.write(raw)
 
-def query(command,seconds=9,env=None):
-    try:
-        p=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=seconds,env=env)
-        assert len(p.stdout)<=131072 and len(p.stderr)<=131072
-        return dict(command=command,exit_code=p.returncode,stdout=p.stdout.decode(errors='replace'),stderr=p.stderr.decode(errors='replace'),server_utc=utc())
-    except subprocess.TimeoutExpired as e:
-        return dict(command=command,exit_code=None,error='TIMEOUT_UNKNOWN',stdout=(e.stdout or b'').decode(errors='replace')[:131072],stderr=(e.stderr or b'').decode(errors='replace')[:131072],server_utc=utc())
+def allowed(url):
+    u = urlparse(url)
+    host = u.hostname or ''
+    assert u.scheme == 'https' and u.port in (None, 443) and not u.username and not u.password and not u.fragment
+    assert host == 'borealisdata.ca' or host.endswith('.scholarsportal.info') or host.endswith('.amazonaws.com')
+    assert len(url) <= 8192
+    return u, host
 
-def deploy():
-    global OWNED
-    assert not ROOT.exists(),'OWN_ROOT_EXISTS_NEVER_REPLAY'
-    assert ROOT.parent.resolve(strict=True)==ROOT.parent and shutil.disk_usage(ROOT.parent).free>=32*1024**3
-    raw=zlib.decompress(base64.b64decode(PAYLOAD_B64,validate=True));assert len(raw)<512*1024
-    payload=json.loads(raw)
-    assert set(payload)=={'glhymps2_candidate_27888_20261021_v2.sbatch', 'CONTRACT.json', 'glhymps2_candidate_27888_20261021_v2.py'}
-    ROOT.mkdir(mode=0o700);OWNED=True;(ROOT/'logs').mkdir()
-    deployed={}
-    for name,row in payload.items():
-        body=base64.b64decode(row['base64'],validate=True)
-        assert len(body)==row['bytes']<=131072 and sha(body)==row['sha256']
-        with (ROOT/name).open('xb') as f:f.write(body)
-        deployed[name]=dict(bytes=len(body),sha256=sha(body))
-    c=json.loads((ROOT/'CONTRACT.json').read_bytes());assert c['root']==str(ROOT)
-    save('DEPLOYMENT.json',dict(files=deployed,original_downloads=0,private_fetches=0,scientific_values_parsed=0,server_utc=utc()))
-    save('SUBMISSION_STARTED.json',dict(max_new_jobs=1,automatic_retries=0,server_utc=utc()))
-    sub=query(['sbatch',str(ROOT/'glhymps2_candidate_27888_20261021_v2.sbatch')],15);save('SUBMISSION_RESULT.json',sub)
-    found=re.findall(r'^Submitted batch job ([0-9]+)\s*$',sub['stdout'],re.M)
-    assert sub['exit_code']==0 and len(found)==1,'UNKNOWN_SUBMISSION_NEVER_REPLAY'
-    with (ROOT/'OWN_JOB_ID').open('x') as f:f.write(found[0]+'\n')
-    return found[0]
 
 def main():
-    job=None;error=None
-    try:
-        if MODE=='deploy':job=deploy()
-        else:
-            assert MODE=='status' and ROOT.resolve(strict=True)==ROOT
-            job=(ROOT/'OWN_JOB_ID').read_text().strip()
-        assert re.fullmatch('[0-9]+',job)
-    except BaseException as e:
-        job=None;error=dict(error_type=type(e).__name__,message=str(e)[:1200],server_utc=utc())
-        if MODE=='deploy' and OWNED and not (ROOT/'BRIDGE_FAILURE.json').exists():save('BRIDGE_FAILURE.json',error)
-    queries={}
-    if job is not None:
-        queries=dict(squeue=query(['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),
-            sacct=query(['sacct','-X','-S','2026-10-21','-j',job,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
-            scontrol=query(['scontrol','show','job',job,'-o']))
-    names=NAMES+(['logs/recovery-'+job+'.out','logs/recovery-'+job+'.err'] if job is not None else [])
-    records={};total=0
-    for name in names:
-        path=ROOT/name
-        if not path.exists():records[name]=dict(present=False);continue
-        assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
-        a=path.stat();assert a.st_size<=2*1024**2
-        raw=path.read_bytes();b=path.stat()
-        assert (a.st_size,a.st_mtime_ns)==(b.st_size,b.st_mtime_ns) and len(raw)==a.st_size
-        total+=len(raw);assert total<=6*1024**2
-        records[name]=dict(present=True,bytes=len(raw),sha256=sha(raw),base64=base64.b64encode(raw).decode())
-    body=json.dumps(dict(root=str(ROOT),job_id=job,queries=queries,records=records,bridge_error=error,
-        server_utc=utc(),seconds=time.monotonic()-START,candidate_only=True,
-        scientific_input_accepted=False,prediction_approved=False,
-        model_calls=0,automatic_checks_enabled=False),ensure_ascii=False,separators=(',',':')).encode()
-    assert len(body)<=8*1024**2
-    print('GEOLOGY_RECOVERY_BYTES='+str(len(body)))
-    print('GEOLOGY_RECOVERY_SHA256='+sha(body))
-    print('GEOLOGY_RECOVERY_ZLIB_BASE64='+base64.b64encode(zlib.compress(body)).decode())
-    print('GEOLOGY_RECOVERY_DONE',flush=True)
+    signal.signal(signal.SIGALRM, expired)
+    signal.setitimer(signal.ITIMER_REAL, 100)
+    context = ssl.create_default_context()
+    assert context.check_hostname and context.verify_mode == ssl.CERT_REQUIRED
+    pins = {}
+    url = 'https://borealisdata.ca/api/access/datafile/71909'
+    for hop in range(3):
+        u, host = allowed(url)
+        row = dict(host=host, path=u.path, method='HEAD',
+                   url_sha256=hashlib.sha256(url.encode()).hexdigest(), status=None)
+        RESULT['requests'].append(row)
+        if host not in pins:
+            addresses = sorted({x[4][0] for x in socket.getaddrinfo(host, 443, socket.AF_INET, socket.SOCK_STREAM)},
+                               key=lambda s: int(ipaddress.ip_address(s)))
+            assert addresses and all(ipaddress.ip_address(x).is_global for x in addresses)
+            pins[host] = addresses[0]
+            RESULT['dns'].append(dict(host=host, resolver='HPC_login_system',
+                public_ipv4_addresses=addresses, selected_once=pins[host], getaddrinfo_calls=1,
+                server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat()))
+        connection = http.client.HTTPSConnection(host, 443, timeout=30, context=context)
 
-if __name__=='__main__':main()
+        def connect_fixed(address, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, source_address=None):
+            assert address == (host, 443) and source_address is None and 0 < timeout <= 30
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(timeout)
+            try:
+                sock.connect((pins[host], 443))
+            except BaseException:
+                sock.close()
+                raise
+            return sock
 
-GLHYMPS2_CANDIDATE
+        connection._create_connection = connect_fixed
+        began = time.monotonic()
+        try:
+            path = u.path + ('?' + u.query if u.query else '')
+            connection.request('HEAD', path, headers={'User-Agent': 'china-glhymps2-route/1',
+                                                      'Accept-Encoding': 'identity'})
+            response = connection.getresponse()
+            headers = response.getheaders()
+            header_size = sum(len(k.encode('latin1')) + len(v.encode('latin1')) + 4 for k, v in headers)
+            assert header_size <= 65536 and response.getheader('Content-Encoding', 'identity') == 'identity'
+            row.update(status=response.status, declared_length=response.getheader('Content-Length'),
+                       content_type=response.getheader('Content-Type'), parsed_header_bytes=header_size,
+                       connected_ipv4=pins[host], original_hostname_TLS_verified=True,
+                       response_body_read_calls=0)
+            if response.status in (301, 302, 303, 307, 308):
+                redirect = urljoin(url, response.getheader('Location'))
+                _, next_host = allowed(redirect)
+                row.update(redirect_host=next_host, redirect_url_sha256=hashlib.sha256(redirect.encode()).hexdigest())
+                url = redirect
+                continue
+            assert response.status == 200 and row['declared_length'] == str(2595563951), 'Exact original HEAD length'
+            return dict(pins=pins, final_host=host)
+        finally:
+            row['seconds'] = time.monotonic() - began
+            connection.close()
+    raise RuntimeError('Finite HEAD chain exhausted')
+
+
+try:
+    candidate = main()
+except BaseException as error:
+    RESULT['complete'] = False
+    RESULT['error'] = dict(type=type(error).__name__, message=str(error)[:600])
+finally:
+    elapsed = time.monotonic() - START
+    if elapsed >= 100:
+        RESULT.update(complete=False, error=dict(type='TimeoutError', message='HEAD/DNS main exceeded100seconds'))
+    signal.setitimer(signal.ITIMER_REAL, 0)
+    if 'error' not in RESULT:
+        RESULT.update(candidate, complete=True)
+    RESULT.update(server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), seconds=elapsed,
+                  socket_timeout_seconds=30, whole_DNS_HEAD_seconds=100)
+    raw = json.dumps(RESULT, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
+    assert len(raw) <= 2097152
+    print('GEOLOGY_RECOVERY_BYTES=' + str(len(raw)))
+    print('GEOLOGY_RECOVERY_SHA256=' + hashlib.sha256(raw).hexdigest())
+    print('GEOLOGY_RECOVERY_ZLIB_BASE64=' + base64.b64encode(zlib.compress(raw)).decode())
+    print('GEOLOGY_RECOVERY_DONE')
+
+GLHYMPS2_DNS_ROUTE
