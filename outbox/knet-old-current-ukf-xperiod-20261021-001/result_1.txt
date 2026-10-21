@@ -1,0 +1,8 @@
+### channel=knet-old-current-ukf-xperiod-20261021-001 seq=1
+### host=login4
+### started=2026-10-21T22:52:51+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "246112", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/knet_old_current_ukf_xperiod_20261021_001", "channel": "knet-old-current-ukf-xperiod-20261021-001", "deployment_sequence": 1, "archive_sha256": "be38ec8c2c7da09745c6980052910b43b02fe353d1d2e1c97b73f2f2e15f2031", "script_sha256": "c29b9d0911c2c9d86c1e610bad0723fefdebaf1339338771dc15ecf4fc9a2eb7", "contract_sha256": "261d47a13b6a75007c3f541a513a93a76b542965999646cc39413005fbd7b82a", "submitted_utc": "2026-10-21T14:52:53.713011+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 246112\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T22:52:53+0800
