@@ -274,3 +274,5 @@ git rm inbox/seq
 | `knet-epochscan-20261021-001` | Authorized KNET-EPOCHSCAN-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_epochscan_20261021_001, one 020 six-arm two-history checkpoint evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `id25-rds04-regionmean-20261021` | RDS04 regional mean RMSE single CPU candidate | 2026-10-21 | Only /data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001 writable; fixed RDS01 and C01 read-only; 119-region original conservative model; one seed 80 epochs; no repeated preflight or other-job changes; 3-hour monitor. |
+
+| `knet-old-current-ukf-xperiod-20261021-001` | Authorized KNET-OLD-CURRENT-UKF-XPERIOD-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_old_current_ukf_xperiod_20261021_001, one 020 five-arm two-history checkpoint evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
