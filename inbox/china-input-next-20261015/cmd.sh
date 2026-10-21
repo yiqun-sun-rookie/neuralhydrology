@@ -2,136 +2,115 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=5s 300s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'GAP_SOURCE_SUPPORT'
-"""Unpublished preparation: own-root byte fetch, one compute job, fixed read-only results."""
+exec timeout --signal=TERM --kill-after=5s 110s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'ALTERNATIVE_CATALOGUE'
+"""Two bounded public catalogue reads on HPC; no scientific file downloads."""
 import base64
 import datetime
 import hashlib
 import json
-import os
-from pathlib import Path
-import re
-import shutil
-import subprocess
+import resource
+import signal
 import time
-import zlib
+from urllib.error import HTTPError
+from urllib.parse import urlparse
+from urllib.request import build_opener, HTTPRedirectHandler, ProxyHandler, Request
 
-ROOT=Path('/data1/home/sunyiq/china_input_completion_hpc_20261015_001/gap27888_source_support_20261021_v1')
-MODE='status'
-PAYLOAD_B64=''
-START=time.monotonic()
-OWNED=False
-NAMES=['BRIDGE_FAILURE.json', 'DEPLOYMENT.json', 'SUBMISSION_STARTED.json', 'SUBMISSION_RESULT.json', 'OWN_JOB_ID', 'FETCH_STARTED.json', 'GIT_INIT_RESULT.json', 'FETCH_RESULT.json', 'PRIVATE_TREE_VERIFICATION.json', 'COMPUTE_STARTED.json', 'AUDIT_RESULT.json', 'COMPUTE_FAILURE.json', 'ORIGINAL_BOUNDARY.json', 'TARGET_IDENTITY.json', 'SOURCE_SUPPORT_RELATION.json', 'MASK_CROSS_SOURCE.json', 'SOURCE_UNCHANGED.json', 'HYDROATLAS_SUPPORT.json', 'MASK_SUPPORT.json', 'DEPTH_SUPPORT.json', 'DEM_SUPPORT.json', 'GLIM_SUPPORT.json', 'PERMEABILITY_SUPPORT.json', 'POROSITY_SUPPORT.json']
+START = time.monotonic()
+DOI = 'doi:10.5683/SP2/TTJNIU'
+URLS = [
+    'https://borealisdata.ca/api/datasets/:persistentId/?persistentId=doi%3A10.5683%2FSP2%2FTTJNIU',
+    'https://borealisdata.ca/api/datasets/export?exporter=dataverse_json&persistentId=doi%3A10.5683%2FSP2%2FTTJNIU',
+]
 
-def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-def sha(raw):return hashlib.sha256(raw).hexdigest()
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
-def save(name,value):
-    raw=(json.dumps(value,ensure_ascii=False,indent=2,allow_nan=False)+'\n').encode()
-    assert len(raw)<=2*1024**2
-    with (ROOT/name).open('xb') as f:f.write(raw)
 
-def query(command,seconds=9,env=None):
-    try:
-        p=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=seconds,env=env)
-        assert len(p.stdout)<=131072 and len(p.stderr)<=131072
-        return dict(command=command,exit_code=p.returncode,stdout=p.stdout.decode(errors='replace'),stderr=p.stderr.decode(errors='replace'),server_utc=utc())
-    except subprocess.TimeoutExpired as e:
-        return dict(command=command,exit_code=None,error='TIMEOUT_UNKNOWN',stdout=(e.stdout or b'').decode(errors='replace')[:131072],stderr=(e.stderr or b'').decode(errors='replace')[:131072],server_utc=utc())
+def expired(*_):
+    raise TimeoutError('Bounded public catalogue deadline')
 
-def deploy():
-    global OWNED
-    assert not ROOT.exists(),'OWN_ROOT_EXISTS_NEVER_REPLAY'
-    assert ROOT.parent.resolve(strict=True)==ROOT.parent and shutil.disk_usage(ROOT.parent).free>=2*1024**3
-    raw=zlib.decompress(base64.b64decode(PAYLOAD_B64,validate=True));assert len(raw)<512*1024
-    payload=json.loads(raw)
-    assert set(payload)=={'gap27888_source_support_20261021_v1.py', 'gap27888_source_support_20261021_v1.sbatch', 'CONTRACT.json'}
-    ROOT.mkdir(mode=0o700);OWNED=True;(ROOT/'logs').mkdir()
-    deployed={}
-    for name,row in payload.items():
-        body=base64.b64decode(row['base64'],validate=True)
-        assert len(body)==row['bytes']<=131072 and sha(body)==row['sha256']
-        with (ROOT/name).open('xb') as f:f.write(body)
-        deployed[name]=dict(bytes=len(body),sha256=sha(body))
-    c=json.loads((ROOT/'CONTRACT.json').read_bytes());assert c['root']==str(ROOT)
-    fetch=c['byte_transport']
-    if fetch is not None:
-        assert fetch['repository']=='yiqun-sun-rookie/forecast_system_lite'
-        assert fetch['branch']=='codex/china-boundary-27888-20261021-v2' and re.fullmatch('[0-9a-f]{40}',fetch['commit'])
-        save('FETCH_STARTED.json',dict(private_commit=fetch['commit'],maximum_attempts=1,maximum_seconds=180,scientific_values_parsed=0))
-        bare=ROOT/'private_git'
-        init=query(['git','init','--bare',str(bare)],10);save('GIT_INIT_RESULT.json',init);assert init['exit_code']==0
-        env=dict(os.environ,GIT_TERMINAL_PROMPT='0',GIT_ASKPASS='/bin/false',SSH_ASKPASS='/bin/false',
-            GIT_SSH_COMMAND='ssh -oBatchMode=yes -oStrictHostKeyChecking=yes -oConnectTimeout=20 -oConnectionAttempts=1')
-        command=['timeout','--signal=TERM','--kill-after=3s','180s','git','-c','gc.auto=0','-c','pack.windowMemory=64m','-c','pack.threads=1',
-            '--git-dir='+str(bare),'fetch','--quiet','--no-tags','--depth=1','git@github.com:'+fetch['repository']+'.git','refs/heads/'+fetch['branch']]
-        process=subprocess.run(command,stdin=subprocess.DEVNULL,capture_output=True,timeout=188,env=env,start_new_session=True)
-        assert len(process.stdout)<=131072 and len(process.stderr)<=131072
-        save('FETCH_RESULT.json',dict(exit_code=process.returncode,stdout=process.stdout.decode(errors='replace'),stderr=process.stderr.decode(errors='replace')))
-        assert process.returncode==0,'PRIVATE_FETCH_FAILED_NEVER_REPLAY'
-        head=query(['git','--git-dir='+str(bare),'rev-parse','FETCH_HEAD']);assert head['exit_code']==0 and head['stdout'].strip()==fetch['commit']
-        tree=query(['git','--git-dir='+str(bare),'ls-tree',fetch['commit']]);assert tree['exit_code']==0
-        expected={x['name']:x['git_oid'] for x in fetch['objects']};assert len(expected)==1 and set(expected)=={'0_catchment_boundary.zip'}
-        actual={}
-        for line in tree['stdout'].splitlines():
-            mode,kind,rest=line.split(' ',2);git_oid,name=rest.split('\t',1)
-            assert mode=='100644' and kind=='blob' and name not in actual;actual[name]=git_oid
-        assert actual==expected
-        dest=Path(c['boundary_archive']['path']);assert dest==ROOT/'0_catchment_boundary.zip'
-        with dest.open('xb') as stream:
-            copied=subprocess.run(['git','--git-dir='+str(bare),'show',fetch['commit']+':0_catchment_boundary.zip'],stdin=subprocess.DEVNULL,stdout=stream,stderr=subprocess.PIPE,timeout=30)
-        assert copied.returncode==0 and len(copied.stderr)<=131072
-        body=dest.read_bytes();assert len(body)==c['boundary_archive']['bytes']==18108565 and sha(body)==c['boundary_archive']['sha256']
-        assert sum(p.stat().st_size for p in bare.rglob('*') if p.is_file())<=64*1024**2
-        save('PRIVATE_TREE_VERIFICATION.json',dict(private_commit=fetch['commit'],objects=actual,archive_bytes=len(body),archive_sha256=sha(body),scientific_values_parsed=0))
-    else:
-        source=Path(c['boundary_archive']['path']);assert source.resolve(strict=True)==source and source.is_file() and source.stat().st_size==18108565
-    save('DEPLOYMENT.json',dict(files=deployed,original_downloads=0,private_fetches=int(fetch is not None),scientific_values_parsed=0,server_utc=utc()))
-    save('SUBMISSION_STARTED.json',dict(max_new_jobs=1,automatic_retries=0,server_utc=utc()))
-    sub=query(['sbatch',str(ROOT/'gap27888_source_support_20261021_v1.sbatch')],15);save('SUBMISSION_RESULT.json',sub)
-    found=re.findall(r'^Submitted batch job ([0-9]+)\s*$',sub['stdout'],re.M)
-    assert sub['exit_code']==0 and len(found)==1,'UNKNOWN_SUBMISSION_NEVER_REPLAY'
-    with (ROOT/'OWN_JOB_ID').open('x') as f:f.write(found[0]+'\n')
-    return found[0]
 
 def main():
-    job=None;error=None
-    try:
-        if MODE=='deploy':job=deploy()
-        else:
-            assert MODE=='status' and ROOT.resolve(strict=True)==ROOT
-            job=(ROOT/'OWN_JOB_ID').read_text().strip()
-        assert re.fullmatch('[0-9]+',job)
-    except BaseException as e:
-        job=None;error=dict(error_type=type(e).__name__,message=str(e)[:1200],server_utc=utc())
-        if MODE=='deploy' and OWNED and not (ROOT/'BRIDGE_FAILURE.json').exists():save('BRIDGE_FAILURE.json',error)
-    queries={}
-    if job is not None:
-        queries=dict(squeue=query(['squeue','-h','-j',job,'-o','%i|%T|%N|%R|%Z']),
-            sacct=query(['sacct','-X','-S','2026-10-21','-j',job,'--noheader','--parsable2','--format=JobIDRaw,State,ExitCode,NodeList,WorkDir%240,Start,End,Elapsed,AllocCPUS,MaxRSS']),
-            scontrol=query(['scontrol','show','job',job,'-o']))
-    names=NAMES+(['logs/recovery-'+job+'.out','logs/recovery-'+job+'.err'] if job is not None else [])
-    records={};total=0
-    for name in names:
-        path=ROOT/name
-        if not path.exists():records[name]=dict(present=False);continue
-        assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
-        a=path.stat();assert a.st_size<=2*1024**2
-        raw=path.read_bytes();b=path.stat()
-        assert (a.st_size,a.st_mtime_ns)==(b.st_size,b.st_mtime_ns) and len(raw)==a.st_size
-        total+=len(raw);assert total<=6*1024**2
-        records[name]=dict(present=True,bytes=len(raw),sha256=sha(raw),base64=base64.b64encode(raw).decode())
-    body=json.dumps(dict(root=str(ROOT),job_id=job,queries=queries,records=records,bridge_error=error,
-        server_utc=utc(),seconds=time.monotonic()-START,candidate_only=True,declared_length_accepted=False,
-        original_archive_accepted=False,scientific_input_accepted=False,prediction_approved=False,
-        model_calls=0,automatic_checks_enabled=False),ensure_ascii=False,separators=(',',':')).encode()
-    assert len(body)<=8*1024**2
-    print('GEOLOGY_RECOVERY_BYTES='+str(len(body)))
-    print('GEOLOGY_RECOVERY_SHA256='+sha(body))
-    print('GEOLOGY_RECOVERY_ZLIB_BASE64='+base64.b64encode(zlib.compress(body)).decode())
-    print('GEOLOGY_RECOVERY_DONE',flush=True)
+    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024**2, resource.getrlimit(resource.RLIMIT_AS)[1]))
+    signal.signal(signal.SIGALRM, expired)
+    opener = build_opener(ProxyHandler({}), NoRedirect())
+    result = dict(kind='GAP27888_ALTERNATIVE_CATALOGUE', member='27888', doi=DOI,
+                  complete=False, responses=[], catalogue=None, new_jobs=0, source_content_reads=0,
+                  source_decoding=0, source_writes=0, scientific_archives_downloaded=0, model_calls=0,
+                  automatic_checks_enabled=False, scientific_input_accepted=False, prediction_approved=False)
+    for index, url in enumerate(URLS):
+        remaining = 100 - (time.monotonic() - START)
+        if remaining <= 0:
+            result['error'] = 'GLOBAL_DEADLINE'
+            break
+        assert urlparse(url).hostname == 'borealisdata.ca'
+        signal.setitimer(signal.ITIMER_REAL, min(45, remaining))
+        began = time.monotonic()
+        row = dict(url=url, status=None, accepted=False)
+        result['responses'].append(row)
+        response = None
+        try:
+            request = Request(url, headers={'User-Agent': 'china-gap27888-catalogue/1', 'Accept-Encoding': 'identity'})
+            try:
+                response = opener.open(request, timeout=min(45, remaining))
+            except HTTPError as error:
+                response = error
+            row['status'] = response.code
+            row['content_type'] = response.headers.get('Content-Type')
+            row['declared_length'] = response.headers.get('Content-Length')
+            assert response.headers.get('Content-Encoding', 'identity') == 'identity'
+            raw = response.read(262145)
+            row.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(), base64=base64.b64encode(raw).decode())
+            assert len(raw) <= 262144 and row['status'] == 200
+            assert row['declared_length'] is None or int(row['declared_length']) == len(raw)
+            value = json.loads(raw)
+            data = value['data'] if value.get('status') == 'OK' else value
+            version = data.get('latestVersion') or data.get('datasetVersion')
+            assert isinstance(version, dict) and version['datasetPersistentId'] == DOI
+            assert version['versionState'] == 'RELEASED'
+            files = []
+            for item in version['files']:
+                f = item['dataFile']
+                files.append(dict(id=f['id'], filename=f['filename'], bytes=f['filesize'],
+                                  checksum=f.get('checksum'), restricted=item.get('restricted'),
+                                  description=item.get('description'), content_type=f.get('contentType')))
+            assert len(files) <= 1000
+            result['catalogue'] = dict(doi=DOI, version=[version['versionNumber'], version['versionMinorNumber']],
+                                      release_time=version.get('releaseTime'), license=version.get('license'),
+                                      metadata_blocks=version.get('metadataBlocks'), files=files,
+                                      original_processing_compatibility='UNKNOWN', member_coverage='UNKNOWN')
+            row['accepted'] = True
+            result['complete'] = True
+        except MemoryError:
+            raise
+        except Exception as error:
+            row['error'] = dict(type=type(error).__name__, message=str(error)[:500])
+        finally:
+            signal.setitimer(signal.ITIMER_REAL, 0)
+            if response is not None:
+                response.close()
+            row['seconds'] = time.monotonic() - began
+            if row['seconds'] >= 45:
+                row['accepted'] = False
+                result['complete'] = False
+                result['catalogue'] = None
+                row['time_gate_failed'] = True
+        if result['complete']:
+            break
+    result.update(server_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), seconds=time.monotonic() - START)
+    assert result['seconds'] < 100
+    return result
 
-if __name__=='__main__':main()
 
-GAP_SOURCE_SUPPORT
+if __name__ == '__main__':
+    import zlib
+    raw = (json.dumps(main(), ensure_ascii=False, allow_nan=False, separators=(',', ':')) + '\n').encode()
+    assert len(raw) <= 2097152
+    print('GEOLOGY_RECOVERY_BYTES=' + str(len(raw)))
+    print('GEOLOGY_RECOVERY_SHA256=' + hashlib.sha256(raw).hexdigest())
+    print('GEOLOGY_RECOVERY_ZLIB_BASE64=' + base64.b64encode(zlib.compress(raw)).decode())
+    print('GEOLOGY_RECOVERY_DONE')
+
+ALTERNATIVE_CATALOGUE
