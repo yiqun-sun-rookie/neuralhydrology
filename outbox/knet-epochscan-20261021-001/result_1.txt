@@ -1,0 +1,8 @@
+### channel=knet-epochscan-20261021-001 seq=1
+### host=login4
+### started=2026-10-21T18:38:37+0800
+### ---------- output ----------
+DEPLOYMENT_RESULT={"status": "SUBMITTED", "job_id": "246051", "remote_root": "/data1/home/sunyiq/knet_camels_hpc_20261012_001/attempts/knet_epochscan_20261021_001", "channel": "knet-epochscan-20261021-001", "deployment_sequence": 1, "archive_sha256": "075a4da84faef431229edcd2f75af59b6eef8bdbf4ab695f4de604e80c81232b", "script_sha256": "ab3e8e14cf898e371b8aed9869e494180d1708d6b6524fa9cad77628ee8ae860", "contract_sha256": "18c8aae0d8787bc426c480d84312705822fdce3747861a71d739561ca77c45e0", "submitted_utc": "2026-10-21T10:38:39.094879+00:00", "sbatch_returncode": 0, "sbatch_reply": "Submitted batch job 246051\n", "submission_count": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T18:38:39+0800
