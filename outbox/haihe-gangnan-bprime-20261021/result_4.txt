@@ -1,0 +1,52 @@
+### channel=haihe-gangnan-bprime-20261021 seq=4
+### host=login4
+### started=2026-10-21T17:34:38+0800
+### ---------- output ----------
+2026-10-21T17:34:38+0800
+=== CANCEL OWN JOBS 245971 245974 ===
+245970|COMPLETED|0:0|ngu201|00:02:28
+245971_0|FAILED|1:0|ngu201|00:00:52
+245971_1|FAILED|1:0|ngu201|00:00:53
+245971_2|FAILED|1:0|ngu202|00:01:36
+245971_3|FAILED|1:0|ngu202|00:01:36
+245971_4|FAILED|1:0|ngu202|00:01:36
+245971_5|FAILED|1:0|ngu201|00:00:47
+245971_6|FAILED|1:0|ngu201|00:00:50
+245971_7|FAILED|1:0|ngu201|00:00:50
+245971_8|FAILED|1:0|ngu201|00:00:52
+245971_9|FAILED|1:0|ngu201|00:00:47
+245971_10|FAILED|1:0|ngu201|00:00:48
+245971_11|FAILED|1:0|ngu201|00:00:48
+245971_12|FAILED|1:0|ngu202|00:00:55
+245971_13|FAILED|1:0|ngu202|00:00:55
+245971_14|FAILED|1:0|ngu201|00:00:54
+245971_15|RUNNING|0:0|ngu201|00:00:30
+245971_16|RUNNING|0:0|ngu201|00:00:30
+245971_17|RUNNING|0:0|ngu201|00:00:30
+245971_18|RUNNING|0:0|ngu202|00:00:30
+245971_19|RUNNING|0:0|ngu202|00:00:30
+245971_[20-23%6]|PENDING|0:0|None assigned|00:00:00
+245974|PENDING|0:0|None assigned|00:00:00
+scancel issued for 245971 245974
+=== SET ASIDE ANY RUN DIRS FROM FAILED TASKS (no deletion) ===
+run dirs present: 0
+=== STRIP CR ===
+CR lines before: tasks=24 yml=2292
+CR lines after: tasks=0 yml=0
+first task resolves: configs/bp_3h_base_s42.yml
+=== PARTITION ===
+hgpu2p free_gpus=1
+hgpu2 free_gpus=0
+hgpu4 free_gpus=0
+hgpu8 free_gpus=7
+CHOSEN_PARTITION=hgpu8
+=== SUBMIT ARRAY v2 ===
+Submitted batch job 245997
+=== SUBMIT AGGREGATE v2 (afterany 245997) ===
+Submitted batch job 245998
+245997_[0-23%6] hgpu8 PENDING (None)
+245998 hgpu8 PENDING (Dependency)
+RESUBMITTED array=245997 aggregate=245998
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T17:34:45+0800
