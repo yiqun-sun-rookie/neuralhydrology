@@ -263,3 +263,5 @@ git rm inbox/seq
 | `knet-state-cont5-20261020-001` | Authorized SC-CONTINUOUS5-01 paired five-call training diagnostic | 2026-10-20 | Only state_channel_continuous5_20261020_001, one 020 paired five-call job, 3 hour cap, no repeat submission; preserve shared receiver and all other tasks. |
 
 | `knet-state-mix5-20261021-001` | Authorized SC-MIXFIRST5-01 paired five-call training diagnostic | 2026-10-21 | Only state_channel_mixfirst5_20261021_001, one 020 paired five-call job, 3 hour cap, no repeat submission; preserve shared receiver and all other tasks. |
+
+| `knet-state-hold5-20261021-001` | Authorized SC-HOLDOUT5-01 frozen-step5 paired temporal evaluation | 2026-10-21 | Only state_channel_holdout5_20261021_001, one 020 frozen-step5 evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
