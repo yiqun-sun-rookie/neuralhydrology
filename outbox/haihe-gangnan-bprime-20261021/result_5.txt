@@ -1,0 +1,26 @@
+### channel=haihe-gangnan-bprime-20261021 seq=5
+### host=login4
+### started=2026-10-21T17:36:07+0800
+### ---------- output ----------
+2026-10-21T17:36:07+0800
+=== SACCT ===
+=== SQUEUE ===
+245997_[6-23%6]|PENDING|(JobArrayTaskLimit)
+245998|PENDING|(Dependency)
+245997_5|RUNNING|ngu201
+245997_0|RUNNING|ngu201
+245997_1|RUNNING|ngu201
+245997_2|RUNNING|ngu202
+245997_3|RUNNING|ngu202
+245997_4|RUNNING|ngu202
+=== DONE ===
+0
+=== SMOKE ===
+SMOKE_OK var=INQ_3h steps=26304 first=2023-01-01T00:00:00.000000000 last=2025-12-31T23:00:00.000000000 valid=25925 nse_ep1=0.481
+SMOKE_DONE end=2026-10-21T17:33:04+0800
+=== AGG ===
+=== FAILED TASK ERR TAILS ===
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T17:36:07+0800
