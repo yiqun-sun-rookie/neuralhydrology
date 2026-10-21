@@ -1,0 +1,41 @@
+### channel=haihe-gangnan-bprime-20261021 seq=14
+### host=login4
+### started=2026-10-21T18:37:16+0800
+### ---------- output ----------
+2026-10-21T18:37:16+0800
+=== SACCT ===
+246043|PENDING|0:0|None assigned|00:00:00
+246042_0|RUNNING|0:0|ngu201|00:07:34
+246042_1|RUNNING|0:0|ngu201|00:07:34
+246042_2|RUNNING|0:0|ngu202|00:07:34
+246042_3|RUNNING|0:0|ngu202|00:07:34
+246042_4|RUNNING|0:0|ngu202|00:07:34
+246042_5|RUNNING|0:0|ngu201|00:03:03
+246042_[6-11%6]|PENDING|0:0|None assigned|00:00:00
+=== SQUEUE ===
+246042_[6-11%6]|PENDING|(JobArrayTaskLimit)
+246043|PENDING|(Dependency)
+246042_5|RUNNING|ngu201
+246042_0|RUNNING|ngu201
+246042_1|RUNNING|ngu201
+246042_2|RUNNING|ngu202
+246042_3|RUNNING|ngu202
+246042_4|RUNNING|ngu202
+=== DONE ===
+24
+=== SMOKE ===
+SMOKE_OK var=INQ_3h steps=26304 first=2023-01-01T00:00:00.000000000 last=2025-12-31T23:00:00.000000000 valid=25925 nse_ep1=0.481
+SMOKE_DONE end=2026-10-21T17:33:04+0800
+=== AGG ===
+=== EPOCHS ===
+train_rs_246042_0 30
+train_rs_246042_1 30
+train_rs_246042_2 30
+train_rs_246042_3 30
+train_rs_246042_4 30
+train_rs_246042_5 25
+=== FAILED TASK ERR TAILS ===
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-21T18:37:17+0800
