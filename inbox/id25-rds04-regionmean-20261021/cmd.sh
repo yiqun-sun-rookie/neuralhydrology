@@ -1,14 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 root=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001
-payload=/data1/home/sunyiq/hpc_mailbox/inbox/id25-rds04-regionmean-20261021/payload/rds04_regionmean_payload_v001.tar.gz
-test ! -e "$root"
-active=$(timeout 30 squeue -h -u sunyiq -n id25_rds04_261021 -o '%i|%T')
-test -z "$active"
-printf '%s  %s\n' 'f1dad262fa0e176d4b5a3dfd22665b97b844e27a3d5463677532f0df52c4be4c' "$payload" | sha256sum -c -
-mkdir "$root"
-mkdir -p "$root/logs" "$root/tmp" "$root/output"
-tar -xzf "$payload" -C "$root"
-ln -s /data1/home/sunyiq/id25_regional_daily_storage_20261012_001/inputs/inputs.npz "$root/inputs/inputs.npz"
-echo DEPLOYED_NO_REPEATED_PREFLIGHT
-bash "$root/ops/submit.sh" initial
+date -Is
+for rel in job_id.txt submissions.tsv; do echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi; done
+if test -f "$root/job_id.txt"; then
+ job=$(cat "$root/job_id.txt")
+ timeout 30 squeue -h -j "$job" -o '%i|%j|%T|%M|%R'
+ timeout 30 sacct -n -X -j "$job" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -P
+fi
+for rel in runtime.json output/status.json output/selection.json report.json; do
+ echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi
+done
+if test -f "$root/output/metrics.jsonl"; then tail -n 2 "$root/output/metrics.jsonl"; fi
+for f in "$root"/logs/*.out "$root"/logs/*.err; do if test -f "$f"; then echo "LOG=$f"; tail -n 12 "$f"; fi; done
