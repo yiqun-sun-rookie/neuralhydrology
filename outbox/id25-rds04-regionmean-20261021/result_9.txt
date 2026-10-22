@@ -1,0 +1,18 @@
+### channel=id25-rds04-regionmean-20261021 seq=9
+### host=login4
+### started=2026-10-22T11:59:21+0800
+### ---------- output ----------
+2026-10-22T11:59:21+0800
+FILE=job_id.txt
+246090
+FILE=submissions.tsv
+2026-10-21T20:28:59+0800	246090	initial
+246090|id25_rds04_261021|PENDING|0:00|(Priority)
+246090|id25_rds04_261021|PENDING|0:0|00:00:00|None assigned
+FILE=runtime.json
+FILE=output/status.json
+FILE=output/selection.json
+FILE=report.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T11:59:21+0800
