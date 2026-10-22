@@ -1,0 +1,43 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=9
+### host=login4
+### started=2026-10-22T12:58:04+0800
+### ---------- output ----------
+2026-10-22T12:58:04+0800
+=== SACCT ===
+246201|ohn_a1_smoke|COMPLETED|0:0|00:30:44|ngu001
+246240|ohn_da_select|PENDING|0:0|00:00:00|None assigned
+246239_0|ohn_da_grid|RUNNING|0:0|00:17:04|ngu001
+246239_1|ohn_da_grid|RUNNING|0:0|00:17:04|ngu007
+246239_2|ohn_da_grid|RUNNING|0:0|00:15:33|ngu001
+246239_[3-12%4]|ohn_da_grid|PENDING|0:0|00:00:00|None assigned
+246245|ohn_p3_score|PENDING|0:0|00:00:00|None assigned
+246242_[0-4%3]|ohn_a1_train|PENDING|0:0|00:00:00|None assigned
+246243_[0-14%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+246244_[0-4%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+=== SQUEUE ===
+246239_[3-12%4]|PENDING|(Priority)|2026-10-26T17:31:36
+246242_[0-4%3]|PENDING|(Priority)|2026-10-26T17:31:36
+246240|PENDING|(Dependency)|N/A
+246243_[0-14%3]|PENDING|(Dependency)|N/A
+246244_[0-4%3]|PENDING|(Dependency)|N/A
+246245|PENDING|(Dependency)|N/A
+246239_2|RUNNING|ngu001|2026-10-22T12:44:31
+246239_0|RUNNING|ngu001|2026-10-22T12:43:00
+246239_1|RUNNING|ngu007|2026-10-22T12:43:00
+=== DEPENDENCY CHECK ===
+Dependency=afterany:246242_*
+Dependency=afterany:246243_*,afterany:246244_*
+=== RESERVATIONS ===
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00
+   Nodes=icn[202,204-207,210-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+ReservationName=hhu08_74 StartTime=2026-09-24T15:54:32 EndTime=2027-09-24T15:54:32 Duration=365-00:00:00
+   Nodes=ngu203 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+=== LOG MARKERS ===
+--- ohn_a1_smoke-246201.out
+A1_TRAIN_50_UPDATES_S=73 A1_INFER_TEST_S=1728 run=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021/runs_smoke/a1_smoke_2210_121434
+SMOKE_A1_DONE 2026-10-22T12:44:01+08:00
+--- ohn_a1_smoke-246201.err
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T12:58:04+0800
