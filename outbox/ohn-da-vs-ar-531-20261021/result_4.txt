@@ -1,0 +1,34 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=4
+### host=login4
+### started=2026-10-22T12:18:01+0800
+### ---------- output ----------
+2026-10-22T12:18:01+0800
+=== SACCT ===
+246200|ohn_da_smoke|COMPLETED|0:0|00:05:17|ngu007
+246201|ohn_a1_smoke|RUNNING|0:0|00:06:37|ngu001
+=== SQUEUE ===
+246201|RUNNING|ngu001|2026-10-22T12:13:25
+=== RESERVATIONS ===
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00
+   Nodes=icn[202,204-207,210-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+ReservationName=hhu08_74 StartTime=2026-09-24T15:54:32 EndTime=2027-09-24T15:54:32 Duration=365-00:00:00
+   Nodes=ngu203 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+=== LOG MARKERS ===
+--- ohn_da_smoke-246200.out
+EVAL_DONE elapsed_s=188.6 samples=10960
+ "samples": 10960,
+ "elapsed_s": 15.3,
+ "samples": 10960,
+ "elapsed_s": 188.6,
+}SMOKE_DA_DONE 2026-10-22T12:18:31+08:00
+--- ohn_da_smoke-246200.err
+--- ohn_a1_smoke-246201.out
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+check {'dtype': 'float32', 'same_coords': True, 'lag_relation_ok': True, 'first_date_all_nan': True, 'shape': [531, 12784]}
+{'dtype': 'float32', 'same_coords': True, 'lag_relation_ok': True, 'first_date_all_nan': True, 'shape': [531, 12784]}
+[INFO] 12:14:34.739 (basetrainer.py:__init__) -- allzero_samples_are_invalid: False
+--- ohn_a1_smoke-246201.err
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T12:18:02+0800
