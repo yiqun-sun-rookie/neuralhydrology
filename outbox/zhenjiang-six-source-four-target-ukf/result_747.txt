@@ -1,0 +1,8 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=747
+### host=login4
+### started=2026-10-22T17:40:36+0800
+### ---------- output ----------
+{"status": "readonly_inference_submitted", "job_id": "246349", "job_name": "zj003_lstm_dev100_2022", "root": "/data1/home/sunyiq/zhenjiang_fixed200_003_lstm_dev100_20261022_001", "new_training_jobs": 0, "existing_training_jobs_changed": false, "prepared": {"at_utc": "2026-10-22T09:41:12.525868+00:00", "calendar_sha256": "47e003afa19d1b75dd2bd2d0c3ae7ec8f5808f2ad85bc90b205baa9632e966ae", "case": "legacy_lstm__historical_capacity", "excluded_hours": 923, "excluded_reasons": {"incomplete_window": 70, "missing_input_or_label": 853}, "family": "003_dev100_lr001_s101_2022", "forecast_cells_per_method": 721004, "fresh_parameter_fits": 0, "input_sha256": "f3034d8079625658bed9071d6df9ab60c8b9f6da1267908f5251e0c5a91faa5b", "issue_hours": 7837, "model_manifest_sha256": "4a90bcce25983b1cd50cb244a3b01abdebed170b6dc97a7b45b765b2eeef75c9", "observations_sha256": "c6e7f1ffb3a21991fd13ff0d5196c910b2b6cdad9a30ee7ef25e63aa993ad74f", "spec_sha256": "6ba40915959e92c630914f6c98e0405be676ec0fd22ab03fd0c22092083892f5", "status": "prepared_no_inference", "tide_parameters_sha256": "3bfd1a1c23352c91e639eee000ccef2a468e0b7182719a80bfb9bc8cf2dd48cf", "tide_reference_check": {"max_abs_m": 0.0, "sample_hours": 74}, "tide_source_hash": "ac59cd460d6a8b643e3114efbd26f06f313e7108515ee981b1fa3a3e9b6a58a4", "training_epochs_added": 0, "wrapper_sha256": "d95b97450d038f940c766cbf2601d4884c1a1ade42cba7b7044128bae27f3094", "year": 2022, "years_2023_2024_read": false}, "at_utc": "2026-10-22T09:41:13.234634+00:00"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T17:41:13+0800
