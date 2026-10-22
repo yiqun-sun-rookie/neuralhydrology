@@ -1,0 +1,16 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=2
+### host=login4
+### started=2026-10-22T11:59:22+0800
+### ---------- output ----------
+2026-10-22T11:59:22+0800
+=== SACCT ===
+246200|ohn_da_smoke|PENDING|0:0|00:00:00|None assigned
+246201|ohn_a1_smoke|PENDING|0:0|00:00:00|None assigned
+=== SQUEUE ===
+246200|PENDING|(ReqNodeNotAvail, UnavailableNodes:ngu[201-202])|N/A
+246201|PENDING|(ReqNodeNotAvail, UnavailableNodes:ngu[201-202])|N/A
+=== LOG MARKERS ===
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T11:59:23+0800
