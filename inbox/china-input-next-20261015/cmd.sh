@@ -2,11 +2,14 @@
 set -eo pipefail
 umask 077
 export PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=''
-exec timeout --signal=TERM --kill-after=5s 160s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'NAMED_CATALOGUE_QUERY'
+exec timeout --signal=TERM --kill-after=5s 160s /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'CHUNKED_CATALOGUE_QUERY'
 """One finite HPC public-directory session; no GIS, source archives or Slurm."""
 import base64
 import datetime
 import hashlib
+import io
+import sys
+from http.client import HTTPResponse, IncompleteRead
 import json
 import re
 import resource
@@ -70,6 +73,27 @@ def allowed(url, name):
     assert '/api/access/datafile/' not in p.path
 
 
+def framing_probes():
+    class Socket:
+        def __init__(self, raw): self.raw = raw
+        def makefile(self, *_args): return io.BytesIO(self.raw)
+    prefix = b'HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n'
+    valid = HTTPResponse(Socket(prefix+b'3\r\nabc\r\n0\r\n\r\n'))
+    valid.begin()
+    assert valid.chunked is True and valid.read(512)==b'abc'
+    assert valid.isclosed() and valid.chunk_left is None
+    invalid = HTTPResponse(Socket(prefix+b'3\r\nabc\r\n'))
+    invalid.begin()
+    rejected = False
+    try:
+        invalid.read(512)
+    except IncompleteRead:
+        rejected = True
+    assert rejected, 'Incomplete chunked message must fail'
+    return dict(complete_chunked_accepted=True, missing_terminal_chunk_rejected=True,
+        python_version=sys.version.split()[0], external_requests=0, scientific_reads=0)
+
+
 def main():
     resource.setrlimit(resource.RLIMIT_AS, (256 * 1024**2, resource.getrlimit(resource.RLIMIT_AS)[1]))
     signal.signal(signal.SIGALRM, expired)
@@ -77,7 +101,7 @@ def main():
     assert len(original) == 7559 and hashlib.sha256(original).hexdigest() == CGS_SHA
     a = json.loads(original)['data']['attributes']
     assert a['doi'].lower() == '10.35080/data.c.2021.p23' and a['version'] == '1.0.0'
-    result = dict(kind='GAP27888_NAMED_CATALOGUE_QUERY', member='27888',
+    result = dict(kind='GAP27888_CHUNKED_CATALOGUE_QUERY', member='27888',
         complete=False, metadata_session_finished=False, responses=[], documents=[],
         reused_registry=dict(bytes=len(original), sha256=CGS_SHA, base64=REUSED_CGS_METADATA_B64,
             version=a['version'], publication_year=a['publicationYear'], url=a['url'],
@@ -87,6 +111,7 @@ def main():
         scientific_input_accepted=False, prediction_approved=False,
         permeability_units_verified=False, porosity_units_verified=False,
         member_coverage='UNKNOWN_NOT_SPATIALLY_COMPUTED')
+    result['transport_probes'] = framing_probes()
     opener = build_opener(ProxyHandler({}), NoRedirect())
     total = 0; requests = 0
     for name, initial in ENDPOINTS:
@@ -110,19 +135,42 @@ def main():
                 row.update(status=response.code, content_type=response.headers.get('Content-Type'),
                     declared_length=response.headers.get('Content-Length'),
                     content_encoding=response.headers.get('Content-Encoding', 'identity'),
-                    location=response.headers.get('Location'))
+                    location=response.headers.get('Location'),
+                    transfer_encoding=response.headers.get('Transfer-Encoding'),
+                    http_version=getattr(response, 'version', None),
+                    library_chunked=getattr(response, 'chunked', False))
                 assert row['content_encoding'] == 'identity', 'Compressed metadata not accepted'
                 typ = (row['content_type'] or '').split(';')[0].strip().lower()
                 assert typ.startswith('text/') or typ in ('application/json','application/vnd.api+json',
                     'application/xml','application/xhtml+xml'), 'Metadata text only'
                 cap = min(512 * 1024, 1024**2 - total)
                 declared = row['declared_length']
-                assert declared is not None and 0 <= int(declared) <= cap, 'Exact Content-Length and metadata body budget'
-                raw = response.read(cap); total += len(raw)
+                transfer = (row['transfer_encoding'] or '').strip().lower()
+                if declared is not None:
+                    assert not transfer, 'Ambiguous CL plus Transfer-Encoding rejected'
+                    assert 0 <= int(declared) <= cap, 'Exact declared metadata body budget'
+                    row['framing'] = 'CONTENT_LENGTH'
+                else:
+                    assert transfer=='chunked' and row['library_chunked'] is True, 'Unverified no-length framing'
+                    row['framing'] = 'CHUNKED'
+                try:
+                    raw = response.read(cap)
+                except IncompleteRead as error:
+                    raw = error.partial
+                    total += len(raw)
+                    row.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(),
+                        base64=base64.b64encode(raw).decode(), partial_body=True)
+                    raise
+                total += len(raw)
                 row.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(),
                            base64=base64.b64encode(raw).decode())
-                assert len(raw) < cap or (declared is not None and int(declared) == len(raw)), 'Possible truncated body'
-                assert int(declared) == len(raw), 'Metadata length mismatch'
+                if declared is not None:
+                    assert len(raw)==int(declared), 'Metadata length mismatch'
+                else:
+                    row.update(response_closed_after_read=response.isclosed(),
+                        chunk_left_after_read=response.chunk_left)
+                    assert len(raw)<cap and row['response_closed_after_read'] is True and response.chunk_left is None, 'No validated terminal chunk or body cap reached'
+                row['framing_complete'] = True
                 response.close(); response = None
                 assert time.monotonic() - began < limit, 'Request time limit after close'
                 row['complete'] = True
@@ -200,4 +248,4 @@ if __name__ == '__main__':
     print('GEOLOGY_RECOVERY_DONE', flush=True)
     assert time.monotonic()-START < 150, 'Final output/flush deadline exceeded; nonzero exit'
 
-NAMED_CATALOGUE_QUERY
+CHUNKED_CATALOGUE_QUERY
