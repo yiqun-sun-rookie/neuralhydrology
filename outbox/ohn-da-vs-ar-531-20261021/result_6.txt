@@ -1,0 +1,40 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=6
+### host=login4
+### started=2026-10-22T12:30:08+0800
+### ---------- output ----------
+2026-10-22T12:30:08+0800
+=== DEPLOY V3 ===
+manifest v3 OK 7 files
+  15 configs/tasks_p2_e.txt
+   5 configs/tasks_p2_a1da.txt
+  20 total
+=== STATE OF UPSTREAM JOBS ===
+246239_[0-12%4] hgpu2p PENDING (Priority) 0:00
+246240 hgpu2p PENDING (Dependency) 0:00
+246201 hgpu2p RUNNING ngu001 16:43
+246201|RUNNING|0:0|00:18:44
+partition=hgpu2p
+=== SUBMIT ===
+Submitted batch job 246242
+Submitted batch job 246243
+Submitted batch job 246244
+Submitted batch job 246245
+==> slurm/run_p2_da_e.slurm <==
+#!/usr/bin/env bash
+#SBATCH --dependency=afterany:246240
+#SBATCH -J ohn_p2_da
+#SBATCH -p hgpu2p
+
+==> slurm/run_p3_score.slurm <==
+#!/usr/bin/env bash
+#SBATCH --dependency=afterany:246243:246244
+#SBATCH -J ohn_p3_score
+#SBATCH -p hgpu2p
+246242_[0-4%3] hgpu2p PENDING (Dependency)
+246243_[0-14%3] hgpu2p PENDING (Dependency)
+246244_[0-4%3] hgpu2p PENDING (None)
+246245 hgpu2p PENDING (Dependency)
+SEQ6_DONE a1train=246242 e_da=246243 a1da=246244 p3=246245
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T12:30:09+0800
