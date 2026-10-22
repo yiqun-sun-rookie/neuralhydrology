@@ -1,0 +1,33 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=5
+### host=login4
+### started=2026-10-22T12:24:04+0800
+### ---------- output ----------
+2026-10-22T12:24:04+0800
+=== CHECKS ===
+tune_v0=/data1/home/sunyiq/openhydronet_531_20261015/runs/tune_v0_2010_172646
+133:test_end_date: 30/09/2008
+134:test_start_date: 01/10/2006
+142:train_end_date: 30/09/2006
+143:train_start_date: 01/10/1999
+partition=hgpu2p
+ngu001    mix       gpu:1,dcu:0             
+ngu002    down*     gpu:0,dcu:0             
+ngu004    mix       gpu:2,dcu:0             
+ngu005    mix       gpu:2,dcu:0             
+ngu006    mix       gpu:2,dcu:0             
+ngu007    mix       gpu:1,dcu:0             
+ngu008    mix       gpu:2,dcu:0             
+ngu010    mix       gpu:2,dcu:0             
+ngu011    mix       gpu:2,dcu:0             
+=== SUBMIT GRID ===
+Submitted batch job 246239
+=== SUBMIT SELECT (afterany 246239) ===
+Submitted batch job 246240
+246239_[0-12%4] hgpu2p PENDING (None)
+246240 hgpu2p PENDING (Dependency)
+=== A1 SMOKE ===
+246201 hgpu2p RUNNING ngu001 10:39
+SEQ5_DONE grid=246239 select=246240
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T12:24:04+0800
