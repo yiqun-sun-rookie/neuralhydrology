@@ -1,0 +1,10 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=750
+### host=login4
+### started=2026-10-23T01:15:47+0800
+### ---------- output ----------
+{"schema": "fixed200-continuation-decision-v1", "case": "legacy_lstm__historical_capacity", "previous_job": "245556", "at_utc": "2026-10-22T17:15:50.999105+00:00", "matching_queue": ["245556|PENDING|zj003_legacy_lstm__historical_capacity|/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/base"], "status": "existing_job_retained"}
+{"schema": "fixed200-continuation-decision-v1", "case": "explicit_gru__historical_capacity", "previous_job": "246202", "at_utc": "2026-10-22T17:15:51.048033+00:00", "matching_queue": [], "accounting": "246202|COMPLETED|0:0\n", "status": "verified_terminal_continuation_entry_invoked", "returncode": 0, "stdout": "{\"status\": \"fixed200_continuation_submitted\", \"case\": \"explicit_gru__historical_capacity\", \"job_id\": \"246498\"}\n", "stderr": "", "confirmed": {"case": "explicit_gru__historical_capacity", "job_id": "246498", "previous_job": "246202"}}
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-23T01:16:10+0800
