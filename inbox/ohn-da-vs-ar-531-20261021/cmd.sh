@@ -1,19 +1,16 @@
 #!/bin/bash
-# OHN DA-vs-AR seq8: shorten time limits of OWN pending jobs to realistic values so backfill can use gaps
-# (P1 smoke: grid task ~25 min, DA arm ~3 h on RTX 3090; original id18_nse training 10-12.6 h). No other jobs touched.
-set -o pipefail
+# read-only status for jobs 246201,246239,246240,246242,246243,246244,246245
 date --iso-8601=seconds
-upd() {  # upd <jobid> <limit>
-  local st; st=$(squeue -j "$1" -h -o '%T' 2>/dev/null | sort -u | tr '\n' ' ')
-  echo "job $1 states: ${st:-GONE}"
-  case "$st" in *PENDING*) scontrol update jobid="$1" TimeLimit="$2" 2>&1 && echo "  -> TimeLimit=$2" ;; *) echo "  not pending, unchanged" ;; esac
-}
-upd 246239 01:30:00
-upd 246243 06:00:00
-upd 246244 06:00:00
-upd 246242 1-00:00:00
-echo "=== NEW LIMITS / START ESTIMATES ==="
-squeue -j 246239,246240,246242,246243,246244,246245 -h -o '%i|%T|%l|%R|%S' 2>&1 | head -12
-squeue -j 246201 -h -o '%i|%T|%M|%R' 2>&1
-grep -hE 'A1_TRAIN|SMOKE_A1|Traceback|Error' /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/ohn_a1_smoke-246201.* 2>/dev/null | tail -4
-echo "SEQ8_DONE"
+echo "=== SACCT ==="
+sacct -X -n -P -j 246201,246239,246240,246242,246243,246244,246245 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList 2>&1
+echo "=== SQUEUE ==="
+squeue -j 246201,246239,246240,246242,246243,246244,246245 -h -o '%i|%T|%R|%S' 2>&1
+echo '=== DEPENDENCY CHECK ==='
+scontrol show job 246244 2>/dev/null | grep -oE 'Dependency=[^ ]*' | head -1
+scontrol show job 246245 2>/dev/null | grep -oE 'Dependency=[^ ]*' | head -1
+cat /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/results/p1b/p1b_selection.json 2>/dev/null
+echo "=== RESERVATIONS ==="
+scontrol show reservation 2>&1 | grep -E "ReservationName|StartTime|Nodes=|Flags" | head -12
+echo "=== LOG MARKERS ==="
+for f in "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_a1_smoke-246201.out "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_a1_smoke-246201.err "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_da_select-246240.out "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_da_select-246240.err "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_p3_score-246245.out "/data1/home/sunyiq/ohn_da_vs_ar_531_20261021"/logs/ohn_p3_score-246245.err; do [ -f "$f" ] && { echo "--- $(basename $f)"; grep -hE 'A1_TRAIN_50_UPDATES_S|SMOKE_A1_DONE|SELECTED|SELECT_DONE|VERDICTS|P3_DONE|mean_L1_3|Traceback|Error|FATAL|CONDA_FAILED|MISSING|SUBMIT_FAILED' "$f" | tail -6; }; done
+echo END_STATUS
