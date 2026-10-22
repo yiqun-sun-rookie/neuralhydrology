@@ -1,0 +1,44 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=25
+### host=login4
+### started=2026-10-22T22:50:49+0800
+### ---------- output ----------
+2026-10-22T22:50:49+0800
+=== OWN TIME LIMITS ===
+246243_[3-14%3]|6:00:00|hgpu2p,hgpu2|(Resources)|2026-10-24T16:54:39
+246279_[0-4%3]|1-12:00:00|hgpu2p,hgpu2,hgpu4|(Priority)|2026-10-24T16:54:39
+246378_[0]|6:00:00|hgpu2p,hgpu2|(Priority)|2026-10-24T16:54:39
+246280_[0-4%3]|6:00:00|hgpu2p,hgpu2|(Dependency)|N/A
+246281|3:00:00|hgpu2p|(Dependency)|N/A
+=== RESERVATIONS ===
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00
+   Nodes=icn[202,204-207,210-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+ReservationName=hhu08_74 StartTime=2026-09-24T15:54:32 EndTime=2027-09-24T15:54:32 Duration=365-00:00:00
+   Nodes=ngu203 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+ReservationName=root_79 StartTime=2026-10-22T17:08:57 EndTime=2027-10-22T17:08:57 Duration=365-00:00:00
+   Nodes=icn[242,244-245] NodeCnt=3 CoreCnt=144 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+=== NGU001 ===
+AvailableFeatures=(null)
+Gres=gpu:2
+State=IDLE
+Partitions=hgpu2p
+CfgTRES=cpu=96,mem=1M,billing=96
+AllocTRES=
+=== START ESTIMATES hgpu2p pending (all users, anonymized) ===
+924722|6:00:00|1|gpu:1|N/A|(JobArrayTaskLimit)
+548327|UNLIMITED|1|gpu:1|N/A|(Priority)
+251374|6:00:00|1|gpu:1|2026-10-24T16:54:39|(Resources)
+247712|1-12:00:00|1|gpu:1|2026-10-24T16:54:39|(Priority)
+230711|12:00:00|1|gpu:1|N/A|(Priority)
+218310|6:00:00|1|gpu:1|2026-10-24T16:54:39|(Priority)
+200005|4:00:00|1|gpu:1|N/A|(Dependency)
+200005|6:00:00|1|gpu:1|N/A|(Dependency)
+200005|6:00:00|1|gpu:1|N/A|(Dependency)
+200005|3:00:00|1|gpu:1|N/A|(Dependency)
+0|12:00:00|1|gpu:1|N/A|(JobHeldUser)
+0|6:00:00|1|gpu:1|N/A|(JobHeldUser)
+0|2:00:00|1|gpu:1|N/A|(JobHeldUser)
+0|30:00|1|gpu:1|N/A|(JobHeldUser)
+SEQ25_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T22:50:50+0800
