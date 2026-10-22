@@ -1,0 +1,25 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=29
+### host=login4
+### started=2026-10-22T23:47:18+0800
+### ---------- output ----------
+2026-10-22T23:47:18+0800
+BACKUP_OK
+3:#SBATCH -p hgpu2p,hgpu2,hgpu4
+4:#SBATCH --exclude=ngu002
+10:#SBATCH --array=0-4%3
+22:mkdir -p "$NEW/runs"  # before find: find on a missing dir fails the pipeline and set -e exits silently (job 246279)
+0
+0
+SBATCH: Submitted batch job 246450
+DEP_UPDATED 246280 -> afterany:246450
+RELEASED 246280
+NEW_A1=246450
+246280_[0-4%3]|PENDING|hgpu2p,hgpu2|(None)|6:00:00
+246281|PENDING|hgpu2p|(Dependency)|3:00:00
+246450_[0-4%3]|PENDING|hgpu2p,hgpu2,hgpu4|(None)|1-12:00:00
+Dependency=afterany:246450_*
+Dependency=afterany:246243_*,afterany:246280_*,afterany:246378_*
+SEQ29_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T23:47:18+0800
