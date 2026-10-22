@@ -1,0 +1,80 @@
+### channel=id25-rds04-regionmean-20261021 seq=14
+### host=login4
+### started=2026-10-22T15:26:39+0800
+### ---------- output ----------
+2026-10-22T15:26:39+0800
+JOB_DETAIL
+JobId=246090 JobName=id25_rds04_261021
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=312784 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Resources Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-10-21T20:30:58 EligibleTime=2026-10-21T20:30:58
+   AccrueTime=2026-10-21T20:30:58
+   StartTime=2026-10-24T00:01:53 EndTime=2026-10-24T06:01:53 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-22T15:28:22
+   Partition=hcpu48,hcpu48y AllocNode:Sid=login04:3169
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001/hpc/train.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001/logs/rds04-246090.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001/logs/rds04-246090.out
+   Power=
+
+CONFIG_SCHEDULER
+DefMemPerNode           = UNLIMITED
+PreemptMode             = OFF
+PreemptType             = preempt/none
+PriorityFlags           = 
+PriorityType            = priority/multifactor
+ProctrackType           = proctrack/cgroup
+SchedulerParameters     = (null)
+SchedulerType           = sched/backfill
+SelectType              = select/cons_res
+SelectTypeParameters    = CR_CORE
+TaskPlugin              = task/cgroup
+CPU_PARTITIONS
+PartitionName=hcpu48 AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=YES QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[201-264] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=EXCLUSIVE OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+PartitionName=hcpu48y AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=icn[270-281] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+NODE_DETAIL
+NodeName=icn270 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=90.17 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn270 NodeHostName=icn270 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=222452 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T12:17:56 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn271 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=48.30 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn271 NodeHostName=icn271 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=219522 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T13:35:13 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn272 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=48.25 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn272 NodeHostName=icn272 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=220268 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T13:42:44 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn273 Arch=x86_64 CoresPerSocket=24  CPUAlloc=32 CPUTot=48 CPULoad=32.14 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn273 NodeHostName=icn273 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=177605 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T13:50:00 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=32 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn274 Arch=x86_64 CoresPerSocket=24  CPUAlloc=1 CPUTot=48 CPULoad=0.06 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn274 NodeHostName=icn274 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=227928 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T13:54:05 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=1 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn275 Arch=x86_64 CoresPerSocket=24  CPUAlloc=32 CPUTot=48 CPULoad=32.12 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn275 NodeHostName=icn275 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=204944 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T14:00:06 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=32 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn276 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=48.30 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn276 NodeHostName=icn276 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=217670 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T12:00:19 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn277 Arch=x86_64 CoresPerSocket=24  CPUAlloc=5 CPUTot=48 CPULoad=0.08 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn277 NodeHostName=icn277 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=230127 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T12:05:53 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=5 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn278 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=28.92 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn278 NodeHostName=icn278 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=78941 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2026-05-05T21:03:20 SlurmdStartTime=2026-10-02T08:53:49 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn279 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=47.36 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn279 NodeHostName=icn279 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=239298 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2026-10-22T14:53:26 SlurmdStartTime=2026-10-22T15:06:56 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn280 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=48.16 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn280 NodeHostName=icn280 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=201186 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2025-08-08T12:11:22 SlurmdStartTime=2025-08-11T14:24:02 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=icn281 Arch=x86_64 CoresPerSocket=24  CPUAlloc=48 CPUTot=48 CPULoad=38.19 AvailableFeatures=(null) ActiveFeatures=(null) Gres=(null) NodeAddr=icn281 NodeHostName=icn281 Version=19.05.4 OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018  RealMemory=1 AllocMem=0 FreeMem=227054 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hcpu48y  BootTime=2026-05-05T20:52:46 SlurmdStartTime=2026-10-02T08:53:35 CfgTRES=cpu=48,mem=1M,billing=48 AllocTRES=cpu=48 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+RESERVATIONS
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00 Nodes=icn[202,204-207,210-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES TRES=cpu=720 Users=wangzhaomin,yukai Accounts=(null) Licenses=(null) State=ACTIVE BurstBuffer=(null) Watts=n/a
+ReservationName=hhu08_74 StartTime=2026-09-24T15:54:32 EndTime=2027-09-24T15:54:32 Duration=365-00:00:00 Nodes=ngu203 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES TRES=cpu=64 Users=hhu08 Accounts=(null) Licenses=(null) State=ACTIVE BurstBuffer=(null) Watts=n/a
+CPU_Y_QUEUE
+246090|sunyiq|PENDING|4|1|6:00:00|2026-10-24T00:01:53|Resources|(Resources)|312784
+START_ESTIMATE
+JOBID|STATE|REASON|START_TIME|PRIORITY|NODELIST(REASON)
+246090|PENDING|Resources|2026-10-24T00:01:53|312784|(Resources)
+OWN_TRAINING_STATUS
+FILE=job_id.txt
+246090
+FILE=submissions.tsv
+2026-10-21T20:28:59+0800	246090	initial
+FILE=runtime.json
+FILE=output/status.json
+READ_ONLY_DIAGNOSIS_FINISHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T15:26:39+0800
