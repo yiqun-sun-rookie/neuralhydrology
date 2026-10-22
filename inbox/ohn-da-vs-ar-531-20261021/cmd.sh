@@ -1,21 +1,28 @@
 #!/bin/bash
-# read-only health probe for jobs 246240,246243,246279,246280,246281,246378
-cd /data1/home/sunyiq/ohn_da_vs_ar_531_20261021 || exit 1
-echo "=== NOW ==="; date +%s
-echo "=== SACCT ==="
-sacct -X -n -P -j 246240,246243,246279,246280,246281,246378 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList 2>&1
-echo "=== SQUEUE ==="
-squeue -j 246240,246243,246279,246280,246281,246378 -h -o '%i|%T|%R|%M|%l' 2>&1
-echo "=== LOGAGE ==="
-ls -1 logs | grep -E '(246240_|246243_|246279_|246280_|246281_|246378_)' | while read f; do echo "$f $(stat -c %Y logs/$f) $(stat -c %s logs/$f)"; done
-echo "=== SPEED ==="
-for f in $(ls -1 logs | grep -E '(246240_|246243_|246279_|246280_|246281_|246378_).*\.out$'); do s=$(tr '\r' '\n' < logs/$f | grep -oE '[0-9]+/531 \[[^]]*, *[0-9.]+s/it\]' | tail -1); [ -n "$s" ] && echo "$f $s"; done
-echo "=== CKPT ==="
-for d in runs/a1_s10*; do [ -d "$d" ] || continue; n=$(ls $d/model_epoch*.pt 2>/dev/null | wc -l); nw=$(ls -t $d/model_epoch*.pt 2>/dev/null | head -1); echo "$(basename $d) $n ${nw:+$(stat -c %Y $nw)}"; done
-echo "=== MARKERS ==="
-ls logs | grep -E '^done_a1_s10' ; for f in copies/p2/*/*/da_eval_stamp_test_every3_da.json; do [ -f "$f" ] && { d=$(dirname $f); z=$d/test/model_epoch050/test_results_data_assimilation.zarr; [ -d "$z" ] && echo "STAMP $f zarr_ok" || echo "STAMP $f ZARR_MISSING"; }; done
-echo "=== ERRTAILS ==="
-for f in $(ls -1 logs | grep -E '(246240_|246243_|246279_|246280_|246281_|246378_).*\.(err|out)$'); do if grep -qE 'Traceback|CUDA error|RuntimeError|FATAL|MISSING|STALE_RUN|AMBIGUOUS|CONDA_FAILED|Killed|oom' logs/$f; then echo "--- $f"; grep -hE 'Error|FATAL|MISSING|STALE|AMBIGUOUS|Killed|oom' logs/$f | tail -3; fi; done
-echo "=== P3 ==="
-cat results/p3/p3_verdicts.json 2>/dev/null
-echo END_STATUS
+# Own jobs have been Priority-pending ~2 h with nothing running. Widen partitions of OWN pending jobs without changing
+# card type for DA arms: hgpu2 has the same RTX 3090 as hgpu2p. A1 training (card type irrelevant) may also use hgpu4 (A40).
+# ngu002 stays excluded. Nothing else touched.
+set -o pipefail
+date --iso-8601=seconds
+echo "=== FREE GPUS ==="
+for P in hgpu2p hgpu2 hgpu4 hgpu8; do
+  FREE=$(sinfo -p $P -N -h -O statecompact:10,gres:14,gresused:24 2>/dev/null | awk '
+      $1 ~ /^(idle|mix)$/ { t=$2; u=$3; sub(/^gpu:/,"",t); sub(/\(.*/,"",t); sub(/,.*/,"",t);
+                            sub(/^gpu:/,"",u); sub(/\(.*/,"",u); sub(/,.*/,"",u); f+=t-u }
+      END { print f+0 }')
+  echo "$P free_gpus=$FREE"
+done
+echo "=== WIDEN PARTITIONS (pending only) ==="
+upd() {  # upd <jobid> <partitions>
+  local st; st=$(squeue -j "$1" -h -o '%T' 2>/dev/null | sort -u | tr '\n' ' ')
+  echo "job $1 states: ${st:-GONE}"
+  case "$st" in *PENDING*) scontrol update jobid="$1" Partition="$2" 2>&1 && echo "  -> Partition=$2" ;; esac
+}
+upd 246243 hgpu2p,hgpu2
+upd 246378 hgpu2p,hgpu2
+upd 246280 hgpu2p,hgpu2
+upd 246279 hgpu2p,hgpu2,hgpu4
+echo "=== AFTER ==="
+squeue -j 246243,246378,246279,246280,246281 -h -o '%i|%P|%T|%R|%S' 2>&1 | head -12
+for J in 246243 246279; do scontrol show job $J 2>/dev/null | grep -oE 'ExcNodeList=[^ ]*' | sort -u | head -1; done
+echo "SEQ23_DONE"
