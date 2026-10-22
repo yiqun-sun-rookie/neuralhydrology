@@ -1,0 +1,25 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=8
+### host=login4
+### started=2026-10-22T12:40:40+0800
+### ---------- output ----------
+2026-10-22T12:40:40+0800
+job 246239 states: PENDING 
+  -> TimeLimit=01:30:00
+job 246243 states: PENDING 
+  -> TimeLimit=06:00:00
+job 246244 states: PENDING 
+  -> TimeLimit=06:00:00
+job 246242 states: PENDING 
+  -> TimeLimit=1-00:00:00
+=== NEW LIMITS / START ESTIMATES ===
+246239_[0-12%4]|PENDING|1:30:00|(Priority)|2026-10-26T17:31:36
+246240|PENDING|30:00|(Dependency)|N/A
+246242_[0-4%3]|PENDING|1-00:00:00|(Dependency)|N/A
+246243_[0-14%3]|PENDING|6:00:00|(Dependency)|N/A
+246244_[0-4%3]|PENDING|6:00:00|(Dependency)|N/A
+246245|PENDING|3:00:00|(Dependency)|N/A
+246201|RUNNING|27:15|ngu001
+SEQ8_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T12:40:40+0800
