@@ -1,0 +1,60 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=10
+### host=login4
+### started=2026-10-22T13:06:07+0800
+### ---------- output ----------
+2026-10-22T13:06:07+0800
+=== SACCT ===
+246201|ohn_a1_smoke|COMPLETED|0:0|00:30:44|ngu001
+246240|ohn_da_select|PENDING|0:0|00:00:00|None assigned
+246239_0|ohn_da_grid|COMPLETED|0:0|00:22:58|ngu001
+246239_1|ohn_da_grid|COMPLETED|0:0|00:21:45|ngu007
+246239_2|ohn_da_grid|COMPLETED|0:0|00:21:52|ngu001
+246239_3|ohn_da_grid|RUNNING|0:0|00:03:05|ngu007
+246239_4|ohn_da_grid|RUNNING|0:0|00:02:05|ngu001
+246239_5|ohn_da_grid|RUNNING|0:0|00:01:35|ngu001
+246239_[6-12%4]|ohn_da_grid|PENDING|0:0|00:00:00|None assigned
+246245|ohn_p3_score|PENDING|0:0|00:00:00|None assigned
+246242_[0-4%3]|ohn_a1_train|PENDING|0:0|00:00:00|None assigned
+246243_[0-14%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+246244_[0-4%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+=== SQUEUE ===
+246239_[6-12%4]|PENDING|(Priority)|2026-10-26T17:31:36
+246242_[0-4%3]|PENDING|(Priority)|2026-10-26T17:31:36
+246240|PENDING|(Dependency)|N/A
+246243_[0-14%3]|PENDING|(Dependency)|N/A
+246244_[0-4%3]|PENDING|(Dependency)|N/A
+246245|PENDING|(Dependency)|N/A
+246239_5|RUNNING|ngu001|2026-10-22T13:06:33
+246239_4|RUNNING|ngu001|2026-10-22T13:06:03
+246239_3|RUNNING|ngu007|2026-10-22T13:05:03
+=== DEPENDENCY CHECK ===
+Dependency=afterany:246242_*
+Dependency=afterany:246243_*,afterany:246244_*
+=== A1 SMOKE SPEED ===
+[INFO] 12:14:34.739 (basetrainer.py:__init__) -- max_updates_per_epoch: 50
+[INFO] 12:14:34.739 (basetrainer.py:__init__) -- log_loss_every_nth_update: 50
+[INFO] 12:14:37.585 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'MAURER' with bands ['maurer_prcp', 'maurer_srad', 'maurer_tmax', 'maurer_tmin', 'maurer_vp']
+[INFO] 12:14:37.650 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'QOBS' with bands ['qobs_lag1']
+[INFO] 12:14:37.690 (multimet.py:_load_forecast_as_zarr) -- Loading forecast product 'MAURER' with bands ['maurer_prcp', 'maurer_srad', 'maurer_tmax', 'maurer_tmin', 'maurer_vp']
+[INFO] 12:15:12.104 (logger.py:log_gradient_norms) -- Epoch 1 gradient clipped 43/44 finite steps (97.7%), median norm 12.63, p90 128.3, p99 1440 (threshold 1; 6 non-finite / 50 checked steps)
+[INFO] 12:15:12.108 (basetrainer.py:train_and_validate) -- Epoch 1 average loss: avg_loss: 1.02012, avg_total_loss: 1.02012
+[INFO] 12:15:55.362 (multimet.py:_load_hindcast_as_zarr) -- Loading hindcast product 'MAURER' with bands ['maurer_prcp', 'maurer_srad', 'maurer_tmax', 'maurer_tmin', 'maurer_vp']
+[INFO] 23:02:21.227 (logger.py:log_gradient_norms) -- Epoch 1 gradient clipped 1836/1993 finite steps (92.1%), median norm 2.119, p90 5.01, p99 25.24 (threshold 1; 7 non-finite / 2000 checked steps)
+[INFO] 23:02:21.241 (basetrainer.py:train_and_validate) -- Epoch 1 average loss: avg_loss: 0.40596, avg_total_loss: 0.40596
+[INFO] 23:13:41.730 (logger.py:log_gradient_norms) -- Epoch 2 gradient clipped 1760/2000 finite steps (88.0%), median norm 1.626, p90 2.88, p99 4.917 (threshold 1; 0 non-finite / 2000 checked steps)
+[INFO] 08:35:14.818 (logger.py:log_gradient_norms) -- Epoch 50 gradient clipped 0/2000 finite steps (0.0%), median norm 0.1287, p90 0.1974, p99 0.2889 (threshold 1; 0 non-finite / 2000 checked steps)
+[INFO] 08:35:14.828 (basetrainer.py:train_and_validate) -- Epoch 50 average loss: avg_learning_rate: 0.00025, avg_loss: 0.00952, avg_total_loss: 0.00952
+=== RESERVATIONS ===
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00
+   Nodes=icn[202,204-207,210-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+ReservationName=hhu08_74 StartTime=2026-09-24T15:54:32 EndTime=2027-09-24T15:54:32 Duration=365-00:00:00
+   Nodes=ngu203 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+=== LOG MARKERS ===
+--- ohn_a1_smoke-246201.out
+A1_TRAIN_50_UPDATES_S=73 A1_INFER_TEST_S=1728 run=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021/runs_smoke/a1_smoke_2210_121434
+SMOKE_A1_DONE 2026-10-22T12:44:01+08:00
+--- ohn_a1_smoke-246201.err
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T13:06:07+0800
