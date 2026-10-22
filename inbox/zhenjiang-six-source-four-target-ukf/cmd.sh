@@ -4,71 +4,6 @@ source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'CHECK_AUTHORIZED_CONTINUATION'
-"""Fresh scheduler check, then use the existing authorized continuation entry.
-
-Executed once before the combined heartbeat monitor. Active jobs are retained;
-only a verified terminal allocation with no competing writer may continue.
-"""
-import datetime
-import json
-from pathlib import Path
-import subprocess
-import sys
-
-SLURM=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-BASE=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
-CASES={'legacy_lstm__historical_capacity':BASE/'base',
-       'explicit_gru__historical_capacity':BASE/'sqrt_gru_recovery'}
-
-
-def query(args,root):
-    p=subprocess.run(list(map(str,args)),cwd=root,capture_output=True,text=True,timeout=60)
-    if p.returncode:raise RuntimeError(json.dumps({'command':list(map(str,args)),'stderr':p.stderr}))
-    return p.stdout
-
-
-def main():
-    for case,root in CASES.items():
-        previous=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
-        queue=query([SLURM/'squeue','-h','-u','sunyiq','-o','%i|%T|%j|%Z'],root)
-        matching=[line for line in queue.splitlines() if line.startswith(previous+'|') or case in line or str(root) in line]
-        result={'schema':'fixed200-continuation-decision-v1','case':case,'previous_job':previous,
-                'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'matching_queue':matching}
-        if matching:
-            result['status']='existing_job_retained'
-        else:
-            accounting=query([SLURM/'sacct','-n','-X','-j',previous,'--format=JobID,State,ExitCode','-P'],root)
-            rows=[line.split('|') for line in accounting.splitlines() if line.startswith(previous+'|')]
-            result['accounting']=accounting
-            record=root/'records'/case
-            healthy=(len(rows)==1 and (rows[0][1] in ('TIMEOUT','PREEMPTED','NODE_FAIL') or
-                     (rows[0][1:3]==['COMPLETED','0:0'] and (record/('scheduler_slice_end_'+previous+'.json')).is_file())))
-            attempt=record/('continuation_after_'+previous+'.attempt.json')
-            if attempt.exists():
-                result['status']='existing_submission_attempt_requires_readonly_reconciliation'
-            elif healthy:
-                result['status']='verified_terminal_continuation_entry_invoked'
-                p=subprocess.run([sys.executable,'-B','hpc/submit_fixed200_continuation.py','--case',case],
-                                 cwd=root,capture_output=True,text=True,timeout=150)
-                result.update(returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)
-                confirmed=record/('continuation_after_'+previous+'.confirmed.json')
-                if confirmed.is_file():result['confirmed']=json.loads(confirmed.read_bytes())
-                if p.returncode:result['status']='continuation_entry_error_preserved'
-            else:
-                result['status']='no_verified_healthy_terminal_no_submission'
-        print(json.dumps(result),flush=True)
-
-
-if __name__=='__main__':main()
-
-CHECK_AUTHORIZED_CONTINUATION
-#!/usr/bin/env bash
-set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
 python -B - <<'READ_LSTM_DEV100'
 import base64,datetime,hashlib,json,subprocess
 from pathlib import Path
@@ -217,3 +152,42 @@ report['summary'] = {'cases': len(report['cases']),
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
+
+python -B - <<'READ_750_BASELINE'
+"""Read only small immutable epoch events predating confirmed continuation 750."""
+import datetime
+import hashlib
+import json
+from pathlib import Path
+
+root=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery')
+case='explicit_gru__historical_capacity'
+record=root/'records'/case
+confirmed=json.loads((record/'continuation_after_246202.confirmed.json').read_bytes())
+assert confirmed=={'case':case,'job_id':'246498','previous_job':'246202'}
+# This is the fresh scheduler-check timestamp in complete receipt 750,
+# before invoking the existing submitter. The new job cannot have written then.
+cutoff='2026-10-22T17:15:51.048033+00:00'
+epoch_time=datetime.datetime.fromisoformat(cutoff).timestamp()
+members=json.loads((record/'activation_starting_members.json').read_bytes())
+baseline={}
+for member in members:
+    folder=root/'runs'/member
+    events=sorted((folder/'checkpoint_events').glob('*.json'),key=lambda p:p.stat().st_mtime,reverse=True)
+    event_path=next((p for p in events if p.stat().st_mtime<epoch_time),None)
+    if event_path is None:
+        anchor=json.loads((folder/'continuation_anchor.json').read_bytes())
+        baseline[member]={'completed_epochs':anchor['initial_epochs'],'source':'initial_anchor'}
+    else:
+        raw=event_path.read_bytes();event=json.loads(raw)
+        assert event['completed_epochs']==event['previous_epochs']+1
+        baseline[member]={'completed_epochs':event['completed_epochs'],'path':str(event_path),
+                          'mtime':event_path.stat().st_mtime,'event_sha256':hashlib.sha256(raw).hexdigest(),
+                          'checkpoint_sha256':event['checkpoint_sha256']}
+report={'schema':'fixed200-continuation-baseline-v1','case':case,'confirmed':confirmed,
+        'cutoff_utc':cutoff,'source_receipt':750,'members':baseline,'checkpoints_loaded':False}
+slice_end=record/'scheduler_slice_end_246202.json'
+if slice_end.is_file():report['previous_slice_end']=json.loads(slice_end.read_bytes())
+print(json.dumps(report),flush=True)
+
+READ_750_BASELINE
