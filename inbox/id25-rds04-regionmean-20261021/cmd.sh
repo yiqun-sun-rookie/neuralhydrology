@@ -1,24 +1,18 @@
 #!/bin/bash
 set -euo pipefail
 root=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001
-stage="$root/resource_compatibility_v001"
-payload=/data1/home/sunyiq/hpc_mailbox/inbox/id25-rds04-regionmean-20261021/payload/id25_apply_cpu_partitions_v001.py
-mkdir -p "$stage"
-test ! -f "$stage/apply_result.json"
-printf '%s  %s\n' 'cdcc125995613af264f817a427cd14a38ba2653636fc03dbc246e6ee20dd30e9' "$payload" | sha256sum -c -
-cp "$payload" "$stage/id25_apply_cpu_partitions_v001.py"
-for node in icn273 icn274 icn275 icn277; do timeout 30 scontrol -o show node "$node"; done > "$stage/cpu_node_metadata_before.txt"
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - "$stage/cpu_node_metadata_before.txt" <<'PYMETADATA'
-from pathlib import Path
-import sys
-lines=Path(sys.argv[1]).read_text().splitlines()
-assert len(lines)==4
-for line in lines:
-    assert 'Arch=x86_64' in line and 'OS=Linux' in line, 'Unexpected CPU architecture/OS'
-print('CPU_NODE_METADATA_COMPATIBLE_NO_NUMERICAL_PREFLIGHT')
-PYMETADATA
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python "$stage/id25_apply_cpu_partitions_v001.py" --partitions hcpu48,hcpu48y
-echo START_ESTIMATE_AFTER
- timeout 30 squeue --start -j 246090 -o '%i|%T|%r|%S|%Q|%R' || true
-cat "$stage/cpu_node_metadata_before.txt"
-echo NO_CANCELLATION_NO_NEW_SUBMISSION_NO_PREFLIGHT
+date -Is
+for rel in job_id.txt submissions.tsv; do echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi; done
+if test -f "$root/job_id.txt"; then
+ job=$(cat "$root/job_id.txt")
+ timeout 30 squeue -h -j "$job" -o '%i|%j|%T|%M|%R'
+ timeout 30 sacct -n -X -j "$job" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -P
+fi
+for rel in runtime.json output/status.json output/selection.json report.json; do
+ echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi
+done
+if test -f "$root/output/metrics.jsonl"; then tail -n 2 "$root/output/metrics.jsonl"; fi
+for f in "$root"/logs/*.out "$root"/logs/*.err; do if test -f "$f"; then echo "LOG=$f"; tail -n 12 "$f"; fi; done
+
+timeout 30 scontrol -o show job 246090
+timeout 30 squeue --start -j 246090 -o '%i|%T|%r|%S|%Q|%R'
