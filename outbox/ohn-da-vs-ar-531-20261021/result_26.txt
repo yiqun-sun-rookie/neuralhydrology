@@ -1,0 +1,27 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=26
+### host=login4
+### started=2026-10-22T22:53:33+0800
+### ---------- output ----------
+2026-10-22T22:53:34+0800
+246243_5 state=PENDING
+  -> TimeLimit=1:30:00
+246243_6 state=PENDING
+  -> TimeLimit=1:30:00
+246243_7 state=PENDING
+  -> TimeLimit=1:30:00
+246243_8 state=PENDING
+  -> TimeLimit=1:30:00
+246243_9 state=PENDING
+  -> TimeLimit=1:30:00
+=== AFTER ===
+246243_[3-4,8-14]|PENDING|6:00:00|hgpu2p,hgpu2|(JobArrayTaskLimit)|N/A|
+246279_[0-4%3]|PENDING|1-12:00:00|hgpu2p,hgpu2,hgpu4|(Priority)|2026-10-24T16:54:39|
+246280_[0-4%3]|PENDING|6:00:00|hgpu2p,hgpu2|(Dependency)|N/A|
+246281|PENDING|3:00:00|hgpu2p|(Dependency)|N/A|
+246243_5|RUNNING|1:30:00|hgpu2p|ngu007|2026-10-22T22:56:00|ngu007
+246243_6|RUNNING|1:30:00|hgpu2p|ngu001|2026-10-22T22:56:00|ngu001
+246243_7|RUNNING|1:30:00|hgpu2p|ngu001|2026-10-22T22:56:00|ngu001
+SEQ26_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T22:54:19+0800
