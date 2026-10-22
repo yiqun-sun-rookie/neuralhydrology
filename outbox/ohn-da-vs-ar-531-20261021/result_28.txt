@@ -1,0 +1,49 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=28
+### host=login4
+### started=2026-10-22T23:44:35+0800
+### ---------- output ----------
+2026-10-22T23:44:35+0800
+HELD 246280
+246281|PENDING|(Dependency)
+246280_[0-4%3]|PENDING|(JobHeldUser)
+=== A1 LOGS ===
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 22 23:03 ohn_a1_train-246279_0.err
+-rw-r--r--.  1 sunyiq g_sunyiq    102 Oct 22 23:03 ohn_a1_train-246279_0.out
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 22 23:04 ohn_a1_train-246279_1.err
+-rw-r--r--.  1 sunyiq g_sunyiq    102 Oct 22 23:04 ohn_a1_train-246279_1.out
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 22 23:04 ohn_a1_train-246279_2.err
+-rw-r--r--.  1 sunyiq g_sunyiq    102 Oct 22 23:04 ohn_a1_train-246279_2.out
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 22 23:05 ohn_a1_train-246279_3.err
+-rw-r--r--.  1 sunyiq g_sunyiq    102 Oct 22 23:05 ohn_a1_train-246279_3.out
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 22 23:05 ohn_a1_train-246279_4.err
+-rw-r--r--.  1 sunyiq g_sunyiq    102 Oct 22 23:05 ohn_a1_train-246279_4.out
+--- /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/ohn_a1_train-246279_0.err
+--- /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/ohn_a1_train-246279_0.out
+host=ngu102 start=2026-10-22T23:03:34+0800 job=246279_0 name=a1_s100
+torch 2.4.0 cuda True NVIDIA A40
+--- /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/ohn_a1_train-246279_1.err
+--- /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/ohn_a1_train-246279_1.out
+host=ngu102 start=2026-10-22T23:04:03+0800 job=246279_1 name=a1_s101
+torch 2.4.0 cuda True NVIDIA A40
+=== A1 RUN DIRS ===
+ls: cannot access /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/runs: No such file or directory
+=== SLURM HEAD ===
+2:#SBATCH -J ohn_a1_train
+3:#SBATCH -p hgpu2p
+4:#SBATCH -N 1
+5:#SBATCH -n 1
+6:#SBATCH --cpus-per-task=4
+7:#SBATCH --gres=gpu:1
+8:#SBATCH -t 1-12:00:00
+9:#SBATCH --array=0-4%4
+10:#SBATCH -o /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/%x-%A_%a.out
+11:#SBATCH -e /data1/home/sunyiq/ohn_da_vs_ar_531_20261021/logs/%x-%A_%a.err
+12:# P2 A1 (plan v2 §4): id18_nse + QOBS input + input_replacing, seeds 100..104; full training then test-period inference.
+13:# Original id18_nse trainings took 10-12.6 h (A800/A40); 36 h wall limit leaves margin on RTX 3090.
+24:python -u "$NEW/code/make_a1_config.py" "$OLD/configs/id18_nse.yml" "$NEW/configs/$NAME.yml" "$NAME" \
+27:run_cli train --config-file "$NEW/configs/$NAME.yml"
+30:run_cli infer --run-dir "$RUN"
+SEQ28_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T23:44:35+0800
