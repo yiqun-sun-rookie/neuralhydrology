@@ -1,0 +1,36 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=18
+### host=login4
+### started=2026-10-22T19:44:02+0800
+### ---------- output ----------
+2026-10-22T19:44:02+0800
+=== 246243_0 ===
+JobState=RUNNING RunTime=04:31:11 NodeList=(null) NodeList=(null) NodeList=ngu002 GRES=gpu(IDX:0) TresPerNode=gpu:1 
+--- logs/ohn_p2_da-246243_0.out (98237 bytes)
+# Inference:  37%|███▋      | 195/531 [4:30:35<6:41:27, 71.7s/it]
+# Inference:  37%|███▋      | 196/531 [4:30:36<6:39:45, 71.6s/it]
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+run=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021/copies/p2/E1/id18_nse_1510_225843 period=test every=3 samples=646758 da=True
+--- logs/ohn_p2_da-246243_0.err (2740 bytes)
+=== 246243_1 ===
+
+--- logs/ohn_p2_da-246243_1.out (282092 bytes)
+# Inference: 100%|██████████| 531/531 [3:08:45<00:00, 21.1s/it]
+# Inference: 100%|██████████| 531/531 [3:08:45<00:00, 21.3s/it]
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+run=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021/copies/p2/E1/id18_nse_s101_1610_225041 period=test every=3 samples=646758 da=True
+EVAL_DONE elapsed_s=11338.3 samples=646758
+--- logs/ohn_p2_da-246243_1.err (3203 bytes)
+=== 246243_2 ===
+JobState=RUNNING RunTime=01:19:47 NodeList=(null) NodeList=(null) NodeList=ngu002 GRES=gpu(IDX:1) TresPerNode=gpu:1 
+--- logs/ohn_p2_da-246243_2.out (115427 bytes)
+# Inference:  44%|████▍     | 233/531 [1:20:10<1:42:13, 20.6s/it]
+# Inference:  44%|████▍     | 233/531 [1:20:10<1:42:13, 20.6s/it]
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+run=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021/copies/p2/E1/id18_nse_s102_1610_225041 period=test every=3 samples=646758 da=True
+--- logs/ohn_p2_da-246243_2.err (2740 bytes)
+=== NODE ===
+ngu002    mix       gpu:2         gpu:2,dcu:0             
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T19:44:02+0800
