@@ -1,4 +1,9 @@
 #!/bin/bash
+set -euo pipefail
+root=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001
+bash "$root/ops/submit_gpu_rechecks.sh"
+bash <<'AUDITQUERY'
+#!/bin/bash
 set -u
 root=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001
 date -Iseconds
@@ -23,3 +28,5 @@ done
 if test -f "$root/submissions.tsv"; then printf '\nSUBMISSIONS\n'; cat "$root/submissions.tsv"; fi
 echo QUERY_ONLY_NO_NEW_TESTS_OR_NODE_CHANGES
 exit 0
+
+AUDITQUERY
