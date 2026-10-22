@@ -1,0 +1,60 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=24
+### host=login4
+### started=2026-10-22T22:48:40+0800
+### ---------- output ----------
+2026-10-22T22:48:40+0800
+=== PYSITE WHEEL TAGS (non-pure) ===
+      2 Tag: cp311-cp311-manylinux_2_17_x86_64
+      2 Tag: cp311-cp311-manylinux2014_x86_64
+      1 Tag: cp311-cp311-manylinux_2_28_x86_64
+      1 Tag: cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64
+=== PYSITE manylinux_2_2x/2_3x tagged dists ===
+numcodecs-0.16.5.dist-info
+=== MAX GLIBC SYMBOL PER .so (top 10) ===
+GLIBC_2.2 pysite/google_crc32c.libs/libcrc32c-7ebc40c5.so.1.1.0
+GLIBC_2.2 pysite/numcodecs/compat_ext.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/blosc.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/fletcher32.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/jenkins.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/lz4.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/_shuffle.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/vlen.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/numcodecs/zstd.cpython-311-x86_64-linux-gnu.so
+GLIBC_2.14 pysite/pydantic_core/_pydantic_core.cpython-311-x86_64-linux-gnu.so
+=== nh_final torch build ===
+numpy-2.3.3.dist-info
+torch-2.4.0-py3.11.egg-info
+xarray-2025.12.0.dist-info
+=== SPRIO own pending ===
+          JOBID PARTITION   PRIORITY       SITE        AGE    JOBSIZE        QOS
+         246243 hgpu2p        250878          0      50873          6     200000
+         246243 hgpu2         250878          0      50873          6     200000
+         246279 hgpu2p        247216          0      47211          6     200000
+         246279 hgpu2         247216          0      47211          6     200000
+         246279 hgpu4         247216          0      47211          6     200000
+         246378 hgpu2p        217814          0      17809          6     200000
+         246378 hgpu2         217814          0      17809          6     200000
+=== QUEUE DEPTH hgpu2p/hgpu2/hgpu4 (pending GPU jobs, all users) ===
+hgpu2p pending=14 running=3
+hgpu2 pending=10 running=0
+hgpu4 pending=8 running=6
+=== NODE STATE hgpu2p/hgpu2/hgpu4 ===
+ngu001    idle    gpu:2         gpu:0,dcu:0             
+ngu002    mix     gpu:2         gpu:2,dcu:0             
+ngu004    mix     gpu:2         gpu:2,dcu:0             
+ngu005    mix     gpu:2         gpu:2,dcu:0             
+ngu006    mix     gpu:2         gpu:2,dcu:0             
+ngu007    mix     gpu:2         gpu:1,dcu:0             
+ngu008    mix     gpu:2         gpu:2,dcu:0             
+ngu010    mix     gpu:2         gpu:2,dcu:0             
+ngu011    mix     gpu:2         gpu:2,dcu:0             
+ngu003    mix     gpu:2         gpu:2,dcu:0             
+ngu009    mix     gpu:2         gpu:2,dcu:0             
+ngu101    mix     gpu:4         gpu:4,dcu:0             
+ngu102    mix     gpu:4         gpu:4,dcu:0             
+ngu103    down*   gpu:4         gpu:0,dcu:0             
+ngu104    mix     gpu:4         gpu:4,dcu:0             
+SEQ24_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T22:48:44+0800
