@@ -1,0 +1,31 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=23
+### host=login4
+### started=2026-10-22T22:44:38+0800
+### ---------- output ----------
+2026-10-22T22:44:38+0800
+=== FREE GPUS ===
+hgpu2p free_gpus=3
+hgpu2 free_gpus=0
+hgpu4 free_gpus=0
+hgpu8 free_gpus=2
+=== WIDEN PARTITIONS (pending only) ===
+job 246243 states: PENDING 
+  -> Partition=hgpu2p,hgpu2
+job 246378 states: PENDING 
+  -> Partition=hgpu2p,hgpu2
+job 246280 states: PENDING 
+  -> Partition=hgpu2p,hgpu2
+job 246279 states: PENDING 
+  -> Partition=hgpu2p,hgpu2,hgpu4
+=== AFTER ===
+246279_[0-4%3]|hgpu2p,hgpu2,hgpu4|PENDING|(Priority)|2026-10-26T17:31:36
+246243_[3-14%3]|hgpu2p,hgpu2|PENDING|(Priority)|2026-10-26T17:31:36
+246378_[0]|hgpu2p,hgpu2|PENDING|(Priority)|2026-10-26T17:31:36
+246280_[0-4%3]|hgpu2p,hgpu2|PENDING|(Dependency)|N/A
+246281|hgpu2p|PENDING|(Dependency)|N/A
+ExcNodeList=ngu002
+ExcNodeList=ngu002
+SEQ23_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T22:44:38+0800
