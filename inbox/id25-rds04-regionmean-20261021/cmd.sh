@@ -1,23 +1,39 @@
 #!/bin/bash
 set -euo pipefail
 root=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001
-stage="$root/resource_compatibility_v003"
-payload=/data1/home/sunyiq/hpc_mailbox/inbox/id25-rds04-regionmean-20261021/payload/id25_apply_cpu_execution_partitions_v003.py
-mkdir -p "$stage"
-test ! -f "$stage/apply_result.json"
-printf '%s  %s\n' '70de31f5423d1314c3610c9e8716297a95b2af9fda41449298df78ea60b2f9b0' "$payload" | sha256sum -c -
-cp "$payload" "$stage/id25_apply_cpu_execution_partitions_v003.py"
-timeout 30 scontrol -o show node 'ngu[001-002,004-008,010-011]' > "$stage/cpu_node_metadata_before.txt"
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - "$stage/cpu_node_metadata_before.txt" <<'PYMETADATA'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - "$root" <<'PYHEADER'
+import hashlib,json,re,sys
 from pathlib import Path
-import sys
-lines=Path(sys.argv[1]).read_text().splitlines()
-assert len(lines)==9
-for line in lines:
-    assert 'Arch=x86_64' in line and 'OS=Linux' in line
-print('CPU_NODE_METADATA_COMPATIBLE_NO_NUMERICAL_PREFLIGHT')
-print(Path(sys.argv[1]).read_text())
-PYMETADATA
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python "$stage/id25_apply_cpu_execution_partitions_v003.py" --partitions hgpu2p,hcpu48y,hcpu48
+r=Path(sys.argv[1]); stage=r/'resource_compatibility_v003'
+assert str(r)=='/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001'
+assert (r/'job_id.txt').read_text().strip()=='246090'
+p=stage/'apply_result.json'
+if p.exists() and json.loads(p.read_text()).get('state')=='CPU_EXECUTION_PARTITIONS_EXPANDED':
+    script=r/'hpc/train.slurm'; before=script.read_bytes()
+    after=re.sub(br'(?m)^#SBATCH -p [^\r\n]+',b'#SBATCH -p hgpu2p,hcpu48y',before)
+    if after!=before:
+        backup=stage/'train_before_resume_header_fix.slurm'
+        assert not backup.exists(),'Unexpected duplicate header mutation'
+        backup.write_bytes(before)
+        temp=script.with_suffix('.slurm.resource_pending'); temp.write_bytes(after); temp.replace(script)
+        result={'scope':'future_technical_resume_header_only','partitions':['hgpu2p','hcpu48y'],'reason':'avoid recreating EXCLUSIVE partition whole-node flag on future technical resume','before_sha256':hashlib.sha256(before).hexdigest(),'after_sha256':hashlib.sha256(after).hexdigest(),'training_body_unchanged':re.sub(br'(?m)^#SBATCH -p [^\r\n]+',b'',before)==re.sub(br'(?m)^#SBATCH -p [^\r\n]+',b'',after),'current_job_mutated':False,'new_submissions':0}
+        assert result['training_body_unchanged']
+        (stage/'resume_header_fix.json').write_text(json.dumps(result,indent=2)+'\n')
+        print(json.dumps(result))
+PYHEADER
+root=/data1/home/sunyiq/id25_regional_regionmean_rds04_20261021_001
+date -Is
+for rel in job_id.txt submissions.tsv; do echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi; done
+if test -f "$root/job_id.txt"; then
+ job=$(cat "$root/job_id.txt")
+ timeout 30 squeue -h -j "$job" -o '%i|%j|%T|%M|%R' || true
+ timeout 30 sacct -n -X -j "$job" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -P
+fi
+for rel in runtime.json output/status.json output/selection.json report.json; do
+ echo "FILE=$rel"; if test -f "$root/$rel"; then cat "$root/$rel"; fi
+done
+if test -f "$root/output/metrics.jsonl"; then tail -n 2 "$root/output/metrics.jsonl"; fi
+for f in "$root"/logs/*.out "$root"/logs/*.err; do if test -f "$f"; then echo "LOG=$f"; tail -n 12 "$f"; fi; done
+
+timeout 30 scontrol -o show job 246090 || true
 timeout 30 squeue --start -j 246090 -o '%i|%T|%r|%S|%Q|%R' || true
-printf 'CPU_EXECUTION_ONLY_NO_NEW_GPU_REQUEST_NO_NEW_SUBMISSION\n'
