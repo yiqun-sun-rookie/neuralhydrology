@@ -1,0 +1,38 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=17
+### host=login4
+### started=2026-10-22T19:41:53+0800
+### ---------- output ----------
+=== NOW ===
+1792669313
+=== SACCT ===
+246240|ohn_da_select|COMPLETED|0:0|00:00:41|ngu007
+246243_0|ohn_p2_da|RUNNING|0:0|04:31:02|ngu002
+246243_1|ohn_p2_da|COMPLETED|0:0|03:11:09|ngu002
+246243_2|ohn_p2_da|RUNNING|0:0|01:19:38|ngu002
+246243_[3-14%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+246281|ohn_p3_score|PENDING|0:0|00:00:00|None assigned
+246279_[0-4%3]|ohn_a1_train|PENDING|0:0|00:00:00|None assigned
+246280_[0-4%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+=== SQUEUE ===
+246243_[3-14%3]|PENDING|(Priority)|0:00|6:00:00
+246279_[0-4%3]|PENDING|(Priority)|0:00|1-12:00:00
+246280_[0-4%3]|PENDING|(Dependency)|0:00|6:00:00
+246281|PENDING|(Dependency)|0:00|3:00:00
+246243_2|RUNNING|ngu002|1:17:38|6:00:00
+246243_0|RUNNING|ngu002|4:29:02|6:00:00
+=== LOGAGE ===
+ohn_p2_da-246243_0.err 1792653187 2740
+ohn_p2_da-246243_0.out 1792669289 97201
+ohn_p2_da-246243_1.err 1792664517 3203
+ohn_p2_da-246243_1.out 1792664518 282092
+ohn_p2_da-246243_2.err 1792664619 2740
+ohn_p2_da-246243_2.out 1792669304 112083
+=== CKPT ===
+=== MARKERS ===
+STAMP copies/p2/E1/id18_nse_s101_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+=== ERRTAILS ===
+=== P3 ===
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-22T19:41:53+0800
