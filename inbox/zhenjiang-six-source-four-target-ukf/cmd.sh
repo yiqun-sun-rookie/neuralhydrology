@@ -3,152 +3,42 @@ set -eo pipefail
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 set -u
-export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'READ_LSTM_DEV100'
-import base64,datetime,hashlib,json,subprocess
+python -B - <<'EXPORT_003'
+import base64,hashlib,io,json,tarfile,datetime,importlib.metadata as meta,sys
 from pathlib import Path
 root=Path('/data1/home/sunyiq/zhenjiang_fixed200_003_lstm_dev100_20261022_001')
-slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-report={'schema':'lstm-dev100-monitor-v1','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'root':str(root),'files':{},'file_sha256':{}}
-names=['submission.confirmed.json','submission.response.json','prepared.json','RESULT.json','artifacts.json','model_manifest.json']
-names += [p.name for pattern in ['runtime_start_*.json','failure_*.json','error_*.json'] for p in sorted(root.glob(pattern))]
-for name in names:
- p=root/name
- if p.is_file():
-  raw=p.read_bytes();report['files'][name]=json.loads(raw);report['file_sha256'][name]=hashlib.sha256(raw).hexdigest()
-receipt=report['files'].get('submission.confirmed.json')
-if receipt:
- job=receipt['job_id']
- for label,args in [('queue',['squeue','-h','-j',job,'-o','%i|%j|%T|%R|%M|%N|%Z']),('accounting',['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,Elapsed,NodeList','-P'])]:
-  response=subprocess.run([str(slurm/args[0]),*args[1:]],capture_output=True,text=True,timeout=30)
-  report[label]={'returncode':response.returncode,'stdout':response.stdout,'stderr':response.stderr}
- log=root/'logs'/('zj003_lstm_dev100_2022_'+job+'.out')
- if log.is_file():
-  with log.open('rb') as handle:
-   handle.seek(max(0,log.stat().st_size-5000));report['log_tail']=handle.read().decode(errors='replace')
-if (root/'RESULT.json').is_file():
- for name in ['REPORT.md','lead_mae.png']:
-  p=root/name
-  if p.is_file():
-   raw=p.read_bytes();report.setdefault('artifacts_base64',{})[name]=base64.b64encode(raw).decode();report['file_sha256'][name]=hashlib.sha256(raw).hexdigest()
-print(json.dumps(report,ensure_ascii=False,allow_nan=False))
-READ_LSTM_DEV100
-
-#!/usr/bin/env bash
-set -eo pipefail
-python3 - <<'READ_FIXED200_003'
-"""Read fixed-200 allocation and committed-epoch evidence without loading tensors.
-
-Example on HPC: python -B read_status.py
-Reads the two activated cases, checkpoint heads/events and small record files.
-Prints a status snapshot only; no scheduler submission or source writes.
-"""
-import datetime
-import hashlib
-import json
-from pathlib import Path
-import subprocess
-
-ROOT = Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
-SLURM = Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-CASES = {'legacy_lstm__historical_capacity': 'base',
-         'explicit_gru__historical_capacity': 'sqrt_gru_recovery'}
-
-
-def read(path):
-    return json.loads(path.read_bytes())
-
-
-def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def query(command):
-    result = subprocess.run(list(map(str, command)), capture_output=True, text=True, timeout=45)
-    return {'command': list(map(str, command)), 'returncode': result.returncode,
-            'stdout': result.stdout, 'stderr': result.stderr}
-
-
-report = {'schema': 'fixed200-activation-status-v1', 'root': str(ROOT),
-          'checked_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'checkpoints_loaded': False, 'evaluation_values_read': False, 'cases': {}, 'errors': []}
-report['queue'] = query([SLURM / 'squeue', '-h', '-u', 'sunyiq', '-o', '%i|%j|%T|%Z|%e|%l|%N|%R'])
-for case, variant in CASES.items():
-    runtime = ROOT / variant
-    record = runtime / 'records' / case
-    try:
-        initial = read(record / 'activation_starting_members.json')
-        job = str(read(runtime / 'records/scheduler_jobs.json')[case])
-        auth = read(runtime / 'records/authorization.json')
-        row = {'case': case, 'root': str(runtime), 'job_id': job,
-               'authorization_sha256': sha(runtime / 'records/authorization.json'),
-               'authorization': auth, 'migration_manifest': read(record / 'migration_manifest.json'),
-               'data_preparation_complete': read(runtime / 'records/data_preparation_complete.json'),
-               'scheduler_script': (runtime / 'hpc/fixed200_case.slurm').read_text(),
-               'device_identity': auth['device_identity'], 'members': {},
-               'queue_rows': [line for line in report['queue']['stdout'].splitlines() if line.startswith(job + '|')],
-               'failure_records': {}}
-        allocation = record / ('runtime_binding_' + job + '.json')
-        if allocation.exists():
-            row['runtime_binding'] = read(allocation)
-            assert row['runtime_binding']['device_identity'] == auth['device_identity']
-        for name in ('progress.json', 'training_complete.json', 'selected_rates_2021.json',
-                     'scheduler_slice_end_' + job + '.json', 'submission_context_repair.confirmed.json'):
-            if (record / name).exists():
-                row[name] = read(record / name)
-        source_outcome = record / 'tune_foundation_group_outcome.json'
-        if source_outcome.exists():
-            source = read(source_outcome)
-            row['tuning_foundation_source'] = {'seal_epochs': source['seal']['epochs'],
-                'members': {name: {'epochs': value['epochs'], 'best_epoch': value['best_epoch'],
-                           'checkpoint_sha256': value['checkpoint_sha256']}
-                            for name, value in source['members'].items()}}
-            assert row['tuning_foundation_source']['seal_epochs'] == 400
-        for member, start in initial.items():
-            folder = runtime / 'runs' / member
-            head = read(folder / 'checkpoint_head.json')
-            anchor = read(folder / 'continuation_anchor.json')
-            assert anchor['initial_checkpoint_sha256'] == start['checkpoint_sha256']
-            assert anchor['initial_epochs'] == start['completed_epochs']
-            assert sha(folder / 'config.json') == start['config_sha256']
-            assert sha(folder / 'migration_source.json') == start['receipt_sha256']
-            n = head['completed_epochs']
-            assert start['completed_epochs'] <= n <= 200
-            item = {'initial_epochs': start['completed_epochs'], 'completed_epochs': n,
-                    'new_complete_epochs': n - start['completed_epochs'],
-                    'checkpoint_sha256_from_committed_head': head['checkpoint_sha256'],
-                    'initial_identity_and_config_preserved': True}
-            if n > start['completed_epochs']:
-                event = read(folder / 'checkpoint_events' / (head['checkpoint_sha256'][:16] + '.json'))
-                assert event['checkpoint_sha256'] == head['checkpoint_sha256']
-                assert event['completed_epochs'] == n and event['previous_epochs'] == n - 1
-                assert event['anchor_sha256'] == head['anchor_sha256'] == sha(folder / 'continuation_anchor.json')
-                item['new_epoch_event'] = event
-            if (folder / 'failure.json').exists():
-                row['failure_records'][member] = read(folder / 'failure.json')
-            row['members'][member] = item
-        row['new_complete_member_epochs'] = sum(v['new_complete_epochs'] for v in row['members'].values())
-        row['members_with_new_complete_epoch'] = sum(v['new_complete_epochs'] > 0 for v in row['members'].values())
-        row['tune_branch_200_complete_members'] = sum(v['completed_epochs'] == 200 for v in row['members'].values())
-        row['actual_training_progress_confirmed'] = bool(row.get('runtime_binding') and row['new_complete_member_epochs'] > 0)
-        row['logs'] = []
-        for path in (runtime / 'logs').glob('*_' + job + '.out'):
-            with path.open('rb') as handle:
-                handle.seek(max(0, path.stat().st_size - 7000))
-                row['logs'].append({'path': str(path), 'tail': handle.read().decode('utf-8', errors='replace')})
-        report['cases'][case] = row
-    except Exception as error:
-        report['errors'].append({'case': case, 'type': type(error).__name__, 'message': str(error)})
-jobs = [v['job_id'] for v in report['cases'].values()]
-if jobs:
-    report['accounting'] = query([SLURM / 'sacct', '-n', '-X', '-j', ','.join(jobs),
-                                  '--format=JobID,State,ExitCode,Start,End,NodeList', '-P'])
-report['summary'] = {'cases': len(report['cases']),
-    'cases_with_new_complete_epoch': sum(v['actual_training_progress_confirmed'] for v in report['cases'].values()),
-    'new_complete_member_epochs': sum(v['new_complete_member_epochs'] for v in report['cases'].values()),
-    'members_with_new_complete_epoch': sum(v['members_with_new_complete_epoch'] for v in report['cases'].values()),
-    'tune_branch_200_complete_members': sum(v['tune_branch_200_complete_members'] for v in report['cases'].values()),
-    'failure_files': sum(len(v['failure_records']) for v in report['cases'].values())}
-print(json.dumps(report, sort_keys=True), flush=True)
-
-READ_FIXED200_003
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+spec=json.loads((root/'spec.json').read_bytes())
+prepared=json.loads((root/'prepared.json').read_bytes())
+manifest=json.loads((root/'model_manifest.json').read_bytes())
+expected={'spec.json':prepared['spec_sha256'],'run_comparison.py':prepared['wrapper_sha256'],
+          'inputs_2022.npz':prepared['input_sha256'],'model_manifest.json':prepared['model_manifest_sha256'],
+          'sources/tide_fit.json':prepared['tide_parameters_sha256']}
+for item in manifest:
+ method=item['method']
+ expected['sources/'+method+'/config.json']=item['source']['config']['sha256']
+ expected['sources/'+method+'/epoch_100.pt']=item['source']['checkpoint']['sha256']
+ expected['sources/parent_best.pt']=item['parent_hash']
+names=sorted(set(expected)|{'prepared.json','original_foundation_source.json','excluded_calendar.json'})
+buffer=io.BytesIO();files=[]
+with tarfile.open(fileobj=buffer,mode='w:gz') as archive:
+ for name in names:
+  raw=(root/name).read_bytes();digest=sha(raw)
+  if name in expected and digest!=expected[name]:raise ValueError('changed source: '+name)
+  info=tarfile.TarInfo(name);info.size=len(raw);info.mode=0o644
+  archive.addfile(info,io.BytesIO(raw))
+  files.append({'path':name,'bytes':len(raw),'sha256':digest})
+raw=buffer.getvalue()
+if len(raw)>8000000:raise ValueError('bundle exceeds bounded receipt transfer size')
+versions={}
+for name in ['torch','numpy','scipy','pandas','matplotlib']:
+ try:versions[name]=meta.version(name)
+ except meta.PackageNotFoundError:versions[name]=None
+print(json.dumps({'schema':'003-autodl-source-export-v1','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'source_root':str(root),'files':files,'archive_bytes':len(raw),'archive_sha256':sha(raw),
+ 'python':sys.version,'environment_versions':versions,'source_writes':0,'training_submissions':0}))
+print('BEGIN_003_ARCHIVE_BASE64')
+encoded=base64.b64encode(raw).decode('ascii')
+for pos in range(0,len(encoded),65536):print(encoded[pos:pos+65536])
+print('END_003_ARCHIVE_BASE64')
+EXPORT_003
