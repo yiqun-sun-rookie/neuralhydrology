@@ -1,0 +1,14 @@
+### channel=hydrol85935-revision-20261008-001 seq=577
+### host=login4
+### started=2026-10-23T23:48:05+0800
+### ---------- output ----------
+ES_STATE COMPLETED|0:0|00:52:44|ngu010
+ES_OUT
+{"destination": "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v028_20261014_001/hpc_packet_001", "endpoint": "hpc_v009", "counts": {"clean": 2909, "complete": 24829, "restores": 11636, "failed": 726}}
+
+ES_ERR
+
+ES_PACKET 0 files  MB
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T23:48:06+0800
