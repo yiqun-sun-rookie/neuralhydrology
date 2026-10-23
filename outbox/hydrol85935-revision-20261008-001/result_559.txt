@@ -1,0 +1,35 @@
+### channel=hydrol85935-revision-20261008-001 seq=559
+### host=login4
+### started=2026-10-23T20:41:41+0800
+### ---------- output ----------
+PJ_TIME 2026-10-23T12:41:41Z
+PJ_SQUEUE
+241344|PENDING|Dependency|hgpu2p|gpu:1|N/A|200005
+241337|RUNNING|None|hgpu2p|gpu:1|2026-10-23T20:38:07|286252
+PJ_SACCT
+241337|RUNNING|0:0|00:05:36|2026-10-23T20:38:07|Unknown|hgpu2p|ngu008
+241344|PENDING|0:0|00:00:00|Unknown|Unknown|hgpu2p|None assigned
+PJ_SPRIO
+Unable to find jobs matching user/id(s) specified
+PJ_PART hgpu2p
+ngu001 mix gpu:2
+ngu002 mix gpu:2
+ngu004 mix gpu:2
+ngu005 mix gpu:2
+ngu006 mix gpu:2
+ngu007 mix gpu:2
+ngu008 mix gpu:2
+ngu010 mix gpu:2
+ngu011 mix gpu:2
+246349 260672 sunyiq
+246450_[3-4%3] 224352 sunyiq
+246281 200005 sunyiq
+246280_[0-4%3] 200005 sunyiq
+241344 200005 sunyiq
+241691 0 sunyiq
+240078 0 sunyiq
+240077_[0-131%1] 0 sunyiq
+240076_[0-2%1] 0 sunyiq
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T20:41:41+0800
