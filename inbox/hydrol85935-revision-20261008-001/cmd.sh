@@ -1,9 +1,21 @@
 #!/bin/bash
-# READ_ONLY_QUEUE_AHEAD_EXPORT: pending jobs ahead of export 241344 on hgpu2p, running jobs and node states; no mutation
-echo "QA_TIME $(date -u +%FT%TZ)"
-squeue -j 241344 -h -o "%i|%T|%r|%Q|%S" 2>&1
-sprio -j 241344 -h 2>&1 | head -2
-echo "QA_PENDING"; squeue -p hgpu2p -t PD -h -o "%i|%j|%u|%Q|%r|%S|%l|%b" 2>&1 | sort -t"|" -k4 -nr | head -10
-echo "QA_RUNNING"; squeue -p hgpu2p -t R -h -o "%i|%j|%u|%M|%l|%e|%N|%b" 2>&1 | head -24
-echo "QA_NODES"; sinfo -p hgpu2p -h -N -o "%n %t %G %C" 2>&1 | head -12
+# OPS (standing authorization): move OWN pending export job 241344 from the GPU queue to an idle CPU partition.
+# The export only reads records/hashes and writes the packet (no GPU use); script, code and science unchanged.
+J=241344
+echo "MV_TIME $(date -u +%FT%TZ)"
+scontrol show job $J | grep -oE "(JobName|JobState|Reason|Partition|TresPerNode|Gres|ExcNodeList|NumCPUs|Command|Dependency|TimeLimit)=[^ ]*"
+[ "$(squeue -j $J -h -o %T)" = PENDING ] || { echo MV_NOT_PENDING_NO_CHANGE; exit 3; }
+[ "$(squeue -j $J -h -o %j)" = hydrol85935-v010-export ] || { echo MV_WRONG_JOB_NO_CHANGE; exit 3; }
+sinfo -p hcpu48,hcpu48y -h -o "%P %a %D %T" 2>&1
+P=$(for p in hcpu48 hcpu48y; do n=$(sinfo -p $p -h -t idle -o "%D" | awk '{s+=$1} END{print s+0}'); echo "$n $p"; done | sort -nr | awk '$1>0{print $2; exit}')
+[ -n "$P" ] || { echo MV_NO_IDLE_CPU_PARTITION_NO_CHANGE; exit 3; }
+echo "MV_TARGET $P"
+for spec in "TresPerNode=" "Gres=" "Gres=none" "TresPerNode=none"; do
+  out=$(scontrol update JobId=$J Partition=$P $spec 2>&1); echo "MV_TRY $spec rc=$? $out"
+  [ "$(squeue -j $J -h -o %P)" = "$P" ] && break
+done
+sleep 20
+echo MV_AFTER; scontrol show job $J | grep -oE "(JobState|Reason|Partition|TresPerNode|Gres|NodeList|StartTime)=[^ ]*"
+squeue -j $J -h -o "%i|%T|%r|%P|%b|%S|%N"
+[ "$(squeue -j $J -h -o %P)" = "$P" ] && echo MV_DONE || echo MV_UNCHANGED
 exit 0
