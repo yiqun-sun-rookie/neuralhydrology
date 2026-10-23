@@ -1,0 +1,44 @@
+### channel=hydrol85935-revision-20261008-001 seq=572
+### host=login4
+### started=2026-10-23T22:35:59+0800
+### ---------- output ----------
+241344|FAILED|1:0|00:00:11|2026-10-23T22:31:32|2026-10-23T22:31:43|hcpu48|icn218
+241344.batch|FAILED|1:0|00:00:11|2026-10-23T22:31:32|2026-10-23T22:31:43||icn218
+241344.extern|COMPLETED|0:0|00:00:11|2026-10-23T22:31:32|2026-10-23T22:31:43||icn218
+-rw-r--r--.  1 sunyiq g_sunyiq   2046 Oct 23 22:29 export-241344.err
+-rw-r--r--.  1 sunyiq g_sunyiq      0 Oct 23 22:29 export-241344.out
+-rw-r--r--.  1 sunyiq g_sunyiq    475 Oct 12 20:46 export_config.json
+-rw-r--r--.  1 sunyiq g_sunyiq   1187 Oct 12 20:46 export.sbatch
+-rw-r--r--.  1 sunyiq g_sunyiq    113 Oct 12 20:46 export_submission.attempt.json
+-rw-r--r--.  1 sunyiq g_sunyiq     27 Oct 12 20:46 export_submission.txt
+EF_ERR
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/federated_v010.py", line 8, in <module>
+    runpy.run_path(str(p),run_name='__main__')
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v028_20261014_001/federated_v010.py", line 291, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v028_20261014_001/federated_v010.py", line 287, in main
+    if a.mode=='export': endpoint(a.config,a.assignment,a.destination)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v028_20261014_001/federated_v010.py", line 92, in endpoint
+    from src.adversarial.scripts.revision_20261008.validation import SlotValidator, latest_ledger
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/src/adversarial/scripts/revision_20261008/validation.py", line 11, in <module>
+    from .records import load_complete
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/src/adversarial/scripts/revision_20261008/records.py", line 11, in <module>
+    from .engine import physical_metrics, metric_changes
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/versions/v004/code/src/adversarial/scripts/revision_20261008/engine.py", line 5, in <module>
+    import torch
+  File "/data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site/torch/__init__.py", line 409, in <module>
+    from torch._C import *  # noqa: F403
+    ^^^^^^^^^^^^^^^^^^^^^^
+ImportError: /lib64/libc.so.6: version `GLIBC_2.28' not found (required by /data1/home/sunyiq/hydrol85935_revision_20261008_001/runtime_torch271cu118/site/torch/lib/libtorch_python.so)
+EF_OUT
+EF_PACKET
+ls: cannot access /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/hpc_packet_001: No such file or directory
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:35:59+0800
