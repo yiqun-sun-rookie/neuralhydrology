@@ -1,0 +1,21 @@
+### channel=hydrol85935-revision-20261008-001 seq=545
+### host=login4
+### started=2026-10-23T08:34:10+0800
+### ---------- output ----------
+QA_TIME 2026-10-23T00:34:10Z
+246349|zj003_lstm_dev100_2022|288251|Priority|2026-10-28T03:23:23|12:00:00|gpu:1
+246450_[0-4%3]|ohn_a1_train|251931|Priority|2026-10-24T16:54:39|1-12:00:00|gpu:1
+241337|hydrol85935-v009-validate|214327|Priority|2026-10-26T17:31:36|4:00:00|gpu:1
+246281|ohn_p3_score|200005|Dependency|N/A|3:00:00|gpu:1
+246280_[0-4%3]|ohn_p2_da|200005|Dependency|N/A|6:00:00|gpu:1
+241344|hydrol85935-v010-export|200005|Dependency|N/A|6:00:00|gpu:1
+241691|tessera_01073000_abc_261013|0|JobHeldUser|N/A|30:00|gpu:1
+240078|hydrol85935-report|0|JobHeldUser|N/A|2:00:00|gpu:1
+QA_RUNNING_END
+245556|zj003_legacy_lstm__historical_capacity|sunyiq|5:10:47|UNLIMITED|NONE
+246378_0|ohn_p2_da|sunyiq|2:25:40|6:00:00|2026-10-23T12:08:30
+237928|zj_lstm_small_recovery_261008_002|sunyiq|14-10:16:45|UNLIMITED|NONE
+236706|zj_explicit_gru__small_261006_pathfix|sunyiq|16-21:15:50|UNLIMITED|NONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T08:34:10+0800
