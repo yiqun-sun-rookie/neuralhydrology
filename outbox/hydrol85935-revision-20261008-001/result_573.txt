@@ -1,0 +1,26 @@
+### channel=hydrol85935-revision-20261008-001 seq=573
+### host=login4
+### started=2026-10-23T22:42:32+0800
+### ---------- output ----------
+RS_TIME 2026-10-23T14:42:32Z
+241344|hydrol85935-v010-export|FAILED|1:0|00:00:11|hcpu48|icn218
+241345|hydrol85935-temporal-preflight|COMPLETED|0:0|00:06:06|hgpu2p|ngu007
+77dc5704646d6a48e764c67b1d3fb015388e5b2f5c9be42b363293a37cb71f14  /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/export.sbatch
+RS_DIFF_CPU
+7d6
+< #SBATCH --gres=gpu:1
+11d9
+< #SBATCH --dependency=afterany:241337
+RS_DIFF_GPU
+11d10
+< #SBATCH --dependency=afterany:241337
+e4b9e23b2d4b442091100c0a1d9d9b962125cbc259e0e1f2fb95eb0795ae0ab4  /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/export_hgpu2p_cpu_20261023.sbatch
+67712e96deca4f88c092119b81e5302b256c3a0ae933d5935f5b432bda88d7fb  /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/export_hgpu2p_gpu_20261023.sbatch
+RS_TEST_CPU
+sbatch: Job 246827 to start at 2049-01-04T22:17:35 using 4 processors on nodes ngu010 in partition hgpu2p
+RS_SUBMIT_CPU Submitted batch job 246828
+RS_JOB 246828
+246828|hydrol85935-v010-export|RUNNING|None|hgpu2p|N/A|2026-10-23T22:44:45|ngu010
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:43:18+0800
