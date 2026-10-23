@@ -1,0 +1,29 @@
+### channel=hydrol85935-revision-20261008-001 seq=546
+### host=login4
+### started=2026-10-23T09:43:34+0800
+### ---------- output ----------
+NC_TIME 2026-10-23T01:43:34Z
+NC_BEFORE
+246349|zj003_lstm_dev100_2022|PENDING|295195|0
+246450_[1-4%3]|ohn_a1_train|PENDING|258876|0
+241337|hydrol85935-v009-validate|PENDING|221272|0
+241344|hydrol85935-v010-export|PENDING|200005|0
+246450_0|ohn_a1_train|RUNNING|256396|0
+NC_STATE 246349 PENDING,
+NC_RC 246349 0
+NC_STATE 246450 PENDING,RUNNING,
+NC_SKIP 246450 not purely pending
+NC_AFTER
+246450_[1-4%3]|ohn_a1_train|PENDING|258876|0
+241337|hydrol85935-v009-validate|PENDING|221272|0
+241344|hydrol85935-v010-export|PENDING|200005|0
+246349|zj003_lstm_dev100_2022|PENDING|195478|100000
+246450_0|ohn_a1_train|RUNNING|256396|0
+         241337 hgpu2p        221272          0      21267          6     200000
+         246349 hgpu2p        195478          0      95473          6     200000
+         246450 hgpu2p        258876          0      58871          6     200000
+         246450 hgpu2         258876          0      58871          6     200000
+         246450 hgpu4         258876          0      58871          6     200000
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T09:43:39+0800
