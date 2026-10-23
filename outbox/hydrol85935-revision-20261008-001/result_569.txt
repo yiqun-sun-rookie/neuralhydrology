@@ -1,0 +1,31 @@
+### channel=hydrol85935-revision-20261008-001 seq=569
+### host=login4
+### started=2026-10-23T22:15:00+0800
+### ---------- output ----------
+ecb0091457b56154f5b7e8e7492d4193ae1f248960760f5e0f1aa7b4e66fe741  /data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v009_20261012_001/logs/validate-241337_4294967294.out
+VR_STATUS FAIL 4 2659 False False
+VR_COUNTS {"attacks": 24829, "clean": 2909, "restore_series": 11636, "trainings": 3}
+VR_EXPECTED {"attacks": 25555, "clean": 2999, "restore_series": 11996, "trainings": 3}
+VR_FAILURES 816 UNEXPECTED 0 []
+VR_CLASS 714 ('attack', 'Baseline reproduction failed')
+VR_CLASS 90 ('clean', 'Required clean reference is missing')
+VR_CLASS 12 ('attack', 'empty')
+VR_ATTACK_LEDGER_STATUS {'failed': 726}
+VR_OTHER original_s100_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'original_s100_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timestamp_utc': 
+VR_OTHER original_s100_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'original_s100_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', '
+VR_OTHER original_s200_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'original_s200_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timestamp_utc': 
+VR_OTHER original_s200_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'original_s200_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', '
+VR_OTHER original_s300_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'original_s300_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timestamp_utc': 
+VR_OTHER original_s300_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'original_s300_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', '
+VR_OTHER single_temperature_s100_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s100_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timest
+VR_OTHER single_temperature_s100_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s100_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': '
+VR_OTHER single_temperature_s200_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s200_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timest
+VR_OTHER single_temperature_s200_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s200_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': '
+VR_OTHER single_temperature_s300_iterative_eps0p1_physical_range 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s300_iterative_eps0p1_physical_range', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': 'failed', 'timest
+VR_OTHER single_temperature_s300_iterative_eps0p1_whole_period_moment_adjustment 04213075 {'basin_id': '04213075', 'combination_id': 'single_temperature_s300_iterative_eps0p1_whole_period_moment_adjustment', 'manifest_sha256': 'bd3c4d1f1c836962aa3a3b831d02cfb9e6d5f7d73c4dd6e7ffed7cfea649f826', 'reason': 'ValueError: physical_and_amplitude_constraints_have_empty_intersection', 'status': '
+VR_CLEAN_FAILED 90 Counter({'original_s200': 37, 'original_s300': 32, 'original_s100': 21})
+VR_ATTACK_MODEL_BASIN 94 Counter({'original_s200': 38, 'original_s300': 33, 'original_s100': 22, 'single_temperature': 1})
+VR_ATTACK_NOT_IN_CLEAN [('original_s100', '04213075'), ('original_s200', '04213075'), ('original_s300', '04213075'), ('single_temperature', '04213075')]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:15:01+0800
