@@ -1,0 +1,19 @@
+### channel=hpc-gpu-recheck-20261019 seq=42
+### host=login4
+### started=2026-10-24T07:26:27+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/hpc-gpu-recheck-20261019/payload/gpu_recheck_import_repair_v003.tar.gz: OK
+tar: repair_import_v003/launcher.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: repair_import_v003/ngu103.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: repair_import_v003/submit.sh: implausibly old time stamp 1970-01-01 08:00:00
+tar: repair_import_v003/manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+246673|FAILED|124:0
+NODE=ngu103 STATE=idle
+FAILED_ATTEMPT_PRESERVED_NO_GPU_NUMERICAL_TEST_COMPLETED
+246881
+REPAIR_NODE_JOB=ngu103|246881
+FAILED_RESULT_JOB=246673; current result.json may still refer to old job until repaired worker starts; require matching job_id
+REPAIR_ONLY_NGU103_ORIGINAL_NUMERICAL_WORKER_AND_150_SECOND_LIMIT_UNCHANGED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T07:26:29+0800
