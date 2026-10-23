@@ -1,5 +1,8 @@
 #!/bin/bash
-# READ_ONLY_PACKET_FETCH batch 2/2: tar (no compression) | base64 of named packet files; no mutation
-cd "/data1/home/sunyiq/hydrol85935_temporal_attempts/hpc_v009_001/hydrol85935_temporal_persistence_20261011_001/attempts/infeasible_recovery_v002_20261015_001/reports" || exit 3
-echo "PF_BEGIN"; tar -cf - "coverage_and_summary.json" "cross_environment_reconstruction.json" | base64 -w 0; echo; echo "PF_END"
+# READ_ONLY_POST_JOBS: state of validate/export jobs after main array; no mutation
+echo "PJ_TIME $(date -u +%FT%TZ)"
+echo "PJ_SQUEUE"; squeue -j 241337,241344 -h -o "%i|%T|%r|%P|%b|%S|%Q" 2>&1
+echo "PJ_SACCT"; sacct -X -j 241337,241344 -n -P -o JobID,State,ExitCode,Elapsed,Start,End,Partition,NodeList 2>&1
+echo "PJ_SPRIO"; sprio -j 241337 -h 2>&1 | head -3
+P=$(squeue -j 241337 -h -o "%P" 2>/dev/null | head -1); [ -n "$P" ] && { echo "PJ_PART $P"; sinfo -p "$P" -h -o "%n %t %G" 2>&1 | head -20; squeue -p "$P" -t PD -h -o "%i %Q %u" 2>&1 | sort -k2 -nr | head -10; }
 exit 0
