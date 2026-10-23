@@ -1,41 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'READ_LSTM_DEV100'
-import base64,datetime,hashlib,json,subprocess
-from pathlib import Path
-root=Path('/data1/home/sunyiq/zhenjiang_fixed200_003_lstm_dev100_20261022_001')
-slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-report={'schema':'lstm-dev100-monitor-v1','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'root':str(root),'files':{},'file_sha256':{}}
-names=['submission.confirmed.json','submission.response.json','prepared.json','RESULT.json','artifacts.json','model_manifest.json']
-names += [p.name for pattern in ['runtime_start_*.json','failure_*.json','error_*.json'] for p in sorted(root.glob(pattern))]
-for name in names:
- p=root/name
- if p.is_file():
-  raw=p.read_bytes();report['files'][name]=json.loads(raw);report['file_sha256'][name]=hashlib.sha256(raw).hexdigest()
-receipt=report['files'].get('submission.confirmed.json')
-if receipt:
- job=receipt['job_id']
- for label,args in [('queue',['squeue','-h','-j',job,'-o','%i|%j|%T|%R|%M|%N|%Z']),('accounting',['sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,Elapsed,NodeList','-P'])]:
-  response=subprocess.run([str(slurm/args[0]),*args[1:]],capture_output=True,text=True,timeout=30)
-  report[label]={'returncode':response.returncode,'stdout':response.stdout,'stderr':response.stderr}
- log=root/'logs'/('zj003_lstm_dev100_2022_'+job+'.out')
- if log.is_file():
-  with log.open('rb') as handle:
-   handle.seek(max(0,log.stat().st_size-5000));report['log_tail']=handle.read().decode(errors='replace')
-if (root/'RESULT.json').is_file():
- for name in ['REPORT.md','lead_mae.png']:
-  p=root/name
-  if p.is_file():
-   raw=p.read_bytes();report.setdefault('artifacts_base64',{})[name]=base64.b64encode(raw).decode();report['file_sha256'][name]=hashlib.sha256(raw).hexdigest()
-print(json.dumps(report,ensure_ascii=False,allow_nan=False))
-READ_LSTM_DEV100
-
-#!/usr/bin/env bash
-set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
