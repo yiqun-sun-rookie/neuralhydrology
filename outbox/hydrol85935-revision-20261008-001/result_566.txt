@@ -1,0 +1,15 @@
+### channel=hydrol85935-revision-20261008-001 seq=566
+### host=login4
+### started=2026-10-23T22:07:28+0800
+### ---------- output ----------
+PJ_TIME 2026-10-23T14:07:28Z
+PJ_SQUEUE
+241344|PENDING|Priority|hgpu2p|gpu:1|2026-10-25T20:38:07|204440
+PJ_SACCT
+241337|FAILED|4:0|00:44:55|2026-10-23T20:38:07|2026-10-23T21:23:02|hgpu2p|ngu008
+241344|PENDING|0:0|00:00:00|Unknown|Unknown|hgpu2p|None assigned
+PJ_SPRIO
+Unable to find jobs matching user/id(s) specified
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:07:28+0800
