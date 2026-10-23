@@ -1,0 +1,38 @@
+### channel=hydrol85935-revision-20261008-001 seq=571
+### host=login4
+### started=2026-10-23T22:29:28+0800
+### ---------- output ----------
+MV_TIME 2026-10-23T14:29:28Z
+JobName=hydrol85935-v010-export
+JobState=PENDING
+Reason=Priority
+Dependency=(null)
+TimeLimit=06:00:00
+Partition=hgpu2p
+ExcNodeList=ngu002
+NumCPUs=4
+Command=/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/workflow_v010_20261012_001/export.sbatch
+TresPerNode=gpu:1
+hcpu48* up 3 down$
+hcpu48* up 12 allocated$
+hcpu48* up 3 maint
+hcpu48* up 39 allocated
+hcpu48* up 7 idle
+hcpu48y up 6 mixed
+hcpu48y up 5 allocated
+hcpu48y up 1 idle
+MV_TARGET hcpu48
+MV_TRY TresPerNode= rc=0 
+MV_AFTER
+JobState=FAILED
+Reason=NonZeroExitCode
+StartTime=2026-10-23T22:31:32
+Partition=hcpu48
+NodeList=(null)
+NodeList=ngu002
+NodeList=icn218
+TresPerNode=
+MV_UNCHANGED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:29:50+0800
