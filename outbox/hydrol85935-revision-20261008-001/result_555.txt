@@ -1,0 +1,36 @@
+### channel=hydrol85935-revision-20261008-001 seq=555
+### host=login4
+### started=2026-10-23T16:35:33+0800
+### ---------- output ----------
+PJ_TIME 2026-10-23T08:35:33Z
+PJ_SQUEUE
+241337|PENDING|Priority|hgpu2p|gpu:1|2026-10-24T21:20:08|261946
+241344|PENDING|Dependency|hgpu2p|gpu:1|N/A|200005
+PJ_SACCT
+241337|PENDING|0:0|00:00:00|Unknown|Unknown|hgpu2p|None assigned
+241344|PENDING|0:0|00:00:00|Unknown|Unknown|hgpu2p|None assigned
+PJ_SPRIO
+         241337 hgpu2p        261946          0      61941          6     200000
+PJ_PART hgpu2p
+ngu001 mix gpu:2
+ngu002 mix gpu:2
+ngu004 mix gpu:2
+ngu005 mix gpu:2
+ngu006 mix gpu:2
+ngu007 mix gpu:2
+ngu008 mix gpu:2
+ngu010 mix gpu:2
+ngu011 mix gpu:2
+241337 261946 sunyiq
+246349 235870 sunyiq
+246281 200005 sunyiq
+246280_[0-4%3] 200005 sunyiq
+241344 200005 sunyiq
+246450_[3-4%3] 199551 sunyiq
+241691 0 sunyiq
+240078 0 sunyiq
+240077_[0-131%1] 0 sunyiq
+240076_[0-2%1] 0 sunyiq
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T16:35:33+0800
