@@ -1,0 +1,35 @@
+### channel=hydrol85935-revision-20261008-001 seq=570
+### host=login4
+### started=2026-10-23T22:17:10+0800
+### ---------- output ----------
+QA_TIME 2026-10-23T14:17:10Z
+241344|PENDING|Priority|205432|2026-10-25T22:05:44
+         241344 hgpu2p        205432          0       5427          6     200000
+QA_PENDING
+246349|zj003_lstm_dev100_2022|sunyiq|270096|Priority|2026-10-25T22:05:44|12:00:00|gpu:1
+246450_[3-4%3]|ohn_a1_train|sunyiq|233777|JobArrayTaskLimit|N/A|1-12:00:00|gpu:1
+241344|hydrol85935-v010-export|sunyiq|205432|Priority|2026-10-25T22:05:44|6:00:00|gpu:1
+246281|ohn_p3_score|sunyiq|200005|Dependency|N/A|3:00:00|gpu:1
+246280_[0-4%3]|ohn_p2_da|sunyiq|200005|Dependency|N/A|6:00:00|gpu:1
+241691|tessera_01073000_abc_261013|sunyiq|0|JobHeldUser|N/A|30:00|gpu:1
+240078|hydrol85935-report|sunyiq|0|JobHeldUser|N/A|2:00:00|gpu:1
+240077_[0-131%1]|hydrol85935-attacks|sunyiq|0|JobHeldUser|N/A|6:00:00|gpu:1
+240076_[0-2%1]|hydrol85935-train|sunyiq|0|JobHeldUser|N/A|12:00:00|gpu:1
+QA_RUNNING
+245556|zj003_legacy_lstm__historical_capacity|sunyiq|18:53:47|UNLIMITED|NONE|ngu001|gpu:1
+237928|zj_lstm_small_recovery_261008_002|sunyiq|14-23:59:45|UNLIMITED|NONE|ngu007|gpu:1
+236706|zj_explicit_gru__small_261006_pathfix|sunyiq|17-10:58:50|UNLIMITED|NONE|ngu011|gpu:1
+246450_0|ohn_a1_train|sunyiq|12:57:02|1-12:00:00|2026-10-24T21:20:08|ngu010|gpu:1
+QA_NODES
+ngu001 mix gpu:2 6/90/0/96
+ngu002 mix gpu:2 4/92/0/96
+ngu004 mix gpu:2 8/88/0/96
+ngu005 mix gpu:2 8/88/0/96
+ngu006 mix gpu:2 8/88/0/96
+ngu007 mix gpu:2 6/90/0/96
+ngu008 mix gpu:2 20/76/0/96
+ngu010 mix gpu:2 8/24/0/32
+ngu011 mix gpu:2 8/24/0/32
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-23T22:17:10+0800
