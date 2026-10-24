@@ -1,0 +1,132 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=67
+### host=login4
+### started=2026-10-24T12:43:43+0800
+### ---------- output ----------
+=== NOW ===
+1792817023
+=== SACCT ===
+246240|ohn_da_select|COMPLETED|0:0|00:00:41|ngu007
+246243_0|ohn_p2_da|CANCELLED by 2272|0:0|04:35:16|ngu002
+246243_1|ohn_p2_da|COMPLETED|0:0|03:11:09|ngu002
+246243_2|ohn_p2_da|COMPLETED|0:0|03:04:07|ngu002
+246243_3|ohn_p2_da|COMPLETED|0:0|03:10:00|ngu003
+246243_4|ohn_p2_da|COMPLETED|0:0|03:05:58|ngu003
+246243_5|ohn_p2_da|COMPLETED|0:0|00:15:06|ngu007
+246243_6|ohn_p2_da|COMPLETED|0:0|00:15:13|ngu001
+246243_7|ohn_p2_da|COMPLETED|0:0|00:15:10|ngu001
+246243_8|ohn_p2_da|COMPLETED|0:0|00:15:04|ngu007
+246243_9|ohn_p2_da|COMPLETED|0:0|00:15:16|ngu001
+246243_10|ohn_p2_da|COMPLETED|0:0|03:06:17|ngu009
+246243_11|ohn_p2_da|COMPLETED|0:0|03:09:02|ngu003
+246243_12|ohn_p2_da|COMPLETED|0:0|03:05:27|ngu003
+246243_13|ohn_p2_da|COMPLETED|0:0|03:05:39|ngu009
+246243_14|ohn_p2_da|COMPLETED|0:0|03:08:41|ngu003
+246281|ohn_p3_score|PENDING|0:0|00:00:00|None assigned
+246280_[0-4%3]|ohn_p2_da|PENDING|0:0|00:00:00|None assigned
+246378_0|ohn_p2_da|COMPLETED|0:0|03:11:32|ngu010
+246450_0|ohn_a1_train|COMPLETED|0:0|13:07:42|ngu010
+246450_1|ohn_a1_train|COMPLETED|0:0|13:18:07|ngu103
+246450_2|ohn_a1_train|COMPLETED|0:0|13:17:04|ngu103
+246450_3|ohn_a1_train|COMPLETED|0:0|13:14:55|ngu010
+246450_4|ohn_a1_train|RUNNING|0:0|13:01:55|ngu101
+=== SQUEUE ===
+246280_[0-4%3]|PENDING|(Dependency)|0:00|6:00:00
+246281|PENDING|(Dependency)|0:00|3:00:00
+246450_4|RUNNING|ngu101|12:59:51|1-12:00:00
+=== LOGAGE ===
+ohn_a1_train-246450_0.err 1792718354 207
+ohn_a1_train-246450_0.out 1792765547 20366281
+ohn_a1_train-246450_1.err 1792722137 207
+ohn_a1_train-246450_1.out 1792769893 20370566
+ohn_a1_train-246450_2.err 1792722137 207
+ohn_a1_train-246450_2.out 1792769829 20372122
+ohn_a1_train-246450_3.err 1792765637 207
+ohn_a1_train-246450_3.out 1792813267 20372205
+ohn_a1_train-246450_4.err 1792770162 207
+ohn_a1_train-246450_4.out 1792817022 20281914
+ohn_p2_da-246243_0.err 1792669567 2821
+ohn_p2_da-246243_0.out 1792669565 99051
+ohn_p2_da-246243_10.err 1792699809 3203
+ohn_p2_da-246243_10.out 1792699809 282016
+ohn_p2_da-246243_11.err 1792706220 3203
+ohn_p2_da-246243_11.out 1792706220 282115
+ohn_p2_da-246243_12.err 1792709159 3203
+ohn_p2_da-246243_12.out 1792709160 282031
+ohn_p2_da-246243_13.err 1792710947 3203
+ohn_p2_da-246243_13.out 1792710947 282045
+ohn_p2_da-246243_14.err 1792717541 3203
+ohn_p2_da-246243_14.out 1792717542 282110
+ohn_p2_da-246243_1.err 1792664517 3203
+ohn_p2_da-246243_1.out 1792664518 282092
+ohn_p2_da-246243_2.err 1792675580 3203
+ohn_p2_da-246243_2.out 1792675580 281970
+ohn_p2_da-246243_3.err 1792694879 3203
+ohn_p2_da-246243_3.out 1792694879 282104
+ohn_p2_da-246243_4.err 1792698031 3203
+ohn_p2_da-246243_4.out 1792698032 282023
+ohn_p2_da-246243_5.err 1792681744 3203
+ohn_p2_da-246243_5.out 1792681744 252609
+ohn_p2_da-246243_6.err 1792681751 3203
+ohn_p2_da-246243_6.out 1792681751 252503
+ohn_p2_da-246243_7.err 1792681748 3203
+ohn_p2_da-246243_7.out 1792681748 252503
+ohn_p2_da-246243_8.err 1792682674 3203
+ohn_p2_da-246243_8.out 1792682674 252624
+ohn_p2_da-246243_9.err 1792682687 3203
+ohn_p2_da-246243_9.out 1792682687 252623
+ohn_p2_da-246378_0.err 1792718279 3203
+ohn_p2_da-246378_0.out 1792718279 282147
+=== SPEED ===
+ohn_a1_train-246450_0.out 531/531 [25:11<00:00, 2.85s/it]
+ohn_a1_train-246450_1.out 531/531 [30:44<00:00, 3.47s/it]
+ohn_a1_train-246450_2.out 531/531 [31:00<00:00, 3.50s/it]
+ohn_a1_train-246450_3.out 531/531 [24:32<00:00, 2.77s/it]
+ohn_a1_train-246450_4.out 466/531 [25:54<04:00, 3.71s/it]
+ohn_p2_da-246243_0.out 197/531 [4:32:53<6:44:29, 72.7s/it]
+ohn_p2_da-246243_10.out 531/531 [3:04:26<00:00, 20.8s/it]
+ohn_p2_da-246243_11.out 531/531 [3:07:41<00:00, 21.2s/it]
+ohn_p2_da-246243_12.out 531/531 [3:04:09<00:00, 20.8s/it]
+ohn_p2_da-246243_13.out 531/531 [3:04:18<00:00, 20.8s/it]
+ohn_p2_da-246243_14.out 531/531 [3:07:27<00:00, 21.2s/it]
+ohn_p2_da-246243_1.out 531/531 [3:08:45<00:00, 21.3s/it]
+ohn_p2_da-246243_2.out 531/531 [3:02:36<00:00, 20.6s/it]
+ohn_p2_da-246243_3.out 531/531 [3:07:52<00:00, 21.2s/it]
+ohn_p2_da-246243_4.out 531/531 [3:04:26<00:00, 20.8s/it]
+ohn_p2_da-246243_5.out 531/531 [11:56<00:00, 1.35s/it]
+ohn_p2_da-246243_6.out 531/531 [12:02<00:00, 1.36s/it]
+ohn_p2_da-246243_7.out 531/531 [11:59<00:00, 1.36s/it]
+ohn_p2_da-246243_8.out 531/531 [11:49<00:00, 1.34s/it]
+ohn_p2_da-246243_9.out 531/531 [11:53<00:00, 1.34s/it]
+ohn_p2_da-246378_0.out 531/531 [3:10:05<00:00, 21.5s/it]
+=== CKPT ===
+a1_s100_2310_092101 50 1792763970
+a1_s101_2310_102216 50 1792767996
+a1_s102_2310_102216 50 1792767910
+a1_s103_2310_222905 50 1792811721
+a1_s104_2310_234241 50 1792815420
+=== MARKERS ===
+done_a1_s100
+done_a1_s101
+done_a1_s102
+done_a1_s103
+STAMP copies/p2/E0fp32/id18_nse_1510_225843/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E0fp32/id18_nse_s101_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E0fp32/id18_nse_s102_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E0fp32/id18_nse_s103_1610_211043/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E0fp32/id18_nse_s104_1610_211024/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1default/id18_nse_1510_225843/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1default/id18_nse_s101_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1default/id18_nse_s102_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1default/id18_nse_s103_1610_211043/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1default/id18_nse_s104_1610_211024/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1/id18_nse_1510_225843/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1/id18_nse_s101_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1/id18_nse_s102_1610_225041/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1/id18_nse_s103_1610_211043/da_eval_stamp_test_every3_da.json zarr_ok
+STAMP copies/p2/E1/id18_nse_s104_1610_211024/da_eval_stamp_test_every3_da.json zarr_ok
+=== ERRTAILS ===
+=== P3 ===
+END_STATUS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T12:43:51+0800
