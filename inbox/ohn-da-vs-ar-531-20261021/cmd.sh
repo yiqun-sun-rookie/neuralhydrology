@@ -1,13 +1,21 @@
 #!/bin/bash
-# OWN pending A1+DA tasks 246280_4 and 246911_0: a full DA run takes 3:03-3:11 on a healthy 3090 (10 completed so far).
-# Lower their limit from 6:00 to 4:30 (~40% margin) so backfill can place them sooner. Limits only go down. Nothing else.
-set -o pipefail
-date --iso-8601=seconds
-for J in 246280_4 246911_0; do
-  st=$(squeue -j $J -h -o '%T' 2>/dev/null | head -1)
-  echo "$J state=${st:-GONE}"
-  [ "$st" = PENDING ] && scontrol update jobid=$J TimeLimit=4:30:00 2>&1 && echo "  -> TimeLimit=4:30:00"
-done
-sleep 60
-squeue -j 246280,246911,246281 -h --start -o '%i|%T|%R|%l|%S|%N' 2>&1 | head -8
-echo "SEQ78_DONE"
+# read-only health probe for jobs 246240,246243,246450,246280,246281,246378,246911
+cd /data1/home/sunyiq/ohn_da_vs_ar_531_20261021 || exit 1
+echo "=== NOW ==="; date +%s
+echo "=== SACCT ==="
+sacct -X -n -P -j 246240,246243,246450,246280,246281,246378,246911 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList 2>&1
+echo "=== SQUEUE ==="
+squeue -j 246240,246243,246450,246280,246281,246378,246911 -h -o '%i|%T|%R|%M|%l' 2>&1
+echo "=== LOGAGE ==="
+ls -1 logs | grep -E '(246240_|246243_|246450_|246280_|246281_|246378_|246911_)' | while read f; do echo "$f $(stat -c %Y logs/$f) $(stat -c %s logs/$f)"; done
+echo "=== SPEED ==="
+for f in $(ls -1 logs | grep -E '(246240_|246243_|246450_|246280_|246281_|246378_|246911_).*\.out$'); do s=$(tr '\r' '\n' < logs/$f | grep -oE '[0-9]+/531 \[[^]]*, *[0-9.]+s/it\]' | tail -1); [ -n "$s" ] && echo "$f $s"; done
+echo "=== CKPT ==="
+for d in runs/a1_s10*; do [ -d "$d" ] || continue; n=$(ls $d/model_epoch*.pt 2>/dev/null | wc -l); nw=$(ls -t $d/model_epoch*.pt 2>/dev/null | head -1); echo "$(basename $d) $n ${nw:+$(stat -c %Y $nw)}"; done
+echo "=== MARKERS ==="
+ls logs | grep -E '^done_a1_s10' ; for f in copies/p2/*/*/da_eval_stamp_test_every3_da.json; do [ -f "$f" ] && { d=$(dirname $f); z=$d/test/model_epoch050/test_results_data_assimilation.zarr; [ -d "$z" ] && echo "STAMP $f zarr_ok" || echo "STAMP $f ZARR_MISSING"; }; done
+echo "=== ERRTAILS ==="
+for f in $(ls -1 logs | grep -E '(246240_|246243_|246450_|246280_|246281_|246378_|246911_).*\.(err|out)$'); do if grep -qE 'Traceback|CUDA error|RuntimeError|FATAL|MISSING|STALE_RUN|AMBIGUOUS|CONDA_FAILED|Killed|oom' logs/$f; then echo "--- $f"; grep -hE 'Error|FATAL|MISSING|STALE|AMBIGUOUS|Killed|oom' logs/$f | tail -3; fi; done
+echo "=== P3 ==="
+cat results/p3/p3_verdicts.json 2>/dev/null
+echo END_STATUS
