@@ -1,5 +1,17 @@
 #!/bin/bash
-# READ_ONLY_PACKET_FETCH batch 13/13: tar (no compression) | base64 of named packet files; no mutation
-cd "/data1/home/sunyiq/hydrol85935_revision_20261008_001/control/hybrid_v028_20261014_001/hpc_packet_001" || exit 3
-echo "PF_BEGIN"; tar -cf - "rows_0097.jsonl.gz" "rows_0098.jsonl.gz" "rows_0099.jsonl.gz" "rows_0100.jsonl.gz" "rows_0101.jsonl.gz" "rows_0102.jsonl.gz" | base64 -w 0; echo; echo "PF_END"
+# USER_AUTHORIZED_NICE_REVERT 2026-10-24: set nice of 246349 and 246450 back to 0 (undo seq546/547); only where the
+# current nice is still the 100000 we set; any other value is reported and left alone; touches nothing else
+echo "NR_TIME $(date -u +%FT%TZ)"
+echo "NR_BEFORE"; squeue -j 246349,246450 -h -o "%i|%j|%T|%Q|%y|%r" 2>&1
+for J in 246349 246450; do
+  N=$(squeue -j $J -h -o "%y" 2>/dev/null | sort -u | tr "\n" ","); echo "NR_NICE $J [$N]"
+  case "$N" in
+    "") echo "NR_SKIP $J no longer in queue";;
+    "0,") echo "NR_SKIP $J already 0";;
+    "100000,") scontrol update jobid=$J nice=0 2>&1; echo "NR_RC $J $?";;
+    *) echo "NR_SKIP $J nice is not the value we set; left unchanged";;
+  esac
+done
+sleep 5
+echo "NR_AFTER"; squeue -j 246349,246450 -h -o "%i|%j|%T|%Q|%y|%r|%S" 2>&1
 exit 0
