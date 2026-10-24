@@ -1,0 +1,16 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=78
+### host=login4
+### started=2026-10-24T18:47:53+0800
+### ---------- output ----------
+2026-10-24T18:47:53+0800
+246280_4 state=PENDING
+  -> TimeLimit=4:30:00
+246911_0 state=PENDING
+  -> TimeLimit=4:30:00
+246281|PENDING|(Dependency)|3:00:00|N/A|
+246280_[4%3]|PENDING|(Resources)|4:30:00|2026-10-24T22:47:32|
+246911_[0]|PENDING|(Priority)|4:30:00|2026-10-24T23:38:16|
+SEQ78_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T18:48:53+0800
