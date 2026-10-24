@@ -277,3 +277,5 @@ git rm inbox/seq
 
 | `knet-old-current-ukf-xperiod-20261021-001` | Authorized KNET-OLD-CURRENT-UKF-XPERIOD-01 HBV/UKF/KNet frozen-model comparison | 2026-10-21 | Only knet_old_current_ukf_xperiod_20261021_001, one 020 five-arm two-history checkpoint evaluation job, 900 second cap, zero training, no repeat submission; preserve shared receiver and all other tasks. |
 | `ohn-da-vs-ar-531-20261021` | OpenHydroNet 嵌入层同化 vs 自回归 vs 叠加（CAMELS-US 531，计划 v2）：冒烟、调参、主实验 | 2026-10-22 | 独立落点 `/data1/home/sunyiq/ohn_da_vs_ar_531_20261021`；原落点 `openhydronet_531_20261015` 只读（权重复制后推理）；不碰其他通道/作业；不写 --mem |
+
+| `knet-nl-queue-status-20261024-001` | Read-only current account queue and known Knet/NL completion metadata | 2026-10-24 | squeue/sacct only; no computation, submissions, cancellations, restarts or experiment writes. |
