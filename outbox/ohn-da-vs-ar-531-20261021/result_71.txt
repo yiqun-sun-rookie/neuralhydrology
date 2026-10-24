@@ -1,0 +1,19 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=71
+### host=login4
+### started=2026-10-24T14:54:37+0800
+### ---------- output ----------
+2026-10-24T14:54:37+0800
+job 246280 states: PENDING 
+  -> ExcNodeList cleared
+job 246281 states: PENDING 
+  -> ExcNodeList cleared
+246280_[2-4%3]|PENDING|(Resources)||2026-10-25T08:57:00
+246281|PENDING|(Dependency)||N/A
+246280_0|RUNNING|ngu002|ngu002|2026-10-24T14:57:08
+246280_1|RUNNING|ngu002|ngu002|2026-10-24T14:57:08
+ExcNodeList=(null)
+ExcNodeList=(null)
+SEQ71_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T14:55:39+0800
