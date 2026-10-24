@@ -1,68 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-export PYTHONDONTWRITEBYTECODE=1
-python -B - <<'CHECK_AUTHORIZED_CONTINUATION'
-"""Fresh scheduler check, then use the existing authorized continuation entry.
-
-Executed once before the combined heartbeat monitor. Active jobs are retained;
-only a verified terminal allocation with no competing writer may continue.
-"""
-import datetime
-import json
-from pathlib import Path
-import subprocess
-import sys
-
-SLURM=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-BASE=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
-CASES={'legacy_lstm__historical_capacity':BASE/'base',
-       'explicit_gru__historical_capacity':BASE/'sqrt_gru_recovery'}
-
-
-def query(args,root):
-    p=subprocess.run(list(map(str,args)),cwd=root,capture_output=True,text=True,timeout=60)
-    if p.returncode:raise RuntimeError(json.dumps({'command':list(map(str,args)),'stderr':p.stderr}))
-    return p.stdout
-
-
-def main():
-    for case,root in CASES.items():
-        previous=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
-        queue=query([SLURM/'squeue','-h','-u','sunyiq','-o','%i|%T|%j|%Z'],root)
-        matching=[line for line in queue.splitlines() if line.startswith(previous+'|') or case in line or str(root) in line]
-        result={'schema':'fixed200-continuation-decision-v1','case':case,'previous_job':previous,
-                'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'matching_queue':matching}
-        if matching:
-            result['status']='existing_job_retained'
-        else:
-            accounting=query([SLURM/'sacct','-n','-X','-j',previous,'--format=JobID,State,ExitCode','-P'],root)
-            rows=[line.split('|') for line in accounting.splitlines() if line.startswith(previous+'|')]
-            result['accounting']=accounting
-            record=root/'records'/case
-            healthy=(len(rows)==1 and (rows[0][1] in ('TIMEOUT','PREEMPTED','NODE_FAIL') or
-                     (rows[0][1:3]==['COMPLETED','0:0'] and (record/('scheduler_slice_end_'+previous+'.json')).is_file())))
-            attempt=record/('continuation_after_'+previous+'.attempt.json')
-            if attempt.exists():
-                result['status']='existing_submission_attempt_requires_readonly_reconciliation'
-            elif healthy:
-                result['status']='verified_terminal_continuation_entry_invoked'
-                p=subprocess.run([sys.executable,'-B','hpc/submit_fixed200_continuation.py','--case',case],
-                                 cwd=root,capture_output=True,text=True,timeout=150)
-                result.update(returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)
-                confirmed=record/('continuation_after_'+previous+'.confirmed.json')
-                if confirmed.is_file():result['confirmed']=json.loads(confirmed.read_bytes())
-                if p.returncode:result['status']='continuation_entry_error_preserved'
-            else:
-                result['status']='no_verified_healthy_terminal_no_submission'
-        print(json.dumps(result),flush=True)
-
-
-if __name__=='__main__':main()
-
-CHECK_AUTHORIZED_CONTINUATION
-set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
@@ -179,3 +116,82 @@ report['summary'] = {'cases': len(report['cases']),
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
+
+python3 - <<'EXPORT_003_FINAL_SOURCES'
+"""Export admitted final inputs and unchanged runtime; never start HPC training."""
+import base64
+import datetime
+import hashlib
+import io
+import json
+from pathlib import Path
+import tarfile
+
+ROOT = Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/base')
+CASE = 'legacy_lstm__historical_capacity'
+record = ROOT / 'records' / CASE
+progress = json.loads((record / 'progress.json').read_bytes())
+assert progress['group'] == CASE + '__tune_branch_group', progress
+assert not (record / 'final_foundation_group_outcome.json').exists()
+for seed in (17, 29, 43, 61, 89):
+    name = CASE + '__final_foundation__foundation__s' + str(seed) + '__lrselected_foundation'
+    assert not (ROOT / 'runs' / name).exists(), 'final foundation already started'
+
+files = {}
+sources = []
+def add(path, relative, expected=None):
+    raw = path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if expected is not None:
+        assert digest == expected, str(path)
+    assert relative not in files
+    files[relative] = raw
+    sources.append({'path': relative, 'source_path': str(path), 'bytes': len(raw), 'sha256': digest})
+
+for folder in ('src', 'scripts', 'vendor/pytides'):
+    for path in sorted((ROOT / folder).glob('*.py')):
+        add(path, 'runtime/' + path.relative_to(ROOT).as_posix())
+for relative in ('configs/protocol-v3.json', 'configs/registry-v3.json',
+                 'configs/stage_source_admission.json', 'records/authorization.json',
+                 'records/data_preparation_complete.json'):
+    add(ROOT / relative, 'runtime/' + relative)
+
+manifest_path = ROOT / 'prepared/final/manifest.json'
+manifest = json.loads(manifest_path.read_bytes())
+prep = json.loads((ROOT / 'records/data_preparation_complete.json').read_bytes())
+add(manifest_path, 'source_final_manifest.json', prep['reports']['final']['manifest_file_sha256'])
+for item in manifest['files']:
+    assert set(item['years']).issubset({2017, 2018, 2019, 2020, 2021, 2022})
+    add(Path(item['path']), 'inputs/final/' + Path(item['path']).name, item['sha256'])
+assert len([x for x in sources if x['path'].startswith('inputs/')]) == 18
+
+reservation = {'schema': '003-external-final-foundation-reservation-v1',
+               'case': CASE, 'stage': 'final_foundation', 'seeds': [17, 29, 43, 61, 89],
+               'epochs_total': 200, 'executor': 'autodl-003',
+               'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+               'source_progress': progress, 'existing_hpc_job_retained': True,
+               'import_complete_outcome_before_source_stage': True}
+reservation_path = record / 'autodl_final_foundation_reservation_20261024.json'
+with reservation_path.open('x') as f:
+    json.dump(reservation, f, indent=2)
+add(reservation_path, 'source_reservation.json')
+
+buffer = io.BytesIO()
+with tarfile.open(fileobj=buffer, mode='w:gz') as archive:
+    for name, raw in files.items():
+        member = tarfile.TarInfo(name)
+        member.size = len(raw)
+        archive.addfile(member, io.BytesIO(raw))
+binary = buffer.getvalue()
+assert len(binary) < 8_000_000
+report = {'schema': '003-autodl-final-source-export-v1', 'case': CASE,
+          'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'archive_bytes': len(binary), 'archive_sha256': hashlib.sha256(binary).hexdigest(),
+          'files': sources, 'reservation': reservation,
+          'source400_rerun': False, 'hpc_training_submissions': 0}
+print(json.dumps(report), flush=True)
+print('BEGIN_003_FINAL_ARCHIVE_BASE64', flush=True)
+print(base64.b64encode(binary).decode(), flush=True)
+print('END_003_FINAL_ARCHIVE_BASE64', flush=True)
+
+EXPORT_003_FINAL_SOURCES
