@@ -1,0 +1,22 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=70
+### host=login4
+### started=2026-10-24T14:48:55+0800
+### ---------- output ----------
+2026-10-24T14:48:55+0800
+ngu001    mix     gpu:2         gpu:2,dcu:0             
+ngu002    idle    gpu:2         gpu:0,dcu:0             
+ngu004    mix     gpu:2         gpu:2,dcu:0             
+ngu005    mix     gpu:2         gpu:2,dcu:0             
+ngu006    mix     gpu:2         gpu:2,dcu:0             
+ngu007    mix     gpu:2         gpu:2,dcu:0             
+ngu008    mix     gpu:2         gpu:2,dcu:0             
+ngu010    mix     gpu:2         gpu:2,dcu:0             
+ngu011    mix     gpu:2         gpu:2,dcu:0             
+ngu003    mix     gpu:2         gpu:2,dcu:0             
+ngu009    mix     gpu:2         gpu:2,dcu:0             
+246281|PENDING|(Dependency)|N/A|3:00:00
+246280_[0-4%3]|PENDING|(Resources)|2026-10-25T23:38:18|6:00:00
+SEQ70_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T14:48:55+0800
