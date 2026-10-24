@@ -1,12 +1,8 @@
 #!/bin/bash
-# Read-only: fetch P3 outputs.
+# Read-only: per-basin NSE table and GPU-hour accounting for the report.
 NEW=/data1/home/sunyiq/ohn_da_vs_ar_531_20261021
-cd $NEW/results/p3 || exit 1
-ls -la
-echo "=== MEDIAN_BY_L ==="; cat p3_median_nse_by_L.csv
-echo "=== PAIRED ==="; cat p3_paired_comparisons.csv
-echo "=== VERDICTS ==="; cat p3_verdicts.json
-echo "=== NBB_HEAD ==="; head -3 p3_nse_by_basin.csv; wc -l p3_nse_by_basin.csv
-echo "=== P3 LOG ==="; tail -n 60 $NEW/logs/ohn_p3_score-246281.out
-echo "=== P3 ERR ==="; tail -n 15 $NEW/logs/ohn_p3_score-246281.err
-echo "SEQ84_DONE"
+echo "=== SACCT ==="
+sacct -X -n -P -j 246200,246201,246239,246240,246243,246378,246450,246280,246911,246281,246279 -o JobID,JobName,State,Elapsed,ElapsedRaw,NodeList 2>&1
+echo "=== NSE_BY_BASIN ==="
+cat $NEW/results/p3/p3_nse_by_basin.csv
+echo "SEQ85_DONE"
