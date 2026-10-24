@@ -1,0 +1,33 @@
+### channel=ohn-da-vs-ar-531-20261021 seq=73
+### host=login4
+### started=2026-10-24T15:48:24+0800
+### ---------- output ----------
+2026-10-24T15:48:24+0800
+=== 1) EXCLUDE ngu002 FOR PENDING A1+DA TASKS ===
+246280_0-1: Job is no longer pending execution
+246280_2-4: No error
+246280_[2-4%3]|PENDING|
+246280_1|RUNNING|ngu002
+246280_0|RUNNING|ngu002
+=== 2) CANCEL SLOW TASK ===
+246280_0 state=RUNNING
+cancelled own 246280_0
+moved partial copy aside: copies/p2/A1DA/a1_s100_2310_092101
+A1DA_a1_s100_2310_092101_ngu002gpu0_20261024T154829
+E1_id18_nse_1510_225843_ngu002gpu0_20261022T194612
+=== 3) RESUBMIT TASK 0 WITH EXCLUDE ===
+#!/usr/bin/env bash
+#SBATCH --exclude=ngu002
+#SBATCH -J ohn_p2_da
+#SBATCH -p hgpu2p,hgpu2
+Submitted batch job 246911
+=== 4) RE-LINK P3 ===
+Dependency=afterany:246280_*,afterany:246911_*
+246280_[2-4%3]|PENDING|(Resources)|2026-10-25T08:57:00
+246281|PENDING|(Dependency)|N/A
+246911_[0]|PENDING|(Priority)|N/A
+246280_1|RUNNING|ngu002|2026-10-24T14:57:08
+SEQ73_DONE a1da_retry0=246911
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-24T15:48:32+0800
