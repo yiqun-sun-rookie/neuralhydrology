@@ -1,0 +1,385 @@
+### channel=hpc-gpu-recheck-20261019 seq=54
+### host=login4
+### started=2026-10-25T16:27:28+0800
+### ---------- output ----------
+2026-10-25T16:27:28+0800
+
+NODE=ngu001
+ngu001|hgpu2p|mix|gpu:2|20/76/0/96|none
+slurm_load_jobs error: Invalid job id specified
+245331|ghr_001_261019|COMPLETED|0:0|00:00:59|ngu001
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu001/log_245331.out
+{"node": "ngu001", "expected_gpus": 2, "job_id": "245331", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.3480335660278797, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.0319889634847641, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T03:48:16.198486+00:00", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "libc": ["glibc", "2.34"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n", "inventory_gpu_count": 2, "slurm_job_gpus": ["0", "1"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 2, "finished_utc": "2026-10-22T03:49:12.371301+00:00"}
+{"node": "ngu001", "expected_gpus": 2, "job_id": "245331", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.3480335660278797, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.0319889634847641, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T03:48:16.198486+00:00", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "libc": ["glibc", "2.34"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n", "inventory_gpu_count": 2, "slurm_job_gpus": ["0", "1"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 2, "finished_utc": "2026-10-22T03:49:12.371301+00:00", "worker_exit_code": 0}
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu001/log_245331.err
+2026-10-22 11:48:36.577287: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-22 11:48:36.577340: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-22 11:48:36.579021: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-22 11:48:47.908272: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+RESULT_JSON_NODE=ngu001
+{
+  "node": "ngu001",
+  "expected_gpus": 2,
+  "job_id": "245331",
+  "state": "PASS_ALL_GPUS",
+  "cards": [
+    {
+      "slurm_gpu_id": "0",
+      "uuid": "GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066",
+      "name": "NVIDIA GeForce RTX 3090",
+      "memory_MiB": 24576.0,
+      "driver": "580.76.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.3480335660278797,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "1",
+      "uuid": "GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202",
+      "name": "NVIDIA GeForce RTX 3090",
+      "memory_MiB": 24576.0,
+      "driver": "580.76.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.0319889634847641,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    }
+  ],
+  "started_utc": "2026-10-22T03:48:16.198486+00:00",
+  "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+  "libc": [
+    "glibc",
+    "2.34"
+  ],
+  "scientific_model_preflight": false,
+  "other_processes_stopped": false,
+  "inventory": "0, GPU-905ab382-bdb9-708b-5bd3-b8cf873d5066, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-cc179fde-7dc6-b38a-12b6-2bf6aff7e202, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n",
+  "inventory_gpu_count": 2,
+  "slurm_job_gpus": [
+    "0",
+    "1"
+  ],
+  "tensorflow_version": "2.15.1",
+  "tensorflow_gpu_count": 2,
+  "finished_utc": "2026-10-22T03:49:12.371301+00:00",
+  "worker_exit_code": 0
+}
+
+END_RESULT_JSON_NODE=ngu001
+
+NODE=ngu002
+ngu002|hgpu2p|idle|gpu:2|0/96/0/96|none
+slurm_load_jobs error: Invalid job id specified
+246299|ghr_002_261019|COMPLETED|0:0|00:01:23|ngu002
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu002/log_246299.out
+{"node": "ngu002", "expected_gpus": 2, "job_id": "246299", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-486229ea-b64a-186b-17d8-4d99fd0b029c", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.8625466889934614, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.02908648399170488, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T13:25:22.005527+00:00", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "libc": ["glibc", "2.34"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-486229ea-b64a-186b-17d8-4d99fd0b029c, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n", "inventory_gpu_count": 2, "slurm_job_gpus": ["0", "1"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 2, "finished_utc": "2026-10-22T13:26:39.122128+00:00"}
+{"node": "ngu002", "expected_gpus": 2, "job_id": "246299", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-486229ea-b64a-186b-17d8-4d99fd0b029c", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.8625466889934614, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13", "name": "NVIDIA GeForce RTX 3090", "memory_MiB": 24576.0, "driver": "580.76.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.02908648399170488, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T13:25:22.005527+00:00", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "libc": ["glibc", "2.34"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-486229ea-b64a-186b-17d8-4d99fd0b029c, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n", "inventory_gpu_count": 2, "slurm_job_gpus": ["0", "1"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 2, "finished_utc": "2026-10-22T13:26:39.122128+00:00", "worker_exit_code": 0}
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu002/log_246299.err
+2026-10-22 21:25:48.976964: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-22 21:25:48.977044: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-22 21:25:49.203152: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-22 21:26:05.542168: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+RESULT_JSON_NODE=ngu002
+{
+  "node": "ngu002",
+  "expected_gpus": 2,
+  "job_id": "246299",
+  "state": "PASS_ALL_GPUS",
+  "cards": [
+    {
+      "slurm_gpu_id": "0",
+      "uuid": "GPU-486229ea-b64a-186b-17d8-4d99fd0b029c",
+      "name": "NVIDIA GeForce RTX 3090",
+      "memory_MiB": 24576.0,
+      "driver": "580.76.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.8625466889934614,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "1",
+      "uuid": "GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13",
+      "name": "NVIDIA GeForce RTX 3090",
+      "memory_MiB": 24576.0,
+      "driver": "580.76.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.02908648399170488,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    }
+  ],
+  "started_utc": "2026-10-22T13:25:22.005527+00:00",
+  "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+  "libc": [
+    "glibc",
+    "2.34"
+  ],
+  "scientific_model_preflight": false,
+  "other_processes_stopped": false,
+  "inventory": "0, GPU-486229ea-b64a-186b-17d8-4d99fd0b029c, NVIDIA GeForce RTX 3090, 00000000:4B:00.0, 24576, 580.76.05\n1, GPU-df5fd60b-c11c-c3a4-5775-fccf6ba95b13, NVIDIA GeForce RTX 3090, 00000000:CA:00.0, 24576, 580.76.05\n",
+  "inventory_gpu_count": 2,
+  "slurm_job_gpus": [
+    "0",
+    "1"
+  ],
+  "tensorflow_version": "2.15.1",
+  "tensorflow_gpu_count": 2,
+  "finished_utc": "2026-10-22T13:26:39.122128+00:00",
+  "worker_exit_code": 0
+}
+
+END_RESULT_JSON_NODE=ngu002
+
+NODE=ngu101
+ngu101|hgpu4|mix|gpu:4|16/80/0/96|none
+slurm_load_jobs error: Invalid job id specified
+245332|ghr_101_261019|COMPLETED|0:0|00:00:56|ngu101
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu101/log_245332.out
+{"node": "ngu101", "expected_gpus": 4, "job_id": "245332", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.9531521797180176, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-e39be87e-7f68-211a-32af-d0671d13fb08", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.054292887449264526, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "2", "uuid": "GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.03948529064655304, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "3", "uuid": "GPU-115f590d-5dae-3445-b730-5dc15f5e8c58", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.055557698011398315, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T19:33:27.386532+00:00", "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "libc": ["glibc", "2.17"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-e39be87e-7f68-211a-32af-d0671d13fb08, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-115f590d-5dae-3445-b730-5dc15f5e8c58, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n", "inventory_gpu_count": 4, "slurm_job_gpus": ["0", "1", "2", "3"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 4, "finished_utc": "2026-10-22T19:34:19.982436+00:00"}
+{"node": "ngu101", "expected_gpus": 4, "job_id": "245332", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.9531521797180176, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-e39be87e-7f68-211a-32af-d0671d13fb08", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.054292887449264526, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "2", "uuid": "GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.03948529064655304, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "3", "uuid": "GPU-115f590d-5dae-3445-b730-5dc15f5e8c58", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.055557698011398315, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-22T19:33:27.386532+00:00", "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "libc": ["glibc", "2.17"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-e39be87e-7f68-211a-32af-d0671d13fb08, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-115f590d-5dae-3445-b730-5dc15f5e8c58, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n", "inventory_gpu_count": 4, "slurm_job_gpus": ["0", "1", "2", "3"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 4, "finished_utc": "2026-10-22T19:34:19.982436+00:00", "worker_exit_code": 0}
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu101/log_245332.err
+2026-10-23 03:33:37.983660: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-23 03:33:37.983793: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-23 03:33:38.027237: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-23 03:33:53.273912: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+RESULT_JSON_NODE=ngu101
+{
+  "node": "ngu101",
+  "expected_gpus": 4,
+  "job_id": "245332",
+  "state": "PASS_ALL_GPUS",
+  "cards": [
+    {
+      "slurm_gpu_id": "0",
+      "uuid": "GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.9531521797180176,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "1",
+      "uuid": "GPU-e39be87e-7f68-211a-32af-d0671d13fb08",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.054292887449264526,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "2",
+      "uuid": "GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.03948529064655304,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "3",
+      "uuid": "GPU-115f590d-5dae-3445-b730-5dc15f5e8c58",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.055557698011398315,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    }
+  ],
+  "started_utc": "2026-10-22T19:33:27.386532+00:00",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+  "libc": [
+    "glibc",
+    "2.17"
+  ],
+  "scientific_model_preflight": false,
+  "other_processes_stopped": false,
+  "inventory": "0, GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-e39be87e-7f68-211a-32af-d0671d13fb08, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-115f590d-5dae-3445-b730-5dc15f5e8c58, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n",
+  "inventory_gpu_count": 4,
+  "slurm_job_gpus": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "tensorflow_version": "2.15.1",
+  "tensorflow_gpu_count": 4,
+  "finished_utc": "2026-10-22T19:34:19.982436+00:00",
+  "worker_exit_code": 0
+}
+
+END_RESULT_JSON_NODE=ngu101
+
+NODE=ngu103
+ngu103|hgpu4|mix|gpu:4|8/88/0/96|none
+slurm_load_jobs error: Invalid job id specified
+246881|ghr103r3_261024|COMPLETED|0:0|00:02:30|ngu103
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu103/log_246881.out
+{"node": "ngu103", "expected_gpus": 4, "job_id": "246881", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 1.0562351644039154, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-92822e01-ab3b-7447-2b45-89ae06124ec9", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.053864486515522, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "2", "uuid": "GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.03945408761501312, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "3", "uuid": "GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.042577989399433136, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-23T23:26:33.383194+00:00", "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "libc": ["glibc", "2.17"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-92822e01-ab3b-7447-2b45-89ae06124ec9, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n", "inventory_gpu_count": 4, "slurm_job_gpus": ["0", "1", "2", "3"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 4, "finished_utc": "2026-10-23T23:28:57.386096+00:00"}
+{"node": "ngu103", "expected_gpus": 4, "job_id": "246881", "state": "PASS_ALL_GPUS", "cards": [{"slurm_gpu_id": "0", "uuid": "GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 1.0562351644039154, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "1", "uuid": "GPU-92822e01-ab3b-7447-2b45-89ae06124ec9", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.053864486515522, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "2", "uuid": "GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.03945408761501312, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}, {"slurm_gpu_id": "3", "uuid": "GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b", "name": "NVIDIA A40", "memory_MiB": 46068.0, "driver": "535.104.05", "active_compute_processes": false, "state": "PASS", "elapsed_seconds": 0.042577989399433136, "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3", "host_to_device": true, "matrix_operation": true, "device_to_host": true, "exact_result": true}], "started_utc": "2026-10-23T23:26:33.383194+00:00", "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "libc": ["glibc", "2.17"], "scientific_model_preflight": false, "other_processes_stopped": false, "inventory": "0, GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-92822e01-ab3b-7447-2b45-89ae06124ec9, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n", "inventory_gpu_count": 4, "slurm_job_gpus": ["0", "1", "2", "3"], "tensorflow_version": "2.15.1", "tensorflow_gpu_count": 4, "finished_utc": "2026-10-23T23:28:57.386096+00:00", "worker_exit_code": 0}
+FILE=/data1/home/sunyiq/hpc_gpu_recheck_20261019_001/nodes/ngu103/log_246881.err
+2026-10-24 07:28:18.098718: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-24 07:28:18.098773: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-24 07:28:18.100049: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-24 07:28:27.414293: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+RESULT_JSON_NODE=ngu103
+{
+  "node": "ngu103",
+  "expected_gpus": 4,
+  "job_id": "246881",
+  "state": "PASS_ALL_GPUS",
+  "cards": [
+    {
+      "slurm_gpu_id": "0",
+      "uuid": "GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 1.0562351644039154,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "1",
+      "uuid": "GPU-92822e01-ab3b-7447-2b45-89ae06124ec9",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.053864486515522,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:1",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "2",
+      "uuid": "GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.03945408761501312,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:2",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    },
+    {
+      "slurm_gpu_id": "3",
+      "uuid": "GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b",
+      "name": "NVIDIA A40",
+      "memory_MiB": 46068.0,
+      "driver": "535.104.05",
+      "active_compute_processes": false,
+      "state": "PASS",
+      "elapsed_seconds": 0.042577989399433136,
+      "actual_device": "/job:localhost/replica:0/task:0/device:GPU:3",
+      "host_to_device": true,
+      "matrix_operation": true,
+      "device_to_host": true,
+      "exact_result": true
+    }
+  ],
+  "started_utc": "2026-10-23T23:26:33.383194+00:00",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+  "libc": [
+    "glibc",
+    "2.17"
+  ],
+  "scientific_model_preflight": false,
+  "other_processes_stopped": false,
+  "inventory": "0, GPU-4eeeab2a-5222-eec8-6670-bbbbb424d035, NVIDIA A40, 00000000:1B:00.0, 46068, 535.104.05\n1, GPU-92822e01-ab3b-7447-2b45-89ae06124ec9, NVIDIA A40, 00000000:1F:00.0, 46068, 535.104.05\n2, GPU-e4eb1241-2b57-f27a-fbfc-2c06b95061e9, NVIDIA A40, 00000000:35:00.0, 46068, 535.104.05\n3, GPU-6f26d08b-9a10-7a91-e694-c525b431ba3b, NVIDIA A40, 00000000:39:00.0, 46068, 535.104.05\n",
+  "inventory_gpu_count": 4,
+  "slurm_job_gpus": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "tensorflow_version": "2.15.1",
+  "tensorflow_gpu_count": 4,
+  "finished_utc": "2026-10-23T23:28:57.386096+00:00",
+  "worker_exit_code": 0
+}
+
+END_RESULT_JSON_NODE=ngu103
+
+NODE=ngu201
+ngu201|hgpu8|alloc|gpu:8|64/0/0/64|none
+JOBID|NAME|STATE|NODELIST(REASON)
+245333|ghr_201_261019|PENDING|(Resources)
+245333|ghr_201_261019|PENDING|0:0|00:00:00|None assigned
+
+NODE=ngu202
+ngu202|hgpu8|mix|gpu:8|62/2/0/64|none
+JOBID|NAME|STATE|NODELIST(REASON)
+245334|ghr_202_261019|PENDING|(Resources)
+245334|ghr_202_261019|PENDING|0:0|00:00:00|None assigned
+
+NODE=ngu203
+ngu203|hgpu8|alloc$|gpu:8|64/0/0/64|none
+
+SUBMISSIONS
+2026-10-19T14:16:16Z	ngu001	245331
+2026-10-19T14:16:17Z	ngu101	245332
+2026-10-19T14:16:17Z	ngu201	245333
+2026-10-19T14:16:17Z	ngu202	245334
+2026-10-22T07:56:52Z	ngu002	246299
+2026-10-23T05:14:37Z	ngu103	246673
+2026-10-23T23:26:29Z	ngu103	246881
+QUERY_ONLY_NO_NEW_TESTS_OR_NODE_CHANGES
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-25T16:27:30+0800
