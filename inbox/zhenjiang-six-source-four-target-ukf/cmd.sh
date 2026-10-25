@@ -1,5 +1,68 @@
 #!/usr/bin/env bash
 set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+export PYTHONDONTWRITEBYTECODE=1
+python -B - <<'CHECK_AUTHORIZED_CONTINUATION'
+"""Fresh scheduler check, then use the existing authorized continuation entry.
+
+Executed once before the combined heartbeat monitor. Active jobs are retained;
+only a verified terminal allocation with no competing writer may continue.
+"""
+import datetime
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+SLURM=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
+BASE=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003')
+CASES={'legacy_lstm__historical_capacity':BASE/'base',
+       'explicit_gru__historical_capacity':BASE/'sqrt_gru_recovery'}
+
+
+def query(args,root):
+    p=subprocess.run(list(map(str,args)),cwd=root,capture_output=True,text=True,timeout=60)
+    if p.returncode:raise RuntimeError(json.dumps({'command':list(map(str,args)),'stderr':p.stderr}))
+    return p.stdout
+
+
+def main():
+    for case,root in CASES.items():
+        previous=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
+        queue=query([SLURM/'squeue','-h','-u','sunyiq','-o','%i|%T|%j|%Z'],root)
+        matching=[line for line in queue.splitlines() if line.startswith(previous+'|') or case in line or str(root) in line]
+        result={'schema':'fixed200-continuation-decision-v1','case':case,'previous_job':previous,
+                'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'matching_queue':matching}
+        if matching:
+            result['status']='existing_job_retained'
+        else:
+            accounting=query([SLURM/'sacct','-n','-X','-j',previous,'--format=JobID,State,ExitCode','-P'],root)
+            rows=[line.split('|') for line in accounting.splitlines() if line.startswith(previous+'|')]
+            result['accounting']=accounting
+            record=root/'records'/case
+            healthy=(len(rows)==1 and (rows[0][1] in ('TIMEOUT','PREEMPTED','NODE_FAIL') or
+                     (rows[0][1:3]==['COMPLETED','0:0'] and (record/('scheduler_slice_end_'+previous+'.json')).is_file())))
+            attempt=record/('continuation_after_'+previous+'.attempt.json')
+            if attempt.exists():
+                result['status']='existing_submission_attempt_requires_readonly_reconciliation'
+            elif healthy:
+                result['status']='verified_terminal_continuation_entry_invoked'
+                p=subprocess.run([sys.executable,'-B','hpc/submit_fixed200_continuation.py','--case',case],
+                                 cwd=root,capture_output=True,text=True,timeout=150)
+                result.update(returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)
+                confirmed=record/('continuation_after_'+previous+'.confirmed.json')
+                if confirmed.is_file():result['confirmed']=json.loads(confirmed.read_bytes())
+                if p.returncode:result['status']='continuation_entry_error_preserved'
+            else:
+                result['status']='no_verified_healthy_terminal_no_submission'
+        print(json.dumps(result),flush=True)
+
+
+if __name__=='__main__':main()
+
+CHECK_AUTHORIZED_CONTINUATION
+set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
