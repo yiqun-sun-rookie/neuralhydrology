@@ -2,21 +2,19 @@
 set -euo pipefail
 root=/data1/home/sunyiq/id25_regional_transport_rds07_20261026_001
 job=$(cat "$root/job_id.txt")
-test "$job" = 247722
-date -Is
-echo JOB_ID=$job
-echo EXACT_ACCOUNTING
-timeout 30 sacct -n -j "$job" --format=JobIDRaw,JobName%40,User,State,ExitCode,Elapsed,NodeList,MaxRSS -P
-echo LIVE_QUEUE_IF_PRESENT
-if ! timeout 30 squeue -h -j "$job" -o '%i|%j|%T|%M|%R'; then echo NO_LIVE_QUEUE_RECORD_USE_ACCOUNTING; fi
-for file in runtime.json status.json report.json transport/initial.json transport/status.json transport/selection.json direct_history/status.json direct_history/selection.json; do
-  if test -f "$root/output/$file"; then echo FILE=$file; cat "$root/output/$file"; fi
-done
-echo OUTPUT_FILE_METADATA
-find "$root/output" -maxdepth 2 -type f -printf '%P %s bytes\n'
+case "$job" in ''|*[!0-9]*) exit 1 ;; esac
+timeout 30 sacct -n -X -j "$job" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList -P > "$root/final_sacct.txt"
+grep -E "^$job\|.*\|COMPLETED\|0:0\|" "$root/final_sacct.txt"
+grep -q '"state": "COMPLETED"' "$root/output/report.json"
 for arm in transport direct_history; do
-  if test -f "$root/output/$arm/metrics.jsonl"; then echo METRICS=$arm; tail -n 2 "$root/output/$arm/metrics.jsonl"; fi
+  grep -q '"state": "FROZEN"' "$root/output/$arm/selection.json"
+  grep -q '"optimizer_steps": 20' "$root/output/$arm/report.json"
 done
-for file in "$root"/logs/*; do
-  if test -f "$file"; then echo LOG=$file; tail -n 20 "$file"; fi
-done
+archive="$root/rds07_completed_v001.tar.gz"
+test ! -e "$archive"
+tar -czf "$archive" -C "$root" output final_sacct.txt source_manifest.json config.json inputs/input_receipt.json inputs/transforms.json provenance code hpc ops logs submissions.tsv job_id.txt submission_intent.initial resource_adaptation_v004 submission_intent.memory_default_v004 pre_repair_sacct_v002.txt pre_repair_sacct_v004.txt failed_submission_247680_v004.txt
+sha256sum "$archive"
+wc -c "$archive"
+echo ARCHIVE_BASE64_BEGIN
+base64 "$archive"
+echo ARCHIVE_BASE64_END
