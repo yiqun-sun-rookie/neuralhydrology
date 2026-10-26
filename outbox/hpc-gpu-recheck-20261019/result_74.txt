@@ -1,0 +1,13 @@
+### channel=hpc-gpu-recheck-20261019 seq=74
+### host=login4
+### started=2026-10-26T21:33:47+0800
+### ---------- output ----------
+2026-10-26T21:33:47+0800
+BEFORE|ngu201|245333|ghr_201_261019|sunyiq|PENDING
+245333|ghr_201_261019|CANCELLED by 2272|0:0|00:00:00|None assigned
+BEFORE|ngu202|245334|ghr_202_261019|sunyiq|PENDING
+245334|ghr_202_261019|CANCELLED by 2272|0:0|00:00:00|None assigned
+USER_AUTHORIZED_CLOSEOUT_NO_NEW_SUBMISSIONS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-26T21:33:47+0800
