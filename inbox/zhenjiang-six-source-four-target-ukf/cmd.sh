@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+export PYTHONDONTWRITEBYTECODE=1
+python -B - <<'READ_ONLY_PROGRESS'
+import json,subprocess,datetime
+from pathlib import Path
+root=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery')
+case='explicit_gru__historical_capacity'
+slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
+job=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
+result={'schema':'fixed200-running-progress-diagnosis-v1','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'case':case,'job_id':job,'read_only':True,'training_tensors_loaded':False}
+for key,cmd in [('queue',[str(slurm/'squeue'),'-h','-j',job,'-o','%i|%T|%N']),('sstat',[str(slurm/'sstat'),'-j',job+'.batch','--format=JobID,AveCPU,AveRSS,MaxRSS','-P'])]:
+    p=subprocess.run(cmd,capture_output=True,text=True,timeout=60)
+    result[key]={'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+rows=[line.split('|') for line in result['queue']['stdout'].splitlines() if line.startswith(job+'|')]
+if len(rows)==1 and rows[0][1]=='RUNNING' and ',' not in rows[0][2] and '[' not in rows[0][2]:
+    node=rows[0][2]
+    try:
+        p=subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',node,'python','-B','-'],input="import os,json,time\nfrom pathlib import Path\nroot=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery')\ncase='explicit_gru__historical_capacity'\ndef snapshot():\n    out={}\n    for p in Path('/proc').iterdir():\n        if not p.name.isdigit():continue\n        try:\n            if p.stat().st_uid!=os.getuid():continue\n            cmd=(p/'cmdline').read_bytes().replace(b'\\0',b' ').decode(errors='replace')\n            if 'run_fixed200_case.py' not in cmd or case not in cmd:continue\n            cwd=(p/'cwd').resolve()\n            if cwd!=root:continue\n            stat=(p/'stat').read_text();fields=stat[stat.rfind(')')+2:].split()\n            io={}\n            try:io={line.split(':')[0]:int(line.split(':')[1]) for line in (p/'io').read_text().splitlines()}\n            except OSError:pass\n            try:wchan=(p/'wchan').read_text().strip()\n            except OSError:wchan=None\n            out[p.name]={'pid':int(p.name),'cwd':str(cwd),'command':cmd.strip(),'state':fields[0],'cpu_ticks':int(fields[11])+int(fields[12]),'wchan':wchan,'io':io,'cgroup':(p/'cgroup').read_text().strip()}\n        except (OSError,ValueError,IndexError):continue\n    return out\nfirst=snapshot();time.sleep(5);second=snapshot();hz=os.sysconf('SC_CLK_TCK')\nfor pid,item in second.items():\n    if pid in first:\n        item['cpu_seconds_delta_5s']=(item['cpu_ticks']-first[pid]['cpu_ticks'])/hz\n        item['io_delta_5s']={k:item['io'].get(k,0)-first[pid]['io'].get(k,0) for k in item['io']}\nprint(json.dumps({'schema':'fixed200-readonly-process-progress-v1','at_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'sample_seconds':5,'processes':second}))\n",capture_output=True,text=True,timeout=45)
+        result['node_process_sample']={'node':node,'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+    except subprocess.TimeoutExpired as exc:result['node_process_sample']={'node':node,'timeout_seconds':45}
+print(json.dumps(result),flush=True)
+
+READ_ONLY_PROGRESS
+set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
