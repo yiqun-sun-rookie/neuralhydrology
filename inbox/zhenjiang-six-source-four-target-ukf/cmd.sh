@@ -116,8 +116,7 @@ report['summary'] = {'cases': len(report['cases']),
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
-
-python3 - <<'EXPORT_003_PRIORITY_COMPLETE'
+python3 - <<'EXPORT_003_PRIORITY_CHUNKED'
 """Read-only, stable complete-state export for the four existing tuning runs."""
 import base64
 import datetime
@@ -212,12 +211,17 @@ report = {'schema': '003-priority-complete-source-export-v1',
           'files': sources, 'members': members, 'archive_bytes': len(binary),
           'archive_sha256': sha(binary), 'source_writes': 0, 'training_submissions': 0,
           'checkpoint_tensors_loaded': False, 'years_2022_2023_2024_read': False}
-print(json.dumps(report), flush=True)
-assert len(binary) < 8_000_000, 'bounded transfer limit; no source writes or training'
-print('BEGIN_003_PRIORITY_ARCHIVE_BASE64', flush=True)
-encoded = base64.b64encode(binary).decode()
-for pos in range(0, len(encoded), 65536):
-    print(encoded[pos:pos+65536], flush=True)
-print('END_003_PRIORITY_ARCHIVE_BASE64', flush=True)
+spool=Path('/data1/home/sunyiq/zhenjiang_priority_source_export_20261026_001')
+spool.mkdir(exist_ok=False)
+(spool/'source.tar.gz').write_bytes(binary)
+chunk_size=7_500_000
+chunks=[binary[i:i+chunk_size] for i in range(0,len(binary),chunk_size)]
+report.update(transport='immutable_spool_chunked_v1',spool=str(spool),chunks=[{'index':i,'bytes':len(v),'sha256':sha(v)} for i,v in enumerate(chunks)],export_writes_only_in_new_spool=True)
+(spool/'MANIFEST.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(report),flush=True)
+print('BEGIN_003_PRIORITY_CHUNK_BASE64',flush=True)
+print(base64.b64encode(chunks[0]).decode(),flush=True)
+print('END_003_PRIORITY_CHUNK_BASE64',flush=True)
+print(json.dumps({'chunk_index':0,'chunk_sha256':sha(chunks[0]),'archive_sha256':sha(binary)}),flush=True)
 
-EXPORT_003_PRIORITY_COMPLETE
+EXPORT_003_PRIORITY_CHUNKED
