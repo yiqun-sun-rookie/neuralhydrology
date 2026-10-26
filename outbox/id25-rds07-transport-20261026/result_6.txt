@@ -1,0 +1,563 @@
+### channel=id25-rds07-transport-20261026 seq=6
+### host=login4
+### started=2026-10-27T00:57:05+0800
+### ---------- output ----------
+2026-10-27T00:57:05+0800
+JOB_ID=247722
+EXACT_ACCOUNTING
+247722|id25_rds07_261026|sunyiq|COMPLETED|0:0|00:09:03|icn279|
+247722.batch|batch||COMPLETED|0:0|00:09:03|icn279|1422152K
+247722.extern|extern||COMPLETED|0:0|00:09:06|icn279|1352K
+LIVE_QUEUE_IF_PRESENT
+slurm_load_jobs error: Invalid job id specified
+NO_LIVE_QUEUE_RECORD_USE_ACCOUNTING
+FILE=runtime.json
+{
+  "host": "icn279",
+  "job_id": "247722",
+  "torch": "2.4.0",
+  "device": "cpu",
+  "started_at": "2026-10-26T15:49:06.151304+00:00",
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  }
+}FILE=status.json
+{
+  "state": "COMPLETED",
+  "experiment_id": "RDS07_TRANSPORT_MEMORY_PILOT_20261026",
+  "development_only": true,
+  "primary_endpoint": "fixed_epoch20_on_opened_2008",
+  "region_count": 119,
+  "total_optimizer_steps": 40,
+  "technical_feasible": true,
+  "transport_fit_loss_decreased": true,
+  "architecture_advantage_signal": false,
+  "scientific_success_proven": false,
+  "transport_minus_direct_pooled_rmse_cm": 0.008076198321165684,
+  "transport_better_regions": 58,
+  "worse_regions": 61,
+  "tied_regions": 0,
+  "near_tied_within_1e_5_cm": 0,
+  "transport_rmse_cm": 4.0928097077189705,
+  "direct_rmse_cm": 4.084733509397805,
+  "fixed_baselines": {
+    "RDS01": {
+      "job_id": "241347",
+      "epochs": 80,
+      "best_epoch": 78,
+      "saved_2008_rmse_cm": 4.485342502593994,
+      "reference_only": true,
+      "rerun_or_rescore": false
+    },
+    "C01_LSTM": {
+      "job_id": "245242",
+      "epochs": 114,
+      "best_epoch": 84,
+      "saved_best_val_mse_cm2": 12.901087863337429,
+      "reference_only": true,
+      "rerun_or_rescore": false,
+      "ranking_admitted": false,
+      "note": "Saved selection metric retained. Full mask identity not independently reverified here; do not combine into a new ranking."
+    }
+  },
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  },
+  "finished_at": "2026-10-26T15:57:48.228160+00:00",
+  "limitations": [
+    "2008 already used for development; no independent generalization claim",
+    "equal parameter architecture comparison is not a pure transport causal ablation",
+    "fixed baselines have larger and different training budgets; no retraining",
+    "no 2009-2010 access; no daily-component or flood-forecast validation"
+  ]
+}FILE=report.json
+{
+  "state": "COMPLETED",
+  "experiment_id": "RDS07_TRANSPORT_MEMORY_PILOT_20261026",
+  "development_only": true,
+  "primary_endpoint": "fixed_epoch20_on_opened_2008",
+  "region_count": 119,
+  "total_optimizer_steps": 40,
+  "technical_feasible": true,
+  "transport_fit_loss_decreased": true,
+  "architecture_advantage_signal": false,
+  "scientific_success_proven": false,
+  "transport_minus_direct_pooled_rmse_cm": 0.008076198321165684,
+  "transport_better_regions": 58,
+  "worse_regions": 61,
+  "tied_regions": 0,
+  "near_tied_within_1e_5_cm": 0,
+  "transport_rmse_cm": 4.0928097077189705,
+  "direct_rmse_cm": 4.084733509397805,
+  "fixed_baselines": {
+    "RDS01": {
+      "job_id": "241347",
+      "epochs": 80,
+      "best_epoch": 78,
+      "saved_2008_rmse_cm": 4.485342502593994,
+      "reference_only": true,
+      "rerun_or_rescore": false
+    },
+    "C01_LSTM": {
+      "job_id": "245242",
+      "epochs": 114,
+      "best_epoch": 84,
+      "saved_best_val_mse_cm2": 12.901087863337429,
+      "reference_only": true,
+      "rerun_or_rescore": false,
+      "ranking_admitted": false,
+      "note": "Saved selection metric retained. Full mask identity not independently reverified here; do not combine into a new ranking."
+    }
+  },
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  },
+  "finished_at": "2026-10-26T15:57:48.228160+00:00",
+  "limitations": [
+    "2008 already used for development; no independent generalization claim",
+    "equal parameter architecture comparison is not a pure transport causal ablation",
+    "fixed baselines have larger and different training budgets; no retraining",
+    "no 2009-2010 access; no daily-component or flood-forecast validation"
+  ]
+}FILE=transport/initial.json
+{
+  "epoch": 0,
+  "fit_mse_cm2": 43.91584014892578,
+  "not_selectable": true
+}FILE=transport/status.json
+{
+  "state": "COMPLETED",
+  "arm": "transport",
+  "epoch": 20,
+  "optimizer_steps": 20,
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  },
+  "parameters": 1187,
+  "technical_feasible": true,
+  "initial_fit_mse_cm2": 43.91584014892578,
+  "endpoint_fit_mse_cm2": 13.254340171813965,
+  "fit_loss_decreased": true,
+  "endpoint_val_rmse_cm": 4.0928097077189705,
+  "regional_val_rmse_cm": [
+    2.883842164911295,
+    4.426691095480537,
+    3.05195956950841,
+    2.548497230226084,
+    2.4971700949376543,
+    5.21638281586524,
+    3.939713381451883,
+    1.7853048841159311,
+    2.6179733400507925,
+    3.191593085401668,
+    1.9915039894783333,
+    3.2114688773899878,
+    4.414784988327771,
+    4.408106817629011,
+    5.712891153809705,
+    1.6680289204963186,
+    5.008765915892222,
+    5.100095745406082,
+    4.940692864520225,
+    8.22375246883202,
+    6.032206390341335,
+    1.7005856856498014,
+    2.026321608934169,
+    3.4744088361127905,
+    2.6048589978196284,
+    3.787658478203695,
+    4.6360650370884136,
+    5.285043973789977,
+    5.424015061167076,
+    4.426299122062356,
+    3.9482313391828723,
+    3.4935056736334236,
+    1.5119190957575124,
+    1.6579182616420292,
+    1.1538386641376108,
+    2.0169289245927327,
+    2.1402589600152258,
+    3.9270669445113517,
+    4.600269345851194,
+    3.450025049372008,
+    5.727584828185522,
+    3.335147079799104,
+    2.661802240672097,
+    2.671667118927871,
+    4.138311753621285,
+    1.127690962998394,
+    4.565564403277499,
+    1.9052328023124154,
+    5.521346422810741,
+    9.055721855435685,
+    6.85741141930353,
+    4.498382109534414,
+    1.8010275832988256,
+    4.391155186352822,
+    4.570867330127582,
+    3.7164283140895726,
+    2.354072923740554,
+    1.6851125416093344,
+    1.1673997768375346,
+    6.552771236527502,
+    1.763316267328617,
+    1.7453157544998317,
+    2.359948772391043,
+    4.056225947558958,
+    5.847469116706741,
+    6.507299580966459,
+    4.338119168913424,
+    2.7950432510903185,
+    1.9230141909508505,
+    1.7384698737716955,
+    3.1556599206071416,
+    2.6399800824279596,
+    6.023065514820121,
+    6.02192989959004,
+    3.744044603498148,
+    1.1314580782196095,
+    5.553287449308035,
+    1.7399515021959278,
+    1.7953613173448149,
+    2.539384954848449,
+    4.383660192789471,
+    4.440138281493786,
+    2.9429221492917375,
+    2.8772913179427597,
+    3.2131702582229633,
+    2.4282675138669534,
+    4.82698978717649,
+    4.394946739854474,
+    5.421430227868615,
+    1.8203383354631097,
+    4.029035321314781,
+    1.572641513830717,
+    3.1416051597001315,
+    3.4828168577255463,
+    2.8785969059632985,
+    3.410397642551916,
+    5.464867974418916,
+    7.380460080224501,
+    6.0712254319429295,
+    7.686523068128307,
+    2.297346553165094,
+    2.069298384785179,
+    3.3630942052087085,
+    3.034369223906524,
+    4.699165539856598,
+    3.2452254386719113,
+    2.5886217575540855,
+    3.4419276036827537,
+    4.996816136314564,
+    3.8865573752211082,
+    2.9136075474774388,
+    3.3344055932390466,
+    4.144357855061826,
+    3.202377469613706,
+    4.134558735647097,
+    2.2506347827758764,
+    4.100666416353585,
+    8.475458589311952,
+    6.152166217208767
+  ],
+  "minimum_water_stock_mm": 0.0,
+  "maximum_daily_water_balance_mm": 0.00014162063598632812,
+  "maximum_code_channel_balance": 6.29425048828125e-05,
+  "maximum_absolute_average_code": 0.7070775628089905,
+  "encoder_learned": true,
+  "selection": {
+    "state": "FROZEN",
+    "primary_endpoint_epoch": 20,
+    "best_epoch_diagnostic_only": 20,
+    "best_val_mse_diagnostic_only": 16.75109100341797,
+    "identity": {
+      "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+      "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+      "code_sha256": {
+        "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+        "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+        "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+        "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+      }
+    }
+  },
+  "job_id": "247722",
+  "finished_at": "2026-10-26T15:54:10.160398+00:00"
+}FILE=transport/selection.json
+{
+  "state": "FROZEN",
+  "primary_endpoint_epoch": 20,
+  "best_epoch_diagnostic_only": 20,
+  "best_val_mse_diagnostic_only": 16.75109100341797,
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  }
+}FILE=direct_history/status.json
+{
+  "state": "COMPLETED",
+  "arm": "direct_history",
+  "epoch": 20,
+  "optimizer_steps": 20,
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  },
+  "parameters": 1187,
+  "technical_feasible": true,
+  "initial_fit_mse_cm2": 43.91584014892578,
+  "endpoint_fit_mse_cm2": 13.109212875366211,
+  "fit_loss_decreased": true,
+  "endpoint_val_rmse_cm": 4.084733509397805,
+  "regional_val_rmse_cm": [
+    2.965903061323118,
+    4.480227187372782,
+    3.0566670306592076,
+    2.7016766635339584,
+    2.651756669663008,
+    5.551889311362107,
+    4.091644511496562,
+    1.8680041413728186,
+    2.507730176801614,
+    3.4986979442982102,
+    2.3082333844570604,
+    2.953980631223421,
+    4.3432601217562725,
+    4.542259728703247,
+    5.67045523170038,
+    1.8388865544192126,
+    5.212449882934722,
+    5.182672470700872,
+    5.00131836884026,
+    7.933075523101106,
+    5.458875363711972,
+    1.7354190073796063,
+    2.3191368867614295,
+    4.035283667413393,
+    2.8680285173478484,
+    3.935722251895756,
+    4.152735998987656,
+    5.437095330356819,
+    5.944697572755688,
+    4.776451143830038,
+    4.563611255027586,
+    3.49698018416738,
+    1.4906737225988822,
+    1.6429939578010402,
+    1.2149953304998817,
+    2.1489161328607995,
+    1.8973487101093012,
+    3.988170113251862,
+    4.6107597531035145,
+    3.4343168022709003,
+    6.10019432130506,
+    3.4883743998527583,
+    2.911805426837507,
+    2.510629679936853,
+    3.7672347065664584,
+    1.3090412204423862,
+    4.533949167815476,
+    2.051454022143537,
+    4.92670064265212,
+    8.906695773676336,
+    6.440927784367628,
+    4.389751553756376,
+    1.7890591563927174,
+    4.145302011091921,
+    4.03421983546752,
+    3.5877540327893405,
+    2.1870678429421075,
+    1.9168588452324833,
+    1.5040997837097767,
+    7.2390498812136626,
+    2.0208052932179847,
+    1.888299761457203,
+    2.1658000189738673,
+    3.9752992198778156,
+    5.175755354249862,
+    5.867922590556081,
+    4.142557554138188,
+    2.6035496515953476,
+    1.7044186603662514,
+    1.5060843920205267,
+    3.0296735216117954,
+    2.5367429453141037,
+    5.142455842559255,
+    5.211805472980273,
+    3.8760430112982114,
+    1.3934123068865258,
+    5.823326678870125,
+    1.7278301921041828,
+    1.5582930822167302,
+    3.312360927996624,
+    5.728897419736043,
+    3.9580699400622392,
+    2.7112174132222604,
+    2.474082348322074,
+    2.9970815448002277,
+    2.3324157311543976,
+    5.293155266585712,
+    4.889514470429174,
+    4.805272357261149,
+    2.0061147427832107,
+    4.176812722674964,
+    1.377766596927464,
+    2.992261795601249,
+    2.897894142981793,
+    2.7017338737986747,
+    3.0142810915385017,
+    5.035823785960889,
+    7.372038853028517,
+    6.000294497860156,
+    7.515360745310573,
+    2.2783735152595934,
+    1.895663574254357,
+    3.570935918689371,
+    2.985470822142809,
+    4.544040414947937,
+    3.2609072459553725,
+    2.432763434675352,
+    2.695984821793127,
+    4.781035967856404,
+    3.8959379157409173,
+    2.796223656271143,
+    3.310068472550377,
+    4.475603454183069,
+    3.4397282664612887,
+    4.425129229277291,
+    2.457804719874436,
+    4.1451509093490095,
+    9.099721631397719,
+    6.771349534077636
+  ],
+  "minimum_water_stock_mm": 0.0,
+  "maximum_daily_water_balance_mm": 0.0001430511474609375,
+  "maximum_code_channel_balance": 5.739927291870117e-05,
+  "maximum_absolute_average_code": 0.7692282795906067,
+  "encoder_learned": true,
+  "selection": {
+    "state": "FROZEN",
+    "primary_endpoint_epoch": 20,
+    "best_epoch_diagnostic_only": 18,
+    "best_val_mse_diagnostic_only": 16.472660064697266,
+    "identity": {
+      "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+      "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+      "code_sha256": {
+        "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+        "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+        "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+        "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+      }
+    }
+  },
+  "job_id": "247722",
+  "finished_at": "2026-10-26T15:57:48.212835+00:00"
+}FILE=direct_history/selection.json
+{
+  "state": "FROZEN",
+  "primary_endpoint_epoch": 20,
+  "best_epoch_diagnostic_only": 18,
+  "best_val_mse_diagnostic_only": 16.472660064697266,
+  "identity": {
+    "input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566",
+    "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30",
+    "code_sha256": {
+      "run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b",
+      "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17",
+      "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200",
+      "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"
+    }
+  }
+}OUTPUT_FILE_METADATA
+runtime.json 786 bytes
+transport/status.json 4917 bytes
+transport/last.pt 81602 bytes
+transport/best_diagnostic.pt 34186 bytes
+transport/report.json 4917 bytes
+transport/initial.json 78 bytes
+transport/metrics.jsonl 6600 bytes
+transport/selection.json 795 bytes
+transport/endpoint_validation.npz 73095 bytes
+direct_history/metrics.jsonl 6708 bytes
+direct_history/status.json 4923 bytes
+direct_history/endpoint_validation.npz 73089 bytes
+direct_history/last.pt 81602 bytes
+direct_history/initial.json 78 bytes
+direct_history/selection.json 796 bytes
+direct_history/best_diagnostic.pt 34186 bytes
+direct_history/report.json 4923 bytes
+regional_comparison.csv 8935 bytes
+status.json 2289 bytes
+report.json 2289 bytes
+METRICS=transport
+{"state": "RUNNING", "arm": "transport", "epoch": 19, "optimizer_steps": 19, "fit_rmse_cm": 3.676724352437391, "validation_rmse_cm": 4.127873662419962, "gradient_norm": 4.581373691558838, "encoder_gradient_l1": 21.002612352371216, "epoch_seconds": 13.938711095019244, "time": "2026-10-26T15:53:53.759628+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "transport", "epoch": 20, "optimizer_steps": 20, "fit_rmse_cm": 3.6406510642759993, "validation_rmse_cm": 4.092809671047259, "gradient_norm": 4.35294246673584, "encoder_gradient_l1": 15.593029975891113, "epoch_seconds": 13.930494670988992, "time": "2026-10-26T15:54:07.695638+00:00", "job_id": "247722"}
+METRICS=direct_history
+{"state": "RUNNING", "arm": "direct_history", "epoch": 19, "optimizer_steps": 19, "fit_rmse_cm": 3.6450664621999667, "validation_rmse_cm": 4.0623093780398065, "gradient_norm": 4.0101704597473145, "encoder_gradient_l1": 16.416680097579956, "epoch_seconds": 10.64413778402377, "time": "2026-10-26T15:57:35.176865+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 20, "optimizer_steps": 20, "fit_rmse_cm": 3.6206647007650696, "validation_rmse_cm": 4.084733658025556, "gradient_norm": 3.2668771743774414, "encoder_gradient_l1": 19.0175039768219, "epoch_seconds": 10.668943573022261, "time": "2026-10-26T15:57:45.851988+00:00", "job_id": "247722"}
+LOG=/data1/home/sunyiq/id25_regional_transport_rds07_20261026_001/logs/rds07-247722.err
+LOG=/data1/home/sunyiq/id25_regional_transport_rds07_20261026_001/logs/rds07-247722.out
+{"state": "RUNNING", "arm": "direct_history", "epoch": 2, "optimizer_steps": 2, "fit_rmse_cm": 6.084311977034603, "validation_rmse_cm": 6.122122886822628, "gradient_norm": 27.137237548828125, "encoder_gradient_l1": 5.179130852222443, "epoch_seconds": 10.713995230966248, "time": "2026-10-26T15:54:33.625897+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 3, "optimizer_steps": 3, "fit_rmse_cm": 5.655265595989427, "validation_rmse_cm": 5.689623761065442, "gradient_norm": 29.15778923034668, "encoder_gradient_l1": 10.384157061576843, "epoch_seconds": 10.75384545797715, "time": "2026-10-26T15:54:44.385292+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 4, "optimizer_steps": 4, "fit_rmse_cm": 5.20920242179317, "validation_rmse_cm": 5.275837669935158, "gradient_norm": 28.561954498291016, "encoder_gradient_l1": 18.567190647125244, "epoch_seconds": 10.713411661039572, "time": "2026-10-26T15:54:55.104190+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 5, "optimizer_steps": 5, "fit_rmse_cm": 4.961115892461846, "validation_rmse_cm": 5.07756081601511, "gradient_norm": 19.638769149780273, "encoder_gradient_l1": 37.03369426727295, "epoch_seconds": 10.666630284977145, "time": "2026-10-26T15:55:05.776395+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 6, "optimizer_steps": 6, "fit_rmse_cm": 4.842499996218782, "validation_rmse_cm": 5.005704296149372, "gradient_norm": 23.57346534729004, "encoder_gradient_l1": 42.14673471450806, "epoch_seconds": 10.667510739993304, "time": "2026-10-26T15:55:16.448945+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 7, "optimizer_steps": 7, "fit_rmse_cm": 4.777496460215137, "validation_rmse_cm": 5.0460873393673475, "gradient_norm": 27.710905075073242, "encoder_gradient_l1": 46.9203724861145, "epoch_seconds": 10.638331929978449, "time": "2026-10-26T15:55:27.093094+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 8, "optimizer_steps": 8, "fit_rmse_cm": 4.6751840157425555, "validation_rmse_cm": 5.014404528665354, "gradient_norm": 26.757457733154297, "encoder_gradient_l1": 55.86381244659424, "epoch_seconds": 10.651617312978487, "time": "2026-10-26T15:55:37.750106+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 9, "optimizer_steps": 9, "fit_rmse_cm": 4.503784495657535, "validation_rmse_cm": 4.864073612973673, "gradient_norm": 24.554607391357422, "encoder_gradient_l1": 56.97600317001343, "epoch_seconds": 10.685447402007412, "time": "2026-10-26T15:55:48.442419+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 10, "optimizer_steps": 10, "fit_rmse_cm": 4.29009074686457, "validation_rmse_cm": 4.653745861148966, "gradient_norm": 20.725454330444336, "encoder_gradient_l1": 63.6280403137207, "epoch_seconds": 10.690242554002907, "time": "2026-10-26T15:55:59.138330+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 11, "optimizer_steps": 11, "fit_rmse_cm": 4.102049822240172, "validation_rmse_cm": 4.464330662092364, "gradient_norm": 14.61080265045166, "encoder_gradient_l1": 70.79977703094482, "epoch_seconds": 10.680450490966905, "time": "2026-10-26T15:56:09.824403+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 12, "optimizer_steps": 12, "fit_rmse_cm": 3.980409451418276, "validation_rmse_cm": 4.345699174857756, "gradient_norm": 10.295552253723145, "encoder_gradient_l1": 59.70083808898926, "epoch_seconds": 10.621445023047272, "time": "2026-10-26T15:56:20.451535+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 13, "optimizer_steps": 13, "fit_rmse_cm": 3.897219052762475, "validation_rmse_cm": 4.283453826594879, "gradient_norm": 9.416726112365723, "encoder_gradient_l1": 33.632662296295166, "epoch_seconds": 10.627944779000245, "time": "2026-10-26T15:56:31.085004+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 14, "optimizer_steps": 14, "fit_rmse_cm": 3.826800058700483, "validation_rmse_cm": 4.2457876086307635, "gradient_norm": 8.028703689575195, "encoder_gradient_l1": 26.279051542282104, "epoch_seconds": 10.624118231993634, "time": "2026-10-26T15:56:41.714657+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 15, "optimizer_steps": 15, "fit_rmse_cm": 3.773591917049444, "validation_rmse_cm": 4.202409761402899, "gradient_norm": 5.89700174331665, "encoder_gradient_l1": 23.802186965942383, "epoch_seconds": 10.606097710027825, "time": "2026-10-26T15:56:52.326031+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 16, "optimizer_steps": 16, "fit_rmse_cm": 3.7452181527703856, "validation_rmse_cm": 4.145797780457966, "gradient_norm": 5.817220211029053, "encoder_gradient_l1": 23.00343132019043, "epoch_seconds": 10.754086125991307, "time": "2026-10-26T15:57:03.086669+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 17, "optimizer_steps": 17, "fit_rmse_cm": 3.7193782500103953, "validation_rmse_cm": 4.087217753986917, "gradient_norm": 6.116365432739258, "encoder_gradient_l1": 21.017761707305908, "epoch_seconds": 10.721419623994734, "time": "2026-10-26T15:57:13.813158+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 18, "optimizer_steps": 18, "fit_rmse_cm": 3.6818399471491614, "validation_rmse_cm": 4.05865249370986, "gradient_norm": 5.2622551918029785, "encoder_gradient_l1": 18.535308122634888, "epoch_seconds": 10.708576689998154, "time": "2026-10-26T15:57:24.527418+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 19, "optimizer_steps": 19, "fit_rmse_cm": 3.6450664621999667, "validation_rmse_cm": 4.0623093780398065, "gradient_norm": 4.0101704597473145, "encoder_gradient_l1": 16.416680097579956, "epoch_seconds": 10.64413778402377, "time": "2026-10-26T15:57:35.176865+00:00", "job_id": "247722"}
+{"state": "RUNNING", "arm": "direct_history", "epoch": 20, "optimizer_steps": 20, "fit_rmse_cm": 3.6206647007650696, "validation_rmse_cm": 4.084733658025556, "gradient_norm": 3.2668771743774414, "encoder_gradient_l1": 19.0175039768219, "epoch_seconds": 10.668943573022261, "time": "2026-10-26T15:57:45.851988+00:00", "job_id": "247722"}
+{"state": "COMPLETED", "experiment_id": "RDS07_TRANSPORT_MEMORY_PILOT_20261026", "development_only": true, "primary_endpoint": "fixed_epoch20_on_opened_2008", "region_count": 119, "total_optimizer_steps": 40, "technical_feasible": true, "transport_fit_loss_decreased": true, "architecture_advantage_signal": false, "scientific_success_proven": false, "transport_minus_direct_pooled_rmse_cm": 0.008076198321165684, "transport_better_regions": 58, "worse_regions": 61, "tied_regions": 0, "near_tied_within_1e_5_cm": 0, "transport_rmse_cm": 4.0928097077189705, "direct_rmse_cm": 4.084733509397805, "fixed_baselines": {"RDS01": {"job_id": "241347", "epochs": 80, "best_epoch": 78, "saved_2008_rmse_cm": 4.485342502593994, "reference_only": true, "rerun_or_rescore": false}, "C01_LSTM": {"job_id": "245242", "epochs": 114, "best_epoch": 84, "saved_best_val_mse_cm2": 12.901087863337429, "reference_only": true, "rerun_or_rescore": false, "ranking_admitted": false, "note": "Saved selection metric retained. Full mask identity not independently reverified here; do not combine into a new ranking."}}, "identity": {"input_sha256": "b6e20598038eccf7a18753619342fdd48e90990f4cde4685eef42929978f2566", "config_sha256": "43e63816e5251d54d680128b4cdb0e86f8f418abba2a6c2f19da430a8dcebd30", "code_sha256": {"run_regional_transport_pilot.py": "357ea3eaad9581c982e4762be10da24ca73ec240f37790ddd4eb9e63f3d14c6b", "regional_transport_memory.py": "59be019c05f84e9d090a2c15f3fd00a6fb4a92a6195d5888e1d89dc15a9f3a17", "regional_daily_storage.py": "9b45d1b69b872200570dc3fdfc0661f12d6560ea743e737848dc81348d3c3200", "regional_storage_observation.py": "75e38c5f08f7809a68e580010f3b631922629c133f4e83c8910bc369110a19aa"}}, "finished_at": "2026-10-26T15:57:48.228160+00:00", "limitations": ["2008 already used for development; no independent generalization claim", "equal parameter architecture comparison is not a pure transport causal ablation", "fixed baselines have larger and different training budgets; no retraining", "no 2009-2010 access; no daily-component or flood-forecast validation"]}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-27T00:57:06+0800
