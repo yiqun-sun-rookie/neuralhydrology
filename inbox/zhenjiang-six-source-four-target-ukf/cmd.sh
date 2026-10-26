@@ -116,3 +116,25 @@ report['summary'] = {'cases': len(report['cases']),
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
+
+python3 - <<'RESUME_HEALTH'
+import datetime,json,subprocess,time
+from pathlib import Path
+root=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery')
+case='explicit_gru__historical_capacity'
+job=str(json.loads((root/'records/scheduler_jobs.json').read_bytes())[case])
+slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
+def cpu_sample():
+ command=[str(slurm/'sstat'),'-j',job+'.batch','--format=JobID,AveCPU,MaxRSS','-P','-n']
+ try:
+  q=subprocess.run(command,capture_output=True,text=True,timeout=20)
+  return {'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'command':command,'returncode':q.returncode,'stdout':q.stdout,'stderr':q.stderr}
+ except subprocess.TimeoutExpired:return {'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'status':'native_job_statistics_timeout'}
+first=cpu_sample();time.sleep(10);second=cpu_sample()
+heads={}
+for folder in sorted((root/'runs').glob(case+'__tune_branch__*')):
+ head=json.loads((folder/'checkpoint_head.json').read_bytes());event_path=folder/'checkpoint_events'/(head['checkpoint_sha256'][:16]+'.json')
+ event=json.loads(event_path.read_bytes());before=folder/'checkpoint_events'/(event['previous_checkpoint_sha256'][:16]+'.json')
+ heads[folder.name]={'completed_epochs':head['completed_epochs'],'head_mtime_utc':datetime.datetime.fromtimestamp((folder/'checkpoint_head.json').stat().st_mtime,datetime.timezone.utc).isoformat(),'current_event_mtime_utc':datetime.datetime.fromtimestamp(event_path.stat().st_mtime,datetime.timezone.utc).isoformat(),'previous_event_mtime_utc':datetime.datetime.fromtimestamp(before.stat().st_mtime,datetime.timezone.utc).isoformat() if before.exists() else None}
+print(json.dumps({'schema':'fixed200-resume-light-health-v1','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'case':case,'job_id':job,'native_cpu_samples':[first,second],'committed_events':heads,'checkpoints_loaded':False,'gpu_probes':0,'scientific_mutations':0}))
+RESUME_HEALTH
