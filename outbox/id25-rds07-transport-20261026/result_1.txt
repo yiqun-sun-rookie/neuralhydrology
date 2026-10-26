@@ -1,0 +1,11 @@
+### channel=id25-rds07-transport-20261026 seq=1
+### host=login4
+### started=2026-10-26T22:31:29+0800
+### ---------- output ----------
+/data1/home/sunyiq/hpc_mailbox/inbox/id25-rds07-transport-20261026/payload/rds07_transport_payload_v001.tar.gz: OK
+DEPLOYED_NO_SCIENTIFIC_PREFLIGHT
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+### ---------- end ----------
+### exit_code=1
+### finished=2026-10-26T22:31:29+0800
