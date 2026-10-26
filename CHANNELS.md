@@ -279,3 +279,5 @@ git rm inbox/seq
 | `ohn-da-vs-ar-531-20261021` | OpenHydroNet 嵌入层同化 vs 自回归 vs 叠加（CAMELS-US 531，计划 v2）：冒烟、调参、主实验 | 2026-10-22 | 独立落点 `/data1/home/sunyiq/ohn_da_vs_ar_531_20261021`；原落点 `openhydronet_531_20261015` 只读（权重复制后推理）；不碰其他通道/作业；不写 --mem |
 
 | `knet-nl-queue-status-20261024-001` | Read-only current account queue and known Knet/NL completion metadata | 2026-10-24 | squeue/sacct only; no computation, submissions, cancellations, restarts or experiment writes. |
+
+| `id25-rds07-transport-20261026` | RDS07 transport-memory 20+20 CPU pilot | 2026-10-26 | Only /data1/home/sunyiq/id25_regional_transport_rds07_20261026_001 writable; fixed RDS01 and C01 read-only; 119 regions, two equal-capacity arms, one seed, exactly 20 steps each; 2-hour job; no sealed targets, no old experiment or other-job changes. |
