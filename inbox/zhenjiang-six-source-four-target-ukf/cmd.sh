@@ -6,7 +6,7 @@ from pathlib import Path
 spool=Path('/data1/home/sunyiq/zhenjiang_priority_source_export_20261026_001')
 report=json.loads((spool/'MANIFEST.json').read_bytes())
 assert report['archive_sha256']=='67cc6fc89bdebdf03d27a7153abda29e4c443ffeba429214d4a17d2949fe0e59'
-index=2
+index=3
 expected=report['chunks'][index]
 assert (spool/'source.tar.gz').stat().st_size==report['archive_bytes']
 with (spool/'source.tar.gz').open('rb') as f:
