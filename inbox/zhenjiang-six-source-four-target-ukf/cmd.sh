@@ -116,3 +116,108 @@ report['summary'] = {'cases': len(report['cases']),
 print(json.dumps(report, sort_keys=True), flush=True)
 
 READ_FIXED200_003
+
+python3 - <<'EXPORT_003_PRIORITY_COMPLETE'
+"""Read-only, stable complete-state export for the four existing tuning runs."""
+import base64
+import datetime
+import hashlib
+import io
+import json
+from pathlib import Path
+import tarfile
+import time
+
+ROOT = Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/base')
+CASE = 'legacy_lstm__historical_capacity'
+METHODS = ('encoder_fixed', 'encoder_joint', 'filter_fixed', 'filter_joint')
+files = {}
+sources = []
+members = []
+sha = lambda b: hashlib.sha256(b).hexdigest()
+
+def add_raw(raw, name, source):
+    if name in files:
+        assert files[name] == raw
+        return
+    files[name] = raw
+    sources.append({'path': name, 'source_path': str(source), 'bytes': len(raw), 'sha256': sha(raw)})
+
+def add(path, name, expected=None):
+    raw = path.read_bytes()
+    if expected is not None:
+        assert sha(raw) == expected, str(path)
+    add_raw(raw, name, path)
+
+for folder in ('src', 'scripts', 'vendor/pytides'):
+    for path in sorted((ROOT / folder).glob('*.py')):
+        add(path, 'runtime/' + path.relative_to(ROOT).as_posix())
+for name in ('configs/protocol-v3.json', 'configs/registry-v3.json',
+             'configs/stage_source_admission.json', 'records/authorization.json',
+             'records/data_preparation_complete.json'):
+    add(ROOT / name, 'runtime/' + name)
+prep = json.loads((ROOT / 'records/data_preparation_complete.json').read_bytes())
+manifest_path = ROOT / 'prepared/tuning/manifest.json'
+manifest = json.loads(manifest_path.read_bytes())
+add(manifest_path, 'source_tuning_manifest.json', prep['reports']['tuning']['manifest_file_sha256'])
+for item in manifest['files']:
+    assert set(item['years']).issubset({2017, 2018, 2019, 2020, 2021})
+    add(Path(item['path']), 'inputs/tuning/' + Path(item['path']).name, item['sha256'])
+
+for method in METHODS:
+    run = CASE + '__tune_branch__' + method + '__s101__lr0p001'
+    folder = ROOT / 'runs' / run
+    assert not (folder / 'failure.json').exists(), 'failed source retained; no automatic export admission'
+    stable = None
+    for attempt in range(5):
+        head_raw = (folder / 'checkpoint_head.json').read_bytes()
+        head = json.loads(head_raw)
+        names = ['config.json', 'continuation.pt', 'initial_continuation.pt',
+                 'continuation_anchor.json', 'migration_source.json']
+        # Export all immutable lineage support files, excluding superseded snapshots,
+        # derived metrics and in-progress temporary files.
+        names += [p.relative_to(folder).as_posix() for p in folder.rglob('*')
+                  if p.is_file() and (p.parent.name == 'checkpoint_events'
+                    or p.name.startswith('source_') or p.name == 'whitening.json')]
+        raw_files = {name: (folder / name).read_bytes() for name in sorted(set(names))}
+        if (head_raw == (folder / 'checkpoint_head.json').read_bytes()
+                and sha(raw_files['continuation.pt']) == head['checkpoint_sha256']):
+            stable = raw_files
+            break
+        time.sleep(1)
+    assert stable is not None, 'source boundary busy; no source changes made'
+    assert 0 < head['completed_epochs'] <= 200
+    stable['checkpoint_head.json'] = head_raw
+    if head['completed_epochs'] == 200:
+        stable['epoch_200.pt'] = (folder / 'epoch_200.pt').read_bytes()
+    for name, raw in stable.items():
+        add_raw(raw, 'sources/' + run + '/' + name, folder / name)
+    config = json.loads(stable['config.json'])
+    effective = config['effective_config']
+    assert config['registration']['method'] == method and effective['learning_rate'] == .001
+    parent = Path(effective['parent_checkpoint'])
+    add(parent, 'parents/' + effective['parent_hash'] + '.pt', effective['parent_hash'])
+    members.append({'run_id': run, 'method': method, 'source_epochs': head['completed_epochs'],
+                    'head': head, 'config_sha256': sha(stable['config.json']),
+                    'parent_hash': effective['parent_hash'], 'source_path': str(folder)})
+
+buffer = io.BytesIO()
+with tarfile.open(fileobj=buffer, mode='w:gz') as archive:
+    for name, raw in files.items():
+        info = tarfile.TarInfo(name); info.size = len(raw); info.mode = 0o644
+        archive.addfile(info, io.BytesIO(raw))
+binary = buffer.getvalue()
+report = {'schema': '003-priority-complete-source-export-v1',
+          'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'files': sources, 'members': members, 'archive_bytes': len(binary),
+          'archive_sha256': sha(binary), 'source_writes': 0, 'training_submissions': 0,
+          'checkpoint_tensors_loaded': False, 'years_2022_2023_2024_read': False}
+print(json.dumps(report), flush=True)
+assert len(binary) < 8_000_000, 'bounded transfer limit; no source writes or training'
+print('BEGIN_003_PRIORITY_ARCHIVE_BASE64', flush=True)
+encoded = base64.b64encode(binary).decode()
+for pos in range(0, len(encoded), 65536):
+    print(encoded[pos:pos+65536], flush=True)
+print('END_003_PRIORITY_ARCHIVE_BASE64', flush=True)
+
+EXPORT_003_PRIORITY_COMPLETE
