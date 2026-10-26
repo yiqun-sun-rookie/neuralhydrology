@@ -1,0 +1,30 @@
+### channel=id25-rds07-transport-20261026 seq=3
+### host=login4
+### started=2026-10-26T22:45:38+0800
+### ---------- output ----------
+2026-10-26T22:45:38+0800
+SCOPED_ROOT_FILES
+config.json 1413 bytes
+inputs/input_receipt.json 2268 bytes
+inputs/transforms.json 943 bytes
+ops/submit.sh 655 bytes
+submission_intent.initial 25 bytes
+pre_repair_sacct_v002.txt 36 bytes
+hpc/train.slurm 828 bytes
+provenance/2026-10-26-id25-rds07-minimal-implementation-plan.md 8718 bytes
+provenance/2026-10-26-id25-rds07-independent-novelty-review.md 14289 bytes
+provenance/2026-10-26-id25-rds07-minimal-implementation-plan-v2.md 9881 bytes
+provenance/small_array_check.json 398 bytes
+source_manifest.json 1649 bytes
+submit.lock 0 bytes
+FILE=submission_intent.initial
+2026-10-26T22:31:29+0800
+FILE=pre_repair_sacct_v002.txt
+247680|id25_rds07_261026|FAILED|1:0
+EXACT_NAME_QUEUE
+EXACT_NAME_ACCOUNTING
+247680|id25_rds07_261026|FAILED|1:0
+SCOPED_LOG_TAIL
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-26T22:45:38+0800
