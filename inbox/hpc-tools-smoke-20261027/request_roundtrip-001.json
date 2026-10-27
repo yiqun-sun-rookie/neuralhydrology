@@ -1,0 +1,17 @@
+{
+  "binding": {
+    "branch": "hpc-mailbox",
+    "channel": "hpc-tools-smoke-20261027",
+    "project_id": "hpc-tools-smoke-20261027",
+    "protocol": "configurable-hpc-mailbox-v1",
+    "remote_python": "python3",
+    "remote_root": "/data1/home/sunyiq/hpc_projects/hpc-tools-smoke-20261027",
+    "repository": "yiqun-sun-rookie/neuralhydrology"
+  },
+  "command_sha256": "919922ac616522a66ab3875c0e578bc38e1e49748e842fbb222786c9a32b7bca",
+  "created_at": "2026-10-27T07:51:20.069503+00:00",
+  "fingerprint": "24e9dcfd208cc63aba2d4e6cee86e78dc1882f5440bab39c51b4b079fb8018b0",
+  "payload_sha256": "cef0840381e5e62195137ce54ac9798c39a07e4da187a2402ac1342b5d2a856a",
+  "request_id": "roundtrip-001",
+  "sequence": 1
+}
