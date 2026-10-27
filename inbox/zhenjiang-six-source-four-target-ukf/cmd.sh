@@ -1,5 +1,54 @@
 #!/usr/bin/env bash
 set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+export CUDA_VISIBLE_DEVICES=""
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+python -B - <<'IMPORT_FOUNDATION_PAYLOAD'
+import hashlib,io,json,pathlib,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
+sequence=int((inbox/'seq').read_text());assert sequence==812
+raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes()
+assert hashlib.sha256(raw).hexdigest()=='eaef69d33397b239ae346e1ba8d840ce0e0c400184c7188af22a915cfe61297c'
+staging=pathlib.Path('/data1/home/sunyiq/zhenjiang003_external_imports/final_foundation_4090_20261027_001')
+assert not staging.exists(),'existing staging retained; reconcile before any retry'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert all(m.isfile() for m in members)
+ assert len({m.name for m in members})==len(members)
+ content={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(content['TRANSFER_MANIFEST.json'])
+assert manifest['sequence']==sequence and manifest['staging']==str(staging)
+assert set(content)==set(manifest['files'])|{'TRANSFER_MANIFEST.json'}
+for name,item in manifest['files'].items():
+ assert pathlib.PurePosixPath(name).name==name
+ assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
+staging.mkdir(parents=True,exist_ok=False)
+for name,data in content.items():
+ with (staging/name).open('xb') as stream:stream.write(data)
+bundle_root=staging/'bundle';bundle_root.mkdir()
+with tarfile.open(staging/'completed_final_foundation.tar.gz','r:gz') as archive:
+ members=archive.getmembers();assert len({m.name for m in members})==len(members)
+ for member in members:
+  relative=pathlib.PurePosixPath(member.name)
+  target=bundle_root/member.name
+  assert member.isfile() and not relative.is_absolute() and '..' not in relative.parts
+  assert target.resolve().is_relative_to(bundle_root.resolve())
+  target.parent.mkdir(parents=True,exist_ok=True)
+  with target.open('xb') as stream:stream.write(archive.extractfile(member).read())
+artifacts=json.loads((bundle_root/'ARTIFACTS.json').read_bytes())
+for item in artifacts:
+ path=bundle_root/item['path'];assert path.resolve().is_relative_to(bundle_root.resolve())
+ assert path.stat().st_size==item['bytes'] and hashlib.sha256(path.read_bytes()).hexdigest()==item['sha256']
+print(json.dumps({'status':'complete_cloud_bundle_staged_verified','sequence':sequence,'archive_sha256':manifest['archive_sha256'],'files_verified':len(artifacts),'training_submitted':False}),flush=True)
+IMPORT_FOUNDATION_PAYLOAD
+cd /data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/base
+python -B /data1/home/sunyiq/zhenjiang003_external_imports/final_foundation_4090_20261027_001/import_cloud_group.py --bundle-root /data1/home/sunyiq/zhenjiang003_external_imports/final_foundation_4090_20261027_001/bundle
+
+#!/usr/bin/env bash
+set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
