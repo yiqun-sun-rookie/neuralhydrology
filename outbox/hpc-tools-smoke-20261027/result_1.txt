@@ -1,0 +1,9 @@
+### channel=hpc-tools-smoke-20261027 seq=1
+### host=login4
+### started=2026-10-27T15:53:26+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "roundtrip-001", "project_id": "hpc-tools-smoke-20261027", "channel": "hpc-tools-smoke-20261027", "sequence": 1, "remote_root": "/data1/home/sunyiq/hpc_projects/hpc-tools-smoke-20261027", "payload_sha256": "cef0840381e5e62195137ce54ac9798c39a07e4da187a2402ac1342b5d2a856a"}
+{"probe": "PASS", "project": "hpc-tools-smoke-20261027", "channel": "hpc-tools-smoke-20261027", "cwd": "/data1/home/sunyiq/hpc_projects/hpc-tools-smoke-20261027", "payload_sha256": "c567bf5f9f085ba6bb9af89d6b472d67443769b388443f473de36b5f9a7de510", "scientific_jobs_submitted": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-10-27T15:53:28+0800
