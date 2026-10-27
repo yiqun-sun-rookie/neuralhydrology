@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+cd /data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery
+python -B hpc/submit_fixed200_continuation.py --case explicit_gru__historical_capacity
+
+#!/usr/bin/env bash
+set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
