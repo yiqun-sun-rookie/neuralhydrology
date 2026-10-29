@@ -1,0 +1,17 @@
+{
+  "binding": {
+    "branch": "hpc-mailbox",
+    "channel": "kalmannet-p01-ln-final-hpc",
+    "project_id": "kalmannet-p01-ln-final",
+    "protocol": "configurable-hpc-mailbox-v1",
+    "remote_python": "python3",
+    "remote_root": "/data1/home/sunyiq/hpc_projects/kalmannet-p01-ln-final",
+    "repository": "yiqun-sun-rookie/neuralhydrology"
+  },
+  "command_sha256": "31372e1701f48a0e055afe7ea4abfc4b8e7f87a1cc342712ada6bf29e940e683",
+  "created_at": "2026-10-29T13:05:04.272704+00:00",
+  "fingerprint": "d4f7a70f54638b8618aa32053a4b408cd3fd743744826bda55bf0fa0ef7aed4a",
+  "payload_sha256": null,
+  "request_id": "fetch-main-draws-001",
+  "sequence": 1
+}
