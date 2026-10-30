@@ -1,5 +1,63 @@
 #!/usr/bin/env bash
 set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+export CUDA_VISIBLE_DEVICES=""
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+python -B - <<'STAGE_GRU_FIVE_SEED_UNION'
+import hashlib,io,json,pathlib,tarfile
+inbox=pathlib.Path('inbox/zhenjiang-six-source-four-target-ukf')
+sequence=int((inbox/'seq').read_text());assert sequence==850
+raw=(inbox/f'payload_complete_comparison_20261006_{sequence}.tar.gz').read_bytes()
+assert hashlib.sha256(raw).hexdigest()=='4fd95adc89e0e97c69885d98bc17d7ba10631a489c66a375f88be7d6279bddb7'
+staging=pathlib.Path('/data1/home/sunyiq/zhenjiang003_external_imports/gru_foundation_4090_3060_20261030_001')
+assert not staging.exists(),'existing staging retained; reconcile without replay'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert all(m.isfile() for m in members)
+ assert len({m.name for m in members})==len(members)
+ content={m.name:archive.extractfile(m).read() for m in members}
+manifest=json.loads(content['TRANSFER_MANIFEST.json'])
+assert manifest['transfer_id']=='gru_foundation_five_seed_20261030_001' and manifest['staging']==str(staging)
+assert set(content)==set(manifest['files'])|{'TRANSFER_MANIFEST.json'}
+for name,item in manifest['files'].items():
+ assert pathlib.PurePosixPath(name).name==name and name not in ('.','..')
+ assert len(content[name])==item['bytes'] and hashlib.sha256(content[name]).hexdigest()==item['sha256']
+staging.mkdir(parents=True,exist_ok=False)
+for name,data in content.items():
+ with (staging/name).open('xb') as stream:stream.write(data)
+bundle=staging/'bundle';bundle.mkdir()
+total=0
+for host in ['cloud','g15']:
+ shard=bundle/host;shard.mkdir();complete=shard/'complete';complete.mkdir()
+ archive_manifest=json.loads(content[host+'.ARCHIVE_MANIFEST.json'])
+ assert hashlib.sha256(content[host+'.completed_shard.tar.gz']).hexdigest()==archive_manifest['archive_sha256']
+ expected={row['path']:row for row in archive_manifest['files']}
+ assert len(expected)==len(archive_manifest['files'])
+ with (shard/'ARCHIVE_MANIFEST.json').open('xb') as stream:stream.write(content[host+'.ARCHIVE_MANIFEST.json'])
+ with tarfile.open(staging/(host+'.completed_shard.tar.gz'),'r:gz') as archive:
+  members=archive.getmembers();assert len({m.name for m in members})==len(members)
+  assert {m.name for m in members}==set(expected)
+  for member in members:
+   relative=pathlib.PurePosixPath(member.name);target=complete/member.name
+   assert member.isfile() and not relative.is_absolute() and '..' not in relative.parts
+   assert target.resolve().is_relative_to(complete.resolve())
+   data=archive.extractfile(member).read();item=expected[member.name]
+   assert len(data)==item['bytes'] and hashlib.sha256(data).hexdigest()==item['sha256']
+   target.parent.mkdir(parents=True,exist_ok=True)
+   with target.open('xb') as stream:stream.write(data)
+ total+=len(expected)
+ print('GRU_SHARD_IMPORT_STAGING_JSON '+json.dumps({'host':host,'files_verified':len(expected),'source_archive_sha256':archive_manifest['archive_sha256'],'original_archive_repacked':False,'training_submitted':False}),flush=True)
+assert total==1105
+print('GRU_FIVE_SEED_STAGED_JSON '+json.dumps({'status':'five_seed_external_union_staged_verified','seeds':[17,29,43,61,89],'epochs_total':200,'files_verified':total,'transfer_id':manifest['transfer_id'],'training_submitted':False}),flush=True)
+STAGE_GRU_FIVE_SEED_UNION
+cd /data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery
+python -B /data1/home/sunyiq/zhenjiang003_external_imports/gru_foundation_4090_3060_20261030_001/import_gru_shards.py --bundle-root /data1/home/sunyiq/zhenjiang003_external_imports/gru_foundation_4090_3060_20261030_001/bundle
+
+#!/usr/bin/env bash
+set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
