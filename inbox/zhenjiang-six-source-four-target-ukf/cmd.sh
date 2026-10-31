@@ -1,30 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
-cd /data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery
-python -B - <<'VERIFY_REGISTERED_EXTERNAL_GUARD'
-from pathlib import Path
-import hashlib,json
-r=Path.cwd()
-assert str(json.loads((r/'records/scheduler_jobs.json').read_bytes())['explicit_gru__historical_capacity'])=='253589','scheduler job changed; do not submit from a stale baseline'
-guard=r/'hpc/run_fixed200_case.py'
-expected='4157613be568d36e5dc322b2f39da81434d30dd7eba9c7491252e209244168ba'
-assert hashlib.sha256(guard.read_bytes()).hexdigest()==expected,'reserved external stage guard differs'
-reservation=r/'records/explicit_gru__historical_capacity/external_final_foundation_20261028.json'
-v=json.loads(reservation.read_bytes())
-assert v['group']=='explicit_gru__historical_capacity__final_foundation_group'
-assert v['seeds']==[17,29,43,61,89]
-assert v['assignments']=={'cloud':[17,29],'g15':[43,61,89]}
-assert not (r/'records/explicit_gru__historical_capacity/external_stage_wait_253589.json').exists(),'external-stage waiting must not create idle continuation'
-print('GRU_RESERVED_GUARD_READY_JSON '+json.dumps({'wrapper_sha256':expected,'reservation':str(reservation),'previous_job':'253589','original_jobs_preserved':True}),flush=True)
-VERIFY_REGISTERED_EXTERNAL_GUARD
-python -B hpc/submit_fixed200_continuation.py --case explicit_gru__historical_capacity
-
-#!/usr/bin/env bash
-set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
