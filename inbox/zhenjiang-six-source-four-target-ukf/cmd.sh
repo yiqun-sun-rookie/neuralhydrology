@@ -33,6 +33,85 @@ def query(command):
             'stdout': result.stdout, 'stderr': result.stderr}
 
 
+def final_stage_metadata(runtime, record, case, row):
+    """Read bounded final-stage records and committed heads; never load tensors."""
+    result = {'group_outcomes': {}, 'physical_members': {}, 'aliases': {},
+              'checkpoints_loaded': False, 'scientific_files_changed': False}
+    for suffix in ('tune_branch_group', 'final_foundation_group', 'all_final_branches_group'):
+        path = record / (suffix + '_outcome.json')
+        if not path.exists():
+            continue
+        outcome = read(path)
+        seal = outcome['seal']
+        result['group_outcomes'][suffix] = {
+            'path': str(path), 'sha256': sha(path),
+            'seal': {key: seal[key] for key in ('group_id', 'member_ids', 'epochs',
+                     'checkpoint_hashes', 'status', 'budget_final', 'evidence_sha256')},
+            'members': {name: {key: value.get(key) for key in ('case', 'seed', 'method',
+                'type', 'epochs', 'budget_final', 'best_epoch', 'checkpoint_sha256',
+                'checkpoint_path', 'learning_rate', 'normalization_hash', 'whitening_hash',
+                'initializer_hash', 'device_identity')} for name, value in outcome['members'].items()}}
+    path = record / 'aliases_before_final_training.json'
+    if path.exists():
+        aliases = read(path)
+        result['alias_record_sha256'] = sha(path)
+        result['effective_configs_sha256_before_aliases'] = aliases['effective_configs_sha256']
+        result['aliases'] = {name: target for name, target in aliases['aliases'].items()
+                             if name.startswith(case + '__')}
+    path = record / 'all_final_branches_group_configs.json'
+    if not path.exists():
+        return result
+    configs = read(path)
+    result['physical_configs_sha256'] = sha(path)
+    for name, config in configs.items():
+        assert name.startswith(case + '__') and name not in result['aliases']
+        run = config['registration']
+        effective = config['effective_config']
+        folder = runtime / 'runs' / name
+        item = {'method': run['method'], 'type': run['type'], 'seed': run['seed'],
+                'learning_rate': effective['learning_rate'],
+                'parent_run_id': effective['parent_run_id'], 'parent_hash': effective['parent_hash'],
+                'folder_exists': folder.exists(), 'continuation_file_exists': (folder / 'continuation.pt').is_file()}
+        config_path = folder / 'config.json'
+        if config_path.exists():
+            item['config_sha256'] = sha(config_path)
+            item['frozen_config_matches'] = read(config_path) == config
+        head_path = folder / 'checkpoint_head.json'
+        if head_path.exists():
+            head = read(head_path)
+            assert 0 <= head['completed_epochs'] <= 200
+            item['head'] = head
+            event_path = folder / 'checkpoint_events' / (head['checkpoint_sha256'][:16] + '.json')
+            if head['completed_epochs'] > 0 and event_path.exists():
+                event = read(event_path)
+                assert event['completed_epochs'] == head['completed_epochs']
+                assert event['checkpoint_sha256'] == head['checkpoint_sha256']
+                assert event['previous_epochs'] == head['completed_epochs'] - 1
+                item['latest_complete_epoch_event'] = event
+            anchor_path = folder / 'continuation_anchor.json'
+            if anchor_path.exists():
+                item['anchor_sha256'] = sha(anchor_path)
+                item['anchor'] = read(anchor_path)
+                item['head_anchor_matches'] = head.get('anchor_sha256') == item['anchor_sha256']
+        step_path = folder / 'first_optimizer_step.json'
+        if step_path.exists():
+            step = read(step_path)
+            item['first_optimizer_step'] = {key: step.get(key) for key in
+                ('status', 'epoch', 'training_batch_size', 'method', 'device_identity')}
+        failure_path = folder / 'failure.json'
+        if failure_path.exists():
+            row['failure_records'][name] = read(failure_path)
+        result['physical_members'][name] = item
+    result['physical_member_count'] = len(configs)
+    result['logical_member_count'] = len(configs) + len(result['aliases'])
+    result['complete200_physical_members'] = sum(
+        value.get('head', {}).get('completed_epochs') == 200 for value in result['physical_members'].values())
+    result['complete_member_epochs'] = sum(
+        value.get('head', {}).get('completed_epochs', 0) for value in result['physical_members'].values())
+    result['all_alias_targets_are_physical'] = all(target in configs for target in result['aliases'].values())
+    return result
+
+
 report = {'schema': 'fixed200-activation-status-v1', 'root': str(ROOT),
           'checked_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
           'checkpoints_loaded': False, 'evaluation_values_read': False, 'cases': {}, 'errors': []}
@@ -96,6 +175,10 @@ for case, variant in CASES.items():
         row['members_with_new_complete_epoch'] = sum(v['new_complete_epochs'] > 0 for v in row['members'].values())
         row['tune_branch_200_complete_members'] = sum(v['completed_epochs'] == 200 for v in row['members'].values())
         row['actual_training_progress_confirmed'] = bool(row.get('runtime_binding') and row['new_complete_member_epochs'] > 0)
+        try:
+            row['final_stage'] = final_stage_metadata(runtime, record, case, row)
+        except Exception as error:
+            row['final_stage_metadata_error'] = {'type': type(error).__name__, 'message': str(error)}
         row['logs'] = []
         for path in (runtime / 'logs').glob('*_' + job + '.out'):
             with path.open('rb') as handle:
