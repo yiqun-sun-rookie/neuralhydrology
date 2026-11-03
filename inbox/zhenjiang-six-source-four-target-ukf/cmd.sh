@@ -1,32 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-python3 - <<'MONITOR_PROJECTION_ZERO_ORIGIN'
-import hashlib,json,subprocess
-from pathlib import Path
-folder=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery/records/explicit_gru__historical_capacity/repairs/gradient_zero_subnormal_254778_20261102_001/projection_zero_origin_20261103_001');slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin');data={'schema':'003-projection-zero-origin-monitor-v1','directory':str(folder),'files':{},'tensor_values_loaded':False,'scientific_files_changed':False}
-for name in ['SUBMISSION_CONFIRMED.json','STATUS.json','REPORT.json','COMPUTE_ATTEMPT.json','PUBLICATION_RESPONSE.json']:
- path=folder/name
- if path.is_file():data['files'][name]=json.loads(path.read_bytes())
-job=data['files'].get('SUBMISSION_CONFIRMED.json',{}).get('job_id')
-if job:
- for label,args in [('queue',[slurm/'squeue','-h','-j',job,'-o','%i|%j|%T|%Z|%e|%l|%N|%R']),('accounting',[slurm/'sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,NodeList','-P'])]:
-  p=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=45);data[label]={'command':list(map(str,args)),'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
- path=folder/('zero_origin_'+job+'.out')
- if path.is_file():
-  with path.open('rb') as f:f.seek(max(0,path.stat().st_size-6000));data['log_tail']=f.read().decode('utf-8',errors='replace')
-if 'REPORT.json' in data['files']:
- def sha(path):
-  h=hashlib.sha256()
-  with Path(path).open('rb') as f:
-   for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
-  return h.hexdigest()
- plan=json.loads((folder/'plan.json').read_bytes());data['live_file_hashes']={name:sha(folder/name) for name in ['plan.json','trace.py','REPORT.json','COMPUTE_ATTEMPT.json','projection_input_adjoint_pairs.pt'] if (folder/name).is_file()};data['source_file_hashes']={name:sha(Path(plan['source_diagnostic_directory'])/name) for name in plan['source_file_sha256']};data['source_hashes_match_plan']=data['source_file_hashes']==plan['source_file_sha256']
-print('GRU_PROJECTION_ZERO_ORIGIN_MONITOR_JSON '+json.dumps(data,sort_keys=True),flush=True)
-
-MONITOR_PROJECTION_ZERO_ORIGIN
-
-#!/usr/bin/env bash
-set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
