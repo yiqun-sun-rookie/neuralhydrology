@@ -1,34 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail
-python3 - <<'MONITOR_PROJECTION_REPAIR'
-import hashlib,json,subprocess
-from pathlib import Path
-folder=Path('/data1/home/sunyiq/zhenjiang_complete_comparison_fixed200_20261019_003/sqrt_gru_recovery/records/explicit_gru__historical_capacity/repairs/gradient_zero_subnormal_254778_20261102_001/projection_repair_validation_20261105_001');slurm=Path('/usr/local/globle/softs/slurm/19.05.4.1/bin')
-data={'schema':'003-projection-repair-validation-monitor-v1','directory':str(folder),'files':{},'queue':None,'accounting':None,'live_file_hashes':{},'source_file_hashes':{},'tensor_values_loaded':False}
-def sha(path):
- h=hashlib.sha256()
- with path.open('rb') as handle:
-  for block in iter(lambda:handle.read(1024*1024),b''):h.update(block)
- return h.hexdigest()
-for name in ['SUBMISSION_CONFIRMED.json','STATUS.json','REPORT.json','COMPUTE_ATTEMPT.json','PUBLICATION_RESPONSE.json']:
- path=folder/name
- if path.is_file():data['files'][name]=json.loads(path.read_bytes())
-submission=data['files'].get('SUBMISSION_CONFIRMED.json',{});job=submission.get('job_id')
-if job:
- for label,args in [('queue',[slurm/'squeue','-h','-j',job,'-o','%i|%j|%T|%Z|%e|%l|%N|%R']),('accounting',[slurm/'sacct','-n','-X','-j',job,'--format=JobID,State,ExitCode,Start,End,NodeList','-P'])]:
-  result=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=60)
-  data[label]={'command':list(map(str,args)),'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr}
-if 'REPORT.json' in data['files']:
- plan=json.loads((folder/'plan.json').read_bytes())
- data['live_file_hashes']={name:sha(folder/name) for name in ['plan.json','run.slurm','validate_original_batch.py','REPORT.json','STATUS.json','COMPUTE_ATTEMPT.json'] if (folder/name).is_file()}
- data['source_file_hashes']={name:sha(Path(item['path'])) for name,item in plan['source_files'].items()}
- data['source_hashes_match_plan']=data['source_file_hashes']=={name:item['sha256'] for name,item in plan['source_files'].items()}
- data['candidate_file_hashes']={name:sha(folder/'candidate_runtime'/name) for name in plan['candidate_source_sha256']}
- data['candidate_hashes_match_plan']=data['candidate_file_hashes']==plan['candidate_source_sha256']
-print('GRU_PROJECTION_REPAIR_MONITOR_JSON '+json.dumps(data,sort_keys=True),flush=True)
-MONITOR_PROJECTION_REPAIR
-#!/usr/bin/env bash
-set -eo pipefail
 python3 - <<'READ_FIXED200_003'
 """Read fixed-200 allocation and committed-epoch evidence without loading tensors.
 
