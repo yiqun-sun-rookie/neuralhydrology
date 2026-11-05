@@ -1,0 +1,17 @@
+{
+  "binding": {
+    "branch": "hpc-mailbox",
+    "channel": "precip-r16-resource-status-20261105",
+    "project_id": "precip-r16-resource-status-20261105",
+    "protocol": "configurable-hpc-mailbox-v1",
+    "remote_python": "python3",
+    "remote_root": "/data1/home/sunyiq/hpc_projects/precip_r16_resource_status_20261105",
+    "repository": "yiqun-sun-rookie/neuralhydrology"
+  },
+  "command_sha256": "29d2aa1ead04bf6eb473521126b9fd48d27bb16d78a73e89729b32bce2790371",
+  "created_at": "2026-11-05T08:24:15.766779+00:00",
+  "fingerprint": "c4fc69a51a281fcf6949b3d2874dea2bb3dad48e8acbcf25a7042f05fdbe3e8b",
+  "payload_sha256": null,
+  "request_id": "resource-status-20261105-1600-v01",
+  "sequence": 1
+}
