@@ -1,0 +1,17 @@
+{
+  "binding": {
+    "branch": "hpc-mailbox",
+    "channel": "camels-rpn01-stage-a",
+    "project_id": "camels-rpn01-stage-a",
+    "protocol": "configurable-hpc-mailbox-v1",
+    "remote_python": "python3",
+    "remote_root": "/data1/home/sunyiq/hpc_projects/camels-rpn01-stage-a-20261107",
+    "repository": "yiqun-sun-rookie/neuralhydrology"
+  },
+  "command_sha256": "e00f0474ffdb66d088321de36d08332b776fc1baee4dd642097dd1d214671dc2",
+  "created_at": "2026-11-07T12:09:06.469916+00:00",
+  "fingerprint": "1cc19e3f0488189774463202078e6abcbe4f63e936fde8775307d2e4bea16e2c",
+  "payload_sha256": null,
+  "request_id": "scheduler-availability-20261107-01",
+  "sequence": 1
+}
