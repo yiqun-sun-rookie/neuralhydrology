@@ -1,0 +1,61 @@
+### channel=zhenjiang-jhrs-revision seq=5
+### host=login4
+### started=2026-11-08T06:19:36+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "resources-004", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 5, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+## date
+Sun Nov  8 06:19:39 CST 2026
+## gpu per node: configured vs allocated
+NodeName=ngu001 Partitions=hgpu2p State=MIXED cpu=96,mem=1M,billing=96 cpu=8
+NodeName=ngu002 Partitions=hgpu2p State=DOWN$ cpu=96,mem=1M,billing=96 
+NodeName=ngu003 Partitions=hgpu2 State=MIXED cpu=96,mem=1M,billing=96 cpu=4
+NodeName=ngu004 Partitions=hgpu2p State=MIXED cpu=96,mem=1M,billing=96 cpu=20
+NodeName=ngu005 Partitions=hgpu2p State=IDLE cpu=96,mem=1M,billing=96 
+NodeName=ngu006 Partitions=hgpu2p State=IDLE cpu=96,mem=1M,billing=96 
+NodeName=ngu007 Partitions=hgpu2p State=MIXED cpu=96,mem=1M,billing=96 cpu=8
+NodeName=ngu008 Partitions=hgpu2p State=IDLE cpu=96,mem=1M,billing=96 
+NodeName=ngu009 Partitions=hgpu2 State=MIXED cpu=96,mem=1M,billing=96 cpu=10
+NodeName=ngu010 Partitions=hgpu2p State=MIXED cpu=32,mem=1M,billing=32 cpu=8
+NodeName=ngu011 Partitions=hgpu2p State=MIXED cpu=32,mem=1M,billing=32 cpu=8
+NodeName=ngu101 Partitions=hgpu4 State=MIXED cpu=96,mem=1M,billing=96 cpu=16
+NodeName=ngu102 Partitions=hgpu4 State=MIXED cpu=96,mem=1M,billing=96 cpu=14
+NodeName=ngu103 Partitions=hgpu4 State=MIXED cpu=96,mem=1M,billing=96 cpu=14
+NodeName=ngu104 Partitions=hgpu4 State=MIXED cpu=96,mem=1M,billing=96 cpu=14
+NodeName=ngu201 Partitions=hgpu8 State=MIXED cpu=64,mem=1M,billing=64 cpu=48
+NodeName=ngu202 Partitions=hgpu8 State=ALLOCATED cpu=64,mem=1M,billing=64 cpu=64
+NodeName=ngu203 Partitions=hgpu8 State=ALLOCATED cpu=64,mem=1M,billing=64 cpu=64
+## own queue
+202229 hgpu4,hgpu8,hgpu2 PENDING 0:00 (DependencyNeverSatisfied)
+202294 hgpu4,hgpu8,hgpu2 PENDING 0:00 (Dependency)
+202315 hgpu4,hgpu8,hgpu2 PENDING 0:00 (Dependency)
+202507 hgpu4,hgpu8,hgpu2 PENDING 0:00 (DependencyNeverSatisfied)
+215429 hgpu2 PENDING 0:00 (DependencyNeverSatisfied)
+202293 hgpu4,hgpu8,hgpu2 PENDING 0:00 (JobHeldUser)
+240076_[0-2%1] hgpu2p PENDING 0:00 (JobHeldUser)
+240077_[0-131%1] hgpu2p PENDING 0:00 (JobHeldUser)
+240078 hgpu2p PENDING 0:00 (JobHeldUser)
+241691 hgpu2p,hgpu4,hgpu8 PENDING 0:00 (JobHeldUser)
+237928 hgpu2p RUNNING 30-08:02:14 ngu007
+236706 hgpu2p RUNNING 32-19:01:19 ngu011
+## estimated start for one GPU, nothing submitted
+-- hgpu8
+sbatch: Job 258037 to start at 2026-11-09T16:50:29 using 4 processors on nodes ngu201 in partition hgpu8
+-- hgpu4
+sbatch: Job 258038 to start at 2048-02-13T21:21:47 using 4 processors on nodes ngu104 in partition hgpu4
+-- hgpu2p
+sbatch: Job 258039 to start at 2082-05-02T19:21:08 using 4 processors on nodes ngu008 in partition hgpu2p
+-- hgpu2
+sbatch: Job 258040 to start at 2069-05-24T06:49:08 using 4 processors on nodes ngu003 in partition hgpu2
+## reservations
+ReservationName=wangzhaomin_45 StartTime=2026-07-01T14:17:33 EndTime=2027-07-01T14:17:33 Duration=365-00:00:00
+   Nodes=icn[202-207,211-212,214,216-217,220-221,246,249] NodeCnt=15 CoreCnt=720 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+   TRES=cpu=720
+   Users=wangzhaomin,yukai Accounts=(null) Licenses=(null) State=ACTIVE BurstBuffer=(null) Watts=n/a
+
+ReservationName=root_79 StartTime=2026-10-22T17:08:57 EndTime=2027-10-22T17:08:57 Duration=365-00:00:00
+   Nodes=icn[242,244-245],ngu002 NodeCnt=4 CoreCnt=192 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES
+   TRES=cpu=240
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T06:19:39+0800
