@@ -1,0 +1,50 @@
+### channel=zhenjiang-jhrs-revision seq=2
+### host=login4
+### started=2026-11-07T17:19:16+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "resources-001", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 2, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+## date
+Sat Nov  7 17:19:20 CST 2026
+## partitions
+PARTITION AVAIL NODES STATE GRES
+hgpu8 up 2 mix gpu:8
+hgpu8 up 1 alloc gpu:8
+hgpu4 up 4 mix gpu:4
+hgpu2 up 1 mix gpu:2
+hgpu2 up 1 idle gpu:2
+hgpu2p up 1 down$ gpu:2
+hgpu2p up 5 mix gpu:2
+hgpu2p up 3 idle gpu:2
+## own queue by partition and state
+      1 hgpu2 PENDING
+      1 hgpu2p,hgpu4,hgpu8 PENDING
+      3 hgpu2p PENDING
+      2 hgpu2p RUNNING
+      5 hgpu4,hgpu8,hgpu2 PENDING
+      1 hgpu4 RUNNING
+## estimated start, nothing submitted
+-- hgpu8
+sbatch: Job 257460 to start at 2026-11-09T16:01:48 using 4 processors on nodes ngu201 in partition hgpu8
+-- hgpu2p
+sbatch: Job 257461 to start at 2082-05-01T15:22:48 using 4 processors on nodes ngu008 in partition hgpu2p
+-- hgpu2
+sbatch: Job 257462 to start at 2069-05-23T17:48:48 using 4 processors on nodes ngu003 in partition hgpu2
+## n4 array elapsed seconds on A800
+n=1440 mean=276.5 max=696
+first_start 2026-08-26T19:06:40 last_end 2026-08-27T02:55:05
+## sampled run identities
+tasks 480 sampled 40 median_s 139.1 max_s 277.2 median_epochs 13.0 {'NVIDIA GeForce RTX 3090': 40}
+ladder_tasks 960 sampled 40 median_s 144.5 max_s 249.8 median_epochs 13.0 {'NVIDIA GeForce RTX 3090': 40}
+n4_tasks 1440 sampled 40 median_s 241.7 max_s 418.8 median_epochs 11.5 {'NVIDIA A800-SXM4-80GB': 40}
+## platform control
+160
+## code and inputs
+/data1/home/sunyiq/zhenjiang_oyv_v1/pysite
+/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling
+water_level_model_input_v7_beijing_realtime_verified
+Unknown option: -C
+## environment
+
+### ---------- end ----------
+### exit_code=1
+### finished=2026-11-07T17:19:39+0800
