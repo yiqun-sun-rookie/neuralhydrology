@@ -1,0 +1,11 @@
+### channel=camels-rpn01-stage-a seq=1
+### host=login4
+### started=2026-11-07T20:15:24+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "scheduler-availability-20261107-01", "project_id": "camels-rpn01-stage-a", "channel": "camels-rpn01-stage-a", "sequence": 1, "remote_root": "/data1/home/sunyiq/hpc_projects/camels-rpn01-stage-a-20261107", "payload_sha256": null}
+2026-11-07T12:15:26Z
+sbatch: Job 257582 to start at 2082-05-01T16:32:54 using 1 processors on nodes ngu010 in partition hgpu2p
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-07T20:15:26+0800
