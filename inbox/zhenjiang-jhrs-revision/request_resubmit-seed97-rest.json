@@ -1,0 +1,17 @@
+{
+  "binding": {
+    "branch": "hpc-mailbox",
+    "channel": "zhenjiang-jhrs-revision",
+    "project_id": "zhenjiang-jhrs-revision",
+    "protocol": "configurable-hpc-mailbox-v1",
+    "remote_python": "python3",
+    "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision",
+    "repository": "yiqun-sun-rookie/neuralhydrology"
+  },
+  "command_sha256": "92d99ad9e67824e19beb7166467d67cbb692a49aa92770e3320726e0ebcbcd49",
+  "created_at": "2026-11-08T03:35:35.988083+00:00",
+  "fingerprint": "84bf8a99b9d686235cfd4a6df99a32ece32a5818402111042bfe40047d002a57",
+  "payload_sha256": null,
+  "request_id": "resubmit-seed97-rest",
+  "sequence": 15
+}
