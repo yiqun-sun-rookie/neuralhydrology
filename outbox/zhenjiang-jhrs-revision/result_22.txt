@@ -1,0 +1,11 @@
+### channel=zhenjiang-jhrs-revision seq=22
+### host=login4
+### started=2026-11-08T16:35:51+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "h1-errors-table-001", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 22, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+## script sha256: 450c8f047bc18acb93a29477117aafb2506b2e92cc8aea8df96549b2a4c57c76
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+
+### ---------- end ----------
+### exit_code=1
+### finished=2026-11-08T16:35:57+0800
