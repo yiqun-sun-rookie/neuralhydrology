@@ -1,0 +1,16 @@
+### channel=zhenjiang-jhrs-revision seq=14
+### host=login4
+### started=2026-11-08T11:31:46+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "check-array-258221-001", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 14, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 11:31:47 CST 2026
+## squeue
+slurm_load_jobs error: Invalid job id specified
+## sacct elements by state and seed block
+97 CANCELLED by 2272 1
+97 COMPLETED 27
+## h1 tasks complete: 9
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T11:31:47+0800
