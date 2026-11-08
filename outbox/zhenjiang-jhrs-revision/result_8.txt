@@ -1,0 +1,13 @@
+### channel=zhenjiang-jhrs-revision seq=8
+### host=login4
+### started=2026-11-08T10:37:19+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "deploy-h1-hgpu8-001", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 8, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": "c11aa9f600494c9d692577cca10aed921acebc080be7c4aad87a39a62d6cf282"}
+manifest_files 41 mismatches 0
+partition=hgpu8 smoke_job=258220 array_job=258221 root=/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision/h1_v1
+258220_[576] hgpu8 PENDING (None)
+258221_[576-863%16] hgpu8 PENDING (None)
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T10:37:23+0800
