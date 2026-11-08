@@ -1,0 +1,20 @@
+### channel=zhenjiang-jhrs-revision seq=9
+### host=login4
+### started=2026-11-08T10:39:34+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "status-h1-001", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 9, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 10:39:35 CST 2026
+## queue
+258221_[576-863%16] PENDING 0:00 (Dependency)
+258220_576 RUNNING INVALID ngu201
+## accounting
+## smoke
+NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB
+## h1 tasks complete: 0
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T10:39:35+0800
