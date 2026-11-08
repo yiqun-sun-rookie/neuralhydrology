@@ -1,0 +1,18 @@
+### channel=zhenjiang-jhrs-revision seq=18
+### host=login4
+### started=2026-11-08T13:31:01+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "submit-seed127", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 18, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 13:31:02 CST 2026
+seed 127 task directories present before submit: 0
+submitted array=258411 indices 768-863 (seed 127)
+258274_[626-671%16] PENDING (Priority)
+258411_[768-863%16] PENDING (Priority)
+258274_625 RUNNING ngu202
+258274_624 RUNNING ngu202
+258274_623 RUNNING ngu201
+258274_622 RUNNING ngu202
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T13:31:05+0800
