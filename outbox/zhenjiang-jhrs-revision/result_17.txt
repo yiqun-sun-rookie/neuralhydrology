@@ -1,0 +1,18 @@
+### channel=zhenjiang-jhrs-revision seq=17
+### host=login4
+### started=2026-11-08T13:28:51+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "status-h1-007", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 17, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 13:28:53 CST 2026
+## queue
+258274_[625-671%16] PENDING 0:00 (Priority)
+258274_624 RUNNING INVALID ngu202
+258274_623 RUNNING INVALID ngu201
+258274_622 RUNNING 0:29 ngu202
+258274_621 RUNNING 1:29 ngu202
+258274_620 RUNNING 2:32 ngu202
+## seed 97 tasks complete: 44 of 96
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T13:28:53+0800
