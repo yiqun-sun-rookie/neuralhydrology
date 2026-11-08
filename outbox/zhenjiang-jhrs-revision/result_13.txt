@@ -1,0 +1,17 @@
+### channel=zhenjiang-jhrs-revision seq=13
+### host=login4
+### started=2026-11-08T11:25:51+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "cancel-seeds-109-127", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 13, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 11:25:51 CST 2026
+## before
+258221_[585-863%16] PENDING sunyiq
+258221_584 RUNNING sunyiq
+running elements in 672-863: 0
+scancel issued for pending elements 672-863
+## after
+258221_584 RUNNING sunyiq
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T11:25:55+0800
