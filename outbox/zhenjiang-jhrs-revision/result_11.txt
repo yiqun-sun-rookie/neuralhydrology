@@ -1,0 +1,29 @@
+### channel=zhenjiang-jhrs-revision seq=11
+### host=login4
+### started=2026-11-08T10:50:05+0800
+### ---------- output ----------
+{"hpc_mailbox_request": "status-h1-003", "project_id": "zhenjiang-jhrs-revision", "channel": "zhenjiang-jhrs-revision", "sequence": 11, "remote_root": "/data1/home/sunyiq/hpc_projects/zhenjiang-jhrs-revision", "payload_sha256": null}
+Sun Nov  8 10:50:05 CST 2026
+## queue
+258221_[578-863%16] PENDING 0:00 (Resources)
+258221_577 RUNNING INVALID ngu201
+## accounting
+COMPLETED 2
+PENDING 1
+RUNNING 1
+## smoke
+jhrs_tide_control_v1__frozen__fold_2020__nanjing__hidden_target__seed_97
+best_state.pt
+completion_manifest.json
+run_identity.json
+test_predictions.npz
+training_history.csv
+NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB
+NVIDIA A800-SXM4-80GB
+{"best_epoch": 9, "completed_epochs": 13, "elapsed_seconds": 301.583, "task_id": "jhrs_tide_control_v1__frozen__fold_2020__nanjing__hidden_target__seed_97"}
+## h1 tasks complete: 1
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-11-08T10:50:06+0800
